@@ -4,133 +4,84 @@
 @section('description', $product_detail->summary)
 
 @section('main-content')
-<div class="tl-breadcrumb catalog-banner pt-60 pb-60">
-    <img src="{{ asset('assets/images/breadcrumb.webp') }}" alt="breadcrumb" class="breadcrumb-bg-img">
-    <div class="breadcrumb-float-element float-element-1"></div>
-    <div class="breadcrumb-float-element float-element-2"></div>
-    <div class="breadcrumb-float-element float-element-3"></div>
-    <div class="container">
-        <div class="row align-items-end">
-            <div class="col-md-6">
-                <div class="banner-txt"><h1 class="tl-breadcrumb-title">{{ $product_detail->title }}</h1></div>
-            </div>
-            <div class="col-md-6">
-                <ul class="tl-breadcrumb-nav d-flex justify-content-md-end">
-                    <li><a href="{{route('home')}}">{{ __('common.home') }}</a></li>
-                    <li class="current-page">
-                        <span class="dvdr"><i class="fas fa-chevron-right mx-2"></i></span>
-                        <span>{{ $product_detail->title }}</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+<x-breadcrumb :title="$product_detail->title" :parent="__('common.catalog')" :parent-url="route('product-lists')" />
 
-<section class="product-details-section pt-60 pb-80" style="background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%);">
-    <div class="container">
-        @php $photo = explode(',', $product_detail->photo); @endphp
+@php $photos = array_values(array_filter(explode(',', $product_detail->photo))); @endphp
 
-        <!-- Title Centered -->
-        <div class="row justify-content-center mb-5">
-            <div class="col-12 text-center">
-                <h1 class="fw-900" style="font-size: 48px; font-weight: 900; color: #0a0e27; line-height: 1.2;">
-                    {{ $product_detail->title }}
-                </h1>
-            </div>
-        </div>
+<section class="pd-section">
+    <div class="pd-container">
+        <div class="pd-grid">
 
-        <!-- Image Left, Content Right -->
-        <div class="row align-items-start g-5 mb-5">
-            <!-- Image on Left (1:1 Aspect Ratio) -->
-            <div class="col-lg-6">
-                <div class="modern-card p-0 border-0 overflow-hidden position-relative watermark-overlay" style="border-radius: 28px; border: 1.5px solid rgba(232, 93, 142, 0.1); box-shadow: 0 30px 80px rgba(232, 93, 142, 0.2); aspect-ratio: 1/1; animation: slideInUp 0.6s ease-out;">
-                    <img src="{{ asset($photo[0]) }}" class="w-100 h-100 object-fit-cover" style="transition: transform 0.5s ease;">
+            {{-- ============ GALLERY ============ --}}
+            <div class="pd-gallery">
+                <div class="pd-gallery__main">
+                    <img id="pdMainImg" src="{{ asset($photos[0] ?? '') }}" alt="{{ $product_detail->title }}">
                 </div>
-            </div>
-
-            <!-- Content on Right -->
-            <div class="col-lg-6">
-                <!-- Course Overview -->
-                <div class="modern-card p-5 border-0 mb-4" style="border-radius: 24px; border: 1px solid rgba(232, 93, 142, 0.1); background: rgba(255, 255, 255, 0.6);">
-                    <h4 class="fw-bold mb-3" style="font-size: 18px; color: #0a0e27;">{{ __('common.artwork_overview') }}</h4>
-                    
-                    <p class="text-muted mb-0" style="font-size: 16px; line-height: 1.8; color: #666;">{{$product_detail->description}}</p>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<!-- Levels Selection Section with Different Background -->
-<section class="product-levels-section pt-80 pb-80" style="background: linear-gradient(135deg, #ffffff 0%, #FFF4EE 100%);">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12">
-                <h2 class="fw-900 mb-5 text-center" style="font-size: 32px; font-weight: 900; color: #0a0e27;">{{ __('common.select_level') }}</h2>
-
-                <!-- Level Slider Tabs -->
-                <div class="level-slider-wrapper mb-5">
-                    <div class="d-flex gap-3 justify-content-center flex-wrap">
-                        @foreach($product_detail->levels as $key => $level)
-                            <button type="button" class="level-tab-btn {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}" style="padding: 12px 28px; border-radius: 12px; background: rgba(232, 93, 142, 0.1); color: #E85D8E; border: 2px solid transparent; font-weight: 600; cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                                <i class="fas fa-star me-2"></i>{{ ucfirst($level->skill_level) }}
+                @if(count($photos) > 1)
+                    <div class="pd-gallery__thumbs">
+                        @foreach($photos as $i => $ph)
+                            <button type="button" class="pd-thumb {{ $i === 0 ? 'active' : '' }}" data-src="{{ asset($ph) }}">
+                                <img src="{{ asset($ph) }}" alt="{{ $product_detail->title }} {{ $i + 1 }}">
                             </button>
                         @endforeach
                     </div>
-                </div>
+                @endif
+            </div>
 
-                <!-- Level Details Section -->
-                <div class="level-content-wrapper">
-                    @foreach($product_detail->levels as $key => $level)
-                        <div class="level-details-container {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}" style="display: {{ $key === 0 ? 'block' : 'none' }}; animation: slideInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                            <div class="concept-card p-5 border-0">
-                                <div class="row align-items-center g-4">
-                                    <!-- Left Column: Design Concept -->
-                                    <div class="col-md-7 col-lg-8 concept-divider">
-                                        <div class="pe-md-4">
-                                            <span class="badge rounded-2 px-3 py-2 mb-3" style="background: rgba(232, 93, 142, 0.1); color: #E85D8E; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
-                                                <i class="fas fa-palette me-1"></i> {{ __('common.design_concept') }}
-                                            </span>
-                                            <p class="text-dark mb-0" style="font-size: 16px; line-height: 1.8; color: #2d3748; font-weight: 500;">
-                                                {{ $level->purpose }}
-                                            </p>
-                                        </div>
+            {{-- ============ INFO + BUY ============ --}}
+            <div class="pd-info">
+                <p class="pd-eyebrow">{{ __('common.digital_art') ?? 'Digital Art' }}</p>
+                <h1 class="pd-title">{{ $product_detail->title }}</h1>
+
+                @if($product_detail->description)
+                    <div class="pd-overview">
+                        <span class="pd-overview__label">{{ __('common.artwork_overview') }}</span>
+                        <p class="pd-overview__text">{{ $product_detail->description }}</p>
+                    </div>
+                @endif
+
+                {{-- Levels / variants --}}
+                @if($product_detail->levels && count($product_detail->levels))
+                    <div class="pd-levels">
+                        <span class="pd-levels__label">{{ __('common.select_level') }}</span>
+
+                        <div class="pd-tabs">
+                            @foreach($product_detail->levels as $key => $level)
+                                <button type="button" class="pd-tab {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}">
+                                    {{ ucfirst($level->skill_level) }}
+                                </button>
+                            @endforeach
+                        </div>
+
+                        @foreach($product_detail->levels as $key => $level)
+                            <div class="pd-level {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}" style="display: {{ $key === 0 ? 'block' : 'none' }};">
+                                @if($level->purpose)
+                                    <div class="pd-level__concept">
+                                        <span class="pd-level__concept-label"><i class="fas fa-palette"></i> {{ __('common.design_concept') }}</span>
+                                        <p class="pd-level__purpose">{{ $level->purpose }}</p>
                                     </div>
-                                    
-                                    <!-- Right Column: Cost and Button -->
-                                    <div class="col-md-5 col-lg-4 text-center text-md-start">
-                                        <div class="ps-md-4 d-flex flex-column justify-content-center h-100">
-                                            <div class="mb-4">
-                                                <span class="text-muted small text-uppercase" style="font-size: 11px; letter-spacing: 1.5px; font-weight: 600; display: block; margin-bottom: 6px;">{{ __('common.price') }}</span>
-                                                <h3 class="fw-900 mb-0" style="color: #0a0e27; font-size: 32px; font-weight: 900; line-height: 1;">
-                                                    {{ number_format($level->price_in_points) }}
-                                                    <span style="font-weight: 600; font-size: 16px; color: #E85D8E; margin-left: 2px;">{{ __('common.credits') }}</span>
-                                                </h3>
-                                            </div>
-                                            
-                                            <form action="{{route('single-add-to-cart')}}" method="POST" class="enroll-form w-100">
-                                                @csrf
-                                                <input type="hidden" name="quant[1]" value="1">
-                                                <input type="hidden" name="slug" value="{{$product_detail->slug}}">
-                                                <input type="hidden" name="price" value="{{$level->price}}">
-                                                <input type="hidden" name="price_jp" value="{{$level->price_jp}}">
-                                                <input type="hidden" name="price_hk" value="{{$level->price_hk}}">
-                                                <input type="hidden" name="level_id" value="{{$level->id}}">
-                                                <button type="submit" class="btn w-100 py-3 fw-bold rounded-4 enroll-btn d-flex align-items-center justify-content-center gap-2" style="background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); color: white; border: none; font-size: 15px; box-shadow: 0 10px 25px rgba(232, 93, 142, 0.25); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
-                                                    <span>{{ __('common.buy_now_text') }}</span> 
-                                                    <i class="fas fa-arrow-right icon-arrow" style="transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);"></i>
-                                                </button>
-                                            </form>
-                                        </div>
+                                @endif
+
+                                <div class="pd-buybar">
+                                    <div class="pd-price">
+                                        <span class="pd-price__label">{{ __('common.price') }}</span>
+                                        <span class="pd-price__amt">{{ number_format($level->price_in_points) }} <small>{{ __('common.credits') }}</small></span>
                                     </div>
+                                    <form action="{{ route('single-add-to-cart') }}" method="POST" class="enroll-form pd-buyform">
+                                        @csrf
+                                        <input type="hidden" name="quant[1]" value="1">
+                                        <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
+                                        <input type="hidden" name="price" value="{{ $level->price }}">
+                                        <input type="hidden" name="price_jp" value="{{ $level->price_jp }}">
+                                        <input type="hidden" name="price_hk" value="{{ $level->price_hk }}">
+                                        <input type="hidden" name="level_id" value="{{ $level->id }}">
+                                        <button type="submit" class="pd-buy enroll-btn"><span>{{ __('common.buy_now_text') }}</span> <i class="fas fa-arrow-right icon-arrow"></i></button>
+                                    </form>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -140,102 +91,93 @@
 
 @push('styles')
 <style>
-    .product-details-section {
-        padding-top: 60px !important;
-        padding-bottom: 60px !important;
-    }
+    /* =========================================================
+       PRODUCT DETAIL — Structured theme
+       ========================================================= */
+    .pd-section { background-color: var(--color-putty, #c4c3b6); padding: 72px 0; }
+    .pd-container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .pd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
 
-    .product-levels-section {
-        padding-top: 80px !important;
-        padding-bottom: 80px !important;
+    /* Gallery */
+    .pd-gallery__main {
+        aspect-ratio: 4 / 5; overflow: hidden;
+        border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 14px; background-color: var(--color-bone, #e7e5e4);
     }
-
-    .level-tab-btn {
-        color: #E85D8E !important;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        background: rgba(232, 93, 142, 0.1) !important;
-        font-weight: 600;
+    .pd-gallery__main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pd-gallery__thumbs { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+    .pd-thumb {
+        width: 72px; height: 72px; padding: 0; overflow: hidden; cursor: pointer;
+        border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 9px; background: var(--color-bone, #e7e5e4);
+        transition: border-color 0.2s ease;
     }
+    .pd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pd-thumb.active, .pd-thumb:hover { border-color: var(--color-ink, #000); }
 
-    .level-tab-btn:hover:not(.active) {
-        background: rgba(232, 93, 142, 0.15) !important;
-        color: #E85D8E !important;
-        transform: translateY(-3px);
+    /* Info */
+    .pd-eyebrow {
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 11px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-graphite, #595855); margin: 0 0 12px 0;
     }
-
-    .level-tab-btn.active {
-        background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%) !important;
-        color: white !important;
-        box-shadow: 0 12px 32px rgba(232, 93, 142, 0.3) !important;
+    .pd-title {
+        font-family: var(--font-davinci, serif); font-size: clamp(30px, 4vw, 48px); font-weight: 500;
+        line-height: 1.08; letter-spacing: -0.02em; color: var(--color-ink, #000); margin: 0 0 24px 0;
     }
-
-    .level-details-container {
-        animation: slideInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    .pd-overview { padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid var(--color-vellum, #dfdcd5); }
+    .pd-overview__label {
+        display: block; font-family: var(--font-helvetica-now, sans-serif); font-size: 11px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-graphite, #595855); margin-bottom: 10px;
     }
+    .pd-overview__text { font-family: var(--font-helvetica-now, sans-serif); font-size: 15px; line-height: 1.8; color: var(--color-ink, #000); margin: 0; }
 
-    /* Concept Card Specific Styles */
-    .concept-card {
-        border-radius: 28px !important;
-        border: 1.5px solid rgba(232, 93, 142, 0.1) !important;
-        background: rgba(255, 255, 255, 0.75) !important;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 20px 50px rgba(232, 93, 142, 0.08) !important;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Levels */
+    .pd-levels__label {
+        display: block; font-family: var(--font-helvetica-now, sans-serif); font-size: 11px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-graphite, #595855); margin-bottom: 12px;
     }
-    
-    .concept-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 30px 60px rgba(232, 93, 142, 0.14) !important;
-        border-color: rgba(232, 93, 142, 0.2) !important;
+    .pd-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+    .pd-tab {
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 12px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.05em;
+        color: var(--color-ink, #000); background-color: transparent;
+        border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 28.8px;
+        padding: 10px 20px; cursor: pointer; transition: all 0.2s ease;
     }
+    .pd-tab:hover { background-color: var(--color-bone, #e7e5e4); }
+    .pd-tab.active { background-color: var(--color-ink, #000); color: var(--color-paper, #fff); border-color: var(--color-ink, #000); }
 
-    .concept-divider {
-        border-right: 1px solid rgba(232, 93, 142, 0.15);
+    .pd-level__concept { background-color: var(--color-bone, #e7e5e4); border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 10px; padding: 20px 22px; margin-bottom: 22px; }
+    .pd-level__concept-label {
+        display: inline-flex; align-items: center; gap: 7px;
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 10px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-graphite, #595855); margin-bottom: 10px;
     }
+    .pd-level__concept-label i { color: var(--color-ink, #000); }
+    .pd-level__purpose { font-family: var(--font-helvetica-now, sans-serif); font-size: 14px; line-height: 1.7; color: var(--color-ink, #000); margin: 0; }
 
-    @media (max-width: 767.98px) {
-        .concept-divider {
-            border-right: none !important;
-            border-bottom: 1px solid rgba(232, 93, 142, 0.15);
-            padding-bottom: 24px;
-            margin-bottom: 24px;
-        }
+    .pd-buybar {
+        display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+        padding: 20px 24px; border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 12px; background-color: var(--color-paper, #fff);
     }
-
-    .enroll-btn {
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    .pd-price__label { display: block; font-family: var(--font-helvetica-now, sans-serif); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-graphite, #595855); margin-bottom: 4px; }
+    .pd-price__amt { font-family: var(--font-davinci, serif); font-size: 30px; font-weight: 500; color: var(--color-ink, #000); line-height: 1; }
+    .pd-price__amt small { font-family: var(--font-helvetica-now, sans-serif); font-size: 13px; font-weight: 500; color: var(--color-graphite, #595855); }
+    .pd-buyform { flex: 1 1 200px; }
+    .pd-buy {
+        width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 13px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.05em;
+        background-color: var(--color-ink, #000); color: var(--color-paper, #fff);
+        border: 1px solid var(--color-ink, #000); border-radius: 28.8px;
+        padding: 15px 24px; cursor: pointer; transition: opacity 0.2s ease;
     }
+    .pd-buy:hover { opacity: 0.85; }
+    .pd-buy .icon-arrow { transition: transform 0.3s ease; }
+    .pd-buy:hover .icon-arrow { transform: translateX(4px); }
 
-    .enroll-btn:hover {
-        transform: translateY(-3px) !important;
-        box-shadow: 0 12px 30px rgba(232, 93, 142, 0.4) !important;
-    }
-
-    .enroll-btn:hover .icon-arrow {
-        transform: translateX(4px);
-    }
-
-    .tiny { font-size: 0.75rem; }
-
-    .sticky-top {
-        transition: all 0.3s ease;
-    }
-
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @media (max-width: 992px) {
-        .col-xl-7, .col-xl-5 {
-            margin-bottom: 1.5rem;
-        }
+    @media (max-width: 900px) {
+        .pd-section { padding: 48px 0; }
+        .pd-container { padding: 0 20px; }
+        .pd-grid { grid-template-columns: 1fr; gap: 32px; }
     }
 </style>
 @endpush
@@ -243,73 +185,53 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const levelTabBtns = document.querySelectorAll('.level-tab-btn');
-    const levelDetailsContainers = document.querySelectorAll('.level-details-container');
-
-    levelTabBtns.forEach(btn => {
+    // ---- Level / variant tabs ----
+    const tabs = document.querySelectorAll('.pd-tab');
+    const levels = document.querySelectorAll('.pd-level');
+    tabs.forEach(btn => {
         btn.addEventListener('click', function() {
-            const levelId = this.getAttribute('data-level-id');
-
-            // Remove active class from all buttons and containers
-            levelTabBtns.forEach(b => b.classList.remove('active'));
-            levelDetailsContainers.forEach(container => {
-                container.style.display = 'none';
-                container.classList.remove('active');
-            });
-
-            // Add active class to clicked button
+            const id = this.getAttribute('data-level-id');
+            tabs.forEach(b => b.classList.remove('active'));
+            levels.forEach(l => { l.style.display = 'none'; l.classList.remove('active'); });
             this.classList.add('active');
-
-            // Show corresponding level details
-            const activeContainer = document.querySelector(`.level-details-container[data-level-id="${levelId}"]`);
-            if (activeContainer) {
-                activeContainer.style.display = 'block';
-                activeContainer.classList.add('active');
-            }
+            const active = document.querySelector('.pd-level[data-level-id="' + id + '"]');
+            if (active) { active.style.display = 'block'; active.classList.add('active'); }
         });
     });
 
-    // Handle enroll form submission without redirect
+    // ---- Gallery thumbnails ----
+    const mainImg = document.getElementById('pdMainImg');
+    const thumbs = document.querySelectorAll('.pd-thumb');
+    thumbs.forEach(t => {
+        t.addEventListener('click', function() {
+            const src = this.getAttribute('data-src');
+            if (mainImg && src) { mainImg.src = src; }
+            thumbs.forEach(x => x.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // ---- Enroll (add to cart) — submit without redirect, then reload ----
     const enrollForms = document.querySelectorAll('.enroll-form');
     enrollForms.forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-
             const submitBtn = form.querySelector('.enroll-btn');
             const originalBtnText = submitBtn.innerHTML;
             const originalBtnState = submitBtn.disabled;
-
-            // Show loading state
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
 
-            // Fetch the form
-            fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                redirect: 'manual'
-            })
-            .then(response => {
-                // Wait 500ms for cart update to complete
-                return new Promise(resolve => {
-                    setTimeout(() => {
-                        resolve(response);
-                    }, 500);
+            fetch(form.action, { method: 'POST', body: new FormData(form), redirect: 'manual' })
+                .then(response => new Promise(resolve => setTimeout(() => resolve(response), 500)))
+                .then(() => { window.location.reload(); })
+                .catch(error => {
+                    console.error('Error:', error);
+                    submitBtn.disabled = originalBtnState;
+                    submitBtn.innerHTML = originalBtnText;
                 });
-            })
-            .then(response => {
-                // Reload the page to show success message
-                window.location.reload();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Reset button state on error
-                submitBtn.disabled = originalBtnState;
-                submitBtn.innerHTML = originalBtnText;
-            });
         });
     });
 });
 </script>
 @endpush
-

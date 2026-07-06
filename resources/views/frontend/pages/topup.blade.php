@@ -1,16 +1,16 @@
 @extends('frontend.layouts.main')
 
-@section('title', __('common.points_top_up'))
+@section('title', __('inkwave.topup_heading'))
 
 @section('main-content')
-<x-breadcrumb :title="__('common.top_up_points')" />
+<x-breadcrumb :title="__('inkwave.topup_heading')" />
 
 <section class="points-topup-section" id="topup">
     <div class="auto-container">
         <div class="topup-head">
-            <p class="topup-eyebrow">{{ __('common.points_top_up') }}</p>
-            <h2 class="topup-heading">{{ __('common.maximize_value') }}</h2>
-            <p class="topup-sub">{{ __('common.topup_description') }}</p>
+            <p class="topup-eyebrow">{{ __('inkwave.topup_eyebrow') }}</p>
+            <h2 class="topup-heading">{{ __('inkwave.topup_heading') }}</h2>
+            <p class="topup-sub">{{ __('inkwave.topup_sub') }}</p>
         </div>
 
         <div class="topup-layout">
@@ -18,24 +18,24 @@
                 $cur = session('currency');
                 if ($cur == 'JPY') {
                     $tiers = [
-                        ['n'=>__('common.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'¥1 - ¥79,999',        'f'=>false],
-                        ['n'=>__('common.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'¥80,000 - ¥159,999',  'f'=>false],
-                        ['n'=>__('common.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'¥160,000 - ¥239,999', 'f'=>false],
-                        ['n'=>__('common.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'¥240,000+',           'f'=>true],
+                        ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'¥1 - ¥79,999',        'f'=>false],
+                        ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'¥80,000 - ¥159,999',  'f'=>false],
+                        ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'¥160,000 - ¥239,999', 'f'=>false],
+                        ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'¥240,000+',           'f'=>true],
                     ];
                 } elseif ($cur == 'HKD') {
                     $tiers = [
-                        ['n'=>__('common.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$499',       'f'=>false],
-                        ['n'=>__('common.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$500 - HK$999',     'f'=>false],
-                        ['n'=>__('common.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$1,000 - HK$1,499', 'f'=>false],
-                        ['n'=>__('common.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$1,500+',           'f'=>true],
+                        ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$499',       'f'=>false],
+                        ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$500 - HK$999',     'f'=>false],
+                        ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$1,000 - HK$1,499', 'f'=>false],
+                        ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$1,500+',           'f'=>true],
                     ];
                 } else {
                     $tiers = [
-                        ['n'=>__('common.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'$1 - $499',       'f'=>false],
-                        ['n'=>__('common.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'$500 - $999',     'f'=>false],
-                        ['n'=>__('common.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'$1,000 - $1,499', 'f'=>false],
-                        ['n'=>__('common.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'$1,500+',         'f'=>true],
+                        ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'$1 - $499',       'f'=>false],
+                        ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'$500 - $999',     'f'=>false],
+                        ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'$1,000 - $1,499', 'f'=>false],
+                        ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'$1,500+',         'f'=>true],
                     ];
                 }
             @endphp
@@ -43,29 +43,29 @@
             <div class="tier-cards">
                 @foreach($tiers as $t)
                     <div class="tier-card @if($t['f']) tier-card--featured @endif">
-                        @if($t['f'])<span class="tier-card__flag">{{ __('common.best_value') ?? 'Best Value' }}</span>@endif
+                        @if($t['f'])<span class="tier-card__flag">{{ __('inkwave.best_value') }}</span>@endif
                         <span class="tier-card__icon"><i class="fas {{ $t['i'] }}"></i></span>
                         <h3 class="tier-card__name">{{ $t['n'] }}</h3>
                         <div class="tier-card__price">
                             <span class="tier-card__mult">{{ $t['big'] }}</span>
-                            <span class="tier-card__per">{{ __('common.bonus') }}</span>
+                            <span class="tier-card__per">{{ __('inkwave.bonus_text') }}</span>
                         </div>
                         <ul class="tier-card__feats">
                             <li><i class="fas fa-check-circle"></i> {{ $t['r'] }}</li>
-                            <li><i class="fas fa-check-circle"></i> {{ __('common.bonus') }} {{ $t['big'] }}</li>
+                            <li><i class="fas fa-check-circle"></i> {{ __('inkwave.bonus_text') }} {{ $t['big'] }}</li>
                         </ul>
-                        <button type="button" class="tier-card__btn" data-topup-focus>{{ __('common.top_up_points') }}</button>
+                        <button type="button" class="tier-card__btn" data-topup-focus>{{ __('inkwave.calc_button') }}</button>
                     </div>
                 @endforeach
             </div>
 
             <p class="tier-note">
                 @if(session('currency') == 'JPY')
-                    {{ __('common.jpy_conversion_note') }}
+                    {{ __('inkwave.jpy_conversion_note') }}
                 @elseif(session('currency') == 'HKD')
-                    {{ __('common.hkd_conversion_note') }}
+                    {{ __('inkwave.hkd_conversion_note') }}
                 @else
-                    {{ __('common.usd_conversion_note') }}
+                    {{ __('inkwave.usd_conversion_note') }}
                 @endif
             </p>
 
@@ -73,8 +73,8 @@
                 <div class="ink-calc">
                     <div class="ink-calc__head">
                         <div>
-                            <h2 class="ink-calc__title">{{ __('common.sakura_calc_title') }}</h2>
-                            <p class="ink-calc__tag">{{ __('common.sakura_calc_tagline') }}</p>
+                            <h2 class="ink-calc__title">{{ __('inkwave.calc_title') }}</h2>
+                            <p class="ink-calc__tag">{{ __('inkwave.calc_tagline') }}</p>
                         </div>
                         <span class="ink-calc__cur">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
                     </div>
@@ -82,7 +82,7 @@
                     <form action="{{ route('points.add-to-cart') }}" method="POST" class="luxury-calc-form ink-calc__form">
                         @csrf
 
-                        <label class="ink-calc__label">{{ __('common.sakura_calc_input_label') }}</label>
+                        <label class="ink-calc__label">{{ __('inkwave.calc_input_label') }}</label>
                         <div class="ink-calc__field">
                             <span class="ink-calc__prefix">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
                             <input type="number" name="amount" id="topup_amount" class="ink-calc__input" placeholder="0" min="1" required>
@@ -90,37 +90,37 @@
 
                         <div class="ink-calc__rows">
                             <div class="ink-calc__row">
-                                <span>{{ __('common.sakura_calc_base_points') }}</span>
+                                <span>{{ __('inkwave.calc_base_points') }}</span>
                                 <span id="base_points">0</span>
                             </div>
                             <div class="ink-calc__row">
-                                <span>{{ __('common.sakura_calc_tier_bonus') }}</span>
+                                <span>{{ __('inkwave.calc_tier_bonus') }}</span>
                                 <span id="multiplier_display" class="ink-calc__mult">×1</span>
                             </div>
                             <div class="ink-calc__row ink-calc__row--total">
-                                <span>{{ __('common.sakura_calc_youll_get') }}</span>
+                                <span>{{ __('inkwave.calc_youll_get') }}</span>
                                 <span id="total_points">0</span>
                             </div>
                         </div>
 
                         <div class="ink-calc__display">
                             <span class="ink-calc__big" id="total_points_large">0</span>
-                            <span class="ink-calc__unit">{{ __('common.sakura_calc_points_unit') }}</span>
+                            <span class="ink-calc__unit">{{ __('inkwave.calc_points_unit') }}</span>
                         </div>
 
                         <ul class="ink-calc__benefits">
-                            <li><i class="fas fa-check"></i> {{ __('common.sakura_calc_benefit_access') }}</li>
-                            <li><i class="fas fa-check"></i> {{ __('common.sakura_calc_benefit_tutorials') }}</li>
-                            <li><i class="fas fa-check"></i> {{ __('common.sakura_calc_benefit_vip') }}</li>
+                            <li><i class="fas fa-check"></i> {{ __('inkwave.calc_benefit_access') }}</li>
+                            <li><i class="fas fa-check"></i> {{ __('inkwave.calc_benefit_tutorials') }}</li>
+                            <li><i class="fas fa-check"></i> {{ __('inkwave.calc_benefit_vip') }}</li>
                         </ul>
 
                         <button type="submit" class="btn-premium-checkout ink-calc__btn">
-                            <span class="btn-label">{{ __('common.add_to_cart') }}</span>
+                            <span class="btn-label">{{ __('inkwave.calc_button') }}</span>
                             <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
                         </button>
                     </form>
 
-                    <p class="ink-calc__trust"><i class="fas fa-check-circle"></i> {{ __('common.sakura_calc_trust_message') }}</p>
+                    <p class="ink-calc__trust"><i class="fas fa-check-circle"></i> {{ __('inkwave.calc_trust_message') }}</p>
                 </div>
             </div>
         </div>

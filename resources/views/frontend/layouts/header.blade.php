@@ -15,7 +15,7 @@
                 <li><a href="{{ route('home') }}" class="custom-nav-link {{ Route::is('home') ? 'active' : '' }}">{{ __('common.home') }}</a></li>
 
                 <li class="dropdown">
-                    <a href="javascript:void(0)" class="custom-nav-link" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="javascript:void(0)" class="custom-nav-link" aria-expanded="false">
                         <span>{{ __('common.catalog') }}</span><i class="fas fa-chevron-down ms-1 custom-chevron"></i>
                     </a>
                     <ul class="dropdown-menu custom-dropdown-panel shadow-sm">
@@ -39,14 +39,8 @@
                                 }
                             @endphp
                             <li>
-                                <a class="dropdown-item custom-dropdown-item" href="{{ route('product-lists', $cat->slug) }}">
-                                    <div class="custom-dropdown-icon">
-                                        <i class="fas {{ $icon }}"></i>
-                                    </div>
-                                    <div class="custom-dropdown-info">
-                                        <span class="custom-dropdown-title">{{ $cat->title }}</span>
-                                        <span class="custom-dropdown-desc">Premium prints of {{ strtolower($cat->title) }}</span>
-                                    </div>
+                                <a class="dropdown-item {{ (isset($category) && $category->id == $cat->id) ? 'active' : '' }}" href="{{ route('product-lists', $cat->slug) }}">
+                                    <i class="fas {{ $icon }} me-2"></i> {{ $cat->title }}
                                 </a>
                             </li>
                         @empty
@@ -79,18 +73,12 @@
                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown-panel shadow-sm">
                     <li>
                         <a class="dropdown-item custom-dropdown-item {{ (session('app_locale') != 'ja' && app()->getLocale() != 'ja') ? 'active' : '' }}" href="{{ route('change.language', 'en') }}">
-                            <div class="custom-dropdown-icon"><i class="fas fa-globe"></i></div>
-                            <div class="custom-dropdown-info">
-                                <span class="custom-dropdown-title">{{ __('common.english') }}</span>
-                            </div>
+                            <i class="fi fi-gb me-2"></i> {{ __('common.english') }}
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item custom-dropdown-item {{ (session('app_locale') == 'ja' || app()->getLocale() == 'ja') ? 'active' : '' }}" href="{{ route('change.language', 'ja') }}">
-                            <div class="custom-dropdown-icon"><i class="fas fa-globe"></i></div>
-                            <div class="custom-dropdown-info">
-                                <span class="custom-dropdown-title">{{ __('common.japanese') }}</span>
-                            </div>
+                            <i class="fi fi-jp me-2"></i> {{ __('common.japanese') }}
                         </a>
                     </li>
                 </ul>
@@ -112,10 +100,7 @@
                         @if($cur->code != 'HKD')
                             <li>
                                 <a class="dropdown-item custom-dropdown-item {{ $currentCurrency == $cur->code ? 'active' : '' }}" href="{{ route('change.currency', $cur->code) }}">
-                                    <div class="custom-dropdown-icon"><i class="fas fa-money-bill-wave"></i></div>
-                                    <div class="custom-dropdown-info">
-                                        <span class="custom-dropdown-title">{{ $cur->code }} ({{ Helper::getCurrencySymbol($cur->code) }})</span>
-                                    </div>
+                                    <i class="fas fa-money-bill-wave me-2"></i> {{ $cur->code }} ({{ Helper::getCurrencySymbol($cur->code) }})
                                 </a>
                             </li>
                         @endif
@@ -139,20 +124,14 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end custom-dropdown-panel shadow-sm">
                         <li>
-                            <a class="dropdown-item custom-dropdown-item" href="{{ route('user') }}">
-                                <div class="custom-dropdown-icon"><i class="fas fa-id-card"></i></div>
-                                <div class="custom-dropdown-info">
-                                    <span class="custom-dropdown-title">{{ __('common.account') }}</span>
-                                </div>
+                            <a class="dropdown-item" href="{{ route('user') }}">
+                                <i class="fas fa-id-card me-2"></i> {{ __('common.account') }}
                             </a>
                         </li>
                         <li><hr class="dropdown-divider opacity-50 my-1"></li>
                         <li>
-                            <a class="dropdown-item custom-dropdown-item text-danger" href="{{ route('user.logout') }}">
-                                <div class="custom-dropdown-icon text-danger"><i class="fas fa-sign-out-alt"></i></div>
-                                <div class="custom-dropdown-info">
-                                    <span class="custom-dropdown-title text-danger">{{ __('common.logout') }}</span>
-                                </div>
+                            <a class="dropdown-item text-danger" href="{{ route('user.logout') }}">
+                                <i class="fas fa-sign-out-alt me-2"></i> {{ __('common.logout') }}
                             </a>
                         </li>
                     </ul>
@@ -213,6 +192,48 @@
         position: relative !important;
     }
 
+    /* ==========================================================================
+       Bootstrap utility shims — Bootstrap CSS is no longer loaded in this theme,
+       so the layout utilities the header markup relies on are reimplemented here
+       (scoped to the header) to restore alignment. No markup or JS changes.
+       ========================================================================== */
+    .custom-nav-bar .d-flex { display: flex !important; }
+    .custom-nav-bar .d-block { display: block !important; }
+    .custom-nav-bar .d-none { display: none !important; }
+    .custom-nav-bar .align-items-center { align-items: center !important; }
+    .custom-nav-bar .justify-content-between { justify-content: space-between !important; }
+    .custom-nav-bar .justify-content-center { justify-content: center !important; }
+    .custom-nav-bar .ms-1 { margin-left: 4px !important; }
+    .custom-nav-bar .ms-2 { margin-left: 8px !important; }
+    .custom-nav-bar .ms-3 { margin-left: 16px !important; }
+    .custom-nav-bar .me-1 { margin-right: 4px !important; }
+    .custom-nav-bar .me-2 { margin-right: 8px !important; }
+    .custom-nav-bar .my-1 { margin-top: 4px !important; margin-bottom: 4px !important; }
+
+    @media (min-width: 576px) {
+        .custom-nav-bar .d-sm-flex { display: flex !important; }
+        .custom-nav-bar .d-sm-inline { display: inline !important; }
+        .custom-nav-bar .d-sm-inline-block { display: inline-block !important; }
+    }
+    @media (min-width: 768px) {
+        .custom-nav-bar .d-md-block { display: block !important; }
+    }
+    @media (min-width: 992px) {
+        .custom-nav-bar .d-lg-block { display: block !important; }
+        .custom-nav-bar .d-lg-none { display: none !important; }
+    }
+
+    /* Right-side actions row — the key alignment fix */
+    .custom-nav-actions {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* Design system: flat surfaces only — neutralize any Bootstrap shadow utilities */
+    .custom-nav-bar .shadow-sm,
+    .custom-nav-bar .shadow { box-shadow: none !important; }
+
     /* Reset and custom styling for the redesigned premium header */
     .custom-nav-bar {
         position: sticky !important;
@@ -220,9 +241,7 @@
         z-index: 1030 !important;
         width: 100% !important;
         height: 72px !important;
-        background-color: rgba(196, 195, 182, 0.9) !important; /* Putty color with 90% opacity */
-        backdrop-filter: blur(12px) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
+        background-color: var(--color-putty, #c4c3b6) !important; /* solid putty — flat gallery wall, no blur */
         border-bottom: 1px solid var(--color-vellum) !important; /* Vellum hairline border */
         display: flex !important;
         align-items: center !important;
@@ -233,10 +252,10 @@
     }
 
     .custom-nav-bar.floating {
-        background-color: rgba(196, 195, 182, 0.95) !important;
+        background-color: var(--color-putty, #c4c3b6) !important;
         height: 56px !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+        box-shadow: none !important;
+        border-bottom: 1px solid var(--color-ink, #000000) !important; /* hairline darkens on scroll — flat, no shadow */
     }
 
     .custom-nav-container {
@@ -293,21 +312,38 @@
         color: #000000 !important;
         padding: 8px 12px !important;
         text-decoration: none !important;
-        transition: opacity 0.2s ease !important;
+        opacity: 0.65 !important;
+        transition: opacity 0.25s ease, color 0.25s ease !important;
         display: inline-flex !important;
         align-items: center;
     }
 
     .custom-nav-link:hover,
-    .custom-nav-link.active {
-        opacity: 0.7 !important;
-        text-decoration: underline !important;
+    .custom-nav-link.active,
+    .custom-nav-menu .dropdown:hover > .custom-nav-link {
+        opacity: 1 !important;
+        text-decoration: none !important;
         background-color: transparent !important;
         color: #000000 !important;
     }
 
+    /* Animated hairline underline — the gallery hover effect (flat, ink) */
+    .custom-nav-link { position: relative !important; }
     .custom-nav-link::after {
-        display: none !important; /* Hide default bootstrap arrow */
+        content: "" !important;
+        position: absolute !important;
+        left: 12px !important;
+        right: 12px !important;
+        bottom: 2px !important;
+        height: 1px !important;
+        background-color: var(--color-ink, #000000) !important;
+        transform: scaleX(0) !important;
+        transform-origin: left center !important;
+        transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    }
+    .custom-nav-link:hover::after,
+    .custom-nav-link.active::after {
+        transform: scaleX(1) !important;
     }
 
     .custom-chevron {
@@ -324,10 +360,10 @@
         transform: translateY(10px) scale(0.98) !important;
         transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1), transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.25s ease !important;
         pointer-events: none !important; /* Prevent clicks when hidden */
-        background-color: #ffffff !important;
+        background-color: var(--color-paper, #ffffff) !important;
         border: 1px solid var(--color-vellum) !important;
-        border-radius: 8px !important;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+        border-radius: 9px !important;
+        box-shadow: none !important;
         padding: 8px !important;
         margin-top: 8px !important;
         min-width: 260px !important;
@@ -342,14 +378,21 @@
 
     /* Show dropdown panel on hover (desktop) or when clicked (.show) */
     @media (min-width: 992px) {
-        .dropdown:hover .custom-dropdown-panel {
+        .custom-nav-menu .dropdown:hover .custom-dropdown-panel {
             opacity: 1 !important;
             visibility: visible !important;
             transform: translateY(0) scale(1) !important;
             pointer-events: auto !important;
         }
-        .dropdown:hover .custom-chevron {
+        .custom-nav-menu .dropdown:hover .custom-chevron {
             transform: rotate(180deg) !important;
+        }
+        .custom-nav-menu .dropdown:hover > .custom-nav-link::after {
+            transform: scaleX(1) !important;
+        }
+        /* Hide script.js appended dropdown button on desktop */
+        .custom-nav-bar .dropdown-btn {
+            display: none !important;
         }
     }
 
@@ -422,7 +465,7 @@
         border: 1px solid var(--color-vellum) !important;
         padding: 0 12px !important;
         height: 32px !important;
-        border-radius: 20px !important;
+        border-radius: 28.8px !important;
         text-decoration: none !important;
         display: inline-flex !important;
         align-items: center !important;
@@ -450,7 +493,7 @@
         font-size: 11px !important;
         font-weight: 600 !important;
         letter-spacing: 0.03em !important;
-        border-radius: 20px !important;
+        border-radius: 28.8px !important;
         padding: 0 12px !important;
         height: 32px !important;
         display: inline-flex !important;
@@ -475,7 +518,7 @@
         font-weight: 600 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
-        border-radius: 20px !important;
+        border-radius: 28.8px !important;
         padding: 0 12px !important;
         height: 32px !important;
         display: inline-flex !important;
@@ -501,7 +544,7 @@
         background-color: var(--color-ink) !important;
         color: var(--color-paper) !important;
         padding: 8px 16px !important;
-        border-radius: 20px !important;
+        border-radius: 28.8px !important;
         border: 1px solid var(--color-ink) !important;
         text-decoration: none !important;
         display: inline-flex !important;
@@ -524,7 +567,7 @@
         background-color: var(--color-ink) !important;
         color: var(--color-paper) !important;
         border: 1px solid var(--color-ink) !important;
-        border-radius: 20px !important;
+        border-radius: 28.8px !important;
         height: 32px !important;
         padding: 0 16px !important;
         display: inline-flex !important;
@@ -565,59 +608,70 @@
        Dropdown Panel & Item Styling
        ========================================================================== */
     .custom-dropdown-panel {
-        background-color: var(--color-paper, #ffffff) !important;
-        border: 1px solid var(--color-ink, #000000) !important;
-        border-radius: 4px !important;
-        box-shadow: none !important;
-        padding: 8px 0 !important;
-        margin-top: 8px !important;
-        animation: dropdown-fade-in 0.3s cubic-bezier(0.25, 1, 0.5, 1) both !important;
+        display: block !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(12px) scale(0.97) !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        pointer-events: none !important;
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        margin-top: 12px !important;
+        min-width: 280px !important;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04) !important;
+        position: absolute !important;
+        z-index: 1050 !important;
     }
     @keyframes dropdown-fade-in {
         from { opacity: 0; transform: translateY(8px) scale(0.98); }
         to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    .custom-dropdown-item {
+    .custom-dropdown-panel .dropdown-item {
         font-family: var(--font-helvetica-now) !important;
-        font-size: 13px !important;
-        font-weight: 500 !important;
-        color: var(--color-graphite) !important;
-        padding: 10px 16px !important;
+        font-size: 13.5px !important;
+        font-weight: 550 !important;
+        color: var(--color-ink, #000000) !important;
+        padding: 10px 14px !important;
+        border-radius: 8px !important;
         display: flex !important;
         align-items: center !important;
         gap: 12px !important;
-        transition: all 0.2s ease !important;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
         background-color: transparent !important;
+        margin-bottom: 4px !important;
     }
-    .custom-dropdown-item:hover,
-    .custom-dropdown-item.active {
-        background-color: var(--color-bone) !important;
-        color: var(--color-ink) !important;
-        text-decoration: none !important;
+    .custom-dropdown-panel .dropdown-item:last-child {
+        margin-bottom: 0 !important;
     }
-    .custom-dropdown-item i {
-        font-size: 14px !important;
-        width: 20px !important;
-        text-align: center !important;
-        color: var(--color-ink) !important;
-    }
-
-    .custom-dropdown-icon {
-        display: flex !important;
+    .custom-dropdown-panel .dropdown-item i {
+        font-size: 13px !important;
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 50% !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+        display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
+        color: var(--color-ink, #000000) !important;
+        transition: all 0.25s ease !important;
         flex-shrink: 0 !important;
     }
-
-    .custom-dropdown-info {
-        display: flex !important;
-        flex-direction: column !important;
+    .custom-dropdown-panel .dropdown-item:hover,
+    .custom-dropdown-panel .dropdown-item.active {
+        background-color: var(--color-bone, #e7e5e4) !important;
+        color: var(--color-ink, #000000) !important;
+        transform: translateX(4px) !important;
+        text-decoration: none !important;
     }
-
-    .custom-dropdown-title {
-        font-weight: 500 !important;
-        line-height: 1.2 !important;
+    .custom-dropdown-panel .dropdown-item:hover i {
+        background-color: var(--color-ink, #000000) !important;
+        color: var(--color-paper, #ffffff) !important;
+        transform: scale(1.1) !important;
     }
 
     /* ==========================================================================

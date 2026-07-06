@@ -1,10 +1,11 @@
 -- ============================================================================
 --  Policy content update for `pages` (page_desc = English, page_desc_ja = 日本語)
---  Rewritten for the digital-art-print + credits business (Anime & Manga, Pixel,
---  Pop, Street, and Modern Ukiyo-e artworks, sold in Small / Medium / Large tiers).
---  Placeholders: [Company Name] / [Company Email] / [Company Address]
---  Billing-descriptor image: /assets/images/dba.webp
---  Run this against the `digital-art` database (e.g. via phpMyAdmin > SQL).
+--  Human-friendly, detailed policies for the digital-art-print + credits store
+--  (Anime & Manga, Pixel, Pop, Street, and Modern Ukiyo-e art, in Small / Medium
+--  / Large tiers). Currencies: US Dollars ($), Japanese Yen (¥), Hong Kong
+--  Dollars (HK$). Placeholders: [Company Name] / [Company Email] / [Company Address].
+--  Billing-descriptor logo (inline): /assets/images/dba.webp
+--  Run against the `digital-art` database (phpMyAdmin > SQL).
 -- ============================================================================
 
 -- ---------------------------------------------------------------------------
@@ -12,119 +13,157 @@
 -- ---------------------------------------------------------------------------
 UPDATE `pages` SET
 `page_desc` = '<h2>Privacy Policy</h2>
-<p>Welcome to [Company Name] (the &ldquo;Website&rdquo;, &ldquo;Platform&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;). We create and sell premium downloadable digital artwork &mdash; spanning Anime &amp; Manga, Pixel, Pop, Street, and Modern Ukiyo-e collections &mdash; through a credit-based store. This Privacy Policy explains what information we collect, how we use it, and the choices you have. By using the Website or purchasing credits and artwork, you agree to the practices described here.</p>
+<p>Welcome to [Company Name] (the &ldquo;Website&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;). We are a small digital-art store: we create and sell downloadable artwork across our Anime &amp; Manga, Pixel, Pop, Street, and Modern Ukiyo-e collections, and you buy them using credits. Your privacy matters to us, and we have written this policy in plain language so you can actually understand what happens to your information. In short: we only collect what we need to run the store and deliver your downloads, we never sell your data, and you stay in control of your account. By using the Website or buying credits and artwork, you agree to what is described below.</p>
 <ol>
   <li>
-    <h3>Information We Collect</h3>
-    <p>We collect only the information needed to run the store and deliver your downloads:</p>
+    <h3>What Information We Collect</h3>
+    <p>We try to keep this to a minimum. Depending on how you use the Website, we may collect:</p>
     <ul>
-      <li>Account details such as your name, email address, and password.</li>
-      <li>Order and billing details, including your address and the artworks or credit packs you purchase.</li>
-      <li>Payment information, which is handled by our payment provider &mdash; we do not store full card numbers on our servers.</li>
-      <li>Credit activity, such as top-ups, bonus credits, and the artworks you redeem.</li>
-      <li>Technical data such as your browser, device, and general usage of the Website.</li>
+      <li><strong>Account details</strong> &mdash; your name, email address, and password so you can sign in and keep your purchases in one place.</li>
+      <li><strong>Order and billing details</strong> &mdash; your billing address and the artworks or credit packs you buy, so we can process the order and send you a receipt.</li>
+      <li><strong>Payment details</strong> &mdash; handled securely by our payment provider. We do <strong>not</strong> see or store your full card number on our servers.</li>
+      <li><strong>Credit activity</strong> &mdash; your top-ups, any bonus credits you earn, your current balance, and the artworks you redeem.</li>
+      <li><strong>Technical information</strong> &mdash; basic things like your browser, device type, language, and how you move around the Website, which helps us fix problems and improve the experience.</li>
     </ul>
   </li>
   <li>
     <h3>How We Use Your Information</h3>
-    <p>We use your information to:</p>
+    <p>We use the information above only for clear, sensible reasons, such as to:</p>
     <ul>
-      <li>Deliver the digital artwork and credits you buy and keep them available in your account.</li>
-      <li>Process payments, apply tier bonuses, and prevent fraud.</li>
-      <li>Provide customer support and respond to your requests.</li>
-      <li>Send order confirmations, receipts, and important service notices.</li>
-      <li>Improve our collections, the Website, and your browsing experience.</li>
+      <li>Deliver the credits and digital artwork you buy and keep them available in your account for re-download.</li>
+      <li>Take payment, apply the correct currency, and add any tier bonus you have earned on a larger top-up.</li>
+      <li>Answer your questions and give you support when something goes wrong.</li>
+      <li>Send you order confirmations, receipts, and important notices about your account or these policies.</li>
+      <li>Keep the store safe by preventing fraud and misuse.</li>
+      <li>Understand which collections and features people enjoy, so we can make the store better.</li>
     </ul>
   </li>
   <li>
     <h3>Cookies and Tracking Technologies</h3>
-    <p>We use cookies and similar technologies to keep you signed in, remember your cart and currency, and understand how the Website is used. You can control cookies through your browser settings, though some features may not work correctly without them.</p>
+    <p>Like most websites, we use small files called cookies. They are not scary &mdash; they simply help the site work. We use them to:</p>
+    <ul>
+      <li>Keep you signed in as you move between pages.</li>
+      <li>Remember your shopping cart and your chosen currency ($, &yen;, or HK$).</li>
+      <li>Understand, in an anonymous way, how the Website is being used so we can improve it.</li>
+    </ul>
+    <p>You can turn cookies off in your browser settings, but please note that some parts of the store may not work properly without them.</p>
   </li>
   <li>
     <h3>How We Share Information</h3>
-    <p>We do not sell your personal information. We share it only with trusted parties who help us operate the store, such as payment processors, hosting and email providers, and analytics services &mdash; and only to the extent needed to provide the service. We may also disclose information where required by law.</p>
+    <p>We do not sell your personal information to anyone. We only share it with trusted companies that help us run the store, and only as much as they need to do their job. These may include:</p>
+    <ul>
+      <li>Our <strong>payment provider</strong>, to process your payment securely.</li>
+      <li>Our <strong>hosting and email providers</strong>, to keep the Website online and send you receipts and notices.</li>
+      <li><strong>Analytics services</strong>, to help us understand how the store is used.</li>
+    </ul>
+    <p>We may also share information if the law requires us to, for example in response to a valid legal request.</p>
   </li>
   <li>
-    <h3>Data Security</h3>
-    <p>We use reasonable technical and organisational measures to protect your information. Payments are processed over secure, encrypted connections. No method of transmission over the internet is completely secure, so we cannot guarantee absolute security.</p>
+    <h3>How We Keep Your Information Safe</h3>
+    <p>We take reasonable technical and organisational steps to protect your information, and all payments happen over secure, encrypted connections. No system on the internet can ever be 100% secure, so while we work hard to protect your data, we cannot promise absolute security. Please help us by keeping your password private.</p>
   </li>
   <li>
     <h3>Your Rights and Choices</h3>
-    <p>You may access or update your account details at any time from your dashboard. You may also ask us to correct or delete your personal information, subject to any records we must keep for legal or accounting reasons. To make a request, contact us at [Company Email].</p>
+    <p>Your information belongs to you, and you have real control over it:</p>
+    <ul>
+      <li>You can view and update most of your account details at any time from your dashboard.</li>
+      <li>You can ask us to correct anything that is wrong.</li>
+      <li>You can ask us to delete your personal information, unless we are required to keep certain records for legal or accounting reasons.</li>
+    </ul>
+    <p>To make any of these requests, just email us at <a href="mailto:[Company Email]">[Company Email]</a> and we will help.</p>
   </li>
   <li>
-    <h3>Digital Products and Your Account</h3>
-    <p>Purchased credits and downloaded artwork are tied to your account. Please keep your login details private; you are responsible for activity that takes place under your account.</p>
+    <h3>Your Purchases and Account</h3>
+    <p>The credits you buy and the artwork you download are tied to your account. Please keep your login details private, because anyone who signs in as you can use your credits and see your purchases. You are responsible for activity that happens under your account.</p>
   </li>
   <li>
     <h3>Children&rsquo;s Privacy</h3>
-    <p>The Website is intended for adults. We do not knowingly collect information from children. If you believe a child has provided us information, please contact us so we can remove it.</p>
+    <p>The Website is meant for adults. We do not knowingly collect information from children. If you believe a child has given us their information, please contact us and we will remove it promptly.</p>
   </li>
   <li>
     <h3>Changes to This Policy</h3>
-    <p>We may update this Privacy Policy from time to time. The latest version will always be posted on this page with a revised effective date. Continued use of the Website means you accept the updated Policy.</p>
+    <p>As our store grows, we may update this Privacy Policy from time to time. The most recent version will always be here on this page. If we make an important change, the update will be reflected in the date on this page, and by continuing to use the Website you accept the updated policy.</p>
   </li>
   <li>
     <h3>Contact Us</h3>
-    <p>If you have any questions about this Privacy Policy or your information, contact us at [Company Email] or write to us at [Company Address].</p>
+    <p>If you have any questions about your privacy or this policy, we are happy to help. Email us at <a href="mailto:[Company Email]">[Company Email]</a>, or write to us at [Company Address].</p>
   </li>
 </ol>',
 `page_desc_ja` = '<h2>プライバシーポリシー</h2>
-<p>[Company Name]（以下「本ウェブサイト」「プラットフォーム」「当社」といいます）へようこそ。当社は、アニメ・漫画、ピクセル、ポップ、ストリート、現代浮世絵の各コレクションにわたる高品質なダウンロード型デジタルアートを、クレジット制のストアを通じて制作・販売しています。本プライバシーポリシーは、当社が収集する情報、その利用方法、及びお客様の選択肢について説明するものです。本ウェブサイトのご利用、又はクレジットやアートワークのご購入をもって、本ポリシーに記載の取扱いに同意いただいたものとみなします。</p>
+<p>[Company Name]（以下「本ウェブサイト」「当社」といいます）へようこそ。当社は小さなデジタルアートストアです。アニメ・漫画、ピクセル、ポップ、ストリート、現代浮世絵の各コレクションにわたるダウンロード型アートを制作・販売しており、お客様はクレジットを使ってご購入いただけます。当社はお客様のプライバシーを大切に考えており、ご自身の情報がどのように扱われるかを本当に理解していただけるよう、本ポリシーを分かりやすい言葉で記載しています。要点はシンプルです。当社はストアの運営とダウンロードの提供に必要な情報のみを収集し、お客様のデータを販売することは決してなく、アカウントの管理はお客様ご自身が行えます。本ウェブサイトのご利用、又はクレジットやアートワークのご購入をもって、以下の内容に同意いただいたものとみなします。</p>
 <ol>
   <li>
     <h3>収集する情報</h3>
-    <p>当社は、ストアの運営とダウンロードの提供に必要な情報のみを収集します。</p>
+    <p>収集は最小限に努めています。ご利用方法に応じて、次の情報を収集する場合があります。</p>
     <ul>
-      <li>お名前、メールアドレス、パスワードなどのアカウント情報。</li>
-      <li>ご住所、及びご購入いただいたアートワークやクレジットパックを含む注文・請求情報。</li>
-      <li>決済情報。決済代行会社が処理し、当社のサーバーにカード番号の全桁を保存することはありません。</li>
-      <li>チャージ、ボーナスクレジット、引き換えたアートワークなどのクレジット利用履歴。</li>
-      <li>ブラウザ、デバイス、本ウェブサイトの一般的な利用状況などの技術情報。</li>
+      <li><strong>アカウント情報</strong> &mdash; サインインやご購入品の一元管理のための、お名前、メールアドレス、パスワード。</li>
+      <li><strong>注文・請求情報</strong> &mdash; 注文処理と領収書の送付のための、ご請求先住所、及びご購入いただいたアートワークやクレジットパック。</li>
+      <li><strong>決済情報</strong> &mdash; 決済代行会社が安全に処理します。当社がカード番号の全桁を閲覧・保存することは<strong>ありません</strong>。</li>
+      <li><strong>クレジット利用履歴</strong> &mdash; チャージ、獲得したボーナスクレジット、現在の残高、引き換えたアートワーク。</li>
+      <li><strong>技術情報</strong> &mdash; ブラウザ、デバイスの種類、言語、サイト内での移動など、問題の解決や体験の改善に役立つ基本的な情報。</li>
     </ul>
   </li>
   <li>
     <h3>情報の利用方法</h3>
-    <p>当社は、次の目的でお客様の情報を利用します。</p>
+    <p>上記の情報は、次のような明確で妥当な目的のためにのみ利用します。</p>
     <ul>
-      <li>ご購入いただいたデジタルアートやクレジットを提供し、アカウント内で利用可能に保つため。</li>
-      <li>決済処理、ティア（段階）ボーナスの付与、及び不正利用の防止のため。</li>
-      <li>カスタマーサポートの提供、及びお問い合わせへの対応のため。</li>
-      <li>注文確認、領収書、重要なサービス通知の送信のため。</li>
-      <li>コレクション、本ウェブサイト、及び閲覧体験を改善するため。</li>
+      <li>ご購入いただいたクレジット及びデジタルアートを提供し、再ダウンロードのためにアカウント内で利用可能に保つため。</li>
+      <li>お支払いの受領、適切な通貨の適用、及び大口チャージで獲得されたティアボーナスの付与のため。</li>
+      <li>お問い合わせへの回答、及び問題発生時のサポートのため。</li>
+      <li>注文確認、領収書、並びにアカウントや本ポリシーに関する重要なお知らせの送信のため。</li>
+      <li>不正利用や悪用を防ぎ、ストアを安全に保つため。</li>
+      <li>どのコレクションや機能が好まれているかを把握し、ストアを改善するため。</li>
     </ul>
   </li>
   <li>
     <h3>クッキー及びトラッキング技術</h3>
-    <p>当社は、ログイン状態の維持、カートや通貨設定の記憶、及び本ウェブサイトの利用状況の把握のため、クッキー及び類似の技術を使用します。クッキーはブラウザの設定で管理できますが、無効にすると一部の機能が正しく動作しない場合があります。</p>
+    <p>多くのウェブサイトと同様に、当社はクッキーと呼ばれる小さなファイルを使用します。これは怖いものではなく、サイトを正しく動作させるためのものです。次の目的で使用します。</p>
+    <ul>
+      <li>ページ間を移動してもサインイン状態を維持するため。</li>
+      <li>ショッピングカートや選択された通貨（$、&yen;、HK$）を記憶するため。</li>
+      <li>匿名の形で本ウェブサイトの利用状況を把握し、改善するため。</li>
+    </ul>
+    <p>クッキーはブラウザの設定で無効にできますが、その場合、ストアの一部が正しく動作しないことがあります。</p>
   </li>
   <li>
     <h3>情報の共有</h3>
-    <p>当社はお客様の個人情報を販売しません。ストア運営を支援する信頼できる委託先（決済代行会社、ホスティング及びメール提供者、分析サービスなど）に対し、サービス提供に必要な範囲でのみ共有します。また、法令上必要な場合には情報を開示することがあります。</p>
+    <p>当社はお客様の個人情報を第三者に販売しません。ストア運営を支援する信頼できる委託先に対し、その業務に必要な範囲でのみ共有します。次のものが含まれます。</p>
+    <ul>
+      <li>お支払いを安全に処理するための<strong>決済代行会社</strong>。</li>
+      <li>ウェブサイトの稼働や、領収書・お知らせの送信のための<strong>ホスティング及びメール提供者</strong>。</li>
+      <li>ストアの利用状況を把握するための<strong>分析サービス</strong>。</li>
+    </ul>
+    <p>また、正当な法的要請への対応など、法令上必要な場合には情報を共有することがあります。</p>
   </li>
   <li>
-    <h3>データの安全管理</h3>
-    <p>当社は、お客様の情報を保護するため、合理的な技術的・組織的措置を講じます。決済は暗号化された安全な通信で処理されます。ただし、インターネット上の通信は完全に安全とはいえないため、絶対的な安全性を保証することはできません。</p>
+    <h3>情報の安全管理</h3>
+    <p>当社は、お客様の情報を保護するため合理的な技術的・組織的措置を講じており、すべての決済は暗号化された安全な通信で行われます。インターネット上のいかなるシステムも完全に安全とはいえないため、当社は保護に努めていますが、絶対的な安全性をお約束することはできません。パスワードは第三者に開示しないようご協力ください。</p>
   </li>
   <li>
     <h3>お客様の権利と選択</h3>
-    <p>お客様は、ダッシュボードからいつでもアカウント情報を確認・更新できます。また、法令上・会計上の理由により保持が必要な記録を除き、個人情報の訂正又は削除を当社に請求できます。ご請求は [Company Email] までご連絡ください。</p>
+    <p>お客様の情報はお客様のものであり、実際にご自身でコントロールできます。</p>
+    <ul>
+      <li>ダッシュボードから、アカウント情報の大部分をいつでも確認・更新できます。</li>
+      <li>誤りがある場合は、訂正を求めることができます。</li>
+      <li>法令上・会計上の理由で保持が必要な記録を除き、個人情報の削除を求めることができます。</li>
+    </ul>
+    <p>これらのご請求は、<a href="mailto:[Company Email]">[Company Email]</a> までメールでご連絡いただければ対応いたします。</p>
   </li>
   <li>
-    <h3>デジタル製品とアカウント</h3>
-    <p>ご購入いただいたクレジット及びダウンロードしたアートワークは、お客様のアカウントに紐づきます。ログイン情報は第三者に開示せず、アカウントで行われた操作についてはお客様がご責任を負うものとします。</p>
+    <h3>ご購入とアカウント</h3>
+    <p>ご購入いただいたクレジットとダウンロードしたアートワークは、お客様のアカウントに紐づきます。お客様としてサインインした人は誰でもクレジットを使用しご購入内容を閲覧できるため、ログイン情報は第三者に開示しないでください。アカウントで行われた操作についてはお客様が責任を負うものとします。</p>
   </li>
   <li>
     <h3>お子様のプライバシー</h3>
-    <p>本ウェブサイトは成人の方を対象としています。当社は、お子様から意図的に情報を収集することはありません。お子様が情報を提供したと思われる場合は、削除できるようご連絡ください。</p>
+    <p>本ウェブサイトは成人の方を対象としています。当社は、お子様から意図的に情報を収集することはありません。お子様が情報を提供したと思われる場合は、ご連絡いただければ速やかに削除いたします。</p>
   </li>
   <li>
     <h3>本ポリシーの変更</h3>
-    <p>当社は、本プライバシーポリシーを随時改定することがあります。最新版は常に本ページに掲載し、改定日を更新します。改定後も本ウェブサイトのご利用を継続された場合、更新後のポリシーに同意いただいたものとみなします。</p>
+    <p>ストアの成長に伴い、当社は本プライバシーポリシーを随時更新することがあります。最新版は常に本ページに掲載します。重要な変更を行った場合は本ページの日付に反映され、本ウェブサイトのご利用を継続された場合、更新後のポリシーに同意いただいたものとみなします。</p>
   </li>
   <li>
     <h3>お問い合わせ</h3>
-    <p>本プライバシーポリシー又はお客様の情報に関するご質問は、[Company Email] までご連絡いただくか、[Company Address] までご郵送ください。</p>
+    <p>プライバシーや本ポリシーに関するご質問には、喜んで対応いたします。<a href="mailto:[Company Email]">[Company Email]</a> までメールでご連絡いただくか、[Company Address] までご郵送ください。</p>
   </li>
 </ol>'
 WHERE `page_slug` = 'privacy-policy';
@@ -135,119 +174,167 @@ WHERE `page_slug` = 'privacy-policy';
 -- ---------------------------------------------------------------------------
 UPDATE `pages` SET
 `page_desc` = '<h2>Terms &amp; Conditions</h2>
-<p>These Terms &amp; Conditions govern your use of [Company Name] (the &ldquo;Website&rdquo;) and any purchase of credits or digital artwork made through it. By creating an account, buying credits, or downloading artwork, you agree to these Terms. Please read them carefully.</p>
+<p>These Terms &amp; Conditions are the agreement between you and [Company Name] (the &ldquo;Website&rdquo;). They explain how our store works, what you can do with the artwork you buy, and what we each promise. We have kept them friendly and clear on purpose. By creating an account, buying credits, or downloading artwork, you agree to these Terms &mdash; so please take a few minutes to read them.</p>
 <ol>
   <li>
-    <h3>Eligibility and Accounts</h3>
-    <p>You must be at least the age of majority in your country to buy from the Website. You are responsible for keeping your account details accurate and your password secure. You are responsible for all activity that occurs under your account.</p>
-  </li>
-  <li>
-    <h3>Credits</h3>
-    <p>Our store runs on credits. You purchase credits, then redeem them for digital artwork.</p>
+    <h3>Your Account</h3>
+    <p>To buy from the Website you need an account, and you must be old enough to enter into a contract where you live. When you create an account, please:</p>
     <ul>
-      <li>Larger top-ups may earn bonus credits according to the tier shown at checkout.</li>
-      <li>Credits have no cash value, are non-transferable, and cannot be exchanged back into money.</li>
-      <li>Credits are added to your balance immediately after a successful payment.</li>
+      <li>Give accurate details and keep them up to date.</li>
+      <li>Keep your password private and secure.</li>
+      <li>Understand that you are responsible for everything that happens under your account.</li>
     </ul>
   </li>
   <li>
-    <h3>Digital Artwork and Sizes</h3>
-    <p>Each artwork is a downloadable digital image offered in multiple tiers &mdash; typically <strong>Small</strong>, <strong>Medium</strong>, and <strong>Large</strong>. Each tier has its own credit price and resolution. The tier you choose determines the file you receive; please select carefully before redeeming.</p>
+    <h3>How Credits Work</h3>
+    <p>Our store runs on <strong>credits</strong>. Instead of paying for each artwork separately at checkout, you first top up a balance of credits, then spend those credits on the art you love. Here is what you should know:</p>
+    <ul>
+      <li>You buy credits with real money, and they are added to your balance as soon as your payment is confirmed.</li>
+      <li>Larger top-ups can earn <strong>bonus credits</strong> based on the tier shown at checkout &mdash; the more you add, the more bonus you may receive.</li>
+      <li>Credits have no cash value. They cannot be exchanged back into money, and they cannot be transferred to another person or account.</li>
+    </ul>
   </li>
   <li>
-    <h3>Licence and Permitted Use</h3>
-    <p>When you redeem an artwork, we grant you a personal, non-exclusive, non-transferable licence to download and use the image for your own personal, non-commercial enjoyment &mdash; for example, printing it for your home or using it as personal wallpaper. Unless we agree in writing, you may not resell, redistribute, sublicense, or commercially exploit the artwork, nor claim authorship of it.</p>
+    <h3>Artworks and Sizes</h3>
+    <p>Every product is a high-quality digital image that you download. Each artwork is offered in a few tiers so you can pick what suits you:</p>
+    <ul>
+      <li><strong>Small</strong> &mdash; ideal for screens, social posts, and smaller prints.</li>
+      <li><strong>Medium</strong> &mdash; a balanced choice for everyday prints and displays.</li>
+      <li><strong>Large</strong> &mdash; the highest resolution, best for large or high-detail prints.</li>
+    </ul>
+    <p>Each tier has its own credit price and resolution. The tier you choose decides the exact file you receive, so please pick your size carefully before you redeem it.</p>
   </li>
   <li>
-    <h3>Intellectual Property</h3>
-    <p>All artwork, designs, text, logos, and other content on the Website remain the property of [Company Name] or its licensors and are protected by copyright and other laws. Buying credits or downloading a file does not transfer ownership of the underlying artwork to you.</p>
+    <h3>What You Can and Cannot Do With the Art</h3>
+    <p>When you redeem an artwork, we give you a personal, non-exclusive, non-transferable licence to enjoy it. In simple terms:</p>
+    <ul>
+      <li><strong>You can</strong> download the file and use it for your own personal enjoyment &mdash; for example, printing it for your home or using it as your wallpaper.</li>
+      <li><strong>You cannot</strong> resell it, give it away, share the file, sub-license it, or use it commercially.</li>
+      <li><strong>You cannot</strong> claim that you created the artwork.</li>
+    </ul>
+    <p>If you would like to use a piece commercially, contact us at <a href="mailto:[Company Email]">[Company Email]</a> and we can discuss it.</p>
   </li>
   <li>
-    <h3>Payments and Billing</h3>
-    <p>Prices are shown in your selected currency and are payable at checkout. Payments are processed securely by our payment provider. Charges will appear on your card or bank statement under our billing descriptor shown below, so you can recognise the transaction:</p>
+    <h3>Who Owns the Artwork</h3>
+    <p>All artwork, designs, text, and logos on the Website remain the property of [Company Name] or its artists and licensors, and are protected by copyright and other laws. Buying credits or downloading a file gives you the right to use the artwork under the licence above &mdash; it does not transfer ownership of the artwork to you.</p>
+  </li>
+  <li>
+    <h3>Prices, Currencies, and Payment</h3>
+    <p>We want payment to be simple and transparent. A few important points:</p>
+    <ul>
+      <li>You can shop in three currencies: <strong>US Dollars ($)</strong>, <strong>Japanese Yen (&yen;)</strong>, and <strong>Hong Kong Dollars (HK$)</strong>. Use the currency selector at the top of the site to switch, and every price updates instantly to match.</li>
+      <li>All prices are shown in your selected currency and are payable at checkout before your credits or downloads are released.</li>
+      <li>Payments are processed securely by our trusted payment provider.</li>
+    </ul>
+    <p>When you pay, the charge appears on your card or bank statement under our billing descriptor <img src="/assets/images/dba.webp" class="dba-inline" alt="[Company Name] billing descriptor"> so, if you ever see this mark on your statement, you will know the payment was made to [Company Name]. For your reference, here are our details:</p>
     <table>
       <tr><th>Company</th><td>[Company Name]</td></tr>
-      <tr><th>Support Email</th><td>[Company Email]</td></tr>
-      <tr><th>Billing Descriptor</th><td><img src="/assets/images/dba.webp" alt="[Company Name] billing descriptor" style="max-height:40px;"></td></tr>
+      <tr><th>Support Email</th><td><a href="mailto:[Company Email]">[Company Email]</a></td></tr>
     </table>
-    <p>If you do not recognise a charge, please contact us at [Company Email] before disputing it with your bank so we can help resolve the matter quickly.</p>
+    <p>If you do not recognise a charge, please email us at <a href="mailto:[Company Email]">[Company Email]</a> first &mdash; we can almost always sort it out quickly.</p>
   </li>
   <li>
-    <h3>Prohibited Conduct</h3>
-    <p>You agree not to misuse the Website. In particular, you must not:</p>
+    <h3>Things You Agree Not to Do</h3>
+    <p>To keep the store fair and safe for everyone, you agree not to:</p>
     <ul>
       <li>Copy, scrape, or redistribute our artwork or content without permission.</li>
-      <li>Attempt to bypass payment, manipulate credits, or access another user&rsquo;s account.</li>
-      <li>Use the Website for any unlawful, infringing, or harmful purpose.</li>
+      <li>Try to bypass payment, manipulate credits, or access someone else&rsquo;s account.</li>
+      <li>Use the Website for anything unlawful, harmful, or infringing.</li>
     </ul>
   </li>
   <li>
-    <h3>Availability and Changes</h3>
-    <p>We may add, update, or remove artworks, collections, and features at any time. We aim to keep the Website available, but we do not guarantee uninterrupted access and may suspend it for maintenance or reasons beyond our control.</p>
+    <h3>Changes to the Store</h3>
+    <p>Our collections grow and change over time. We may add, update, or remove artworks, sizes, prices, and features whenever we need to. We aim to keep the Website running smoothly, but we cannot promise it will always be available, and we may pause it for maintenance or for reasons outside our control.</p>
   </li>
   <li>
-    <h3>Disclaimers and Limitation of Liability</h3>
-    <p>The Website and artwork are provided on an &ldquo;as is&rdquo; basis. Colours may vary slightly between screens and prints. To the fullest extent permitted by law, [Company Name] is not liable for any indirect or consequential loss arising from your use of the Website, and our total liability is limited to the amount you paid for the relevant purchase.</p>
+    <h3>Disclaimers and Our Responsibility</h3>
+    <p>We put a lot of care into our art, but the Website and artwork are provided on an &ldquo;as is&rdquo; basis. Please note that colours can look slightly different from one screen or printer to another. To the fullest extent allowed by law, [Company Name] is not responsible for indirect or knock-on losses, and our total responsibility for any purchase is limited to the amount you actually paid for it.</p>
   </li>
   <li>
     <h3>Governing Law and Contact</h3>
-    <p>These Terms are governed by the laws applicable at the place of business of [Company Name]. For any questions about these Terms, contact us at [Company Email] or [Company Address].</p>
+    <p>These Terms are governed by the laws that apply where [Company Name] is based. If you have any questions about them, we are happy to help &mdash; email us at <a href="mailto:[Company Email]">[Company Email]</a> or write to [Company Address].</p>
   </li>
 </ol>',
 `page_desc_ja` = '<h2>利用規約</h2>
-<p>本利用規約は、[Company Name]（以下「本ウェブサイト」）のご利用、及び本ウェブサイトを通じたクレジット又はデジタルアートのご購入に適用されます。アカウントの作成、クレジットのご購入、又はアートワークのダウンロードをもって、本規約に同意いただいたものとみなします。内容をよくお読みください。</p>
+<p>本利用規約は、お客様と [Company Name]（以下「本ウェブサイト」）との間の合意事項です。当ストアの仕組み、ご購入いただいたアートワークで何ができるか、そして双方の約束について説明しています。あえて分かりやすく親しみやすい表現にしています。アカウントの作成、クレジットのご購入、又はアートワークのダウンロードをもって本規約に同意いただいたものとみなしますので、数分お時間をとってお読みください。</p>
 <ol>
   <li>
-    <h3>利用資格とアカウント</h3>
-    <p>本ウェブサイトでご購入いただくには、お客様の居住国における成年年齢に達している必要があります。お客様は、アカウント情報を正確に保ち、パスワードを安全に管理する責任を負います。また、アカウントで行われたすべての操作について責任を負うものとします。</p>
-  </li>
-  <li>
-    <h3>クレジット</h3>
-    <p>当ストアはクレジット制で運営されています。お客様はクレジットを購入し、それをデジタルアートと引き換えます。</p>
+    <h3>アカウントについて</h3>
+    <p>本ウェブサイトでご購入いただくにはアカウントが必要で、お住まいの地域で契約を締結できる年齢に達している必要があります。アカウント作成の際は、次の点にご注意ください。</p>
     <ul>
-      <li>チャージ額が大きいほど、決済画面に表示されるティアに応じてボーナスクレジットが付与される場合があります。</li>
-      <li>クレジットに換金価値はなく、第三者への譲渡や現金への払い戻しはできません。</li>
-      <li>クレジットは、決済が正常に完了した直後に残高へ加算されます。</li>
+      <li>正確な情報をご登録いただき、最新の状態に保つこと。</li>
+      <li>パスワードを非公開かつ安全に管理すること。</li>
+      <li>アカウントで行われるすべての操作について、お客様が責任を負うこと。</li>
     </ul>
   </li>
   <li>
-    <h3>デジタルアートとサイズ</h3>
-    <p>各アートワークはダウンロード型のデジタル画像で、通常は<strong>Small（小）</strong>、<strong>Medium（中）</strong>、<strong>Large（大）</strong>の複数のティアで提供されます。各ティアには固有のクレジット価格と解像度があります。選択したティアによって受け取るファイルが決まりますので、引き換え前によくご確認ください。</p>
+    <h3>クレジットの仕組み</h3>
+    <p>当ストアは<strong>クレジット</strong>制で運営されています。決済時に一点ずつお支払いいただくのではなく、まずクレジットの残高をチャージし、そのクレジットでお好きなアートを購入します。次の点をご確認ください。</p>
+    <ul>
+      <li>クレジットは実際のお金で購入し、決済の確認後直ちに残高へ加算されます。</li>
+      <li>大口のチャージでは、決済画面に表示されるティアに応じて<strong>ボーナスクレジット</strong>を獲得できます。多くチャージするほど、より多くのボーナスが付与される場合があります。</li>
+      <li>クレジットに換金価値はありません。現金への払い戻しや、他者・他アカウントへの譲渡はできません。</li>
+    </ul>
   </li>
   <li>
-    <h3>ライセンスと許諾される利用</h3>
-    <p>アートワークを引き換えると、当社はお客様に対し、個人的かつ非独占的で譲渡不能なライセンスを付与します。これにより、お客様は当該画像を個人的・非商業的な用途（例：ご自宅での印刷、個人的な壁紙としての使用）でダウンロード・利用できます。当社の書面による合意がない限り、アートワークの再販売、再配布、サブライセンス、商業的利用、及び著作者であるとの主張は行えません。</p>
+    <h3>アートワークとサイズ</h3>
+    <p>すべての商品は、ダウンロードいただく高品質なデジタル画像です。各アートワークは、ご都合に合わせて選べるよう複数のティアで提供されます。</p>
+    <ul>
+      <li><strong>Small（小）</strong> &mdash; 画面表示、SNS投稿、小さめの印刷に最適です。</li>
+      <li><strong>Medium（中）</strong> &mdash; 日常的な印刷や展示にちょうどよいバランスの選択肢です。</li>
+      <li><strong>Large（大）</strong> &mdash; 最も高い解像度で、大判や高精細な印刷に最適です。</li>
+    </ul>
+    <p>各ティアには固有のクレジット価格と解像度があります。選択したティアによって受け取るファイルが決まりますので、引き換え前にサイズをよくお選びください。</p>
   </li>
   <li>
-    <h3>知的財産権</h3>
-    <p>本ウェブサイト上のすべてのアートワーク、デザイン、テキスト、ロゴその他のコンテンツは、[Company Name] 又はそのライセンサーに帰属し、著作権その他の法律により保護されます。クレジットの購入やファイルのダウンロードによって、原著作物の権利がお客様に移転することはありません。</p>
+    <h3>アートで「できること・できないこと」</h3>
+    <p>アートワークを引き換えると、当社はお客様に個人的・非独占的・譲渡不能なライセンスを付与します。分かりやすく言うと、次のとおりです。</p>
+    <ul>
+      <li><strong>できること</strong> &mdash; ファイルをダウンロードし、個人的な用途（ご自宅での印刷、壁紙としての使用など）で楽しむこと。</li>
+      <li><strong>できないこと</strong> &mdash; 再販売、譲渡、ファイルの共有、サブライセンス、商業利用。</li>
+      <li><strong>できないこと</strong> &mdash; そのアートワークをご自身が制作したと主張すること。</li>
+    </ul>
+    <p>作品を商業的に利用されたい場合は、<a href="mailto:[Company Email]">[Company Email]</a> までご連絡ください。ご相談を承ります。</p>
   </li>
   <li>
-    <h3>お支払いと請求</h3>
-    <p>価格はお客様が選択された通貨で表示され、決済時にお支払いいただきます。決済は決済代行会社により安全に処理されます。ご請求は、取引をご確認いただけるよう、以下に示す当社の請求ディスクリプタ（明細表示名）でカード又は銀行のご利用明細に表示されます。</p>
-    <p><img src="/assets/images/dba.webp" alt="[Company Name] 請求ディスクリプタ" style="max-height:48px;"></p>
-    <p>お心当たりのないご請求がある場合は、金融機関へ異議を申し立てる前に [Company Email] までご連絡ください。速やかな解決に向けてお手伝いいたします。</p>
+    <h3>アートワークの権利者</h3>
+    <p>本ウェブサイト上のすべてのアートワーク、デザイン、テキスト、ロゴは、[Company Name] 又はそのアーティスト及びライセンサーに帰属し、著作権その他の法律により保護されています。クレジットの購入やファイルのダウンロードは、上記ライセンスに基づく利用の権利を付与するものであり、アートワークの権利をお客様に移転するものではありません。</p>
   </li>
   <li>
-    <h3>禁止行為</h3>
-    <p>お客様は、本ウェブサイトを不正に利用しないことに同意します。特に、次の行為を行ってはなりません。</p>
+    <h3>価格・通貨・お支払い</h3>
+    <p>お支払いは、シンプルで分かりやすいものを目指しています。重要な点は次のとおりです。</p>
+    <ul>
+      <li>当ストアは、<strong>米ドル（$）</strong>、<strong>日本円（&yen;）</strong>、<strong>香港ドル（HK$）</strong>の3通貨に対応しています。サイト上部の通貨切替から選択でき、すべての価格が即座に更新されます。</li>
+      <li>すべての価格は選択された通貨で表示され、クレジットやダウンロードが提供される前に、決済時にお支払いいただきます。</li>
+      <li>お支払いは、信頼できる決済代行会社により安全に処理されます。</li>
+    </ul>
+    <p>お支払いの際、ご請求はカード又は銀行のご利用明細に当社の請求ディスクリプタ <img src="/assets/images/dba.webp" class="dba-inline" alt="[Company Name] 請求ディスクリプタ"> として表示されます。明細にこのマークが表示されていれば、それは [Company Name] へのお支払いだとお分かりいただけます。ご参考までに、当社の情報は次のとおりです。</p>
+    <table>
+      <tr><th>会社名</th><td>[Company Name]</td></tr>
+      <tr><th>サポートメール</th><td><a href="mailto:[Company Email]">[Company Email]</a></td></tr>
+    </table>
+    <p>お心当たりのないご請求がある場合は、まず <a href="mailto:[Company Email]">[Company Email]</a> までメールでご連絡ください。ほとんどの場合、速やかに解決できます。</p>
+  </li>
+  <li>
+    <h3>禁止事項</h3>
+    <p>すべての方にとって公平で安全なストアを保つため、次の行為を行わないことに同意いただきます。</p>
     <ul>
       <li>許可なく当社のアートワークやコンテンツを複製、収集（スクレイピング）、又は再配布すること。</li>
-      <li>決済の回避、クレジットの不正操作、又は他のユーザーのアカウントへのアクセスを試みること。</li>
-      <li>違法、権利侵害、又は有害な目的で本ウェブサイトを利用すること。</li>
+      <li>決済の回避、クレジットの不正操作、又は他者のアカウントへのアクセスを試みること。</li>
+      <li>違法、有害、又は権利侵害となる目的で本ウェブサイトを利用すること。</li>
     </ul>
   </li>
   <li>
-    <h3>提供内容の変更</h3>
-    <p>当社は、アートワーク、コレクション、及び機能をいつでも追加、更新、又は削除することがあります。当社は本ウェブサイトの提供に努めますが、中断のないアクセスを保証するものではなく、保守その他やむを得ない事由により一時的に停止する場合があります。</p>
+    <h3>ストアの変更</h3>
+    <p>当社のコレクションは時間とともに成長し、変化します。当社は必要に応じて、アートワーク、サイズ、価格、機能をいつでも追加・更新・削除することがあります。本ウェブサイトの円滑な運営に努めますが、常時利用可能であることをお約束することはできず、保守やむを得ない事由により一時的に停止する場合があります。</p>
   </li>
   <li>
-    <h3>免責事項及び責任の制限</h3>
-    <p>本ウェブサイト及びアートワークは「現状有姿」で提供されます。色味は画面や印刷環境によってわずかに異なる場合があります。法令が認める最大限の範囲で、[Company Name] は本ウェブサイトの利用に起因する間接的又は結果的損害について責任を負わず、当社の賠償責任の総額は当該購入についてお客様がお支払いになった金額を上限とします。</p>
+    <h3>免責事項と当社の責任</h3>
+    <p>当社は作品づくりに細心の注意を払っていますが、本ウェブサイト及びアートワークは「現状有姿」で提供されます。色味は画面や印刷環境によってわずかに異なる場合がありますので、ご了承ください。法令が認める最大限の範囲で、[Company Name] は間接的又は波及的な損害について責任を負わず、いずれの購入についても当社の責任の総額はお客様が実際にお支払いになった金額を上限とします。</p>
   </li>
   <li>
     <h3>準拠法及びお問い合わせ</h3>
-    <p>本規約は、[Company Name] の事業所所在地において適用される法律に準拠します。本規約に関するご質問は、[Company Email] 又は [Company Address] までご連絡ください。</p>
+    <p>本規約は、[Company Name] の所在地において適用される法律に準拠します。ご不明な点があれば、喜んで対応いたします。<a href="mailto:[Company Email]">[Company Email]</a> までメールでご連絡いただくか、[Company Address] までご郵送ください。</p>
   </li>
 </ol>'
 WHERE `page_slug` = 'terms-conditions';
@@ -258,97 +345,115 @@ WHERE `page_slug` = 'terms-conditions';
 -- ---------------------------------------------------------------------------
 UPDATE `pages` SET
 `page_desc` = '<h2>Refund Policy</h2>
-<p>This Refund &amp; Cancellation Policy explains when refunds are and are not available for purchases made on [Company Name] (the &ldquo;Website&rdquo;). Because we sell downloadable digital products &mdash; credits and digital artwork &mdash; delivery is instant and cannot be reversed. By purchasing, you agree to this Policy.</p>
+<p>This Refund &amp; Cancellation Policy explains, in plain language, when you can and cannot get a refund from [Company Name] (the &ldquo;Website&rdquo;). Because we sell digital products &mdash; credits and downloadable artwork &mdash; delivery happens instantly and cannot be undone, so refunds work a little differently than they do for physical goods. Please read this before you buy, because by purchasing you agree to what is written here.</p>
 <ol>
   <li>
-    <h3>Nature of Our Digital Products</h3>
-    <p>Everything sold on the Website is a digital product delivered electronically, including:</p>
+    <h3>Why Digital Products Are Different</h3>
+    <p>Everything we sell is delivered to you electronically, including:</p>
     <ul>
-      <li>Credit top-ups and bonus credits.</li>
-      <li>Downloadable digital artwork in Small, Medium, and Large tiers.</li>
+      <li>Credit top-ups and any bonus credits you earn.</li>
+      <li>Downloadable artwork in <strong>Small</strong>, <strong>Medium</strong>, and <strong>Large</strong> sizes.</li>
     </ul>
-    <p>Because these products are delivered instantly and cannot be returned, purchases are generally non-refundable once processed, accessed, or downloaded.</p>
+    <p>Once a digital item has been delivered, accessed, or downloaded, it cannot be &ldquo;returned&rdquo; the way a physical item can. For that reason, purchases are generally non-refundable once they have been processed.</p>
   </li>
   <li>
     <h3>Credit Purchases</h3>
-    <p>Purchased credits are non-refundable once payment has been successfully processed and the credits have been added to your balance. Bonus credits awarded through tier promotions likewise have no cash value and are non-refundable.</p>
+    <p>When you top up credits and the payment goes through, those credits are added to your balance straight away. Because they are delivered instantly:</p>
+    <ul>
+      <li>Purchased credits are generally non-refundable once the payment has been processed.</li>
+      <li>Bonus credits earned through a tier promotion have no cash value and are non-refundable.</li>
+    </ul>
   </li>
   <li>
     <h3>Artwork Downloads</h3>
-    <p>When you redeem credits for an artwork, that transaction is final. As the file is made available immediately, redeemed artwork cannot be refunded or exchanged for a different tier or a different piece. Please review the collection and your chosen size before confirming.</p>
+    <p>When you redeem credits for an artwork, that action is final. The file is made available to you immediately, so a redeemed artwork cannot be refunded, swapped for a different size, or exchanged for a different piece. Please review the artwork and double-check your chosen size ($ / &yen; / HK$ pricing shown on screen) before you confirm.</p>
   </li>
   <li>
-    <h3>When We May Offer a Refund</h3>
-    <p>We will review a refund request in good faith in limited situations, such as:</p>
+    <h3>When We Will Look at a Refund</h3>
+    <p>We are fair, and in a few specific situations we will review a refund request in good faith, such as when:</p>
     <ul>
-      <li>You were charged more than once for the same order due to a technical error.</li>
-      <li>A payment succeeded but your credits or download were never delivered and we cannot resolve it.</li>
-      <li>A confirmed unauthorised transaction on your account.</li>
+      <li>You were charged more than once for the same order because of a technical error.</li>
+      <li>Your payment succeeded but your credits or download never arrived, and we are unable to fix it.</li>
+      <li>There was a genuine, confirmed unauthorised transaction on your account.</li>
     </ul>
   </li>
   <li>
-    <h3>How to Request a Refund</h3>
-    <p>Email us at [Company Email] within 7 days of the charge with your order number and a short description of the issue. We may ask for details to verify the purchase. Approved refunds are returned to your original payment method.</p>
+    <h3>How to Ask for a Refund</h3>
+    <p>Requesting a refund is easy:</p>
+    <ul>
+      <li>Email us at <a href="mailto:[Company Email]">[Company Email]</a> within 7 days of the charge.</li>
+      <li>Include your order number and a short description of what went wrong.</li>
+      <li>We may ask a couple of questions to confirm the purchase.</li>
+    </ul>
+    <p>If your refund is approved, it will be returned to your original payment method, in the currency you paid.</p>
   </li>
   <li>
-    <h3>Billing and Statement Descriptor</h3>
-    <p>Payments and any approved refunds are handled by our payment provider. Charges and refunds appear on your statement under our billing descriptor shown here, which can help you identify the transaction before contacting your bank:</p>
-    <p><img src="/assets/images/dba.webp" alt="[Company Name] billing descriptor" style="max-height:48px;"></p>
+    <h3>Billing and Your Statement</h3>
+    <p>Payments and any approved refunds are handled by our payment provider. On your statement, both charges and refunds appear under our billing descriptor <img src="/assets/images/dba.webp" class="dba-inline" alt="[Company Name] billing descriptor"> which can help you recognise the transaction before you contact your bank.</p>
   </li>
   <li>
-    <h3>Chargebacks</h3>
-    <p>If you do not recognise a charge, please contact us first at [Company Email]. Opening a chargeback before contacting us may delay a resolution and can lead to temporary suspension of your account while the dispute is reviewed.</p>
+    <h3>Please Talk to Us Before a Chargeback</h3>
+    <p>If you see a charge you do not recognise, please email us first at <a href="mailto:[Company Email]">[Company Email]</a>. Opening a chargeback with your bank before contacting us can slow things down, and it may lead to your account being temporarily suspended while the dispute is reviewed. In almost every case, a quick message to us is the fastest way to resolve it.</p>
   </li>
   <li>
     <h3>Contact Us</h3>
-    <p>For any questions about this Refund Policy, contact us at [Company Email] or [Company Address].</p>
+    <p>If you have any questions about this Refund Policy, we are here to help. Email us at <a href="mailto:[Company Email]">[Company Email]</a> or write to [Company Address].</p>
   </li>
 </ol>',
 `page_desc_ja` = '<h2>返金ポリシー</h2>
-<p>本返金・キャンセルポリシーは、[Company Name]（以下「本ウェブサイト」）でのご購入について、返金が可能な場合と不可能な場合を説明するものです。当社はダウンロード型のデジタル製品（クレジット及びデジタルアート）を販売しており、提供は即時に行われ、取り消すことができません。ご購入をもって、本ポリシーに同意いただいたものとみなします。</p>
+<p>本返金・キャンセルポリシーは、[Company Name]（以下「本ウェブサイト」）でのご購入について、返金が可能な場合と不可能な場合を分かりやすい言葉で説明するものです。当社はデジタル製品（クレジット及びダウンロード型アートワーク）を販売しており、提供は即時に行われ取り消すことができないため、返金の扱いは物理的な商品とは少し異なります。ご購入をもって本ポリシーに同意いただいたものとみなしますので、ご購入前にお読みください。</p>
 <ol>
   <li>
-    <h3>デジタル製品の性質</h3>
-    <p>本ウェブサイトで販売されるものはすべて、電子的に提供されるデジタル製品です。次のものが含まれます。</p>
+    <h3>デジタル製品が異なる理由</h3>
+    <p>当社が販売するものはすべて電子的に提供され、次のものが含まれます。</p>
     <ul>
-      <li>クレジットのチャージ及びボーナスクレジット。</li>
-      <li>Small（小）、Medium（中）、Large（大）の各ティアで提供されるダウンロード型デジタルアート。</li>
+      <li>クレジットのチャージ、及び獲得したボーナスクレジット。</li>
+      <li><strong>Small（小）</strong>、<strong>Medium（中）</strong>、<strong>Large（大）</strong>の各サイズのダウンロード型アートワーク。</li>
     </ul>
-    <p>これらの製品は即時に提供され、返品ができないため、処理・アクセス・ダウンロードが完了した後は、原則として返金の対象外となります。</p>
+    <p>デジタル製品は、提供・アクセス・ダウンロードが行われると、物理的な商品のように「返品」することができません。そのため、処理が完了したご購入は原則として返金の対象外となります。</p>
   </li>
   <li>
     <h3>クレジットの購入</h3>
-    <p>購入されたクレジットは、決済が正常に処理され残高に加算された後は返金できません。ティアプロモーションにより付与されたボーナスクレジットも同様に換金価値はなく、返金の対象外です。</p>
+    <p>クレジットをチャージし決済が完了すると、そのクレジットは直ちに残高へ加算されます。即時に提供されるため、次のとおりです。</p>
+    <ul>
+      <li>購入されたクレジットは、決済処理の完了後は原則として返金できません。</li>
+      <li>ティアプロモーションで獲得したボーナスクレジットに換金価値はなく、返金の対象外です。</li>
+    </ul>
   </li>
   <li>
     <h3>アートワークのダウンロード</h3>
-    <p>クレジットをアートワークに引き換えた取引は最終的なものです。ファイルは直ちに利用可能となるため、引き換え済みのアートワークについて、返金や、別のティア・別の作品への交換はできません。確定前に、コレクションと選択したサイズをよくご確認ください。</p>
+    <p>クレジットをアートワークに引き換える操作は最終的なものです。ファイルは直ちに利用可能となるため、引き換え済みのアートワークについて、返金、別サイズへの変更、別作品への交換はできません。確定前に、作品の内容と、画面に表示される選択サイズの価格（$ / &yen; / HK$）をよくご確認ください。</p>
   </li>
   <li>
-    <h3>返金に応じる場合</h3>
-    <p>当社は、次のような限定的な状況においては、誠実に返金のご請求を検討します。</p>
+    <h3>返金を検討する場合</h3>
+    <p>当社は公平に対応します。次のような特定の状況では、返金のご請求を誠実に検討します。</p>
     <ul>
       <li>技術的なエラーにより、同一の注文に対して重複して請求された場合。</li>
-      <li>決済は成立したものの、クレジット又はダウンロードが提供されず、当社でも解決できない場合。</li>
-      <li>お客様のアカウントにおける、確認された不正取引の場合。</li>
+      <li>決済は成立したものの、クレジット又はダウンロードが届かず、当社でも解決できない場合。</li>
+      <li>アカウントにおいて、確認された真正な不正取引があった場合。</li>
     </ul>
   </li>
   <li>
     <h3>返金のご請求方法</h3>
-    <p>ご請求は、ご請求日から7日以内に、注文番号と問題の概要を添えて [Company Email] までメールでご連絡ください。購入内容の確認のため、詳細をお伺いする場合があります。承認された返金は、元のお支払い方法へ返金されます。</p>
+    <p>ご請求は簡単です。</p>
+    <ul>
+      <li>ご請求日から7日以内に <a href="mailto:[Company Email]">[Company Email]</a> までメールでご連絡ください。</li>
+      <li>注文番号と、問題の概要を添えてください。</li>
+      <li>購入内容の確認のため、いくつかご質問する場合があります。</li>
+    </ul>
+    <p>返金が承認された場合は、お支払いいただいた通貨で、元のお支払い方法へ返金されます。</p>
   </li>
   <li>
-    <h3>請求及び明細表示名</h3>
-    <p>お支払い及び承認された返金は、決済代行会社が処理します。ご請求及び返金は、金融機関へご連絡いただく前に取引を識別しやすいよう、以下に示す当社の請求ディスクリプタでご利用明細に表示されます。</p>
-    <p><img src="/assets/images/dba.webp" alt="[Company Name] 請求ディスクリプタ" style="max-height:48px;"></p>
+    <h3>請求とご利用明細</h3>
+    <p>お支払い及び承認された返金は、決済代行会社が処理します。ご利用明細では、ご請求も返金も当社の請求ディスクリプタ <img src="/assets/images/dba.webp" class="dba-inline" alt="[Company Name] 請求ディスクリプタ"> として表示されるため、金融機関へご連絡いただく前に取引を識別しやすくなっています。</p>
   </li>
   <li>
-    <h3>チャージバックについて</h3>
-    <p>お心当たりのないご請求がある場合は、まず [Company Email] までご連絡ください。ご連絡の前にチャージバックを申請されますと、解決が遅れるほか、異議申立ての審査中にアカウントが一時的に停止される場合があります。</p>
+    <h3>チャージバックの前にご連絡ください</h3>
+    <p>お心当たりのないご請求がある場合は、まず <a href="mailto:[Company Email]">[Company Email]</a> までメールでご連絡ください。ご連絡の前に金融機関へチャージバックを申請されますと、対応が遅れるほか、異議申立ての審査中にアカウントが一時的に停止される場合があります。ほとんどの場合、当社へひとことご連絡いただくのが最も早い解決方法です。</p>
   </li>
   <li>
     <h3>お問い合わせ</h3>
-    <p>本返金ポリシーに関するご質問は、[Company Email] 又は [Company Address] までご連絡ください。</p>
+    <p>本返金ポリシーに関するご質問には、喜んで対応いたします。<a href="mailto:[Company Email]">[Company Email]</a> までメールでご連絡いただくか、[Company Address] までご郵送ください。</p>
   </li>
 </ol>'
 WHERE `page_slug` = 'refund-policy';
@@ -359,67 +464,97 @@ WHERE `page_slug` = 'refund-policy';
 -- ---------------------------------------------------------------------------
 UPDATE `pages` SET
 `page_desc` = '<h2>Delivery Policy</h2>
-<p>This Delivery Policy explains how you receive your purchases from [Company Name] (the &ldquo;Website&rdquo;). We sell downloadable digital products only &mdash; credits and digital artwork across our Anime &amp; Manga, Pixel, Pop, Street, and Modern Ukiyo-e collections. There is no physical shipping.</p>
+<p>This Delivery Policy explains, simply and clearly, how you receive what you buy from [Company Name] (the &ldquo;Website&rdquo;). Everything we sell is digital &mdash; credits and downloadable artwork across our Anime &amp; Manga, Pixel, Pop, Street, and Modern Ukiyo-e collections &mdash; so there is nothing to post and no delivery address to enter. It all happens right inside your account.</p>
 <ol>
   <li>
-    <h3>Digital Delivery Only</h3>
-    <p>All products are delivered electronically through your account on the Website. Nothing is posted or couriered, so no shipping address or delivery fee applies.</p>
+    <h3>Everything Is Delivered Digitally</h3>
+    <p>All of our products are delivered electronically through your account on the Website. That means:</p>
+    <ul>
+      <li>There is no physical shipping, so no shipping address is needed.</li>
+      <li>There are no delivery or postage fees, ever.</li>
+      <li>Your purchases stay in your account so you can come back to them.</li>
+    </ul>
   </li>
   <li>
-    <h3>Credit Delivery</h3>
-    <p>When you top up, your credits are added to your account balance immediately after your payment is confirmed. You can then use them to redeem any artwork in the store.</p>
+    <h3>Getting Your Credits</h3>
+    <p>When you top up, your credits are added to your account balance as soon as your payment is confirmed &mdash; whether you paid in US Dollars ($), Japanese Yen (&yen;), or Hong Kong Dollars (HK$). You can then spend them on any artwork in the store straight away.</p>
   </li>
   <li>
-    <h3>Artwork Downloads and Sizes</h3>
-    <p>After you redeem credits for an artwork, the digital file becomes available to download from your account. Each artwork is offered in <strong>Small</strong>, <strong>Medium</strong>, and <strong>Large</strong> tiers, and you receive the file for the tier you selected.</p>
+    <h3>Downloading Your Artwork</h3>
+    <p>After you redeem credits for a piece, the digital file becomes available to download from your account. Each artwork comes in <strong>Small</strong>, <strong>Medium</strong>, and <strong>Large</strong> sizes, and you receive the file for the size you chose. You can download your purchased artwork again from your account whenever you need it.</p>
   </li>
   <li>
-    <h3>Delivery Timeframe</h3>
-    <p>Delivery is normally instant. During periods of very high traffic, confirmation may take a little longer; if so, your credits and downloads will appear in your account once processing completes. You can re-download purchased artwork from your account at any time.</p>
+    <h3>How Long It Takes</h3>
+    <p>Delivery is normally instant. In the rare case that the store is very busy:</p>
+    <ul>
+      <li>Confirmation may take a little longer than usual.</li>
+      <li>Your credits and downloads will still appear in your account as soon as processing finishes.</li>
+      <li>If you close the page, do not worry &mdash; everything is saved to your account.</li>
+    </ul>
   </li>
   <li>
-    <h3>Technical Requirements</h3>
-    <p>To receive your downloads you need a compatible device, an up-to-date browser, and a stable internet connection. Large files may take longer to download on slower connections.</p>
+    <h3>What You Need</h3>
+    <p>To receive your downloads smoothly, please make sure you have:</p>
+    <ul>
+      <li>A compatible device (computer, tablet, or phone).</li>
+      <li>An up-to-date web browser.</li>
+      <li>A stable internet connection &mdash; large files can take longer on slower connections.</li>
+    </ul>
   </li>
   <li>
-    <h3>Failed or Delayed Delivery</h3>
-    <p>If a payment has been taken but your credits or download have not appeared after a reasonable time, please contact us at [Company Email] with your order number so we can restore access promptly.</p>
+    <h3>If Something Does Not Arrive</h3>
+    <p>If your payment went through but your credits or download have not appeared after a reasonable wait, please do not worry. Just email us at <a href="mailto:[Company Email]">[Company Email]</a> with your order number, and we will restore your access as quickly as we can.</p>
   </li>
   <li>
     <h3>Contact Us</h3>
-    <p>For any questions about delivery, contact us at [Company Email] or [Company Address].</p>
+    <p>If you have any questions about delivery, we are happy to help. Email us at <a href="mailto:[Company Email]">[Company Email]</a> or write to [Company Address].</p>
   </li>
 </ol>',
 `page_desc_ja` = '<h2>配信ポリシー</h2>
-<p>本配信ポリシーは、[Company Name]（以下「本ウェブサイト」）でのご購入品をお客様がどのように受け取るかを説明するものです。当社は、アニメ・漫画、ピクセル、ポップ、ストリート、現代浮世絵の各コレクションにわたるクレジット及びデジタルアートといった、ダウンロード型のデジタル製品のみを販売しています。物理的な配送はございません。</p>
+<p>本配信ポリシーは、[Company Name]（以下「本ウェブサイト」）でのご購入品をどのように受け取るかを、分かりやすく簡潔に説明するものです。当社が販売するものはすべてデジタル（アニメ・漫画、ピクセル、ポップ、ストリート、現代浮世絵の各コレクションにわたるクレジット及びダウンロード型アートワーク）であり、郵送するものはなく、配送先住所の入力も不要です。すべてお客様のアカウント内で完結します。</p>
 <ol>
   <li>
-    <h3>デジタル配信のみ</h3>
-    <p>すべての製品は、本ウェブサイト上のお客様のアカウントを通じて電子的に提供されます。郵送や宅配は行わないため、配送先住所や送料は発生しません。</p>
+    <h3>すべてデジタルで提供</h3>
+    <p>当社のすべての製品は、本ウェブサイト上のお客様のアカウントを通じて電子的に提供されます。つまり、次のとおりです。</p>
+    <ul>
+      <li>物理的な配送はなく、配送先住所は不要です。</li>
+      <li>配送料や郵送料は一切かかりません。</li>
+      <li>ご購入品はアカウントに保存され、いつでも再度ご利用いただけます。</li>
+    </ul>
   </li>
   <li>
-    <h3>クレジットの付与</h3>
-    <p>チャージを行うと、決済の確認後直ちにクレジットがアカウント残高に加算されます。その後、ストア内の任意のアートワークの引き換えにご利用いただけます。</p>
+    <h3>クレジットの受け取り</h3>
+    <p>チャージを行うと、米ドル（$）、日本円（&yen;）、香港ドル（HK$）のいずれでお支払いになった場合でも、決済の確認後直ちにクレジットがアカウント残高へ加算されます。その後すぐに、ストア内の任意のアートワークにご利用いただけます。</p>
   </li>
   <li>
-    <h3>アートワークのダウンロードとサイズ</h3>
-    <p>クレジットをアートワークに引き換えると、そのデジタルファイルをアカウントからダウンロードできるようになります。各アートワークは <strong>Small（小）</strong>、<strong>Medium（中）</strong>、<strong>Large（大）</strong> の各ティアで提供され、選択したティアのファイルを受け取ります。</p>
+    <h3>アートワークのダウンロード</h3>
+    <p>作品にクレジットを引き換えると、そのデジタルファイルをアカウントからダウンロードできるようになります。各アートワークは <strong>Small（小）</strong>、<strong>Medium（中）</strong>、<strong>Large（大）</strong> のサイズで提供され、選択したサイズのファイルを受け取ります。ご購入済みのアートワークは、必要なときにいつでもアカウントから再ダウンロードいただけます。</p>
   </li>
   <li>
     <h3>提供までの時間</h3>
-    <p>提供は通常即時です。アクセスが非常に集中する時間帯には、確認に少しお時間をいただく場合があります。その場合でも、処理が完了次第、クレジット及びダウンロードがアカウントに表示されます。ご購入済みのアートワークは、いつでもアカウントから再ダウンロードいただけます。</p>
+    <p>提供は通常即時です。まれにストアが非常に混み合っている場合には、次のとおりです。</p>
+    <ul>
+      <li>確認に通常より少しお時間がかかることがあります。</li>
+      <li>それでも、処理が完了次第、クレジット及びダウンロードがアカウントに表示されます。</li>
+      <li>ページを閉じてもご安心ください。すべてアカウントに保存されています。</li>
+    </ul>
   </li>
   <li>
-    <h3>技術的な要件</h3>
-    <p>ダウンロードを受け取るには、対応デバイス、最新のブラウザ、及び安定したインターネット接続が必要です。大きなファイルは、通信速度が遅い環境ではダウンロードに時間がかかる場合があります。</p>
+    <h3>必要なもの</h3>
+    <p>ダウンロードをスムーズに受け取るために、次のものをご用意ください。</p>
+    <ul>
+      <li>対応デバイス（パソコン、タブレット、又はスマートフォン）。</li>
+      <li>最新のウェブブラウザ。</li>
+      <li>安定したインターネット接続 &mdash; 大きなファイルは通信速度が遅いと時間がかかる場合があります。</li>
+    </ul>
   </li>
   <li>
-    <h3>提供の失敗又は遅延</h3>
-    <p>決済が完了しているにもかかわらず、相当の時間が経過してもクレジット又はダウンロードが表示されない場合は、注文番号を添えて [Company Email] までご連絡ください。速やかにアクセスを回復いたします。</p>
+    <h3>届かない場合</h3>
+    <p>決済が完了しているのに、相当の時間が経ってもクレジット又はダウンロードが表示されない場合も、ご心配は要りません。注文番号を添えて <a href="mailto:[Company Email]">[Company Email]</a> までメールでご連絡ください。できる限り速やかにアクセスを回復いたします。</p>
   </li>
   <li>
     <h3>お問い合わせ</h3>
-    <p>配信に関するご質問は、[Company Email] 又は [Company Address] までご連絡ください。</p>
+    <p>配信に関するご質問には、喜んで対応いたします。<a href="mailto:[Company Email]">[Company Email]</a> までメールでご連絡いただくか、[Company Address] までご郵送ください。</p>
   </li>
 </ol>'
 WHERE `page_slug` = 'delivery-policy';

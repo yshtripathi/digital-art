@@ -90,6 +90,8 @@
 
     /* ---------- Images ---------- */
     .page-prose img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--color-vellum, #dfdcd5); margin: 1.2rem 0; }
+    /* inline logo (e.g. billing descriptor) that flows within a sentence */
+    .page-prose img.dba-inline { display: inline; height: 26px; width: auto; vertical-align: middle; margin: 0 5px; border: none; border-radius: 3px; }
 
     /* ---------- Code ---------- */
     .page-prose code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.88em; background-color: var(--color-bone, #e7e5e4); padding: 2px 6px; border-radius: 5px; color: var(--color-ink, #000); }

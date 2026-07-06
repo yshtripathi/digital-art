@@ -9,55 +9,34 @@
     </video>
     <div class="hero-overlay"></div>
 
-    <!-- Main Content -->
-    <div class="auto-container relative z-10 text-center">
-        <div class="hero-badge-wrapper flex-column align-items-center gap-2">
-            <span class="hero-badge">{{ __('common.digital_art') ?? 'Digital Art' }}</span>
-            <div class="hero-mini-tag d-flex align-items-center gap-2 mt-2">
-                <span class="pulse-dot"></span>
-                <span>Museum Quality Prints &bull; Worldwide Express Delivery</span>
+    <!-- Split hero: text left, image collage right -->
+    <div class="auto-container hero-split relative z-10">
+        <div class="hero-col hero-col--text">
+            <div class="hero-badge-wrapper">
+                <span class="hero-badge">{{ __('common.digital_art') ?? 'Digital Art' }}</span>
+                <div class="hero-mini-tag">
+                    <span class="pulse-dot"></span>
+                    <span>Museum Quality Prints &bull; Worldwide Express Delivery</span>
+                </div>
+            </div>
+            <h1 class="modern-h1">Transform Your Vision into <span class="highlight-art">Masterpiece Artworks</span></h1>
+            <p class="hero-subtitle">Experience the next generation of creative expression. Inkwave pairs cutting-edge rendering with museum-quality curation to deliver flawless, high-resolution digital prints. Your canvas awaits.</p>
+            <div class="hero-cta-buttons">
+                <a href="{{ route('product-lists') }}" class="modern-btn modern-btn-solid">{{ __('common.sakura_hero_cta') ?? 'Browse Catalog' }} <i class="fas fa-arrow-right ms-2"></i></a>
+                <a href="{{ route('contact') }}" class="modern-btn modern-btn-outline">{{ __('common.get_in_touch') ?? 'Get In Touch' }}</a>
             </div>
         </div>
-        <h1 class="modern-h1 mx-auto text-center" style="max-width: 900px; font-size: clamp(48px, 6vw, 72px); line-height: 1.15; letter-spacing: -0.02em;">
-            Transform Your Vision into <br/>
-            <span class="highlight-art">Masterpiece Artworks</span>
-        </h1>
-        <p class="hero-subtitle mx-auto text-center mt-4" style="max-width: 680px; font-size: 18px; line-height: 1.6; color: var(--color-graphite, #595855);">
-            Experience the next generation of creative expression. Inkwave combines cutting-edge AI rendering with museum-quality curation to deliver flawless, high-resolution digital prints. Your canvas awaits.
-        </p>
-        
-        <!-- CTA Buttons -->
-        <div class="hero-cta-buttons justify-content-center">
-            <a href="{{ route('product-lists') }}" class="modern-btn modern-btn-solid">
-                {{ __('common.sakura_hero_cta') ?? 'Browse Catalog' }} <i class="fas fa-arrow-right ms-2"></i>
-            </a>
-            <a href="{{ route('contact') }}" class="modern-btn modern-btn-outline">
-                {{ __('common.get_in_touch') ?? 'Get In Touch' }}
-            </a>
+
+        <div class="hero-col hero-col--media">
+            <div class="hero-collage">
+                <figure class="hero-collage__item" style="--d: 0s"><img src="{{ asset('assets/images/i2.png') }}" alt="Modern ukiyo-e dragon print"></figure>
+                <figure class="hero-collage__item" style="--d: .5s"><img src="{{ asset('assets/images/i6.jpg') }}" alt="Pop-art print"></figure>
+                <figure class="hero-collage__item" style="--d: 1s"><img src="{{ asset('assets/images/i5.png') }}" alt="White tiger ukiyo-e print"></figure>
+                <figure class="hero-collage__item" style="--d: .25s"><img src="{{ asset('assets/images/i3.png') }}" alt="Anime portrait print"></figure>
+                <figure class="hero-collage__item" style="--d: .75s"><img src="{{ asset('assets/images/i4.png') }}" alt="Neon street-art print"></figure>
+                <figure class="hero-collage__item" style="--d: 1.25s"><img src="{{ asset('assets/images/i7.jpg') }}" alt="Moonlit street-art print"></figure>
+            </div>
         </div>
-    </div>
-
-    <!-- Text above the gallery -->
-    <div class="auto-container relative z-10 hero-gallery-block">
-        <p class="gallery-eyebrow">The Inkwave Collection</p>
-        <h2 class="gallery-heading">Five movements, one gallery wall</h2>
-
-        <!-- Featured Gallery Wall — images shown at their true aspect ratio -->
-        <div class="hero-gallery">
-            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i2.png') }}" alt="Modern ukiyo-e dragon print"></figure>
-            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i3.png') }}" alt="Anime portrait print"></figure>
-            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i4.png') }}" alt="Neon street-art print"></figure>
-            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i5.png') }}" alt="White tiger ukiyo-e print"></figure>
-            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i6.jpg') }}" alt="Pop-art print"></figure>
-            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i7.jpg') }}" alt="Moonlit street-art print"></figure>
-            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i8.jpg') }}" alt="Manga line-art print"></figure>
-        </div>
-
-        <!-- Text below the gallery -->
-        <p class="gallery-caption">
-            Every Inkwave piece is an original, high-resolution print — spanning Anime &amp; Manga, Pixel, Pop, Street, and Modern Ukiyo-e. Printed to gallery standard and ready to frame.
-        </p>
-        <a href="{{ route('product-lists') }}" class="gallery-link">Explore the full catalog</a>
     </div>
 </section>
 
@@ -70,8 +49,8 @@
         position: relative !important;
         overflow: hidden !important;
         background-color: var(--color-putty, #c4c3b6) !important; /* flat putty canvas — no gradient per DESIGN.md */
-        padding-top: 140px !important;
-        padding-bottom: 80px !important;
+        padding-top: 104px !important;
+        padding-bottom: 56px !important;
         font-family: var(--font-helvetica-now, sans-serif) !important;
     }
 
@@ -604,267 +583,593 @@
      INKWAVE / DIGITAL ART PREMIUM SECTIONS
      ============================================== -->
 
-<!-- SECTION 1: Featured Masterpieces -->
-<section class="inkwave-featured py-120" style="background-color: var(--color-bone, #e7e5e4); border-top: 1px solid rgba(0,0,0,0.05);">
+<!-- SECTION 2: Category Cards -->
+<section class="inkwave-categories" style="background-color: var(--color-bone, #e7e5e4); border-top: 1px solid var(--color-vellum, #dfdcd5);">
     <div class="auto-container">
-        <div class="text-center mb-5">
-            <span class="modern-badge">Curated Gallery</span>
-            <h2 class="modern-h2 mt-3" style="font-size: 3rem;">Featured Artworks</h2>
-            <p class="text-muted mx-auto mt-3" style="max-width: 600px; font-size: 1.1rem;">
-                Explore top tier digital creations rendered with perfection.
-            </p>
+        <div class="cat-section-head">
+            <p class="cat-eyebrow">Browse by Movement</p>
+            <h2 class="cat-heading">Explore the Collections</h2>
         </div>
+
+        @php
+            $featuredCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+        @endphp
         
-        <!-- Grid/Marquee placeholder -->
-        <div class="featured-placeholder" style="min-height: 400px; border: 2px dashed #ccc; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-style: italic; color: #888;">
-            (Featured Artworks Grid / Carousel will go here)
+        <div class="cat-grid">
+            @forelse($featuredCategories as $cat)
+                <a href="{{ route('product-lists', $cat->slug) }}" class="cat-card" aria-label="{{ $cat->title }}">
+                    @if($cat->photo)
+                        <img src="{{ $cat->photo }}" alt="{{ $cat->title }}" class="cat-card__img">
+                    @else
+                        <span class="cat-card__placeholder"><i class="fas fa-palette"></i></span>
+                    @endif
+                    <span class="cat-card__veil" aria-hidden="true"></span>
+                    <span class="cat-card__content">
+                        <span class="cat-card__title">{{ $cat->title }}</span>
+                        @if($cat->summary)
+                            <span class="cat-card__summary">{{ $cat->summary }}</span>
+                        @endif
+                    </span>
+                </a>
+            @empty
+                <p class="cat-empty">{{ __('common.no_categories') }}</p>
+            @endforelse
         </div>
     </div>
 </section>
+
+<style>
+    /* =========================================
+       SECTION 2 — CATEGORY CARDS (vertical, image-only, title on hover)
+       ========================================= */
+    .inkwave-categories {
+        padding: 96px 40px !important;
+    }
+    .inkwave-categories .cat-section-head {
+        text-align: center !important;
+        margin-bottom: 48px !important;
+    }
+    .cat-eyebrow {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.18em !important;
+        color: var(--color-graphite, #595855) !important;
+        margin: 0 0 10px 0 !important;
+    }
+    .cat-heading {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: clamp(28px, 3.5vw, 44px) !important;
+        font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+        letter-spacing: -0.01em !important;
+        line-height: 1.1 !important;
+        margin: 0 !important;
+    }
+    .cat-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;      /* short last row (e.g. 2 cards) centers */
+        gap: 20px !important;
+        max-width: 1100px !important;
+        margin: 0 auto !important;
+    }
+    .cat-card {
+        position: relative !important;
+        display: block !important;
+        flex: 0 1 calc(33.333% - 14px) !important;   /* three per row */
+        max-width: calc(33.333% - 14px) !important;
+        aspect-ratio: 3 / 4 !important;          /* vertical / portrait card */
+        overflow: hidden !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 9px !important;           /* theme card radius */
+        background-color: var(--color-putty, #c4c3b6) !important;
+        text-decoration: none !important;
+        box-shadow: none !important;             /* flat — no shadow */
+    }
+    .cat-card__img {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .cat-card:hover .cat-card__img { transform: scale(1.06) !important; }
+    .cat-card__placeholder {
+        position: absolute !important;
+        inset: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: var(--color-graphite, #595855) !important;
+        font-size: 40px !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+    }
+    .cat-card__veil {
+        position: absolute !important;
+        inset: 0 !important;
+        background: rgba(0, 0, 0, 0.35) !important;   /* flat ink veil, reveals on hover */
+        opacity: 0 !important;
+        transition: opacity 0.4s ease !important;
+        z-index: 1 !important;
+    }
+    .cat-card:hover .cat-card__veil { opacity: 1 !important; }
+    .cat-card__content {
+        position: absolute !important;
+        inset: 0 !important;                          /* cover whole card so the full summary fits */
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 24px !important;
+        text-align: center !important;
+        opacity: 0 !important;                        /* title + summary hidden until hover */
+        transform: translateY(14px) !important;
+        transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        z-index: 2 !important;
+        overflow-y: auto !important;                  /* a very long summary can scroll, never clips */
+    }
+    .cat-card:hover .cat-card__content {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+    .cat-card__title {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 22px !important;
+        font-weight: 500 !important;
+        line-height: 1.15 !important;
+        color: var(--color-paper, #ffffff) !important;
+        margin: 0 !important;
+    }
+    .cat-card__summary {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+        margin: 0 !important;
+        max-width: 92% !important;                    /* full summary — no truncation */
+    }
+    .cat-empty {
+        grid-column: 1 / -1 !important;
+        text-align: center !important;
+        color: var(--color-graphite, #595855) !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+    }
+    /* Touch devices have no hover — keep titles readable */
+    @media (hover: none) {
+        .cat-card__veil { opacity: 0.4 !important; }
+        .cat-card__content { opacity: 1 !important; transform: none !important; }
+    }
+    @media (max-width: 768px) {
+        .inkwave-categories { padding: 60px 20px !important; }
+        .cat-grid { gap: 14px !important; }
+        .cat-card { flex-basis: calc(50% - 7px) !important; max-width: calc(50% - 7px) !important; }
+        .cat-card__title { font-size: 18px !important; }
+        .cat-card__content { padding: 16px !important; }
+    }
+    @media (max-width: 480px) {
+        .cat-card { flex-basis: 100% !important; max-width: 100% !important; }
+    }
+</style>
 
 <!-- SECTION 2: How It Works -->
 <section class="inkwave-how-it-works py-120" style="background-color: var(--color-putty, #c4c3b6);">
     <div class="auto-container">
-        <div class="text-center mb-5">
-            <span class="modern-badge" style="background: rgba(0,0,0,0.05); color: var(--color-ink);">The Process</span>
-            <h2 class="modern-h2 mt-3" style="font-size: 3rem;">From Pixel to Print</h2>
-            <p class="text-muted mx-auto mt-3" style="max-width: 600px; font-size: 1.1rem; color: #595855 !important;">
-                Three simple steps to elevate your digital assets into physical masterpieces.
-            </p>
+        <div class="steps-head">
+            <p class="steps-eyebrow">The Process</p>
+            <h2 class="steps-heading">From Pixel to Print</h2>
+            <p class="steps-sub">Three simple steps to bring a gallery-grade piece into your space.</p>
         </div>
-        
-        <!-- Steps Placeholder -->
-        <div class="steps-placeholder" style="min-height: 300px; border: 2px dashed #a09f95; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-style: italic; color: #666;">
-            (Step 1, Step 2, Step 3 columns will go here)
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <span class="step-num">01</span>
+                <h3 class="step-title">Browse the Collection</h3>
+                <p class="step-desc">Explore five movements — Anime &amp; Manga, Pixel, Pop, Street, and Modern Ukiyo-e — and find the piece that speaks to you.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">02</span>
+                <h3 class="step-title">Choose Your Print</h3>
+                <p class="step-desc">Pick your artwork and size. Every file is prepared at gallery resolution, sharp enough for large-format printing.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">03</span>
+                <h3 class="step-title">Framed &amp; Delivered</h3>
+                <p class="step-desc">Check out securely and receive your high-resolution, ready-to-frame artwork — delivered and ready to display.</p>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- SECTION 3: Premium Materials -->
-<section class="inkwave-quality py-120" style="background-color: var(--color-bone, #e7e5e4);">
-    <div class="auto-container">
-        <div class="text-center mb-5">
-            <span class="modern-badge">Museum Quality</span>
-            <h2 class="modern-h2 mt-3" style="font-size: 3rem;">Uncompromising Materials</h2>
-        </div>
-        
-        <!-- Materials Placeholder -->
-        <div class="materials-placeholder" style="min-height: 400px; border: 2px dashed #ccc; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-style: italic; color: #888;">
-            (Images and descriptions of canvas, framing, and paper quality will go here)
-        </div>
+<style>
+    /* =========================================
+       SECTION 3 — HOW IT WORKS (three steps in a row)
+       ========================================= */
+    .inkwave-how-it-works { padding: 96px 40px !important; }
+    .steps-head { text-align: center !important; margin-bottom: 48px !important; }
+    .steps-eyebrow {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.18em !important;
+        color: var(--color-graphite, #595855) !important;
+        margin: 0 0 10px 0 !important;
+    }
+    .steps-heading {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: clamp(28px, 3.5vw, 44px) !important;
+        font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+        letter-spacing: -0.01em !important;
+        line-height: 1.1 !important;
+        margin: 0 0 14px 0 !important;
+    }
+    .steps-sub {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 15px !important;
+        line-height: 1.6 !important;
+        color: var(--color-graphite, #595855) !important;
+        max-width: 560px !important;
+        margin: 0 auto !important;
+    }
+    .steps-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 24px !important;
+        max-width: 1100px !important;
+        margin: 0 auto !important;
+    }
+    .step-card {
+        flex: 0 1 calc(33.333% - 16px) !important;   /* three in a row */
+        max-width: calc(33.333% - 16px) !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 9px !important;
+        padding: 36px 28px !important;
+        text-align: center !important;
+        box-shadow: none !important;                 /* flat — no shadow */
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .step-card:hover { transform: translateY(-6px) !important; }
+    .step-num {
+        display: block !important;
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 40px !important;
+        font-weight: 500 !important;
+        line-height: 1 !important;
+        color: var(--color-ink, #000000) !important;
+        margin-bottom: 18px !important;
+    }
+    .step-title {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 22px !important;
+        font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+        margin: 0 0 12px 0 !important;
+    }
+    .step-desc {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 14px !important;
+        line-height: 1.6 !important;
+        color: var(--color-graphite, #595855) !important;
+        margin: 0 !important;
+    }
+    @media (max-width: 768px) {
+        .inkwave-how-it-works { padding: 60px 20px !important; }
+        .step-card { flex-basis: 100% !important; max-width: 100% !important; }
+    }
+</style>
+
+<!-- SECTION 4: Products Carousel -->
+<section class="inkwave-products" style="background-color: var(--color-bone, #e7e5e4);">
+    <div class="prod-head">
+        <p class="prod-eyebrow">The Catalog</p>
+        <h2 class="prod-heading">Browse Every Artwork</h2>
     </div>
-</section>
 
-<!-- POINTS TOP UP SECTION - PREMIUM LUXURY DESIGN -->
-<section class="points-topup-section py-6" id="topup" style="background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%);">
-    <div class="auto-container">
-        <div class="text-center mb-5">
-            <span class="modern-badge" style="font-size: 11px; font-weight: 700; color: #E85D8E; background: rgba(232, 93, 142, 0.08); padding: 8px 14px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;">{{ __('common.sakura_topup_badge') }}</span>
-            <h2 class="modern-h2 mt-3" style="font-size: 42px; font-weight: 900; color: #0a0e27; line-height: 1.2;">{{ __('common.sakura_topup_title') }}</h2>
-            <p class="text-muted mx-auto mt-3" style="max-width: 600px; font-size: 16px; color: #666;">
-                {{ __('common.sakura_topup_description') }}
-            </p>
-        </div>
+    @php
+        $carouselProducts = \App\Models\Product::where('status','active')->orderBy('id','DESC')->get();
+    @endphp
 
-        <div class="row align-items-stretch g-4 justify-content-center" style="max-width: 1300px; margin: 0 auto;">
-            <!-- PREMIUM TIER CARDS -->
-            <div class="col-lg-5 col-md-12">
-                <div class="premium-tier-section">
-                    <!-- Section Header -->
-                    <div class="tier-section-header">
-                        <div class="header-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <path d="M16 2L20.123 12.038H30.879L22.378 17.962L26.501 28L16 22.076L5.499 28L9.622 17.962L1.121 12.038H11.877L16 2Z" fill="url(#tierGradient)"/>
-                                <defs>
-                                    <linearGradient id="tierGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#E85D8E;stop-opacity:1" />
-                                        <stop offset="100%" style="stop-color:#C86BFA;stop-opacity:1" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                        </div>
-                        <div class="header-text">
-                            <h3 class="tier-title">{{ __('common.sakura_tiers_title') }}</h3>
-                            <p class="tier-subtitle">{{ __('common.sakura_tiers_subtitle') }}</p>
-                        </div>
-                    </div>
+    <div class="prod-carousel">
+        <button class="prod-nav prod-nav--prev" type="button" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
 
-                    <!-- Tier Table -->
-                    <div class="tier-table-wrapper">
-                        <table class="tier-table">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('common.tier') }}</th>
-                                    <th>{{ __('common.range') }}</th>
-                                    <th>{{ __('common.bonus') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if(session('currency') == 'JPY')
-                                    <tr class="tier-row tier-row-1">
-                                        <td class="tier-cell-tier"><span class="tier-badge">1</span> {{ __('common.tier_standard') }}</td>
-                                        <td class="tier-cell-range">¥ 1 - ¥ 79,999</td>
-                                        <td class="tier-cell-bonus">×1</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-2">
-                                        <td class="tier-cell-tier"><span class="tier-badge">2</span> {{ __('common.tier_premium') }}</td>
-                                        <td class="tier-cell-range">¥ 80,000 - ¥ 159,999</td>
-                                        <td class="tier-cell-bonus">×1.5</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-3">
-                                        <td class="tier-cell-tier"><span class="tier-badge">3</span> {{ __('common.tier_elite') }}</td>
-                                        <td class="tier-cell-range">¥ 160,000 - ¥ 239,999</td>
-                                        <td class="tier-cell-bonus">×2</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-4">
-                                        <td class="tier-cell-tier"><span class="tier-badge">4</span> {{ __('common.tier_vip') }}</td>
-                                        <td class="tier-cell-range">¥ 240,000+</td>
-                                        <td class="tier-cell-bonus">×2.5</td>
-                                    </tr>
-                                @else
-                                    <tr class="tier-row tier-row-1">
-                                        <td class="tier-cell-tier"><span class="tier-badge">1</span> {{ __('common.tier_standard') }}</td>
-                                        @if(session('currency') == 'HKD')
-                                            <td class="tier-cell-range">HK$1 - HK$499</td>
-                                        @else
-                                            <td class="tier-cell-range">$1 - $499</td>
-                                        @endif
-                                        <td class="tier-cell-bonus">{{ __('common.none') }}</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-2">
-                                        <td class="tier-cell-tier"><span class="tier-badge">2</span> {{ __('common.tier_premium') }}</td>
-                                        @if(session('currency') == 'HKD')
-                                            <td class="tier-cell-range">HK$500 - HK$999</td>
-                                        @else
-                                            <td class="tier-cell-range">$500 - $999</td>
-                                        @endif
-                                        <td class="tier-cell-bonus">×1.5</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-3">
-                                        <td class="tier-cell-tier"><span class="tier-badge">3</span> {{ __('common.tier_elite') }}</td>
-                                        @if(session('currency') == 'HKD')
-                                            <td class="tier-cell-range">HK$1,000 - HK$1,499</td>
-                                        @else
-                                            <td class="tier-cell-range">$1,000 - $1,499</td>
-                                        @endif
-                                        <td class="tier-cell-bonus">×2</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-4">
-                                        <td class="tier-cell-tier"><span class="tier-badge">4</span> {{ __('common.tier_vip') }}</td>
-                                        @if(session('currency') == 'HKD')
-                                            <td class="tier-cell-range">HK$1,500+</td>
-                                        @else
-                                            <td class="tier-cell-range">$1,500+</td>
-                                        @endif
-                                        <td class="tier-cell-bonus">×2.5</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="currency-note">
-                        @if(session('currency') == 'JPY')
-                            {{ __('common.jpy_conversion_note') }}
-                        @elseif(session('currency') == 'HKD')
-                            {{ __('common.hkd_conversion_note') }}
+        <div class="prod-track" id="prodTrack">
+            @forelse($carouselProducts as $product)
+                @php $pimg = $product->photo ? explode(',', $product->photo)[0] : null; @endphp
+                <a href="{{ route('product-detail', $product->slug) }}" class="prod-slide">
+                    <div class="prod-slide__img">
+                        @if($pimg)
+                            <img src="{{ url($pimg) }}" alt="{{ $product->title }}" loading="lazy">
                         @else
-                            {{ __('common.usd_conversion_note') }}
+                            <span class="prod-slide__ph"><i class="fas fa-image"></i></span>
                         @endif
                     </div>
-                </div>
+                    <h3 class="prod-slide__title">{{ $product->title }}</h3>
+                </a>
+            @empty
+                <p class="prod-empty">{{ __('common.no_products') ?? 'No products available yet.' }}</p>
+            @endforelse
+        </div>
+
+        <button class="prod-nav prod-nav--next" type="button" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+</section>
+
+<style>
+    /* =========================================
+       SECTION 4 — PRODUCTS CAROUSEL (image + title only)
+       ========================================= */
+    .inkwave-products { padding: 96px 0 !important; }
+    .inkwave-products .prod-head {
+        text-align: center !important;
+        margin-bottom: 48px !important;
+        padding: 0 40px !important;
+    }
+    .prod-eyebrow {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.18em !important;
+        color: var(--color-graphite, #595855) !important;
+        margin: 0 0 10px 0 !important;
+    }
+    .prod-heading {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: clamp(28px, 3.5vw, 44px) !important;
+        font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+        letter-spacing: -0.01em !important;
+        line-height: 1.1 !important;
+        margin: 0 !important;
+    }
+
+    .prod-carousel {
+        position: relative !important;
+        max-width: 1280px !important;
+        margin: 0 auto !important;
+        padding: 0 56px !important;
+    }
+    .prod-track {
+        display: flex !important;
+        gap: 20px !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        scroll-behavior: smooth !important;
+        padding: 4px 4px 10px 4px !important;
+        scrollbar-width: none !important;          /* Firefox */
+        -ms-overflow-style: none !important;       /* IE / Edge */
+    }
+    .prod-track::-webkit-scrollbar { display: none !important; }  /* Chrome / Safari */
+
+    .prod-slide {
+        flex: 0 0 auto !important;
+        width: 260px !important;
+        scroll-snap-align: start !important;
+        text-decoration: none !important;
+        display: block !important;
+    }
+    .prod-slide__img {
+        position: relative !important;
+        width: 100% !important;
+        aspect-ratio: 3 / 4 !important;
+        overflow: hidden !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 9px !important;             /* theme card radius */
+        background-color: var(--color-putty, #c4c3b6) !important;
+        box-shadow: none !important;               /* flat — no shadow */
+    }
+    .prod-slide__img img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .prod-slide:hover .prod-slide__img img { transform: scale(1.06) !important; }
+    .prod-slide__ph {
+        position: absolute !important;
+        inset: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: var(--color-graphite, #595855) !important;
+        font-size: 32px !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+    }
+    .prod-slide__title {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+        line-height: 1.35 !important;
+        margin: 14px 4px 0 4px !important;
+        text-align: center !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+    }
+
+    /* Prev / next capsule buttons */
+    .prod-nav {
+        position: absolute !important;
+        top: 44% !important;
+        transform: translateY(-50%) !important;
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 50% !important;
+        background-color: var(--color-paper, #ffffff) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        color: var(--color-ink, #000000) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 14px !important;
+        cursor: pointer !important;
+        z-index: 3 !important;
+        transition: background-color 0.2s ease !important;
+    }
+    .prod-nav:hover { background-color: var(--color-bone, #e7e5e4) !important; }
+    .prod-nav--prev { left: 6px !important; }
+    .prod-nav--next { right: 6px !important; }
+
+    .prod-empty {
+        text-align: center !important;
+        width: 100% !important;
+        color: var(--color-graphite, #595855) !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+    }
+
+    @media (max-width: 768px) {
+        .inkwave-products { padding: 60px 0 !important; }
+        .prod-carousel { padding: 0 20px !important; }
+        .prod-slide { width: 200px !important; }
+        .prod-nav { display: none !important; }     /* touch-scroll on mobile */
+    }
+</style>
+
+<script>
+    (function () {
+        var track = document.getElementById('prodTrack');
+        if (!track) return;
+        var prev = document.querySelector('.prod-nav--prev');
+        var next = document.querySelector('.prod-nav--next');
+        function page() {
+            var slide = track.querySelector('.prod-slide');
+            var w = slide ? slide.offsetWidth + 20 : track.clientWidth * 0.8;
+            var visible = Math.max(1, Math.floor(track.clientWidth / w));
+            return w * visible;
+        }
+        if (next) next.addEventListener('click', function () { track.scrollBy({ left: page(), behavior: 'smooth' }); });
+        if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -page(), behavior: 'smooth' }); });
+    })();
+</script>
+
+<!-- POINTS TOP UP SECTION - PREMIUM LUXURY DESIGN -->
+<section class="points-topup-section py-6" id="topup" style="background-color: var(--color-putty, #c4c3b6);">
+    <div class="auto-container">
+        <div class="topup-head">
+            <p class="topup-eyebrow">{{ __('common.sakura_topup_badge') }}</p>
+            <h2 class="topup-heading">{{ __('common.sakura_topup_title') }}</h2>
+            <p class="topup-sub">{{ __('common.sakura_topup_description') }}</p>
+        </div>
+
+        <div class="topup-layout">
+            @php
+                $cur = session('currency');
+                if ($cur == 'JPY') {
+                    $tiers = [
+                        ['n'=>__('common.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'¥1 - ¥79,999',        'f'=>false],
+                        ['n'=>__('common.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'¥80,000 - ¥159,999',  'f'=>false],
+                        ['n'=>__('common.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'¥160,000 - ¥239,999', 'f'=>false],
+                        ['n'=>__('common.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'¥240,000+',           'f'=>true],
+                    ];
+                } elseif ($cur == 'HKD') {
+                    $tiers = [
+                        ['n'=>__('common.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$499',       'f'=>false],
+                        ['n'=>__('common.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$500 - HK$999',     'f'=>false],
+                        ['n'=>__('common.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$1,000 - HK$1,499', 'f'=>false],
+                        ['n'=>__('common.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$1,500+',           'f'=>true],
+                    ];
+                } else {
+                    $tiers = [
+                        ['n'=>__('common.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'$1 - $499',       'f'=>false],
+                        ['n'=>__('common.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'$500 - $999',     'f'=>false],
+                        ['n'=>__('common.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'$1,000 - $1,499', 'f'=>false],
+                        ['n'=>__('common.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'$1,500+',         'f'=>true],
+                    ];
+                }
+            @endphp
+
+            <div class="tier-cards">
+                @foreach($tiers as $t)
+                    <div class="tier-card @if($t['f']) tier-card--featured @endif">
+                        @if($t['f'])<span class="tier-card__flag">{{ __('common.best_value') ?? 'Best Value' }}</span>@endif
+                        <span class="tier-card__icon"><i class="fas {{ $t['i'] }}"></i></span>
+                        <h3 class="tier-card__name">{{ $t['n'] }}</h3>
+                        <div class="tier-card__price">
+                            <span class="tier-card__mult">{{ $t['big'] }}</span>
+                            <span class="tier-card__per">{{ __('common.bonus') }}</span>
+                        </div>
+                        <ul class="tier-card__feats">
+                            <li><i class="fas fa-check-circle"></i> {{ $t['r'] }}</li>
+                            <li><i class="fas fa-check-circle"></i> {{ __('common.bonus') }} {{ $t['big'] }}</li>
+                        </ul>
+                        <button type="button" class="tier-card__btn" data-topup-focus>{{ __('common.sakura_calc_button') }}</button>
+                    </div>
+                @endforeach
             </div>
 
-            <!-- PREMIUM LUXURY CALCULATOR -->
-            <div class="col-lg-5 col-md-12">
-                <div class="luxury-calculator-wrapper">
-                    <!-- Decorative background elements -->
-                    <div class="calc-bg-blob calc-blob-1"></div>
-                    <div class="calc-bg-blob calc-blob-2"></div>
+            <p class="tier-note">
+                @if(session('currency') == 'JPY')
+                    {{ __('common.jpy_conversion_note') }}
+                @elseif(session('currency') == 'HKD')
+                    {{ __('common.hkd_conversion_note') }}
+                @else
+                    {{ __('common.usd_conversion_note') }}
+                @endif
+            </p>
 
-                    <div class="luxury-calculator">
-                        <!-- Header -->
-                        <div class="calc-header-premium">
-                            <div class="calc-header-top">
-                                <h2 class="calc-title-premium">{{ __('common.sakura_calc_title') }}</h2>
-                                <p class="calc-tagline">{{ __('common.sakura_calc_tagline') }}</p>
-                            </div>
-                            <div class="calc-currency-badge">{{ session('currency') == 'JPY' ? '¥' : '$' }}</div>
+            <div class="calc-center">
+                <div class="ink-calc">
+                    <div class="ink-calc__head">
+                        <div>
+                            <h2 class="ink-calc__title">{{ __('common.sakura_calc_title') }}</h2>
+                            <p class="ink-calc__tag">{{ __('common.sakura_calc_tagline') }}</p>
                         </div>
-
-                        <!-- Main Form -->
-                        <form action="{{ route('points.add-to-cart') }}" method="POST" class="luxury-calc-form">
-                            @csrf
-
-                            <!-- Amount Input with Premium Styling -->
-                            <div class="premium-input-section">
-                                <label class="input-label-premium">{{ __('common.sakura_calc_input_label') }}</label>
-                                <div class="premium-amount-input-wrapper">
-                                    <input
-                                        type="number"
-                                        name="amount"
-                                        id="topup_amount"
-                                        class="premium-amount-input"
-                                        placeholder="0"
-                                        min="1"
-                                        required
-                                    >
-                                    <span class="input-currency">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
-                                </div>
-                            </div>
-
-                            <!-- Points Breakdown Card -->
-                            <div class="points-breakdown-card">
-                                <div class="breakdown-row">
-                                    <span class="breakdown-label">{{ __('common.sakura_calc_base_points') }}</span>
-                                    <span class="breakdown-value" id="base_points">0</span>
-                                </div>
-                                <div class="breakdown-row">
-                                    <span class="breakdown-label">{{ __('common.sakura_calc_tier_bonus') }}</span>
-                                    <span class="breakdown-value bonus-badge" id="multiplier_display">×1</span>
-                                </div>
-                                <div class="breakdown-divider"></div>
-                                <div class="breakdown-row breakdown-total">
-                                    <span class="breakdown-label">{{ __('common.sakura_calc_youll_get') }}</span>
-                                    <span class="breakdown-value-total" id="total_points">0</span>
-                                </div>
-                            </div>
-
-                            <!-- Large Points Display -->
-                            <div class="points-display-premium">
-                                <span class="points-number" id="total_points_large">0</span>
-                                <span class="points-unit">{{ __('common.sakura_calc_points_unit') }}</span>
-                            </div>
-
-                            <!-- Benefits Checklist -->
-                            <div class="benefits-section">
-                                <div class="benefit-item">
-                                    <i class="fas fa-star"></i>
-                                    <span>{{ __('common.sakura_calc_benefit_access') }}</span>
-                                </div>
-                                <div class="benefit-item">
-                                    <i class="fas fa-image"></i>
-                                    <span>{{ __('common.sakura_calc_benefit_tutorials') }}</span>
-                                </div>
-                                <div class="benefit-item">
-                                    <i class="fas fa-crown"></i>
-                                    <span>{{ __('common.sakura_calc_benefit_vip') }}</span>
-                                </div>
-                            </div>
-
-                            <!-- Premium Button -->
-                            <button type="submit" class="btn-premium-checkout">
-                                <span class="btn-label">{{ __('common.sakura_calc_button') }}</span>
-                                <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
-                                <span class="btn-shine"></span>
-                            </button>
-                        </form>
-
-                        <!-- Trust Badge -->
-                        <div class="trust-indicator">
-                            <i class="fas fa-check-circle"></i>
-                            <span>{{ __('common.sakura_calc_trust_message') }}</span>
-                        </div>
+                        <span class="ink-calc__cur">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
                     </div>
+
+                    <form action="{{ route('points.add-to-cart') }}" method="POST" class="luxury-calc-form ink-calc__form">
+                        @csrf
+
+                        <label class="ink-calc__label">{{ __('common.sakura_calc_input_label') }}</label>
+                        <div class="ink-calc__field">
+                            <span class="ink-calc__prefix">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
+                            <input type="number" name="amount" id="topup_amount" class="ink-calc__input" placeholder="0" min="1" required>
+                        </div>
+
+                        <div class="ink-calc__rows">
+                            <div class="ink-calc__row">
+                                <span>{{ __('common.sakura_calc_base_points') }}</span>
+                                <span id="base_points">0</span>
+                            </div>
+                            <div class="ink-calc__row">
+                                <span>{{ __('common.sakura_calc_tier_bonus') }}</span>
+                                <span id="multiplier_display" class="ink-calc__mult">×1</span>
+                            </div>
+                            <div class="ink-calc__row ink-calc__row--total">
+                                <span>{{ __('common.sakura_calc_youll_get') }}</span>
+                                <span id="total_points">0</span>
+                            </div>
+                        </div>
+
+                        <div class="ink-calc__display">
+                            <span class="ink-calc__big" id="total_points_large">0</span>
+                            <span class="ink-calc__unit">{{ __('common.sakura_calc_points_unit') }}</span>
+                        </div>
+
+                        <ul class="ink-calc__benefits">
+                            <li><i class="fas fa-check"></i> {{ __('common.sakura_calc_benefit_access') }}</li>
+                            <li><i class="fas fa-check"></i> {{ __('common.sakura_calc_benefit_tutorials') }}</li>
+                            <li><i class="fas fa-check"></i> {{ __('common.sakura_calc_benefit_vip') }}</li>
+                        </ul>
+
+                        <button type="submit" class="btn-premium-checkout ink-calc__btn">
+                            <span class="btn-label">{{ __('common.sakura_calc_button') }}</span>
+                            <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                        </button>
+                    </form>
+
+                    <p class="ink-calc__trust"><i class="fas fa-check-circle"></i> {{ __('common.sakura_calc_trust_message') }}</p>
                 </div>
             </div>
         </div>
@@ -1447,6 +1752,607 @@
         }
     }
 </style>
+
+<style>
+    /* =========================================
+       SECTION 5 — TOP-UP TABLE + CALCULATOR (Structured theme redesign)
+       Overrides the legacy pink/luxury styles above. Markup + IDs unchanged.
+       ========================================= */
+    .points-topup-section { padding: 96px 40px !important; }
+    .points-topup-section .row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        align-items: stretch !important;
+        gap: 24px !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+    }
+    .points-topup-section .col-lg-5,
+    .points-topup-section .col-md-12 {
+        flex: 1 1 460px !important;
+        max-width: 560px !important;
+        width: auto !important;
+        padding: 0 !important;
+    }
+
+    /* Section header */
+    .topup-head { text-align: center !important; margin-bottom: 48px !important; }
+    .topup-eyebrow {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 11px !important; font-weight: 600 !important;
+        text-transform: uppercase !important; letter-spacing: 0.18em !important;
+        color: var(--color-graphite, #595855) !important; margin: 0 0 10px 0 !important;
+    }
+    .topup-heading {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: clamp(28px, 3.5vw, 44px) !important; font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important; letter-spacing: -0.01em !important;
+        line-height: 1.1 !important; margin: 0 0 14px 0 !important;
+    }
+    .topup-sub {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 15px !important; line-height: 1.6 !important;
+        color: var(--color-graphite, #595855) !important;
+        max-width: 560px !important; margin: 0 auto !important;
+    }
+
+    /* Card surfaces — flat, hairline border, no shadow */
+    .premium-tier-section,
+    .luxury-calculator {
+        background-color: var(--color-paper, #ffffff) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 9px !important;
+        box-shadow: none !important;
+        padding: 32px !important;
+        height: 100% !important;
+    }
+    .luxury-calculator-wrapper { position: relative !important; height: 100% !important; }
+    .calc-bg-blob { display: none !important; }
+
+    /* Tier header */
+    .tier-section-header {
+        display: flex !important; align-items: center !important; gap: 14px !important;
+        margin-bottom: 24px !important; padding-bottom: 20px !important;
+        border-bottom: 1px solid var(--color-vellum, #dfdcd5) !important;
+    }
+    .header-icon {
+        width: 40px !important; height: 40px !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 9px !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        flex-shrink: 0 !important;
+    }
+    .tier-title {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 20px !important; font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important; margin: 0 !important;
+    }
+    .tier-subtitle {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 13px !important; color: var(--color-graphite, #595855) !important;
+        margin: 4px 0 0 0 !important; font-weight: 400 !important;
+    }
+
+    /* Tier table */
+    .tier-table-wrapper { overflow-x: auto !important; }
+    .tier-table {
+        width: 100% !important; border-collapse: collapse !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+    }
+    .tier-table thead th {
+        font-size: 10px !important; font-weight: 600 !important;
+        text-transform: uppercase !important; letter-spacing: 0.1em !important;
+        color: var(--color-graphite, #595855) !important;
+        text-align: left !important;
+        padding: 0 12px 12px 12px !important;
+        border-bottom: 1px solid var(--color-vellum, #dfdcd5) !important;
+        background: transparent !important;
+    }
+    .tier-table td {
+        font-size: 13px !important;
+        color: var(--color-ink, #000000) !important;
+        padding: 14px 12px !important;
+        border-bottom: 1px solid var(--color-vellum, #dfdcd5) !important;
+        background: transparent !important;
+        vertical-align: middle !important;
+    }
+    .tier-table tbody tr:last-child td { border-bottom: none !important; }
+    .tier-row { background: transparent !important; }
+    .tier-row:hover td { background-color: var(--color-bone, #e7e5e4) !important; }
+    .tier-cell-tier {
+        display: flex !important; align-items: center !important; gap: 10px !important;
+        font-weight: 500 !important;
+    }
+    .tier-badge {
+        display: inline-flex !important; align-items: center !important; justify-content: center !important;
+        width: 22px !important; height: 22px !important;
+        background-color: var(--color-ink, #000000) !important;
+        color: var(--color-paper, #ffffff) !important;
+        border-radius: 50% !important;
+        font-size: 11px !important; font-weight: 600 !important;
+        flex-shrink: 0 !important;
+    }
+    .tier-cell-range { color: var(--color-graphite, #595855) !important; white-space: nowrap !important; }
+    .tier-cell-bonus { font-weight: 600 !important; color: var(--color-ink, #000000) !important; text-align: right !important; }
+    .currency-note {
+        margin-top: 16px !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 11.5px !important; line-height: 1.5 !important;
+        color: var(--color-graphite, #595855) !important;
+    }
+
+    /* Calculator header */
+    .calc-header-premium {
+        display: flex !important; align-items: flex-start !important; justify-content: space-between !important;
+        gap: 16px !important; margin-bottom: 24px !important; padding-bottom: 20px !important;
+        border-bottom: 1px solid var(--color-vellum, #dfdcd5) !important;
+    }
+    .calc-title-premium {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 22px !important; font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important; margin: 0 !important;
+    }
+    .calc-tagline {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 13px !important; color: var(--color-graphite, #595855) !important; margin: 4px 0 0 0 !important;
+    }
+    .calc-currency-badge {
+        width: 40px !important; height: 40px !important; flex-shrink: 0 !important;
+        background-color: var(--color-ink, #000000) !important; color: var(--color-paper, #ffffff) !important;
+        border-radius: 50% !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 16px !important; font-weight: 600 !important;
+    }
+
+    /* Amount input */
+    .premium-input-section { margin-bottom: 20px !important; }
+    .input-label-premium {
+        display: block !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 11px !important; font-weight: 600 !important;
+        text-transform: uppercase !important; letter-spacing: 0.08em !important;
+        color: var(--color-graphite, #595855) !important; margin-bottom: 8px !important;
+    }
+    .premium-amount-input-wrapper { position: relative !important; }
+    .premium-amount-input {
+        width: 100% !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 24px !important; font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 9px !important;
+        padding: 14px 44px 14px 16px !important;
+        outline: none !important; box-shadow: none !important;
+        transition: border-color 0.2s ease !important;
+    }
+    .premium-amount-input:focus { border-color: var(--color-ink, #000000) !important; }
+    .input-currency {
+        position: absolute !important; right: 16px !important; top: 50% !important;
+        transform: translateY(-50%) !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 18px !important; font-weight: 600 !important;
+        color: var(--color-graphite, #595855) !important;
+    }
+
+    /* Breakdown */
+    .points-breakdown-card {
+        background-color: var(--color-bone, #e7e5e4) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 9px !important; padding: 18px !important; margin-bottom: 20px !important;
+        box-shadow: none !important;
+    }
+    .breakdown-row { display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 6px 0 !important; }
+    .breakdown-label { font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 13px !important; color: var(--color-graphite, #595855) !important; }
+    .breakdown-value { font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 14px !important; font-weight: 600 !important; color: var(--color-ink, #000000) !important; }
+    .bonus-badge {
+        background-color: var(--color-ink, #000000) !important; color: var(--color-paper, #ffffff) !important;
+        padding: 2px 10px !important; border-radius: 28.8px !important; font-size: 12px !important;
+    }
+    .breakdown-divider { height: 1px !important; background-color: var(--color-vellum, #dfdcd5) !important; margin: 10px 0 !important; border: none !important; }
+    .breakdown-total .breakdown-label { color: var(--color-ink, #000000) !important; font-weight: 600 !important; }
+    .breakdown-value-total { font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 18px !important; font-weight: 700 !important; color: var(--color-ink, #000000) !important; }
+
+    /* Large points display — ink room */
+    .points-display-premium {
+        text-align: center !important;
+        background-color: var(--color-ink, #000000) !important;
+        border-radius: 9px !important; padding: 24px !important; margin-bottom: 20px !important;
+        display: flex !important; flex-direction: column !important; align-items: center !important; gap: 4px !important;
+    }
+    .points-number {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 44px !important; font-weight: 500 !important; line-height: 1 !important;
+        color: var(--color-paper, #ffffff) !important;
+    }
+    .points-unit {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 11px !important; text-transform: uppercase !important; letter-spacing: 0.18em !important;
+        color: rgba(255, 255, 255, 0.6) !important;
+    }
+
+    /* Benefits */
+    .benefits-section { margin-bottom: 24px !important; display: flex !important; flex-direction: column !important; gap: 10px !important; }
+    .benefit-item {
+        display: flex !important; align-items: center !important; gap: 10px !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 13px !important; color: var(--color-graphite, #595855) !important;
+    }
+    .benefit-item i { color: var(--color-ink, #000000) !important; font-size: 12px !important; width: 16px !important; text-align: center !important; }
+
+    /* Checkout button — ink pill */
+    .btn-premium-checkout {
+        position: relative !important; overflow: hidden !important; width: 100% !important;
+        display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 10px !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 13px !important; font-weight: 600 !important;
+        text-transform: uppercase !important; letter-spacing: 0.05em !important;
+        background-color: var(--color-ink, #000000) !important;
+        color: var(--color-paper, #ffffff) !important;
+        border: 1px solid var(--color-ink, #000000) !important;
+        border-radius: 28.8px !important;
+        padding: 14px 24px !important;
+        cursor: pointer !important; box-shadow: none !important;
+        transition: opacity 0.2s ease !important;
+    }
+    .btn-premium-checkout:hover { opacity: 0.85 !important; }
+    .btn-premium-checkout:disabled { opacity: 0.6 !important; cursor: default !important; }
+    .btn-shine { display: none !important; }
+
+    /* Trust indicator */
+    .trust-indicator {
+        margin-top: 16px !important;
+        display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 12px !important; color: var(--color-graphite, #595855) !important;
+    }
+    .trust-indicator i { color: var(--color-ink, #000000) !important; }
+
+    @media (max-width: 768px) {
+        .points-topup-section { padding: 60px 20px !important; }
+        .points-topup-section .col-lg-5,
+        .points-topup-section .col-md-12 { flex-basis: 100% !important; max-width: 100% !important; }
+        .premium-tier-section, .luxury-calculator { padding: 24px !important; }
+    }
+</style>
+
+<style>
+    /* =========================================
+       SECTION 5 — TIER PRICING CARDS (reference-style, four across)
+       ========================================= */
+    .topup-layout { max-width: 1200px !important; margin: 0 auto !important; }
+    .tier-cards {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;   /* four in a row */
+        gap: 20px !important;
+        align-items: stretch !important;
+    }
+    .tier-card {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        background-color: var(--color-ink, #000000) !important;
+        border: 1px solid rgba(255, 255, 255, 0.14) !important;
+        border-radius: 14px !important;
+        padding: 28px 24px !important;
+        box-shadow: none !important;
+    }
+    .tier-card--featured {
+        border-color: var(--color-paper, #ffffff) !important;
+        border-width: 1.5px !important;
+    }
+    .tier-card__flag {
+        position: absolute !important;
+        top: -11px !important;
+        right: 18px !important;
+        background-color: var(--color-paper, #ffffff) !important;
+        color: var(--color-ink, #000000) !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.08em !important;
+        padding: 4px 12px !important;
+        border-radius: 28.8px !important;
+    }
+    .tier-card__icon {
+        width: 44px !important;
+        height: 44px !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: var(--color-paper, #ffffff) !important;
+        font-size: 16px !important;
+        margin-bottom: 20px !important;
+    }
+    .tier-card__name {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 22px !important;
+        font-weight: 500 !important;
+        color: var(--color-paper, #ffffff) !important;
+        margin: 0 0 16px 0 !important;
+    }
+    .tier-card__price {
+        display: flex !important;
+        align-items: baseline !important;
+        gap: 8px !important;
+        margin-bottom: 20px !important;
+        padding-bottom: 20px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+    }
+    .tier-card__mult {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 40px !important;
+        font-weight: 500 !important;
+        line-height: 1 !important;
+        color: var(--color-paper, #ffffff) !important;
+    }
+    .tier-card__per {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 12px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.1em !important;
+        color: rgba(255, 255, 255, 0.55) !important;
+    }
+    .tier-card__feats {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 0 0 24px 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        flex-grow: 1 !important;
+    }
+    .tier-card__feats li {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 13px !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        line-height: 1.4 !important;
+    }
+    .tier-card__feats li i { color: var(--color-paper, #ffffff) !important; font-size: 13px !important; flex-shrink: 0 !important; }
+    .tier-card__btn {
+        width: 100% !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        background-color: transparent !important;
+        color: var(--color-paper, #ffffff) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        border-radius: 28.8px !important;
+        padding: 12px 18px !important;
+        cursor: pointer !important;
+        margin-top: auto !important;
+    }
+    .tier-card--featured .tier-card__btn {
+        background-color: var(--color-paper, #ffffff) !important;
+        color: var(--color-ink, #000000) !important;
+        border-color: var(--color-paper, #ffffff) !important;
+    }
+    .tier-note {
+        text-align: center !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 12px !important;
+        color: var(--color-graphite, #595855) !important;
+        margin: 24px auto 0 auto !important;
+        max-width: 720px !important;
+    }
+    .calc-center { max-width: 560px !important; margin: 56px auto 0 auto !important; }
+
+    /* ===== Remove legacy button shine + ALL hover effects in this section ===== */
+    .btn-shine { display: none !important; }
+    .btn-premium-checkout::before,
+    .btn-premium-checkout::after { display: none !important; content: none !important; }
+    .btn-premium-checkout:hover { opacity: 1 !important; transform: none !important; box-shadow: none !important; }
+    .premium-tier-section:hover,
+    .luxury-calculator:hover,
+    .luxury-calculator-wrapper:hover,
+    .points-breakdown-card:hover,
+    .points-display-premium:hover,
+    .tier-card:hover,
+    .tier-card__btn:hover,
+    .premium-amount-input:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    @media (max-width: 992px) { .tier-cards { grid-template-columns: repeat(2, 1fr) !important; } }
+    @media (max-width: 560px) { .tier-cards { grid-template-columns: 1fr !important; } }
+</style>
+
+<style>
+    /* =========================================
+       HERO SPLIT — text left, collage right
+       ========================================= */
+    .modern-hero .auto-container.hero-split {
+        display: flex !important;
+        align-items: center !important;
+        gap: 48px !important;
+        text-align: left !important;
+        max-width: 1240px !important;
+        margin: 0 auto !important;
+    }
+    .hero-col--text {
+        flex: 1 1 46% !important;
+        min-width: 0 !important;
+        animation: st-hero-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+    }
+    .hero-col--media { flex: 1 1 54% !important; min-width: 0 !important; }
+
+    .hero-split .hero-badge-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+        margin-bottom: 22px !important;
+    }
+    .hero-split .hero-mini-tag { justify-content: flex-start !important; }
+    .hero-split .modern-h1 {
+        text-align: left !important;
+        margin: 0 0 18px 0 !important;
+        max-width: none !important;
+        font-size: clamp(34px, 4vw, 54px) !important;
+        line-height: 1.12 !important;
+    }
+    .hero-split .hero-subtitle {
+        text-align: left !important;
+        margin: 0 0 28px 0 !important;
+        max-width: 520px !important;
+        font-size: 16px !important;
+    }
+    .hero-split .hero-cta-buttons { justify-content: flex-start !important; margin-bottom: 0 !important; }
+
+    .hero-collage {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        aspect-ratio: 1 / 1;
+    }
+    .hero-collage__item {
+        position: absolute;
+        margin: 0;
+        overflow: hidden;
+        border: 5px solid var(--color-paper, #ffffff);   /* white photo frame — flat collage depth */
+        border-radius: 4px;
+        background-color: var(--color-bone, #e7e5e4);
+        box-shadow: none;
+        transform: rotate(var(--r, 0deg));
+        animation: st-collage-float 6.5s ease-in-out infinite;
+        animation-delay: var(--d, 0s);
+    }
+    .hero-collage__item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* scattered, overlapping placement — a real collage */
+    .hero-collage__item:nth-child(1) { left: 3%;  top: 2%;  width: 40%; aspect-ratio: 3/4; --r: -6deg; z-index: 3; }
+    .hero-collage__item:nth-child(2) { left: 56%; top: 0;   width: 38%; aspect-ratio: 1/1; --r: 5deg;  z-index: 2; }
+    .hero-collage__item:nth-child(3) { left: 27%; top: 30%; width: 44%; aspect-ratio: 4/5; --r: -2deg; z-index: 6; }
+    .hero-collage__item:nth-child(4) { left: 1%;  top: 56%; width: 38%; aspect-ratio: 1/1; --r: 4deg;  z-index: 4; }
+    .hero-collage__item:nth-child(5) { left: 58%; top: 54%; width: 40%; aspect-ratio: 1/1; --r: -5deg; z-index: 3; }
+    .hero-collage__item:nth-child(6) { left: 62%; top: 26%; width: 28%; aspect-ratio: 3/4; --r: 8deg;  z-index: 1; }
+
+    @keyframes st-collage-float {
+        0%, 100% { transform: rotate(var(--r, 0deg)) translateY(0); }
+        50%      { transform: rotate(var(--r, 0deg)) translateY(-7px); }
+    }
+    @keyframes st-hero-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 900px) {
+        .modern-hero .auto-container.hero-split { flex-direction: column !important; text-align: center !important; gap: 36px !important; }
+        .hero-split .modern-h1, .hero-split .hero-subtitle { text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
+        .hero-split .hero-badge-wrapper { align-items: center !important; }
+        .hero-split .hero-mini-tag { justify-content: center !important; }
+        .hero-split .hero-cta-buttons { justify-content: center !important; }
+        .hero-col--text, .hero-col--media { flex-basis: 100% !important; width: 100% !important; }
+    }
+    @media (prefers-reduced-motion: reduce) { .hero-collage__item { animation: none; } }
+
+    /* =========================================
+       CALCULATOR REDESIGN — fresh classes (legacy pink cannot reach these).
+       High-specificity selectors (.calc-center .ink-calc …) win outright.
+       ========================================= */
+    .calc-center .ink-calc {
+        background-color: var(--color-paper, #ffffff) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 14px !important;
+        padding: 30px !important;
+        box-shadow: none !important;
+    }
+    .ink-calc__head {
+        display: flex !important; align-items: flex-start !important; justify-content: space-between !important;
+        gap: 16px !important; padding-bottom: 20px !important; margin-bottom: 22px !important;
+        border-bottom: 1px solid var(--color-vellum, #dfdcd5) !important;
+    }
+    .ink-calc__title { font-family: var(--font-davinci, serif) !important; font-size: 22px !important; font-weight: 500 !important; color: var(--color-ink, #000) !important; margin: 0 !important; }
+    .ink-calc__tag { font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 13px !important; color: var(--color-graphite, #595855) !important; margin: 4px 0 0 0 !important; }
+    .ink-calc__cur {
+        flex-shrink: 0 !important; width: 40px !important; height: 40px !important; border-radius: 50% !important;
+        background-color: var(--color-ink, #000) !important; color: var(--color-paper, #fff) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 16px !important; font-weight: 600 !important;
+    }
+    .ink-calc__label {
+        display: block !important; font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 11px !important; font-weight: 600 !important; text-transform: uppercase !important; letter-spacing: 0.08em !important;
+        color: var(--color-graphite, #595855) !important; margin-bottom: 8px !important;
+    }
+    .ink-calc__field {
+        display: flex !important; align-items: center !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 9px !important; padding: 0 16px !important; margin-bottom: 22px !important;
+        transition: border-color 0.2s ease !important;
+    }
+    .ink-calc__field:focus-within { border-color: var(--color-ink, #000) !important; }
+    .ink-calc__prefix { font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 20px !important; font-weight: 600 !important; color: var(--color-graphite, #595855) !important; margin-right: 8px !important; }
+    .ink-calc__input {
+        flex: 1 !important; width: 100% !important; border: none !important; outline: none !important; background: transparent !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 26px !important; font-weight: 500 !important;
+        color: var(--color-ink, #000) !important; padding: 14px 0 !important; box-shadow: none !important;
+    }
+    .ink-calc__rows {
+        background-color: var(--color-bone, #e7e5e4) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 9px !important; padding: 16px 18px !important; margin-bottom: 22px !important;
+    }
+    .ink-calc__row {
+        display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 6px 0 !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 13px !important; color: var(--color-graphite, #595855) !important;
+    }
+    .ink-calc__row > span:last-child:not(.ink-calc__mult) { color: var(--color-ink, #000) !important; font-weight: 600 !important; }
+    .ink-calc__mult {
+        background-color: var(--color-ink, #000) !important; color: var(--color-paper, #fff) !important;
+        padding: 2px 10px !important; border-radius: 28.8px !important; font-size: 12px !important;
+    }
+    .ink-calc__row--total { margin-top: 8px !important; padding-top: 12px !important; border-top: 1px solid var(--color-vellum, #dfdcd5) !important; }
+    .ink-calc__row--total > span { font-size: 15px !important; color: var(--color-ink, #000) !important; font-weight: 700 !important; }
+    .ink-calc__display {
+        background-color: var(--color-ink, #000) !important; border-radius: 9px !important;
+        padding: 22px !important; margin-bottom: 22px !important; text-align: center !important;
+        display: flex !important; flex-direction: column !important; align-items: center !important; gap: 4px !important;
+    }
+    .ink-calc__big { font-family: var(--font-davinci, serif) !important; font-size: 44px !important; font-weight: 500 !important; line-height: 1 !important; color: var(--color-paper, #fff) !important; }
+    .ink-calc__unit { font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 11px !important; text-transform: uppercase !important; letter-spacing: 0.18em !important; color: rgba(255, 255, 255, 0.6) !important; }
+    .ink-calc__benefits { list-style: none !important; padding: 0 !important; margin: 0 0 22px 0 !important; display: flex !important; flex-direction: column !important; gap: 10px !important; }
+    .ink-calc__benefits li { display: flex !important; align-items: center !important; gap: 10px !important; font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 13px !important; color: var(--color-graphite, #595855) !important; }
+    .ink-calc__benefits li i { color: var(--color-ink, #000) !important; font-size: 11px !important; }
+    .calc-center .ink-calc .btn-premium-checkout {
+        width: 100% !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 10px !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 13px !important; font-weight: 600 !important;
+        text-transform: uppercase !important; letter-spacing: 0.05em !important;
+        background: var(--color-ink, #000) !important; background-color: var(--color-ink, #000) !important; background-image: none !important;
+        color: var(--color-paper, #fff) !important;
+        border: 1px solid var(--color-ink, #000) !important; border-radius: 28.8px !important;
+        padding: 15px 24px !important; cursor: pointer !important; box-shadow: none !important;
+    }
+    .ink-calc__trust {
+        display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important;
+        margin: 16px 0 0 0 !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important; font-size: 12px !important; color: var(--color-graphite, #595855) !important;
+    }
+    .ink-calc__trust i { color: var(--color-ink, #000) !important; }
+</style>
+
+<script>
+    (function () {
+        document.querySelectorAll('.tier-card__btn[data-topup-focus]').forEach(function (b) {
+            b.addEventListener('click', function () {
+                var a = document.getElementById('topup_amount');
+                if (a) {
+                    a.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    setTimeout(function () { a.focus(); }, 350);
+                }
+            });
+        });
+    })();
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

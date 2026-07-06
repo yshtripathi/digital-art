@@ -1,126 +1,298 @@
-@extends('frontend.layouts.main') 
+@extends('frontend.layouts.main')
 @section('title','About Us')
 @section('main-content')
 
 <x-breadcrumb :title="__('common.about')" />
 
-<section class="about-page-section" style="background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%); padding: 6rem 60px !important;">
-    <div class="auto-container">
-        <div class="row align-items-center g-5">
-            <!-- Left: Content -->
-            <div class="col-xl-6 col-lg-6">
-                <div class="content-wrapper ps-xl-5">
-                    <span class="modern-badge" style="font-size: 11px; font-weight: 700; color: #E85D8E; background: rgba(232, 93, 142, 0.08); padding: 8px 14px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;">{{ __('common.sakura_about_badge') }}</span>
+{{-- ============================================================
+     SECTION 1 — OUR STORY (text + image a1.jpg)
+     ============================================================ --}}
+<section class="abt-section abt-story">
+    <div class="abt-container abt-split">
+        <div class="abt-split__text">
+            <p class="abt-eyebrow">Our Story</p>
+            <h2 class="abt-heading">{{ __('common.sakura_about_title') }}</h2>
+            <p class="abt-lead">
+                Inkwave began with a simple belief — that extraordinary art shouldn't stay behind glass.
+                We curate and produce premium digital prints across five living movements, so collectors
+                everywhere can bring gallery-grade work into their own space.
+            </p>
+            <p class="abt-body">{{ __('common.sakura_about_description') }}</p>
 
-                    <h2 class="modern-h2 mt-4 mb-4" style="font-size: 42px; font-weight: 900; color: #0a0e27; line-height: 1.2;">{{ __('common.sakura_about_title') }}</h2>
-
-                    <p class="text-muted lead mb-5" style="font-size: 16px; color: #666; line-height: 1.8;">
-                        {{ __('common.sakura_about_description') }}
-                    </p>
-
-                    <!-- Features Grid -->
-                    <div class="row g-4">
-                        <div class="col-12 rounded-4">
-                            <div class="feature-item p-4 rounded-4" style="background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(232, 93, 142, 0.1); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 20px;">
-                                <div class="d-flex align-items-center gap-3 mb-3">
-                                    <div class="icon-box d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); border-radius: 16px; color: white; font-size: 1.5rem; flex-shrink: 0;">
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <h6 class="mb-0 fw-bold" style="color: #0a0e27;">{{ __('common.sakura_why_expert_title') }}</h6>
-                                </div>
-                                <p class="mb-0 small text-muted">{{ __('common.sakura_why_expert_desc') }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-12 rounded-4">
-                            <div class="feature-item p-4 rounded-4" style="background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(232, 93, 142, 0.1); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 20px;">
-                                <div class="d-flex align-items-center gap-3 mb-3">
-                                    <div class="icon-box d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background: linear-gradient(135deg, #C86BFA 0%, #E85D8E 100%); border-radius: 16px; color: white; font-size: 1.5rem; flex-shrink: 0;">
-                                        <i class="fas fa-palette"></i>
-                                    </div>
-                                    <h6 class="mb-0 fw-bold" style="color: #0a0e27;">{{ __('common.licensing') }}</h6>
-                                </div>
-                                <p class="mb-0 small text-muted">{{ __('common.licensing_desc') }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-12 rounded-4">
-                            <div class="feature-item p-4 rounded-4" style="background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(232, 93, 142, 0.1); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 20px;">
-                                <div class="d-flex align-items-center gap-3 mb-3">
-                                    <div class="icon-box d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); border-radius: 16px; color: white; font-size: 1.5rem; flex-shrink: 0;">
-                                        <i class="fas fa-laptop-code"></i>
-                                    </div>
-                                    <h6 class="mb-0 fw-bold" style="color: #0a0e27;">{{ __('common.sakura_why_industry_title') }}</h6>
-                                </div>
-                                <p class="mb-0 small text-muted">{{ __('common.sakura_why_industry_desc') }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-12 rounded-4">
-                            <div class="feature-item p-4 rounded-4" style="background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(232, 93, 142, 0.1); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 20px;">
-                                <div class="d-flex align-items-center gap-3 mb-3">
-                                    <div class="icon-box d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background: linear-gradient(135deg, #C86BFA 0%, #E85D8E 100%); border-radius: 16px; color: white; font-size: 1.5rem; flex-shrink: 0;">
-                                        <i class="fas fa-crown"></i>
-                                    </div>
-                                    <h6 class="mb-0 fw-bold" style="color: #0a0e27;">{{ __('common.sakura_why_projects_title') }}</h6>
-                                </div>
-                                <p class="mb-0 small text-muted">{{ __('common.sakura_why_projects_desc') }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- CTA Button -->
-                    <div class="mt-5">
-                        <a href="{{route('product-lists')}}" class="btn-sakura" style="background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); color: white; border: none; border-radius: 16px; padding: 14px 32px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 4px 15px rgba(232, 93, 142, 0.3);">
-                            <i class="fas fa-arrow-right"></i>
-                            {{ __('common.discover_more') }}
-                        </a>
-                    </div>
-                </div>
+            <div class="abt-tags">
+                <span>Anime &amp; Manga</span>
+                <span>Pixel</span>
+                <span>Pop</span>
+                <span>Street</span>
+                <span>Modern Ukiyo-e</span>
             </div>
+        </div>
 
-            <!-- Right: Image -->
-            <div class="col-xl-6 col-lg-6">
-                <div class="image-wrapper" style="position: relative;">
-                    <div style="position: absolute; top: -20px; right: -20px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(232, 93, 142, 0.1) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
-                    <div style="position: absolute; bottom: -30px; left: -30px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(200, 107, 250, 0.08) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
-                    <img src="{{ asset('assets/images/i-3.webp') }}" alt="About Us" class="w-100 rounded-4" style="position: relative; z-index: 1; box-shadow: 0 20px 60px rgba(232, 93, 142, 0.2); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 20px;">
-                </div>
+        <div class="abt-split__media">
+            <figure class="abt-frame abt-frame--tall">
+                <img src="{{ asset('assets/images/a1.jpg') }}" alt="Inkwave curated artwork" loading="lazy">
+            </figure>
+        </div>
+    </div>
+</section>
+
+{{-- ============================================================
+     SECTION 2 — PHILOSOPHY (full-bleed video h2.mp4)
+     ============================================================ --}}
+<section class="abt-manifesto">
+    <video class="abt-manifesto__video" autoplay muted loop playsinline preload="auto" poster="{{ asset('assets/images/a2.jpg') }}">
+        <source src="{{ asset('assets/images/h2.mp4') }}" type="video/mp4">
+    </video>
+    <span class="abt-manifesto__veil" aria-hidden="true"></span>
+    <div class="abt-container abt-manifesto__inner">
+        <p class="abt-manifesto__label">Our Philosophy</p>
+        <p class="abt-manifesto__quote">
+            We don't just sell art. We curate movements — from ukiyo-e to pixel, street to pop —
+            and render each one at a fidelity worth framing.
+        </p>
+    </div>
+</section>
+
+{{-- ============================================================
+     SECTION 3 — WHAT SETS US APART (value cards)
+     ============================================================ --}}
+<section class="abt-section abt-values">
+    <div class="abt-container">
+        <div class="abt-head">
+            <p class="abt-eyebrow">What sets us apart</p>
+            <h2 class="abt-heading abt-heading--center">Crafted with intent</h2>
+        </div>
+
+        <div class="abt-values__grid">
+            <div class="abt-value">
+                <span class="abt-value__icon"><i class="fas fa-award"></i></span>
+                <h3 class="abt-value__title">{{ __('common.sakura_why_expert_title') }}</h3>
+                <p class="abt-value__desc">{{ __('common.sakura_why_expert_desc') }}</p>
+            </div>
+            <div class="abt-value">
+                <span class="abt-value__icon"><i class="fas fa-certificate"></i></span>
+                <h3 class="abt-value__title">{{ __('common.licensing') }}</h3>
+                <p class="abt-value__desc">{{ __('common.licensing_desc') }}</p>
+            </div>
+            <div class="abt-value">
+                <span class="abt-value__icon"><i class="fas fa-layer-group"></i></span>
+                <h3 class="abt-value__title">{{ __('common.sakura_why_industry_title') }}</h3>
+                <p class="abt-value__desc">{{ __('common.sakura_why_industry_desc') }}</p>
+            </div>
+            <div class="abt-value">
+                <span class="abt-value__icon"><i class="fas fa-crown"></i></span>
+                <h3 class="abt-value__title">{{ __('common.sakura_why_projects_title') }}</h3>
+                <p class="abt-value__desc">{{ __('common.sakura_why_projects_desc') }}</p>
             </div>
         </div>
     </div>
 </section>
 
-@push('styles')
+{{-- ============================================================
+     SECTION 4 — THE CRAFT (image a2.jpg + text, reversed)
+     ============================================================ --}}
+<section class="abt-section abt-craft">
+    <div class="abt-container abt-split abt-split--reverse">
+        <div class="abt-split__media">
+            <figure class="abt-frame abt-frame--wide">
+                <img src="{{ asset('assets/images/a2.jpg') }}" alt="Inkwave print craft" loading="lazy">
+            </figure>
+        </div>
+
+        <div class="abt-split__text">
+            <p class="abt-eyebrow">The Craft</p>
+            <h2 class="abt-heading">From pixel to paper, nothing is left to chance</h2>
+            <p class="abt-body">
+                Every Inkwave piece is prepared at gallery resolution and colour-checked by hand, so the print
+                on your wall carries the same depth and detail as the original artwork. No compromises, no filler
+                — just work worth collecting.
+            </p>
+            <ul class="abt-checklist">
+                <li><i class="fas fa-check"></i> High-resolution, large-format ready files</li>
+                <li><i class="fas fa-check"></i> Hand colour-checked before release</li>
+                <li><i class="fas fa-check"></i> Original artwork, ethically licensed</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+{{-- ============================================================
+     SECTION 5 — CTA (ink room)
+     ============================================================ --}}
+<section class="abt-cta">
+    <div class="abt-container">
+        <h2 class="abt-cta__heading">Bring a masterpiece home</h2>
+        <p class="abt-cta__sub">Explore the full collection and find the piece that speaks to you.</p>
+        <a href="{{ route('product-lists') }}" class="abt-cta__btn">{{ __('common.discover_more') }} <i class="fas fa-arrow-right"></i></a>
+    </div>
+</section>
+
 <style>
-    .feature-item {
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* =========================================================
+       ABOUT — Structured theme (flat, putty/ink, serif display)
+       ========================================================= */
+    .abt-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .abt-section { padding: 96px 0; }
+    .abt-story  { background-color: var(--color-putty, #c4c3b6); }
+    .abt-values { background-color: var(--color-bone, #e7e5e4); }
+    .abt-craft  { background-color: var(--color-putty, #c4c3b6); }
+
+    /* Shared type */
+    .abt-eyebrow {
+        font-family: var(--font-helvetica-now, sans-serif);
+        font-size: 11px; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.18em; color: var(--color-graphite, #595855); margin: 0 0 12px 0;
+    }
+    .abt-heading {
+        font-family: var(--font-davinci, serif);
+        font-size: clamp(28px, 3.6vw, 44px); font-weight: 500;
+        line-height: 1.12; letter-spacing: -0.01em;
+        color: var(--color-ink, #000); margin: 0 0 20px 0;
+    }
+    .abt-heading--center { text-align: center; margin-left: auto; margin-right: auto; max-width: 640px; }
+    .abt-lead {
+        font-family: var(--font-helvetica-now, sans-serif);
+        font-size: 17px; line-height: 1.7; color: var(--color-ink, #000);
+        margin: 0 0 16px 0; max-width: 560px;
+    }
+    .abt-body {
+        font-family: var(--font-helvetica-now, sans-serif);
+        font-size: 15px; line-height: 1.8; color: var(--color-graphite, #595855);
+        margin: 0 0 24px 0; max-width: 560px;
     }
 
-    .feature-item:hover {
-        transform: translateY(-8px);
-        background: rgba(255, 255, 255, 0.8) !important;
-        border-color: rgba(232, 93, 142, 0.25) !important;
-        box-shadow: 0 15px 40px rgba(232, 93, 142, 0.15);
+    /* Split (text + media) */
+    .abt-split { display: flex; align-items: center; gap: 56px; }
+    .abt-split--reverse { flex-direction: row-reverse; }
+    .abt-split__text { flex: 1 1 48%; min-width: 0; }
+    .abt-split__media { flex: 1 1 52%; min-width: 0; }
+
+    .abt-frame {
+        margin: 0; overflow: hidden;
+        border: 1px solid var(--color-vellum, #dfdcd5);
+        border-radius: 12px; background-color: var(--color-bone, #e7e5e4);
+        box-shadow: none;
+    }
+    .abt-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .abt-frame--tall { aspect-ratio: 4 / 5; }
+    .abt-frame--wide { aspect-ratio: 5 / 4; }
+
+    /* Movement tags */
+    .abt-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .abt-tags span {
+        font-family: var(--font-helvetica-now, sans-serif);
+        font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em;
+        color: var(--color-ink, #000);
+        background-color: var(--color-paper, #fff);
+        border: 1px solid var(--color-vellum, #dfdcd5);
+        border-radius: 28.8px; padding: 6px 14px;
     }
 
-    .image-wrapper img:hover {
-        transform: scale(1.02);
+    /* Manifesto video band */
+    .abt-manifesto {
+        position: relative; overflow: hidden;
+        min-height: 460px; display: flex; align-items: center; justify-content: center;
+        background-color: var(--color-ink, #000);
+        border-top: 1px solid var(--color-vellum, #dfdcd5);
+        border-bottom: 1px solid var(--color-vellum, #dfdcd5);
+    }
+    .abt-manifesto__video {
+        position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; z-index: 1; filter: grayscale(0.15) contrast(1.02);
+    }
+    .abt-manifesto__veil { position: absolute; inset: 0; z-index: 2; background: rgba(0, 0, 0, 0.5); pointer-events: none; }
+    .abt-manifesto__inner { position: relative; z-index: 3; text-align: center; padding-top: 80px; padding-bottom: 80px; }
+    .abt-manifesto__label {
+        font-family: var(--font-helvetica-now, sans-serif);
+        font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em;
+        color: rgba(255, 255, 255, 0.6); margin: 0 0 20px 0;
+    }
+    .abt-manifesto__quote {
+        font-family: var(--font-davinci, serif);
+        font-size: clamp(24px, 3.4vw, 40px); font-weight: 500; line-height: 1.28;
+        letter-spacing: -0.01em; color: var(--color-paper, #fff);
+        margin: 0 auto; max-width: 900px;
     }
 
-    @media (max-width: 768px) {
-        .modern-h2 {
-            font-size: 32px !important;
-        }
+    /* Values grid */
+    .abt-head { text-align: center; margin-bottom: 48px; }
+    .abt-values__grid {
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    }
+    .abt-value {
+        background-color: var(--color-paper, #fff);
+        border: 1px solid var(--color-vellum, #dfdcd5);
+        border-radius: 12px; padding: 30px 26px; box-shadow: none;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .abt-value:hover { transform: translateY(-6px); }
+    .abt-value__icon {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 46px; height: 46px; margin-bottom: 18px;
+        border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 50%;
+        color: var(--color-ink, #000); font-size: 16px;
+        background-color: var(--color-bone, #e7e5e4);
+    }
+    .abt-value__title {
+        font-family: var(--font-davinci, serif); font-size: 19px; font-weight: 500;
+        color: var(--color-ink, #000); margin: 0 0 10px 0; line-height: 1.25;
+    }
+    .abt-value__desc {
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 13.5px; line-height: 1.6;
+        color: var(--color-graphite, #595855); margin: 0;
+    }
 
-        .feature-item {
-            margin-bottom: 10px;
-        }
+    /* Checklist */
+    .abt-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+    .abt-checklist li {
+        display: flex; align-items: center; gap: 12px;
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 14px;
+        color: var(--color-ink, #000);
+    }
+    .abt-checklist li i {
+        color: var(--color-ink, #000); font-size: 11px; flex-shrink: 0;
+        width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center;
+        border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 50%;
+        background-color: var(--color-paper, #fff);
+    }
+
+    /* CTA */
+    .abt-cta {
+        background-color: var(--color-ink, #000); text-align: center;
+        padding: 100px 0;
+    }
+    .abt-cta__heading {
+        font-family: var(--font-davinci, serif); font-size: clamp(30px, 4vw, 52px); font-weight: 500;
+        line-height: 1.08; letter-spacing: -0.02em; color: var(--color-paper, #fff); margin: 0 0 14px 0;
+    }
+    .abt-cta__sub {
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 15px; line-height: 1.6;
+        color: rgba(255, 255, 255, 0.65); margin: 0 auto 32px auto; max-width: 480px;
+    }
+    .abt-cta__btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 13px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.05em;
+        background-color: var(--color-paper, #fff); color: var(--color-ink, #000);
+        border: 1px solid var(--color-paper, #fff); border-radius: 28.8px;
+        padding: 14px 28px; text-decoration: none;
+        transition: opacity 0.2s ease;
+    }
+    .abt-cta__btn:hover { opacity: 0.85; color: var(--color-ink, #000); text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .abt-section { padding: 64px 0; }
+        .abt-split, .abt-split--reverse { flex-direction: column; gap: 36px; }
+        .abt-split__text, .abt-split__media { flex-basis: 100%; width: 100%; }
+        .abt-lead, .abt-body { max-width: none; }
+        .abt-values__grid { grid-template-columns: repeat(2, 1fr); }
+        .abt-manifesto { min-height: 380px; }
+    }
+    @media (max-width: 560px) {
+        .abt-container { padding: 0 20px; }
+        .abt-values__grid { grid-template-columns: 1fr; }
     }
 </style>
-@endpush
 
 @endsection
-
-

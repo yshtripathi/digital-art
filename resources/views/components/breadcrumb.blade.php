@@ -44,7 +44,7 @@
     .st-breadcrumb {
         position: relative;
         width: 100%;
-        min-height: 260px;
+        min-height: 340px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -62,8 +62,8 @@
         height: 100%;
         object-fit: cover;
         z-index: 1;
-        opacity: 0.55;                    /* muted gallery tone */
-        filter: grayscale(0.25) contrast(1.03);
+        opacity: 1;                       /* only the video shows — b1.jpg (poster / bg) is a fallback for load-fail */
+        filter: grayscale(0.15) contrast(1.02);
         animation: st-bc-zoom 18s ease-in-out infinite alternate;  /* slow Ken Burns drift */
     }
 
@@ -79,9 +79,9 @@
         position: relative;
         z-index: 3;
         width: 100%;
-        max-width: 1200px;
+        max-width: 1320px;
         margin: 0 auto;
-        padding: 56px 40px;
+        padding: 80px 48px;
         text-align: center;
         animation: st-bc-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
@@ -147,8 +147,8 @@
     }
 
     @media (max-width: 768px) {
-        .st-breadcrumb { min-height: 200px; }
-        .st-breadcrumb__inner { padding: 40px 20px; }
+        .st-breadcrumb { min-height: 240px; }
+        .st-breadcrumb__inner { padding: 52px 24px; }
     }
     @media (prefers-reduced-motion: reduce) {
         .st-breadcrumb__media,

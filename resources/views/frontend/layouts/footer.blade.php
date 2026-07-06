@@ -4,18 +4,18 @@
     <div class="newsletter-section">
         <div class="newsletter-container">
             <div class="footer-widget">
-                <h4 class="widget-title">{{ __('common.stay_updated') }}</h4>
-                <p class="newsletter-message">{{ __('common.subscribe_description') }}</p>
+                <h4 class="widget-title">{{ __('inkwave.newsletter_title') }}</h4>
+                <p class="newsletter-message">{{ __('inkwave.newsletter_subtitle') }}</p>
                 <div class="subscribe-form">
                     <form>
                         <div class="form-group">
-                            <input type="email" name="email" class="email" placeholder="{{ __('common.your_email_address') }}" required>
+                            <input type="email" name="email" class="email" placeholder="{{ __('inkwave.email_placeholder') }}" required>
                             <button type="submit" class="subscribe-btn" aria-label="Subscribe">
-                                {{ __('common.subscribe') ?? 'Subscribe' }} <i class="fas fa-paper-plane ms-2"></i>
+                                {{ __('inkwave.subscribe_action') }} <i class="fas fa-paper-plane ms-2"></i>
                             </button>
                         </div>
                     </form>
-                    <p class="text-success suces_rinfo mt-3" style="display: none;">{{ __('common.thanks_for_subscribing') }}</p>
+                    <p class="text-success suces_rinfo mt-3" style="display: none;">{{ __('inkwave.subscribe_success') }}</p>
                 </div>
             </div>
         </div>
@@ -30,18 +30,18 @@
                     <div class="footer-widget about-widget">
                         <div class="pb-3">
                             <a href="{{route('home')}}" class="footer-logo-link">
-                                <img src="{{asset('assets/images/logo.webp')}}" alt="{{ $misc['Company Name'] ?? __('common.company_name') }}" class="footer-logo-img">
+                                <img src="{{asset('assets/images/logo.webp')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.fallback_company_name') }}" class="footer-logo-img">
                             </a>
                         </div>
-                        <p class="brand-bio mb-4">Discover, collect, and trade premium digital art prints from global creators.</p>
+                        <p class="brand-bio mb-4">{{ __('inkwave.brand_mission') }}</p>
                         <ul class="contact-info">
                             <li>
                                 <i class="fas fa-envelope"></i>
-                                <a href="mailto:{{ $misc['Company Email'] ?? __('common.company_email') }}">{{ $misc['Company Email'] ?? __('common.company_email') }}</a>
+                                <a href="mailto:{{ $misc['Company Email'] ?? __('inkwave.fallback_email') }}">{{ $misc['Company Email'] ?? __('inkwave.fallback_email') }}</a>
                             </li>
                             <li>
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>{{ $misc['Company Address'] ?? __('common.company_Address') }}</span>
+                                <span>{{ $misc['Company Address'] ?? __('inkwave.fallback_address') }}</span>
                             </li>
                         </ul>
                     </div>
@@ -50,12 +50,12 @@
                 <!-- Column 2: Platform Links -->
                 <div class="footer-column">
                     <div class="footer-widget">
-                        <h4>{{ __('common.platform') }}</h4>
+                        <h4>{{ __('inkwave.menu_explore') }}</h4>
                         <ul class="user-links">
-                            <li><a href="{{route('home')}}">{{ __('common.home') }}</a></li>
-                            <li><a href="{{route('product-lists')}}">{{ __('common.catalog') }}</a></li>
-                            <li><a href="{{route('about-us')}}">{{ __('common.about') }}</a></li>
-                            <li><a href="{{route('contact')}}">{{ __('common.contact') }}</a></li>
+                            <li><a href="{{route('home')}}">{{ __('inkwave.menu_home') }}</a></li>
+                            <li><a href="{{route('product-lists')}}">{{ __('inkwave.menu_catalog') }}</a></li>
+                            <li><a href="{{route('about-us')}}">{{ __('inkwave.menu_about') }}</a></li>
+                            <li><a href="{{route('contact')}}">{{ __('inkwave.menu_contact') }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -63,12 +63,12 @@
                 <!-- Column 3: Quick Categories -->
                 <div class="footer-column">
                     <div class="footer-widget">
-                        <h4>{{ __('common.categories') ?? 'Categories' }}</h4>
+                        <h4>{{ __('inkwave.menu_collections') }}</h4>
                         <ul class="user-links">
-                            <li><a href="{{route('product-lists', ['category' => 'anime-manga'])}}">Anime & Manga</a></li>
-                            <li><a href="{{route('product-lists', ['category' => 'pixel-art'])}}">Pixel Art</a></li>
-                            <li><a href="{{route('product-lists', ['category' => 'pop-art'])}}">Pop Art</a></li>
-                            <li><a href="{{route('product-lists', ['category' => 'street-art'])}}">Street Art</a></li>
+                            <li><a href="{{route('product-lists', ['category' => 'anime-manga'])}}">{{ __('inkwave.collection_anime') }}</a></li>
+                            <li><a href="{{route('product-lists', ['category' => 'pixel-art'])}}">{{ __('inkwave.collection_pixel') }}</a></li>
+                            <li><a href="{{route('product-lists', ['category' => 'pop-art'])}}">{{ __('inkwave.collection_pop') }}</a></li>
+                            <li><a href="{{route('product-lists', ['category' => 'street-art'])}}">{{ __('inkwave.collection_street') }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -76,12 +76,12 @@
                 <!-- Column 4: Support Links -->
                 <div class="footer-column">
                     <div class="footer-widget">
-                        <h4>{{ __('common.support') }}</h4>
+                        <h4>{{ __('inkwave.menu_assistance') }}</h4>
                         <ul class="user-links">
-                            <li><a href="{{route('pages','privacy-policy')}}">{{ __('common.privacy_policy') }}</a></li>
-                            <li><a href="{{route('pages','terms-conditions')}}">{{ __('common.terms_policy') }}</a></li>
-                            <li><a href="{{route('pages','refund-policy')}}">{{ __('common.refund_policy') }}</a></li>
-                            <li><a href="{{route('pages','delivery-policy')}}">{{ __('common.delivery_policy') }}</a></li>
+                            <li><a href="{{route('pages','privacy-policy')}}">{{ __('inkwave.legal_privacy') }}</a></li>
+                            <li><a href="{{route('pages','terms-conditions')}}">{{ __('inkwave.legal_terms') }}</a></li>
+                            <li><a href="{{route('pages','refund-policy')}}">{{ __('inkwave.legal_refund') }}</a></li>
+                            <li><a href="{{route('pages','delivery-policy')}}">{{ __('inkwave.legal_delivery') }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
     <div class="footer-bottom">
         <div class="bottom-container">
             <div class="copyright-text">
-                &copy; {{ date('Y') }} <a href="{{route('home')}}">{{ $misc['Company Name'] ?? __('common.company_name') }}</a>. {{ __('common.all_rights_reserved') }}
+                &copy; {{ date('Y') }} <a href="{{route('home')}}">{{ $misc['Company Name'] ?? __('inkwave.fallback_company_name') }}</a>. {{ __('inkwave.rights_reserved') }}
             </div>
             <div class="payment-icons">
                 <img src="{{ asset('assets/images/payment.webp') }}" alt="Payment Methods">

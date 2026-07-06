@@ -8,16 +8,16 @@
 
 {{-- ==========================================================================
      Breadcrumb — Structured theme (dark gallery room over a muted video)
-     Background: b1.mp4 (main) with b1.jpg as poster + hard fallback image.
+     Background: b1.webm (main) with b1.webp as poster + hard fallback image.
      Flat surfaces, hairline border, serif title, hexagon separators.
      ========================================================================== --}}
 <section class="st-breadcrumb" role="region" aria-label="Page header"
-         style="background-image: url('{{ asset('assets/images/b1.jpg') }}');">
+         style="background-image: url('{{ asset('assets/images/b1.webp') }}');">
 
-    {{-- Main background video; poster (b1.jpg) shows until/if the video plays --}}
+    {{-- Main background video; poster (b1.webp) shows until/if the video plays --}}
     <video class="st-breadcrumb__media" autoplay muted loop playsinline preload="auto"
-           poster="{{ asset('assets/images/b1.jpg') }}">
-        <source src="{{ asset('assets/images/b1.mp4') }}" type="video/mp4">
+           poster="{{ asset('assets/images/b1.webp') }}">
+        <source src="{{ asset('assets/images/b1.webm') }}" type="video/webm">
     </video>
 
     {{-- Flat ink veil so the white type stays legible over the imagery --}}
@@ -50,7 +50,7 @@
         justify-content: center;
         overflow: hidden;
         background-color: var(--color-ink, #000000);
-        background-size: cover;          /* b1.jpg ultimate fallback if <video> fails entirely */
+        background-size: cover;          /* b1.webp ultimate fallback if <video> fails entirely */
         background-position: center;
         border-bottom: 1px solid var(--color-vellum, #dfdcd5);
     }
@@ -62,7 +62,7 @@
         height: 100%;
         object-fit: cover;
         z-index: 1;
-        opacity: 1;                       /* only the video shows — b1.jpg (poster / bg) is a fallback for load-fail */
+        opacity: 1;                       /* only the video shows — b1.webp (poster / bg) is a fallback for load-fail */
         filter: grayscale(0.15) contrast(1.02);
         animation: st-bc-zoom 18s ease-in-out infinite alternate;  /* slow Ken Burns drift */
     }

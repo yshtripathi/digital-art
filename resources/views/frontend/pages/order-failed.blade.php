@@ -5,7 +5,7 @@
 <x-breadcrumb :title="__('common.failed')" />
 
 <section class="ord-section">
-    <img src="{{ asset('assets/images/i1.png') }}" alt="" aria-hidden="true" class="ord-bg">
+    <img src="{{ asset('assets/images/i1.webp') }}" alt="" aria-hidden="true" class="ord-bg">
     <div class="ord-card">
         <div class="ord-badge ord-badge--err"><i class="fas fa-times"></i></div>
         <h1 class="ord-title">{{ __('common.payment_error') }}</h1>

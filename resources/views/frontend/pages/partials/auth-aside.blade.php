@@ -1,5 +1,5 @@
 <div class="au-aside">
-    <img src="{{ asset('assets/images/i9.png') }}" alt="" aria-hidden="true" class="au-aside__art">
+    <img src="{{ asset('assets/images/i9.webp') }}" alt="" aria-hidden="true" class="au-aside__art">
     <div class="au-aside__inner">
         <span class="au-aside__mark"><i class="fas fa-palette"></i></span>
         <h2 class="au-aside__title">Welcome to Inkwave</h2>

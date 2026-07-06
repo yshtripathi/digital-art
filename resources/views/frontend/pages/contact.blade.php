@@ -12,9 +12,9 @@
 
     <div class="ct-grid">
 
-        {{-- ================= COMPANY INFO (image behind: i9.png + i1.png) ================= --}}
+        {{-- ================= COMPANY INFO (image behind: i9.webp + i1.webp) ================= --}}
         <div class="ct-info">
-            <img src="{{ asset('assets/images/i9.png') }}" alt="" aria-hidden="true" class="ct-info__art ct-info__art--1">
+            <img src="{{ asset('assets/images/i9.webp') }}" alt="" aria-hidden="true" class="ct-info__art ct-info__art--1">
 
             <div class="ct-info__inner">
                 <h3 class="ct-info__title">{{ __('common.contact') }}</h3>
@@ -46,10 +46,10 @@
             </div>
         </div>
 
-        {{-- ================= CONTACT FORM (video behind: form.mp4) ================= --}}
+        {{-- ================= CONTACT FORM (video behind: form.webm) ================= --}}
         <div class="ct-form">
             <video class="ct-form__video" autoplay muted loop playsinline preload="auto">
-                <source src="{{ asset('assets/images/form.mp4') }}" type="video/mp4">
+                <source src="{{ asset('assets/images/form.webm') }}" type="video/webm">
             </video>
             <span class="ct-form__veil" aria-hidden="true"></span>
 

@@ -12,7 +12,7 @@
         border-radius: 16px; overflow: hidden;
     }
 
-    /* Branding aside (ink room, i9.png art behind) */
+    /* Branding aside (ink room, i9.webp art behind) */
     .au-aside {
         position: relative; overflow: hidden;
         background-color: var(--color-ink, #000);

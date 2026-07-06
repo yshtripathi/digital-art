@@ -5,7 +5,7 @@
 <x-breadcrumb :title="__('common.about')" />
 
 {{-- ============================================================
-     SECTION 1 — OUR STORY (text + image a1.jpg)
+     SECTION 1 — OUR STORY (text + image a1.webp)
      ============================================================ --}}
 <section class="abt-section abt-story">
     <div class="abt-container abt-split">
@@ -30,18 +30,18 @@
 
         <div class="abt-split__media">
             <figure class="abt-frame abt-frame--tall">
-                <img src="{{ asset('assets/images/a1.jpg') }}" alt="Inkwave curated artwork" loading="lazy">
+                <img src="{{ asset('assets/images/a1.webp') }}" alt="Inkwave curated artwork" loading="lazy">
             </figure>
         </div>
     </div>
 </section>
 
 {{-- ============================================================
-     SECTION 2 — PHILOSOPHY (full-bleed video h2.mp4)
+     SECTION 2 — PHILOSOPHY (full-bleed video h2.webm)
      ============================================================ --}}
 <section class="abt-manifesto">
-    <video class="abt-manifesto__video" autoplay muted loop playsinline preload="auto" poster="{{ asset('assets/images/a2.jpg') }}">
-        <source src="{{ asset('assets/images/h2.mp4') }}" type="video/mp4">
+    <video class="abt-manifesto__video" autoplay muted loop playsinline preload="auto" poster="{{ asset('assets/images/a2.webp') }}">
+        <source src="{{ asset('assets/images/h2.webm') }}" type="video/webm">
     </video>
     <span class="abt-manifesto__veil" aria-hidden="true"></span>
     <div class="abt-container abt-manifesto__inner">
@@ -89,13 +89,13 @@
 </section>
 
 {{-- ============================================================
-     SECTION 4 — THE CRAFT (image a2.jpg + text, reversed)
+     SECTION 4 — THE CRAFT (image a2.webp + text, reversed)
      ============================================================ --}}
 <section class="abt-section abt-craft">
     <div class="abt-container abt-split abt-split--reverse">
         <div class="abt-split__media">
             <figure class="abt-frame abt-frame--wide">
-                <img src="{{ asset('assets/images/a2.jpg') }}" alt="Inkwave print craft" loading="lazy">
+                <img src="{{ asset('assets/images/a2.webp') }}" alt="Inkwave print craft" loading="lazy">
             </figure>
         </div>
 

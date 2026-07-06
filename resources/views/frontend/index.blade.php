@@ -5,7 +5,7 @@
 <section class="modern-hero">
     <!-- Background Video -->
     <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
-        <source src="{{ asset('assets/images/h3.mp4') }}" type="video/mp4">
+        <source src="{{ asset('assets/images/h3.webm') }}" type="video/webm">
     </video>
     <div class="hero-overlay"></div>
 
@@ -29,12 +29,12 @@
 
         <div class="hero-col hero-col--media">
             <div class="hero-collage">
-                <figure class="hero-collage__item" style="--d: 0s"><img src="{{ asset('assets/images/i2.png') }}" alt="Modern ukiyo-e dragon print"></figure>
-                <figure class="hero-collage__item" style="--d: .5s"><img src="{{ asset('assets/images/i6.jpg') }}" alt="Pop-art print"></figure>
-                <figure class="hero-collage__item" style="--d: 1s"><img src="{{ asset('assets/images/i5.png') }}" alt="White tiger ukiyo-e print"></figure>
-                <figure class="hero-collage__item" style="--d: .25s"><img src="{{ asset('assets/images/i3.png') }}" alt="Anime portrait print"></figure>
-                <figure class="hero-collage__item" style="--d: .75s"><img src="{{ asset('assets/images/i4.png') }}" alt="Neon street-art print"></figure>
-                <figure class="hero-collage__item" style="--d: 1.25s"><img src="{{ asset('assets/images/i7.jpg') }}" alt="Moonlit street-art print"></figure>
+                <figure class="hero-collage__item" style="--d: 0s"><img src="{{ asset('assets/images/i2.webp') }}" alt="Modern ukiyo-e dragon print"></figure>
+                <figure class="hero-collage__item" style="--d: .5s"><img src="{{ asset('assets/images/i6.webp') }}" alt="Pop-art print"></figure>
+                <figure class="hero-collage__item" style="--d: 1s"><img src="{{ asset('assets/images/i5.webp') }}" alt="White tiger ukiyo-e print"></figure>
+                <figure class="hero-collage__item" style="--d: .25s"><img src="{{ asset('assets/images/i3.webp') }}" alt="Anime portrait print"></figure>
+                <figure class="hero-collage__item" style="--d: .75s"><img src="{{ asset('assets/images/i4.webp') }}" alt="Neon street-art print"></figure>
+                <figure class="hero-collage__item" style="--d: 1.25s"><img src="{{ asset('assets/images/i7.webp') }}" alt="Moonlit street-art print"></figure>
             </div>
         </div>
     </div>
@@ -387,7 +387,7 @@
     .collage-center {
         left: 50% !important;
         top: 50% !important;
-        width: 440px !important;  /* Landscape image b1.jpg */
+        width: 440px !important;  /* Landscape image b1.webp */
         height: 260px !important;
         border-radius: 16px !important;
         z-index: 10 !important;
@@ -409,7 +409,7 @@
     .collage-top-left {
         left: 18% !important;
         top: 6% !important;
-        width: 200px !important;  /* Landscape image i1.png */
+        width: 200px !important;  /* Landscape image i1.webp */
         height: 150px !important;
         z-index: 5 !important;
         animation: float-up-tl 5.5s ease-in-out infinite !important;
@@ -418,7 +418,7 @@
     .collage-top-right {
         right: 20% !important;
         top: 4% !important;
-        width: 170px !important;  /* Portrait image i2.png */
+        width: 170px !important;  /* Portrait image i2.webp */
         height: 215px !important;
         z-index: 5 !important;
         animation: float-up-tr 6.2s ease-in-out infinite !important;
@@ -427,7 +427,7 @@
     .collage-bottom-right {
         right: 18% !important;
         bottom: 4% !important;
-        width: 200px !important;  /* Square image i3.png */
+        width: 200px !important;  /* Square image i3.webp */
         height: 200px !important;
         z-index: 8 !important;
         animation: float-up-br 5.8s ease-in-out infinite !important;
@@ -436,7 +436,7 @@
     .collage-far-right {
         right: 3% !important;
         top: 30% !important;
-        width: 160px !important;  /* Square image i4.png */
+        width: 160px !important;  /* Square image i4.webp */
         height: 160px !important;
         z-index: 4 !important;
         animation: float-up-fr 6.5s ease-in-out infinite !important;
@@ -445,7 +445,7 @@
     .collage-bottom-left {
         left: 14% !important;
         bottom: 2% !important;
-        width: 180px !important;  /* Portrait image i5.png */
+        width: 180px !important;  /* Portrait image i5.webp */
         height: 250px !important;
         z-index: 8 !important;
         animation: float-up-bl 5.9s ease-in-out infinite !important;
@@ -454,7 +454,7 @@
     .collage-far-left {
         left: 3% !important;
         top: 22% !important;
-        width: 150px !important;  /* Portrait image i9.png */
+        width: 150px !important;  /* Portrait image i9.webp */
         height: 240px !important;
         z-index: 4 !important;
         animation: float-up-fl 6.4s ease-in-out infinite !important;

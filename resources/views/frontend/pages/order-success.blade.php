@@ -9,7 +9,7 @@ $order = Order::where('trans_id', $transaction_id)->first();
 <x-breadcrumb :title="__('common.order_success')" />
 
 <section class="ord-section">
-    <img src="{{ asset('assets/images/i1.png') }}" alt="" aria-hidden="true" class="ord-bg">
+    <img src="{{ asset('assets/images/i1.webp') }}" alt="" aria-hidden="true" class="ord-bg">
     <div class="ord-card">
         <div class="ord-badge ord-badge--ok"><i class="fas fa-check"></i></div>
         <h1 class="ord-title">{{ __('common.order_successful') }}</h1>

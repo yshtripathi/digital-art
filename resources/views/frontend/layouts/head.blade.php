@@ -23,6 +23,16 @@
     <meta property="og:site_name" content="Inkwave">
     <meta property="og:locale" content="en_US">
 
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@inkwave">
+    <meta name="twitter:creator" content="@inkwave">
+    <meta name="twitter:title" content="@yield('title', 'Inkwave – Premium Digital Art Prints')">
+    <meta name="twitter:description" content="Premium digital art prints spanning Anime & Manga, Pixel Art, Pop Art, Street Art, and Modern Ukiyo-e — high-resolution collectible artwork ready to display.">
+    @if(isset($og_image))
+    <meta name="twitter:image" content="{{ $og_image }}">
+    @endif
+
     {{-- Favicon --}}
     <link rel="shortcut icon" href="{{ url('assets/images/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ url('assets/images/favicon.ico') }}" type="image/x-icon">
@@ -39,46 +49,76 @@
     {{-- Structured theme (Renaissance gallery on putty paper) --}}
     <link href="{{ url('css/structured.css') }}" rel="stylesheet">
 
-    {{-- Preloader Styles --}}
+    {{-- Preloader Styles — Inkwave gallery loader (flat, no gradients, no shadows) --}}
     <style>
         #preloader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #ffffff; /* pure white required for filter & mix-blend-mode to work perfectly */
+            inset: 0;
+            background: var(--color-putty, #c4c3b6);
             z-index: 999999;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease-out;
         }
-        /* HTML: <div class="loader"></div> */
-        .loader {
-            width: 120px;
-            height: 60px;
-            padding: 10px;
-            box-sizing: border-box;
+        .st-preloader {
             display: flex;
-            justify-content: space-between;
-            background: #fff;
-            filter: blur(5px) contrast(10);
-            mix-blend-mode: darken;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            animation: st-pre-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
         }
-        .loader:before,
-        .loader:after {
-            content: "";
-            width: 40px;
-            border-radius: 50%;
-            background: #E85D8E; /* Inkwave's signature brand pink */
-            animation: l3 1s infinite alternate;
+        /* Serif brand wordmark — the gallery voice */
+        .st-preloader__mark {
+            font-family: var(--font-davinci, 'Playfair Display', Georgia, serif);
+            font-size: clamp(44px, 9vw, 88px);
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            color: var(--color-ink, #000000);
         }
-        .loader:after {
-            --s: -1;
+        /* Museum wall-label caption */
+        .st-preloader__label {
+            font-family: var(--font-helvetica-now, 'Inter', sans-serif);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--color-graphite, #595855);
+            animation: st-pre-pulse 1.6s ease-in-out infinite;
         }
-        @keyframes l3 {
-            90%, 100% { transform: translate(calc(var(--s, 1) * 30px)); }
+        /* Hairline indeterminate progress — ink segment sweeping a vellum track */
+        .st-preloader__bar {
+            position: relative;
+            width: 160px;
+            height: 2px;
+            background: var(--color-vellum, #dfdcd5);
+            overflow: hidden;
+        }
+        .st-preloader__bar span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 40%;
+            background: var(--color-ink, #000000);
+            animation: st-pre-slide 1.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+        }
+        @keyframes st-pre-slide {
+            0%   { transform: translateX(-100%); }
+            100% { transform: translateX(400%); }
+        }
+        @keyframes st-pre-pulse {
+            0%, 100% { opacity: 0.4; }
+            50%      { opacity: 1; }
+        }
+        @keyframes st-pre-in {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .st-preloader,
+            .st-preloader__label,
+            .st-preloader__bar span { animation: none; }
         }
     </style>
 
@@ -90,5 +130,9 @@
 
     {{-- Preloader --}}
     <div id="preloader">
-        <div class="loader"></div>
+        <div class="st-preloader">
+            <div class="st-preloader__mark">Inkwave</div>
+            <div class="st-preloader__label">Curating the collection</div>
+            <div class="st-preloader__bar"><span></span></div>
+        </div>
     </div>

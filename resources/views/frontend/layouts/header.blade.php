@@ -39,7 +39,7 @@
                                 }
                             @endphp
                             <li>
-                                <a class="dropdown-item {{ (isset($category) && $category->id == $cat->id) ? 'active' : '' }}" href="{{ route('product-lists', $cat->slug) }}">
+                                <a class="dropdown-item {{ (isset($category->id) && $category->id == $cat->id) ? 'active' : '' }}" href="{{ route('product-lists', $cat->slug) }}">
                                     <i class="fas {{ $icon }} me-2"></i> {{ $cat->title }}
                                 </a>
                             </li>
@@ -62,7 +62,7 @@
         <div class="custom-nav-actions d-flex align-items-center">
             {{-- Language Switcher --}}
             <div class="dropdown">
-                <a href="javascript:void(0)" class="custom-switcher-btn" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="javascript:void(0)" class="custom-switcher-btn" aria-expanded="false">
                     @if(session('app_locale') == 'ja' || app()->getLocale() == 'ja')
                         <span>JP</span>
                     @else
@@ -72,12 +72,12 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown-panel shadow-sm">
                     <li>
-                        <a class="dropdown-item custom-dropdown-item {{ (session('app_locale') != 'ja' && app()->getLocale() != 'ja') ? 'active' : '' }}" href="{{ route('change.language', 'en') }}">
+                        <a class="dropdown-item {{ (session('app_locale') != 'ja' && app()->getLocale() != 'ja') ? 'active' : '' }}" href="{{ route('change.language', 'en') }}">
                             <i class="fi fi-gb me-2"></i> {{ __('common.english') }}
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item custom-dropdown-item {{ (session('app_locale') == 'ja' || app()->getLocale() == 'ja') ? 'active' : '' }}" href="{{ route('change.language', 'ja') }}">
+                        <a class="dropdown-item {{ (session('app_locale') == 'ja' || app()->getLocale() == 'ja') ? 'active' : '' }}" href="{{ route('change.language', 'ja') }}">
                             <i class="fi fi-jp me-2"></i> {{ __('common.japanese') }}
                         </a>
                     </li>
@@ -90,20 +90,18 @@
                     $currentCurrency = session('currency', 'USD');
                     $currencies = Helper::CurrenciesList();
                 @endphp
-                <a href="javascript:void(0)" class="custom-switcher-btn" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="javascript:void(0)" class="custom-switcher-btn" aria-expanded="false">
                     <span class="fw-bold">{{ Helper::getCurrencySymbol($currentCurrency) }}</span>
                     <span>{{ $currentCurrency }}</span>
                     <i class="fas fa-chevron-down custom-chevron"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown-panel shadow-sm" style="max-height: 250px; overflow-y: auto;">
                     @foreach($currencies as $cur)
-                        @if($cur->code != 'HKD')
-                            <li>
-                                <a class="dropdown-item custom-dropdown-item {{ $currentCurrency == $cur->code ? 'active' : '' }}" href="{{ route('change.currency', $cur->code) }}">
-                                    <i class="fas fa-money-bill-wave me-2"></i> {{ $cur->code }} ({{ Helper::getCurrencySymbol($cur->code) }})
-                                </a>
-                            </li>
-                        @endif
+                        <li>
+                            <a class="dropdown-item {{ $currentCurrency == $cur->code ? 'active' : '' }}" href="{{ route('change.currency', $cur->code) }}">
+                                <i class="fas fa-money-bill-wave me-2"></i> {{ $cur->code }} ({{ Helper::getCurrencySymbol($cur->code) }})
+                            </a>
+                        </li>
                     @endforeach
                 </ul>
             </div>
@@ -111,13 +109,13 @@
             @if(Auth::check())
                 {{-- Points balance --}}
                 <a href="{{ route('points.topup') }}" class="custom-points-badge d-none d-sm-flex align-items-center ms-3">
-                    <i class="fas fa-coins text-warning me-1"></i>
+                    <i class="fas fa-coins me-1"></i>
                     <span>{{ Auth::user()->points_balance ?? 0 }} CREDS</span>
                 </a>
 
                 {{-- User Profile dropdown --}}
                 <div class="dropdown ms-3">
-                    <a href="javascript:void(0)" class="custom-user-badge" data-toggle="dropdown" data-bs-toggle="dropdown">
+                    <a href="javascript:void(0)" class="custom-user-badge" aria-expanded="false">
                         <i class="fas fa-user-circle me-1"></i>
                         <span class="d-none d-sm-inline">{{ Auth::user()->name }}</span>
                         <i class="fas fa-chevron-down ms-1 custom-chevron"></i>
@@ -236,8 +234,10 @@
 
     /* Reset and custom styling for the redesigned premium header */
     .custom-nav-bar {
-        position: sticky !important;
+        position: fixed !important;
         top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
         z-index: 1030 !important;
         width: 100% !important;
         height: 72px !important;
@@ -378,13 +378,13 @@
 
     /* Show dropdown panel on hover (desktop) or when clicked (.show) */
     @media (min-width: 992px) {
-        .custom-nav-menu .dropdown:hover .custom-dropdown-panel {
+        .custom-nav-bar .dropdown:hover .custom-dropdown-panel {
             opacity: 1 !important;
             visibility: visible !important;
             transform: translateY(0) scale(1) !important;
             pointer-events: auto !important;
         }
-        .custom-nav-menu .dropdown:hover .custom-chevron {
+        .custom-nav-bar .dropdown:hover .custom-chevron {
             transform: rotate(180deg) !important;
         }
         .custom-nav-menu .dropdown:hover > .custom-nav-link::after {
@@ -564,40 +564,43 @@
        Shopping Cart Capsule Button
        ========================================================================== */
     .custom-cart-toggle {
-        background-color: var(--color-ink) !important;
-        color: var(--color-paper) !important;
-        border: 1px solid var(--color-ink) !important;
-        border-radius: 28.8px !important;
+        background-color: var(--color-paper, #ffffff) !important;
+        color: var(--color-ink, #000000) !important;
+        border: 1px solid var(--color-vellum) !important;
+        border-radius: 50% !important;
+        width: 32px !important;
         height: 32px !important;
-        padding: 0 16px !important;
         display: inline-flex !important;
         align-items: center !important;
-        gap: 8px !important;
+        justify-content: center !important;
         cursor: pointer !important;
         transition: all 0.2s ease !important;
         box-sizing: border-box !important;
-        white-space: nowrap !important;
+        position: relative !important;
     }
     .custom-cart-toggle:hover {
-        background-color: transparent !important;
+        background-color: var(--color-bone) !important;
         color: var(--color-ink) !important;
     }
     .custom-cart-toggle i {
         font-size: 13px !important;
     }
     .custom-cart-count {
-        background-color: var(--color-paper) !important;
-        color: var(--color-ink) !important;
-        font-size: 10px !important;
+        position: absolute !important;
+        top: -6px !important;
+        right: -6px !important;
+        background-color: var(--color-ink, #000000) !important;
+        color: var(--color-paper, #ffffff) !important;
+        font-size: 9px !important;
         font-weight: 700 !important;
         border-radius: 50% !important;
-        width: 18px !important;
-        height: 18px !important;
+        width: 16px !important;
+        height: 16px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        border: 1px solid var(--color-paper, #ffffff) !important;
         transition: all 0.2s ease !important;
-        border: 1px solid var(--color-ink) !important;
     }
     .custom-cart-toggle:hover .custom-cart-count {
         background-color: var(--color-ink) !important;
@@ -607,6 +610,13 @@
     /* ==========================================================================
        Dropdown Panel & Item Styling
        ========================================================================== */
+    .custom-nav-bar .dropdown {
+        position: relative !important;
+    }
+    .custom-nav-bar .dropdown-menu-end {
+        right: 0 !important;
+        left: auto !important;
+    }
     .custom-dropdown-panel {
         display: block !important;
         opacity: 0 !important;
@@ -614,64 +624,56 @@
         transform: translateY(12px) scale(0.97) !important;
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
         pointer-events: none !important;
-        background-color: rgba(255, 255, 255, 0.95) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
+        background-color: var(--color-paper, #ffffff) !important;
         border: 1px solid var(--color-vellum, #dfdcd5) !important;
-        border-radius: 12px !important;
-        padding: 12px !important;
-        margin-top: 12px !important;
-        min-width: 280px !important;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04) !important;
+        border-radius: 9px !important; /* theme card radius */
+        padding: 8px !important;
+        margin-top: 10px !important;
+        min-width: 200px !important;
+        box-shadow: none !important; /* flat surfaces — no shadows */
         position: absolute !important;
         z-index: 1050 !important;
+        list-style: none !important;
+        list-style-type: none !important;
+        padding-left: 0 !important;
     }
-    @keyframes dropdown-fade-in {
-        from { opacity: 0; transform: translateY(8px) scale(0.98); }
-        to { opacity: 1; transform: translateY(0) scale(1); }
+    .custom-dropdown-panel li {
+        list-style: none !important;
+        list-style-type: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
     .custom-dropdown-panel .dropdown-item {
-        font-family: var(--font-helvetica-now) !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
         font-size: 13.5px !important;
         font-weight: 550 !important;
         color: var(--color-ink, #000000) !important;
-        padding: 10px 14px !important;
-        border-radius: 8px !important;
+        padding: 8px 12px !important;
+        border-radius: 6px !important;
         display: flex !important;
         align-items: center !important;
-        gap: 12px !important;
-        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        gap: 8px !important;
+        transition: all 0.2s ease !important;
         background-color: transparent !important;
-        margin-bottom: 4px !important;
+        margin-bottom: 2px !important;
+        white-space: nowrap !important;
     }
     .custom-dropdown-panel .dropdown-item:last-child {
         margin-bottom: 0 !important;
     }
     .custom-dropdown-panel .dropdown-item i {
         font-size: 13px !important;
-        width: 30px !important;
-        height: 30px !important;
-        border-radius: 50% !important;
-        background-color: var(--color-bone, #e7e5e4) !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
         color: var(--color-ink, #000000) !important;
-        transition: all 0.25s ease !important;
+        transition: all 0.2s ease !important;
         flex-shrink: 0 !important;
     }
     .custom-dropdown-panel .dropdown-item:hover,
     .custom-dropdown-panel .dropdown-item.active {
         background-color: var(--color-bone, #e7e5e4) !important;
         color: var(--color-ink, #000000) !important;
-        transform: translateX(4px) !important;
         text-decoration: none !important;
-    }
-    .custom-dropdown-panel .dropdown-item:hover i {
-        background-color: var(--color-ink, #000000) !important;
-        color: var(--color-paper, #ffffff) !important;
-        transform: scale(1.1) !important;
+        padding-left: 14px !important;
     }
 
     /* ==========================================================================
@@ -841,6 +843,8 @@
         font-size: 20px !important;
         color: var(--color-ink, #000000) !important;
         transition: opacity 0.2s ease !important;
+        position: relative !important;
+        z-index: 10 !important; /* keep close (cross) button in front of cart content */
     }
 
     .cartcanvas__close:hover {
@@ -852,6 +856,11 @@
         overflow-y: auto !important;
         margin: 0 !important;
         padding: 0 !important;
+        scrollbar-width: none !important; /* Firefox */
+        -ms-overflow-style: none !important;  /* IE and Edge */
+    }
+    .cart-list::-webkit-scrollbar {
+        display: none !important; /* Chrome, Safari, and Opera */
     }
 
     .cart-item {
@@ -861,7 +870,7 @@
         padding: 16px !important;
         border: 1px solid var(--color-vellum, #dfdcd5) !important;
         background-color: var(--color-paper, #ffffff) !important;
-        border-radius: 4px !important;
+        border-radius: 9px !important; /* theme card radius */
         margin-bottom: 16px !important;
         position: relative !important;
         box-shadow: none !important;
@@ -971,7 +980,7 @@
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
         padding: 10px 16px !important;
-        border-radius: 4px !important;
+        border-radius: 28.8px !important; /* theme pill radius for action buttons */
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -1028,7 +1037,7 @@
 
 {{-- Cart Sidebar --}}
 <div class="offcanvas__overlay"></div>
-<div class="cartcanvas__info glass-card" style="border-radius: 28px 0 0 28px;">
+<div class="cartcanvas__info">
     <div class="cart-header d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
         <h4 class="fw-bold mb-0">{{ __('common.shopping_cart') }}</h4>
         <div class="cartcanvas__close fs-4" style="cursor: pointer;"><i class="fas fa-times"></i></div>
@@ -1059,27 +1068,27 @@
                     @endphp
                     @if($isPoints)
                         {{-- Points Item (No Image) --}}
-                        <li class="cart-item cart-item-points d-flex align-items-center justify-content-between mb-4 p-4 rounded-4 bg-white shadow-sm border border-light position-relative">
+                        <li class="cart-item cart-item-points d-flex align-items-center justify-content-between position-relative">
                             <a href="{{ route('cart-delete',$cart->id) }}" class="remove-item position-absolute top-0 end-0 m-2 text-danger opacity-50">
                                 <i class="fas fa-times-circle"></i>
                             </a>
                             <div class="item-details flex-grow-1">
                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                    <i class="fas fa-coins" style="color: var(--accent-primary); font-size: 1.2rem; flex-shrink: 0;"></i>
+                                    <i class="fas fa-coins" style="color: var(--color-ink); font-size: 1.2rem; flex-shrink: 0;"></i>
                                     <h6 class="mb-0 fw-bold" style="word-wrap: break-word; white-space: normal; overflow-wrap: break-word;">{{ $item_title }}</h6>
                                 </div>
                                 <p class="mb-0 small text-muted">
-                                    {{ $cart->quantity }} x <span class="fw-bold" style="color: var(--accent-primary);">{{ number_format($cart->points) }} {{ __('common.credits') }}</span>
+                                    {{ $cart->quantity }} x <span class="fw-bold" style="color: var(--color-ink);">{{ number_format($cart->points) }} {{ __('common.credits') }}</span>
                                 </p>
                             </div>
                             <div class="text-end ms-3">
                                 <p class="mb-0 small text-muted">{{ __('common.total') }}:</p>
-                                <p class="mb-0 fw-bold" style="color: var(--accent-primary); font-size: 1.1rem;">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2) }}</p>
+                                <p class="mb-0 fw-bold" style="color: var(--color-ink); font-size: 1.1rem;">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2) }}</p>
                             </div>
                         </li>
                     @else
                         {{-- Product Item (With Image) --}}
-                        <li class="cart-item d-flex align-items-center gap-3 mb-4 p-3 rounded-4 bg-white shadow-sm border border-light position-relative">
+                        <li class="cart-item d-flex align-items-center gap-3 position-relative">
                             <a href="{{ route('cart-delete',$cart->id) }}" class="remove-item position-absolute top-0 end-0 m-2 text-danger opacity-50">
                                 <i class="fas fa-times-circle"></i>
                             </a>
@@ -1089,12 +1098,12 @@
                             <div class="item-details flex-grow-1 min-width-0">
                                 <h6 class="mb-1 fw-bold" style="word-wrap: break-word; white-space: normal; overflow-wrap: break-word;">{{ $item_title }}</h6>
                                 <div class="mb-1">
-                                    <span class="badge rounded-2 px-2 py-1" style="background: rgba(232, 93, 142, 0.1); color: #E85D8E; font-size: 10px; font-weight: 600;">
+                                    <span class="badge rounded-2 px-2 py-1" style="background: var(--color-bone); color: var(--color-ink); border: 1px solid var(--color-vellum); font-size: 10px; font-weight: 600;">
                                         <i class="fas fa-palette me-1"></i> {{ $item_level }}
                                     </span>
                                 </div>
                                 <p class="mb-0 small text-muted">
-                                    {{ $cart->quantity }} x <span class="fw-bold" style="color: var(--accent-primary);">{{ number_format($cart->points) }} {{ __('common.credits') }}</span>
+                                    {{ $cart->quantity }} x <span class="fw-bold" style="color: var(--color-ink);">{{ number_format($cart->points) }} {{ __('common.credits') }}</span>
                                 </p>
                             </div>
                         </li>
@@ -1104,7 +1113,7 @@
                 <li class="text-center py-5">
                     <div class="opacity-25 mb-3"><i class="fas fa-shopping-basket fa-4x"></i></div>
                     <p class="text-muted fw-bold">{{ __('common.no_cart_available') }}</p>
-                    <a href="{{ route('product-lists') }}" class="btn-sakura-outline small">{{ __('common.catalog') }}</a>
+                    <a href="{{ route('product-lists') }}" class="btn-sakura-outline" style="width: auto !important; display: inline-flex; padding: 7px 18px !important; font-size: 11px !important;">{{ __('common.catalog') }}</a>
                 </li>
             @endif
         </ul>

@@ -5,1409 +5,655 @@
 <section class="modern-hero">
     <!-- Background Video -->
     <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
-        <source src="{{ asset('assets/images/hero.mp4') }}" type="video/mp4">
+        <source src="{{ asset('assets/images/h3.mp4') }}" type="video/mp4">
     </video>
-
-    <div class="modern-hero-bg"></div>
     <div class="hero-overlay"></div>
-    <div class="modern-blob modern-blob-1"></div>
-    <div class="modern-blob modern-blob-2"></div>
 
-    <div class="auto-container">
-        <div class="hero-content-wrapper">
-            <!-- Centered Hero Content -->
-            <div class="hero-center-content">
-                <div class="hero-badge-wrapper">
-                    <span class="hero-badge">{{ __('common.digital_art') }}</span>
-                </div>
-
-                <h1 class="modern-h1">
-                    {{ __('common.sakura_hero_title') }}
-                </h1>
-
-                <p class="hero-subtitle">
-                    {{ __('common.sakura_hero_subtitle') }}
-                </p>
-
-                <!-- CTA Buttons -->
-                <div class="hero-cta-buttons">
-                    <a href="{{ route('product-lists') }}" class="modern-btn modern-btn-solid">
-                        {{ __('common.sakura_hero_cta') }} <i class="fas fa-arrow-right ms-2"></i>
-                    </a>
-                    <a href="{{ route('contact') }}" class="modern-btn modern-btn-outline">
-                        {{ __('common.get_in_touch') }}
-                    </a>
-                </div>
+    <!-- Main Content -->
+    <div class="auto-container relative z-10 text-center">
+        <div class="hero-badge-wrapper flex-column align-items-center gap-2">
+            <span class="hero-badge">{{ __('common.digital_art') ?? 'Digital Art' }}</span>
+            <div class="hero-mini-tag d-flex align-items-center gap-2 mt-2">
+                <span class="pulse-dot"></span>
+                <span>Museum Quality Prints &bull; Worldwide Express Delivery</span>
             </div>
-
-           
         </div>
+        <h1 class="modern-h1 mx-auto text-center" style="max-width: 900px; font-size: clamp(48px, 6vw, 72px); line-height: 1.15; letter-spacing: -0.02em;">
+            Transform Your Vision into <br/>
+            <span class="highlight-art">Masterpiece Artworks</span>
+        </h1>
+        <p class="hero-subtitle mx-auto text-center mt-4" style="max-width: 680px; font-size: 18px; line-height: 1.6; color: var(--color-graphite, #595855);">
+            Experience the next generation of creative expression. Inkwave combines cutting-edge AI rendering with museum-quality curation to deliver flawless, high-resolution digital prints. Your canvas awaits.
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div class="hero-cta-buttons justify-content-center">
+            <a href="{{ route('product-lists') }}" class="modern-btn modern-btn-solid">
+                {{ __('common.sakura_hero_cta') ?? 'Browse Catalog' }} <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+            <a href="{{ route('contact') }}" class="modern-btn modern-btn-outline">
+                {{ __('common.get_in_touch') ?? 'Get In Touch' }}
+            </a>
+        </div>
+    </div>
+
+    <!-- Text above the gallery -->
+    <div class="auto-container relative z-10 hero-gallery-block">
+        <p class="gallery-eyebrow">The Inkwave Collection</p>
+        <h2 class="gallery-heading">Five movements, one gallery wall</h2>
+
+        <!-- Featured Gallery Wall — images shown at their true aspect ratio -->
+        <div class="hero-gallery">
+            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i2.png') }}" alt="Modern ukiyo-e dragon print"></figure>
+            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i3.png') }}" alt="Anime portrait print"></figure>
+            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i4.png') }}" alt="Neon street-art print"></figure>
+            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i5.png') }}" alt="White tiger ukiyo-e print"></figure>
+            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i6.jpg') }}" alt="Pop-art print"></figure>
+            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i7.jpg') }}" alt="Moonlit street-art print"></figure>
+            <figure class="hero-gallery-item"><img src="{{ asset('assets/images/i8.jpg') }}" alt="Manga line-art print"></figure>
+        </div>
+
+        <!-- Text below the gallery -->
+        <p class="gallery-caption">
+            Every Inkwave piece is an original, high-resolution print — spanning Anime &amp; Manga, Pixel, Pop, Street, and Modern Ukiyo-e. Printed to gallery standard and ready to frame.
+        </p>
+        <a href="{{ route('product-lists') }}" class="gallery-link">Explore the full catalog</a>
     </div>
 </section>
 
 <style>
     /* =========================================
-       MODERN HERO - VERTICAL VIDEO + CONTENT
+       MODERN HERO - PHOTO COLLAGE & STATS
        ========================================= */
-
     .modern-hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(135deg, var(--bg-soft) 0%, var(--bg-secondary) 100%);
+        width: 100% !important;
+        position: relative !important;
+        overflow: hidden !important;
+        background-color: var(--color-putty, #c4c3b6) !important; /* flat putty canvas — no gradient per DESIGN.md */
+        padding-top: 140px !important;
+        padding-bottom: 80px !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
     }
 
-    /* Background Video */
     .hero-bg-video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transform: translate(-50%, -50%);
-        z-index: 0;
-        opacity: 0.6;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 1 !important;
+        opacity: 0.85 !important;
+        filter: grayscale(0.12) contrast(1.03) !important; /* muted gallery tone, video stays visible */
     }
 
-    .modern-hero-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%);
-        z-index: 0;
-        opacity: 0.5;
-    }
-
-    /* Overlay for readability */
     .hero-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(232, 93, 142, 0.15) 100%);
-        z-index: 1;
+        position: absolute !important;
+        inset: 0 !important;
+        background: rgba(196, 195, 182, 0.42) !important; /* subtle flat putty veil — readable, video visible */
+        z-index: 2 !important;
+        pointer-events: none !important;
     }
 
-    .modern-blob {
-        position: absolute;
-        border-radius: 50%;
-        opacity: 0;
-        z-index: 1;
-        display: none;
+    /* =========================================
+       HERO GALLERY WALL — centered, aspect-true
+       ========================================= */
+    .hero-gallery-block {
+        margin-top: 64px !important;
+    }
+    .gallery-eyebrow {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.18em !important;
+        color: var(--color-graphite, #595855) !important;
+        text-align: center !important;
+        margin: 0 0 10px 0 !important;
+    }
+    .gallery-heading {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: clamp(26px, 3.2vw, 40px) !important;
+        font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+        letter-spacing: -0.01em !important;
+        line-height: 1.1 !important;
+        text-align: center !important;
+        margin: 0 auto 36px auto !important;
+        max-width: 720px !important;
+    }
+    .hero-gallery {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 16px !important;
+        max-width: 1180px !important;
+        margin: 0 auto !important;
+    }
+    .hero-gallery-item {
+        height: 280px !important;
+        margin: 0 !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 9px !important;       /* theme card radius */
+        overflow: hidden !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+        box-shadow: none !important;         /* flat — no shadow */
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .hero-gallery-item img {
+        height: 100% !important;
+        width: auto !important;              /* preserve each image's real height : width */
+        display: block !important;
+        object-fit: contain !important;
+    }
+    .hero-gallery-item:hover {
+        transform: translateY(-6px) !important;
+    }
+    .gallery-caption {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 15px !important;
+        line-height: 1.7 !important;
+        color: var(--color-graphite, #595855) !important;
+        text-align: center !important;
+        max-width: 640px !important;
+        margin: 40px auto 20px auto !important;
+    }
+    .gallery-link {
+        display: inline-block !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.08em !important;
+        color: var(--color-ink, #000000) !important;
+        text-decoration: none !important;
+        border-bottom: 1px solid var(--color-ink, #000000) !important;
+        padding-bottom: 3px !important;
+        transition: opacity 0.2s ease !important;
+    }
+    .gallery-link:hover {
+        opacity: 0.6 !important;
+    }
+    @media (max-width: 768px) {
+        .hero-gallery-item { height: 180px !important; }
+    }
+    @media (max-width: 480px) {
+        .hero-gallery-item { height: 140px !important; }
     }
 
-    .modern-blob-1 {
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(232, 93, 142, 0.15), transparent);
-        top: -100px;
-        right: -100px;
-    }
-
-    .modern-blob-2 {
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, rgba(200, 107, 250, 0.1), transparent);
-        bottom: -50px;
-        left: -50px;
-    }
-
-    .auto-container {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-    }
-
-    /* Hero Content Wrapper - Centered Layout */
-    .hero-content-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 4rem;
-        align-items: center;
-        justify-content: center;
-        min-height: 90vh;
-        padding: 4rem 3rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    /* Centered Text Section */
-    .hero-center-content {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        animation: slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        text-align: center;
-        max-width: 800px;
-    }
-
-    /* Features Grid */
-    .hero-features-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-        width: 100%;
-        animation: slideInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
-    }
-
-    /* Simple Feature Cards */
-    .simple-feature {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-        text-align: center;
-        animation: fadeInUp 0.6s ease-out backwards;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .simple-feature:hover {
-        transform: translateY(-8px);
-    }
-
-    .simple-feature:nth-child(1) { animation-delay: 0.2s; }
-    .simple-feature:nth-child(2) { animation-delay: 0.3s; }
-    .simple-feature:nth-child(3) { animation-delay: 0.4s; }
-    .simple-feature:nth-child(4) { animation-delay: 0.5s; }
-
-    .feature-number {
-        font-size: 2.5rem;
-        font-weight: 900;
-        background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin: 0;
-    }
-
-    .simple-feature h5 {
-        margin: 0;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #0a0e27;
-        letter-spacing: -0.3px;
-    }
-
-    .simple-feature p {
-        margin: 0;
-        font-size: 0.9rem;
-        color: #999;
-        font-weight: 500;
-        line-height: 1.5;
-    }
-
-    @keyframes slideInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(40px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes slideInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
+    .modern-hero .auto-container {
+        position: relative !important;
+        z-index: 3 !important;
+        text-align: center !important; /* Bootstrap utilities aren't loaded — center here */
     }
 
     .hero-badge-wrapper {
-        display: flex;
-        gap: 0.5rem;
-        margin-bottom: 0.5rem;
-        justify-content: center;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 10px !important;
+        justify-content: center !important;
+        margin-bottom: 16px !important;
+    }
+
+    .hero-mini-tag {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        font-size: 11px !important;
+        color: var(--color-graphite, #595855) !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.05em !important;
+        text-transform: uppercase !important;
+    }
+
+    .pulse-dot {
+        width: 6px !important;
+        height: 6px !important;
+        background-color: var(--color-ink, #000000) !important;
+        border-radius: 50% !important;
+        display: inline-block !important;
+        animation: pulse-glow 1.5s infinite ease-in-out !important;
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.3); }
     }
 
     .hero-badge {
-        display: inline-block;
-        background: linear-gradient(135deg, rgba(232, 93, 142, 0.12), rgba(200, 107, 250, 0.08));
-        color: #E85D8E;
-        padding: 0.7rem 1.8rem;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 1.2px;
-        border: 1.5px solid rgba(232, 93, 142, 0.3);
-        box-shadow: 0 4px 15px rgba(232, 93, 142, 0.1);
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        animation: fadeIn 0.8s ease-out backwards;
-    }
-
-    .hero-badge:hover {
-        border-color: rgba(232, 93, 142, 0.5);
-        box-shadow: 0 8px 25px rgba(232, 93, 142, 0.2);
-        background: linear-gradient(135deg, rgba(232, 93, 142, 0.18), rgba(200, 107, 250, 0.12));
-        transform: translateY(-2px);
+        display: inline-block !important;
+        background-color: var(--color-paper, #ffffff) !important;
+        color: var(--color-ink, #000000) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        padding: 6px 16px !important;
+        border-radius: 20px !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.15em !important;
     }
 
     .modern-h1 {
-        font-size: 3.2rem;
-        font-weight: 900;
-        color: #0a0e27;
-        line-height: 1.15;
-        letter-spacing: -0.02em;
-        margin: 0.5rem 0 1rem 0;
-        animation: slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s backwards;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .modern-h1:hover {
-        color: #E85D8E;
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 56px !important;
+        font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+        line-height: 1.15 !important;
+        letter-spacing: -0.02em !important;
+        margin: 16px auto 20px auto !important;
+        text-align: center !important;
     }
 
     .hero-subtitle {
-        font-size: 1rem;
-        color: #666;
-        line-height: 1.8;
-        margin: 0 0 1.5rem 0;
-        font-weight: 500;
-        animation: fadeIn 0.8s ease-out 0.2s backwards;
+        font-size: 15px !important;
+        color: var(--color-graphite, #595855) !important;
+        line-height: 1.7 !important;
+        margin: 0 auto 30px auto !important;
+        text-align: center !important;
     }
 
-
-    /* CTA Buttons */
     .hero-cta-buttons {
-        display: flex;
-        gap: 1rem;
-        margin: 2rem 0 2.5rem 0;
-        flex-wrap: wrap;
-        animation: fadeInUp 0.8s ease-out 0.4s backwards;
-        justify-content: center;
+        display: flex !important;
+        gap: 16px !important;
+        margin-bottom: 40px !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
     }
 
     .modern-btn {
-        padding: 1rem 2.5rem;
-        border-radius: 16px;
-        font-weight: 700;
-        font-size: 0.9rem;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.6rem;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        border: none;
-        cursor: pointer;
-        white-space: nowrap;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        padding: 12px 32px !important;
+        border-radius: 24px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-decoration: none !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer !important;
     }
 
     .modern-btn-solid {
-        background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%);
-        color: white;
-        box-shadow: 0 10px 30px rgba(232, 93, 142, 0.3);
+        background-color: var(--color-ink, #000000) !important;
+        color: var(--color-paper, #ffffff) !important;
+        border: 1px solid var(--color-ink, #000000) !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+
+    .modern-btn-solid::before {
+        content: "" !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+        transition: all 0.6s ease !important;
+    }
+
+    .modern-btn-solid:hover::before {
+        left: 100% !important;
     }
 
     .modern-btn-solid:hover {
-        background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%);
-        color: white;
-        transform: translateY(-3px);
-        box-shadow: 0 15px 40px rgba(232, 93, 142, 0.4);
-    }
-
-    .modern-btn-solid:active {
-        transform: translateY(-1px);
+        background-color: transparent !important;
+        color: var(--color-ink, #000000) !important;
     }
 
     .modern-btn-outline {
-        background: white;
-        color: #E85D8E;
-        border: 2px solid #E85D8E;
+        background-color: transparent !important;
+        color: var(--color-ink, #000000) !important;
+        border: 1px solid var(--color-ink, #000000) !important;
     }
 
     .modern-btn-outline:hover {
-        background: white;
-        color: #E85D8E;
-        border-color: #E85D8E;
-        transform: translateY(-3px);
-        box-shadow: 0 12px 30px rgba(232, 93, 142, 0.2);
+        background-color: var(--color-ink, #000000) !important;
+        color: var(--color-paper, #ffffff) !important;
     }
 
-    /* Avatar Stack */
-    .hero-avatar-stack {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(232, 93, 142, 0.15);
+    .highlight-art {
+        font-family: var(--font-davinci, serif) !important;
+        font-style: italic !important;
+        color: var(--color-ink, #000000) !important; /* flat ink — no gradient/saturated color per DESIGN.md */
+        display: inline-block !important;
+        padding-right: 0.1em !important;
     }
 
-    .avatar-group {
-        display: flex;
-        align-items: center;
+    /* Floating Image Collage animations with custom rotation tilt effects */
+    @keyframes float-up-tl {
+        0% { transform: translateY(0px) rotate(-3deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+        50% { transform: translateY(-12px) rotate(-1deg); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
+        100% { transform: translateY(0px) rotate(-3deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+    }
+    @keyframes float-up-tr {
+        0% { transform: translateY(0px) rotate(2deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+        50% { transform: translateY(-12px) rotate(4deg); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
+        100% { transform: translateY(0px) rotate(2deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+    }
+    @keyframes float-up-br {
+        0% { transform: translateY(0px) rotate(-1.5deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+        50% { transform: translateY(-12px) rotate(0.5deg); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
+        100% { transform: translateY(0px) rotate(-1.5deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+    }
+    @keyframes float-up-fr {
+        0% { transform: translateY(0px) rotate(4deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+        50% { transform: translateY(-12px) rotate(2deg); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
+        100% { transform: translateY(0px) rotate(4deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+    }
+    @keyframes float-up-bl {
+        0% { transform: translateY(0px) rotate(1deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+        50% { transform: translateY(-12px) rotate(3deg); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
+        100% { transform: translateY(0px) rotate(1deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+    }
+    @keyframes float-up-fl {
+        0% { transform: translateY(0px) rotate(-2deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+        50% { transform: translateY(-12px) rotate(-4deg); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
+        100% { transform: translateY(0px) rotate(-2deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
     }
 
-    .avatar-group img {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: 3px solid white;
-        margin-right: -12px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-        transition: transform 0.3s ease;
+    .hero-collage-container {
+        height: 600px !important;
+        position: relative !important;
+        width: 100% !important;
+        max-width: 1200px !important;
+        margin: 50px auto !important;
+        z-index: 3 !important;
     }
 
-    .avatar-group img:hover {
-        transform: scale(1.1);
-        margin-right: -8px;
+    .collage-wrapper {
+        position: relative !important;
+        width: 100% !important;
+        height: 100% !important;
     }
 
-    .avatar-text {
-        font-size: 0.85rem;
-        color: var(--text-secondary);
-        margin: 0;
-        font-weight: 600;
-        letter-spacing: 0.3px;
+    .collage-item {
+        position: absolute !important;
+        overflow: hidden !important;
+        background-color: var(--color-paper, #ffffff) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        border-radius: 12px !important;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease !important;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06) !important;
     }
 
-    /* =========================================
-       RESPONSIVE DESIGN
-       ========================================= */
+    .collage-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
 
-    @media (max-width: 1024px) {
-        .hero-content-wrapper {
-            gap: 3.5rem;
-            padding: 3rem 2rem;
+    /* Elevate and glow hover effect on all images */
+    .collage-item:hover {
+        transform: scale(1.1) rotate(0deg) !important;
+        animation-play-state: paused !important;
+        z-index: 99 !important;
+        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.2) !important;
+        border-color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    .collage-item:hover img {
+        transform: scale(1.05) !important;
+    }
+
+    /* Absolute Placement matching actual asset horizontal / vertical aspect ratios */
+    .collage-center {
+        left: 50% !important;
+        top: 50% !important;
+        width: 440px !important;  /* Landscape image b1.jpg */
+        height: 260px !important;
+        border-radius: 16px !important;
+        z-index: 10 !important;
+    }
+
+    @keyframes float-up-center {
+        0% { transform: translate(-50%, -50%) translateY(0px); box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
+        50% { transform: translate(-50%, -50%) translateY(-15px); box-shadow: 0 35px 65px rgba(0,0,0,0.15); }
+        100% { transform: translate(-50%, -50%) translateY(0px); box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
+    }
+    .collage-center.animate-float-up {
+        animation: float-up-center 6s ease-in-out infinite !important;
+    }
+    .collage-center:hover {
+        transform: translate(-50%, -50%) scale(1.08) !important;
+        animation: none !important;
+    }
+
+    .collage-top-left {
+        left: 18% !important;
+        top: 6% !important;
+        width: 200px !important;  /* Landscape image i1.png */
+        height: 150px !important;
+        z-index: 5 !important;
+        animation: float-up-tl 5.5s ease-in-out infinite !important;
+    }
+
+    .collage-top-right {
+        right: 20% !important;
+        top: 4% !important;
+        width: 170px !important;  /* Portrait image i2.png */
+        height: 215px !important;
+        z-index: 5 !important;
+        animation: float-up-tr 6.2s ease-in-out infinite !important;
+    }
+
+    .collage-bottom-right {
+        right: 18% !important;
+        bottom: 4% !important;
+        width: 200px !important;  /* Square image i3.png */
+        height: 200px !important;
+        z-index: 8 !important;
+        animation: float-up-br 5.8s ease-in-out infinite !important;
+    }
+
+    .collage-far-right {
+        right: 3% !important;
+        top: 30% !important;
+        width: 160px !important;  /* Square image i4.png */
+        height: 160px !important;
+        z-index: 4 !important;
+        animation: float-up-fr 6.5s ease-in-out infinite !important;
+    }
+
+    .collage-bottom-left {
+        left: 14% !important;
+        bottom: 2% !important;
+        width: 180px !important;  /* Portrait image i5.png */
+        height: 250px !important;
+        z-index: 8 !important;
+        animation: float-up-bl 5.9s ease-in-out infinite !important;
+    }
+
+    .collage-far-left {
+        left: 3% !important;
+        top: 22% !important;
+        width: 150px !important;  /* Portrait image i9.png */
+        height: 240px !important;
+        z-index: 4 !important;
+        animation: float-up-fl 6.4s ease-in-out infinite !important;
+    }
+
+    /* Stats Section Styling */
+    .hero-stats-container {
+        border-top: 1px solid var(--color-vellum, #dfdcd5) !important;
+        padding-top: 32px !important;
+        margin-top: 40px !important;
+    }
+
+    .stat-box .stat-value {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 36px !important;
+        font-weight: 700 !important;
+        color: var(--color-ink, #000000) !important;
+        margin: 0 !important;
+    }
+
+    .stat-box .stat-label {
+        font-size: 13px !important;
+        color: var(--color-graphite, #595855) !important;
+        margin: 4px 0 0 0 !important;
+    }
+
+    .stat-divider {
+        width: 1px !important;
+        height: 40px !important;
+        background-color: var(--color-vellum, #dfdcd5) !important;
+    }
+
+    /* Compatible Formats Ticker Styling */
+    .hero-formats-ticker {
+        margin-top: 50px !important;
+        border-top: 1px dashed var(--color-vellum, #dfdcd5) !important;
+        padding-top: 24px !important;
+    }
+
+    .formats-title {
+        font-size: 10px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.15em !important;
+        color: var(--color-graphite, #595855) !important;
+        text-transform: uppercase !important;
+        margin-bottom: 0 !important;
+    }
+
+    .format-tag {
+        font-size: 12.5px !important;
+        color: var(--color-ink, #000000) !important;
+        background-color: var(--color-paper, #ffffff) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        padding: 6px 14px !important;
+        border-radius: 16px !important;
+        font-weight: 550 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        transition: all 0.25s ease !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02) !important;
+    }
+
+    .format-tag:hover {
+        transform: translateY(-2px) !important;
+        border-color: var(--color-ink, #000000) !important;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1199px) {
+        .hero-collage-container {
+            height: 480px !important;
         }
+        .collage-center {
+            width: 320px !important;
+            height: 200px !important;
+        }
+        .collage-top-left { width: 160px !important; height: 120px !important; left: 12% !important; }
+        .collage-top-right { width: 130px !important; height: 160px !important; right: 14% !important; }
+        .collage-bottom-left { width: 140px !important; height: 190px !important; left: 10% !important; }
+        .collage-bottom-right { width: 150px !important; height: 150px !important; right: 12% !important; }
+        .collage-far-left { width: 120px !important; height: 190px !important; left: 1% !important; }
+        .collage-far-right { width: 120px !important; height: 120px !important; right: 1% !important; }
+    }
 
+    @media (max-width: 991px) {
+        .hero-collage-container {
+            height: 400px !important;
+        }
+        .collage-center {
+            width: 280px !important;
+            height: 175px !important;
+        }
+        .collage-top-left { width: 120px !important; height: 90px !important; left: 8% !important; }
+        .collage-top-right { width: 100px !important; height: 125px !important; right: 10% !important; }
+        .collage-bottom-left { width: 100px !important; height: 140px !important; left: 6% !important; }
+        .collage-bottom-right { width: 110px !important; height: 110px !important; right: 8% !important; }
+        .collage-far-left, .collage-far-right {
+            display: none !important;
+        }
+    }
+
+    @media (max-width: 575px) {
         .modern-h1 {
-            font-size: 2.8rem;
+            font-size: 36px !important;
         }
-
-        .hero-center-content {
-            max-width: 700px;
+        .hero-collage-container {
+            height: 260px !important;
         }
-
-        .hero-features-grid {
-            gap: 1.5rem;
+        .collage-center {
+            width: 220px !important;
+            height: 140px !important;
         }
-
-        .feature-number {
-            font-size: 2.2rem;
+        .collage-top-left, .collage-top-right, .collage-bottom-left, .collage-bottom-right {
+            display: none !important;
         }
-
-        .simple-feature h5 {
-            font-size: 1rem;
-        }
-
-        .simple-feature p {
-            font-size: 0.85rem;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .modern-hero {
-            min-height: auto;
-            padding: 2rem 0;
-        }
-
-        .hero-content-wrapper {
-            gap: 3rem;
-            padding: 2.5rem 1.5rem;
-            max-width: 100%;
-        }
-
-        .modern-h1 {
-            font-size: 2.2rem;
-        }
-
-        .hero-subtitle {
-            font-size: 0.95rem;
-        }
-
-        .hero-center-content {
-            max-width: 100%;
-        }
-
-        .hero-badge-wrapper {
-            justify-content: center;
-        }
-
-        .hero-cta-buttons {
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .modern-btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .hero-badge {
-            font-size: 0.75rem;
-            padding: 0.6rem 1.5rem;
-        }
-
-        .hero-features-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .feature-number {
-            font-size: 2rem;
-        }
-
-        .simple-feature h5 {
-            font-size: 0.95rem;
-        }
-
-        .simple-feature p {
-            font-size: 0.8rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .modern-h1 {
-            font-size: 1.8rem;
-        }
-
-        .hero-subtitle {
-            font-size: 0.9rem;
-        }
-
-        .hero-content-wrapper {
-            gap: 2.5rem;
-            padding: 2rem 1rem;
-        }
-
-        .hero-features-grid {
-            grid-template-columns: 1fr;
-            gap: 1.2rem;
-        }
-
-        .feature-number {
-            font-size: 1.8rem;
-        }
-
-        .simple-feature h5 {
-            font-size: 0.9rem;
-        }
-
-        .simple-feature p {
-            font-size: 0.75rem;
-        }
-
-        .hero-badge {
-            font-size: 0.7rem;
-            padding: 0.5rem 1rem;
-        }
-
-        .modern-btn {
-            padding: 0.9rem 2rem;
-            font-size: 0.85rem;
-        }
-
-        .modern-blob-1 {
-            width: 200px;
-            height: 200px;
-        }
-
-        .modern-blob-2 {
-            width: 150px;
-            height: 150px;
+        .hero-stats-container {
+            flex-direction: column !important;
+            gap: 20px !important;
         }
     }
 </style>
 
-<section class="category-section pt-120 pb-120" style="background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%);">
+
+<!-- ==============================================
+     INKWAVE / DIGITAL ART PREMIUM SECTIONS
+     ============================================== -->
+
+<!-- SECTION 1: Featured Masterpieces -->
+<section class="inkwave-featured py-120" style="background-color: var(--color-bone, #e7e5e4); border-top: 1px solid rgba(0,0,0,0.05);">
     <div class="auto-container">
         <div class="text-center mb-5">
-            <span class="modern-badge">{{ __('common.sakura_category_badge') }}</span>
-            <h2 class="modern-h2 mt-3">{{ __('common.sakura_category_title') }}</h2>
-            <p class="text-muted mx-auto mt-3" style="max-width: 600px;">
-                {{ __('common.sakura_category_subtitle') }}
+            <span class="modern-badge">Curated Gallery</span>
+            <h2 class="modern-h2 mt-3" style="font-size: 3rem;">Featured Artworks</h2>
+            <p class="text-muted mx-auto mt-3" style="max-width: 600px; font-size: 1.1rem;">
+                Explore top tier digital creations rendered with perfection.
             </p>
         </div>
-
-        <!-- Category Carousel Container -->
-        <div class="category-carousel-wrapper">
-            <!-- Left Navigation -->
-            <button class="carousel-nav carousel-nav-left" id="categoryPrev">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-
-            <!-- Carousel Track -->
-            <div class="carousel-container">
-                <div class="carousel-track" id="categoryTrack">
-                    @if(isset($category_lists) && $category_lists->count() > 0)
-                        @foreach($category_lists as $category)
-                            <div class="carousel-slide">
-                                <div class="category-card-premium">
-                                    <!-- Image on Top -->
-                                    <div class="category-card-image position-relative watermark-overlay">
-                                        @if($category->photo)
-                                            <img src="{{ $category->photo }}" alt="{{ $category->title }}" class="category-img">
-                                        @else
-                                            <div class="category-img-placeholder">
-                                                <i class="fas fa-image"></i>
-                                            </div>
-                                        @endif
-                                       
-                                    </div>
-
-                                    <!-- Title and Summary Below -->
-                                    <div class="category-card-content">
-                                        <h3 class="category-title">
-                                            <a href="{{ route('product-lists', $category->slug) }}">
-                                                {{ $category->title }}
-                                            </a>
-                                        </h3>
-                                       
-                                        @if($category->summary)
-                                            <p class="category-description">
-                                                {{ $category->summary }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
-
-            <!-- Right Navigation -->
-            <button class="carousel-nav carousel-nav-right" id="categoryNext">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-
-        <!-- Carousel Indicators -->
-        <div class="premium-carousel-indicators" id="categoryIndicators"></div>
-    </div>
-</section>
-
-<style>
-    /* =========================================
-       CATEGORY CAROUSEL - MODERN DESIGN
-       ========================================= */
-
-    .category-carousel-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-        position: relative;
-    }
-
-    /* Carousel Container */
-    .carousel-container {
-        flex: 1;
-        max-width: 1200px;
-        overflow: hidden;
-        border-radius: 20px;
-    }
-
-    /* Carousel Track */
-    .carousel-track {
-        display: flex;
-        gap: 1.5rem;
-        padding: 1rem;
-        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Carousel Slides */
-    .carousel-slide {
-        flex: 0 0 calc(25% - 1.125rem);
-        min-width: 280px;
-    }
-
-    /* Navigation Buttons */
-    .carousel-nav {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: var(--gradient-sakura);
-        color: white;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 8px 25px rgba(232, 93, 142, 0.3);
-        flex-shrink: 0;
-    }
-
-    .carousel-nav:hover {
-        transform: translateY(-2px) scale(1.1);
-        box-shadow: 0 12px 35px rgba(232, 93, 142, 0.4);
-    }
-
-    .carousel-nav:active {
-        transform: scale(0.95);
-    }
-
-    /* Category Card - Updated Design */
-    .category-card-premium {
-        background: white;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(21, 145, 220, 0.08);
-        border: 1px solid rgba(232, 93, 142, 0.1);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .category-card-premium:hover {
-        box-shadow: 0 12px 35px rgba(232, 93, 142, 0.15);
-        transform: translateY(-6px);
-        border-color: rgba(21, 145, 220, 0.2);
-    }
-
-    /* Image on Top */
-    .category-card-image {
-        position: relative;
-        width: 100%;
-        height: 200px;
-        overflow: hidden;
-        background: linear-gradient(135deg, #f0f4ff 0%, #e8f1f9 100%);
-        flex-shrink: 0;
-    }
-
-    .category-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .category-card-premium:hover .category-img {
-        transform: scale(1.08);
-    }
-
-    .category-img-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 48px;
-        color: #E85D8E;
-        background: linear-gradient(135deg, #f0f4ff 0%, #e8f1f9 100%);
-    }
-
-    .category-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(10, 14, 39, 0.7);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        backdrop-filter: blur(4px);
-    }
-
-    .category-card-premium:hover .category-overlay {
-        opacity: 1;
-    }
-
-    .category-explore-btn {
-        background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%);
-        color: white;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 14px;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(232, 93, 142, 0.3);
-    }
-
-    .category-explore-btn:hover {
-        background: linear-gradient(135deg, #d64577 0%, #b857e8 100%);
-        box-shadow: 0 6px 16px rgba(232, 93, 142, 0.4);
-        transform: translateY(-2px);
-        color: white;
-    }
-
-    /* Card Content - Title and Summary Below */
-    .category-card-content {
-        padding: 1.5rem;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-
-    .category-title {
-        font-size: 16px;
-        font-weight: 700;
-        color: #0a0e27;
-        margin: 0;
-        line-height: 1.4;
-    }
-
-    .category-title a {
-        color: #0a0e27;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .category-title a:hover {
-        color: #E85D8E;
-    }
-
-    .category-course-count {
-        font-size: 12px;
-        color: #E85D8E;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        margin: 0;
-    }
-
-    .category-course-count i {
-        font-size: 11px;
-    }
-
-    .category-description {
-        font-size: 13px;
-        color: #666;
-        margin: 0;
-        line-height: 1.6;
-        overflow-wrap: break-word;
-        white-space: normal;
-        hyphens: none;
-        flex: 1;
-        text-align: left;
-        /* Truncate with an ellipsis (…) after a set number of lines */
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 6;
-        line-clamp: 6;
-        overflow: hidden;
-    }
-
-    /* Premium Carousel Indicators */
-    .premium-carousel-indicators {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
-        margin-top: 4rem;
-        padding-top: 1.5rem;
-        position: relative;
-        z-index: 10;
-        clear: both;
-    }
-
-    .premium-carousel-indicator {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: rgba(232, 93, 142, 0.3);
-        border: 2px solid transparent;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        padding: 0;
-    }
-
-    .premium-carousel-indicator.active {
-        background: #E85D8E;
-        width: 30px;
-        border-radius: 5px;
-    }
-
-    .premium-carousel-indicator:hover {
-        background: #E85D8E;
-    }
-
-    /* =========================================
-       RESPONSIVE CAROUSEL
-       ========================================= */
-
-    @media (max-width: 1024px) {
-        .carousel-slide {
-            flex: 0 0 calc(33.333% - 1rem);
-        }
-
-        .carousel-nav {
-            width: 44px;
-            height: 44px;
-            font-size: 1rem;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .carousel-slide {
-            flex: 0 0 calc(50% - 0.75rem);
-        }
-
-        .category-carousel-wrapper {
-            gap: 1rem;
-        }
-
-        .carousel-nav {
-            width: 40px;
-            height: 40px;
-            font-size: 0.9rem;
-        }
-
-        .carousel-track {
-            gap: 1rem;
-            padding: 0.5rem;
-        }
-
-        .category-card-content {
-            padding: 1.2rem;
-        }
-
-        .category-title {
-            font-size: 15px;
-        }
-
-        .category-description {
-            font-size: 12px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .carousel-slide {
-            flex: 0 0 calc(100% - 0.5rem);
-        }
-
-        .carousel-nav {
-            width: 36px;
-            height: 36px;
-            font-size: 0.8rem;
-        }
-
-        .carousel-nav-left {
-            position: absolute;
-            left: -20px;
-        }
-
-        .carousel-nav-right {
-            position: absolute;
-            right: -20px;
-        }
-
-        .carousel-container {
-            max-width: 100%;
-        }
-    }
-</style>
-
-<script>
-    // Category Carousel - Loop Functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const track = document.getElementById('categoryTrack');
-        const prevBtn = document.getElementById('categoryPrev');
-        const nextBtn = document.getElementById('categoryNext');
-        const indicatorsContainer = document.getElementById('categoryIndicators');
-
-        if (!track) return;
-
-        const slides = Array.from(track.querySelectorAll('.carousel-slide'));
-        const totalSlides = slides.length;
-        if (totalSlides === 0) return;
-
-        let currentPosition = 0;
-        let isTransitioning = false;
-        let cardsPerView = 4;
-        let step = 0;       // pixels to shift per position (slide width + gap)
-        let maxPosition = 0; // last position that still fills the viewport
-
-        // How many cards are visible at the current breakpoint (mirrors the CSS).
-        function getCardsPerView() {
-            const w = window.innerWidth;
-            if (w <= 480) return 1;
-            if (w <= 768) return 2;
-            if (w <= 1024) return 3;
-            return 4;
-        }
-
-        // Measure the real slide width (including the flex gap) from the DOM,
-        // so the transform stays pixel-perfect regardless of CSS gap/calc().
-        function measure() {
-            cardsPerView = getCardsPerView();
-            const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
-            step = slides[0].offsetWidth + gap;
-            maxPosition = Math.max(0, totalSlides - cardsPerView);
-            if (currentPosition > maxPosition) currentPosition = maxPosition;
-        }
-
-        // Build one indicator per scrollable position.
-        function buildIndicators() {
-            if (!indicatorsContainer) return;
-            indicatorsContainer.innerHTML = '';
-            for (let i = 0; i <= maxPosition; i++) {
-                const indicator = document.createElement('button');
-                indicator.className = `premium-carousel-indicator ${i === currentPosition ? 'active' : ''}`;
-                indicator.addEventListener('click', () => goToSlide(i));
-                indicatorsContainer.appendChild(indicator);
-            }
-        }
-
-        function updateCarousel(animate = true) {
-            track.style.transition = animate
-                ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
-                : 'none';
-            track.style.transform = `translateX(${-currentPosition * step}px)`;
-
-            if (indicatorsContainer) {
-                indicatorsContainer.querySelectorAll('.premium-carousel-indicator')
-                    .forEach((ind, index) => ind.classList.toggle('active', index === currentPosition));
-            }
-        }
-
-        function goToSlide(index) {
-            if (isTransitioning) return;
-            isTransitioning = true;
-            currentPosition = Math.min(Math.max(index, 0), maxPosition);
-            updateCarousel();
-            setTimeout(() => { isTransitioning = false; }, 500);
-        }
-
-        function moveNext() {
-            if (isTransitioning) return;
-            isTransitioning = true;
-            // Advance one card; once the last card is reached, loop back to the start.
-            currentPosition = currentPosition >= maxPosition ? 0 : currentPosition + 1;
-            updateCarousel();
-            setTimeout(() => { isTransitioning = false; }, 500);
-        }
-
-        function movePrev() {
-            if (isTransitioning) return;
-            isTransitioning = true;
-            // Go back one card; from the start, jump to the end.
-            currentPosition = currentPosition <= 0 ? maxPosition : currentPosition - 1;
-            updateCarousel();
-            setTimeout(() => { isTransitioning = false; }, 500);
-        }
-
-        nextBtn.addEventListener('click', moveNext);
-        prevBtn.addEventListener('click', movePrev);
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') moveNext();
-            if (e.key === 'ArrowLeft') movePrev();
-        });
-
-        // Recalculate on resize so the layout stays correct across breakpoints.
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                measure();
-                buildIndicators();
-                updateCarousel(false);
-            }, 150);
-        });
-
-        // Initial setup
-        measure();
-        buildIndicators();
-        updateCarousel(false);
-
-        // Auto-loop carousel (optional)
-        // setInterval(moveNext, 5000);
-    });
-</script>
-
-<section class="about-info py-6" style="background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%);">
-    <div class="auto-container">
-        <div class="row align-items-center g-5" style="max-width: 1400px; margin: 0 auto;">
-            <!-- LEFT: Image -->
-            <div class="col-xl-5 col-lg-5 col-md-12 d-flex justify-content-center" style="padding: 3rem 2rem;">
-                <div class="modern-img-wrapper" style="border-radius: 24px; overflow: hidden; box-shadow: 0 40px 100px rgba(232, 93, 142, 0.2); border: 3px solid rgba(232, 93, 142, 0.1); width: 100%; max-width: 100%; animation: slideInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                    <img src="{{ asset('assets/images/i-2.webp') }}" alt="Digital Arts" class="w-100" style="display: block; transition: transform 0.5s ease; object-fit: cover; width: 100%; height: 100%;">
-                </div>
-            </div>
-
-            <!-- RIGHT: Content -->
-            <div class="col-xl-7 col-lg-7 col-md-12 d-flex flex-column justify-content-center" style="padding: 3rem 2rem;">
-                <span class="modern-badge mb-3" style="font-size: 11px; font-weight: 700; color: #E85D8E; background: rgba(232, 93, 142, 0.08); padding: 8px 14px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; align-self: flex-start; animation: fadeIn 0.8s ease-out backwards;">{{ __('common.sakura_about_badge') }}</span>
-                <h2 class="modern-h2 mb-4" style="font-size: 42px; font-weight: 900; color: #0a0e27; line-height: 1.2; animation: slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s backwards;">{{ __('common.sakura_about_title') }}</h2>
-                <p class="mb-5 text-muted" style="font-size: 16px; color: #666; font-weight: 500; line-height: 1.8; animation: fadeInUp 0.8s ease-out 0.2s backwards;">{{ __('common.sakura_about_description') }}</p>
-
-                <div class="row g-3">
-                    <div class="col-md-12">
-                        <div class="d-flex align-items-center gap-4 p-5" style="background: rgba(255, 255, 255, 0.8); border: 1.5px solid rgba(232, 93, 142, 0.15); border-radius: 20px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); backdrop-filter: blur(10px); animation: fadeInUp 0.8s ease-out 0.3s backwards; min-height: 140px;">
-                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; flex-shrink: 0; box-shadow: 0 8px 20px rgba(232, 93, 142, 0.2);">
-                                <i class="fas fa-image"></i>
-                            </div>
-                            <div>
-                                <p class="mb-2 fw-bold" style="font-size: 17px; color: #0a0e27; line-height: 1.4;">{{ __('common.sakura_about_quality') }}</p>
-                                <p class="mb-0" style="font-size: 14px; color: #666; line-height: 1.5;">{{ __('common.sakura_about_quality_desc') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="d-flex align-items-center gap-4 p-5" style="background: rgba(255, 255, 255, 0.8); border: 1.5px solid rgba(232, 93, 142, 0.15); border-radius: 20px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); backdrop-filter: blur(10px); animation: fadeInUp 0.8s ease-out 0.4s backwards; min-height: 140px;">
-                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; flex-shrink: 0; box-shadow: 0 8px 20px rgba(232, 93, 142, 0.2);">
-                                <i class="fas fa-file-invoice"></i>
-                            </div>
-                            <div>
-                                <p class="mb-2 fw-bold" style="font-size: 17px; color: #0a0e27; line-height: 1.4;">{{ __('common.sakura_about_licensing') }}</p>
-                                <p class="mb-0" style="font-size: 14px; color: #666; line-height: 1.5;">{{ __('common.sakura_about_licensing_desc') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        
+        <!-- Grid/Marquee placeholder -->
+        <div class="featured-placeholder" style="min-height: 400px; border: 2px dashed #ccc; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-style: italic; color: #888;">
+            (Featured Artworks Grid / Carousel will go here)
         </div>
     </div>
 </section>
 
-<section class="product-info py-6" style="background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%);">
+<!-- SECTION 2: How It Works -->
+<section class="inkwave-how-it-works py-120" style="background-color: var(--color-putty, #c4c3b6);">
     <div class="auto-container">
         <div class="text-center mb-5">
-            <span class="modern-badge" style="font-size: 11px; font-weight: 700; color: #E85D8E; background: rgba(232, 93, 142, 0.08); padding: 8px 14px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;">{{ __('common.sakura_artworks_badge') }}</span>
-            <h2 class="modern-h2 mt-3" style="font-size: 42px; font-weight: 900; color: #0a0e27; line-height: 1.2;">{{ __('common.sakura_artworks_title') }}</h2>
-            <p class="text-muted mx-auto mt-3" style="max-width: 600px; font-size: 16px; color: #666;">{{ __('common.sakura_artworks_subtitle') }}</p>
+            <span class="modern-badge" style="background: rgba(0,0,0,0.05); color: var(--color-ink);">The Process</span>
+            <h2 class="modern-h2 mt-3" style="font-size: 3rem;">From Pixel to Print</h2>
+            <p class="text-muted mx-auto mt-3" style="max-width: 600px; font-size: 1.1rem; color: #595855 !important;">
+                Three simple steps to elevate your digital assets into physical masterpieces.
+            </p>
         </div>
-
-        <!-- Initial Products (6) -->
-        <div class="row g-4 justify-content-center" id="initialProducts" style="max-width: 1200px; margin: 0 auto;">
-            @php $products = Helper::getRandomProduct(6); @endphp
-
-            @foreach($products as $product)
-                <div class="col-lg-4 col-md-6">
-                    <div class="product-course-card" style="border-radius: 20px; overflow: hidden; background: white; box-shadow: 0 10px 40px rgba(232, 93, 142, 0.12); border: 1.5px solid rgba(232, 93, 142, 0.1); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; flex-direction: column; height: 100%; cursor: pointer;">
-                        <div class="course-img-container position-relative watermark-overlay" style="width: 100%; height: 220px; overflow: hidden; background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 100%);">
-                            @php $photo = explode(',', $product->photo); @endphp
-                            <img src="{{ $photo[0] }}" alt="{{ $product->title }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        </div>
-
-                        <div class="course-content" style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
-                            <h4 class="course-title" style="font-size: 18px; font-weight: 700; color: #0a0e27; margin-bottom: 1rem;"><a href="{{ route('product-detail', $product->slug) }}" style="text-decoration: none; color: inherit; transition: color 0.3s ease;">{{ $product->title }}</a></h4>
-                            <p class="course-summary" style="font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 1rem; flex-grow: 1; word-wrap: break-word; overflow-wrap: break-word;">{{ Str::limit($product->summary, 150) }}</p>
-
-                            <div class="course-footer" style="margin-top: auto;">
-                                <a href="{{ route('product-detail', $product->slug) }}" class="course-explore-btn" style="background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(232, 93, 142, 0.3);">
-                                    {{ __('common.download_artwork') }} <i class="fas fa-chevron-right ms-2"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
-        <!-- All Products (Hidden initially) -->
-        <div class="row g-4 d-none justify-content-center" id="allProductsContainer" style="max-width: 1200px; margin: 0 auto;">
-            @php $allProducts = \App\Models\Product::where('status','active')->orderBy('created_at','DESC')->get(); @endphp
-
-            @foreach($allProducts as $product)
-                <div class="col-lg-4 col-md-6">
-                    <div class="product-course-card" style="border-radius: 20px; overflow: hidden; background: white; box-shadow: 0 10px 40px rgba(232, 93, 142, 0.12); border: 1.5px solid rgba(232, 93, 142, 0.1); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; flex-direction: column; height: 100%; cursor: pointer;">
-                        <div class="course-img-container position-relative watermark-overlay" style="width: 100%; height: 220px; overflow: hidden; background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 100%);">
-                            @php $photo = explode(',', $product->photo); @endphp
-                            <img src="{{ $photo[0] }}" alt="{{ $product->title }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        </div>
-
-                        <div class="course-content" style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
-                            <h4 class="course-title" style="font-size: 18px; font-weight: 700; color: #0a0e27; margin-bottom: 1rem;"><a href="{{ route('product-detail', $product->slug) }}" style="text-decoration: none; color: inherit; transition: color 0.3s ease;">{{ $product->title }}</a></h4>
-                            <p class="course-summary" style="font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 1rem; flex-grow: 1; word-wrap: break-word; overflow-wrap: break-word;">{{ Str::limit($product->summary, 150) }}</p>
-
-                            <div class="course-footer" style="margin-top: auto;">
-                                <a href="{{ route('product-detail', $product->slug) }}" class="course-explore-btn" style="background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(232, 93, 142, 0.3);">
-                                    {{ __('common.download_artwork') }} <i class="fas fa-chevron-right ms-2"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
-        <div class="text-center mt-5">
-            <button id="exploreAllBtn" class="modern-btn modern-btn-solid" style="background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); color: white; padding: 12px 32px; border-radius: 50px; border: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(232, 93, 142, 0.3); transition: all 0.3s ease; cursor: pointer;">
-                {{ __('common.sakura_artworks_cta') }} <i class="fas fa-arrow-right ms-2"></i>
-            </button>
+        
+        <!-- Steps Placeholder -->
+        <div class="steps-placeholder" style="min-height: 300px; border: 2px dashed #a09f95; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-style: italic; color: #666;">
+            (Step 1, Step 2, Step 3 columns will go here)
         </div>
     </div>
 </section>
 
-<style>
-    /* Product Card Hover Effects */
-    .product-course-card:hover {
-        box-shadow: 0 15px 50px rgba(232, 93, 142, 0.25) !important;
-        transform: translateY(-8px);
-        border-color: rgba(232, 93, 142, 0.3) !important;
-    }
-
-    .product-course-card:hover img {
-        transform: scale(1.1);
-    }
-
-    .product-course-card:hover .course-explore-btn {
-        background: linear-gradient(135deg, #d64577 0%, #b857e8 100%);
-        box-shadow: 0 6px 16px rgba(232, 93, 142, 0.4);
-        transform: translateY(-2px);
-    }
-
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Centered Product Section */
-    #initialProducts, #allProductsContainer {
-        display: grid !important;
-        grid-template-columns: repeat(3, 1fr);
-        justify-items: center;
-        gap: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    /* Hide all products by default */
-    #allProductsContainer.d-none {
-        display: none !important;
-    }
-
-    #initialProducts > div, #allProductsContainer > div {
-        animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
-        width: 100%;
-    }
-
-    #initialProducts > div:nth-child(1) { animation-delay: 0.1s; }
-    #initialProducts > div:nth-child(2) { animation-delay: 0.2s; }
-    #initialProducts > div:nth-child(3) { animation-delay: 0.3s; }
-    #initialProducts > div:nth-child(4) { animation-delay: 0.4s; }
-    #initialProducts > div:nth-child(5) { animation-delay: 0.5s; }
-    #initialProducts > div:nth-child(6) { animation-delay: 0.6s; }
-
-    @media (max-width: 1024px) {
-        #initialProducts, #allProductsContainer {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 768px) {
-        #initialProducts, #allProductsContainer {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    .course-summary {
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        white-space: normal;
-        hyphens: auto;
-    }
-</style>
-
-<script>
-    document.getElementById('exploreAllBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        const initialProducts = document.getElementById('initialProducts');
-        const allProductsContainer = document.getElementById('allProductsContainer');
-        const btn = this;
-
-        if (allProductsContainer.classList.contains('d-none')) {
-            // Show all products
-            allProductsContainer.classList.remove('d-none');
-            btn.innerHTML = '{{ __("common.sakura_artworks_cta") }} <i class="fas fa-chevron-up ms-2"></i>';
-            btn.style.background = 'linear-gradient(135deg, #d64577 0%, #b857e8 100%)';
-            // Scroll to products
-            setTimeout(() => {
-                allProductsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 100);
-        } else {
-            // Hide all products
-            allProductsContainer.classList.add('d-none');
-            btn.innerHTML = '{{ __("common.sakura_artworks_cta") }} <i class="fas fa-arrow-right ms-2"></i>';
-            btn.style.background = 'linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%)';
-        }
-    });
-</script>
-
-<section class="why-choose-section py-6" style="background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%);">
+<!-- SECTION 3: Premium Materials -->
+<section class="inkwave-quality py-120" style="background-color: var(--color-bone, #e7e5e4);">
     <div class="auto-container">
         <div class="text-center mb-5">
-            <span class="modern-badge" style="font-size: 11px; font-weight: 700; color: #E85D8E; background: rgba(232, 93, 142, 0.08); padding: 8px 14px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; animation: fadeIn 0.8s ease-out backwards;">{{ __('common.sakura_why_badge') }}</span>
-            <h2 class="modern-h2 mt-3" style="font-size: 42px; font-weight: 900; color: #0a0e27; line-height: 1.2; animation: slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s backwards;">{{ __('common.sakura_why_title') }}</h2>
-            <p style="font-size: 16px; color: #666; margin-top: 1.5rem; animation: fadeInUp 0.8s ease-out 0.2s backwards; max-width: 600px; margin-left: auto; margin-right: auto;">{{ __('common.sakura_why_description') ?? 'Discover the benefits of Chromatique Art' }}</p>
+            <span class="modern-badge">Museum Quality</span>
+            <h2 class="modern-h2 mt-3" style="font-size: 3rem;">Uncompromising Materials</h2>
         </div>
-
-        <div class="row g-4 justify-content-center" style="max-width: 1200px; margin: 0 auto;">
-            <div class="col-lg-4 col-md-6">
-                <div class="why-choose-card" style="background: rgba(255,255,255,0.6); border-radius: 20px; padding: 2.5rem 2rem; text-align: center; box-shadow: 0 10px 40px rgba(232, 93, 142, 0.12); border: 1.5px solid rgba(232, 93, 142, 0.1); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; flex-direction: column; align-items: center; gap: 1.5rem; animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s backwards; height: 100%;">
-                    <div class="why-icon-box" style="width: 80px; height: 80px; background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; flex-shrink: 0; box-shadow: 0 10px 30px rgba(232, 93, 142, 0.2); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <div>
-                        <h3 style="font-size: 20px; font-weight: 700; color: #0a0e27; margin-bottom: 0.75rem;">{{ __('common.sakura_why_expert_title') }}</h3>
-                        <p style="font-size: 15px; color: #666; line-height: 1.6; margin: 0;">{{ __('common.sakura_why_expert_desc') }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="why-choose-card" style="background: rgba(255,255,255,0.6); border-radius: 20px; padding: 2.5rem 2rem; text-align: center; box-shadow: 0 10px 40px rgba(232, 93, 142, 0.12); border: 1.5px solid rgba(232, 93, 142, 0.1); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; flex-direction: column; align-items: center; gap: 1.5rem; animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards; height: 100%;">
-                    <div class="why-icon-box" style="width: 80px; height: 80px; background: linear-gradient(135deg, #C86BFA 0%, #E85D8E 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; flex-shrink: 0; box-shadow: 0 10px 30px rgba(200, 107, 250, 0.2); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <div>
-                        <h3 style="font-size: 20px; font-weight: 700; color: #0a0e27; margin-bottom: 0.75rem;">{{ __('common.sakura_why_industry_title') }}</h3>
-                        <p style="font-size: 15px; color: #666; line-height: 1.6; margin: 0;">{{ __('common.sakura_why_industry_desc') }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="why-choose-card" style="background: rgba(255,255,255,0.6); border-radius: 20px; padding: 2.5rem 2rem; text-align: center; box-shadow: 0 10px 40px rgba(232, 93, 142, 0.12); border: 1.5px solid rgba(232, 93, 142, 0.1); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; flex-direction: column; align-items: center; gap: 1.5rem; animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards; height: 100%;">
-                    <div class="why-icon-box" style="width: 80px; height: 80px; background: linear-gradient(135deg, #E85D8E 0%, #C86BFA 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; flex-shrink: 0; box-shadow: 0 10px 30px rgba(232, 93, 142, 0.2); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        <i class="fas fa-images"></i>
-                    </div>
-                    <div>
-                        <h3 style="font-size: 20px; font-weight: 700; color: #0a0e27; margin-bottom: 0.75rem;">{{ __('common.sakura_why_projects_title') }}</h3>
-                        <p style="font-size: 15px; color: #666; line-height: 1.6; margin: 0;">{{ __('common.sakura_why_projects_desc') }}</p>
-                    </div>
-                </div>
-            </div>
+        
+        <!-- Materials Placeholder -->
+        <div class="materials-placeholder" style="min-height: 400px; border: 2px dashed #ccc; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-style: italic; color: #888;">
+            (Images and descriptions of canvas, framing, and paper quality will go here)
         </div>
     </div>
 </section>
-
-<style>
-    .why-choose-card {
-        height: 100%;
-    }
-
-    .why-choose-card:hover {
-        box-shadow: 0 30px 80px rgba(232, 93, 142, 0.3) !important;
-        border-color: rgba(232, 93, 142, 0.3) !important;
-        transform: translateY(-12px);
-        background: rgba(255,255,255,0.9) !important;
-    }
-
-    .why-choose-card:hover .why-icon-box {
-        transform: scale(1.15) rotateZ(-5deg);
-        box-shadow: 0 15px 50px rgba(232, 93, 142, 0.35) !important;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    @keyframes slideInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
-
-<section class="tech-hero-section" style="position: relative; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: visible;">
-    <video class="tech-hero-video" autoplay loop muted playsinline preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;">
-        <source src="{{ asset('assets/images/h1.mp4') }}" type="video/mp4">
-    </video>
-    <div class="tech-hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(232, 93, 142, 0.4) 0%, rgba(200, 107, 250, 0.3) 100%); z-index: 2;"></div>
-</section>
-
-<!-- Tech Hero Button Below -->
-<div class="tech-hero-button-container" style="display: flex; justify-content: center; align-items: center; padding: 3rem 2rem; background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%);">
-    <a href="{{ route('product-lists') }}" class="modern-btn modern-btn-contrast" style="background: transparent; color: #E85D8E; padding: 14px 40px; border-radius: 16px; border: 2.5px solid #E85D8E; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 8px 20px rgba(232, 93, 142, 0.15); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; font-size: 14px;">
-        {{ __('common.sakura_tech_hero_cta') }} <i class="fas fa-arrow-right ms-2"></i>
-    </a>
-</div>
 
 <!-- POINTS TOP UP SECTION - PREMIUM LUXURY DESIGN -->
 <section class="points-topup-section py-6" id="topup" style="background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%);">

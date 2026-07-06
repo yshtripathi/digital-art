@@ -2,28 +2,7 @@
 @section('title','Contact Us')
 @section('main-content')
 
-<div class="tl-breadcrumb contact-banner pt-60 pb-60">
-    <img src="{{ asset('assets/images/breadcrumb.webp') }}" alt="breadcrumb" class="breadcrumb-bg-img">
-    <div class="breadcrumb-float-element float-element-1"></div>
-    <div class="breadcrumb-float-element float-element-2"></div>
-    <div class="breadcrumb-float-element float-element-3"></div>
-    <div class="container">
-        <div class="row align-items-end">
-            <div class="col-md-6">
-                <div class="banner-txt"><h1 class="tl-breadcrumb-title">{{ __('common.contact') }}</h1></div>
-            </div>
-            <div class="col-md-6">
-                <ul class="tl-breadcrumb-nav d-flex justify-content-md-end">
-                    <li><a href="/">{{ __('common.home') }}</a></li>
-                    <li class="current-page">
-                        <span class="dvdr"><i class="fas fa-chevron-right mx-2"></i></span>
-                        <span>{{ __('common.contact') }}</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+<x-breadcrumb :title="__('common.contact')" />
 
 <section class="contact-section" style="background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%); padding: 6rem 60px !important;">
     <div class="auto-container">

@@ -1,28 +1,7 @@
 ﻿@extends('frontend.layouts.main')
 @section('main-content')
 
-<div class="tl-breadcrumb about-banner pt-120 pb-120">
-    <img src="{{ asset('assets/images/breadcrumb.webp') }}" alt="breadcrumb" class="breadcrumb-bg-img">
-    <div class="breadcrumb-float-element float-element-1"></div>
-    <div class="breadcrumb-float-element float-element-2"></div>
-    <div class="breadcrumb-float-element float-element-3"></div>
-    <div class="container">
-        <div class="row align-items-end">
-            <div class="col-md-6">
-                <div class="banner-txt"><h1 class="tl-breadcrumb-title">{{ __('common.faqs') }}</h1></div>
-            </div>
-            <div class="col-md-6">
-                <ul class="tl-breadcrumb-nav d-flex justify-content-md-end">
-                    <li><a href="/">{{ __('common.home') }}</a></li>
-                    <li class="current-page">
-                        <span class="dvdr"><i class="fas fa-chevron-right mx-2"></i></span>
-                        <span>{{ __('common.faqs') }}</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+<x-breadcrumb :title="__('common.faqs')" />
 
 <section class="faq-section pt-120 pb-120 bg-light">
     <div class="container">

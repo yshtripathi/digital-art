@@ -1,13 +1,13 @@
 @extends('frontend.layouts.main')
-@section('title','Contact Us')
+@section('title', __('inkwave.contact_title'))
 @section('main-content')
 
-<x-breadcrumb :title="__('common.contact')" />
+<x-breadcrumb :title="__('inkwave.contact_title')" />
 
 <section class="ct-section">
     <div class="ct-head">
-        <p class="ct-eyebrow">{{ __('common.get_in_touch') }}</p>
-        <h2 class="ct-heading">{{ __('common.contact_header') }}</h2>
+        <p class="ct-eyebrow">{{ __('inkwave.contact_badge') }}</p>
+        <h2 class="ct-heading">{{ __('inkwave.contact_header') }}</h2>
     </div>
 
     <div class="ct-grid">
@@ -17,29 +17,29 @@
             <img src="{{ asset('assets/images/i9.webp') }}" alt="" aria-hidden="true" class="ct-info__art ct-info__art--1">
 
             <div class="ct-info__inner">
-                <h3 class="ct-info__title">{{ __('common.contact') }}</h3>
-                <p class="ct-info__sub">We'd love to hear from you. Reach out and our team will respond as soon as we can.</p>
+                <h3 class="ct-info__title">{{ __('inkwave.contact_info_title') }}</h3>
+                <p class="ct-info__sub">{{ __('inkwave.contact_info_sub') }}</p>
 
                 <ul class="ct-info__list">
                     <li>
                         <span class="ct-info__ic"><i class="fas fa-envelope"></i></span>
                         <div>
-                            <span class="ct-info__label">{{ __('common.email') }}</span>
-                            <a href="mailto:{{ $misc['Company Email'] ?? __('common.company_email') }}">{{ $misc['Company Email'] ?? __('common.company_email') }}</a>
+                            <span class="ct-info__label">{{ __('inkwave.contact_label_email') }}</span>
+                            <a href="mailto:{{ $misc['Company Email'] ?? '[Company Email]' }}">{{ $misc['Company Email'] ?? '[Company Email]' }}</a>
                         </div>
                     </li>
                     <li>
                         <span class="ct-info__ic"><i class="fas fa-map-marker-alt"></i></span>
                         <div>
-                            <span class="ct-info__label">{{ __('common.our_location') }}</span>
-                            <span>{{ $misc['Company Address'] ?? __('common.company_Address') }}</span>
+                            <span class="ct-info__label">{{ __('inkwave.contact_label_location') }}</span>
+                            <span>{{ $misc['Company Address'] ?? '[Company Address]' }}</span>
                         </div>
                     </li>
                     <li>
                         <span class="ct-info__ic"><i class="fas fa-building"></i></span>
                         <div>
-                            <span class="ct-info__label">{{ __('common.company') }}</span>
-                            <span>{{ $misc['Company Name'] ?? __('common.company_name') }}</span>
+                            <span class="ct-info__label">{{ __('inkwave.contact_label_company') }}</span>
+                            <span>{{ $misc['Company Name'] ?? '[Company Name]' }}</span>
                         </div>
                     </li>
                 </ul>
@@ -54,55 +54,55 @@
             <span class="ct-form__veil" aria-hidden="true"></span>
 
             <div class="ct-form__inner">
-                <h3 class="ct-form__title">{{ __('common.send_message') }}</h3>
+                <h3 class="ct-form__title">{{ __('inkwave.contact_form_title') }}</h3>
 
                 <form method="POST" action="{{ route('contact.send') }}" id="contactform" onsubmit="return handleSubmit(event)">
                     @csrf
 
                     <div class="ct-row">
                         <div class="ct-field">
-                            <label class="ct-label"><i class="fas fa-user"></i> {{ __('common.name') }}</label>
-                            <input type="text" name="name" id="name" placeholder="{{ __('common.enter_name') }}" class="ct-input @error('name') is-invalid @enderror">
+                            <label class="ct-label"><i class="fas fa-user"></i> {{ __('inkwave.form_name') }}</label>
+                            <input type="text" name="name" id="name" placeholder="{{ __('inkwave.form_name') }}" class="ct-input @error('name') is-invalid @enderror">
                             @error('name') <span class="ct-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                         </div>
 
                         <div class="ct-field">
-                            <label class="ct-label"><i class="fas fa-envelope"></i> {{ __('common.email') }}</label>
-                            <input type="email" name="email" id="email" placeholder="{{ __('common.enter_email') }}" class="ct-input @error('email') is-invalid @enderror">
+                            <label class="ct-label"><i class="fas fa-envelope"></i> {{ __('inkwave.form_email') }}</label>
+                            <input type="email" name="email" id="email" placeholder="{{ __('inkwave.form_email') }}" class="ct-input @error('email') is-invalid @enderror">
                             @error('email') <span class="ct-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                         </div>
                     </div>
 
                     <div class="ct-row">
                         <div class="ct-field">
-                            <label class="ct-label"><i class="fas fa-phone"></i> {{ __('common.phone') }}</label>
-                            <input type="text" name="phone" id="phone" placeholder="{{ __('common.phone') }}" class="ct-input @error('phone') is-invalid @enderror" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <label class="ct-label"><i class="fas fa-phone"></i> {{ __('inkwave.form_phone') }}</label>
+                            <input type="text" name="phone" id="phone" placeholder="{{ __('inkwave.form_phone') }}" class="ct-input @error('phone') is-invalid @enderror" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                             @error('phone') <span class="ct-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                         </div>
 
                         <div class="ct-field">
-                            <label class="ct-label"><i class="fas fa-tag"></i> {{ __('common.your_subject') }}</label>
-                            <input type="text" name="subject" id="subject" placeholder="{{ __('common.enter_subject') }}" class="ct-input">
+                            <label class="ct-label"><i class="fas fa-tag"></i> {{ __('inkwave.form_subject') }}</label>
+                            <input type="text" name="subject" id="subject" placeholder="{{ __('inkwave.form_subject') }}" class="ct-input">
                         </div>
                     </div>
 
                     <div class="ct-field">
-                        <label class="ct-label"><i class="fas fa-message"></i> {{ __('common.your_message') }}</label>
-                        <textarea name="message" id="message" rows="4" placeholder="{{ __('common.enter_message') }}" class="ct-input ct-textarea"></textarea>
+                        <label class="ct-label"><i class="fas fa-message"></i> {{ __('inkwave.form_message') }}</label>
+                        <textarea name="message" id="message" rows="4" placeholder="{{ __('inkwave.form_message') }}" class="ct-input ct-textarea"></textarea>
                     </div>
 
                     @if(env('CAPTCHA_ENABLED', true))
                         <div class="ct-field ct-field--captcha">
-                            <label class="ct-label">{{ __('common.security_verification') }}</label>
+                            <label class="ct-label">{{ __('inkwave.form_captcha') }}</label>
                             <div class="ct-captcha">
-                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="ct-input @error('captcha') is-invalid @enderror" placeholder="{{ __('common.fill_captcha') }}">
+                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="ct-input @error('captcha') is-invalid @enderror" placeholder="{{ __('inkwave.form_captcha_placeholder') }}">
                                 <div class="ct-captcha__img">@captcha</div>
                             </div>
-                            @error('captcha') <span class="ct-error"><i class="fas fa-info-circle"></i> {{ __('common.captcha_error') }}</span> @enderror
+                            @error('captcha') <span class="ct-error"><i class="fas fa-info-circle"></i> {{ __('inkwave.val_captcha_error') }}</span> @enderror
                         </div>
                     @endif
 
-                    <button type="submit" class="ct-submit"><i class="fas fa-paper-plane"></i> {{ __('common.send_message') }}</button>
+                    <button type="submit" class="ct-submit"><i class="fas fa-paper-plane"></i> {{ __('inkwave.btn_send_message') }}</button>
                 </form>
             </div>
         </div>
@@ -263,13 +263,13 @@
         document.querySelectorAll('.ct-input').forEach(el => el.classList.remove('is-invalid'));
 
         const errors = [];
-        if (!name) errors.push({ field: 'name', message: '{{ __('common.validate_name') }}' });
-        if (!email) errors.push({ field: 'email', message: '{{ __('common.validate_email') }}' });
-        else if (!isValidEmail(email)) errors.push({ field: 'email', message: '{{ __('common.validate_email_invalid') }}' });
-        if (!phone) errors.push({ field: 'phone', message: '{{ __('common.validate_phone') }}' });
-        if (!subject) errors.push({ field: 'subject', message: '{{ __('common.validate_subject') }}' });
-        if (!message) errors.push({ field: 'message', message: '{{ __('common.validate_message') }}' });
-        if (captchaEl && !captcha) errors.push({ field: 'captcha', message: '{{ __('common.fill_captcha') }}' });
+        if (!name) errors.push({ field: 'name', message: '{{ __('inkwave.val_name_req') }}' });
+        if (!email) errors.push({ field: 'email', message: '{{ __('inkwave.val_email_req') }}' });
+        else if (!isValidEmail(email)) errors.push({ field: 'email', message: '{{ __('inkwave.val_email_invalid') }}' });
+        if (!phone) errors.push({ field: 'phone', message: '{{ __('inkwave.val_phone_req') }}' });
+        if (!subject) errors.push({ field: 'subject', message: '{{ __('inkwave.val_subject_req') }}' });
+        if (!message) errors.push({ field: 'message', message: '{{ __('inkwave.val_message_req') }}' });
+        if (captchaEl && !captcha) errors.push({ field: 'captcha', message: '{{ __('inkwave.val_captcha_req') }}' });
 
         if (errors.length) {
             errors.forEach(showFieldError);

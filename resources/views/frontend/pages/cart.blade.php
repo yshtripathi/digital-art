@@ -1,8 +1,8 @@
 @extends('frontend.layouts.main')
-@section('title', 'Cart')
+@section('title', __('inkwave.cart_title'))
 @section('main-content')
 
-<x-breadcrumb :title="__('common.cart')" />
+<x-breadcrumb :title="__('inkwave.cart_title')" />
 
 <section class="cart-wrap">
     <div class="cart-container">
@@ -20,12 +20,12 @@
             <div class="cart-grid">
                 {{-- Items --}}
                 <div class="cart-items">
-                    <h2 class="cart-h"><i class="fas fa-shopping-cart"></i> {{ __('common.item_summary') }}</h2>
+                    <h2 class="cart-h"><i class="fas fa-shopping-cart"></i> {{ __('inkwave.cart_item_summary') }}</h2>
 
                     <div class="cart-list">
                         @foreach($cartItems as $cart)
                             @php
-                                $item_title = __('common.points_top_up') ?? 'Credits Top Up';
+                                $item_title = __('inkwave.cart_credits_topup');
                                 $item_link = '#';
                                 if($cart->product) {
                                     $item_title = $cart->product->title;
@@ -35,21 +35,21 @@
                             <div class="cart-item">
                                 <div class="cart-item__main">
                                     <a href="{{ $item_link }}" class="cart-item__title">{{ $item_title }}</a>
-                                    <span class="cart-item__tag">{{ $cart->product ? __('common.art_category') : __('common.credits') }}</span>
+                                    <span class="cart-item__tag">{{ $cart->product ? __('inkwave.cart_type_art') : __('inkwave.cart_type_credits') }}</span>
                                 </div>
 
                                 <div class="cart-item__meta">
                                     <div class="cart-item__col">
-                                        <span class="cart-item__label">{{ __('common.points') }}</span>
-                                        <span class="cart-item__val"><i class="fas fa-coins"></i>{{ number_format($cart->points) }} {{ __('common.credits') }}</span>
+                                        <span class="cart-item__label">{{ __('inkwave.cart_label_points') }}</span>
+                                        <span class="cart-item__val"><i class="fas fa-coins"></i>{{ number_format($cart->points) }} {{ __('inkwave.cart_type_credits') }}</span>
                                     </div>
                                     <div class="cart-item__col">
-                                        <span class="cart-item__label">{{ __('common.price') }}</span>
+                                        <span class="cart-item__label">{{ __('inkwave.cart_label_price') }}</span>
                                         <span class="cart-item__val">{{ $sym }}{{ number_format($cart['price'], $isJPY ? 0 : 2) }}</span>
                                     </div>
                                 </div>
 
-                                <a href="{{ route('cart-delete', $cart->id) }}" class="cart-item__remove" aria-label="{{ __('common.remove') }}"><i class="fas fa-trash-alt"></i></a>
+                                <a href="{{ route('cart-delete', $cart->id) }}" class="cart-item__remove" aria-label="{{ __('inkwave.cart_label_remove') }}"><i class="fas fa-trash-alt"></i></a>
                             </div>
                         @endforeach
                     </div>
@@ -58,28 +58,28 @@
                 {{-- Summary --}}
                 <aside>
                     <div class="cart-summary__card">
-                        <h3 class="cart-summary__h">{{ __('common.order_summary') }}</h3>
+                        <h3 class="cart-summary__h">{{ __('inkwave.cart_order_summary') }}</h3>
 
                         <div class="cart-summary__row">
-                            <span>{{ __('common.total') }}</span>
+                            <span>{{ __('inkwave.cart_total') }}</span>
                             <span>{{ $sym }}{{ number_format($subtotal, $isJPY ? 0 : 2) }}</span>
                         </div>
                         @if($discount > 0)
                             <div class="cart-summary__row">
-                                <span>{{ __('common.coupon') ?? 'Discount' }}</span>
+                                <span>{{ __('inkwave.cart_coupon') }}</span>
                                 <span>&minus; {{ $sym }}{{ number_format($discount, $isJPY ? 0 : 2) }}</span>
                             </div>
                         @endif
 
                         <div class="cart-summary__total">
-                            <span class="lbl">{{ __('common.total') }}</span>
+                            <span class="lbl">{{ __('inkwave.cart_total') }}</span>
                             <span class="amt">{{ $sym }}{{ number_format($total_amount, $isJPY ? 0 : 2) }}</span>
                         </div>
 
-                        <a href="{{ route('checkout') }}" class="cart-btn cart-btn--primary">{{ __('common.checkout') }} <i class="fas fa-arrow-right"></i></a>
+                        <a href="{{ route('checkout') }}" class="cart-btn cart-btn--primary">{{ __('inkwave.cart_checkout') }} <i class="fas fa-arrow-right"></i></a>
 
                         @if(Helper::totalCartPoints() > 0)
-                            <a href="{{ route('product-lists') }}" class="cart-btn cart-btn--ghost"><i class="fas fa-arrow-left"></i> {{ __('common.continue_shopping') }}</a>
+                            <a href="{{ route('product-lists') }}" class="cart-btn cart-btn--ghost"><i class="fas fa-arrow-left"></i> {{ __('inkwave.cart_continue') }}</a>
                         @endif
 
                         <div class="cart-pay">
@@ -91,9 +91,9 @@
         @else
             <div class="cart-empty">
                 <i class="fas fa-shopping-basket"></i>
-                <h3>{{ __('common.no_cart_available') }}</h3>
-                <p>{{ __('common.summary_empty') }}</p>
-                <a href="{{ route('product-lists') }}" class="cart-btn cart-btn--primary cart-empty__btn">{{ __('common.continue_shopping') }} <i class="fas fa-arrow-right"></i></a>
+                <h3>{{ __('inkwave.cart_no_items') }}</h3>
+                <p>{{ __('inkwave.cart_empty_msg') }}</p>
+                <a href="{{ route('product-lists') }}" class="cart-btn cart-btn--primary cart-empty__btn">{{ __('inkwave.cart_continue') }} <i class="fas fa-arrow-right"></i></a>
             </div>
         @endif
     </div>

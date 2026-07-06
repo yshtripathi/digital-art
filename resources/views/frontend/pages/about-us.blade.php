@@ -1,8 +1,8 @@
 @extends('frontend.layouts.main')
-@section('title','About Us')
+@section('title', __('inkwave.about_title'))
 @section('main-content')
 
-<x-breadcrumb :title="__('common.about')" />
+<x-breadcrumb :title="__('inkwave.about_title')" />
 
 {{-- ============================================================
      SECTION 1 — OUR STORY (text + image a1.webp)
@@ -10,14 +10,10 @@
 <section class="abt-section abt-story">
     <div class="abt-container abt-split">
         <div class="abt-split__text">
-            <p class="abt-eyebrow">Our Story</p>
-            <h2 class="abt-heading">{{ __('common.sakura_about_title') }}</h2>
-            <p class="abt-lead">
-                Inkwave began with a simple belief — that extraordinary art shouldn't stay behind glass.
-                We curate and produce premium digital prints across five living movements, so collectors
-                everywhere can bring gallery-grade work into their own space.
-            </p>
-            <p class="abt-body">{{ __('common.sakura_about_description') }}</p>
+            <p class="abt-eyebrow">{{ __('inkwave.about_eyebrow') }}</p>
+            <h2 class="abt-heading">{{ __('inkwave.about_heading') }}</h2>
+            <p class="abt-lead">{{ __('inkwave.about_lead') }}</p>
+            <p class="abt-body">{{ __('inkwave.about_body') }}</p>
 
             <div class="abt-tags">
                 <span>Anime &amp; Manga</span>
@@ -45,10 +41,9 @@
     </video>
     <span class="abt-manifesto__veil" aria-hidden="true"></span>
     <div class="abt-container abt-manifesto__inner">
-        <p class="abt-manifesto__label">Our Philosophy</p>
+        <p class="abt-manifesto__label">{{ __('inkwave.philosophy_label') }}</p>
         <p class="abt-manifesto__quote">
-            We don't just sell art. We curate movements — from ukiyo-e to pixel, street to pop —
-            and render each one at a fidelity worth framing.
+            {{ __('inkwave.philosophy_quote') }}
         </p>
     </div>
 </section>
@@ -59,30 +54,30 @@
 <section class="abt-section abt-values">
     <div class="abt-container">
         <div class="abt-head">
-            <p class="abt-eyebrow">What sets us apart</p>
-            <h2 class="abt-heading abt-heading--center">Crafted with intent</h2>
+            <p class="abt-eyebrow">{{ __('inkwave.values_eyebrow') }}</p>
+            <h2 class="abt-heading abt-heading--center">{{ __('inkwave.values_heading') }}</h2>
         </div>
 
         <div class="abt-values__grid">
             <div class="abt-value">
                 <span class="abt-value__icon"><i class="fas fa-award"></i></span>
-                <h3 class="abt-value__title">{{ __('common.sakura_why_expert_title') }}</h3>
-                <p class="abt-value__desc">{{ __('common.sakura_why_expert_desc') }}</p>
+                <h3 class="abt-value__title">{{ __('inkwave.value1_title') }}</h3>
+                <p class="abt-value__desc">{{ __('inkwave.value1_desc') }}</p>
             </div>
             <div class="abt-value">
                 <span class="abt-value__icon"><i class="fas fa-certificate"></i></span>
-                <h3 class="abt-value__title">{{ __('common.licensing') }}</h3>
-                <p class="abt-value__desc">{{ __('common.licensing_desc') }}</p>
+                <h3 class="abt-value__title">{{ __('inkwave.value2_title') }}</h3>
+                <p class="abt-value__desc">{{ __('inkwave.value2_desc') }}</p>
             </div>
             <div class="abt-value">
                 <span class="abt-value__icon"><i class="fas fa-layer-group"></i></span>
-                <h3 class="abt-value__title">{{ __('common.sakura_why_industry_title') }}</h3>
-                <p class="abt-value__desc">{{ __('common.sakura_why_industry_desc') }}</p>
+                <h3 class="abt-value__title">{{ __('inkwave.value3_title') }}</h3>
+                <p class="abt-value__desc">{{ __('inkwave.value3_desc') }}</p>
             </div>
             <div class="abt-value">
                 <span class="abt-value__icon"><i class="fas fa-crown"></i></span>
-                <h3 class="abt-value__title">{{ __('common.sakura_why_projects_title') }}</h3>
-                <p class="abt-value__desc">{{ __('common.sakura_why_projects_desc') }}</p>
+                <h3 class="abt-value__title">{{ __('inkwave.value4_title') }}</h3>
+                <p class="abt-value__desc">{{ __('inkwave.value4_desc') }}</p>
             </div>
         </div>
     </div>
@@ -100,17 +95,13 @@
         </div>
 
         <div class="abt-split__text">
-            <p class="abt-eyebrow">The Craft</p>
-            <h2 class="abt-heading">From pixel to paper, nothing is left to chance</h2>
-            <p class="abt-body">
-                Every Inkwave piece is prepared at gallery resolution and colour-checked by hand, so the print
-                on your wall carries the same depth and detail as the original artwork. No compromises, no filler
-                — just work worth collecting.
-            </p>
+            <p class="abt-eyebrow">{{ __('inkwave.craft_eyebrow') }}</p>
+            <h2 class="abt-heading">{{ __('inkwave.craft_heading') }}</h2>
+            <p class="abt-body">{{ __('inkwave.craft_body') }}</p>
             <ul class="abt-checklist">
-                <li><i class="fas fa-check"></i> High-resolution, large-format ready files</li>
-                <li><i class="fas fa-check"></i> Hand colour-checked before release</li>
-                <li><i class="fas fa-check"></i> Original artwork, ethically licensed</li>
+                <li><i class="fas fa-check"></i> {{ __('inkwave.craft_check1') }}</li>
+                <li><i class="fas fa-check"></i> {{ __('inkwave.craft_check2') }}</li>
+                <li><i class="fas fa-check"></i> {{ __('inkwave.craft_check3') }}</li>
             </ul>
         </div>
     </div>
@@ -121,9 +112,9 @@
      ============================================================ --}}
 <section class="abt-cta">
     <div class="abt-container">
-        <h2 class="abt-cta__heading">Bring a masterpiece home</h2>
-        <p class="abt-cta__sub">Explore the full collection and find the piece that speaks to you.</p>
-        <a href="{{ route('product-lists') }}" class="abt-cta__btn">{{ __('common.discover_more') }} <i class="fas fa-arrow-right"></i></a>
+        <h2 class="abt-cta__heading">{{ __('inkwave.cta_heading') }}</h2>
+        <p class="abt-cta__sub">{{ __('inkwave.cta_sub') }}</p>
+        <a href="{{ route('product-lists') }}" class="abt-cta__btn">{{ __('inkwave.cta_btn') }} <i class="fas fa-arrow-right"></i></a>
     </div>
 </section>
 

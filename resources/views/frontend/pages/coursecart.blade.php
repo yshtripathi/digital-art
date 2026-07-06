@@ -1,8 +1,8 @@
 @extends('frontend.layouts.main')
-@section('title', __('common.artworks_in_cart'))
+@section('title', __('inkwave.cc_title'))
 @section('main-content')
 
-<x-breadcrumb :title="__('common.cart')" />
+<x-breadcrumb :title="__('inkwave.cart_title')" />
 
 @auth
 <section class="cc-section">
@@ -18,21 +18,21 @@
         <div class="cc-balance">
             <span class="cc-balance__icon"><i class="fas fa-coins"></i></span>
             <div>
-                <span class="cc-balance__label">{{ __('common.available_credits') }}</span>
-                <span class="cc-balance__amount">{{ number_format($points) }} <small>{{ __('common.credits') }}</small></span>
+                <span class="cc-balance__label">{{ __('inkwave.cc_available_credits') }}</span>
+                <span class="cc-balance__amount">{{ number_format($points) }} <small>{{ __('inkwave.cart_type_credits') }}</small></span>
             </div>
         </div>
 
         <div class="cc-grid">
             {{-- Items --}}
             <div class="cc-items">
-                <h2 class="cc-h"><i class="fas fa-palette"></i> {{ __('common.artworks_in_cart') }}</h2>
+                <h2 class="cc-h"><i class="fas fa-palette"></i> {{ __('inkwave.cart_item_summary') }}</h2>
 
                 @if($itemCount)
                     <div class="cc-cards">
                         @foreach($cartItems as $cart)
                             @php
-                                $item_title = __('common.points_top_up') ?? 'Points Top Up';
+                                $item_title = __('inkwave.cart_credits_topup');
                                 $item_image = asset('images/placeholder.jpg');
                                 $item_link = '#';
                                 $is_course = false;
@@ -54,7 +54,7 @@
                             @endphp
 
                             <div class="cc-card">
-                                <a href="{{ route('cart-delete', $cart->id) }}" class="cc-card__remove" title="{{ __('common.remove') ?? 'Remove' }}"><i class="fas fa-times"></i></a>
+                                <a href="{{ route('cart-delete', $cart->id) }}" class="cc-card__remove" title="{{ __('inkwave.cart_label_remove') }}"><i class="fas fa-times"></i></a>
 
                                 <div class="cc-card__img">
                                     <img src="{{ $item_image }}" alt="{{ $item_title }}">
@@ -65,18 +65,18 @@
 
                                     <span class="cc-card__pill">
                                         @if($is_course)
-                                            <i class="fas fa-star"></i> {{ __('common.skill_level_text') }}: {{ $level ? ucfirst($level->skill_level) : 'N/A' }}
+                                            <i class="fas fa-star"></i> {{ __('inkwave.cc_skill_level') }}: {{ $level ? ucfirst($level->skill_level) : 'N/A' }}
                                         @else
-                                            <i class="fas fa-gift"></i> {{ __('common.points_top_up') }}
+                                            <i class="fas fa-gift"></i> {{ __('inkwave.cart_credits_topup') }}
                                         @endif
                                     </span>
 
                                     <div class="cc-card__cost">
                                         @if($is_course)
-                                            <span class="cc-card__credits"><i class="fas fa-coins"></i> {{ number_format($cart->points) }} {{ __('common.credits') }}</span>
+                                            <span class="cc-card__credits"><i class="fas fa-coins"></i> {{ number_format($cart->points) }} {{ __('inkwave.cart_type_credits') }}</span>
                                         @else
                                             <span class="cc-card__price">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2) }}</span>
-                                            <span class="cc-card__sub">({{ number_format($cart->points) }} {{ __('common.credits') }})</span>
+                                            <span class="cc-card__sub">({{ number_format($cart->points) }} {{ __('inkwave.cart_type_credits') }})</span>
                                         @endif
                                     </div>
                                 </div>
@@ -86,9 +86,9 @@
                 @else
                     <div class="cc-empty">
                         <i class="fas fa-shopping-basket"></i>
-                        <h3>{{ __('common.no_cart_available') }}</h3>
-                        <p>{{ __('common.empty_cart_message') }}</p>
-                        <a href="{{ route('product-lists') }}" class="cc-btn cc-btn--primary cc-empty__btn"><i class="fas fa-arrow-left"></i> {{ __('common.continue_shopping') }}</a>
+                        <h3>{{ __('inkwave.cart_no_items') }}</h3>
+                        <p>{{ __('inkwave.cc_empty_msg') }}</p>
+                        <a href="{{ route('product-lists') }}" class="cc-btn cc-btn--primary cc-empty__btn"><i class="fas fa-arrow-left"></i> {{ __('inkwave.cart_continue') }}</a>
                     </div>
                 @endif
             </div>
@@ -96,30 +96,30 @@
             {{-- Summary --}}
             <aside>
                 <div class="cc-summary">
-                    <h3 class="cc-summary__h"><i class="fas fa-shopping-cart"></i> {{ __('common.order_summary') }}</h3>
+                    <h3 class="cc-summary__h"><i class="fas fa-shopping-cart"></i> {{ __('inkwave.cart_order_summary') }}</h3>
 
                     @if($itemCount)
                         @php $total_points = Helper::totalCartPoints(); @endphp
 
                         <div class="cc-summary__row">
-                            <span>{{ __('common.item_count') }}</span>
+                            <span>{{ __('inkwave.cart_item_count') }}</span>
                             <span>{{ $itemCount }}</span>
                         </div>
 
                         <div class="cc-summary__total">
-                            <span class="lbl">{{ __('common.total') }}</span>
-                            <span class="amt">{{ number_format($total_points) }} <small>{{ __('common.credits') }}</small></span>
+                            <span class="lbl">{{ __('inkwave.cart_total') }}</span>
+                            <span class="amt">{{ number_format($total_points) }} <small>{{ __('inkwave.cart_type_credits') }}</small></span>
                         </div>
 
                         <form id="redeemPointsForm" action="{{ route('points.redeem') }}" method="POST" style="display:none;">@csrf</form>
                         <button type="button" class="cc-btn cc-btn--primary" onclick="document.getElementById('redeemPointsForm').submit();">
-                            <i class="fas fa-lock"></i> {{ __('common.redeem_points') ?? 'Redeem Points' }}
+                            <i class="fas fa-lock"></i> {{ __('inkwave.cc_redeem_points') }}
                         </button>
-                        <a href="{{ route('product-lists') }}" class="cc-btn cc-btn--ghost"><i class="fas fa-plus"></i> {{ __('common.continue_shopping') }}</a>
+                        <a href="{{ route('product-lists') }}" class="cc-btn cc-btn--ghost"><i class="fas fa-plus"></i> {{ __('inkwave.cart_continue') }}</a>
                     @else
                         <div class="cc-summary__empty">
                             <i class="fas fa-info-circle"></i>
-                            <p>{{ __('common.summary_empty') }}</p>
+                            <p>{{ __('inkwave.cart_empty_msg') }}</p>
                         </div>
                     @endif
                 </div>
@@ -133,9 +133,9 @@
     <div class="cc-container">
         <div class="cc-signin">
             <i class="fas fa-lock"></i>
-            <h3>{{ __('common.sign_in_required') }}</h3>
-            <p>{{ __('common.sign_in_message') }}</p>
-            <a href="{{ route('login.form') }}" class="cc-btn cc-btn--primary cc-signin__btn"><i class="fas fa-sign-in-alt"></i> {{ __('common.sign_in') }}</a>
+            <h3>{{ __('inkwave.cc_sign_in_req') }}</h3>
+            <p>{{ __('inkwave.cc_sign_in_msg') }}</p>
+            <a href="{{ route('login.form') }}" class="cc-btn cc-btn--primary cc-signin__btn"><i class="fas fa-sign-in-alt"></i> {{ __('inkwave.login_title') }}</a>
         </div>
     </div>
 </section>

@@ -19,10 +19,10 @@
         padding: 48px 40px; display: flex; flex-direction: column; justify-content: center;
     }
     .au-aside__art {
-        position: absolute; top: 50%; right: -10%; transform: translateY(-50%);
-        height: 96%; width: auto; z-index: 1;
-        opacity: 0.22; pointer-events: none;
-        filter: brightness(0) invert(1);   /* black dragon -> soft white watermark on the ink panel */
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        height: 94%; width: auto; z-index: 1;
+        opacity: 0.16; pointer-events: none;
+        filter: brightness(0) invert(1);   /* black dragon -> soft white, centered watermark on the ink panel */
     }
     .au-aside__inner { position: relative; z-index: 2; }
     .au-aside__mark {
@@ -120,7 +120,7 @@
         .au-section { padding: 48px 20px; }
         .au-card { grid-template-columns: 1fr; }
         .au-aside { padding: 40px 28px; }
-        .au-aside__art { height: auto; width: 52%; right: -6%; top: auto; bottom: -4%; transform: none; opacity: 0.16; }
+        .au-aside__art { height: auto; width: 68%; left: 50%; right: auto; top: 50%; transform: translate(-50%, -50%); opacity: 0.12; }
         .au-main { padding: 36px 28px; }
     }
     @media (max-width: 520px) {

@@ -140,8 +140,8 @@
     }
     .ct-info__art { position: absolute; z-index: 1; pointer-events: none; }
     .ct-info__art--1 {
-        top: 50%; right: -12%; transform: translateY(-50%);
-        height: 94%; width: auto; opacity: 0.14;   /* subtle dark dragon watermark on the light panel */
+        top: 50%; left: 50%; transform: translate(-50%, -50%);
+        height: 90%; width: auto; opacity: 0.10;   /* centered, faint watermark so text stays readable */
     }
     .ct-info__inner { position: relative; z-index: 2; }
     .ct-info__title {
@@ -233,7 +233,7 @@
         .ct-section { padding: 60px 20px; }
         .ct-grid { grid-template-columns: 1fr; }
         .ct-info { padding: 40px 28px; }
-        .ct-info__art--1 { height: auto; width: 52%; right: -6%; top: auto; bottom: -4%; transform: none; opacity: 0.12; }
+        .ct-info__art--1 { height: auto; width: 72%; left: 50%; right: auto; top: 50%; transform: translate(-50%, -50%); opacity: 0.08; }
         .ct-form__inner { padding: 36px 28px; }
     }
     @media (max-width: 560px) {

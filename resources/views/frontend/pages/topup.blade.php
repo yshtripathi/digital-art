@@ -3,239 +3,124 @@
 @section('title', __('common.points_top_up'))
 
 @section('main-content')
-<div class="tl-breadcrumb topup-banner pt-60 pb-60">
-    <img src="{{ asset('assets/images/breadcrumb.webp') }}" alt="breadcrumb" class="breadcrumb-bg-img">
-    <div class="breadcrumb-float-element float-element-1"></div>
-    <div class="breadcrumb-float-element float-element-2"></div>
-    <div class="breadcrumb-float-element float-element-3"></div>
-    <div class="container">
-        <div class="row align-items-end">
-            <div class="col-md-6">
-                <div class="banner-txt"><h1 class="tl-breadcrumb-title">{{ __('common.top_up_points') }}</h1></div>
-            </div>
-            <div class="col-md-6">
-                <ul class="tl-breadcrumb-nav d-flex justify-content-md-end">
-                    <li><a href="/">{{ __('common.home') }}</a></li>
-                    <li class="current-page">
-                        <span class="dvdr"><i class="fas fa-chevron-right mx-2"></i></span>
-                        <span>{{ __('common.top_up_points') }}</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+<x-breadcrumb :title="__('common.top_up_points')" />
 
-<!-- POINTS TOP UP SECTION - MODERN CHROMATIQUE ART DESIGN -->
-<section class="points-topup-section py-6" id="topup" style="background: linear-gradient(135deg, #FFF4EE 0%, #FFE5F1 50%, #FFF4EE 100%);">
+<section class="points-topup-section" id="topup">
     <div class="auto-container">
-        <div class="text-center mb-5">
-            <span class="modern-badge" style="font-size: 11px; font-weight: 700; color: #E85D8E; background: rgba(232, 93, 142, 0.08); padding: 8px 14px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;">{{ __('common.points_top_up') }}</span>
-            <h2 class="modern-h2 mt-3" style="font-size: 42px; font-weight: 900; color: #0a0e27; line-height: 1.2;">{{ __('common.maximize_value') }}</h2>
-            <p class="text-muted mx-auto mt-3" style="max-width: 600px; font-size: 16px; color: #666;">
-                {{ __('common.topup_description') }}
-            </p>
+        <div class="topup-head">
+            <p class="topup-eyebrow">{{ __('common.points_top_up') }}</p>
+            <h2 class="topup-heading">{{ __('common.maximize_value') }}</h2>
+            <p class="topup-sub">{{ __('common.topup_description') }}</p>
         </div>
 
-        <div class="row align-items-stretch g-5 justify-content-center">
-            <!-- PREMIUM TIER TABLE -->
-            <div class="col-xl-5 col-lg-6">
-                <div class="premium-tier-section">
-                    <!-- Section Header -->
-                    <div class="tier-section-header">
-                        <div class="header-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <path d="M16 2L20.123 12.038H30.879L22.378 17.962L26.501 28L16 22.076L5.499 28L9.622 17.962L1.121 12.038H11.877L16 2Z" fill="url(#tierGradient)"/>
-                                <defs>
-                                    <linearGradient id="tierGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#E85D8E;stop-opacity:1" />
-                                        <stop offset="100%" style="stop-color:#C86BFA;stop-opacity:1" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                        </div>
-                        <div class="header-text">
-                            <h3 class="tier-title">{{ __('common.tier_rewards') }}</h3>
-                            <p class="tier-subtitle">{{ __('common.bigger_purchases') }}</p>
-                        </div>
-                    </div>
+        <div class="topup-layout">
+            @php
+                $cur = session('currency');
+                if ($cur == 'JPY') {
+                    $tiers = [
+                        ['n'=>__('common.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'¥1 - ¥79,999',        'f'=>false],
+                        ['n'=>__('common.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'¥80,000 - ¥159,999',  'f'=>false],
+                        ['n'=>__('common.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'¥160,000 - ¥239,999', 'f'=>false],
+                        ['n'=>__('common.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'¥240,000+',           'f'=>true],
+                    ];
+                } elseif ($cur == 'HKD') {
+                    $tiers = [
+                        ['n'=>__('common.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$499',       'f'=>false],
+                        ['n'=>__('common.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$500 - HK$999',     'f'=>false],
+                        ['n'=>__('common.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$1,000 - HK$1,499', 'f'=>false],
+                        ['n'=>__('common.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$1,500+',           'f'=>true],
+                    ];
+                } else {
+                    $tiers = [
+                        ['n'=>__('common.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'$1 - $499',       'f'=>false],
+                        ['n'=>__('common.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'$500 - $999',     'f'=>false],
+                        ['n'=>__('common.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'$1,000 - $1,499', 'f'=>false],
+                        ['n'=>__('common.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'$1,500+',         'f'=>true],
+                    ];
+                }
+            @endphp
 
-                    <!-- Tier Table -->
-                    <div class="tier-table-wrapper">
-                        <table class="tier-table">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('common.tier') }}</th>
-                                    <th>{{ __('common.range') }}</th>
-                                    <th>{{ __('common.bonus') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if(session('currency') == 'JPY')
-                                    <tr class="tier-row tier-row-1">
-                                        <td class="tier-cell-tier"><span class="tier-badge">1</span> {{ __('common.tier_standard') }}</td>
-                                        <td class="tier-cell-range">¥ 1 - ¥ 79,999</td>
-                                        <td class="tier-cell-bonus">×1</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-2">
-                                        <td class="tier-cell-tier"><span class="tier-badge">2</span> {{ __('common.tier_premium') }}</td>
-                                        <td class="tier-cell-range">¥ 80,000 - ¥ 159,999</td>
-                                        <td class="tier-cell-bonus">×1.5</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-3">
-                                        <td class="tier-cell-tier"><span class="tier-badge">3</span> {{ __('common.tier_elite') }}</td>
-                                        <td class="tier-cell-range">¥ 160,000 - ¥ 239,999</td>
-                                        <td class="tier-cell-bonus">×2</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-4">
-                                        <td class="tier-cell-tier"><span class="tier-badge">4</span> {{ __('common.tier_vip') }}</td>
-                                        <td class="tier-cell-range">¥ 240,000+</td>
-                                        <td class="tier-cell-bonus">×2.5</td>
-                                    </tr>
-                                @else
-                                    <tr class="tier-row tier-row-1">
-                                        <td class="tier-cell-tier"><span class="tier-badge">1</span> {{ __('common.tier_standard') }}</td>
-                                        @if(session('currency') == 'HKD')
-                                            <td class="tier-cell-range">HK$1 - HK$499</td>
-                                        @else
-                                            <td class="tier-cell-range">$1 - $499</td>
-                                        @endif
-                                        <td class="tier-cell-bonus">{{ __('common.none') }}</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-2">
-                                        <td class="tier-cell-tier"><span class="tier-badge">2</span> {{ __('common.tier_premium') }}</td>
-                                        @if(session('currency') == 'HKD')
-                                            <td class="tier-cell-range">HK$500 - HK$999</td>
-                                        @else
-                                            <td class="tier-cell-range">$500 - $999</td>
-                                        @endif
-                                        <td class="tier-cell-bonus">×1.5</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-3">
-                                        <td class="tier-cell-tier"><span class="tier-badge">3</span> {{ __('common.tier_elite') }}</td>
-                                        @if(session('currency') == 'HKD')
-                                            <td class="tier-cell-range">HK$1,000 - HK$1,499</td>
-                                        @else
-                                            <td class="tier-cell-range">$1,000 - $1,499</td>
-                                        @endif
-                                        <td class="tier-cell-bonus">×2</td>
-                                    </tr>
-                                    <tr class="tier-row tier-row-4">
-                                        <td class="tier-cell-tier"><span class="tier-badge">4</span> {{ __('common.tier_vip') }}</td>
-                                        @if(session('currency') == 'HKD')
-                                            <td class="tier-cell-range">HK$1,500+</td>
-                                        @else
-                                            <td class="tier-cell-range">$1,500+</td>
-                                        @endif
-                                        <td class="tier-cell-bonus">×2.5</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
+            <div class="tier-cards">
+                @foreach($tiers as $t)
+                    <div class="tier-card @if($t['f']) tier-card--featured @endif">
+                        @if($t['f'])<span class="tier-card__flag">{{ __('common.best_value') ?? 'Best Value' }}</span>@endif
+                        <span class="tier-card__icon"><i class="fas {{ $t['i'] }}"></i></span>
+                        <h3 class="tier-card__name">{{ $t['n'] }}</h3>
+                        <div class="tier-card__price">
+                            <span class="tier-card__mult">{{ $t['big'] }}</span>
+                            <span class="tier-card__per">{{ __('common.bonus') }}</span>
+                        </div>
+                        <ul class="tier-card__feats">
+                            <li><i class="fas fa-check-circle"></i> {{ $t['r'] }}</li>
+                            <li><i class="fas fa-check-circle"></i> {{ __('common.bonus') }} {{ $t['big'] }}</li>
+                        </ul>
+                        <button type="button" class="tier-card__btn" data-topup-focus>{{ __('common.top_up_points') }}</button>
                     </div>
-                    <div class="currency-note">
-                        @if(session('currency') == 'JPY')
-                            {{ __('common.jpy_conversion_note') }}
-                        @elseif(session('currency') == 'HKD')
-                            {{ __('common.hkd_conversion_note') }}
-                        @else
-                            {{ __('common.usd_conversion_note') }}
-                        @endif
-                    </div>
-                </div>
+                @endforeach
             </div>
 
-            <!-- PREMIUM LUXURY CALCULATOR -->
-            <div class="col-xl-5 col-lg-6">
-                <div class="luxury-calculator-wrapper">
-                    <!-- Decorative background elements -->
-                    <div class="calc-bg-blob calc-blob-1"></div>
-                    <div class="calc-bg-blob calc-blob-2"></div>
+            <p class="tier-note">
+                @if(session('currency') == 'JPY')
+                    {{ __('common.jpy_conversion_note') }}
+                @elseif(session('currency') == 'HKD')
+                    {{ __('common.hkd_conversion_note') }}
+                @else
+                    {{ __('common.usd_conversion_note') }}
+                @endif
+            </p>
 
-                    <div class="luxury-calculator">
-                        <!-- Header -->
-                        <div class="calc-header-premium">
-                            <div class="calc-header-top">
-                                <h2 class="calc-title-premium">{{ __('common.sakura_calc_title') }}</h2>
-                                <p class="calc-tagline">{{ __('common.sakura_calc_tagline') }}</p>
-                            </div>
-                            <div class="calc-currency-badge">{{ session('currency') == 'JPY' ? '¥' : '$' }}</div>
+            <div class="calc-center">
+                <div class="ink-calc">
+                    <div class="ink-calc__head">
+                        <div>
+                            <h2 class="ink-calc__title">{{ __('common.sakura_calc_title') }}</h2>
+                            <p class="ink-calc__tag">{{ __('common.sakura_calc_tagline') }}</p>
                         </div>
-
-                        <!-- Main Form -->
-                        <form action="{{ route('points.add-to-cart') }}" method="POST" class="luxury-calc-form">
-                            @csrf
-
-                            <!-- Amount Input with Premium Styling -->
-                            <div class="premium-input-section">
-                                <label class="input-label-premium">{{ __('common.sakura_calc_input_label') }}</label>
-                                <div class="premium-amount-input-wrapper">
-                                    <input
-                                        type="number"
-                                        name="amount"
-                                        id="topup_amount"
-                                        class="premium-amount-input"
-                                        placeholder="0"
-                                        min="1"
-                                        required
-                                    >
-                                    <span class="input-currency">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
-                                </div>
-                            </div>
-
-                            <!-- Points Breakdown Card -->
-                            <div class="points-breakdown-card">
-                                <div class="breakdown-row">
-                                    <span class="breakdown-label">{{ __('common.sakura_calc_base_points') }}</span>
-                                    <span class="breakdown-value" id="base_points">0</span>
-                                </div>
-                                <div class="breakdown-row">
-                                    <span class="breakdown-label">{{ __('common.sakura_calc_tier_bonus') }}</span>
-                                    <span class="breakdown-value bonus-badge" id="multiplier_display">×1</span>
-                                </div>
-                                <div class="breakdown-divider"></div>
-                                <div class="breakdown-row breakdown-total">
-                                    <span class="breakdown-label">{{ __('common.sakura_calc_youll_get') }}</span>
-                                    <span class="breakdown-value-total" id="total_points">0</span>
-                                </div>
-                            </div>
-
-                            <!-- Large Points Display -->
-                            <div class="points-display-premium">
-                                <span class="points-number" id="total_points_large">0</span>
-                                <span class="points-unit">{{ __('common.sakura_calc_points_unit') }}</span>
-                            </div>
-
-                            <!-- Benefits Checklist -->
-                            <div class="benefits-section">
-                                <div class="benefit-item">
-                                    <i class="fas fa-star"></i>
-                                    <span>{{ __('common.sakura_calc_benefit_access') }}</span>
-                                </div>
-                                <div class="benefit-item">
-                                    <i class="fas fa-palette"></i>
-                                    <span>{{ __('common.sakura_calc_benefit_tutorials') }}</span>
-                                </div>
-                                <div class="benefit-item">
-                                    <i class="fas fa-crown"></i>
-                                    <span>{{ __('common.sakura_calc_benefit_vip') }}</span>
-                                </div>
-                            </div>
-
-                            <!-- Premium Button -->
-                            <button type="submit" class="btn-premium-checkout">
-                                <span class="btn-label">{{ __('common.add_to_cart') }}</span>
-                                <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
-                                <span class="btn-shine"></span>
-                            </button>
-                        </form>
-
-                        <!-- Trust Badge -->
-                        <div class="trust-indicator">
-                            <i class="fas fa-check-circle"></i>
-                            <span>{{ __('common.sakura_calc_trust_message') }}</span>
-                        </div>
+                        <span class="ink-calc__cur">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
                     </div>
+
+                    <form action="{{ route('points.add-to-cart') }}" method="POST" class="luxury-calc-form ink-calc__form">
+                        @csrf
+
+                        <label class="ink-calc__label">{{ __('common.sakura_calc_input_label') }}</label>
+                        <div class="ink-calc__field">
+                            <span class="ink-calc__prefix">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
+                            <input type="number" name="amount" id="topup_amount" class="ink-calc__input" placeholder="0" min="1" required>
+                        </div>
+
+                        <div class="ink-calc__rows">
+                            <div class="ink-calc__row">
+                                <span>{{ __('common.sakura_calc_base_points') }}</span>
+                                <span id="base_points">0</span>
+                            </div>
+                            <div class="ink-calc__row">
+                                <span>{{ __('common.sakura_calc_tier_bonus') }}</span>
+                                <span id="multiplier_display" class="ink-calc__mult">×1</span>
+                            </div>
+                            <div class="ink-calc__row ink-calc__row--total">
+                                <span>{{ __('common.sakura_calc_youll_get') }}</span>
+                                <span id="total_points">0</span>
+                            </div>
+                        </div>
+
+                        <div class="ink-calc__display">
+                            <span class="ink-calc__big" id="total_points_large">0</span>
+                            <span class="ink-calc__unit">{{ __('common.sakura_calc_points_unit') }}</span>
+                        </div>
+
+                        <ul class="ink-calc__benefits">
+                            <li><i class="fas fa-check"></i> {{ __('common.sakura_calc_benefit_access') }}</li>
+                            <li><i class="fas fa-check"></i> {{ __('common.sakura_calc_benefit_tutorials') }}</li>
+                            <li><i class="fas fa-check"></i> {{ __('common.sakura_calc_benefit_vip') }}</li>
+                        </ul>
+
+                        <button type="submit" class="btn-premium-checkout ink-calc__btn">
+                            <span class="btn-label">{{ __('common.add_to_cart') }}</span>
+                            <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                        </button>
+                    </form>
+
+                    <p class="ink-calc__trust"><i class="fas fa-check-circle"></i> {{ __('common.sakura_calc_trust_message') }}</p>
                 </div>
             </div>
         </div>
@@ -244,32 +129,139 @@
 
 @endsection
 
+@push('styles')
+<style>
+    /* =========================================================
+       TOP-UP — Structured theme (tier cards + calculator)
+       ========================================================= */
+    .points-topup-section { background-color: var(--color-putty, #c4c3b6); padding: 84px 40px; }
+    .topup-head { text-align: center; margin-bottom: 48px; }
+    .topup-eyebrow {
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 11px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-graphite, #595855); margin: 0 0 10px 0;
+    }
+    .topup-heading {
+        font-family: var(--font-davinci, serif); font-size: clamp(28px, 3.5vw, 44px); font-weight: 500;
+        color: var(--color-ink, #000); letter-spacing: -0.01em; line-height: 1.1; margin: 0 0 14px 0;
+    }
+    .topup-sub {
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 15px; line-height: 1.6;
+        color: var(--color-graphite, #595855); max-width: 560px; margin: 0 auto;
+    }
+    .topup-layout { max-width: 1200px; margin: 0 auto; }
+
+    /* Tier pricing cards */
+    .tier-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; align-items: stretch; }
+    .tier-card {
+        position: relative; display: flex; flex-direction: column;
+        background-color: var(--color-ink, #000); border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 14px; padding: 28px 24px; box-shadow: none;
+    }
+    .tier-card--featured { border-color: var(--color-paper, #fff); border-width: 1.5px; }
+    .tier-card__flag {
+        position: absolute; top: -11px; right: 18px;
+        background-color: var(--color-paper, #fff); color: var(--color-ink, #000);
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 10px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 12px; border-radius: 28.8px;
+    }
+    .tier-card__icon {
+        width: 44px; height: 44px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; color: var(--color-paper, #fff); font-size: 16px; margin-bottom: 20px;
+    }
+    .tier-card__name { font-family: var(--font-davinci, serif); font-size: 22px; font-weight: 500; color: var(--color-paper, #fff); margin: 0 0 16px 0; }
+    .tier-card__price { display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+    .tier-card__mult { font-family: var(--font-davinci, serif); font-size: 40px; font-weight: 500; line-height: 1; color: var(--color-paper, #fff); }
+    .tier-card__per { font-family: var(--font-helvetica-now, sans-serif); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.55); }
+    .tier-card__feats { list-style: none; padding: 0; margin: 0 0 24px 0; display: flex; flex-direction: column; gap: 12px; flex-grow: 1; }
+    .tier-card__feats li { display: flex; align-items: center; gap: 10px; font-family: var(--font-helvetica-now, sans-serif); font-size: 13px; color: rgba(255, 255, 255, 0.8); line-height: 1.4; }
+    .tier-card__feats li i { color: var(--color-paper, #fff); font-size: 13px; flex-shrink: 0; }
+    .tier-card__btn {
+        width: 100%; font-family: var(--font-helvetica-now, sans-serif); font-size: 12px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.05em; background-color: transparent; color: var(--color-paper, #fff);
+        border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 28.8px; padding: 12px 18px; cursor: pointer; margin-top: auto;
+    }
+    .tier-card--featured .tier-card__btn { background-color: var(--color-paper, #fff); color: var(--color-ink, #000); border-color: var(--color-paper, #fff); }
+    .tier-note { text-align: center; font-family: var(--font-helvetica-now, sans-serif); font-size: 12px; color: var(--color-graphite, #595855); margin: 24px auto 0 auto; max-width: 720px; }
+    .calc-center { max-width: 560px; margin: 56px auto 0 auto; }
+
+    /* Calculator (fresh ink-calc classes) */
+    .calc-center .ink-calc { background-color: var(--color-paper, #fff); border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 14px; padding: 30px; box-shadow: none; }
+    .ink-calc__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-bottom: 20px; margin-bottom: 22px; border-bottom: 1px solid var(--color-vellum, #dfdcd5); }
+    .ink-calc__title { font-family: var(--font-davinci, serif); font-size: 22px; font-weight: 500; color: var(--color-ink, #000); margin: 0; }
+    .ink-calc__tag { font-family: var(--font-helvetica-now, sans-serif); font-size: 13px; color: var(--color-graphite, #595855); margin: 4px 0 0 0; }
+    .ink-calc__cur { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background-color: var(--color-ink, #000); color: var(--color-paper, #fff); display: flex; align-items: center; justify-content: center; font-family: var(--font-helvetica-now, sans-serif); font-size: 16px; font-weight: 600; }
+    .ink-calc__label { display: block; font-family: var(--font-helvetica-now, sans-serif); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-graphite, #595855); margin-bottom: 8px; }
+    .ink-calc__field { display: flex; align-items: center; background-color: var(--color-bone, #e7e5e4); border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 9px; padding: 0 16px; margin-bottom: 22px; transition: border-color 0.2s ease; }
+    .ink-calc__field:focus-within { border-color: var(--color-ink, #000); }
+    .ink-calc__prefix { font-family: var(--font-helvetica-now, sans-serif); font-size: 20px; font-weight: 600; color: var(--color-graphite, #595855); margin-right: 8px; }
+    .ink-calc__input { flex: 1; width: 100%; border: none; outline: none; background: transparent; font-family: var(--font-helvetica-now, sans-serif); font-size: 26px; font-weight: 500; color: var(--color-ink, #000); padding: 14px 0; box-shadow: none; }
+    .ink-calc__rows { background-color: var(--color-bone, #e7e5e4); border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 9px; padding: 16px 18px; margin-bottom: 22px; }
+    .ink-calc__row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; font-family: var(--font-helvetica-now, sans-serif); font-size: 13px; color: var(--color-graphite, #595855); }
+    .ink-calc__row > span:last-child:not(.ink-calc__mult) { color: var(--color-ink, #000); font-weight: 600; }
+    .ink-calc__mult { background-color: var(--color-ink, #000); color: var(--color-paper, #fff); padding: 2px 10px; border-radius: 28.8px; font-size: 12px; }
+    .ink-calc__row--total { margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--color-vellum, #dfdcd5); }
+    .ink-calc__row--total > span { font-size: 15px; color: var(--color-ink, #000); font-weight: 700; }
+    .ink-calc__display { background-color: var(--color-ink, #000); border-radius: 9px; padding: 22px; margin-bottom: 22px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .ink-calc__big { font-family: var(--font-davinci, serif); font-size: 44px; font-weight: 500; line-height: 1; color: var(--color-paper, #fff); }
+    .ink-calc__unit { font-family: var(--font-helvetica-now, sans-serif); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255, 255, 255, 0.6); }
+    .ink-calc__benefits { list-style: none; padding: 0; margin: 0 0 22px 0; display: flex; flex-direction: column; gap: 10px; }
+    .ink-calc__benefits li { display: flex; align-items: center; gap: 10px; font-family: var(--font-helvetica-now, sans-serif); font-size: 13px; color: var(--color-graphite, #595855); }
+    .ink-calc__benefits li i { color: var(--color-ink, #000); font-size: 11px; }
+    .calc-center .ink-calc .btn-premium-checkout {
+        width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+        font-family: var(--font-helvetica-now, sans-serif); font-size: 13px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.05em;
+        background: var(--color-ink, #000); background-color: var(--color-ink, #000); background-image: none;
+        color: var(--color-paper, #fff); border: 1px solid var(--color-ink, #000); border-radius: 28.8px;
+        padding: 15px 24px; cursor: pointer; box-shadow: none;
+    }
+    .calc-center .ink-calc .btn-premium-checkout:hover { opacity: 0.9; }
+    .ink-calc__trust { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 16px 0 0 0; font-family: var(--font-helvetica-now, sans-serif); font-size: 12px; color: var(--color-graphite, #595855); }
+    .ink-calc__trust i { color: var(--color-ink, #000); }
+
+    @media (max-width: 992px) { .tier-cards { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) {
+        .points-topup-section { padding: 56px 20px; }
+        .tier-cards { grid-template-columns: 1fr; }
+    }
+</style>
+@endpush
+
 @push('scripts')
 <script>
+    // Tier card buttons focus the amount input
+    (function () {
+        document.querySelectorAll('.tier-card__btn[data-topup-focus]').forEach(function (b) {
+            b.addEventListener('click', function () {
+                var a = document.getElementById('topup_amount');
+                if (a) { a.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { a.focus(); }, 350); }
+            });
+        });
+    })();
+
+    // Live points calculator
     document.addEventListener('DOMContentLoaded', function() {
         const amountInput = document.getElementById('topup_amount');
         const totalPointsDisplay = document.getElementById('total_points');
         const totalPointsLarge = document.getElementById('total_points_large');
         const basePointsDisplay = document.getElementById('base_points');
         const multiplierDisplay = document.getElementById('multiplier_display');
+        if (!amountInput) return;
 
         function calculatePoints() {
             const amount = parseFloat(amountInput.value) || 0;
             let multiplier = 1;
             const isJPY = {{ session('currency') == 'JPY' ? 'true' : 'false' }};
-
             let basePoints = 0;
 
             if (isJPY) {
                 basePoints = Math.floor(amount / 160);
-
                 if (amount >= 240000) multiplier = 2.5;
                 else if (amount >= 160000) multiplier = 2;
                 else if (amount >= 80000) multiplier = 1.5;
                 else multiplier = 1;
             } else {
                 basePoints = Math.floor(amount);
-
                 if (amount >= 1500) multiplier = 2.5;
                 else if (amount >= 1000) multiplier = 2;
                 else if (amount >= 500) multiplier = 1.5;
@@ -277,8 +269,6 @@
             }
 
             const totalPoints = Math.round(basePoints * multiplier);
-
-            // Update displays
             basePointsDisplay.textContent = basePoints.toLocaleString();
             multiplierDisplay.textContent = multiplier === 1 ? 'None' : '×' + multiplier.toFixed(1);
             totalPointsDisplay.textContent = totalPoints.toLocaleString();
@@ -290,4 +280,3 @@
     });
 </script>
 @endpush
-

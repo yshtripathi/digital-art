@@ -1,0 +1,210 @@
+/*
+ * Color Utility Classes
+ * Based on the new design system palette:
+ * Deep Blue: #2C5EAD, Bright Blue: #1591DC, Soft Sky Blue: #4BB8FA, Light Mist: #C4E2F5
+ */
+
+/* Background Colors */
+.bg-deep-blue {
+  background-color: #2C5EAD !important;
+}
+
+.bg-bright-blue {
+  background-color: #1591DC !important;
+}
+
+.bg-soft-sky {
+  background-color: #4BB8FA !important;
+}
+
+.bg-light-mist {
+  background-color: #C4E2F5 !important;
+}
+
+/* Text Colors */
+.text-deep-blue {
+  color: #2C5EAD !important;
+}
+
+.text-bright-blue {
+  color: #1591DC !important;
+}
+
+.text-soft-sky {
+  color: #4BB8FA !important;
+}
+
+.text-light-mist {
+  color: #C4E2F5 !important;
+}
+
+/* Border Colors */
+.border-deep-blue {
+  border-color: #2C5EAD !important;
+}
+
+.border-bright-blue {
+  border-color: #1591DC !important;
+}
+
+.border-soft-sky {
+  border-color: #4BB8FA !important;
+}
+
+.border-light-mist {
+  border-color: #C4E2F5 !important;
+}
+
+/* Shadow Colors */
+.shadow-deep-blue {
+  box-shadow: 0px 4px 15px rgba(44, 94, 173, 0.2) !important;
+}
+
+.shadow-bright-blue {
+  box-shadow: 0px 4px 15px rgba(21, 145, 220, 0.2) !important;
+}
+
+.shadow-soft-sky {
+  box-shadow: 0px 4px 15px rgba(75, 184, 250, 0.2) !important;
+}
+
+/* Gradient Backgrounds */
+.gradient-blue-primary {
+  background: linear-gradient(135deg, #2C5EAD 0%, #1591DC 100%) !important;
+}
+
+.gradient-blue-light {
+  background: linear-gradient(135deg, #1591DC 0%, #4BB8FA 100%) !important;
+}
+
+.gradient-blue-pale {
+  background: linear-gradient(135deg, #4BB8FA 0%, #C4E2F5 100%) !important;
+}
+
+/* Hover Effects */
+.hover-deep-blue:hover {
+  color: #2C5EAD !important;
+  transition: all 0.3s ease;
+}
+
+.hover-bright-blue:hover {
+  color: #1591DC !important;
+  transition: all 0.3s ease;
+}
+
+.hover-bg-deep-blue:hover {
+  background-color: #2C5EAD !important;
+  transition: all 0.3s ease;
+}
+
+.hover-bg-bright-blue:hover {
+  background-color: #1591DC !important;
+  transition: all 0.3s ease;
+}
+
+/* Button Styles */
+.btn-blue-primary {
+  background-color: #2C5EAD !important;
+  border-color: #2C5EAD !important;
+  color: #fff !important;
+}
+
+.btn-blue-primary:hover {
+  background-color: #1e4d8b !important;
+  border-color: #1e4d8b !important;
+}
+
+.btn-blue-secondary {
+  background-color: #1591DC !important;
+  border-color: #1591DC !important;
+  color: #fff !important;
+}
+
+.btn-blue-secondary:hover {
+  background-color: #1078b8 !important;
+  border-color: #1078b8 !important;
+}
+
+.btn-blue-outline {
+  background-color: transparent !important;
+  border: 2px solid #2C5EAD !important;
+  color: #2C5EAD !important;
+}
+
+.btn-blue-outline:hover {
+  background-color: #2C5EAD !important;
+  color: #fff !important;
+}
+
+/* Badge Styles */
+.badge-deep-blue {
+  background-color: #2C5EAD !important;
+  color: #fff !important;
+}
+
+.badge-bright-blue {
+  background-color: #1591DC !important;
+  color: #fff !important;
+}
+
+.badge-soft-sky {
+  background-color: #4BB8FA !important;
+  color: #fff !important;
+}
+
+.badge-light-mist {
+  background-color: #C4E2F5 !important;
+  color: #2C5EAD !important;
+}
+
+/* Divider Styles */
+.divider-blue {
+  background: linear-gradient(90deg, transparent, #2C5EAD, transparent);
+  height: 1px;
+  margin: 20px 0;
+}
+
+/* Link Styles */
+.link-blue {
+  color: #1591DC;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.link-blue:hover {
+  color: #2C5EAD;
+  text-decoration: underline;
+}
+
+/* Responsive Padding/Margin with Blue Theme */
+.pt-blue { padding-top: 40px; }
+.pb-blue { padding-bottom: 40px; }
+.pl-blue { padding-left: 20px; }
+.pr-blue { padding-right: 20px; }
+.mt-blue { margin-top: 40px; }
+.mb-blue { margin-bottom: 40px; }
+
+/* Opacity Variants */
+.bg-deep-blue-10 {
+  background-color: rgba(44, 94, 173, 0.1) !important;
+}
+
+.bg-deep-blue-20 {
+  background-color: rgba(44, 94, 173, 0.2) !important;
+}
+
+.bg-bright-blue-10 {
+  background-color: rgba(21, 145, 220, 0.1) !important;
+}
+
+.bg-bright-blue-20 {
+  background-color: rgba(21, 145, 220, 0.2) !important;
+}
+
+.bg-soft-sky-10 {
+  background-color: rgba(75, 184, 250, 0.1) !important;
+}
+
+.bg-soft-sky-20 {
+  background-color: rgba(75, 184, 250, 0.2) !important;
+}

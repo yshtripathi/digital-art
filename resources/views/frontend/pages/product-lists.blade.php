@@ -4,16 +4,16 @@
     @section('title', $category->title)
     @section('description', $category->summary)
 @else
-    @section('title', __('common.browse_artworks'))
-    @section('description', __('common.browse_artworks'))
+    @section('title', __('inkwave.pl_browse'))
+    @section('description', __('inkwave.pl_browse'))
 @endif
 
 @section('main-content')
 @php
     $isCat = isset($category->title) && $category->title;
-    $bcTitle = $isCat ? $category->title : __('common.browse_artworks');
+    $bcTitle = $isCat ? $category->title : __('inkwave.pl_browse');
 @endphp
-<x-breadcrumb :title="$bcTitle" :parent="__('common.catalog')" :parent-url="route('product-lists')" />
+<x-breadcrumb :title="$bcTitle" :parent="__('inkwave.pl_catalog')" :parent-url="route('product-lists')" />
 
 {{-- ================= PRODUCTS (+ category image on left for slug view) ================= --}}
 <section class="pl-section">
@@ -42,8 +42,8 @@
             {{-- Products, vertical --}}
             <div class="pl-products">
                 <div class="pl-head">
-                    <h2 class="pl-head__title">{{ $products->count() }} {{ __('common.artworks') }}</h2>
-                    <p class="pl-head__sub">{{ __('common.explore_curated_collection') }}</p>
+                    <h2 class="pl-head__title">{{ $products->count() }} {{ __('inkwave.pl_artworks') }}</h2>
+                    <p class="pl-head__sub">{{ __('inkwave.pl_explore_curated') }}</p>
                 </div>
 
                 @if($products->count())
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="pl-card__body">
                                     <h3 class="pl-card__title">{{ $course->title }}</h3>
-                                    <span class="pl-card__link">{{ __('common.explore') }} <i class="fas fa-arrow-right"></i></span>
+                                    <span class="pl-card__link">{{ __('inkwave.pl_explore') }} <i class="fas fa-arrow-right"></i></span>
                                 </div>
                             </a>
                         @endforeach
@@ -72,7 +72,7 @@
                 @else
                     <div class="pl-empty">
                         <i class="fas fa-palette"></i>
-                        <p>{{ __('common.explore_curated_collection') }}</p>
+                        <p>{{ __('inkwave.pl_explore_curated') }}</p>
                     </div>
                 @endif
             </div>
@@ -84,9 +84,9 @@
 <section class="pl-cats">
     <div class="pl-container">
         <div class="pl-head pl-head--center">
-            <p class="pl-eyebrow">{{ __('common.explore_more') }}</p>
-            <h2 class="pl-head__title">{{ __('common.other_creative_categories') }}</h2>
-            <p class="pl-head__sub">{{ __('common.discover_more_art_categories') }}</p>
+            <p class="pl-eyebrow">{{ __('inkwave.pl_explore_more') }}</p>
+            <h2 class="pl-head__title">{{ __('inkwave.pl_other_cats') }}</h2>
+            <p class="pl-head__sub">{{ __('inkwave.pl_discover_more') }}</p>
         </div>
     </div>
 
@@ -112,7 +112,7 @@
                     <h4 class="pl-slide__title">{{ $cat->title }}</h4>
                 </a>
             @empty
-                <p class="pl-empty__text">{{ __('common.no_categories') }}</p>
+                <p class="pl-empty__text">{{ __('inkwave.pl_no_cats') }}</p>
             @endforelse
         </div>
         <button class="pl-nav pl-nav--next" type="button" aria-label="Next"><i class="fas fa-chevron-right"></i></button>

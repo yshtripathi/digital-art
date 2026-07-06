@@ -4,7 +4,7 @@
 @section('description', $product_detail->summary)
 
 @section('main-content')
-<x-breadcrumb :title="$product_detail->title" :parent="__('common.catalog')" :parent-url="route('product-lists')" />
+<x-breadcrumb :title="$product_detail->title" :parent="__('inkwave.pl_catalog')" :parent-url="route('product-lists')" />
 
 @php $photos = array_values(array_filter(explode(',', $product_detail->photo))); @endphp
 
@@ -30,12 +30,12 @@
 
             {{-- ============ INFO + BUY ============ --}}
             <div class="pd-info">
-                <p class="pd-eyebrow">{{ __('common.digital_art') ?? 'Digital Art' }}</p>
+                <p class="pd-eyebrow">{{ __('inkwave.pd_digital_art') }}</p>
                 <h1 class="pd-title">{{ $product_detail->title }}</h1>
 
                 @if($product_detail->description)
                     <div class="pd-overview">
-                        <span class="pd-overview__label">{{ __('common.artwork_overview') }}</span>
+                        <span class="pd-overview__label">{{ __('inkwave.pd_overview') }}</span>
                         <p class="pd-overview__text">{{ $product_detail->description }}</p>
                     </div>
                 @endif
@@ -43,7 +43,7 @@
                 {{-- Levels / variants --}}
                 @if($product_detail->levels && count($product_detail->levels))
                     <div class="pd-levels">
-                        <span class="pd-levels__label">{{ __('common.select_level') }}</span>
+                        <span class="pd-levels__label">{{ __('inkwave.pd_select_level') }}</span>
 
                         <div class="pd-tabs">
                             @foreach($product_detail->levels as $key => $level)
@@ -57,15 +57,15 @@
                             <div class="pd-level {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}" style="display: {{ $key === 0 ? 'block' : 'none' }};">
                                 @if($level->purpose)
                                     <div class="pd-level__concept">
-                                        <span class="pd-level__concept-label"><i class="fas fa-palette"></i> {{ __('common.design_concept') }}</span>
+                                        <span class="pd-level__concept-label"><i class="fas fa-palette"></i> {{ __('inkwave.pd_design_concept') }}</span>
                                         <p class="pd-level__purpose">{{ $level->purpose }}</p>
                                     </div>
                                 @endif
 
                                 <div class="pd-buybar">
                                     <div class="pd-price">
-                                        <span class="pd-price__label">{{ __('common.price') }}</span>
-                                        <span class="pd-price__amt">{{ number_format($level->price_in_points) }} <small>{{ __('common.credits') }}</small></span>
+                                        <span class="pd-price__label">{{ __('inkwave.pd_price') }}</span>
+                                        <span class="pd-price__amt">{{ number_format($level->price_in_points) }} <small>{{ __('inkwave.pd_credits') }}</small></span>
                                     </div>
                                     <form action="{{ route('single-add-to-cart') }}" method="POST" class="enroll-form pd-buyform">
                                         @csrf
@@ -75,7 +75,7 @@
                                         <input type="hidden" name="price_jp" value="{{ $level->price_jp }}">
                                         <input type="hidden" name="price_hk" value="{{ $level->price_hk }}">
                                         <input type="hidden" name="level_id" value="{{ $level->id }}">
-                                        <button type="submit" class="pd-buy enroll-btn"><span>{{ __('common.buy_now_text') }}</span> <i class="fas fa-arrow-right icon-arrow"></i></button>
+                                        <button type="submit" class="pd-buy enroll-btn"><span>{{ __('inkwave.pd_buy_now') }}</span> <i class="fas fa-arrow-right icon-arrow"></i></button>
                                     </form>
                                 </div>
                             </div>

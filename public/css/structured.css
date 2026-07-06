@@ -1,0 +1,414 @@
+/* ==========================================================================
+   Structured — Renaissance gallery on putty paper
+   Theme foundation: design tokens + base styles + components
+   Source: DESIGN.md, tokens.json, variables.css
+   Palette is warm grays + black only. No gradients. No shadows. Flat surfaces.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colors */
+  --color-putty: #c4c3b6;   /* dominant light canvas */
+  --color-ink: #000000;     /* borders, inverted UI, primary text */
+  --color-bone: #e7e5e4;    /* elevated card surfaces */
+  --color-chalk: #ebebeb;   /* footer / lightest tier */
+  --color-vellum: #dfdcd5;  /* hairline borders */
+  --color-graphite: #595855;/* muted secondary text */
+  --color-ash: #808080;     /* image placeholder backgrounds */
+  --color-paper: #ffffff;   /* reverse type / white strokes */
+
+  /* Typography — Font Families
+     Davinci → Playfair Display, Helvetica Now → Inter (free Google Fonts).
+     Loaded via <link> in the frontend header. */
+  --font-davinci: 'Playfair Display', 'Davinci', 'Canela', 'Tiempos Headline', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-helvetica-now: 'Inter', 'Helvetica Now', 'Neue Haas Grotesk', 'Helvetica Neue', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Typography — Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  /* Typography — Scale */
+  --text-body-sm: 15px;
+  --leading-body-sm: 1.5;
+
+  --text-subheading: 22px;
+  --leading-subheading: 1.33;
+  --tracking-subheading: -0.11px;
+
+  --text-heading-sm: 26px;
+  --leading-heading-sm: 1.33;
+  --tracking-heading-sm: -0.13px;
+
+  --text-heading: 43px;
+  --leading-heading: 1.1;
+  --tracking-heading: -0.215px;
+
+  --text-heading-lg: 52px;
+  --leading-heading-lg: 1;
+  --tracking-heading-lg: -0.47px;
+
+  --text-section: 94px;
+  --leading-section: 0.84;
+  --tracking-section: -0.85px;
+
+  --text-display: 374px;
+  --leading-display: 0.84;
+  --tracking-display: -3.37px;
+
+  /* Spacing */
+  --spacing-unit: 4px;
+  --spacing-4: 4px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-52: 52px;
+  --spacing-60: 60px;
+  --spacing-96: 96px;
+  --spacing-168: 168px;
+
+  /* Layout */
+  --section-gap: 80px;
+  --card-padding: 24px;
+  --element-gap: 6px;
+
+  /* Border Radius */
+  --radius-sm: 2px;      /* links */
+  --radius-lg: 9px;      /* cards */
+  --radius-3xl: 28.8px;  /* buttons (near-full pill) */
+  --radius-links: 2px;
+  --radius-cards: 9px;
+  --radius-buttons: 28.8px;
+
+  /* Surfaces (level 0 → 3) */
+  --surface-putty-canvas: #c4c3b6;
+  --surface-bone-card: #e7e5e4;
+  --surface-chalk-footer: #ebebeb;
+  --surface-ink-room: #000000;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+.st,
+.st-theme {
+  background-color: var(--surface-putty-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-helvetica-now);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+  font-weight: var(--font-weight-regular);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   3. Typography scale — utility classes
+   Serif (Davinci) is display-only; grotesk (Helvetica Now) is functional.
+   -------------------------------------------------------------------------- */
+.st-body-sm {
+  font-family: var(--font-helvetica-now);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+  font-weight: var(--font-weight-regular);
+}
+
+.st-subheading {
+  font-family: var(--font-helvetica-now);
+  font-size: var(--text-subheading);
+  line-height: var(--leading-subheading);
+  letter-spacing: var(--tracking-subheading);
+  font-weight: var(--font-weight-medium);
+}
+
+.st-heading-sm {
+  font-family: var(--font-helvetica-now);
+  font-size: var(--text-heading-sm);
+  line-height: var(--leading-heading-sm);
+  letter-spacing: var(--tracking-heading-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.st-heading {
+  font-family: var(--font-helvetica-now);
+  font-size: var(--text-heading);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Davinci serif display steps */
+.st-heading-lg {
+  font-family: var(--font-davinci);
+  font-size: var(--text-heading-lg);
+  line-height: var(--leading-heading-lg);
+  letter-spacing: var(--tracking-heading-lg);
+  font-weight: var(--font-weight-medium);
+}
+
+.st-section-title {
+  font-family: var(--font-davinci);
+  font-size: var(--text-section);
+  line-height: var(--leading-section);
+  letter-spacing: var(--tracking-section);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+}
+
+.st-display {
+  font-family: var(--font-davinci);
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: var(--font-weight-medium);
+}
+
+/* --------------------------------------------------------------------------
+   4. Color / surface helpers
+   -------------------------------------------------------------------------- */
+.st-bg-putty  { background-color: var(--color-putty); }
+.st-bg-ink    { background-color: var(--color-ink); color: var(--color-paper); }
+.st-bg-bone   { background-color: var(--color-bone); }
+.st-bg-chalk  { background-color: var(--color-chalk); }
+.st-bg-paper  { background-color: var(--color-paper); }
+
+.st-text-ink      { color: var(--color-ink); }
+.st-text-paper    { color: var(--color-paper); }
+.st-text-graphite { color: var(--color-graphite); }
+
+.st-border { border: 1px solid var(--color-vellum); }
+
+/* --------------------------------------------------------------------------
+   5. Layout
+   Full-bleed sections, no max-width container. Depth from light/dark cuts.
+   -------------------------------------------------------------------------- */
+.st-section {
+  width: 100%;
+  padding-block: var(--section-gap);
+  padding-inline: var(--spacing-40);
+}
+
+.st-section--dark {
+  background-color: var(--surface-ink-room);
+  color: var(--color-paper);
+}
+
+.st-section--light {
+  background-color: var(--surface-putty-canvas);
+  color: var(--color-ink);
+}
+
+.st-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--element-gap);
+}
+
+.st-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-28);
+}
+
+/* --------------------------------------------------------------------------
+   6. Components
+   -------------------------------------------------------------------------- */
+
+/* 6.1 Pill Action Button — filled black pill, white text. One per viewport. */
+.st-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-helvetica-now);
+  font-size: 12px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1;
+  padding: 9px 17px;
+  border: none;
+  border-radius: var(--radius-buttons);
+  box-shadow: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.st-btn:hover { opacity: 0.85; }
+
+/* Inverted pill for use on dark sections */
+.st-btn--inverse {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* 6.2 Ghost Text Link — text only, underline on hover */
+.st-link {
+  color: var(--color-ink);
+  font-family: var(--font-helvetica-now);
+  font-size: 12px;
+  font-weight: var(--font-weight-regular);
+  text-decoration: none;
+  border-radius: var(--radius-links);
+}
+.st-link:hover { text-decoration: underline; }
+.st-section--dark .st-link { color: var(--color-paper); }
+
+/* 6.3 Bone Card — elevated light surface */
+.st-card {
+  background-color: var(--surface-bone-card);
+  border: 1px solid var(--color-vellum);
+  border-radius: var(--radius-cards);
+  padding: var(--card-padding);
+  box-shadow: none;
+}
+
+/* 6.4 Notched Product Card — dark card with hexagonal corner cuts */
+.st-card-notched {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 400px;
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  border-radius: var(--radius-cards);
+  /* geometric notched corners, not standard radius */
+  clip-path: polygon(
+    16px 0, calc(100% - 16px) 0, 100% 16px,
+    100% calc(100% - 16px), calc(100% - 16px) 100%,
+    16px 100%, 0 calc(100% - 16px), 0 16px
+  );
+}
+.st-card-notched__label {
+  position: absolute;
+  left: var(--spacing-16);
+  bottom: var(--spacing-16);
+  font-family: var(--font-helvetica-now);
+  font-size: 9px;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-paper);
+}
+
+/* 6.5 Circular Feature Vignette — classical painting crop */
+.st-vignette {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-16);
+  text-align: center;
+}
+.st-vignette__img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--color-ash);
+  border: none;
+  box-shadow: none;
+}
+.st-vignette__caption {
+  font-family: var(--font-davinci);
+  font-size: var(--text-subheading);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--leading-subheading);
+}
+
+/* 6.6 Hexagonal Nav Indicator — secondary brand shape, ~12px */
+.st-hex {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: currentColor;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  color: var(--color-ink);
+}
+.st-hex--outline {
+  background-color: transparent;
+  border: 1px solid currentColor;
+  /* hexagon outline via clip-path is not stroke-able; use box on 12px */
+  clip-path: none;
+  transform: rotate(0deg);
+}
+.st-section--dark .st-hex { color: var(--color-paper); }
+
+/* 6.7 Stat Pair — inline label:value data */
+.st-stats {
+  display: inline-flex;
+  gap: var(--spacing-28);
+}
+.st-stat {
+  font-family: var(--font-helvetica-now);
+  font-size: 16px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ink);
+}
+.st-section--dark .st-stat { color: var(--color-paper); }
+
+/* 6.8 Logo Mark — circled monogram */
+.st-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 50%;
+  font-family: var(--font-davinci);
+  font-size: 16px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ink);
+  background: transparent;
+}
+.st-section--dark .st-logo { border-color: var(--color-paper); color: var(--color-paper); }
+
+/* 6.9 Minimal Header — logo left, single link right */
+.st-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: var(--spacing-40);
+  padding-inline: var(--spacing-40);
+  background-color: var(--surface-putty-canvas);
+}
+
+/* 6.10 Hero Wordmark — 374px serif, cropped at viewport edges */
+.st-wordmark {
+  font-family: var(--font-davinci);
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;      /* intentionally crops at the edges */
+  width: 100%;
+  text-align: center;
+}
+
+/* 6.11 Classical Painting Panel — full-bleed atmospheric imagery */
+.st-panel {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border: none;
+  border-radius: 0;   /* full-bleed, no rounded corners */
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   7. Responsive — the display wordmark must scale down on small screens
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .st-wordmark { font-size: 22vw; }
+  .st-display  { font-size: 22vw; }
+  .st-section-title { font-size: 12vw; }
+}
+@media (max-width: 768px) {
+  .st-grid-3 { grid-template-columns: 1fr; }
+  .st-section { padding-inline: var(--spacing-20); }
+}

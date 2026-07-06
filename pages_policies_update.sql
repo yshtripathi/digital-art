@@ -165,7 +165,11 @@ UPDATE `pages` SET
   <li>
     <h3>Payments and Billing</h3>
     <p>Prices are shown in your selected currency and are payable at checkout. Payments are processed securely by our payment provider. Charges will appear on your card or bank statement under our billing descriptor shown below, so you can recognise the transaction:</p>
-    <p><img src="/assets/images/dba.webp" alt="[Company Name] billing descriptor" style="max-height:48px;"></p>
+    <table>
+      <tr><th>Company</th><td>[Company Name]</td></tr>
+      <tr><th>Support Email</th><td>[Company Email]</td></tr>
+      <tr><th>Billing Descriptor</th><td><img src="/assets/images/dba.webp" alt="[Company Name] billing descriptor" style="max-height:40px;"></td></tr>
+    </table>
     <p>If you do not recognise a charge, please contact us at [Company Email] before disputing it with your bank so we can help resolve the matter quickly.</p>
   </li>
   <li>

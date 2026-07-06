@@ -39,7 +39,7 @@
 
     {{-- Stylesheets --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
-    <link href="{{ url('css/sakura-mirage.css') }}" rel="stylesheet">
+    <link href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
 
     {{-- Google Fonts: Playfair Display (display serif) + Inter (utility grotesk) --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">

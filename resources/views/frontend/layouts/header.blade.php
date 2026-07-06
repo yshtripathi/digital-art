@@ -1,143 +1,976 @@
 {{-- Main Header --}}
-<header class="main-header navbar-sakura">
-    <div class="container-fluid px-lg-5">
-        <div class="header-inner d-flex align-items-center justify-content-between">
-            {{-- Logo --}}
-            <div class="logo-box">
-                <a href="{{ route('home') }}">
-                    <img src="{{ url('assets/images/logo.webp') }}" alt="Chromatique Art Logo" style="height: 48px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));">
-                </a>
-            </div>
+<header class="main-header custom-nav-bar">
+    <div class="custom-nav-container">
+        {{-- Logo --}}
+        <div class="custom-logo-box">
+            <a href="{{ route('home') }}" class="custom-logo-link">
+                <img src="{{ asset('assets/images/logo.webp') }}" alt="Inkwave Logo" class="custom-logo-img">
+                
+            </a>
+        </div>
 
-            {{-- Main Navigation --}}
-            <nav class="modern-nav-wrapper d-none d-lg-block">
-                <ul class="modern-nav list-unstyled mb-0 d-flex align-items-center gap-2">
-                    <li><a href="{{ route('home') }}" class="nav-link {{ Route::is('home') ? 'active' : '' }}">{{ __('common.home') }}</a></li>
+        {{-- Main Navigation (Desktop) --}}
+        <nav class="main-menu custom-nav-menu d-none d-lg-block">
+            <ul class="navigation custom-nav-links list-unstyled mb-0 d-flex align-items-center">
+                <li><a href="{{ route('home') }}" class="custom-nav-link {{ Route::is('home') ? 'active' : '' }}">{{ __('common.home') }}</a></li>
 
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="nav-link dropdown-toggle d-flex align-items-center gap-1" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ __('common.catalog') }}
-                        </a>
-                        <ul class="dropdown-menu animated-dropdown">
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="custom-nav-link" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span>{{ __('common.catalog') }}</span><i class="fas fa-chevron-down ms-1 custom-chevron"></i>
+                    </a>
+                    <ul class="dropdown-menu custom-dropdown-panel shadow-sm">
+                        @php
+                            $categories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+                        @endphp
+                        @forelse($categories as $cat)
                             @php
-                                $categories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+                                $icon = 'fa-paint-brush';
+                                $slug = strtolower($cat->slug);
+                                if (str_contains($slug, 'anime') || str_contains($slug, 'manga')) {
+                                    $icon = 'fa-dragon';
+                                } elseif (str_contains($slug, 'pixel') || str_contains($slug, 'game')) {
+                                    $icon = 'fa-gamepad';
+                                } elseif (str_contains($slug, 'pop') || str_contains($slug, 'comic')) {
+                                    $icon = 'fa-bolt';
+                                } elseif (str_contains($slug, 'street') || str_contains($slug, 'graffiti') || str_contains($slug, 'urban')) {
+                                    $icon = 'fa-spray-can';
+                                } elseif (str_contains($slug, 'ukiyo') || str_contains($slug, 'japanese') || str_contains($slug, 'woodblock')) {
+                                    $icon = 'fa-mountain';
+                                }
                             @endphp
-                            @forelse($categories as $cat)
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('product-lists', $cat->slug) }}">
-                                        <i class="fas fa-palette"></i>
-                                        {{ $cat->title }}
-                                    </a>
-                                </li>
-                            @empty
-                                <li><span class="dropdown-item text-muted small"><i class="fas fa-info-circle"></i> {{ __('common.no_categories') }}</span></li>
-                            @endforelse
-                        </ul>
-                    </li>
-
-                    <li><a href="{{ route('about-us') }}" class="nav-link {{ Route::is('about-us') ? 'active' : '' }}">{{ __('common.about') }}</a></li>
-                    <li><a href="{{ route('contact') }}" class="nav-link {{ Route::is('contact') ? 'active' : '' }}">{{ __('common.contact') }}</a></li>
-                </ul>
-            </nav>
-
-            {{-- Header Actions --}}
-            <div class="header-actions d-flex align-items-center gap-3">
-
-                {{-- Language Switcher --}}
-                <div class="dropdown d-none d-md-block">
-                    <a href="javascript:void(0)" class="btn-sakura-outline dropdown-toggle px-3" data-bs-toggle="dropdown" aria-expanded="false">
-                        @if(session('app_locale') == 'ja' || app()->getLocale() == 'ja')
-                            <span>JP</span>
-                        @else
-                            <span>EN</span>
-                        @endif
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end animated-dropdown">
-                        <li><a class="dropdown-item {{ (session('app_locale') != 'ja' && app()->getLocale() != 'ja') ? 'active' : '' }}" href="{{ route('change.language', 'en') }}"><i class="fi fi-gb"></i> {{ __('common.english') }}</a></li>
-                        <li><a class="dropdown-item {{ (session('app_locale') == 'ja' || app()->getLocale() == 'ja') ? 'active' : '' }}" href="{{ route('change.language', 'ja') }}"><i class="fi fi-jp"></i> {{ __('common.japanese') }}</a></li>
+                            <li>
+                                <a class="dropdown-item custom-dropdown-item" href="{{ route('product-lists', $cat->slug) }}">
+                                    <div class="custom-dropdown-icon">
+                                        <i class="fas {{ $icon }}"></i>
+                                    </div>
+                                    <div class="custom-dropdown-info">
+                                        <span class="custom-dropdown-title">{{ $cat->title }}</span>
+                                        <span class="custom-dropdown-desc">Premium prints of {{ strtolower($cat->title) }}</span>
+                                    </div>
+                                </a>
+                            </li>
+                        @empty
+                            <li>
+                                <span class="dropdown-item custom-dropdown-item text-muted text-center py-2">
+                                    {{ __('common.no_categories') }}
+                                </span>
+                            </li>
+                        @endforelse
                     </ul>
-                </div>
+                </li>
 
-                {{-- Currency Switcher --}}
-                <div class="dropdown d-none d-lg-block">
-                    @php
-                        $currentCurrency = session('currency', 'USD');
-                        $currencies = Helper::CurrenciesList();
-                    @endphp
-                    <a href="javascript:void(0)" class="btn-sakura-outline dropdown-toggle px-3" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="fw-bold">{{ Helper::getCurrencySymbol($currentCurrency) }}</span>
-                        <span>{{ $currentCurrency }}</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end animated-dropdown">
-                        @foreach($currencies as $cur)
-                            @if($cur->code != 'HKD')
-                                <li>
-                                    <a class="dropdown-item {{ $currentCurrency == $cur->code ? 'active' : '' }}" href="{{ route('change.currency', $cur->code) }}">
-                                        <i class="fas fa-money-bill-wave"></i>
-                                        {{ $cur->code }} ({{ Helper::getCurrencySymbol($cur->code) }})
-                                    </a>
-                                </li>
-                            @endif
-                        @endforeach
-                    </ul>
-                </div>
+                <li><a href="{{ route('about-us') }}" class="custom-nav-link {{ Route::is('about-us') ? 'active' : '' }}">{{ __('common.about') }}</a></li>
+                <li><a href="{{ route('contact') }}" class="custom-nav-link {{ Route::is('contact') ? 'active' : '' }}">{{ __('common.contact') }}</a></li>
+            </ul>
+        </nav>
 
-                @if(Auth::check())
-                    {{-- Points --}}
-                    <a href="{{ route('points.topup') }}" class="points-badge d-none d-sm-flex">
-                        <i class="fas fa-coins"></i>
-                        <span>{{ Auth::user()->points_balance ?? 0 }} CREDS</span>
-                    </a>
-
-                    {{-- User --}}
-                    <div class="dropdown">
-                        <a href="javascript:void(0)" class="btn-sakura dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle"></i>
-                            <span class="d-none d-sm-inline">{{ Auth::user()->name }}</span>
+        {{-- Header Actions (Right side) --}}
+        <div class="custom-nav-actions d-flex align-items-center">
+            {{-- Language Switcher --}}
+            <div class="dropdown">
+                <a href="javascript:void(0)" class="custom-switcher-btn" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    @if(session('app_locale') == 'ja' || app()->getLocale() == 'ja')
+                        <span>JP</span>
+                    @else
+                        <span>EN</span>
+                    @endif
+                    <i class="fas fa-chevron-down custom-chevron"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end custom-dropdown-panel shadow-sm">
+                    <li>
+                        <a class="dropdown-item custom-dropdown-item {{ (session('app_locale') != 'ja' && app()->getLocale() != 'ja') ? 'active' : '' }}" href="{{ route('change.language', 'en') }}">
+                            <div class="custom-dropdown-icon"><i class="fas fa-globe"></i></div>
+                            <div class="custom-dropdown-info">
+                                <span class="custom-dropdown-title">{{ __('common.english') }}</span>
+                            </div>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end animated-dropdown">
-                            <li><a class="dropdown-item" href="{{ route('user') }}">{{ __('common.account') }}</a></li>
-                            <li><hr class="dropdown-divider opacity-50"></li>
-                            <li><a class="dropdown-item text-danger" href="{{ route('user.logout') }}">{{ __('common.logout') }}</a></li>
-                        </ul>
-                    </div>
-                @else
-                    <div class="auth-btns d-flex gap-2">
-                        <a href="{{ route('login.form') }}" class="btn-sakura-outline d-none d-sm-flex">{{ __('common.login') }}</a>
-                        <a href="{{ route('register.form') }}" class="btn-sakura">{{ __('common.register') }}</a>
-                    </div>
-                @endif
-
-                {{-- Cart Toggle --}}
-                <div class="cart-toggle-wrapper position-relative">
-                    <a href="javascript:void(0)" class="btn-sakura-outline p-0 border-0 fs-4 bb-cart-toggle ui-btn" style="background: transparent;">
-                        <i class="lnr-icon-cart1"></i>
-                        <span class="cart-count">{{ Helper::totalCartQuantity() }}</span>
-                    </a>
-                </div>
-
-                {{-- Mobile Toggle --}}
-                <div class="mobile-nav-toggler d-lg-none fs-3 text-primary" style="cursor: pointer;">
-                    <span class="icon lnr-icon-bars"></span>
-                </div>
+                    </li>
+                    <li>
+                        <a class="dropdown-item custom-dropdown-item {{ (session('app_locale') == 'ja' || app()->getLocale() == 'ja') ? 'active' : '' }}" href="{{ route('change.language', 'ja') }}">
+                            <div class="custom-dropdown-icon"><i class="fas fa-globe"></i></div>
+                            <div class="custom-dropdown-info">
+                                <span class="custom-dropdown-title">{{ __('common.japanese') }}</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
             </div>
+
+            {{-- Currency Switcher --}}
+            <div class="dropdown ms-2">
+                @php
+                    $currentCurrency = session('currency', 'USD');
+                    $currencies = Helper::CurrenciesList();
+                @endphp
+                <a href="javascript:void(0)" class="custom-switcher-btn" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="fw-bold">{{ Helper::getCurrencySymbol($currentCurrency) }}</span>
+                    <span>{{ $currentCurrency }}</span>
+                    <i class="fas fa-chevron-down custom-chevron"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end custom-dropdown-panel shadow-sm" style="max-height: 250px; overflow-y: auto;">
+                    @foreach($currencies as $cur)
+                        @if($cur->code != 'HKD')
+                            <li>
+                                <a class="dropdown-item custom-dropdown-item {{ $currentCurrency == $cur->code ? 'active' : '' }}" href="{{ route('change.currency', $cur->code) }}">
+                                    <div class="custom-dropdown-icon"><i class="fas fa-money-bill-wave"></i></div>
+                                    <div class="custom-dropdown-info">
+                                        <span class="custom-dropdown-title">{{ $cur->code }} ({{ Helper::getCurrencySymbol($cur->code) }})</span>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
+
+            @if(Auth::check())
+                {{-- Points balance --}}
+                <a href="{{ route('points.topup') }}" class="custom-points-badge d-none d-sm-flex align-items-center ms-3">
+                    <i class="fas fa-coins text-warning me-1"></i>
+                    <span>{{ Auth::user()->points_balance ?? 0 }} CREDS</span>
+                </a>
+
+                {{-- User Profile dropdown --}}
+                <div class="dropdown ms-3">
+                    <a href="javascript:void(0)" class="custom-user-badge" data-toggle="dropdown" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle me-1"></i>
+                        <span class="d-none d-sm-inline">{{ Auth::user()->name }}</span>
+                        <i class="fas fa-chevron-down ms-1 custom-chevron"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end custom-dropdown-panel shadow-sm">
+                        <li>
+                            <a class="dropdown-item custom-dropdown-item" href="{{ route('user') }}">
+                                <div class="custom-dropdown-icon"><i class="fas fa-id-card"></i></div>
+                                <div class="custom-dropdown-info">
+                                    <span class="custom-dropdown-title">{{ __('common.account') }}</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider opacity-50 my-1"></li>
+                        <li>
+                            <a class="dropdown-item custom-dropdown-item text-danger" href="{{ route('user.logout') }}">
+                                <div class="custom-dropdown-icon text-danger"><i class="fas fa-sign-out-alt"></i></div>
+                                <div class="custom-dropdown-info">
+                                    <span class="custom-dropdown-title text-danger">{{ __('common.logout') }}</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            @else
+                {{-- Guest Login & Register --}}
+                <div class="custom-auth-buttons d-flex align-items-center ms-3">
+                    <a href="{{ route('login.form') }}" class="custom-nav-link d-none d-sm-inline-block">{{ __('common.login') }}</a>
+                    <a href="{{ route('register.form') }}" class="custom-auth-btn ms-3">{{ __('common.register') }}</a>
+                </div>
+            @endif
+
+            {{-- Cart Toggle --}}
+            <div class="custom-cart-wrapper ms-3">
+                <button class="custom-cart-toggle bb-cart-toggle ui-btn" aria-label="Toggle Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="custom-cart-count">{{ Helper::totalCartQuantity() }}</span>
+                </button>
+            </div>
+
+            {{-- Mobile Toggler --}}
+            <button class="mobile-nav-toggler d-lg-none custom-mobile-toggle ms-3" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </div>
 
-    {{-- Mobile Menu Structure --}}
+    {{-- Mobile Sidebar Drawer --}}
     <div class="mobile-menu">
         <div class="menu-backdrop"></div>
-        <nav class="menu-box glass-card" style="border-radius: 0 0 28px 28px;">
-            <div class="upper-box d-flex justify-content-between p-4">
-                <div class="nav-logo"><a href="{{ route('home') }}"><img src="{{ url('assets/images/logo.webp') }}" alt="" style="height: 36px;"></a></div>
-                <div class="close-btn fs-4"><i class="icon fa fa-times"></i></div>
+        <nav class="menu-box">
+            <div class="upper-box d-flex justify-content-between align-items-center p-4">
+                <div class="nav-logo">
+                    <a href="{{ route('home') }}" class="custom-logo-link">
+                        <img src="{{ asset('assets/images/logo.webp') }}" alt="Inkwave Logo" class="custom-logo-img">
+                        <span class="custom-logo-text">Inkwave</span>
+                    </a>
+                </div>
+                <button class="close-btn fs-4 border-0 bg-transparent p-0"><i class="icon fa fa-times"></i></button>
             </div>
-            <ul class="navigation list-unstyled p-4">
+            <ul class="navigation list-unstyled p-4 m-0">
                 {{-- JS Populated --}}
             </ul>
         </nav>
     </div>
 </header>
+
+<style>
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+        width: 100% !important;
+    }
+    .page-wrapper {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        position: relative !important;
+    }
+
+    /* Reset and custom styling for the redesigned premium header */
+    .custom-nav-bar {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1030 !important;
+        width: 100% !important;
+        height: 72px !important;
+        background-color: rgba(196, 195, 182, 0.9) !important; /* Putty color with 90% opacity */
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border-bottom: 1px solid var(--color-vellum) !important; /* Vellum hairline border */
+        display: flex !important;
+        align-items: center !important;
+        box-shadow: none !important;
+        padding: 0 20px !important;
+        margin: 0 !important;
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    }
+
+    .custom-nav-bar.floating {
+        background-color: rgba(196, 195, 182, 0.95) !important;
+        height: 56px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .custom-nav-container {
+        width: 100% !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        height: 100% !important;
+        flex-wrap: nowrap !important;
+    }
+
+    /* Logo Image and Wordmark */
+    .custom-logo-link {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        text-decoration: none !important;
+    }
+    
+    .custom-logo-link:hover {
+        text-decoration: none !important;
+    }
+
+    .custom-logo-img {
+        height: 32px !important;
+        width: auto !important;
+        object-fit: contain !important;
+    }
+
+    .custom-logo-text {
+        font-family: var(--font-davinci) !important;
+        font-size: 20px !important;
+        font-weight: 500 !important;
+        color: #000000 !important;
+        letter-spacing: -0.5px !important;
+    }
+
+    /* Main Navigation Links (Desktop) */
+    .custom-nav-links {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        list-style: none !important;
+    }
+
+    .custom-nav-link {
+        font-family: var(--font-helvetica-now) !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        color: #000000 !important;
+        padding: 8px 12px !important;
+        text-decoration: none !important;
+        transition: opacity 0.2s ease !important;
+        display: inline-flex !important;
+        align-items: center;
+    }
+
+    .custom-nav-link:hover,
+    .custom-nav-link.active {
+        opacity: 0.7 !important;
+        text-decoration: underline !important;
+        background-color: transparent !important;
+        color: #000000 !important;
+    }
+
+    .custom-nav-link::after {
+        display: none !important; /* Hide default bootstrap arrow */
+    }
+
+    .custom-chevron {
+        font-size: 9px !important;
+        opacity: 0.6 !important;
+        transition: transform 0.2s ease !important;
+    }
+
+    /* Modern Dropdown Panels (Bone Surface + Hairline border + Shadow) */
+    .custom-dropdown-panel {
+        display: block !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(10px) scale(0.98) !important;
+        transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1), transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.25s ease !important;
+        pointer-events: none !important; /* Prevent clicks when hidden */
+        background-color: #ffffff !important;
+        border: 1px solid var(--color-vellum) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+        padding: 8px !important;
+        margin-top: 8px !important;
+        min-width: 260px !important;
+        border-top: 1px solid var(--color-vellum) !important;
+        position: absolute !important;
+        z-index: 1050 !important;
+    }
+
+    .custom-dropdown-panel::after, .custom-dropdown-panel::before {
+        display: none !important;
+    }
+
+    /* Show dropdown panel on hover (desktop) or when clicked (.show) */
+    @media (min-width: 992px) {
+        .dropdown:hover .custom-dropdown-panel {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) scale(1) !important;
+            pointer-events: auto !important;
+        }
+        .dropdown:hover .custom-chevron {
+            transform: rotate(180deg) !important;
+        }
+    }
+
+    .dropdown.show .custom-dropdown-panel,
+    .dropdown-menu.show {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) scale(1) !important;
+        pointer-events: auto !important;
+    }
+    .dropdown.show .custom-chevron {
+        transform: rotate(180deg) !important;
+    }
+
+    .custom-dropdown-item {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 8px 12px !important;
+        border-radius: 6px !important;
+        background: transparent !important;
+        transition: background-color 0.2s ease !important;
+        text-decoration: none !important;
+    }
+
+    .custom-dropdown-item:hover,
+    .custom-dropdown-item.active {
+        background-color: var(--color-bone) !important; /* Bone color hover */
+        color: #000000 !important;
+    }
+
+    .custom-dropdown-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 32px !important;
+        height: 32px !important;
+        background-color: var(--color-bone) !important; /* Bone */
+        border: 1px solid var(--color-vellum) !important; /* Vellum */
+        border-radius: 6px !important;
+        color: #000000 !important;
+        flex-shrink: 0 !important;
+        font-size: 13px !important;
+    }
+
+    .custom-dropdown-info {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .custom-dropdown-title {
+        font-family: var(--font-helvetica-now) !important;
+        font-size: 13.5px !important;
+        font-weight: 500 !important;
+        color: #000000 !important;
+        line-height: 1.2 !important;
+    }
+
+    /* ==========================================================================
+       Language / Currency Capsule Switcher Buttons
+       ========================================================================== */
+    .custom-switcher-btn {
+        font-family: var(--font-helvetica-now) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        color: var(--color-ink) !important;
+        background-color: var(--color-paper) !important;
+        border: 1px solid var(--color-vellum) !important;
+        padding: 0 12px !important;
+        height: 32px !important;
+        border-radius: 20px !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        transition: all 0.2s ease !important;
+        box-sizing: border-box !important;
+        cursor: pointer !important;
+        white-space: nowrap !important;
+    }
+
+    .custom-switcher-btn:hover {
+        background-color: var(--color-bone) !important;
+        color: var(--color-ink) !important;
+        text-decoration: none !important;
+    }
+
+    /* ==========================================================================
+       Points & User Profile capsule buttons
+       ========================================================================== */
+    .custom-points-badge {
+        background-color: var(--color-bone) !important;
+        border: 1px solid var(--color-vellum) !important;
+        color: var(--color-ink) !important;
+        font-family: var(--font-helvetica-now) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.03em !important;
+        border-radius: 20px !important;
+        padding: 0 12px !important;
+        height: 32px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease !important;
+        box-sizing: border-box !important;
+        white-space: nowrap !important;
+    }
+    .custom-points-badge:hover {
+        background-color: var(--color-vellum) !important;
+        text-decoration: none !important;
+        color: var(--color-ink) !important;
+    }
+
+    .custom-user-badge {
+        background-color: var(--color-paper) !important;
+        border: 1px solid var(--color-vellum) !important;
+        color: var(--color-ink) !important;
+        font-family: var(--font-helvetica-now) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        border-radius: 20px !important;
+        padding: 0 12px !important;
+        height: 32px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease !important;
+        box-sizing: border-box !important;
+        cursor: pointer !important;
+        white-space: nowrap !important;
+    }
+    .custom-user-badge:hover {
+        background-color: var(--color-bone) !important;
+        text-decoration: none !important;
+        color: var(--color-ink) !important;
+    }
+
+    .custom-auth-btn {
+        font-family: var(--font-helvetica-now) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        background-color: var(--color-ink) !important;
+        color: var(--color-paper) !important;
+        padding: 8px 16px !important;
+        border-radius: 20px !important;
+        border: 1px solid var(--color-ink) !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 32px !important;
+        transition: all 0.2s ease !important;
+        box-sizing: border-box !important;
+    }
+    .custom-auth-btn:hover {
+        background-color: transparent !important;
+        color: var(--color-ink) !important;
+        text-decoration: none !important;
+    }
+
+    /* ==========================================================================
+       Shopping Cart Capsule Button
+       ========================================================================== */
+    .custom-cart-toggle {
+        background-color: var(--color-ink) !important;
+        color: var(--color-paper) !important;
+        border: 1px solid var(--color-ink) !important;
+        border-radius: 20px !important;
+        height: 32px !important;
+        padding: 0 16px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        box-sizing: border-box !important;
+        white-space: nowrap !important;
+    }
+    .custom-cart-toggle:hover {
+        background-color: transparent !important;
+        color: var(--color-ink) !important;
+    }
+    .custom-cart-toggle i {
+        font-size: 13px !important;
+    }
+    .custom-cart-count {
+        background-color: var(--color-paper) !important;
+        color: var(--color-ink) !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        border-radius: 50% !important;
+        width: 18px !important;
+        height: 18px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.2s ease !important;
+        border: 1px solid var(--color-ink) !important;
+    }
+    .custom-cart-toggle:hover .custom-cart-count {
+        background-color: var(--color-ink) !important;
+        color: var(--color-paper) !important;
+    }
+
+    /* ==========================================================================
+       Dropdown Panel & Item Styling
+       ========================================================================== */
+    .custom-dropdown-panel {
+        background-color: var(--color-paper, #ffffff) !important;
+        border: 1px solid var(--color-ink, #000000) !important;
+        border-radius: 4px !important;
+        box-shadow: none !important;
+        padding: 8px 0 !important;
+        margin-top: 8px !important;
+        animation: dropdown-fade-in 0.3s cubic-bezier(0.25, 1, 0.5, 1) both !important;
+    }
+    @keyframes dropdown-fade-in {
+        from { opacity: 0; transform: translateY(8px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .custom-dropdown-item {
+        font-family: var(--font-helvetica-now) !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        color: var(--color-graphite) !important;
+        padding: 10px 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        transition: all 0.2s ease !important;
+        background-color: transparent !important;
+    }
+    .custom-dropdown-item:hover,
+    .custom-dropdown-item.active {
+        background-color: var(--color-bone) !important;
+        color: var(--color-ink) !important;
+        text-decoration: none !important;
+    }
+    .custom-dropdown-item i {
+        font-size: 14px !important;
+        width: 20px !important;
+        text-align: center !important;
+        color: var(--color-ink) !important;
+    }
+
+    .custom-dropdown-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+    }
+
+    .custom-dropdown-info {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .custom-dropdown-title {
+        font-weight: 500 !important;
+        line-height: 1.2 !important;
+    }
+
+    /* ==========================================================================
+       Mobile Hamburger Toggle
+       ========================================================================== */
+    .custom-mobile-toggle {
+        display: none !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        border: none !important;
+        color: #000000 !important;
+        font-size: 22px !important;
+        padding: 8px !important;
+        cursor: pointer !important;
+        transition: opacity 0.2s ease !important;
+    }
+
+    @media (max-width: 991px) {
+        .custom-mobile-toggle {
+            display: flex !important;
+        }
+    }
+
+    .custom-mobile-toggle:hover {
+        opacity: 0.7 !important;
+    }
+
+    /* Hide default bootstrap dropdown carets globally in the header */
+    .custom-nav-bar .dropdown-toggle::after,
+    .custom-nav-bar [data-toggle="dropdown"]::after,
+    .custom-nav-bar [data-bs-toggle="dropdown"]::after {
+        display: none !important;
+        content: none !important;
+    }
+
+    /* ==========================================================================
+       Mobile Sidebar Drawer Styling
+       ========================================================================== */
+    .mobile-menu {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 320px !important;
+        max-width: 100vw !important;
+        height: 100vh !important;
+        background-color: var(--color-bone) !important;
+        border-right: 1px solid var(--color-vellum) !important;
+        z-index: 999999 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        padding: 40px 24px !important;
+    }
+
+    .mobile-menu-visible .mobile-menu {
+        transform: translateX(0) !important;
+    }
+
+    .mobile-menu .menu-backdrop {
+        position: fixed !important;
+        inset: 0 !important;
+        background: rgba(0, 0, 0, 0.4) !important;
+        z-index: -1 !important;
+        opacity: 0 !important;
+        transition: opacity 0.4s ease !important;
+        pointer-events: none !important;
+    }
+
+    .mobile-menu-visible .mobile-menu .menu-backdrop {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    .mobile-menu .nav-logo {
+        margin-bottom: 40px !important;
+        text-align: center !important;
+    }
+
+    .mobile-menu .navigation li {
+        border-bottom: 1px solid var(--color-vellum) !important;
+    }
+
+    .mobile-menu .navigation li a {
+        display: block !important;
+        padding: 14px 24px !important;
+        font-family: var(--font-helvetica-now) !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
+        color: #000000 !important;
+        text-decoration: none !important;
+        transition: background-color 0.2s ease !important;
+    }
+
+    .mobile-menu .navigation li a:hover {
+        background-color: var(--color-putty) !important;
+        text-decoration: none !important;
+    }
+
+    .mobile-menu .close-btn {
+        cursor: pointer !important;
+        font-size: 20px !important;
+        color: #000000 !important;
+        transition: opacity 0.2s ease !important;
+    }
+
+    .mobile-menu .close-btn:hover {
+        opacity: 0.7 !important;
+    }
+
+    /* ==========================================================================
+       Sidebar Cart Styling (Self-contained, Structured gallery styling)
+       ========================================================================== */
+    .cartcanvas__info {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 380px !important;
+        max-width: 100vw !important;
+        height: 100vh !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+        z-index: 1050 !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 24px !important;
+        border-left: 1px solid var(--color-vellum, #dfdcd5) !important;
+        box-shadow: none !important;
+        border-radius: 0 !important; /* Flat surface, no round corners */
+        overflow-x: hidden !important;
+    }
+
+    .cartcanvas__info.info-open {
+        transform: translateX(0) !important;
+    }
+
+    .offcanvas__overlay {
+        position: fixed !important;
+        inset: 0 !important;
+        background-color: rgba(0, 0, 0, 0.4) !important;
+        z-index: 1040 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: opacity 0.4s ease !important;
+    }
+
+    .offcanvas__overlay.overlay-open {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    .cart-header {
+        border-bottom: 1px solid var(--color-vellum, #dfdcd5) !important;
+        padding-bottom: 16px !important;
+        margin-bottom: 24px !important;
+    }
+
+    .cart-header h4 {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 20px !important;
+        font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+    }
+
+    .cartcanvas__close {
+        cursor: pointer !important;
+        font-size: 20px !important;
+        color: var(--color-ink, #000000) !important;
+        transition: opacity 0.2s ease !important;
+    }
+
+    .cartcanvas__close:hover {
+        opacity: 0.6 !important;
+    }
+
+    .cart-list {
+        flex-grow: 1 !important;
+        overflow-y: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .cart-item {
+        display: flex !important;
+        align-items: center !important;
+        gap: 16px !important;
+        padding: 16px !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        background-color: var(--color-paper, #ffffff) !important;
+        border-radius: 4px !important;
+        margin-bottom: 16px !important;
+        position: relative !important;
+        box-shadow: none !important;
+    }
+
+    .cart-item-points {
+        background-color: var(--color-paper, #ffffff) !important;
+    }
+
+    .cart-item .remove-item {
+        position: absolute !important;
+        top: 8px !important;
+        right: 8px !important;
+        color: var(--color-graphite, #595855) !important;
+        font-size: 14px !important;
+        transition: color 0.2s ease !important;
+        opacity: 0.6 !important;
+    }
+
+    .cart-item .remove-item:hover {
+        color: var(--color-ink, #000000) !important;
+        opacity: 1 !important;
+    }
+
+    .cart-item .item-img {
+        width: 64px !important;
+        height: 64px !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+        overflow: hidden !important;
+        flex-shrink: 0 !important;
+    }
+
+    .cart-item .item-img img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    .cart-item .item-details {
+        flex-grow: 1 !important;
+        min-width: 0 !important;
+    }
+
+    .cart-item .item-details h6 {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+        margin: 0 0 6px 0 !important;
+    }
+
+    .cart-item .item-details p {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 12px !important;
+        color: var(--color-graphite, #595855) !important;
+        margin: 0 !important;
+    }
+
+    .cart-item .item-details span {
+        color: var(--color-ink, #000000) !important;
+    }
+
+    .cart-item .badge {
+        background-color: var(--color-bone, #e7e5e4) !important;
+        color: var(--color-ink, #000000) !important;
+        border: 1px solid var(--color-vellum, #dfdcd5) !important;
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 10px !important;
+        font-weight: 500 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        border-radius: 2px !important;
+        padding: 4px 8px !important;
+    }
+
+    .cart-footer {
+        border-top: 1px solid var(--color-vellum, #dfdcd5) !important;
+        padding-top: 20px !important;
+        margin-top: auto !important;
+        background-color: var(--color-bone, #e7e5e4) !important;
+    }
+
+    .cart-footer h5 {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 12px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        color: var(--color-graphite, #595855) !important;
+        margin: 0 !important;
+    }
+
+    .cart-footer h4 {
+        font-family: var(--font-davinci, serif) !important;
+        font-size: 20px !important;
+        font-weight: 500 !important;
+        color: var(--color-ink, #000000) !important;
+        margin: 0 !important;
+    }
+
+    /* Buttons inside Cart Drawer */
+    .btn-sakura,
+    .btn-sakura-outline {
+        font-family: var(--font-helvetica-now, sans-serif) !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        padding: 10px 16px !important;
+        border-radius: 4px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.2s ease !important;
+        text-decoration: none !important;
+        cursor: pointer !important;
+        border: 1px solid var(--color-ink, #000000) !important;
+        width: 100% !important;
+    }
+
+    .btn-sakura {
+        background-color: var(--color-ink, #000000) !important;
+        color: var(--color-paper, #ffffff) !important;
+    }
+
+    .btn-sakura:hover {
+        background-color: var(--color-graphite, #595855) !important;
+        border-color: var(--color-graphite, #595855) !important;
+        color: var(--color-paper, #ffffff) !important;
+        text-decoration: none !important;
+    }
+
+    .btn-sakura-outline {
+        background-color: transparent !important;
+        color: var(--color-ink, #000000) !important;
+    }
+
+    .btn-sakura-outline:hover {
+        background-color: rgba(0, 0, 0, 0.05) !important;
+        color: var(--color-ink, #000000) !important;
+        text-decoration: none !important;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('.custom-nav-bar');
+        if (header) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 40) {
+                    header.classList.add('floating');
+                } else {
+                    header.classList.remove('floating');
+                }
+            });
+            // Initial check
+            if (window.scrollY > 40) {
+                header.classList.add('floating');
+            }
+        }
+    });
+</script>
+
 
 {{-- Cart Sidebar --}}
 <div class="offcanvas__overlay"></div>

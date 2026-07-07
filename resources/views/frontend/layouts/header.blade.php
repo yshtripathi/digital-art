@@ -64,9 +64,9 @@
             <div class="dropdown">
                 <a href="javascript:void(0)" class="custom-switcher-btn" aria-expanded="false">
                     @if(session('app_locale') == 'ja' || app()->getLocale() == 'ja')
-                        <span>JP</span>
+                        <i class="fi fi-jp me-1" style="border-radius: 2px;"></i> <span>JP</span>
                     @else
-                        <span>EN</span>
+                        <i class="fi fi-gb me-1" style="border-radius: 2px;"></i> <span>EN</span>
                     @endif
                     <i class="fas fa-chevron-down custom-chevron"></i>
                 </a>

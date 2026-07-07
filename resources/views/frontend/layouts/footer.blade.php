@@ -65,10 +65,14 @@
                     <div class="footer-widget">
                         <h4>{{ __('inkwave.menu_collections') }}</h4>
                         <ul class="user-links">
-                            <li><a href="{{route('product-lists', ['category' => 'anime-manga'])}}">{{ __('inkwave.collection_anime') }}</a></li>
-                            <li><a href="{{route('product-lists', ['category' => 'pixel-art'])}}">{{ __('inkwave.collection_pixel') }}</a></li>
-                            <li><a href="{{route('product-lists', ['category' => 'pop-art'])}}">{{ __('inkwave.collection_pop') }}</a></li>
-                            <li><a href="{{route('product-lists', ['category' => 'street-art'])}}">{{ __('inkwave.collection_street') }}</a></li>
+                            @php
+                                $footerCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+                            @endphp
+                            @forelse($footerCategories as $cat)
+                                <li><a href="{{ route('product-lists', $cat->slug) }}">{{ $cat->title }}</a></li>
+                            @empty
+                                <li><span class="text-muted">{{ __('inkwave.header_no_categories') }}</span></li>
+                            @endforelse
                         </ul>
                     </div>
                 </div>

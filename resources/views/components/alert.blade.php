@@ -1,31 +1,28 @@
 <style>
     .modern-toast-container {
         position: fixed;
-        top: 90px; /* Just below the header */
+        top: 90px;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 999999; /* Super high to overlay everything */
+        z-index: 999999;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 15px;
-        pointer-events: none; /* Let clicks pass through container */
+        gap: 12px;
+        pointer-events: none;
     }
     .modern-toast {
-        pointer-events: auto; /* Enable clicks on the toast itself */
-        min-width: 320px;
-        max-width: 420px;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid var(--color-vellum, #dfdcd5);
-        border-left: 5px solid;
-        border-radius: 12px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(0, 0, 0, 0.03);
-        padding: 18px 24px;
+        pointer-events: auto;
+        min-width: 280px;
+        max-width: 450px;
+        background: #1a1a1a;
+        color: #ffffff;
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        padding: 12px 20px 12px 16px;
         display: flex;
-        align-items: flex-start;
-        gap: 16px;
+        align-items: center;
+        gap: 14px;
         transform: translateY(-30px);
         opacity: 0;
         transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1.1), opacity 0.4s ease;
@@ -39,55 +36,44 @@
         opacity: 0;
     }
     .modern-toast-icon {
-        font-size: 22px;
+        font-size: 20px;
         flex-shrink: 0;
-        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
     }
     .modern-toast-content {
         flex-grow: 1;
-    }
-    .modern-toast-title {
-        font-family: var(--font-davinci, 'Times New Roman', serif);
-        font-size: 17px;
-        font-weight: 600;
-        color: var(--color-ink, #000000);
-        margin-bottom: 5px;
-        display: block;
-        letter-spacing: 0.02em;
-    }
-    .modern-toast-message {
         font-family: var(--font-helvetica-now, 'Helvetica Neue', sans-serif);
         font-size: 14px;
-        color: var(--color-graphite, #595855);
-        line-height: 1.5;
+        font-weight: 500;
+        line-height: 1.4;
+        letter-spacing: 0.01em;
     }
     .modern-toast-close {
         background: transparent;
         border: none;
-        color: #a0a0a0;
-        font-size: 20px;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 18px;
         cursor: pointer;
-        padding: 0;
+        padding: 4px;
         transition: color 0.2s ease, transform 0.2s ease;
         line-height: 1;
-        margin-top: -2px;
+        display: flex;
+        align-items: center;
     }
     .modern-toast-close:hover {
-        color: var(--color-ink, #000000);
+        color: #ffffff;
         transform: scale(1.1);
     }
     
-    /* Type variants based on brand colors where possible, falling back to clean semantics */
-    .toast-success { border-left-color: #10B981; }
     .toast-success .modern-toast-icon { color: #10B981; }
-    
-    .toast-error { border-left-color: #EF4444; }
     .toast-error .modern-toast-icon { color: #EF4444; }
-    
-    .toast-warning { border-left-color: #F59E0B; }
     .toast-warning .modern-toast-icon { color: #F59E0B; }
-    
-    .toast-info { border-left-color: #3B82F6; }
     .toast-info .modern-toast-icon { color: #3B82F6; }
 
     @media (max-width: 480px) {
@@ -98,6 +84,7 @@
         .modern-toast {
             min-width: 0;
             width: 100%;
+            border-radius: 12px; /* Less pill-like on small screens for better text wrapping */
         }
     }
 </style>
@@ -108,28 +95,17 @@
             <div class="modern-toast toast-{{ $msg }}" role="alert">
                 <div class="modern-toast-icon">
                     @if($msg == 'success')
-                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-check"></i>
                     @elseif($msg == 'error')
-                        <i class="fas fa-times-circle"></i>
+                        <i class="fas fa-times"></i>
                     @elseif($msg == 'warning')
-                        <i class="fas fa-exclamation-triangle"></i>
+                        <i class="fas fa-exclamation"></i>
                     @else
-                        <i class="fas fa-info-circle"></i>
+                        <i class="fas fa-info"></i>
                     @endif
                 </div>
                 <div class="modern-toast-content">
-                    <span class="modern-toast-title">
-                        @if($msg == 'success')
-                            Success
-                        @elseif($msg == 'error')
-                            Error
-                        @elseif($msg == 'warning')
-                            Warning
-                        @else
-                            Information
-                        @endif
-                    </span>
-                    <div class="modern-toast-message">{{ session($msg) }}</div>
+                    {{ session($msg) }}
                 </div>
                 <button class="modern-toast-close" onclick="closeToast(this.parentElement)" aria-label="Close">&times;</button>
             </div>

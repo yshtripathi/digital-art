@@ -9,6 +9,37 @@ class Product extends Model
 {
     protected $fillable=['title', 'title_jp', 'summary_jp', 'description_jp', 'extra_description', 'extra_description_jp','slug','summary','description','cat_id','child_cat_id','price', 'price_jp', 'price_hk','brand_id','discount','status','photo','size','stock','is_featured','condition'];
 
+    public function getTitleAttribute($value) {
+        $locale = App::getLocale();
+        if ($locale == 'ja' && !empty($this->attributes['title_jp'])) {
+            return $this->attributes['title_jp'];
+        }
+        return $value;
+    }
+
+    public function getSummaryAttribute($value) {
+        $locale = App::getLocale();
+        if ($locale == 'ja' && !empty($this->attributes['summary_jp'])) {
+            return $this->attributes['summary_jp'];
+        }
+        return $value;
+    }
+
+    public function getDescriptionAttribute($value) {
+        $locale = App::getLocale();
+        if ($locale == 'ja' && !empty($this->attributes['description_jp'])) {
+            return $this->attributes['description_jp'];
+        }
+        return $value;
+    }
+
+    public function getExtraDescriptionAttribute($value) {
+        $locale = App::getLocale();
+        if ($locale == 'ja' && !empty($this->attributes['extra_description_jp'])) {
+            return $this->attributes['extra_description_jp'];
+        }
+        return $value;
+    }
     public function cat_info(){
         return $this->hasOne('App\Models\Category','id','cat_id');
     }

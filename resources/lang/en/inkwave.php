@@ -32,7 +32,7 @@ return [
     'header_catalog' => 'Catalog',
     'header_no_categories' => 'No Categories Found',
     'header_about' => 'About Us',
-    'header_contact' => 'Contact',
+    'header_contact' => 'Contact Us',
     'header_english' => 'English',
     'header_japanese' => '日本語',
     'header_account' => 'My Account',

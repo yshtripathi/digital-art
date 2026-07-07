@@ -50,77 +50,7 @@
     <link href="{{ url('css/structured.css') }}" rel="stylesheet">
 
     {{-- Preloader Styles — Inkwave gallery loader (flat, no gradients, no shadows) --}}
-    <style>
-        #preloader {
-            position: fixed;
-            inset: 0;
-            background: var(--color-putty, #c4c3b6);
-            z-index: 999999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .st-preloader {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            animation: st-pre-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-        }
-        /* Serif brand wordmark — the gallery voice */
-        .st-preloader__mark {
-            font-family: var(--font-davinci, 'Playfair Display', Georgia, serif);
-            font-size: clamp(44px, 9vw, 88px);
-            font-weight: 500;
-            letter-spacing: -0.03em;
-            line-height: 1;
-            color: var(--color-ink, #000000);
-        }
-        /* Museum wall-label caption */
-        .st-preloader__label {
-            font-family: var(--font-helvetica-now, 'Inter', sans-serif);
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--color-graphite, #595855);
-            animation: st-pre-pulse 1.6s ease-in-out infinite;
-        }
-        /* Hairline indeterminate progress — ink segment sweeping a vellum track */
-        .st-preloader__bar {
-            position: relative;
-            width: 160px;
-            height: 2px;
-            background: var(--color-vellum, #dfdcd5);
-            overflow: hidden;
-        }
-        .st-preloader__bar span {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 40%;
-            background: var(--color-ink, #000000);
-            animation: st-pre-slide 1.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-        }
-        @keyframes st-pre-slide {
-            0%   { transform: translateX(-100%); }
-            100% { transform: translateX(400%); }
-        }
-        @keyframes st-pre-pulse {
-            0%, 100% { opacity: 0.4; }
-            50%      { opacity: 1; }
-        }
-        @keyframes st-pre-in {
-            from { opacity: 0; transform: translateY(12px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .st-preloader,
-            .st-preloader__label,
-            .st-preloader__bar span { animation: none; }
-        }
-    </style>
+    
 
     @cookieconsentscripts
 </head>

@@ -86,49 +86,4 @@
 
 @endsection
 
-@push('styles')
-<style>
-    /* =========================================================
-       ORDER DETAIL — Structured theme (receipt layout)
-       ========================================================= */
-    .od-section { background-color: var(--color-putty, #c4c3b6); padding: 72px 40px; }
-    .od-container { max-width: 860px; margin: 0 auto; }
-    .od-card { background-color: var(--color-paper, #fff); border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 14px; padding: 40px; }
 
-    .od-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-bottom: 26px; margin-bottom: 26px; border-bottom: 1px solid var(--color-vellum, #dfdcd5); }
-    .od-eyebrow { font-family: var(--font-helvetica-now, sans-serif); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-graphite, #595855); margin: 0 0 8px 0; }
-    .od-num { font-family: var(--font-davinci, serif); font-size: clamp(26px, 3.4vw, 36px); font-weight: 500; letter-spacing: -0.01em; color: var(--color-ink, #000); margin: 0; }
-    .od-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    .od-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-helvetica-now, sans-serif); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 28.8px; padding: 11px 20px; text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: opacity 0.2s ease, background-color 0.2s ease; }
-    .od-btn--primary { background-color: var(--color-ink, #000); color: var(--color-paper, #fff); border-color: var(--color-ink, #000); }
-    .od-btn--primary:hover { opacity: 0.85; color: var(--color-paper, #fff); }
-    .od-btn--ghost { background-color: transparent; color: var(--color-ink, #000); border-color: var(--color-vellum, #dfdcd5); }
-    .od-btn--ghost:hover { background-color: var(--color-bone, #e7e5e4); }
-
-    /* Summary strip */
-    .od-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 34px; }
-    .od-summary__item { background-color: var(--color-bone, #e7e5e4); border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 10px; padding: 18px 20px; }
-    .od-summary__label { display: block; font-family: var(--font-helvetica-now, sans-serif); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-graphite, #595855); margin-bottom: 8px; }
-    .od-summary__amt { font-family: var(--font-davinci, serif); font-size: 24px; font-weight: 500; color: var(--color-ink, #000); }
-    .od-tag { display: inline-block; background-color: transparent; color: var(--color-ink, #000); border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 28.8px; padding: 5px 14px; font-family: var(--font-helvetica-now, sans-serif); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
-    .od-tag--solid { background-color: var(--color-ink, #000); color: var(--color-paper, #fff); border-color: var(--color-ink, #000); }
-
-    /* Details grid */
-    .od-h { font-family: var(--font-davinci, serif); font-size: 20px; font-weight: 500; color: var(--color-ink, #000); margin: 0 0 18px 0; }
-    .od-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .od-field { background-color: var(--color-bone, #e7e5e4); border: 1px solid var(--color-vellum, #dfdcd5); border-radius: 10px; padding: 16px 18px; }
-    .od-field--wide { grid-column: 1 / -1; }
-    .od-field__label { display: block; font-family: var(--font-helvetica-now, sans-serif); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-graphite, #595855); margin-bottom: 6px; }
-    .od-field__value { font-family: var(--font-helvetica-now, sans-serif); font-size: 14.5px; font-weight: 500; color: var(--color-ink, #000); word-break: break-word; }
-
-    @media (max-width: 700px) {
-        .od-section { padding: 48px 20px; }
-        .od-card { padding: 28px 22px; }
-        .od-head { flex-direction: column; }
-        .od-actions { width: 100%; }
-        .od-btn { flex: 1 1 auto; justify-content: center; }
-        .od-summary { grid-template-columns: 1fr; }
-        .od-grid { grid-template-columns: 1fr; }
-    }
-</style>
-@endpush

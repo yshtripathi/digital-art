@@ -60,10 +60,7 @@
                     <div class="cart-summary__card">
                         <h3 class="cart-summary__h">{{ __('inkwave.cart_order_summary') }}</h3>
 
-                        <div class="cart-summary__row">
-                            <span>{{ __('inkwave.cart_total') }}</span>
-                            <span>{{ $sym }}{{ number_format($subtotal, $isJPY ? 0 : 2) }}</span>
-                        </div>
+                        
                         @if($discount > 0)
                             <div class="cart-summary__row">
                                 <span>{{ __('inkwave.cart_coupon') }}</span>
@@ -72,7 +69,7 @@
                         @endif
 
                         <div class="cart-summary__total">
-                            <span class="lbl">{{ __('inkwave.cart_total') }}</span>
+                            <span class="lbl">{{ __('inkwave.cart_total') }}:</span>
                             <span class="amt">{{ $sym }}{{ number_format($total_amount, $isJPY ? 0 : 2) }}</span>
                         </div>
 
@@ -200,7 +197,7 @@
     .cart-btn--ghost:hover { background-color: var(--color-bone, #e7e5e4); color: var(--color-ink, #000); }
 
     .cart-pay { text-align: center; margin-top: 22px; }
-    .cart-pay img { max-height: 30px; width: auto; opacity: 0.55; }
+    .cart-pay img { max-height: 30px; width: auto; opacity: 1; }
 
     /* Empty state */
     .cart-empty {

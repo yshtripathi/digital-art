@@ -186,8 +186,10 @@
                         </div>
 
                         <div class="co-billnote">
-                            <p>{{ __('inkwave.checkout_card_bill_desc') }}</p>
-                            <img src="{{ asset('assets/images/dba.webp') }}" alt="Brand Logo">
+                            <p>
+                                {{ __('inkwave.checkout_card_bill_desc') }} 
+                                <img src="{{ asset('assets/images/dba.webp') }}" alt="Brand Logo" style="height: 1.4em; vertical-align: middle; display: inline-block; margin-left: 6px; margin-bottom: 2px;">
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -222,7 +224,7 @@
                                 @endforeach
                             @endif
                             <div class="co-order__total">
-                                <span class="lbl">{{ __('inkwave.checkout_total') }}</span>
+                                <span class="lbl">{{ __('inkwave.checkout_total') }}:</span>
                                 <span class="amt">{{ Helper::getCurrencySymbol(session('currency')) }} {{ number_format($total_amount, session('currency')=='JPY' ? 0 : 2, '.', ',') }}</span>
                             </div>
                         </div>
@@ -351,7 +353,7 @@
     .co-btn--ghost:hover { background-color: var(--color-bone, #e7e5e4); color: var(--color-ink, #000); }
 
     .co-pay { text-align: center; margin-top: 20px; }
-    .co-pay img { max-height: 30px; opacity: 0.55; }
+    .co-pay img { max-height: 30px; opacity: 1; }
 
     @media (max-width: 900px) {
         .co-section { padding: 48px 20px; }

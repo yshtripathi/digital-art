@@ -806,6 +806,10 @@
         overflow-x: hidden !important;
     }
 
+    .cartcanvas__info, .cartcanvas__info * {
+        box-sizing: border-box !important;
+    }
+
     .cartcanvas__info.info-open {
         transform: translateX(0) !important;
     }
@@ -826,6 +830,9 @@
     }
 
     .cart-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
         border-bottom: 1px solid var(--color-vellum, #dfdcd5) !important;
         padding-bottom: 16px !important;
         margin-bottom: 24px !important;
@@ -971,6 +978,20 @@
         margin: 0 !important;
     }
 
+    .cart-footer-top {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: 16px !important;
+    }
+
+    .cart-footer-actions {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+
     /* Buttons inside Cart Drawer */
     .btn-sakura,
     .btn-sakura-outline {
@@ -1110,7 +1131,7 @@
                     @endif
                 @endforeach
             @else
-                <li class="text-center py-5">
+                <li class="text-center py-5" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
                     <div class="opacity-25 mb-3"><i class="fas fa-shopping-basket fa-4x"></i></div>
                     <p class="text-muted fw-bold">{{ __('inkwave.header_no_cart_available') }}</p>
                     <a href="{{ route('product-lists') }}" class="btn-sakura-outline" style="width: auto !important; display: inline-flex; padding: 7px 18px !important; font-size: 11px !important;">{{ __('inkwave.header_catalog') }}</a>
@@ -1137,7 +1158,7 @@
                 }
             @endphp
             <div class="cart-footer">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="cart-footer-top">
                     <h5 class="fw-bold mb-0">{{ __('inkwave.header_total') }}:</h5>
                     @if($hasPoints && !$hasProducts)
                         <h4 class="fw-bold mb-0">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</h4>
@@ -1145,7 +1166,7 @@
                         <h4 class="fw-bold mb-0">{{ number_format($totalPoints) }} {{ __('inkwave.header_credits') }}</h4>
                     @endif
                 </div>
-                <div class="d-grid gap-2">
+                <div class="cart-footer-actions">
                     @if($hasPoints && !$hasProducts)
                         {{-- Points Only: Show View Cart and Checkout --}}
                         <a href="{{ route('cart') }}" class="btn-sakura-outline w-100 justify-content-center">

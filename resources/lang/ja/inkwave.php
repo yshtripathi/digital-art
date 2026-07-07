@@ -253,7 +253,7 @@ return [
     'order_ok_note' => 'アクセス集中により、確認メールの送信が遅れる場合があります。こちらから領収書をダウンロードしてください：',
 
     // Checkout
-    'checkout_title' => '安全な取得',
+    'checkout_title' => 'チェックアウト',
     'checkout_billing_details' => 'コレクターの詳細',
     'checkout_fname' => '名',
     'checkout_lname' => '姓',
@@ -283,7 +283,7 @@ return [
     'checkout_agree_delivery' => '理解しました：',
     'checkout_refund' => '返品ポリシー',
     'checkout_agree_refund' => '同意します：',
-    'checkout_card_bill_desc' => '取得を完了するため、カード情報は安全に処理されます。',
+    'checkout_card_bill_desc' => '当ウェブサイトでサービスを購入すると、クレジットカードの請求書には以下の説明が記載されます：',
     'checkout_your_order' => '取得の概要',
     'checkout_product' => '作品',
     'checkout_total' => '合計',

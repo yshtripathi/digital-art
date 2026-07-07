@@ -102,12 +102,12 @@
                         @php $total_points = Helper::totalCartPoints(); @endphp
 
                         <div class="cc-summary__row">
-                            <span>{{ __('inkwave.cart_item_count') }}</span>
+                            <span>{{ __('inkwave.cart_item_count') }}:</span>
                             <span>{{ $itemCount }}</span>
                         </div>
 
                         <div class="cc-summary__total">
-                            <span class="lbl">{{ __('inkwave.cart_total') }}</span>
+                            <span class="lbl">{{ __('inkwave.cart_total') }}:</span>
                             <span class="amt">{{ number_format($total_points) }} <small>{{ __('inkwave.cart_type_credits') }}</small></span>
                         </div>
 

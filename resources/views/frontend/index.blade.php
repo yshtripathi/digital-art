@@ -127,7 +127,7 @@
     </div>
 
     @php
-        $carouselProducts = \App\Models\Product::where('status','active')->orderBy('id','DESC')->get();
+        $carouselProducts = \App\Models\Product::with('levels')->where('status','active')->orderBy('id','DESC')->get();
     @endphp
 
     <div class="prod-carousel">
@@ -145,6 +145,11 @@
                         @endif
                     </div>
                     <h3 class="prod-slide__title">{{ $product->title }}</h3>
+                    @if($product->levels && $product->levels->count() > 0)
+                        <p class="prod-slide__price">
+                            {{ __('inkwave.starting_from') }} <strong>{{ number_format($product->levels->min('price_in_points')) }}</strong> {{ __('inkwave.pd_credits') }}
+                        </p>
+                    @endif
                 </a>
             @empty
                 <p class="prod-empty">{{ __('inkwave.prod_empty') }}</p>

@@ -5445,3 +5445,21 @@ html, body {
         .ord-card, .ord-badge { animation: none; }
     }
 
+/* =========================================
+   STARTING FROM PRICE ON CARDS
+   ========================================= */
+.prod-slide__price, .pl-card__price {
+    font-family: var(--font-helvetica-now, sans-serif);
+    font-size: 13.5px;
+    color: var(--color-graphite, #595855);
+    margin: 6px 0 0 0;
+    font-weight: 500;
+}
+.prod-slide__price strong, .pl-card__price strong {
+    color: var(--color-ink, #000);
+    font-size: 14.5px;
+}
+.pl-card__price {
+    margin: 6px 0 8px 0;
+}
+

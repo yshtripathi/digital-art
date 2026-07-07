@@ -332,6 +332,7 @@ return [
     'pd_design_concept' => 'Artistic Concept',
     'pd_price' => 'Investment',
     'pd_credits' => 'Credits',
+    'starting_from' => 'Starting from',
     'pd_buy_now' => 'Acquire Now',
 
     // Dashboard

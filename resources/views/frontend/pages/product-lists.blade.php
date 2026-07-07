@@ -60,6 +60,11 @@
                                 </div>
                                 <div class="pl-card__body">
                                     <h3 class="pl-card__title">{{ $course->title }}</h3>
+                                    @if($course->levels && $course->levels->count() > 0)
+                                        <p class="pl-card__price">
+                                            {{ __('inkwave.starting_from') }} <strong>{{ number_format($course->levels->min('price_in_points')) }}</strong> {{ __('inkwave.pd_credits') }}
+                                        </p>
+                                    @endif
                                     <span class="pl-card__link">{{ __('inkwave.pl_explore') }} <i class="fas fa-arrow-right"></i></span>
                                 </div>
                             </a>

@@ -332,6 +332,7 @@ return [
     'pd_design_concept' => '芸術的コンセプト',
     'pd_price' => '投資額',
     'pd_credits' => 'クレジット',
+    'starting_from' => '開始: ',
     'pd_buy_now' => '今すぐ取得する',
 
     // Dashboard

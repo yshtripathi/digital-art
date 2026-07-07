@@ -199,7 +199,7 @@ return [
     'val_captcha_error' => '無効なセキュリティコード。',
 
     // Cart & Checkout
-    'cart_title' => 'あなたのコレクション',
+    'cart_title' => 'コレクション',
     'cart_summary_title' => '取得の概要',
     'cart_item_summary' => '選択された作品',
     'cart_no_items' => 'コレクションは空です',
@@ -218,7 +218,7 @@ return [
     'cart_item_count' => '作品',
 
     // Course Cart (Credits Cart)
-    'cc_title' => '厳選された取得',
+    'cc_title' => 'コレクション',
     'cc_available_credits' => '利用可能なクレジット',
     'cc_skill_level' => 'エディション',
     'cc_empty_msg' => 'まだ取得する作品が選択されていません。',

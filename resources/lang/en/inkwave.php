@@ -199,7 +199,7 @@ return [
     'val_captcha_error' => 'Invalid security code.',
 
     // Cart & Checkout
-    'cart_title' => 'Your Collection',
+    'cart_title' => 'Cart',
     'cart_summary_title' => 'Acquisition Summary',
     'cart_item_summary' => 'Selected Works',
     'cart_no_items' => 'Your collection is empty',
@@ -218,7 +218,7 @@ return [
     'cart_item_count' => 'Artworks',
 
     // Course Cart (Credits Cart)
-    'cc_title' => 'Curated Acquisitions',
+    'cc_title' => 'Cart',
     'cc_available_credits' => 'Available Credits',
     'cc_skill_level' => 'Edition',
     'cc_empty_msg' => 'No artworks selected for acquisition yet.',

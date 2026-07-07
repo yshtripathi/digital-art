@@ -146,12 +146,12 @@
                 toast.classList.add('show');
             }, 100 + (150 * index));
             
-            // Auto-hide after 5 seconds
+            // Auto-hide after 3 seconds
             setTimeout(() => {
                 if (toast.classList.contains('show')) {
                     closeToast(toast);
                 }
-            }, 5000 + (150 * index));
+            }, 3000 + (150 * index));
         });
     });
 

@@ -321,55 +321,57 @@
             }
         });
 
-        // Card CVC formatting
-        jQuery('.cc-cvc').payment('formatCardCVC');
+        // Card CVC formatting (only if jquery.payment loaded)
+        if (jQuery.fn.payment) { jQuery('.cc-cvc').payment('formatCardCVC'); }
+    });
 
-        // Phone — digits, spaces, hyphens, plus, parentheses only
-        jQuery('#phone').on('keypress', function(e) {
-            const char = String.fromCharCode(e.which);
-            if (!/[0-9\-\+\s\(\)]/.test(char)) { e.preventDefault(); }
-        });
+    // --- Input sanitising (vanilla JS, runs even if jQuery/CDN fails to load) ---
+    document.addEventListener('DOMContentLoaded', function () {
+        // Strip characters matching `re` from an input, on typing, paste and autofill.
+        function sanitise(id, re, maxLen) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            var clean = function () {
+                var v = el.value.replace(re, '');
+                if (maxLen) v = v.substring(0, maxLen);
+                if (v !== el.value) el.value = v;
+            };
+            el.addEventListener('input', clean);
+            el.addEventListener('paste', function () { setTimeout(clean, 0); });
+            el.addEventListener('blur', clean);
+        }
 
-        // Card number — 4-digit groups
-        const formatCardNumber = function(input) {
-            const digits = input.value.replace(/\D/g, '').substring(0, 16);
-            input.value = digits.replace(/(.{4})/g, '$1 ').trim();
-        };
-        jQuery('#card_number').on('input paste', function() {
-            setTimeout(() => formatCardNumber(this), 0);
-        }).on('keypress', function(e) {
-            const char = String.fromCharCode(e.which);
-            if (!/[0-9]/.test(char)) { e.preventDefault(); }
-        });
+        // Phone — remove letters only; digits & special characters allowed
+        sanitise('phone', /[a-zA-Z]/g);
 
-        // Expiry month — digits, max 12
-        jQuery('#expiry_month').on('keypress', function(e) {
-            const char = String.fromCharCode(e.which);
-            if (!/[0-9]/.test(char)) { e.preventDefault(); }
-        }).on('input', function() {
-            let value = this.value.replace(/[^0-9]/g, '');
-            if (value.length >= 2) {
-                value = value.substring(0, 2);
-                if (parseInt(value) > 12) { value = '12'; }
-            }
-            this.value = value;
-        });
+        // Card number — digits only, grouped into blocks of 4 (max 16 digits)
+        var card = document.getElementById('card_number');
+        if (card) {
+            var formatCard = function () {
+                var digits = card.value.replace(/\D/g, '').substring(0, 16);
+                card.value = digits.replace(/(.{4})/g, '$1 ').trim();
+            };
+            card.addEventListener('input', formatCard);
+            card.addEventListener('paste', function () { setTimeout(formatCard, 0); });
+        }
 
-        // Expiry year — digits
-        jQuery('#expiry_year').on('keypress', function(e) {
-            const char = String.fromCharCode(e.which);
-            if (!/[0-9]/.test(char)) { e.preventDefault(); }
-        }).on('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '').substring(0, 4);
-        });
+        // Expiry month — digits only, max 2, capped at 12
+        var month = document.getElementById('expiry_month');
+        if (month) {
+            var fixMonth = function () {
+                var v = month.value.replace(/\D/g, '').substring(0, 2);
+                if (v.length === 2 && parseInt(v, 10) > 12) v = '12';
+                month.value = v;
+            };
+            month.addEventListener('input', fixMonth);
+            month.addEventListener('paste', function () { setTimeout(fixMonth, 0); });
+        }
 
-        // CVV — digits
-        jQuery('#cvv').on('keypress', function(e) {
-            const char = String.fromCharCode(e.which);
-            if (!/[0-9]/.test(char)) { e.preventDefault(); }
-        }).on('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '').substring(0, 4);
-        });
+        // Expiry year — digits only, max 4
+        sanitise('expiry_year', /\D/g, 4);
+
+        // CVV — digits only, max 4
+        sanitise('cvv', /\D/g, 4);
     });
 </script>
 @endpush

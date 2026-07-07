@@ -316,11 +316,12 @@ class Product extends Model
         $query->select(
             'id',
             'course_id',
-            'skill_level',
-            'purpose',
-            'learn_info',
-            'outcome',
-            'price_hk as price'
+            'skill_level_jp as skill_level',
+            'purpose_jp as purpose',
+            'learn_info_jp as learn_info',
+            'outcome_jp as outcome',
+            'price_hk as price',
+            'price_in_points'
         );
     },
     'cat_info',
@@ -460,7 +461,8 @@ class Product extends Model
             'purpose',
             'learn_info',
             'outcome',
-            'price_hk as price'
+            'price_hk as price',
+            'price_in_points'
         );
     },
     'cat_info',

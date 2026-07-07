@@ -1,0 +1,58 @@
+/* ========================================================================
+   WATERMARK & ANTI-COPY PROTECTION
+   ======================================================================== */
+
+/* Prevent dragging and CSS-based copy on images/video */
+img, video {
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+a, button, .pd-thumb {
+    pointer-events: auto;
+}
+
+/* Watermark Overlay for Categories and Products */
+.cat-card, .pl-catfig, .pl-othercat, .prod-slide__img, .pl-card__img, .pd-gallery__main, .pd-thumb {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Translucent white overlay tint on top of every protected image */
+.cat-card::before, .pl-catfig::before, .pl-othercat::before, .prod-slide__img::before, .pl-card__img::before, .pd-gallery__main::before, .pd-thumb::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.25);
+    pointer-events: none;
+    z-index: 19;   /* sits under the watermark text (z-index 20) */
+}
+
+.cat-card::after, .pl-catfig::after, .pl-othercat::after, .prod-slide__img::after, .pl-card__img::after, .pd-gallery__main::after, .pd-thumb::after {
+    content: "INKWAVE";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: max(2rem, 3.5vw);
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.9);
+    pointer-events: none;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    z-index: 20;
+    text-shadow: 
+        2px 2px 15px rgba(0,0,0,0.9), 
+        -2px -2px 15px rgba(0,0,0,0.9),
+        0 0 5px rgba(255,255,255,0.4); 
+    opacity: 0.95; 
+}
+
+/* Adjust sizes for smaller thumbnails */
+.pd-thumb::after {
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+}

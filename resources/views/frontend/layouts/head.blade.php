@@ -48,6 +48,9 @@
 
     {{-- Structured theme (Renaissance gallery on putty paper) --}}
     <link href="{{ url('css/structured.css') }}" rel="stylesheet">
+    @if(env('CONTENT_PROTECTION_ENABLED', true))
+    <link href="{{ url('css/prevention.css') }}" rel="stylesheet">
+    @endif
 
     {{-- Preloader Styles — Inkwave gallery loader (flat, no gradients, no shadows) --}}
     

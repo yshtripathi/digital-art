@@ -159,34 +159,8 @@
         }, 5000);
     });
 </script>
-<script>
-    // Disable right click
-    document.addEventListener('contextmenu', e => e.preventDefault());
-     
-    // Disable common shortcut keys
-    document.addEventListener('keydown', function(e) {
-        // Prevent Print Screen
-        if (e.key === 'PrintScreen') {
-            navigator.clipboard.writeText('');
-            alert('Screenshots are disabled.');
-            e.preventDefault();
-        }
-     
-        // Prevent Ctrl+Shift+I / DevTools
-        if (
-            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-            (e.ctrlKey && e.key === 'U') ||
-            (e.key === 'F12')
-        ) {
-            e.preventDefault();
-        }
-    });
-</script>
-<script>
-    document.addEventListener('contextmenu', event => {
-        event.preventDefault();
-    });
-</script>
+@if(env('CONTENT_PROTECTION_ENABLED', true))
+<script src="{{ asset('js/prevention.js') }}"></script>
+@endif
 </body>
 </html>

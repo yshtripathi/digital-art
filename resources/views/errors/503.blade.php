@@ -1,7 +1,7 @@
 @extends('errors.layout')
 
 @php
-    $title = '503 - Service Unavailable | Inkwave';
+    $title = '503 - Service Unavailable';
 @endphp
 
 @section('code', '503')

@@ -1,7 +1,7 @@
 @extends('errors.layout')
 
 @php
-    $title = '404 - Not Found | Inkwave';
+    $title = '404 - Not Found';
 @endphp
 
 @section('code', '404')

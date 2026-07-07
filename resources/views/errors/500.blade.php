@@ -1,7 +1,7 @@
 @extends('errors.layout')
 
 @php
-    $title = '500 - Server Error | Inkwave';
+    $title = '500 - Server Error';
 @endphp
 
 @section('code', '500')

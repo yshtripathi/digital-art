@@ -24,7 +24,7 @@
     <span class="st-breadcrumb__veil" aria-hidden="true"></span>
 
     <div class="st-breadcrumb__inner">
-        <p class="st-breadcrumb__eyebrow">Inkwave</p>
+        
         <h1 class="st-breadcrumb__title">{{ $title }}</h1>
 
         <nav class="st-breadcrumb__nav" aria-label="Breadcrumb">

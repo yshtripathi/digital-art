@@ -1,8 +1,8 @@
 @extends('frontend.layouts.main')
-@section('title', __('inkwave.about_title'))
+@section('title', __('inkwave.about_page_title'))
 @section('main-content')
 
-<x-breadcrumb :title="__('inkwave.about_title')" />
+<x-breadcrumb :title="__('inkwave.about_page_title')" />
 
 {{-- ============================================================
      SECTION 1 — OUR STORY (text + image a1.webp)
@@ -10,23 +10,23 @@
 <section class="abt-section abt-story">
     <div class="abt-container abt-split">
         <div class="abt-split__text">
-            <p class="abt-eyebrow">{{ __('inkwave.about_eyebrow') }}</p>
-            <h2 class="abt-heading">{{ __('inkwave.about_heading') }}</h2>
-            <p class="abt-lead">{{ __('inkwave.about_lead') }}</p>
-            <p class="abt-body">{{ __('inkwave.about_body') }}</p>
+            <p class="abt-eyebrow">{{ __('inkwave.about_intro_eyebrow') }}</p>
+            <h2 class="abt-heading">{{ __('inkwave.about_intro_heading') }}</h2>
+            <p class="abt-lead">{{ __('inkwave.about_intro_lead') }}</p>
+            <p class="abt-body">{{ __('inkwave.about_intro_body') }}</p>
 
             <div class="abt-tags">
-                <span>Anime &amp; Manga</span>
-                <span>Pixel</span>
-                <span>Pop</span>
-                <span>Street</span>
-                <span>Modern Ukiyo-e</span>
+                <span>{{ __('inkwave.about_tag_anime') }}</span>
+                <span>{{ __('inkwave.about_tag_pixel') }}</span>
+                <span>{{ __('inkwave.about_tag_pop') }}</span>
+                <span>{{ __('inkwave.about_tag_street') }}</span>
+                <span>{{ __('inkwave.about_tag_ukiyo') }}</span>
             </div>
         </div>
 
         <div class="abt-split__media">
             <figure class="abt-frame abt-frame--tall">
-                <img src="{{ asset('assets/images/a1.webp') }}" alt="Inkwave curated artwork" loading="lazy">
+                <img src="{{ asset('assets/images/a1.webp') }}" alt="{{ __('inkwave.about_intro_heading') }}" loading="lazy">
             </figure>
         </div>
     </div>
@@ -41,9 +41,9 @@
     </video>
     <span class="abt-manifesto__veil" aria-hidden="true"></span>
     <div class="abt-container abt-manifesto__inner">
-        <p class="abt-manifesto__label">{{ __('inkwave.philosophy_label') }}</p>
+        <p class="abt-manifesto__label">{{ __('inkwave.about_manifesto_label') }}</p>
         <p class="abt-manifesto__quote">
-            {{ __('inkwave.philosophy_quote') }}
+            {{ __('inkwave.about_manifesto_quote') }}
         </p>
     </div>
 </section>
@@ -54,30 +54,30 @@
 <section class="abt-section abt-values">
     <div class="abt-container">
         <div class="abt-head">
-            <p class="abt-eyebrow">{{ __('inkwave.values_eyebrow') }}</p>
-            <h2 class="abt-heading abt-heading--center">{{ __('inkwave.values_heading') }}</h2>
+            <p class="abt-eyebrow">{{ __('inkwave.about_standards_eyebrow') }}</p>
+            <h2 class="abt-heading abt-heading--center">{{ __('inkwave.about_standards_heading') }}</h2>
         </div>
 
         <div class="abt-values__grid">
             <div class="abt-value">
-                <span class="abt-value__icon"><i class="fas fa-award"></i></span>
-                <h3 class="abt-value__title">{{ __('inkwave.value1_title') }}</h3>
-                <p class="abt-value__desc">{{ __('inkwave.value1_desc') }}</p>
+                <span class="abt-value__icon"><i class="fas fa-image"></i></span>
+                <h3 class="abt-value__title">{{ __('inkwave.about_standard_1_title') }}</h3>
+                <p class="abt-value__desc">{{ __('inkwave.about_standard_1_desc') }}</p>
             </div>
             <div class="abt-value">
                 <span class="abt-value__icon"><i class="fas fa-certificate"></i></span>
-                <h3 class="abt-value__title">{{ __('inkwave.value2_title') }}</h3>
-                <p class="abt-value__desc">{{ __('inkwave.value2_desc') }}</p>
+                <h3 class="abt-value__title">{{ __('inkwave.about_standard_2_title') }}</h3>
+                <p class="abt-value__desc">{{ __('inkwave.about_standard_2_desc') }}</p>
             </div>
             <div class="abt-value">
-                <span class="abt-value__icon"><i class="fas fa-layer-group"></i></span>
-                <h3 class="abt-value__title">{{ __('inkwave.value3_title') }}</h3>
-                <p class="abt-value__desc">{{ __('inkwave.value3_desc') }}</p>
+                <span class="abt-value__icon"><i class="fas fa-palette"></i></span>
+                <h3 class="abt-value__title">{{ __('inkwave.about_standard_3_title') }}</h3>
+                <p class="abt-value__desc">{{ __('inkwave.about_standard_3_desc') }}</p>
             </div>
             <div class="abt-value">
-                <span class="abt-value__icon"><i class="fas fa-crown"></i></span>
-                <h3 class="abt-value__title">{{ __('inkwave.value4_title') }}</h3>
-                <p class="abt-value__desc">{{ __('inkwave.value4_desc') }}</p>
+                <span class="abt-value__icon"><i class="fas fa-download"></i></span>
+                <h3 class="abt-value__title">{{ __('inkwave.about_standard_4_title') }}</h3>
+                <p class="abt-value__desc">{{ __('inkwave.about_standard_4_desc') }}</p>
             </div>
         </div>
     </div>
@@ -90,18 +90,18 @@
     <div class="abt-container abt-split abt-split--reverse">
         <div class="abt-split__media">
             <figure class="abt-frame abt-frame--wide">
-                <img src="{{ asset('assets/images/a2.webp') }}" alt="Inkwave print craft" loading="lazy">
+                <img src="{{ asset('assets/images/a2.webp') }}" alt="{{ __('inkwave.about_process_heading') }}" loading="lazy">
             </figure>
         </div>
 
         <div class="abt-split__text">
-            <p class="abt-eyebrow">{{ __('inkwave.craft_eyebrow') }}</p>
-            <h2 class="abt-heading">{{ __('inkwave.craft_heading') }}</h2>
-            <p class="abt-body">{{ __('inkwave.craft_body') }}</p>
+            <p class="abt-eyebrow">{{ __('inkwave.about_process_eyebrow') }}</p>
+            <h2 class="abt-heading">{{ __('inkwave.about_process_heading') }}</h2>
+            <p class="abt-body">{{ __('inkwave.about_process_body') }}</p>
             <ul class="abt-checklist">
-                <li><i class="fas fa-check"></i> {{ __('inkwave.craft_check1') }}</li>
-                <li><i class="fas fa-check"></i> {{ __('inkwave.craft_check2') }}</li>
-                <li><i class="fas fa-check"></i> {{ __('inkwave.craft_check3') }}</li>
+                <li><i class="fas fa-check"></i> {{ __('inkwave.about_process_check_1') }}</li>
+                <li><i class="fas fa-check"></i> {{ __('inkwave.about_process_check_2') }}</li>
+                <li><i class="fas fa-check"></i> {{ __('inkwave.about_process_check_3') }}</li>
             </ul>
         </div>
     </div>
@@ -112,9 +112,9 @@
      ============================================================ --}}
 <section class="abt-cta">
     <div class="abt-container">
-        <h2 class="abt-cta__heading">{{ __('inkwave.cta_heading') }}</h2>
-        <p class="abt-cta__sub">{{ __('inkwave.cta_sub') }}</p>
-        <a href="{{ route('product-lists') }}" class="abt-cta__btn">{{ __('inkwave.cta_btn') }} <i class="fas fa-arrow-right"></i></a>
+        <h2 class="abt-cta__heading">{{ __('inkwave.about_cta_heading') }}</h2>
+        <p class="abt-cta__sub">{{ __('inkwave.about_cta_sub') }}</p>
+        <a href="{{ route('product-lists') }}" class="abt-cta__btn">{{ __('inkwave.about_cta_btn') }} <i class="fas fa-arrow-right"></i></a>
     </div>
 </section>
 

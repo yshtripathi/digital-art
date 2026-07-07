@@ -68,11 +68,13 @@ class PointsController extends Controller
         
         // Fixed exchange rates for multi-currency support
         $usd_rate_jp = 160.0;
-        $usd_rate_hk = 7.82;
+        $usd_rate_hk = 8.0;
 
-        // Convert the input amount to USD if it was entered in JPY
+        // Convert the input amount to USD based on session currency
         if (session('currency') == 'JPY') {
             $usd_amount = $input_amount / $usd_rate_jp;
+        } elseif (session('currency') == 'HKD') {
+            $usd_amount = $input_amount / $usd_rate_hk;
         } else {
             $usd_amount = $input_amount;
         }

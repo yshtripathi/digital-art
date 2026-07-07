@@ -25,10 +25,10 @@
                     ];
                 } elseif ($cur == 'HKD') {
                     $tiers = [
-                        ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$499',       'f'=>false],
-                        ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$500 - HK$999',     'f'=>false],
-                        ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$1,000 - HK$1,499', 'f'=>false],
-                        ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$1,500+',           'f'=>true],
+                        ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
+                        ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
+                        ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
+                        ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$12,000+',           'f'=>true],
                     ];
                 } else {
                     $tiers = [
@@ -156,6 +156,7 @@
             const amount = parseFloat(amountInput.value) || 0;
             let multiplier = 1;
             const isJPY = {{ session('currency') == 'JPY' ? 'true' : 'false' }};
+            const isHKD = {{ session('currency') == 'HKD' ? 'true' : 'false' }};
             let basePoints = 0;
 
             if (isJPY) {
@@ -163,6 +164,12 @@
                 if (amount >= 240000) multiplier = 2.5;
                 else if (amount >= 160000) multiplier = 2;
                 else if (amount >= 80000) multiplier = 1.5;
+                else multiplier = 1;
+            } else if (isHKD) {
+                basePoints = Math.floor(amount / 8);
+                if (amount >= 12000) multiplier = 2.5;
+                else if (amount >= 8000) multiplier = 2;
+                else if (amount >= 4000) multiplier = 1.5;
                 else multiplier = 1;
             } else {
                 basePoints = Math.floor(amount);

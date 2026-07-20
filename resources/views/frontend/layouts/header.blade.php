@@ -4,7 +4,7 @@
         {{-- Logo --}}
         <div class="custom-logo-box">
             <a href="{{ route('home') }}" class="custom-logo-link">
-                <img src="{{ asset('assets/images/logo.webp') }}" alt="Inkwave Logo" class="custom-logo-img">
+                <img src="{{ asset('assets/images/logo.webp') }}" alt="Artora Studios Logo" class="custom-logo-img">
                 
             </a>
         </div>
@@ -164,8 +164,8 @@
             <div class="upper-box d-flex justify-content-between align-items-center p-4">
                 <div class="nav-logo">
                     <a href="{{ route('home') }}" class="custom-logo-link">
-                        <img src="{{ asset('assets/images/logo.webp') }}" alt="Inkwave Logo" class="custom-logo-img">
-                        <span class="custom-logo-text">Inkwave</span>
+                        <img src="{{ asset('assets/images/logo.webp') }}" alt="Artora Studios Logo" class="custom-logo-img">
+                        <span class="custom-logo-text">Artora Studios</span>
                     </a>
                 </div>
                 <button class="close-btn fs-4 border-0 bg-transparent p-0"><i class="icon fa fa-times"></i></button>

@@ -6,29 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
     {{-- SEO Meta --}}
-    <title>@yield('title', 'Inkwave – Premium Anime, Pixel, Pop, Street & Ukiyo-e Art')</title>
-    <meta name="title" content="Inkwave – Premium Digital Art Prints">
-    <meta name="description" content="Inkwave offers high-resolution premium digital art prints across Anime & Manga, Pixel Art, Pop Art, Street Art, and Modern Ukiyo-e collections — expressive, collectible, and ready to display.">
-    <meta name="keywords" content="digital art, premium art prints, anime art, manga art, pixel art, retro game art, pop art, halftone art, street art, graffiti art, ukiyo-e, modern woodblock print, japanese art, inkwave">
-    <meta name="author" content="Inkwave">
+    <title>@yield('title', 'Artora Studios – Online Art Courses in Anime, Manga & Illustration')</title>
+    <meta name="title" content="Artora Studios – Online Art Courses">
+    <meta name="description" content="Artora Studios offers online art courses taught by professional artists across Anime & Manga Illustration, Character Design & Concept Art, Pixel Art & Game Graphics, Modern Japanese Illustration, and Visual Storytelling & Comic Art — learn step by step, anytime.">
+    <meta name="keywords" content="online art courses, anime illustration course, manga art course, character design, concept art, pixel art, game graphics, japanese illustration, comic art, visual storytelling, learn to draw, artora studios">
+    <meta name="author" content="Artora Studios">
 
     {{-- Open Graph / Facebook --}}
     <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title', 'Inkwave – Premium Digital Art Prints')">
-    <meta property="og:description" content="Premium digital art prints spanning Anime & Manga, Pixel Art, Pop Art, Street Art, and Modern Ukiyo-e — high-resolution collectible artwork ready to display.">
+    <meta property="og:title" content="@yield('title', 'Artora Studios – Online Art Courses')">
+    <meta property="og:description" content="Online art courses spanning Anime & Manga Illustration, Character Design & Concept Art, Pixel Art & Game Graphics, Modern Japanese Illustration, and Visual Storytelling & Comic Art — learn from professional artists, step by step.">
     @if(isset($og_image))
     <meta property="og:image" content="{{ $og_image }}">
     @endif
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:site_name" content="Inkwave">
+    <meta property="og:site_name" content="Artora Studios">
     <meta property="og:locale" content="en_US">
 
     {{-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@inkwave">
-    <meta name="twitter:creator" content="@inkwave">
-    <meta name="twitter:title" content="@yield('title', 'Inkwave – Premium Digital Art Prints')">
-    <meta name="twitter:description" content="Premium digital art prints spanning Anime & Manga, Pixel Art, Pop Art, Street Art, and Modern Ukiyo-e — high-resolution collectible artwork ready to display.">
+    <meta name="twitter:site" content="@artorastudios">
+    <meta name="twitter:creator" content="@artorastudios">
+    <meta name="twitter:title" content="@yield('title', 'Artora Studios – Online Art Courses')">
+    <meta name="twitter:description" content="Online art courses spanning Anime & Manga Illustration, Character Design & Concept Art, Pixel Art & Game Graphics, Modern Japanese Illustration, and Visual Storytelling & Comic Art — learn from professional artists, step by step.">
     @if(isset($og_image))
     <meta name="twitter:image" content="{{ $og_image }}">
     @endif
@@ -52,7 +52,7 @@
     <link href="{{ url('css/prevention.css') }}" rel="stylesheet">
     @endif
 
-    {{-- Preloader Styles — Inkwave gallery loader (flat, no gradients, no shadows) --}}
+    {{-- Preloader Styles — Artora Studios loader (flat, no gradients, no shadows) --}}
     
 
     @cookieconsentscripts
@@ -64,8 +64,8 @@
     {{-- Preloader --}}
     <div id="preloader">
         <div class="st-preloader">
-            <div class="st-preloader__mark">Inkwave</div>
-            <div class="st-preloader__label">Curating the collection</div>
+            <div class="st-preloader__mark">Artora Studios</div>
+            <div class="st-preloader__label">Loading your studio</div>
             <div class="st-preloader__bar"><span></span></div>
         </div>
     </div>

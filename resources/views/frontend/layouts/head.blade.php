@@ -64,8 +64,8 @@
     {{-- Preloader --}}
     <div id="preloader">
         <div class="st-preloader">
-            <div class="st-preloader__mark">Artora Studios</div>
-            <div class="st-preloader__label">Loading your studio</div>
+            <img class="st-preloader__logo" src="{{ asset('assets/images/preloader.webp') }}" alt="Artora Studios">
+            <div class="st-preloader__label">Loading…</div>
             <div class="st-preloader__bar"><span></span></div>
         </div>
     </div>

@@ -3172,14 +3172,21 @@
             gap: 20px;
             animation: st-pre-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
         }
-        /* Serif brand wordmark — the gallery voice */
-        .st-preloader__mark {
-            font-family: var(--font-davinci, 'Playfair Display', Georgia, serif);
-            font-size: clamp(44px, 9vw, 88px);
-            font-weight: 500;
-            letter-spacing: -0.03em;
-            line-height: 1;
-            color: var(--color-ink, #000000);
+        /* Brand logo mark (transparent webp) on a light plate */
+        .st-preloader__logo {
+            width: clamp(88px, 16vw, 132px);
+            height: auto;
+            display: block;
+            background-color: var(--color-paper, #ffffff);
+            padding: 22px;
+            border-radius: 22px;
+            box-sizing: content-box;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+            animation: st-pre-breathe 1.9s ease-in-out infinite;
+        }
+        @keyframes st-pre-breathe {
+            0%, 100% { transform: scale(1);    opacity: 0.85; }
+            50%      { transform: scale(1.06); opacity: 1; }
         }
         /* Museum wall-label caption */
         .st-preloader__label {
@@ -3222,6 +3229,7 @@
         }
         @media (prefers-reduced-motion: reduce) {
             .st-preloader,
+            .st-preloader__logo,
             .st-preloader__label,
             .st-preloader__bar span { animation: none; }
         }

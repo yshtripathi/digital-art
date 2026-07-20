@@ -4463,9 +4463,9 @@ html, body {
     .co-check span { font-family: var(--font-helvetica-now, sans-serif); font-size: 13.5px; line-height: 1.5; color: var(--color-ink, #000); }
     .co-check a { color: var(--color-ink, #000); font-weight: 600; text-decoration: underline; }
 
-    .co-billnote { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--color-vellum, #dfdcd5); text-align: center; }
-    .co-billnote p { font-family: var(--font-helvetica-now, sans-serif); font-size: 13px; line-height: 1.6; color: var(--color-graphite, #595855); margin: 0 0 14px 0; }
-    .co-billnote img { max-height: 42px; max-width: 100%; object-fit: contain; }
+    .co-billnote { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--color-vellum, #dfdcd5); text-align: left; }
+    .co-billnote p { font-family: var(--font-helvetica-now, sans-serif); font-size: 13px; line-height: 2.1; color: var(--color-graphite, #595855); margin: 0; }
+    .co-billnote img { display: inline; height: 2.2em; width: auto; max-width: 100%; vertical-align: middle; margin: 0 4px; object-fit: contain; }
 
     /* Summary */
     .co-summary { position: sticky; top: 96px; margin-bottom: 0; }
@@ -4849,9 +4849,9 @@ html, body {
     /* ---------- Images ---------- */
 /*     .page-prose img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--color-vellum, #dfdcd5); margin: 1.2rem 0; }
  */    /* inline logo (e.g. billing descriptor) that flows within a sentence */
-    .page-prose img.dba-inline { display: inline-block; height: 1.25em; width: auto; vertical-align: middle; margin: 0 4px; border: none !important; border-radius: 0; }
+    .page-prose img.dba-inline { display: inline-block; height: 1.7em; width: auto; vertical-align: middle; border: none !important; border-radius: 0; }
     /* DBA inside the info table cell: sized to the cell text, no border, no extra space */
-    .page-prose td img.dba-inline { height: 1.35em; margin: 0; }
+    .page-prose td img.dba-inline { height: 1.7em; margin: 0; }
 
     /* ---------- Code ---------- */
     .page-prose code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.88em; background-color: var(--color-bone, #e7e5e4); padding: 2px 6px; border-radius: 5px; color: var(--color-ink, #000); }

@@ -36,6 +36,10 @@
                         <p class="brand-bio mb-4">{{ __('inkwave.brand_mission') }}</p>
                         <ul class="contact-info">
                             <li>
+                                <i class="fas fa-building"></i>
+                                <span>{{ $misc['Company Name'] ?? __('inkwave.fallback_company_name') }}</span>
+                            </li>
+                            <li>
                                 <i class="fas fa-envelope"></i>
                                 <a href="mailto:{{ $misc['Company Email'] ?? __('inkwave.fallback_email') }}">{{ $misc['Company Email'] ?? __('inkwave.fallback_email') }}</a>
                             </li>

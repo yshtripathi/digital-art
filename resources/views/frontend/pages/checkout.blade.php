@@ -188,7 +188,7 @@
                         <div class="co-billnote">
                             <p>
                                 {{ __('inkwave.checkout_card_bill_desc') }} 
-                                <img src="{{ asset('assets/images/dba.webp') }}" alt="Brand Logo" style="height: 1.4em; vertical-align: middle; display: inline-block; margin-left: 6px; margin-bottom: 2px;">
+                                <img src="{{ asset('assets/images/dba.webp') }}" alt="Brand Logo" >
                             </p>
                         </div>
                     </div>

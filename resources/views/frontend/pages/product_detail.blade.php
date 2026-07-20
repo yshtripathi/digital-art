@@ -55,10 +55,37 @@
 
                         @foreach($product_detail->levels as $key => $level)
                             <div class="pd-level {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}" style="display: {{ $key === 0 ? 'block' : 'none' }};">
-                                @if($level->purpose)
-                                    <div class="pd-level__concept">
-                                        <span class="pd-level__concept-label"><i class="fas fa-palette"></i> {{ __('inkwave.pd_design_concept') }}</span>
-                                        <p class="pd-level__purpose">{{ $level->purpose }}</p>
+                                @if($level->learn_info || $level->purpose || $level->outcome)
+                                    <div class="pd-learn">
+                                        @if($level->learn_info)
+                                            <div class="pd-learn__row">
+                                                <span class="pd-learn__icon"><i class="fas fa-book-open"></i></span>
+                                                <div class="pd-learn__body">
+                                                    <span class="pd-learn__label">{{ __('inkwave.pd_learn_info') }}</span>
+                                                    <p class="pd-learn__text">{{ $level->learn_info }}</p>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        @if($level->purpose)
+                                            <div class="pd-learn__row">
+                                                <span class="pd-learn__icon"><i class="fas fa-bullseye"></i></span>
+                                                <div class="pd-learn__body">
+                                                    <span class="pd-learn__label">{{ __('inkwave.pd_purpose') }}</span>
+                                                    <p class="pd-learn__text">{{ $level->purpose }}</p>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        @if($level->outcome)
+                                            <div class="pd-learn__row">
+                                                <span class="pd-learn__icon"><i class="fas fa-trophy"></i></span>
+                                                <div class="pd-learn__body">
+                                                    <span class="pd-learn__label">{{ __('inkwave.pd_outcome') }}</span>
+                                                    <p class="pd-learn__text">{{ $level->outcome }}</p>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 @endif
 

@@ -149,18 +149,37 @@
         });
     }, 5000);
     $(".suces_rinfo").hide();
+    var subTimer;
 
     $(".subscribe-form").on('submit', function(event){
         event.preventDefault();
-        $(".suces_rinfo").show();
 
-        // reset form
-        $(".subscribe-form form")[0].reset();
+        var $form  = $(this);
+        var $email = $form.find('input[type="email"]');
+        var value  = ($email.val() || '').trim();
+        var isValid = value !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
-        // hide success message after 5 seconds
-        setTimeout(function(){
-            $(".suces_rinfo").fadeOut();
-        }, 5000);
+        // Only show the success message for a filled, valid email
+        if (!isValid) {
+            if ($email[0] && $email[0].reportValidity) {
+                $email[0].reportValidity();
+            }
+            $email.trigger('focus');
+            return;
+        }
+
+        // show the message, cancelling any previous auto-hide timer
+        clearTimeout(subTimer);
+        $(".suces_rinfo").stop(true, true).fadeIn(200);
+
+        // reset the actual <form> element (this handler is bound to the wrapper div)
+        var formEl = $form.is('form') ? $form[0] : $form.find('form')[0];
+        if (formEl) { formEl.reset(); }
+
+        // auto-hide the message after a few seconds
+        subTimer = setTimeout(function(){
+            $(".suces_rinfo").fadeOut(400);
+        }, 4000);
     });
 </script>
 @if(env('CONTENT_PROTECTION_ENABLED', true))

@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'newsletter_title' => 'スタジオに参加する',
+    'newsletter_title' => 'ニュースレターに登録',
     'newsletter_subtitle' => '新しいアート講座、アーティストによるチュートリアル、創作のヒントにいち早くアクセスできます。',
     'email_placeholder' => 'メールアドレスを入力',
-    'subscribe_action' => '参加する',
-    'subscribe_success' => 'スタジオへようこそ。登録が完了しました。',
+    'subscribe_action' => '登録する',
+    'subscribe_success' => 'ご登録ありがとうございます。',
     'brand_mission' => '現代のクリエイターのためのオンラインアート講座。プロのアーティストから、わかりやすいステップ・バイ・ステップの動画レッスンで学べます。',
     'fallback_company_name' => '[Company Name]',
     'fallback_email' => '[Company Email]',
@@ -359,7 +359,7 @@ return [
     'dash_failed' => '失敗',
     'dash_pending' => '保留中',
     'dash_view' => '表示',
-    'dash_no_past_orders' => '記録にアクティビティが見つかりません。',
+    'dash_no_past_orders' => '過去の注文が見つかりません。',
     'dash_points_redeemed_courses' => '登録済みの講座',
     'dash_artwork_name' => '講座タイトル',
     'dash_level' => 'レベル',

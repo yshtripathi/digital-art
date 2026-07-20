@@ -2895,50 +2895,42 @@
         margin: 24px auto 0 auto !important;
     }
 
+    /* Unified pill: input + button inside one rounded, bordered container */
     .main-footer .subscribe-form .form-group {
         display: flex !important;
-        gap: 12px !important;
+        gap: 8px !important;
         align-items: center !important;
         width: 100% !important;
         position: relative !important;
+        background-color: rgba(255, 255, 255, 0.06) !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        border-radius: 40px !important;
+        padding: 6px 6px 6px 24px !important;
+        transition: border-color 0.3s ease, background-color 0.3s ease !important;
+    }
+
+    .main-footer .subscribe-form .form-group:focus-within {
+        border-color: rgba(255, 255, 255, 0.55) !important;
+        background-color: rgba(255, 255, 255, 0.10) !important;
     }
 
     .main-footer .subscribe-form .form-group::after {
-        content: "" !important;
-        position: absolute !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        width: calc(100% - 110px) !important;
-        height: 1px !important;
-        background-color: var(--color-paper, #ffffff) !important;
-        transform: scaleX(0) !important;
-        transform-origin: left !important;
-        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-
-    .main-footer .subscribe-form .form-group:focus-within::after {
-        transform: scaleX(1) !important;
+        display: none !important;
     }
 
     .main-footer .subscribe-form input[type="email"] {
         flex-grow: 1 !important;
         background: transparent !important;
         border: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
         outline: none !important;
         color: var(--color-paper, #ffffff) !important;
         font-size: 14px !important;
-        padding: 8px 0 !important;
+        padding: 12px 0 !important;
         font-family: var(--font-helvetica-now, sans-serif) !important;
-        transition: border-color 0.3s ease !important;
-    }
-
-    .main-footer .subscribe-form input[type="email"]:focus {
-        border-color: var(--color-paper, #ffffff) !important;
     }
 
     .main-footer .subscribe-form input[type="email"]::placeholder {
-        color: rgba(255, 255, 255, 0.3) !important;
+        color: rgba(255, 255, 255, 0.4) !important;
     }
 
     .main-footer .subscribe-btn {
@@ -2946,24 +2938,44 @@
         font-size: 11px !important;
         font-weight: 600 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.05em !important;
+        letter-spacing: 0.06em !important;
         background-color: var(--color-paper, #ffffff) !important;
         color: var(--color-ink, #000000) !important;
         border: 1px solid var(--color-paper, #ffffff) !important;
-        border-radius: 28.8px !important; /* theme pill radius for filled action buttons */
-        padding: 0 20px !important;
-        height: 32px !important;
+        border-radius: 40px !important;
+        padding: 0 26px !important;
+        height: 46px !important;
+        gap: 8px !important;
         cursor: pointer !important;
         transition: all 0.2s ease !important;
         white-space: nowrap !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
+        flex-shrink: 0 !important;
     }
 
     .main-footer .subscribe-btn:hover {
         background-color: transparent !important;
         color: var(--color-paper, #ffffff) !important;
+    }
+
+    /* Newsletter success message — distinct green box.
+       NOTE: do NOT force `display` here — visibility is controlled by JS
+       (.hide()/.show()); forcing display would make it show before submit. */
+    .main-footer .suces_rinfo {
+        width: fit-content !important;
+        max-width: 100% !important;
+        background-color: #1a7f4b !important;
+        color: #ffffff !important;
+        border: 1px solid #35b075 !important;
+        border-radius: 10px !important;
+        padding: 11px 20px !important;
+        margin: 16px auto 0 auto !important;
+        font-size: 13.5px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.01em !important;
+        text-align: center !important;
     }
 
     /* Widgets Section (Middle Grid) */
@@ -4835,9 +4847,11 @@ html, body {
     .page-prose hr { border: none; border-top: 1px solid var(--color-vellum, #dfdcd5); margin: 2.2rem 0; }
 
     /* ---------- Images ---------- */
-    .page-prose img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--color-vellum, #dfdcd5); margin: 1.2rem 0; }
-    /* inline logo (e.g. billing descriptor) that flows within a sentence */
-    .page-prose img.dba-inline { display: inline; height: 26px; width: auto; vertical-align: middle; margin: 0 5px; border: none; border-radius: 3px; }
+/*     .page-prose img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--color-vellum, #dfdcd5); margin: 1.2rem 0; }
+ */    /* inline logo (e.g. billing descriptor) that flows within a sentence */
+    .page-prose img.dba-inline { display: inline-block; height: 1.25em; width: auto; vertical-align: middle; margin: 0 4px; border: none !important; border-radius: 0; }
+    /* DBA inside the info table cell: sized to the cell text, no border, no extra space */
+    .page-prose td img.dba-inline { height: 1.35em; margin: 0; }
 
     /* ---------- Code ---------- */
     .page-prose code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.88em; background-color: var(--color-bone, #e7e5e4); padding: 2px 6px; border-radius: 5px; color: var(--color-ink, #000); }

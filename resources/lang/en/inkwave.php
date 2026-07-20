@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'newsletter_title' => 'Join the Studio',
+    'newsletter_title' => 'Subscribe to our newsletter',
     'newsletter_subtitle' => 'Get early access to new art courses, artist tutorials, and creative tips.',
     'email_placeholder' => 'Enter your email address',
-    'subscribe_action' => 'Join Now',
-    'subscribe_success' => 'Welcome to the studio. Your subscription is confirmed.',
+    'subscribe_action' => 'Subscribe',
+    'subscribe_success' => 'Thank you for subscribing.',
     'brand_mission' => 'Online art courses for modern creators. Learn from professional artists through easy, step-by-step video lessons.',
     'fallback_company_name' => '[Company Name]',
     'fallback_email' => '[Company Email]',
@@ -359,7 +359,7 @@ return [
     'dash_failed' => 'Failed',
     'dash_pending' => 'Pending',
     'dash_view' => 'View',
-    'dash_no_past_orders' => 'No activity found in your record.',
+    'dash_no_past_orders' => 'No past order found.',
     'dash_points_redeemed_courses' => 'Enrolled Courses',
     'dash_artwork_name' => 'Course Title',
     'dash_level' => 'Level',

@@ -233,10 +233,7 @@
 
     <!-- Totals -->
     <table class="totals">
-        <tr>
-            <td>Subtotal:</td>
-            <td>{{ $currency }} {{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}</td>
-        </tr>
+      
         <tr>
             <td><strong>Total:</strong></td>
             <td><strong>{{ $currency }} {{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}</strong></td>

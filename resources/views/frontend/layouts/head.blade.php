@@ -34,8 +34,8 @@
     @endif
 
     {{-- Favicon --}}
-    <link rel="shortcut icon" href="{{ url('assets/images/favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ url('assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ url('assets/images/favicon.png') }}" type="image/png">
 
     {{-- Stylesheets --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">

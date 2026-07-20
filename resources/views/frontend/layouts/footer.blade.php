@@ -30,7 +30,7 @@
                     <div class="footer-widget about-widget">
                         <div class="pb-3">
                             <a href="{{route('home')}}" class="footer-logo-link">
-                                <img src="{{asset('assets/images/logo.webp')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.fallback_company_name') }}" class="footer-logo-img">
+                                <img src="{{asset('assets/images/logo.png')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.fallback_company_name') }}" class="footer-logo-img">
                             </a>
                         </div>
                         <p class="brand-bio mb-4">{{ __('inkwave.brand_mission') }}</p>

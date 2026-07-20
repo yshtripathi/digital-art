@@ -2837,6 +2837,10 @@
         max-height: 48px !important;
         width: auto !important;
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        background-color: var(--color-paper, #ffffff) !important;
+        padding: 10px 16px !important;
+        border-radius: 10px !important;
+        box-sizing: content-box !important;
     }
     .footer-logo-link:hover .footer-logo-img {
         transform: scale(1.05) !important;
@@ -3319,7 +3323,7 @@ html, body {
     }
 
     .custom-logo-img {
-        height: 32px !important;
+        height: 52px !important;
         width: auto !important;
         object-fit: contain !important;
     }

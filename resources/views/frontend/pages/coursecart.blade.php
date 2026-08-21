@@ -60,27 +60,8 @@
     background: var(--color-eager-green, #58cc02);
     color: #ffffff !important;
     border: 2px solid #46a302;
-    border-radius: 16px;
-    padding: 16px 32px;
-    font-size: 19px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    box-shadow: 0 6px 0 #46a302;
-    cursor: pointer;
-    transition: all 0.1s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    width: 100%;
-}
-.duo-cc-btn:hover {
-    filter: brightness(1.05);
-}
-.duo-cc-btn:active {
-    transform: translateY(6px);
-    box-shadow: 0 0 0 transparent;
+    box-shadow: 0 4px 0 #46a302;
+    margin-bottom: 16px;
 }
 .duo-cc-btn--ghost {
     background: #ffffff;
@@ -89,11 +70,10 @@
     box-shadow: 0 4px 0 #e5e5e5;
 }
 .duo-cc-btn--ghost:hover {
-    background: #f7f7f7;
-    filter: none;
+    background: #f7f7f7 !important;
 }
-.duo-cc-btn--ghost:active {
-    box-shadow: 0 0 0 transparent;
+.duo-cc-summary .duo-cc-btn {
+    width: 100%;
 }
 
 /* Balance Header */
@@ -403,7 +383,7 @@
                             <i class="fas fa-ghost"></i>
                             <h3>{{ __('inkwave.cart_no_items') }}</h3>
                             <p>{{ __('inkwave.cc_empty_msg') }}</p>
-                            <a href="{{ route('product-lists') }}" class="duo-cc-btn"><i class="fas fa-palette"></i> {{ __('inkwave.cart_continue') }}</a>
+                            <a href="{{ route('product-lists') }}" class="duo-cc-btn">{{ __('inkwave.cart_continue') }}</a>
                         </div>
                     @endif
                 </div>

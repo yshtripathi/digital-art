@@ -6,13 +6,15 @@
 /* -------------------------------------------
    Duolingo Theme Landing Page - Artora
 ------------------------------------------- */
-.duo-lp-wrap { font-family: 'Nunito', 'Nunito Sans', sans-serif; background: #ffffff; overflow: hidden; padding-top: 48px; }
+.duo-lp-wrap { font-family: 'Nunito', 'Nunito Sans', sans-serif; background: #ffffff; overflow: hidden; }
 .duo-lp-wrap a { text-decoration: none !important; }
 
 /* HERO */
-.duo-lp-hero { text-align: center; padding: 64px 24px 100px 24px; position: relative; max-width: 800px; margin: 0 auto; }
-.duo-lp-hero__title { font-size: 48px; font-weight: 800; color: var(--color-charcoal, #4b4b4b); margin-bottom: 48px; line-height: 1.2; }
-.duo-lp-hero__btns { display: flex; flex-direction: column; gap: 16px; align-items: center; max-width: 320px; margin: 0 auto; }
+.duo-lp-hero { text-align: center; padding: 0 24px; position: relative; max-width: 100%; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+.duo-lp-hero__title { font-size: 48px; font-weight: 800; color: #ffffff; text-shadow: 0 4px 12px rgba(0,0,0,0.5); margin-bottom: 48px; line-height: 1.2; position: relative; z-index: 3; max-width: 800px; }
+.duo-lp-hero__btns { display: flex; flex-direction: column; gap: 16px; align-items: center; max-width: 320px; width: 100%; margin: 0 auto; position: relative; z-index: 3; }
+.duo-lp-hero__bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.duo-lp-hero__overlay { display: none; } /* Removed per user request */
 .duo-lp-btn { width: 100%; display: block; border-radius: 16px; padding: 16px; font-size: 16px; font-weight: 800; text-transform: uppercase; cursor: pointer; border: none; transition: all 0.1s; text-align: center; box-sizing: border-box; }
 .duo-lp-btn--primary { background: var(--color-eager-green, #58cc02); color: #ffffff !important; border: 2px solid #46a302; box-shadow: 0 4px 0 #46a302; }
 .duo-lp-btn--primary:hover { filter: brightness(1.05); }
@@ -22,33 +24,36 @@
 .duo-lp-btn--outline:active { transform: translateY(4px); box-shadow: 0 0 0 transparent; }
 
 /* DECORATIVE ICONS */
-.duo-lp-mascots { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
-.duo-lp-m { position: absolute; font-size: 80px; opacity: 0.15; }
-.duo-lp-m-1 { top: 10%; left: -10%; transform: rotate(-15deg); color: var(--color-spark-blue); }
-.duo-lp-m-2 { top: 50%; left: -5%; transform: rotate(10deg); color: var(--color-cardinal); }
-.duo-lp-m-3 { top: 0%; right: -10%; transform: rotate(20deg); color: var(--color-macaw-yellow); }
-.duo-lp-m-4 { top: 60%; right: -5%; transform: rotate(-10deg); color: var(--color-eager-green); }
+.duo-lp-mascots { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+.duo-lp-m { position: absolute; font-size: 80px; opacity: 0.25; }
+.duo-lp-m-1 { top: 15%; left: 5%; transform: rotate(-15deg); color: var(--color-spark-blue); }
+.duo-lp-m-2 { top: 50%; left: 10%; transform: rotate(10deg); color: var(--color-cardinal); }
+.duo-lp-m-3 { top: 10%; right: 5%; transform: rotate(20deg); color: var(--color-macaw-yellow); }
+.duo-lp-m-4 { top: 60%; right: 10%; transform: rotate(-10deg); color: var(--color-eager-green); }
 @media(max-width: 900px) { .duo-lp-mascots { display: none; } }
 
 /* CAROUSEL */
-.duo-lp-strip { border-top: 2px solid #e5e5e5; border-bottom: 2px solid #e5e5e5; padding: 24px 0; overflow: hidden; white-space: nowrap; position: relative; }
-.duo-lp-strip__inner { display: inline-flex; gap: 48px; padding: 0 24px; animation: duoScroll 30s linear infinite; }
+.duo-lp-strip { padding: 48px 0; overflow: hidden; white-space: nowrap; position: relative; background: #ffffff; margin-top: -2px; }
+.duo-lp-strip__inner { display: inline-flex; gap: 32px; padding: 0 24px; animation: duoScroll 40s linear infinite; }
+.duo-lp-strip--reverse .duo-lp-strip__inner { animation: duoScrollRight 40s linear infinite; }
 .duo-lp-strip:hover .duo-lp-strip__inner { animation-play-state: paused; }
 @keyframes duoScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-.duo-lp-course { display: inline-flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 800; color: var(--color-pencil-gray); cursor: pointer; transition: color 0.1s; }
-.duo-lp-course:hover { color: var(--color-spark-blue); }
-.duo-lp-course__img { width: 48px; height: 32px; border-radius: 8px; background: #f7f7f7; display: flex; align-items: center; justify-content: center; overflow: hidden; color: var(--color-spark-blue); border: 2px solid #e5e5e5; }
-.duo-lp-course__img img { width: 100%; height: 100%; object-fit: cover; }
+@keyframes duoScrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+
+.duo-lp-course-card { display: inline-flex; flex-direction: column; width: 280px; border: 2px solid #e5e5e5; border-radius: 24px; padding: 16px; background: #ffffff; box-shadow: 0 6px 0 #e5e5e5; transition: transform 0.1s, box-shadow 0.1s; text-align: left; white-space: normal; cursor: pointer; }
+.duo-lp-course-card:hover { transform: translateY(-4px); box-shadow: 0 10px 0 #e5e5e5; }
+.duo-lp-course-card__img { width: 100%; height: 160px; border-radius: 16px; object-fit: cover; margin-bottom: 16px; background: #f7f7f7; border: 2px solid #e5e5e5; }
+.duo-lp-course-card__title { font-size: 18px; font-weight: 800; color: var(--color-charcoal); line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
 /* FEATURE BLOCKS */
-.duo-lp-feat { padding: 100px 24px; max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 64px; }
+.duo-lp-feat { padding: 64px 24px; max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 48px; }
 .duo-lp-feat:nth-child(even) { flex-direction: row-reverse; }
-@media (max-width: 768px) { .duo-lp-feat, .duo-lp-feat:nth-child(even) { flex-direction: column; text-align: center; gap: 32px; padding: 64px 24px; } }
+@media (max-width: 768px) { .duo-lp-feat, .duo-lp-feat:nth-child(even) { flex-direction: column; text-align: center; gap: 32px; padding: 48px 24px; } }
 .duo-lp-feat__text { flex: 1; }
 .duo-lp-feat__title { font-size: 40px; font-weight: 800; margin-bottom: 16px; }
 .duo-lp-feat__desc { font-size: 18px; font-weight: 700; color: var(--color-pencil-gray); line-height: 1.6; }
 .duo-lp-feat__img { flex: 1; display: flex; justify-content: center; }
-.duo-lp-feat__box { width: 300px; height: 300px; border-radius: 48px; display: flex; align-items: center; justify-content: center; font-size: 120px; box-shadow: 0 16px 0 rgba(0,0,0,0.05); }
+.duo-lp-feat__box { width: 220px; height: 220px; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-size: 80px; box-shadow: 0 12px 0 rgba(0,0,0,0.05); }
 
 .duo-lp-feat--1 .duo-lp-feat__title { color: var(--color-eager-green); }
 .duo-lp-feat--1 .duo-lp-feat__box { background: #d7ffb8; color: var(--color-eager-green); }
@@ -60,9 +65,9 @@
 .duo-lp-feat--3 .duo-lp-feat__box { background: #fff4cc; color: var(--color-macaw-yellow); }
 
 /* ANYWHERE BLOCK */
-.duo-lp-anywhere { background: #eaf7ff; padding: 100px 24px; text-align: center; overflow: hidden; position: relative; }
-.duo-lp-anywhere__title { font-size: 48px; font-weight: 800; color: var(--color-spark-blue); margin-bottom: 48px; position: relative; z-index: 2; }
-.duo-lp-anywhere__icons { display: flex; justify-content: center; flex-wrap: wrap; gap: 48px; font-size: 80px; color: var(--color-spark-blue); opacity: 0.7; position: relative; z-index: 1; }
+.duo-lp-anywhere { background: var(--color-spark-blue, #1cb0f6); padding: 80px 24px; text-align: center; overflow: hidden; position: relative; border-radius: 32px; border: 2px solid #1899d6; box-shadow: 0 12px 0 #1899d6; max-width: 1000px; margin: 80px auto; width: calc(100% - 48px); }
+.duo-lp-anywhere__title { font-size: 48px; font-weight: 800; color: #ffffff; margin-bottom: 48px; position: relative; z-index: 2; }
+.duo-lp-anywhere__icons { display: flex; justify-content: center; flex-wrap: wrap; gap: 48px; font-size: 80px; color: #ffffff; opacity: 0.9; position: relative; z-index: 1; }
 .duo-lp-anywhere__icons i { transition: transform 0.3s; }
 .duo-lp-anywhere__icons i:hover { transform: scale(1.2) rotate(10deg); }
 
@@ -80,6 +85,20 @@
 .duo-lp-cat__title { font-size: 24px; font-weight: 800; color: var(--color-charcoal); margin-bottom: 12px; }
 .duo-lp-cat__desc { font-size: 16px; font-weight: 700; color: var(--color-pencil-gray); }
 
+/* VISUAL CATEGORIES */
+.duo-lp-visual-cats { padding: 100px 24px; max-width: 1200px; margin: 0 auto; text-align: center; }
+.duo-lp-visual-cats__title { font-size: 40px; font-weight: 800; color: var(--color-charcoal); margin-bottom: 48px; }
+.duo-lp-visual-cats__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+@media (max-width: 1024px) { .duo-lp-visual-cats__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) { .duo-lp-visual-cats__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .duo-lp-visual-cats__grid { grid-template-columns: 1fr; } }
+.duo-lp-vcat { display: block; border-radius: 32px; overflow: hidden; position: relative; border: 2px solid #e5e5e5; box-shadow: 0 8px 0 #e5e5e5; transition: transform 0.1s, box-shadow 0.1s; cursor: pointer; aspect-ratio: 1; }
+.duo-lp-vcat:hover { transform: translateY(-4px); box-shadow: 0 12px 0 #e5e5e5; }
+.duo-lp-vcat__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; background: #f7f7f7; }
+.duo-lp-vcat:hover .duo-lp-vcat__img { transform: scale(1.05); }
+.duo-lp-vcat__overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 48px 24px 24px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); text-align: left; }
+.duo-lp-vcat__title { color: #ffffff; font-size: 24px; font-weight: 800; margin: 0; }
+
 /* BOTTOM CTA */
 .duo-lp-cta { background: var(--color-eager-green); padding: 100px 24px; text-align: center; }
 .duo-lp-cta__title { font-size: 48px; font-weight: 800; color: #ffffff; margin-bottom: 48px; }
@@ -89,14 +108,22 @@
 <div class="duo-lp-wrap">
     
     {{-- 1. HERO SECTION --}}
-    <section class="duo-lp-hero">
-        <div class="duo-lp-mascots">
-            <i class="fas fa-palette duo-lp-m duo-lp-m-1"></i>
-            <i class="fas fa-paint-brush duo-lp-m duo-lp-m-2"></i>
-            <i class="fas fa-pen-nib duo-lp-m duo-lp-m-3"></i>
-            <i class="fas fa-image duo-lp-m duo-lp-m-4"></i>
+    <section class="duo-lp-hero" id="interactiveHero">
+        {{-- BACKGROUND VIDEO --}}
+        <video class="duo-lp-hero__bg-video" autoplay loop muted playsinline>
+            <source src="{{ asset('assets/images/v1.mp4') }}" type="video/mp4">
+        </video>
+        
+        {{-- OVERLAY to keep text readable --}}
+        <div class="duo-lp-hero__overlay"></div>
+
+        <div class="duo-lp-mascots" id="parallaxScene">
+            <i class="fas fa-palette duo-lp-m duo-lp-m-1" data-speed="3"></i>
+            <i class="fas fa-paint-brush duo-lp-m duo-lp-m-2" data-speed="-5"></i>
+            <i class="fas fa-pen-nib duo-lp-m duo-lp-m-3" data-speed="4"></i>
+            <i class="fas fa-image duo-lp-m duo-lp-m-4" data-speed="-3"></i>
         </div>
-        <h1 class="duo-lp-hero__title">The free, fun, and effective way to learn digital art!</h1>
+        <h1 class="duo-lp-hero__title">The free, fun, and effective way to learn online!</h1>
         <div class="duo-lp-hero__btns">
             <a href="{{ route('product-lists') }}" class="duo-lp-btn duo-lp-btn--primary">Get Started</a>
             @if(Auth::check())
@@ -107,29 +134,73 @@
         </div>
     </section>
 
-    {{-- 2. CAROUSEL (Products) --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hero = document.getElementById('interactiveHero');
+            const icons = document.querySelectorAll('.duo-lp-m');
+
+            // Parallax mouse effect
+            hero.addEventListener('mousemove', (e) => {
+                const x = (window.innerWidth - e.pageX * 2) / 100;
+                const y = (window.innerHeight - e.pageY * 2) / 100;
+
+                icons.forEach(icon => {
+                    const speed = icon.getAttribute('data-speed');
+                    const xOffset = x * speed;
+                    const yOffset = y * speed;
+                    
+                    // We extract the original rotation from the class logic, but here we just append translate
+                    // To keep it simple, we just apply transform
+                    icon.style.transform = `translate(${xOffset}px, ${yOffset}px) scale(1.1)`;
+                });
+            });
+
+            // Reset on mouse leave
+            hero.addEventListener('mouseleave', () => {
+                icons.forEach(icon => {
+                    icon.style.transform = `translate(0px, 0px) scale(1)`;
+                });
+            });
+            
+            // Add click "pop" animation
+            icons.forEach(icon => {
+                icon.style.pointerEvents = 'auto'; // allow clicking the background icons
+                icon.style.cursor = 'pointer';
+                icon.style.transition = 'transform 0.2s ease-out, opacity 0.2s';
+                
+                icon.addEventListener('click', () => {
+                    icon.style.transform = `scale(1.5) rotate(15deg)`;
+                    icon.style.opacity = '1';
+                    setTimeout(() => {
+                        icon.style.transform = `scale(1)`;
+                        icon.style.opacity = '0.25';
+                    }, 300);
+                });
+            });
+        });
+    </script>
+
+    {{-- 2. VISUAL CATEGORIES --}}
     @php
-        $carouselProducts = \App\Models\Product::where('status','active')->orderBy('id','DESC')->take(8)->get();
+        $visualCats = \App\Models\Category::where('status','active')->where('is_parent',1)->take(5)->get();
     @endphp
-    @if($carouselProducts->count() > 0)
-    <section class="duo-lp-strip">
-        <div class="duo-lp-strip__inner">
-            {{-- Duplicate loop twice for seamless scrolling effect --}}
-            @for ($i = 0; $i < 2; $i++)
-                @foreach($carouselProducts as $product)
-                    @php $pimg = $product->photo ? explode(',', $product->photo)[0] : null; @endphp
-                    <a href="{{ route('product-detail', $product->slug) }}" class="duo-lp-course">
-                        <div class="duo-lp-course__img">
-                            @if($pimg)
-                                <img src="{{ url($pimg) }}" alt="{{ $product->title }}" loading="lazy">
-                            @else
-                                <i class="fas fa-image"></i>
-                            @endif
-                        </div>
-                        {{ $product->title }}
-                    </a>
-                @endforeach
-            @endfor
+    @if($visualCats->count() > 0)
+    <section class="duo-lp-visual-cats">
+        <h2 class="duo-lp-visual-cats__title">Explore Our Categories</h2>
+        <div class="duo-lp-visual-cats__grid">
+            @foreach($visualCats as $cat)
+                @php $cimg = $cat->photo ? explode(',', $cat->photo)[0] : null; @endphp
+                <a href="{{ route('product-lists', $cat->slug) }}" class="duo-lp-vcat">
+                    @if($cimg)
+                        <img src="{{ url($cimg) }}" alt="{{ $cat->title }}" class="duo-lp-vcat__img" loading="lazy">
+                    @else
+                        <div class="duo-lp-vcat__img" style="display:flex;align-items:center;justify-content:center;font-size:64px;color:var(--color-spark-blue);"><i class="fas fa-image"></i></div>
+                    @endif
+                    <div class="duo-lp-vcat__overlay">
+                        <h3 class="duo-lp-vcat__title">{{ $cat->title }}</h3>
+                    </div>
+                </a>
+            @endforeach
         </div>
     </section>
     @endif
@@ -138,7 +209,7 @@
     <section class="duo-lp-feat duo-lp-feat--1">
         <div class="duo-lp-feat__text">
             <h2 class="duo-lp-feat__title">free. fun. effective.</h2>
-            <p class="duo-lp-feat__desc">{{ __('inkwave.step1_desc') ?? 'Learning with Artora is fun, and research shows that it works! With quick, bite-sized lessons, you’ll earn points and unlock new levels while gaining real-world skills.' }}</p>
+            <p class="duo-lp-feat__desc">Browse our course catalog. Find a class that matches your interests and creative goals.</p>
         </div>
         <div class="duo-lp-feat__img">
             <div class="duo-lp-feat__box"><i class="fas fa-shapes"></i></div>
@@ -148,7 +219,7 @@
     <section class="duo-lp-feat duo-lp-feat--2">
         <div class="duo-lp-feat__text">
             <h2 class="duo-lp-feat__title">backed by science</h2>
-            <p class="duo-lp-feat__desc">{{ __('inkwave.step2_desc') ?? 'We use a combination of research-backed teaching methods and delightful content to create courses that effectively teach drawing, painting, and digital art skills!' }}</p>
+            <p class="duo-lp-feat__desc">Complete your enrollment to get immediate access to every lesson, ready to watch on any device.</p>
         </div>
         <div class="duo-lp-feat__img">
             <div class="duo-lp-feat__box"><i class="fas fa-flask"></i></div>
@@ -158,49 +229,69 @@
     <section class="duo-lp-feat duo-lp-feat--3">
         <div class="duo-lp-feat__text">
             <h2 class="duo-lp-feat__title">stay motivated</h2>
-            <p class="duo-lp-feat__desc">{{ __('inkwave.step3_desc') ?? 'We make it easy to form a habit of learning with game-like features, fun challenges, and reminders to keep you on track.' }}</p>
+            <p class="duo-lp-feat__desc">Follow along with each lesson and build your own artwork with expert guidance.</p>
         </div>
         <div class="duo-lp-feat__img">
-            <div class="duo-lp-feat__box"><i class="fas fa-fire-alt"></i></div>
+            <div class="duo-lp-feat__box"><i class="fas fa-fire"></i></div>
         </div>
     </section>
 
-    {{-- 4. ANYWHERE BLOCK --}}
-    <section class="duo-lp-anywhere">
-        <h2 class="duo-lp-anywhere__title">learn anytime, anywhere</h2>
-        <div class="duo-lp-anywhere__icons">
-            <i class="fas fa-tablet-alt"></i>
-            <i class="fas fa-mobile-alt"></i>
-            <i class="fas fa-laptop"></i>
-            <i class="fas fa-desktop"></i>
-        </div>
-    </section>
+
+
+    {{-- 3.6 SECONDARY CAROUSEL (Products moving Right & Left) --}}
+    @php
+        $carouselProducts = \App\Models\Product::where('status','active')->orderBy('id','DESC')->take(8)->get();
+        $carouselProductsRow2 = \App\Models\Product::where('status','active')->orderBy('id','ASC')->take(8)->get();
+    @endphp
+    @if($carouselProductsRow2->count() > 0)
+    <div style="padding: 48px 0; background: #ffffff;">
+        {{-- Moving Left --}}
+        <section class="duo-lp-strip">
+            <div class="duo-lp-strip__inner">
+                @for ($i = 0; $i < 2; $i++)
+                    @foreach($carouselProductsRow2 as $product)
+                        @php $pimg = $product->photo ? explode(',', $product->photo)[0] : null; @endphp
+                        <a href="{{ route('product-detail', $product->slug) }}" class="duo-lp-course-card">
+                            @if($pimg)
+                                <img src="{{ url($pimg) }}" alt="{{ $product->title }}" class="duo-lp-course-card__img" loading="lazy">
+                            @else
+                                <div class="duo-lp-course-card__img" style="display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--color-spark-blue);"><i class="fas fa-image"></i></div>
+                            @endif
+                            <div class="duo-lp-course-card__title">{{ $product->title }}</div>
+                        </a>
+                    @endforeach
+                @endfor
+            </div>
+        </section>
+        
+        {{-- Moving Right --}}
+        <section class="duo-lp-strip duo-lp-strip--reverse" style="margin-top: 48px;">
+            <div class="duo-lp-strip__inner">
+                @for ($i = 0; $i < 2; $i++)
+                    @foreach($carouselProducts as $product)
+                        @php $pimg = $product->photo ? explode(',', $product->photo)[0] : null; @endphp
+                        <a href="{{ route('product-detail', $product->slug) }}" class="duo-lp-course-card">
+                            @if($pimg)
+                                <img src="{{ url($pimg) }}" alt="{{ $product->title }}" class="duo-lp-course-card__img" loading="lazy">
+                            @else
+                                <div class="duo-lp-course-card__img" style="display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--color-spark-blue);"><i class="fas fa-image"></i></div>
+                            @endif
+                            <div class="duo-lp-course-card__title">{{ $product->title }}</div>
+                        </a>
+                    @endforeach
+                @endfor
+            </div>
+        </section>
+    </div>
+    @endif
+
+
 
     {{-- 5. SUPER DUOLINGO (Credits) --}}
     <section class="duo-lp-super">
         <h2 class="duo-lp-super__title">POWER UP WITH CREDITS</h2>
         <a href="{{ route('points.topup') }}" class="duo-lp-super__btn">Try a Top-Up Package</a>
     </section>
-
-    {{-- 6. SUB-BRANDS (Categories) --}}
-    @php
-        $featuredCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->take(3)->get();
-    @endphp
-    @if($featuredCategories->count() > 0)
-    <div style="background-color: #f7f7f7; padding: 1px 0;">
-        <section class="duo-lp-cats">
-            @foreach($featuredCategories as $cat)
-                <a href="{{ route('product-lists', $cat->slug) }}" class="duo-lp-cat">
-                    <div class="duo-lp-cat__icon">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                    <h3 class="duo-lp-cat__title">artora {{ strtolower($cat->title) }}</h3>
-                    <p class="duo-lp-cat__desc">Explore our top-rated courses and expand your skills in {{ $cat->title }}.</p>
-                </a>
-            @endforeach
-        </section>
-    </div>
-    @endif
 
     {{-- 7. TOP UP SECTION (Imported from topup.blade.php) --}}
     <style>
@@ -241,9 +332,9 @@
     .duo-tu-stat { display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; color: var(--color-pencil-gray, #777777); margin-bottom: 12px; }
     .duo-tu-stat--total { margin-top: 24px; padding-top: 24px; border-top: 2px dashed #e5e5e5; font-size: 24px; font-weight: 800; color: var(--color-charcoal, #4b4b4b); margin-bottom: 0; }
     .duo-tu-stat--total span:last-child { color: var(--color-macaw-yellow, #ffc800); }
-    .duo-tu-buybtn { background: var(--color-eager-green, #58cc02); color: #ffffff !important; border: 2px solid #46a302; border-radius: 16px; padding: 20px; font-size: 22px; font-weight: 800; text-transform: uppercase; box-shadow: 0 6px 0 #46a302; cursor: pointer; width: 100%; transition: all 0.1s; display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .duo-tu-buybtn { background: var(--color-eager-green, #58cc02); color: #ffffff !important; border: 2px solid #46a302; border-radius: 16px; padding: 20px; font-size: 22px; font-weight: 800; text-transform: uppercase; box-shadow: 0 4px 0 #46a302; cursor: pointer; width: 100%; transition: all 0.1s; display: flex; align-items: center; justify-content: center; gap: 12px; }
     .duo-tu-buybtn:hover { filter: brightness(1.05); }
-    .duo-tu-buybtn:active { transform: translateY(6px); box-shadow: 0 0 0 transparent; }
+    .duo-tu-buybtn:active { transform: translateY(4px); box-shadow: 0 0 0 transparent; }
     </style>
 
     <div class="duo-tu-bg">
@@ -353,6 +444,17 @@
             
         </div>
     </div>
+
+    {{-- 6. ANYWHERE BLOCK --}}
+    <section class="duo-lp-anywhere">
+        <h2 class="duo-lp-anywhere__title">learn anytime, anywhere</h2>
+        <div class="duo-lp-anywhere__icons">
+            <i class="fas fa-tablet-alt"></i>
+            <i class="fas fa-mobile-alt"></i>
+            <i class="fas fa-laptop"></i>
+            <i class="fas fa-desktop"></i>
+        </div>
+    </section>
 
 </div>
 

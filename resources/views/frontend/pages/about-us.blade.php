@@ -171,12 +171,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--color-eager-green, #58cc02);
+    background: var(--color-spark-blue, #1cb0f6);
     border-radius: 32px;
     padding: 48px;
     margin-top: 64px;
-    border: 2px solid #46a302;
-    box-shadow: 0 8px 0 #46a302;
+    border: 2px solid #1899d6;
+    box-shadow: 0 8px 0 #1899d6;
 }
 .duo-cta-banner__text h2 {
     font-size: 40px;
@@ -187,13 +187,13 @@
 .duo-cta-banner__text p {
     font-size: 19px;
     font-weight: 500;
-    color: #d7ffb8;
+    color: #eaf7ff;
     margin: 0;
 }
 .duo-cta-banner__btn {
     flex-shrink: 0;
     background: #ffffff;
-    color: var(--color-eager-green, #58cc02);
+    color: var(--color-spark-blue, #1cb0f6);
     padding: 20px 40px;
     border-radius: 24px;
     font-size: 19px;
@@ -207,7 +207,7 @@
 }
 .duo-cta-banner__btn:hover {
     background: #f7f7f7;
-    color: var(--color-eager-green, #58cc02);
+    color: var(--color-spark-blue, #1cb0f6);
 }
 .duo-cta-banner__btn:active {
     transform: translateY(6px);
@@ -227,7 +227,9 @@
     {{-- SECTION 1: Giant Hero Card --}}
     <section class="duo-container">
         <div class="duo-hero-card">
-            <img src="{{ asset('assets/images/a1.webp') }}" alt="{{ __('inkwave.about_intro_heading') }}" class="duo-hero-card__img" loading="lazy">
+            <video class="duo-hero-card__img" autoplay loop muted playsinline>
+                <source src="{{ asset('assets/images/v3.mp4') }}" type="video/mp4">
+            </video>
             <div class="duo-hero-card__body">
                 <p class="duo-hero-card__eyebrow">{{ __('inkwave.about_intro_eyebrow') }}</p>
                 <h2 class="duo-hero-card__title">{{ __('inkwave.about_intro_heading') }}</h2>

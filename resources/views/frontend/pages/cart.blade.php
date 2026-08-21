@@ -200,33 +200,23 @@
 
 /* Buttons */
 .duo-cart-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    padding: 16px;
-    border-radius: 16px;
-    font-size: 17px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.053em;
-    text-decoration: none;
-    transition: transform 0.1s, box-shadow 0.1s;
     margin-bottom: 24px;
+}
+.duo-cart-summary .duo-cart-btn {
+    width: 100%;
 }
 .duo-cart-btn--primary {
     background: var(--color-eager-green, #58cc02);
     color: #ffffff;
     border: 2px solid #46a302;
-    box-shadow: 0 6px 0 #46a302;
+    box-shadow: 0 4px 0 #46a302;
 }
 .duo-cart-btn--primary:hover {
     background: #5fe002;
     color: #ffffff;
 }
 .duo-cart-btn--primary:active {
-    transform: translateY(6px);
+    transform: translateY(4px);
     box-shadow: 0 0 0 #46a302;
 }
 
@@ -234,14 +224,14 @@
     background: transparent;
     color: var(--color-spark-blue, #1cb0f6);
     border: 2px solid #e5e5e5;
-    box-shadow: 0 6px 0 #e5e5e5;
+    box-shadow: 0 4px 0 #e5e5e5;
 }
 .duo-cart-btn--ghost:hover {
     background: #f7f7f7;
     color: var(--color-spark-blue, #1cb0f6);
 }
 .duo-cart-btn--ghost:active {
-    transform: translateY(6px);
+    transform: translateY(4px);
     box-shadow: 0 0 0 #e5e5e5;
 }
 
@@ -353,10 +343,10 @@
                             <span class="amt">{{ $sym }}{{ number_format($total_amount, $isJPY ? 0 : 2) }}</span>
                         </div>
 
-                        <a href="{{ route('checkout') }}" class="duo-cart-btn duo-cart-btn--primary">{{ __('inkwave.cart_checkout') }} <i class="fas fa-arrow-right"></i></a>
+                        <a href="{{ route('checkout') }}" class="duo-cart-btn duo-cart-btn--primary">{{ __('inkwave.cart_checkout') }} <i class="fas fa-arrow-right" style="font-size: 12px;"></i></a>
 
                         @if(Helper::totalCartPoints() > 0)
-                            <a href="{{ route('product-lists') }}" class="duo-cart-btn duo-cart-btn--ghost"><i class="fas fa-arrow-left"></i> {{ __('inkwave.cart_continue') }}</a>
+                            <a href="{{ route('product-lists') }}" class="duo-cart-btn duo-cart-btn--ghost"><i class="fas fa-arrow-left" style="font-size: 12px;"></i> {{ __('inkwave.cart_continue') }}</a>
                         @endif
                         
                         <div class="duo-cart-pay">
@@ -370,7 +360,7 @@
                 <i class="fas fa-shopping-basket"></i>
                 <h3>{{ __('inkwave.cart_no_items') }}</h3>
                 <p>{{ __('inkwave.cart_empty_msg') }}</p>
-                <a href="{{ route('product-lists') }}" class="duo-cart-btn duo-cart-btn--primary">{{ __('inkwave.cart_continue') }} <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('product-lists') }}" class="duo-cart-btn duo-cart-btn--primary">{{ __('inkwave.cart_continue') }}</a>
             </div>
         @endif
     </div>

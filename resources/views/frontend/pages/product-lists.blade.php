@@ -87,8 +87,8 @@
     margin: 0 auto;
 }
 .duo-pl-header__img {
-    width: 320px;
-    height: 180px;
+    width: 220px;
+    height: 300px;
     border-radius: 24px;
     border: 4px solid #ffffff;
     box-shadow: 0 8px 0 rgba(0,0,0,0.1);

@@ -6,29 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
     {{-- SEO Meta --}}
-    <title>@yield('title', 'Artora Studios – Online Art Courses in Anime, Manga & Illustration')</title>
-    <meta name="title" content="Artora Studios – Online Art Courses">
-    <meta name="description" content="Artora Studios offers online art courses taught by professional artists across Anime & Manga Illustration, Character Design & Concept Art, Pixel Art & Game Graphics, Modern Japanese Illustration, and Visual Storytelling & Comic Art — learn step by step, anytime.">
-    <meta name="keywords" content="online art courses, anime illustration course, manga art course, character design, concept art, pixel art, game graphics, japanese illustration, comic art, visual storytelling, learn to draw, artora studios">
-    <meta name="author" content="Artora Studios">
+    <title>@yield('title', '[Website Name] – Online Courses in Tech, Career, Creative & Life Skills')</title>
+    <meta name="title" content="[Website Name] – Online Courses">
+    <meta name="description" content="[Website Name] offers practical online courses in languages, career development, technology, creative arts, and everyday life skills. Learn step by step, anytime.">
+    <meta name="keywords" content="online courses, language learning, career skills, coding, technology courses, creative arts, digital art, life skills, personal finance, self-improvement, [Website Name]">
+    <meta name="author" content="[Website Name]">
 
     {{-- Open Graph / Facebook --}}
     <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title', 'Artora Studios – Online Art Courses')">
-    <meta property="og:description" content="Online art courses spanning Anime & Manga Illustration, Character Design & Concept Art, Pixel Art & Game Graphics, Modern Japanese Illustration, and Visual Storytelling & Comic Art — learn from professional artists, step by step.">
+    <meta property="og:title" content="@yield('title', '[Website Name] – Online Courses')">
+    <meta property="og:description" content="[Website Name] offers practical online courses in languages, career development, technology, creative arts, and everyday life skills. Learn step by step, anytime.">
     @if(isset($og_image))
     <meta property="og:image" content="{{ $og_image }}">
     @endif
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:site_name" content="Artora Studios">
+    <meta property="og:site_name" content="[Website Name]">
     <meta property="og:locale" content="en_US">
 
     {{-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@artorastudios">
-    <meta name="twitter:creator" content="@artorastudios">
-    <meta name="twitter:title" content="@yield('title', 'Artora Studios – Online Art Courses')">
-    <meta name="twitter:description" content="Online art courses spanning Anime & Manga Illustration, Character Design & Concept Art, Pixel Art & Game Graphics, Modern Japanese Illustration, and Visual Storytelling & Comic Art — learn from professional artists, step by step.">
+    <meta name="twitter:site" content="@[Website Name]">
+    <meta name="twitter:creator" content="@[Website Name]">
+    <meta name="twitter:title" content="@yield('title', '[Website Name] – Online Courses')">
+    <meta name="twitter:description" content="[Website Name] offers practical online courses in languages, career development, technology, creative arts, and everyday life skills. Learn step by step, anytime.">
     @if(isset($og_image))
     <meta name="twitter:image" content="{{ $og_image }}">
     @endif
@@ -55,7 +55,52 @@
     <link href="{{ url('css/prevention.css') }}" rel="stylesheet">
     @endif
 
-    {{-- Preloader Styles — Artora Studios loader (Duolingo Theme) --}}
+    {{-- Global Button Consistency Fix (Duolingo Theme) --}}
+    <style>
+        .btn, .ui-btn, .art-btn-login, .art-btn-register, .duo-tu-buybtn, .duo-tu-btn, .duo-cta-banner__btn, .duo-lp-super__btn, button[type="submit"], .duo-od-btn, .duo-dash-navbtn, .duo-cart-btn, .duo-cc-btn {
+            font-family: 'Nunito', 'Nunito Sans', sans-serif !important;
+            font-size: 16px !important;
+            font-weight: 800 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            text-decoration: none !important;
+            white-space: nowrap !important;
+            padding: 12px 24px !important;
+            border-radius: 16px !important;
+            outline: none !important;
+            transition: all 0.1s ease !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            line-height: 1.5 !important;
+        }
+        .btn:focus, .ui-btn:focus, button:focus {
+            outline: none !important;
+        }
+        .btn:hover, .ui-btn:hover, .art-btn-login:hover, .art-btn-register:hover, .duo-tu-buybtn:hover, .duo-tu-btn:hover, .duo-cta-banner__btn:hover, .duo-lp-super__btn:hover, button[type="submit"]:hover, .duo-od-btn:hover, .duo-dash-navbtn:hover, .duo-cart-btn:hover, .duo-cc-btn:hover {
+            text-decoration: none !important;
+            filter: brightness(1.05) !important;
+            transform: translateY(-2px);
+            outline: none !important;
+        }
+        .btn:active, .ui-btn:active, .art-btn-login:active, .art-btn-register:active, .duo-tu-buybtn:active, .duo-tu-btn:active, .duo-cta-banner__btn:active, .duo-lp-super__btn:active, button[type="submit"]:active, .duo-od-btn:active, .duo-dash-navbtn:active, .duo-cart-btn:active, .duo-cc-btn:active {
+            transform: translateY(4px) !important;
+            box-shadow: 0 0 0 transparent !important;
+            outline: none !important;
+        }
+
+        /* Exempt specific minimal icon buttons from standard button styling */
+        .btn-close, .art-cart-btn, .mobile-nav-toggler, .close-btn, .btn-link {
+            border: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            white-space: normal !important;
+        }
+    </style>
+
+    {{-- Preloader Styles — Artora Studios loader (Redesigned) --}}
     <style>
         #preloader {
             position: fixed;
@@ -75,56 +120,54 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
+            gap: 24px;
         }
         .st-preloader__logo {
-            height: 80px;
-            animation: duoBounce 1s infinite alternate ease-in-out;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #1cb0f6; /* Spark Blue */
+            box-shadow: 0 12px 24px rgba(28, 176, 246, 0.2);
+            animation: pulseImage 2s infinite alternate ease-in-out;
         }
         .st-preloader__label {
-            color: #777777; /* Pencil Gray */
+            color: #4b4b4b; /* Charcoal */
             font-family: 'Nunito', 'Nunito Sans', sans-serif;
-            font-weight: 700;
-            font-size: 15px;
+            font-weight: 800;
+            font-size: 18px;
             text-transform: uppercase;
-            letter-spacing: 0.0530em;
-            margin-top: 8px;
+            letter-spacing: 0.1em;
+            animation: fadeInOut 1.5s infinite alternate;
         }
         .st-preloader__bar {
-            width: 240px;
-            height: 20px;
-            background-color: #e5e5e5;
-            border-radius: 12px;
+            width: 200px;
+            height: 8px;
+            background-color: #eaf7ff;
+            border-radius: 8px;
+            overflow: hidden;
             position: relative;
         }
         .st-preloader__bar span {
             display: block;
             height: 100%;
-            background-color: #58cc02; /* Eager Green */
+            background-color: #1cb0f6; /* Spark Blue */
             width: 0%;
-            border-radius: 12px;
+            border-radius: 8px;
             animation: duoLoadingBar 2s ease-in-out forwards;
-            position: relative;
-        }
-        /* Glossy reflection for the progress bar (Duolingo XP bar style) */
-        .st-preloader__bar span::after {
-            content: '';
-            position: absolute;
-            top: 4px;
-            left: 8px;
-            right: 8px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 4px;
         }
 
-        @keyframes duoBounce {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-12px); }
+        @keyframes pulseImage {
+            0% { transform: scale(1); box-shadow: 0 8px 16px rgba(28, 176, 246, 0.2); }
+            100% { transform: scale(1.08); box-shadow: 0 16px 32px rgba(28, 176, 246, 0.4); }
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0.4; }
+            100% { opacity: 1; }
         }
         @keyframes duoLoadingBar {
-            0% { width: 10%; }
-            50% { width: 60%; }
+            0% { width: 0%; }
+            40% { width: 70%; }
             100% { width: 100%; }
         }
     </style>
@@ -138,8 +181,10 @@
     {{-- Preloader --}}
     <div id="preloader">
         <div class="st-preloader">
-            <img class="st-preloader__logo" src="{{ asset('assets/images/preloader.webp') }}" alt="Artora Studios">
-            <div class="st-preloader__label">Loading…</div>
+            <div class="st-preloader__circle">
+                <img class="st-preloader__logo" src="{{ asset('assets/images/preloader.jpeg') }}" alt="[Website Name]">
+            </div>
+            <div class="st-preloader__label">Getting Ready...</div>
             <div class="st-preloader__bar"><span></span></div>
         </div>
     </div>

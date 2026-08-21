@@ -17,7 +17,7 @@
 
 body {
     background-color: var(--color-paper-white) !important;
-    padding-top: 80px !important;
+    padding-top: 71px !important;
     font-family: 'Nunito', 'Nunito Sans', 'Inter', sans-serif !important;
 }
 
@@ -430,16 +430,15 @@ body {
                     @endphp
                     @forelse($categories as $cat)
                         @php
-                            $icon = 'fa-paint-brush';
-                            $slug = strtolower($cat->slug);
-                            if (str_contains($slug, 'anime') || str_contains($slug, 'manga')) $icon = 'fa-dragon';
-                            elseif (str_contains($slug, 'pixel') || str_contains($slug, 'game')) $icon = 'fa-gamepad';
-                            elseif (str_contains($slug, 'pop') || str_contains($slug, 'comic')) $icon = 'fa-bolt';
-                            elseif (str_contains($slug, 'street') || str_contains($slug, 'graffiti') || str_contains($slug, 'urban')) $icon = 'fa-spray-can';
-                            elseif (str_contains($slug, 'ukiyo') || str_contains($slug, 'japanese') || str_contains($slug, 'woodblock')) $icon = 'fa-mountain';
+                            $cimg = $cat->photo ? explode(',', $cat->photo)[0] : null;
                         @endphp
-                        <a class="art-dropdown-item {{ (isset($category->id) && $category->id == $cat->id) ? 'active' : '' }}" href="{{ route('product-lists', $cat->slug) }}">
-                            <i class="fas {{ $icon }}"></i> {{ $cat->title }}
+                        <a class="art-dropdown-item {{ (isset($category->id) && $category->id == $cat->id) ? 'active' : '' }}" href="{{ route('product-lists', $cat->slug) }}" style="display:flex; align-items:center; gap:8px;">
+                            @if($cimg)
+                                <img src="{{ url($cimg) }}" alt="{{ $cat->title }}" style="width:24px; height:24px; object-fit:cover; border-radius:6px;">
+                            @else
+                                <div style="width:24px; height:24px; display:flex; align-items:center; justify-content:center; background:#f7f7f7; border-radius:6px; color:#1cb0f6;"><i class="fas fa-image" style="font-size:12px;"></i></div>
+                            @endif
+                            {{ $cat->title }}
                         </a>
                     @empty
                         <span class="art-dropdown-item text-muted">{{ __('inkwave.header_no_categories') }}</span>
@@ -682,17 +681,4 @@ body {
 
 @cookieconsentview
 
-{{-- Notification Alerts --}}
-@foreach (['success', 'error', 'loginerror'] as $msg)
-    @if (session($msg))
-        <div class="position-fixed top-0 end-0 p-3" style="z-index: 10500; margin-top: 80px;">
-            <div class="alert alert-dismissible fade show border-0" role="alert" style="border-radius: 12px; background: #fff; box-shadow: 0 4px 0 #e5e5e5, 0 8px 24px rgba(0,0,0,0.1); border: 2px solid #e5e5e5; color: var(--color-charcoal);">
-                <div class="d-flex align-items-center gap-3">
-                    <i class="fas fa-{{ $msg == 'success' ? 'check-circle' : 'exclamation-triangle' }} fs-4" style="color: {{ $msg == 'success' ? 'var(--color-eager-green)' : '#ff4b4b' }};"></i>
-                    <div style="font-weight: 700;">{{ session($msg) }}</div>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-    @endif
-@endforeach
+

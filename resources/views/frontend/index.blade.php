@@ -2,193 +2,258 @@
 
 @section('main-content')
 
-<section class="modern-hero">
-    <!-- Background Video -->
-    <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
-        <source src="{{ asset('assets/images/h3.webm') }}" type="video/webm">
-    </video>
-    <div class="hero-overlay"></div>
+<style>
+/* -------------------------------------------
+   Duolingo Theme Landing Page - Artora
+------------------------------------------- */
+.duo-lp-wrap { font-family: 'Nunito', 'Nunito Sans', sans-serif; background: #ffffff; overflow: hidden; padding-top: 48px; }
+.duo-lp-wrap a { text-decoration: none !important; }
 
-    <!-- Split hero: text left, image collage right -->
-    <div class="auto-container hero-split relative z-10">
-        <div class="hero-col hero-col--text">
-            <div class="hero-badge-wrapper">
-                <span class="hero-badge">{{ __('common.digital_art') ?? 'Digital Art' }}</span>
-                <span class="hero-badge">{{ __('inkwave.hero_badge') }}</span>
-                <div class="hero-mini-tag">
-                    <span class="pulse-dot"></span>
-                    <span>{!! __('inkwave.hero_mini_tag') !!}</span>
-                </div>
-            </div>
-            <h1 class="modern-h1">{!! __('inkwave.hero_title_html') !!}</h1>
-            <p class="hero-subtitle">{{ __('inkwave.hero_subtitle') }}</p>
-            <div class="hero-cta-buttons">
-                <a href="{{ route('product-lists') }}" class="modern-btn modern-btn-solid">{{ __('inkwave.hero_btn_primary') }} <i class="fas fa-arrow-right ms-2"></i></a>
-                <a href="{{ route('contact') }}" class="modern-btn modern-btn-outline">{{ __('inkwave.hero_btn_secondary') }}</a>
-            </div>
+/* HERO */
+.duo-lp-hero { text-align: center; padding: 64px 24px 100px 24px; position: relative; max-width: 800px; margin: 0 auto; }
+.duo-lp-hero__title { font-size: 48px; font-weight: 800; color: var(--color-charcoal, #4b4b4b); margin-bottom: 48px; line-height: 1.2; }
+.duo-lp-hero__btns { display: flex; flex-direction: column; gap: 16px; align-items: center; max-width: 320px; margin: 0 auto; }
+.duo-lp-btn { width: 100%; display: block; border-radius: 16px; padding: 16px; font-size: 16px; font-weight: 800; text-transform: uppercase; cursor: pointer; border: none; transition: all 0.1s; text-align: center; box-sizing: border-box; }
+.duo-lp-btn--primary { background: var(--color-eager-green, #58cc02); color: #ffffff !important; border: 2px solid #46a302; box-shadow: 0 4px 0 #46a302; }
+.duo-lp-btn--primary:hover { filter: brightness(1.05); }
+.duo-lp-btn--primary:active { transform: translateY(4px); box-shadow: 0 0 0 transparent; }
+.duo-lp-btn--outline { background: #ffffff; color: var(--color-spark-blue, #1cb0f6) !important; border: 2px solid #e5e5e5; box-shadow: 0 4px 0 #e5e5e5; }
+.duo-lp-btn--outline:hover { background: #f7f7f7; }
+.duo-lp-btn--outline:active { transform: translateY(4px); box-shadow: 0 0 0 transparent; }
+
+/* DECORATIVE ICONS */
+.duo-lp-mascots { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+.duo-lp-m { position: absolute; font-size: 80px; opacity: 0.15; }
+.duo-lp-m-1 { top: 10%; left: -10%; transform: rotate(-15deg); color: var(--color-spark-blue); }
+.duo-lp-m-2 { top: 50%; left: -5%; transform: rotate(10deg); color: var(--color-cardinal); }
+.duo-lp-m-3 { top: 0%; right: -10%; transform: rotate(20deg); color: var(--color-macaw-yellow); }
+.duo-lp-m-4 { top: 60%; right: -5%; transform: rotate(-10deg); color: var(--color-eager-green); }
+@media(max-width: 900px) { .duo-lp-mascots { display: none; } }
+
+/* CAROUSEL */
+.duo-lp-strip { border-top: 2px solid #e5e5e5; border-bottom: 2px solid #e5e5e5; padding: 24px 0; overflow: hidden; white-space: nowrap; position: relative; }
+.duo-lp-strip__inner { display: inline-flex; gap: 48px; padding: 0 24px; animation: duoScroll 30s linear infinite; }
+.duo-lp-strip:hover .duo-lp-strip__inner { animation-play-state: paused; }
+@keyframes duoScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.duo-lp-course { display: inline-flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 800; color: var(--color-pencil-gray); cursor: pointer; transition: color 0.1s; }
+.duo-lp-course:hover { color: var(--color-spark-blue); }
+.duo-lp-course__img { width: 48px; height: 32px; border-radius: 8px; background: #f7f7f7; display: flex; align-items: center; justify-content: center; overflow: hidden; color: var(--color-spark-blue); border: 2px solid #e5e5e5; }
+.duo-lp-course__img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* FEATURE BLOCKS */
+.duo-lp-feat { padding: 100px 24px; max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 64px; }
+.duo-lp-feat:nth-child(even) { flex-direction: row-reverse; }
+@media (max-width: 768px) { .duo-lp-feat, .duo-lp-feat:nth-child(even) { flex-direction: column; text-align: center; gap: 32px; padding: 64px 24px; } }
+.duo-lp-feat__text { flex: 1; }
+.duo-lp-feat__title { font-size: 40px; font-weight: 800; margin-bottom: 16px; }
+.duo-lp-feat__desc { font-size: 18px; font-weight: 700; color: var(--color-pencil-gray); line-height: 1.6; }
+.duo-lp-feat__img { flex: 1; display: flex; justify-content: center; }
+.duo-lp-feat__box { width: 300px; height: 300px; border-radius: 48px; display: flex; align-items: center; justify-content: center; font-size: 120px; box-shadow: 0 16px 0 rgba(0,0,0,0.05); }
+
+.duo-lp-feat--1 .duo-lp-feat__title { color: var(--color-eager-green); }
+.duo-lp-feat--1 .duo-lp-feat__box { background: #d7ffb8; color: var(--color-eager-green); }
+
+.duo-lp-feat--2 .duo-lp-feat__title { color: var(--color-spark-blue); }
+.duo-lp-feat--2 .duo-lp-feat__box { background: #eaf7ff; color: var(--color-spark-blue); }
+
+.duo-lp-feat--3 .duo-lp-feat__title { color: var(--color-macaw-yellow); }
+.duo-lp-feat--3 .duo-lp-feat__box { background: #fff4cc; color: var(--color-macaw-yellow); }
+
+/* ANYWHERE BLOCK */
+.duo-lp-anywhere { background: #eaf7ff; padding: 100px 24px; text-align: center; overflow: hidden; position: relative; }
+.duo-lp-anywhere__title { font-size: 48px; font-weight: 800; color: var(--color-spark-blue); margin-bottom: 48px; position: relative; z-index: 2; }
+.duo-lp-anywhere__icons { display: flex; justify-content: center; flex-wrap: wrap; gap: 48px; font-size: 80px; color: var(--color-spark-blue); opacity: 0.7; position: relative; z-index: 1; }
+.duo-lp-anywhere__icons i { transition: transform 0.3s; }
+.duo-lp-anywhere__icons i:hover { transform: scale(1.2) rotate(10deg); }
+
+/* SUPER BLOCK */
+.duo-lp-super { background: #1a1a2e; padding: 100px 24px; text-align: center; color: #ffffff; }
+.duo-lp-super__title { font-size: 40px; font-weight: 800; margin-bottom: 32px; font-style: italic; background: linear-gradient(90deg, #ffc800, #ff4b4b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.duo-lp-super__btn { display: inline-block; background: transparent; border: 2px solid #ffffff; color: #ffffff !important; font-size: 16px; font-weight: 800; text-transform: uppercase; padding: 16px 32px; border-radius: 16px; transition: all 0.1s; }
+.duo-lp-super__btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+/* SUB-BRANDS (CATEGORIES) */
+.duo-lp-cats { padding: 100px 24px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px; }
+.duo-lp-cat { border: 2px solid #e5e5e5; border-radius: 32px; padding: 32px; text-align: center; box-shadow: 0 8px 0 #e5e5e5; transition: transform 0.1s, box-shadow 0.1s; display: block; background: #ffffff; }
+.duo-lp-cat:hover { transform: translateY(-4px); box-shadow: 0 12px 0 #e5e5e5; }
+.duo-lp-cat__icon { font-size: 64px; margin-bottom: 24px; color: var(--color-spark-blue); }
+.duo-lp-cat__title { font-size: 24px; font-weight: 800; color: var(--color-charcoal); margin-bottom: 12px; }
+.duo-lp-cat__desc { font-size: 16px; font-weight: 700; color: var(--color-pencil-gray); }
+
+/* BOTTOM CTA */
+.duo-lp-cta { background: var(--color-eager-green); padding: 100px 24px; text-align: center; }
+.duo-lp-cta__title { font-size: 48px; font-weight: 800; color: #ffffff; margin-bottom: 48px; }
+.duo-lp-cta .duo-lp-btn--outline { max-width: 300px; margin: 0 auto; color: var(--color-eager-green) !important; border-color: #ffffff; box-shadow: 0 4px 0 #46a302; }
+</style>
+
+<div class="duo-lp-wrap">
+    
+    {{-- 1. HERO SECTION --}}
+    <section class="duo-lp-hero">
+        <div class="duo-lp-mascots">
+            <i class="fas fa-palette duo-lp-m duo-lp-m-1"></i>
+            <i class="fas fa-paint-brush duo-lp-m duo-lp-m-2"></i>
+            <i class="fas fa-pen-nib duo-lp-m duo-lp-m-3"></i>
+            <i class="fas fa-image duo-lp-m duo-lp-m-4"></i>
         </div>
-
-        <div class="hero-col hero-col--media">
-            <div class="hero-collage">
-                <figure class="hero-collage__item" style="--d: 0s"><img src="{{ asset('assets/images/i2.webp') }}" alt="Modern ukiyo-e dragon print"></figure>
-                <figure class="hero-collage__item" style="--d: .5s"><img src="{{ asset('assets/images/i6.webp') }}" alt="Pop-art print"></figure>
-                <figure class="hero-collage__item" style="--d: 1s"><img src="{{ asset('assets/images/i5.webp') }}" alt="White tiger ukiyo-e print"></figure>
-                <figure class="hero-collage__item" style="--d: .25s"><img src="{{ asset('assets/images/i3.webp') }}" alt="Anime portrait print"></figure>
-                <figure class="hero-collage__item" style="--d: .75s"><img src="{{ asset('assets/images/i4.webp') }}" alt="Neon street-art print"></figure>
-                <figure class="hero-collage__item" style="--d: 1.25s"><img src="{{ asset('assets/images/i7.webp') }}" alt="Moonlit street-art print"></figure>
-            </div>
+        <h1 class="duo-lp-hero__title">The free, fun, and effective way to learn digital art!</h1>
+        <div class="duo-lp-hero__btns">
+            <a href="{{ route('product-lists') }}" class="duo-lp-btn duo-lp-btn--primary">Get Started</a>
+            @if(Auth::check())
+                <a href="{{ route('user') }}" class="duo-lp-btn duo-lp-btn--outline">My Account</a>
+            @else
+                <a href="{{ route('login.form') }}" class="duo-lp-btn duo-lp-btn--outline">I already have an account</a>
+            @endif
         </div>
-    </div>
-</section>
+    </section>
 
-
-
-
-<!-- ==============================================
-     INKWAVE / DIGITAL ART PREMIUM SECTIONS
-     ============================================== -->
-
-<!-- SECTION 2: Category Cards -->
-<section class="inkwave-categories" style="background-color: var(--color-bone, #e7e5e4); border-top: 1px solid var(--color-vellum, #dfdcd5);">
-    <div class="auto-container">
-        <div class="cat-section-head">
-            <p class="cat-eyebrow">{{ __('inkwave.cat_eyebrow') }}</p>
-            <h2 class="cat-heading">{{ __('inkwave.cat_heading') }}</h2>
-        </div>
-
-        @php
-            $featuredCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
-        @endphp
-        
-        <div class="cat-grid">
-            @forelse($featuredCategories as $cat)
-                <a href="{{ route('product-lists', $cat->slug) }}" class="cat-card" aria-label="{{ $cat->title }}">
-                    @if($cat->photo)
-                        <img src="{{ $cat->photo }}" alt="{{ $cat->title }}" class="cat-card__img">
-                    @else
-                        <span class="cat-card__placeholder"><i class="fas fa-palette"></i></span>
-                    @endif
-                    <span class="cat-card__veil" aria-hidden="true"></span>
-                    <span class="cat-card__content">
-                        <span class="cat-card__title">{{ $cat->title }}</span>
-                        @if($cat->summary)
-                            <span class="cat-card__summary">{{ $cat->summary }}</span>
-                        @endif
-                    </span>
-                </a>
-            @empty
-                <div class="col-12 text-center py-5">
-                    <i class="fas fa-folder-open mb-3" style="font-size: 48px; color: #E85D8E; opacity: 0.5;"></i>
-                    <p style="color: #666; font-size: 15px;">{{ __('inkwave.prod_empty') }}</p>
-                </div>
-            @endforelse
-        </div>
-    </div>
-</section>
-
-
-
-<!-- SECTION 2: How It Works -->
-<section class="inkwave-how-it-works py-120" style="background-color: var(--color-putty, #c4c3b6);">
-    <div class="auto-container">
-        <div class="steps-head">
-            <p class="steps-eyebrow">{{ __('inkwave.process_eyebrow') }}</p>
-            <h2 class="steps-heading">{{ __('inkwave.process_heading') }}</h2>
-            <p class="steps-sub">{{ __('inkwave.process_sub') }}</p>
-        </div>
-
-        <div class="steps-grid">
-            <div class="step-card">
-                <span class="step-num">{{ __('inkwave.step1_num') }}</span>
-                <h3 class="step-title">{{ __('inkwave.step1_title') }}</h3>
-                <p class="step-desc">{{ __('inkwave.step1_desc') }}</p>
-            </div>
-            <div class="step-card">
-                <span class="step-num">{{ __('inkwave.step2_num') }}</span>
-                <h3 class="step-title">{{ __('inkwave.step2_title') }}</h3>
-                <p class="step-desc">{{ __('inkwave.step2_desc') }}</p>
-            </div>
-            <div class="step-card">
-                <span class="step-num">{{ __('inkwave.step3_num') }}</span>
-                <h3 class="step-title">{{ __('inkwave.step3_title') }}</h3>
-                <p class="step-desc">{{ __('inkwave.step3_desc') }}</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-<!-- SECTION 4: Products Carousel -->
-<section class="inkwave-products" style="background-color: var(--color-bone, #e7e5e4);">
-    <div class="prod-head">
-        <p class="prod-eyebrow">{{ __('inkwave.prod_eyebrow') }}</p>
-        <h2 class="prod-heading">{{ __('inkwave.prod_heading') }}</h2>
-    </div>
-
+    {{-- 2. CAROUSEL (Products) --}}
     @php
-        $carouselProducts = \App\Models\Product::with('levels')->where('status','active')->orderBy('id','DESC')->get();
+        $carouselProducts = \App\Models\Product::where('status','active')->orderBy('id','DESC')->take(8)->get();
     @endphp
+    @if($carouselProducts->count() > 0)
+    <section class="duo-lp-strip">
+        <div class="duo-lp-strip__inner">
+            {{-- Duplicate loop twice for seamless scrolling effect --}}
+            @for ($i = 0; $i < 2; $i++)
+                @foreach($carouselProducts as $product)
+                    @php $pimg = $product->photo ? explode(',', $product->photo)[0] : null; @endphp
+                    <a href="{{ route('product-detail', $product->slug) }}" class="duo-lp-course">
+                        <div class="duo-lp-course__img">
+                            @if($pimg)
+                                <img src="{{ url($pimg) }}" alt="{{ $product->title }}" loading="lazy">
+                            @else
+                                <i class="fas fa-image"></i>
+                            @endif
+                        </div>
+                        {{ $product->title }}
+                    </a>
+                @endforeach
+            @endfor
+        </div>
+    </section>
+    @endif
 
-    <div class="prod-carousel">
-        <button class="prod-nav prod-nav--prev" type="button" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+    {{-- 3. ALTERNATING FEATURE BLOCKS --}}
+    <section class="duo-lp-feat duo-lp-feat--1">
+        <div class="duo-lp-feat__text">
+            <h2 class="duo-lp-feat__title">free. fun. effective.</h2>
+            <p class="duo-lp-feat__desc">{{ __('inkwave.step1_desc') ?? 'Learning with Artora is fun, and research shows that it works! With quick, bite-sized lessons, you’ll earn points and unlock new levels while gaining real-world skills.' }}</p>
+        </div>
+        <div class="duo-lp-feat__img">
+            <div class="duo-lp-feat__box"><i class="fas fa-shapes"></i></div>
+        </div>
+    </section>
 
-        <div class="prod-track" id="prodTrack">
-            @forelse($carouselProducts as $product)
-                @php $pimg = $product->photo ? explode(',', $product->photo)[0] : null; @endphp
-                <a href="{{ route('product-detail', $product->slug) }}" class="prod-slide">
-                    <div class="prod-slide__img">
-                        @if($pimg)
-                            <img src="{{ url($pimg) }}" alt="{{ $product->title }}" loading="lazy">
-                        @else
-                            <span class="prod-slide__ph"><i class="fas fa-image"></i></span>
-                        @endif
+    <section class="duo-lp-feat duo-lp-feat--2">
+        <div class="duo-lp-feat__text">
+            <h2 class="duo-lp-feat__title">backed by science</h2>
+            <p class="duo-lp-feat__desc">{{ __('inkwave.step2_desc') ?? 'We use a combination of research-backed teaching methods and delightful content to create courses that effectively teach drawing, painting, and digital art skills!' }}</p>
+        </div>
+        <div class="duo-lp-feat__img">
+            <div class="duo-lp-feat__box"><i class="fas fa-flask"></i></div>
+        </div>
+    </section>
+
+    <section class="duo-lp-feat duo-lp-feat--3">
+        <div class="duo-lp-feat__text">
+            <h2 class="duo-lp-feat__title">stay motivated</h2>
+            <p class="duo-lp-feat__desc">{{ __('inkwave.step3_desc') ?? 'We make it easy to form a habit of learning with game-like features, fun challenges, and reminders to keep you on track.' }}</p>
+        </div>
+        <div class="duo-lp-feat__img">
+            <div class="duo-lp-feat__box"><i class="fas fa-fire-alt"></i></div>
+        </div>
+    </section>
+
+    {{-- 4. ANYWHERE BLOCK --}}
+    <section class="duo-lp-anywhere">
+        <h2 class="duo-lp-anywhere__title">learn anytime, anywhere</h2>
+        <div class="duo-lp-anywhere__icons">
+            <i class="fas fa-tablet-alt"></i>
+            <i class="fas fa-mobile-alt"></i>
+            <i class="fas fa-laptop"></i>
+            <i class="fas fa-desktop"></i>
+        </div>
+    </section>
+
+    {{-- 5. SUPER DUOLINGO (Credits) --}}
+    <section class="duo-lp-super">
+        <h2 class="duo-lp-super__title">POWER UP WITH CREDITS</h2>
+        <a href="{{ route('points.topup') }}" class="duo-lp-super__btn">Try a Top-Up Package</a>
+    </section>
+
+    {{-- 6. SUB-BRANDS (Categories) --}}
+    @php
+        $featuredCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->take(3)->get();
+    @endphp
+    @if($featuredCategories->count() > 0)
+    <div style="background-color: #f7f7f7; padding: 1px 0;">
+        <section class="duo-lp-cats">
+            @foreach($featuredCategories as $cat)
+                <a href="{{ route('product-lists', $cat->slug) }}" class="duo-lp-cat">
+                    <div class="duo-lp-cat__icon">
+                        <i class="fas fa-layer-group"></i>
                     </div>
-                    <h3 class="prod-slide__title">{{ $product->title }}</h3>
-                    @if($product->levels && $product->levels->count() > 0)
-                        <p class="prod-slide__price">
-                            {{ __('inkwave.starting_from') }} <strong>{{ number_format($product->levels->min('price_in_points')) }}</strong> {{ __('inkwave.pd_credits') }}
-                        </p>
-                    @endif
+                    <h3 class="duo-lp-cat__title">artora {{ strtolower($cat->title) }}</h3>
+                    <p class="duo-lp-cat__desc">Explore our top-rated courses and expand your skills in {{ $cat->title }}.</p>
                 </a>
-            @empty
-                <p class="prod-empty">{{ __('inkwave.prod_empty') }}</p>
-            @endforelse
-        </div>
-
-        <button class="prod-nav prod-nav--next" type="button" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+            @endforeach
+        </section>
     </div>
-</section>
+    @endif
 
+    {{-- 7. TOP UP SECTION (Imported from topup.blade.php) --}}
+    <style>
+    .duo-tu-bg { background-color: #eaf7ff; padding: 2px 0; }
+    .duo-tu-container { max-width: 1200px; margin: 48px auto; padding: 100px 24px; }
+    .duo-tu-head { text-align: center; margin-bottom: 64px; }
+    .duo-tu-eyebrow { font-size: 16px; font-weight: 800; text-transform: uppercase; color: var(--color-spark-blue, #1cb0f6); letter-spacing: 0.1em; margin-bottom: 16px; }
+    .duo-tu-title { font-size: 48px; font-weight: 800; color: var(--color-charcoal, #4b4b4b); margin-bottom: 16px; letter-spacing: -0.5px; }
+    .duo-tu-sub { font-size: 20px; font-weight: 700; color: var(--color-pencil-gray, #777777); max-width: 600px; margin: 0 auto; }
+    .duo-tu-tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; margin-bottom: 32px; }
+    .duo-tu-card { background: #ffffff; border: 2px solid #e5e5e5; border-radius: 24px; padding: 40px 24px 32px; text-align: center; box-shadow: 0 8px 0 #e5e5e5; position: relative; transition: transform 0.1s, box-shadow 0.1s; display: flex; flex-direction: column; }
+    .duo-tu-card--vip { border-color: var(--color-macaw-yellow, #ffc800); box-shadow: 0 8px 0 var(--color-macaw-yellow, #ffc800); background: #fffcf0; }
+    .duo-tu-card:hover { transform: translateY(4px); box-shadow: 0 4px 0 #e5e5e5; }
+    .duo-tu-card--vip:hover { box-shadow: 0 4px 0 var(--color-macaw-yellow, #ffc800); }
+    .duo-tu-card__flag { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); background: var(--color-macaw-yellow, #ffc800); color: #ffffff; font-size: 14px; font-weight: 800; text-transform: uppercase; padding: 6px 16px; border-radius: 12px; border: 2px solid #ffffff; box-shadow: 0 4px 0 rgba(0,0,0,0.1); white-space: nowrap; }
+    .duo-tu-card__icon { font-size: 48px; color: var(--color-spark-blue, #1cb0f6); margin-bottom: 16px; display: block; }
+    .duo-tu-card--vip .duo-tu-card__icon { color: var(--color-macaw-yellow, #ffc800); }
+    .duo-tu-card__name { font-size: 24px; font-weight: 800; color: var(--color-charcoal, #4b4b4b); margin-bottom: 8px; }
+    .duo-tu-card__mult { font-size: 36px; font-weight: 800; color: var(--color-spark-blue, #1cb0f6); }
+    .duo-tu-card--vip .duo-tu-card__mult { color: var(--color-macaw-yellow, #ffc800); }
+    .duo-tu-card__feats { list-style: none; padding: 0; margin: 24px 0; text-align: left; flex: 1; }
+    .duo-tu-card__feats li { font-size: 16px; font-weight: 700; color: var(--color-pencil-gray, #777777); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .duo-tu-card__feats i { color: var(--color-eager-green, #58cc02); }
+    .duo-tu-btn { background: var(--color-spark-blue, #1cb0f6); color: #ffffff !important; border: 2px solid #1899d6; border-radius: 16px; padding: 12px 24px; font-size: 17px; font-weight: 800; text-transform: uppercase; box-shadow: 0 4px 0 #1899d6; cursor: pointer; width: 100%; transition: all 0.1s; margin-top: auto; }
+    .duo-tu-btn:hover { filter: brightness(1.05); }
+    .duo-tu-btn:active { transform: translateY(4px); box-shadow: 0 0 0 transparent; }
+    .duo-tu-note { text-align: center; font-size: 16px; font-weight: 700; color: var(--color-pencil-gray, #777777); margin-bottom: 64px; }
+    .duo-tu-calc { background: #ffffff; border: 2px solid #e5e5e5; border-radius: 32px; box-shadow: 0 12px 0 #e5e5e5; max-width: 800px; margin: 0 auto; overflow: hidden; }
+    .duo-tu-calc__head { background: var(--color-spark-blue, #1cb0f6); padding: 32px; text-align: center; color: #ffffff; border-bottom: 2px solid #1899d6; }
+    .duo-tu-calc__title { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+    .duo-tu-calc__body { padding: 48px; }
+    @media (max-width: 600px) { .duo-tu-calc__body { padding: 24px; } }
+    .duo-tu-form-group { margin-bottom: 32px; }
+    .duo-tu-label { display: block; font-size: 18px; font-weight: 800; color: var(--color-charcoal, #4b4b4b); margin-bottom: 12px; }
+    .duo-tu-input-wrap { display: flex; align-items: center; background: #f7f7f7; border: 2px solid #e5e5e5; border-radius: 16px; padding: 0 24px; font-size: 24px; font-weight: 800; color: var(--color-charcoal, #4b4b4b); box-shadow: inset 0 4px 0 rgba(0,0,0,0.02); }
+    .duo-tu-input-wrap input { border: none; background: transparent; padding: 20px 16px; font-size: 24px; font-weight: 800; color: var(--color-charcoal, #4b4b4b); width: 100%; outline: none; }
+    .duo-tu-stats { background: #ffffff; border: 2px solid #e5e5e5; border-radius: 20px; padding: 24px; margin-bottom: 32px; box-shadow: 0 4px 0 #e5e5e5; }
+    .duo-tu-stat { display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; color: var(--color-pencil-gray, #777777); margin-bottom: 12px; }
+    .duo-tu-stat--total { margin-top: 24px; padding-top: 24px; border-top: 2px dashed #e5e5e5; font-size: 24px; font-weight: 800; color: var(--color-charcoal, #4b4b4b); margin-bottom: 0; }
+    .duo-tu-stat--total span:last-child { color: var(--color-macaw-yellow, #ffc800); }
+    .duo-tu-buybtn { background: var(--color-eager-green, #58cc02); color: #ffffff !important; border: 2px solid #46a302; border-radius: 16px; padding: 20px; font-size: 22px; font-weight: 800; text-transform: uppercase; box-shadow: 0 6px 0 #46a302; cursor: pointer; width: 100%; transition: all 0.1s; display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .duo-tu-buybtn:hover { filter: brightness(1.05); }
+    .duo-tu-buybtn:active { transform: translateY(6px); box-shadow: 0 0 0 transparent; }
+    </style>
 
+    <div class="duo-tu-bg">
+        <div class="duo-tu-container">
+            <div class="duo-tu-head">
+                <p class="duo-tu-eyebrow"><i class="fas fa-coins"></i> {{ __('inkwave.topup_eyebrow') }}</p>
+                <h2 class="duo-tu-title">{{ __('inkwave.topup_heading') }}</h2>
+                <p class="duo-tu-sub">{{ __('inkwave.topup_sub') }}</p>
+            </div>
 
-<script>
-    (function () {
-        var track = document.getElementById('prodTrack');
-        if (!track) return;
-        var prev = document.querySelector('.prod-nav--prev');
-        var next = document.querySelector('.prod-nav--next');
-        function page() {
-            var slide = track.querySelector('.prod-slide');
-            var w = slide ? slide.offsetWidth + 20 : track.clientWidth * 0.8;
-            var visible = Math.max(1, Math.floor(track.clientWidth / w));
-            return w * visible;
-        }
-        if (next) next.addEventListener('click', function () { track.scrollBy({ left: page(), behavior: 'smooth' }); });
-        if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -page(), behavior: 'smooth' }); });
-    })();
-</script>
-
-<!-- POINTS TOP UP SECTION - PREMIUM LUXURY DESIGN -->
-<section class="points-topup-section py-6" id="topup" style="background-color: var(--color-putty, #c4c3b6);">
-    <div class="auto-container">
-        <div class="topup-head">
-            <p class="topup-eyebrow">{{ __('inkwave.topup_eyebrow') }}</p>
-            <h2 class="topup-heading">{{ __('inkwave.topup_heading') }}</h2>
-            <p class="topup-sub">{{ __('inkwave.topup_sub') }}</p>
-        </div>
-
-        <div class="topup-layout">
             @php
                 $cur = session('currency');
                 if ($cur == 'JPY') {
@@ -215,26 +280,23 @@
                 }
             @endphp
 
-            <div class="tier-cards">
+            <div class="duo-tu-tiers">
                 @foreach($tiers as $t)
-                    <div class="tier-card @if($t['f']) tier-card--featured @endif">
-                        @if($t['f'])<span class="tier-card__flag">{{ __('inkwave.best_value') }}</span>@endif
-                        <span class="tier-card__icon"><i class="fas {{ $t['i'] }}"></i></span>
-                        <h3 class="tier-card__name">{{ $t['n'] }}</h3>
-                        <div class="tier-card__price">
-                            <span class="tier-card__mult">{{ $t['big'] }}</span>
-                            <span class="tier-card__per">{{ __('inkwave.bonus_text') }}</span>
-                        </div>
-                        <ul class="tier-card__feats">
+                    <div class="duo-tu-card @if($t['f']) duo-tu-card--vip @endif">
+                        @if($t['f'])<span class="duo-tu-card__flag">{{ __('inkwave.best_value') }}</span>@endif
+                        <span class="duo-tu-card__icon"><i class="fas {{ $t['i'] }}"></i></span>
+                        <h3 class="duo-tu-card__name">{{ $t['n'] }}</h3>
+                        <div class="duo-tu-card__mult">{{ $t['big'] }}</div>
+                        <ul class="duo-tu-card__feats">
                             <li><i class="fas fa-check-circle"></i> {{ $t['r'] }}</li>
                             <li><i class="fas fa-check-circle"></i> {{ __('inkwave.bonus_text') }} {{ $t['big'] }}</li>
                         </ul>
-                        <button type="button" class="tier-card__btn" data-topup-focus>{{ __('inkwave.calc_button') }}</button>
+                        <button type="button" class="duo-tu-btn" data-topup-focus>{{ __('inkwave.calc_button') }}</button>
                     </div>
                 @endforeach
             </div>
 
-            <p class="tier-note">
+            <p class="duo-tu-note">
                 @if(session('currency') == 'JPY')
                     {{ __('inkwave.jpy_conversion_note') }}
                 @elseif(session('currency') == 'HKD')
@@ -244,93 +306,75 @@
                 @endif
             </p>
 
-            <div class="calc-center">
-                <div class="ink-calc">
-                    <div class="ink-calc__head">
-                        <div>
-                            <h2 class="ink-calc__title">{{ __('inkwave.calc_title') }}</h2>
-                            <p class="ink-calc__tag">{{ __('inkwave.calc_tagline') }}</p>
-                        </div>
-                        <span class="ink-calc__cur">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
-                    </div>
-
-                    <form action="{{ route('points.add-to-cart') }}" method="POST" class="luxury-calc-form ink-calc__form">
+            <div class="duo-tu-calc" id="topup">
+                <div class="duo-tu-calc__head">
+                    <h2 class="duo-tu-calc__title">{{ __('inkwave.calc_title') }}</h2>
+                    <p style="font-size:18px; font-weight:700; opacity:0.9;">{{ __('inkwave.calc_tagline') }}</p>
+                </div>
+                
+                <div class="duo-tu-calc__body">
+                    <form action="{{ route('points.add-to-cart') }}" method="POST">
                         @csrf
-
-                        <label class="ink-calc__label">{{ __('inkwave.calc_input_label') }}</label>
-                        <div class="ink-calc__field">
-                            <span class="ink-calc__prefix">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
-                            <input type="number" name="amount" id="topup_amount" class="ink-calc__input" placeholder="0" min="1" required>
+                        
+                        <div class="duo-tu-form-group">
+                            <label class="duo-tu-label">{{ __('inkwave.calc_input_label') }}</label>
+                            <div class="duo-tu-input-wrap">
+                                <span>{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
+                                <input type="number" name="amount" id="topup_amount" placeholder="0" min="1" required>
+                            </div>
                         </div>
 
-                        <div class="ink-calc__rows">
-                            <div class="ink-calc__row">
+                        <div class="duo-tu-stats">
+                            <div class="duo-tu-stat">
                                 <span>{{ __('inkwave.calc_base_points') }}</span>
                                 <span id="base_points">0</span>
                             </div>
-                            <div class="ink-calc__row">
+                            <div class="duo-tu-stat">
                                 <span>{{ __('inkwave.calc_tier_bonus') }}</span>
-                                <span id="multiplier_display" class="ink-calc__mult">×1</span>
+                                <span id="multiplier_display">×1</span>
                             </div>
-                            <div class="ink-calc__row ink-calc__row--total">
+                            <div class="duo-tu-stat duo-tu-stat--total">
                                 <span>{{ __('inkwave.calc_youll_get') }}</span>
-                                <span id="total_points">0</span>
+                                <span><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
                             </div>
                         </div>
 
-                        <div class="ink-calc__display">
-                            <span class="ink-calc__big" id="total_points_large">0</span>
-                            <span class="ink-calc__unit">{{ __('inkwave.calc_points_unit') }}</span>
-                        </div>
-
-                        <ul class="ink-calc__benefits">
-                            <li><i class="fas fa-check"></i> {{ __('inkwave.calc_benefit_access') }}</li>
-                            <li><i class="fas fa-check"></i> {{ __('inkwave.calc_benefit_tutorials') }}</li>
-                            <li><i class="fas fa-check"></i> {{ __('inkwave.calc_benefit_vip') }}</li>
-                        </ul>
-
-                        <button type="submit" class="btn-premium-checkout ink-calc__btn">
-                            <span class="btn-label">{{ __('inkwave.calc_button') }}</span>
-                            <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                        <button type="submit" class="duo-tu-buybtn">
+                            <span>{{ __('inkwave.calc_button') }}</span>
+                            <i class="fas fa-arrow-right"></i>
                         </button>
+                        
+                        <p style="text-align:center; font-weight:700; color:var(--color-pencil-gray); margin-top:24px;">
+                            <i class="fas fa-shield-alt" style="color:var(--color-eager-green);"></i> {{ __('inkwave.calc_trust_message') }}
+                        </p>
                     </form>
-
-                    <p class="ink-calc__trust"><i class="fas fa-check-circle"></i> {{ __('inkwave.calc_trust_message') }}</p>
                 </div>
             </div>
+            
         </div>
     </div>
-</section>
 
+</div>
 
-
-
-
-
-
-
-
+@push('scripts')
 <script>
+    // Tier card buttons focus the amount input
     (function () {
-        document.querySelectorAll('.tier-card__btn[data-topup-focus]').forEach(function (b) {
+        document.querySelectorAll('.duo-tu-btn[data-topup-focus]').forEach(function (b) {
             b.addEventListener('click', function () {
                 var a = document.getElementById('topup_amount');
-                if (a) {
-                    a.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    setTimeout(function () { a.focus(); }, 350);
-                }
+                if (a) { a.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { a.focus(); }, 350); }
             });
         });
     })();
-</script>
 
-<script>
+    // Live points calculator
     document.addEventListener('DOMContentLoaded', function() {
         const amountInput = document.getElementById('topup_amount');
         const totalPointsDisplay = document.getElementById('total_points');
-        const totalPointsLarge = document.getElementById('total_points_large');
         const basePointsDisplay = document.getElementById('base_points');
         const multiplierDisplay = document.getElementById('multiplier_display');
+        if (!amountInput) return;
 
         function calculatePoints() {
             const amount = parseFloat(amountInput.value) || 0;
@@ -360,65 +404,15 @@
             }
 
             const totalPoints = Math.round(basePoints * multiplier);
-
-            basePointsDisplay.textContent = basePoints.toLocaleString();
-            multiplierDisplay.textContent = multiplier === 1 ? 'None' : '×' + multiplier.toFixed(1);
-            totalPointsDisplay.textContent = totalPoints.toLocaleString();
-            totalPointsLarge.textContent = totalPoints.toLocaleString();
+            if(basePointsDisplay) basePointsDisplay.textContent = basePoints.toLocaleString();
+            if(multiplierDisplay) multiplierDisplay.textContent = multiplier === 1 ? 'None' : '×' + multiplier.toFixed(1);
+            if(totalPointsDisplay) totalPointsDisplay.textContent = totalPoints.toLocaleString();
         }
 
         amountInput.addEventListener('input', calculatePoints);
         amountInput.addEventListener('change', calculatePoints);
-
-        // Handle premium top-up form submission without redirect
-        const topupForm = document.querySelector('.luxury-calc-form');
-        if (topupForm) {
-            topupForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                const submitBtn = topupForm.querySelector('.btn-premium-checkout');
-                const btnLabel = submitBtn.querySelector('.btn-label');
-                const btnIcon = submitBtn.querySelector('.btn-icon');
-                const originalBtnText = btnLabel ? btnLabel.innerHTML : 'Checkout';
-                const originalBtnIcon = btnIcon ? btnIcon.innerHTML : '';
-
-                // Show loading state
-                submitBtn.disabled = true;
-                if (btnLabel) btnLabel.innerHTML = 'Loading...';
-                if (btnIcon) btnIcon.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-                // Fetch the form
-                fetch(topupForm.action, {
-                    method: 'POST',
-                    body: new FormData(topupForm),
-                    redirect: 'manual'
-                })
-                .then(response => {
-                    // Wait 500ms for cart update to complete
-                    return new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve(response);
-                        }, 500);
-                    });
-                })
-                .then(response => {
-                    // Reload the page to show success message
-                    window.location.reload();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Reset button state on error
-                    submitBtn.disabled = false;
-                    if (btnLabel) btnLabel.innerHTML = originalBtnText;
-                    if (btnIcon) btnIcon.innerHTML = originalBtnIcon;
-                });
-            });
-        }
     });
 </script>
-
-
-
-
+@endpush
 
 @endsection

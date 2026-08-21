@@ -41,10 +41,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
     <link href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
 
-    {{-- Google Fonts: Playfair Display (display serif) + Inter (utility grotesk) --}}
+    {{-- Google Fonts: Nunito (display) + Nunito Sans (body) --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Nunito+Sans:wght@500;700&display=swap" rel="stylesheet">
+
+    {{-- Application Styles (contains Duolingo Theme Variables & Bootstrap) --}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     {{-- Structured theme (Renaissance gallery on putty paper) --}}
     <link href="{{ url('css/structured.css') }}" rel="stylesheet">
@@ -52,8 +55,79 @@
     <link href="{{ url('css/prevention.css') }}" rel="stylesheet">
     @endif
 
-    {{-- Preloader Styles — Artora Studios loader (flat, no gradients, no shadows) --}}
-    
+    {{-- Preloader Styles — Artora Studios loader (Duolingo Theme) --}}
+    <style>
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .st-preloader {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .st-preloader__logo {
+            height: 80px;
+            animation: duoBounce 1s infinite alternate ease-in-out;
+        }
+        .st-preloader__label {
+            color: #777777; /* Pencil Gray */
+            font-family: 'Nunito', 'Nunito Sans', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.0530em;
+            margin-top: 8px;
+        }
+        .st-preloader__bar {
+            width: 240px;
+            height: 20px;
+            background-color: #e5e5e5;
+            border-radius: 12px;
+            position: relative;
+        }
+        .st-preloader__bar span {
+            display: block;
+            height: 100%;
+            background-color: #58cc02; /* Eager Green */
+            width: 0%;
+            border-radius: 12px;
+            animation: duoLoadingBar 2s ease-in-out forwards;
+            position: relative;
+        }
+        /* Glossy reflection for the progress bar (Duolingo XP bar style) */
+        .st-preloader__bar span::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 8px;
+            right: 8px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+        }
+
+        @keyframes duoBounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-12px); }
+        }
+        @keyframes duoLoadingBar {
+            0% { width: 10%; }
+            50% { width: 60%; }
+            100% { width: 100%; }
+        }
+    </style>
 
     @cookieconsentscripts
 </head>

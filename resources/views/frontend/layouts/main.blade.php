@@ -1,3 +1,4 @@
+
 @include('frontend.layouts.head')
 @include('frontend.layouts.header')
 @include('components.alert')

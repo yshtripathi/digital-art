@@ -2,122 +2,303 @@
 @section('title', __('inkwave.about_page_title'))
 @section('main-content')
 
-<x-breadcrumb :title="__('inkwave.about_page_title')" />
+{{-- Inject the new Breadcrumb component --}}
+@include('frontend.layouts.breadcrumb', [
+    'title' => __('inkwave.about_page_title'),
+    'links' => [
+        ['name' => __('inkwave.menu_home'), 'url' => route('home')],
+        ['name' => __('inkwave.about_page_title')]
+    ]
+])
 
-{{-- ============================================================
-     SECTION 1 — OUR STORY (text + image a1.webp)
-     ============================================================ --}}
-<section class="abt-section abt-story">
-    <div class="abt-container abt-split">
-        <div class="abt-split__text">
-            <p class="abt-eyebrow">{{ __('inkwave.about_intro_eyebrow') }}</p>
-            <h2 class="abt-heading">{{ __('inkwave.about_intro_heading') }}</h2>
-            <p class="abt-lead">{{ __('inkwave.about_intro_lead') }}</p>
-            <p class="abt-body">{{ __('inkwave.about_intro_body') }}</p>
+<style>
+/* -------------------------------------------
+   Duolingo Theme About Page - New Layout
+------------------------------------------- */
+.duo-about-wrapper {
+    background-color: var(--color-paper-white, #ffffff);
+    padding-bottom: 100px;
+    font-family: 'Nunito', 'Nunito Sans', sans-serif;
+}
+.duo-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
 
-            <div class="abt-tags">
-                <span>{{ __('inkwave.about_tag_anime') }}</span>
-                <span>{{ __('inkwave.about_tag_pixel') }}</span>
-                <span>{{ __('inkwave.about_tag_pop') }}</span>
-                <span>{{ __('inkwave.about_tag_street') }}</span>
-                <span>{{ __('inkwave.about_tag_ukiyo') }}</span>
+/* SECTION 1: Giant Hero Card */
+.duo-hero-card {
+    background: #ffffff;
+    border: 2px solid #e5e5e5;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 12px 0 #e5e5e5;
+    margin: 64px auto;
+    text-align: center;
+}
+.duo-hero-card__img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-bottom: 2px solid #e5e5e5;
+}
+.duo-hero-card__body {
+    padding: 48px;
+}
+.duo-hero-card__eyebrow {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-spark-blue, #1cb0f6);
+    text-transform: uppercase;
+    letter-spacing: 0.053em;
+    margin-bottom: 16px;
+}
+.duo-hero-card__title {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--color-charcoal, #4b4b4b);
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+.duo-hero-card__desc {
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--color-pencil-gray, #777777);
+    line-height: 1.5;
+    max-width: 700px;
+    margin: 0 auto 32px;
+}
+.duo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+.duo-tag {
+    background: #f7f7f7;
+    border: 2px solid #e5e5e5;
+    border-radius: 16px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-charcoal, #4b4b4b);
+}
+
+/* SECTION 2: Vertical Value List */
+.duo-values-section {
+    padding: 64px 0;
+}
+.duo-values-header {
+    text-align: center;
+    margin-bottom: 64px;
+}
+.duo-values-header h2 {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--color-charcoal, #4b4b4b);
+}
+.duo-values-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.duo-value-item {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    background: #ffffff;
+    border: 2px solid #e5e5e5;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 6px 0 #e5e5e5;
+    transition: transform 0.1s;
+}
+.duo-value-item:hover {
+    transform: translateX(8px);
+}
+.duo-value-item__icon {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    background: var(--color-spark-blue, #1cb0f6);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #ffffff;
+    border: 2px solid #1899d6;
+    box-shadow: 0 4px 0 #1899d6;
+}
+/* Alternate icon colors for fun */
+.duo-value-item:nth-child(2) .duo-value-item__icon {
+    background: var(--color-eager-green, #58cc02);
+    border-color: #46a302;
+    box-shadow: 0 4px 0 #46a302;
+}
+.duo-value-item:nth-child(3) .duo-value-item__icon {
+    background: #ff4b4b; /* Rose Red */
+    border-color: #d13a3a;
+    box-shadow: 0 4px 0 #d13a3a;
+}
+.duo-value-item:nth-child(4) .duo-value-item__icon {
+    background: #ffc800; /* Sunflower */
+    border-color: #d6a700;
+    box-shadow: 0 4px 0 #d6a700;
+}
+
+.duo-value-item__content {
+    flex: 1;
+}
+.duo-value-item__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-charcoal, #4b4b4b);
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+.duo-value-item__desc {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--color-pencil-gray, #777777);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* SECTION 3: Slim CTA Banner */
+.duo-cta-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--color-eager-green, #58cc02);
+    border-radius: 32px;
+    padding: 48px;
+    margin-top: 64px;
+    border: 2px solid #46a302;
+    box-shadow: 0 8px 0 #46a302;
+}
+.duo-cta-banner__text h2 {
+    font-size: 40px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+}
+.duo-cta-banner__text p {
+    font-size: 19px;
+    font-weight: 500;
+    color: #d7ffb8;
+    margin: 0;
+}
+.duo-cta-banner__btn {
+    flex-shrink: 0;
+    background: #ffffff;
+    color: var(--color-eager-green, #58cc02);
+    padding: 20px 40px;
+    border-radius: 24px;
+    font-size: 19px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.053em;
+    text-decoration: none;
+    border: 2px solid #e5e5e5;
+    box-shadow: 0 6px 0 #e5e5e5;
+    transition: all 0.1s;
+}
+.duo-cta-banner__btn:hover {
+    background: #f7f7f7;
+    color: var(--color-eager-green, #58cc02);
+}
+.duo-cta-banner__btn:active {
+    transform: translateY(6px);
+    box-shadow: 0 0 0 #e5e5e5;
+}
+
+@media (max-width: 768px) {
+    .duo-hero-card__body { padding: 32px 24px; }
+    .duo-hero-card__title { font-size: 32px; }
+    .duo-value-item { flex-direction: column; text-align: center; gap: 16px; }
+    .duo-cta-banner { flex-direction: column; text-align: center; gap: 32px; }
+}
+</style>
+
+<div class="duo-about-wrapper">
+
+    {{-- SECTION 1: Giant Hero Card --}}
+    <section class="duo-container">
+        <div class="duo-hero-card">
+            <img src="{{ asset('assets/images/a1.webp') }}" alt="{{ __('inkwave.about_intro_heading') }}" class="duo-hero-card__img" loading="lazy">
+            <div class="duo-hero-card__body">
+                <p class="duo-hero-card__eyebrow">{{ __('inkwave.about_intro_eyebrow') }}</p>
+                <h2 class="duo-hero-card__title">{{ __('inkwave.about_intro_heading') }}</h2>
+                <p class="duo-hero-card__desc">
+                    {{ __('inkwave.about_intro_lead') }} {{ __('inkwave.about_intro_body') }}
+                </p>
+                <div class="duo-tags">
+                    <span class="duo-tag">{{ __('inkwave.about_tag_anime') }}</span>
+                    <span class="duo-tag">{{ __('inkwave.about_tag_pixel') }}</span>
+                    <span class="duo-tag">{{ __('inkwave.about_tag_pop') }}</span>
+                    <span class="duo-tag">{{ __('inkwave.about_tag_street') }}</span>
+                    <span class="duo-tag">{{ __('inkwave.about_tag_ukiyo') }}</span>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="abt-split__media">
-            <figure class="abt-frame abt-frame--tall">
-                <img src="{{ asset('assets/images/a1.webp') }}" alt="{{ __('inkwave.about_intro_heading') }}" loading="lazy">
-            </figure>
-        </div>
-    </div>
-</section>
-
-{{-- ============================================================
-     SECTION 2 — PHILOSOPHY (full-bleed video h2.webm)
-     ============================================================ --}}
-<section class="abt-manifesto">
-    <video class="abt-manifesto__video" autoplay muted loop playsinline preload="auto" poster="{{ asset('assets/images/a2.webp') }}">
-        <source src="{{ asset('assets/images/h2.webm') }}" type="video/webm">
-    </video>
-    <span class="abt-manifesto__veil" aria-hidden="true"></span>
-    <div class="abt-container abt-manifesto__inner">
-        <p class="abt-manifesto__label">{{ __('inkwave.about_manifesto_label') }}</p>
-        <p class="abt-manifesto__quote">
-            {{ __('inkwave.about_manifesto_quote') }}
-        </p>
-    </div>
-</section>
-
-{{-- ============================================================
-     SECTION 3 — WHAT SETS US APART (value cards)
-     ============================================================ --}}
-<section class="abt-section abt-values">
-    <div class="abt-container">
-        <div class="abt-head">
-            <p class="abt-eyebrow">{{ __('inkwave.about_standards_eyebrow') }}</p>
-            <h2 class="abt-heading abt-heading--center">{{ __('inkwave.about_standards_heading') }}</h2>
+    {{-- SECTION 2: Vertical Value List --}}
+    <section class="duo-values-section duo-container">
+        <div class="duo-values-header">
+            <h2>{{ __('inkwave.about_standards_heading') }}</h2>
         </div>
 
-        <div class="abt-values__grid">
-            <div class="abt-value">
-                <span class="abt-value__icon"><i class="fas fa-image"></i></span>
-                <h3 class="abt-value__title">{{ __('inkwave.about_standard_1_title') }}</h3>
-                <p class="abt-value__desc">{{ __('inkwave.about_standard_1_desc') }}</p>
+        <div class="duo-values-list">
+            <div class="duo-value-item">
+                <div class="duo-value-item__icon"><i class="fas fa-image"></i></div>
+                <div class="duo-value-item__content">
+                    <h3 class="duo-value-item__title">{{ __('inkwave.about_standard_1_title') }}</h3>
+                    <p class="duo-value-item__desc">{{ __('inkwave.about_standard_1_desc') }}</p>
+                </div>
             </div>
-            <div class="abt-value">
-                <span class="abt-value__icon"><i class="fas fa-certificate"></i></span>
-                <h3 class="abt-value__title">{{ __('inkwave.about_standard_2_title') }}</h3>
-                <p class="abt-value__desc">{{ __('inkwave.about_standard_2_desc') }}</p>
+            
+            <div class="duo-value-item">
+                <div class="duo-value-item__icon"><i class="fas fa-certificate"></i></div>
+                <div class="duo-value-item__content">
+                    <h3 class="duo-value-item__title">{{ __('inkwave.about_standard_2_title') }}</h3>
+                    <p class="duo-value-item__desc">{{ __('inkwave.about_standard_2_desc') }}</p>
+                </div>
             </div>
-            <div class="abt-value">
-                <span class="abt-value__icon"><i class="fas fa-palette"></i></span>
-                <h3 class="abt-value__title">{{ __('inkwave.about_standard_3_title') }}</h3>
-                <p class="abt-value__desc">{{ __('inkwave.about_standard_3_desc') }}</p>
+
+            <div class="duo-value-item">
+                <div class="duo-value-item__icon"><i class="fas fa-palette"></i></div>
+                <div class="duo-value-item__content">
+                    <h3 class="duo-value-item__title">{{ __('inkwave.about_standard_3_title') }}</h3>
+                    <p class="duo-value-item__desc">{{ __('inkwave.about_standard_3_desc') }}</p>
+                </div>
             </div>
-            <div class="abt-value">
-                <span class="abt-value__icon"><i class="fas fa-download"></i></span>
-                <h3 class="abt-value__title">{{ __('inkwave.about_standard_4_title') }}</h3>
-                <p class="abt-value__desc">{{ __('inkwave.about_standard_4_desc') }}</p>
+
+            <div class="duo-value-item">
+                <div class="duo-value-item__icon"><i class="fas fa-download"></i></div>
+                <div class="duo-value-item__content">
+                    <h3 class="duo-value-item__title">{{ __('inkwave.about_standard_4_title') }}</h3>
+                    <p class="duo-value-item__desc">{{ __('inkwave.about_standard_4_desc') }}</p>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-{{-- ============================================================
-     SECTION 4 — THE CRAFT (image a2.webp + text, reversed)
-     ============================================================ --}}
-<section class="abt-section abt-craft">
-    <div class="abt-container abt-split abt-split--reverse">
-        <div class="abt-split__media">
-            <figure class="abt-frame abt-frame--wide">
-                <img src="{{ asset('assets/images/a2.webp') }}" alt="{{ __('inkwave.about_process_heading') }}" loading="lazy">
-            </figure>
+    {{-- SECTION 3: Slim CTA Banner --}}
+    <section class="duo-container">
+        <div class="duo-cta-banner">
+            <div class="duo-cta-banner__text">
+                <h2>{{ __('inkwave.about_cta_heading') }}</h2>
+                <p>{{ __('inkwave.about_cta_sub') }}</p>
+            </div>
+            <a href="{{ route('product-lists') }}" class="duo-cta-banner__btn">
+                {{ __('inkwave.about_cta_btn') }} <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
+    </section>
 
-        <div class="abt-split__text">
-            <p class="abt-eyebrow">{{ __('inkwave.about_process_eyebrow') }}</p>
-            <h2 class="abt-heading">{{ __('inkwave.about_process_heading') }}</h2>
-            <p class="abt-body">{{ __('inkwave.about_process_body') }}</p>
-            <ul class="abt-checklist">
-                <li><i class="fas fa-check"></i> {{ __('inkwave.about_process_check_1') }}</li>
-                <li><i class="fas fa-check"></i> {{ __('inkwave.about_process_check_2') }}</li>
-                <li><i class="fas fa-check"></i> {{ __('inkwave.about_process_check_3') }}</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-{{-- ============================================================
-     SECTION 5 — CTA (ink room)
-     ============================================================ --}}
-<section class="abt-cta">
-    <div class="abt-container">
-        <h2 class="abt-cta__heading">{{ __('inkwave.about_cta_heading') }}</h2>
-        <p class="abt-cta__sub">{{ __('inkwave.about_cta_sub') }}</p>
-        <a href="{{ route('product-lists') }}" class="abt-cta__btn">{{ __('inkwave.about_cta_btn') }} <i class="fas fa-arrow-right"></i></a>
-    </div>
-</section>
-
-
+</div>
 
 @endsection

@@ -1,132 +1,392 @@
 @extends('frontend.layouts.main')
-
 @section('title', __('inkwave.topup_heading'))
 
 @section('main-content')
-<x-breadcrumb :title="__('inkwave.topup_heading')" />
+@include('frontend.layouts.breadcrumb', [
+    'title' => __('inkwave.topup_heading'),
+    'links' => [
+        ['name' => __('inkwave.menu_home'), 'url' => route('home')],
+        ['name' => __('inkwave.topup_heading')]
+    ]
+])
 
-<section class="points-topup-section" id="topup">
-    <div class="auto-container">
-        <div class="topup-head">
-            <p class="topup-eyebrow">{{ __('inkwave.topup_eyebrow') }}</p>
-            <h2 class="topup-heading">{{ __('inkwave.topup_heading') }}</h2>
-            <p class="topup-sub">{{ __('inkwave.topup_sub') }}</p>
+<style>
+/* -------------------------------------------
+   Duolingo Theme Topup - Artora
+------------------------------------------- */
+.duo-tu-wrap {
+    font-family: 'Nunito', 'Nunito Sans', sans-serif;
+    background: #ffffff;
+    padding-bottom: 100px;
+}
+.duo-tu-wrap a { text-decoration: none !important; }
+
+.duo-tu-container {
+    max-width: 1200px;
+    margin: 48px auto;
+    padding: 0 24px;
+}
+
+/* Header */
+.duo-tu-head {
+    text-align: center;
+    margin-bottom: 64px;
+}
+.duo-tu-eyebrow {
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--color-spark-blue, #1cb0f6);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+}
+.duo-tu-title {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--color-charcoal, #4b4b4b);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+.duo-tu-sub {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-pencil-gray, #777777);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Tiers Grid */
+.duo-tu-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+    margin-bottom: 32px;
+}
+.duo-tu-card {
+    background: #ffffff;
+    border: 2px solid #e5e5e5;
+    border-radius: 24px;
+    padding: 40px 24px 32px;
+    text-align: center;
+    box-shadow: 0 8px 0 #e5e5e5;
+    position: relative;
+    transition: transform 0.1s, box-shadow 0.1s;
+    display: flex;
+    flex-direction: column;
+}
+.duo-tu-card--vip {
+    border-color: var(--color-macaw-yellow, #ffc800);
+    box-shadow: 0 8px 0 var(--color-macaw-yellow, #ffc800);
+    background: #fffcf0;
+}
+.duo-tu-card:hover {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 #e5e5e5;
+}
+.duo-tu-card--vip:hover {
+    box-shadow: 0 4px 0 var(--color-macaw-yellow, #ffc800);
+}
+.duo-tu-card__flag {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-macaw-yellow, #ffc800);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 12px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+    white-space: nowrap;
+}
+.duo-tu-card__icon {
+    font-size: 48px;
+    color: var(--color-spark-blue, #1cb0f6);
+    margin-bottom: 16px;
+    display: block;
+}
+.duo-tu-card--vip .duo-tu-card__icon {
+    color: var(--color-macaw-yellow, #ffc800);
+}
+.duo-tu-card__name {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-charcoal, #4b4b4b);
+    margin-bottom: 8px;
+}
+.duo-tu-card__mult {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--color-spark-blue, #1cb0f6);
+}
+.duo-tu-card--vip .duo-tu-card__mult {
+    color: var(--color-macaw-yellow, #ffc800);
+}
+.duo-tu-card__feats {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+    text-align: left;
+    flex: 1;
+}
+.duo-tu-card__feats li {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-pencil-gray, #777777);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.duo-tu-card__feats i {
+    color: var(--color-eager-green, #58cc02);
+}
+.duo-tu-btn {
+    background: var(--color-spark-blue, #1cb0f6);
+    color: #ffffff !important;
+    border: 2px solid #1899d6;
+    border-radius: 16px;
+    padding: 12px 24px;
+    font-size: 17px;
+    font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: 0 4px 0 #1899d6;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.1s;
+    margin-top: auto;
+}
+.duo-tu-btn:hover { filter: brightness(1.05); }
+.duo-tu-btn:active { transform: translateY(4px); box-shadow: 0 0 0 transparent; }
+
+.duo-tu-note {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-pencil-gray, #777777);
+    margin-bottom: 64px;
+}
+
+/* Calculator Block */
+.duo-tu-calc {
+    background: #ffffff;
+    border: 2px solid #e5e5e5;
+    border-radius: 32px;
+    box-shadow: 0 12px 0 #e5e5e5;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.duo-tu-calc__head {
+    background: var(--color-spark-blue, #1cb0f6);
+    padding: 32px;
+    text-align: center;
+    color: #ffffff;
+    border-bottom: 2px solid #1899d6;
+}
+.duo-tu-calc__title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+.duo-tu-calc__body {
+    padding: 48px;
+}
+@media (max-width: 600px) { .duo-tu-calc__body { padding: 24px; } }
+
+.duo-tu-form-group {
+    margin-bottom: 32px;
+}
+.duo-tu-label {
+    display: block;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-charcoal, #4b4b4b);
+    margin-bottom: 12px;
+}
+.duo-tu-input-wrap {
+    display: flex;
+    align-items: center;
+    background: #f7f7f7;
+    border: 2px solid #e5e5e5;
+    border-radius: 16px;
+    padding: 0 24px;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-charcoal, #4b4b4b);
+    box-shadow: inset 0 4px 0 rgba(0,0,0,0.02);
+}
+.duo-tu-input-wrap input {
+    border: none;
+    background: transparent;
+    padding: 20px 16px;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-charcoal, #4b4b4b);
+    width: 100%;
+    outline: none;
+}
+.duo-tu-stats {
+    background: #ffffff;
+    border: 2px solid #e5e5e5;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 0 #e5e5e5;
+}
+.duo-tu-stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-pencil-gray, #777777);
+    margin-bottom: 12px;
+}
+.duo-tu-stat--total {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 2px dashed #e5e5e5;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-charcoal, #4b4b4b);
+    margin-bottom: 0;
+}
+.duo-tu-stat--total span:last-child {
+    color: var(--color-macaw-yellow, #ffc800);
+}
+.duo-tu-buybtn {
+    background: var(--color-eager-green, #58cc02);
+    color: #ffffff !important;
+    border: 2px solid #46a302;
+    border-radius: 16px;
+    padding: 20px;
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: 0 6px 0 #46a302;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+.duo-tu-buybtn:hover { filter: brightness(1.05); }
+.duo-tu-buybtn:active { transform: translateY(6px); box-shadow: 0 0 0 transparent; }
+</style>
+
+<div class="duo-tu-wrap">
+    <div class="duo-tu-container">
+        
+        <div class="duo-tu-head">
+            <p class="duo-tu-eyebrow"><i class="fas fa-coins"></i> {{ __('inkwave.topup_eyebrow') }}</p>
+            <h1 class="duo-tu-title">{{ __('inkwave.topup_heading') }}</h1>
+            <p class="duo-tu-sub">{{ __('inkwave.topup_sub') }}</p>
         </div>
 
-        <div class="topup-layout">
-            @php
-                $cur = session('currency');
-                if ($cur == 'JPY') {
-                    $tiers = [
-                        ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'¥1 - ¥79,999',        'f'=>false],
-                        ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'¥80,000 - ¥159,999',  'f'=>false],
-                        ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'¥160,000 - ¥239,999', 'f'=>false],
-                        ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'¥240,000+',           'f'=>true],
-                    ];
-                } elseif ($cur == 'HKD') {
-                    $tiers = [
-                        ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
-                        ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
-                        ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
-                        ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$12,000+',           'f'=>true],
-                    ];
-                } else {
-                    $tiers = [
-                        ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'$1 - $499',       'f'=>false],
-                        ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'$500 - $999',     'f'=>false],
-                        ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'$1,000 - $1,499', 'f'=>false],
-                        ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'$1,500+',         'f'=>true],
-                    ];
-                }
-            @endphp
+        @php
+            $cur = session('currency');
+            if ($cur == 'JPY') {
+                $tiers = [
+                    ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'¥1 - ¥79,999',        'f'=>false],
+                    ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'¥80,000 - ¥159,999',  'f'=>false],
+                    ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'¥160,000 - ¥239,999', 'f'=>false],
+                    ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'¥240,000+',           'f'=>true],
+                ];
+            } elseif ($cur == 'HKD') {
+                $tiers = [
+                    ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
+                    ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
+                    ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
+                    ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$12,000+',           'f'=>true],
+                ];
+            } else {
+                $tiers = [
+                    ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'$1 - $499',       'f'=>false],
+                    ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'$500 - $999',     'f'=>false],
+                    ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'$1,000 - $1,499', 'f'=>false],
+                    ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'$1,500+',         'f'=>true],
+                ];
+            }
+        @endphp
 
-            <div class="tier-cards">
-                @foreach($tiers as $t)
-                    <div class="tier-card @if($t['f']) tier-card--featured @endif">
-                        @if($t['f'])<span class="tier-card__flag">{{ __('inkwave.best_value') }}</span>@endif
-                        <span class="tier-card__icon"><i class="fas {{ $t['i'] }}"></i></span>
-                        <h3 class="tier-card__name">{{ $t['n'] }}</h3>
-                        <div class="tier-card__price">
-                            <span class="tier-card__mult">{{ $t['big'] }}</span>
-                            <span class="tier-card__per">{{ __('inkwave.bonus_text') }}</span>
-                        </div>
-                        <ul class="tier-card__feats">
-                            <li><i class="fas fa-check-circle"></i> {{ $t['r'] }}</li>
-                            <li><i class="fas fa-check-circle"></i> {{ __('inkwave.bonus_text') }} {{ $t['big'] }}</li>
-                        </ul>
-                        <button type="button" class="tier-card__btn" data-topup-focus>{{ __('inkwave.calc_button') }}</button>
-                    </div>
-                @endforeach
-            </div>
-
-            <p class="tier-note">
-                @if(session('currency') == 'JPY')
-                    {{ __('inkwave.jpy_conversion_note') }}
-                @elseif(session('currency') == 'HKD')
-                    {{ __('inkwave.hkd_conversion_note') }}
-                @else
-                    {{ __('inkwave.usd_conversion_note') }}
-                @endif
-            </p>
-
-            <div class="calc-center">
-                <div class="ink-calc">
-                    <div class="ink-calc__head">
-                        <div>
-                            <h2 class="ink-calc__title">{{ __('inkwave.calc_title') }}</h2>
-                            <p class="ink-calc__tag">{{ __('inkwave.calc_tagline') }}</p>
-                        </div>
-                        <span class="ink-calc__cur">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
-                    </div>
-
-                    <form action="{{ route('points.add-to-cart') }}" method="POST" class="luxury-calc-form ink-calc__form">
-                        @csrf
-
-                        <label class="ink-calc__label">{{ __('inkwave.calc_input_label') }}</label>
-                        <div class="ink-calc__field">
-                            <span class="ink-calc__prefix">{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
-                            <input type="number" name="amount" id="topup_amount" class="ink-calc__input" placeholder="0" min="1" required>
-                        </div>
-
-                        <div class="ink-calc__rows">
-                            <div class="ink-calc__row">
-                                <span>{{ __('inkwave.calc_base_points') }}</span>
-                                <span id="base_points">0</span>
-                            </div>
-                            <div class="ink-calc__row">
-                                <span>{{ __('inkwave.calc_tier_bonus') }}</span>
-                                <span id="multiplier_display" class="ink-calc__mult">×1</span>
-                            </div>
-                            <div class="ink-calc__row ink-calc__row--total">
-                                <span>{{ __('inkwave.calc_youll_get') }}</span>
-                                <span id="total_points">0</span>
-                            </div>
-                        </div>
-
-                        <div class="ink-calc__display">
-                            <span class="ink-calc__big" id="total_points_large">0</span>
-                            <span class="ink-calc__unit">{{ __('inkwave.calc_points_unit') }}</span>
-                        </div>
-
-                        <ul class="ink-calc__benefits">
-                            <li><i class="fas fa-check"></i> {{ __('inkwave.calc_benefit_access') }}</li>
-                            <li><i class="fas fa-check"></i> {{ __('inkwave.calc_benefit_tutorials') }}</li>
-                            <li><i class="fas fa-check"></i> {{ __('inkwave.calc_benefit_vip') }}</li>
-                        </ul>
-
-                        <button type="submit" class="btn-premium-checkout ink-calc__btn">
-                            <span class="btn-label">{{ __('inkwave.calc_button') }}</span>
-                            <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
-                        </button>
-                    </form>
-
-                    <p class="ink-calc__trust"><i class="fas fa-check-circle"></i> {{ __('inkwave.calc_trust_message') }}</p>
+        <div class="duo-tu-tiers">
+            @foreach($tiers as $t)
+                <div class="duo-tu-card @if($t['f']) duo-tu-card--vip @endif">
+                    @if($t['f'])<span class="duo-tu-card__flag">{{ __('inkwave.best_value') }}</span>@endif
+                    <span class="duo-tu-card__icon"><i class="fas {{ $t['i'] }}"></i></span>
+                    <h3 class="duo-tu-card__name">{{ $t['n'] }}</h3>
+                    <div class="duo-tu-card__mult">{{ $t['big'] }}</div>
+                    <ul class="duo-tu-card__feats">
+                        <li><i class="fas fa-check-circle"></i> {{ $t['r'] }}</li>
+                        <li><i class="fas fa-check-circle"></i> {{ __('inkwave.bonus_text') }} {{ $t['big'] }}</li>
+                    </ul>
+                    <button type="button" class="duo-tu-btn" data-topup-focus>{{ __('inkwave.calc_button') }}</button>
                 </div>
+            @endforeach
+        </div>
+
+        <p class="duo-tu-note">
+            @if(session('currency') == 'JPY')
+                {{ __('inkwave.jpy_conversion_note') }}
+            @elseif(session('currency') == 'HKD')
+                {{ __('inkwave.hkd_conversion_note') }}
+            @else
+                {{ __('inkwave.usd_conversion_note') }}
+            @endif
+        </p>
+
+        <div class="duo-tu-calc" id="topup">
+            <div class="duo-tu-calc__head">
+                <h2 class="duo-tu-calc__title">{{ __('inkwave.calc_title') }}</h2>
+                <p style="font-size:18px; font-weight:700; opacity:0.9;">{{ __('inkwave.calc_tagline') }}</p>
+            </div>
+            
+            <div class="duo-tu-calc__body">
+                <form action="{{ route('points.add-to-cart') }}" method="POST">
+                    @csrf
+                    
+                    <div class="duo-tu-form-group">
+                        <label class="duo-tu-label">{{ __('inkwave.calc_input_label') }}</label>
+                        <div class="duo-tu-input-wrap">
+                            <span>{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
+                            <input type="number" name="amount" id="topup_amount" placeholder="0" min="1" required>
+                        </div>
+                    </div>
+
+                    <div class="duo-tu-stats">
+                        <div class="duo-tu-stat">
+                            <span>{{ __('inkwave.calc_base_points') }}</span>
+                            <span id="base_points">0</span>
+                        </div>
+                        <div class="duo-tu-stat">
+                            <span>{{ __('inkwave.calc_tier_bonus') }}</span>
+                            <span id="multiplier_display">×1</span>
+                        </div>
+                        <div class="duo-tu-stat duo-tu-stat--total">
+                            <span>{{ __('inkwave.calc_youll_get') }}</span>
+                            <span><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="duo-tu-buybtn">
+                        <span>{{ __('inkwave.calc_button') }}</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    
+                    <p style="text-align:center; font-weight:700; color:var(--color-pencil-gray); margin-top:24px;">
+                        <i class="fas fa-shield-alt" style="color:var(--color-eager-green);"></i> {{ __('inkwave.calc_trust_message') }}
+                    </p>
+                </form>
             </div>
         </div>
+        
     </div>
-</section>
-
+</div>
 @endsection
 
 
@@ -135,7 +395,7 @@
 <script>
     // Tier card buttons focus the amount input
     (function () {
-        document.querySelectorAll('.tier-card__btn[data-topup-focus]').forEach(function (b) {
+        document.querySelectorAll('.duo-tu-btn[data-topup-focus]').forEach(function (b) {
             b.addEventListener('click', function () {
                 var a = document.getElementById('topup_amount');
                 if (a) { a.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { a.focus(); }, 350); }
@@ -180,10 +440,10 @@
             }
 
             const totalPoints = Math.round(basePoints * multiplier);
-            basePointsDisplay.textContent = basePoints.toLocaleString();
-            multiplierDisplay.textContent = multiplier === 1 ? 'None' : '×' + multiplier.toFixed(1);
-            totalPointsDisplay.textContent = totalPoints.toLocaleString();
-            totalPointsLarge.textContent = totalPoints.toLocaleString();
+            if(basePointsDisplay) basePointsDisplay.textContent = basePoints.toLocaleString();
+            if(multiplierDisplay) multiplierDisplay.textContent = multiplier === 1 ? 'None' : '×' + multiplier.toFixed(1);
+            if(totalPointsDisplay) totalPointsDisplay.textContent = totalPoints.toLocaleString();
+            if(totalPointsLarge) totalPointsLarge.textContent = totalPoints.toLocaleString();
         }
 
         amountInput.addEventListener('input', calculatePoints);

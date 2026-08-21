@@ -1,4 +1,4 @@
-<!-- Main Duolingo Theme Footer -->
+﻿<!-- Main Duolingo Theme Footer -->
 <style>
 /* -------------------------------------------
    Duolingo Theme Footer - Artora
@@ -198,15 +198,15 @@
         
         <!-- Newsletter Section -->
         <div class="art-footer-newsletter subscribe-form-wrapper">
-            <h4>{{ __('inkwave.newsletter_title') }}</h4>
-            <p>{{ __('inkwave.newsletter_subtitle') }}</p>
+            <h4>{{ __('inkwave.ft_newsletter_title') }}</h4>
+            <p>{{ __('inkwave.ft_newsletter_subtitle') }}</p>
             <form class="art-newsletter-form subscribe-form">
-                <input type="email" name="email" class="email" placeholder="{{ __('inkwave.email_placeholder') }}" required>
+                <input type="email" name="email" class="email" placeholder="{{ __('inkwave.ft_email_placeholder') }}" required>
                 <button type="submit" aria-label="Subscribe">
-                    {{ __('inkwave.subscribe_action') }}
+                    {{ __('inkwave.ft_subscribe_action') }}
                 </button>
             </form>
-            <p class="suces_rinfo mt-3" style="display: none; color: #ffffff; font-weight: 700; background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 12px;">{{ __('inkwave.subscribe_success') }}</p>
+            <p class="suces_rinfo mt-3" style="display: none; color: #ffffff; font-weight: 700; background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 12px;">{{ __('inkwave.ft_subscribe_success') }}</p>
         </div>
 
         <!-- Widgets Grid -->
@@ -215,30 +215,30 @@
             <!-- Column 1: Brand -->
             <div class="art-footer-column">
                 <a href="{{route('home')}}" class="art-footer-logo">
-                    <img src="{{asset('assets/images/logo.png')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.fallback_company_name') }}">
+                    <img src="{{asset('assets/images/logo.png')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}">
                 </a>
-                <p class="art-footer-brand-bio">{{ __('inkwave.brand_mission') }}</p>
+                <p class="art-footer-brand-bio">{{ __('inkwave.ft_brand_mission') }}</p>
                 <ul class="art-footer-contact">
-                    <li><i class="fas fa-building mt-1"></i> <span>{{ $misc['Company Name'] ?? __('inkwave.fallback_company_name') }}</span></li>
-                    <li><i class="fas fa-envelope mt-1"></i> <a href="mailto:{{ $misc['Company Email'] ?? __('inkwave.fallback_email') }}">{{ $misc['Company Email'] ?? __('inkwave.fallback_email') }}</a></li>
-                    <li><i class="fas fa-map-marker-alt mt-1"></i> <span>{{ $misc['Company Address'] ?? __('inkwave.fallback_address') }}</span></li>
+                    <li><i class="fas fa-building mt-1"></i> <span>{{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}</span></li>
+                    <li><i class="fas fa-envelope mt-1"></i> <a href="mailto:{{ $misc['Company Email'] ?? __('inkwave.ft_fallback_email') }}">{{ $misc['Company Email'] ?? __('inkwave.ft_fallback_email') }}</a></li>
+                    <li><i class="fas fa-map-marker-alt mt-1"></i> <span>{{ $misc['Company Address'] ?? __('inkwave.ft_fallback_address') }}</span></li>
                 </ul>
             </div>
 
             <!-- Column 2: Explore -->
             <div class="art-footer-column">
-                <h4>{{ __('inkwave.menu_explore') }}</h4>
+                <h4>{{ __('inkwave.ft_menu_explore') }}</h4>
                 <ul class="art-footer-links">
-                    <li><a href="{{route('home')}}">{{ __('inkwave.menu_home') }}</a></li>
-                    <li><a href="{{route('product-lists')}}">{{ __('inkwave.menu_catalog') }}</a></li>
-                    <li><a href="{{route('about-us')}}">{{ __('inkwave.menu_about') }}</a></li>
-                    <li><a href="{{route('contact')}}">{{ __('inkwave.menu_contact') }}</a></li>
+                    <li><a href="{{route('home')}}">{{ __('inkwave.ft_menu_home') }}</a></li>
+                    <li><a href="{{route('product-lists')}}">{{ __('inkwave.ft_menu_catalog') }}</a></li>
+                    <li><a href="{{route('about-us')}}">{{ __('inkwave.ft_menu_about') }}</a></li>
+                    <li><a href="{{route('contact')}}">{{ __('inkwave.ft_menu_contact') }}</a></li>
                 </ul>
             </div>
 
             <!-- Column 3: Collections -->
             <div class="art-footer-column">
-                <h4>{{ __('inkwave.menu_collections') }}</h4>
+                <h4>{{ __('inkwave.ft_menu_collections') }}</h4>
                 <ul class="art-footer-links">
                     @php
                         $footerCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
@@ -246,19 +246,19 @@
                     @forelse($footerCategories as $cat)
                         <li><a href="{{ route('product-lists', $cat->slug) }}">{{ $cat->title }}</a></li>
                     @empty
-                        <li><span style="color: #d7ffb8;">{{ __('inkwave.header_no_categories') }}</span></li>
+                        <li><span style="color: #d7ffb8;">{{ __('inkwave.nav_no_categories') }}</span></li>
                     @endforelse
                 </ul>
             </div>
 
             <!-- Column 4: Assistance -->
             <div class="art-footer-column">
-                <h4>{{ __('inkwave.menu_assistance') }}</h4>
+                <h4>{{ __('inkwave.ft_menu_assistance') }}</h4>
                 <ul class="art-footer-links">
-                    <li><a href="{{route('pages','privacy-policy')}}">{{ __('inkwave.legal_privacy') }}</a></li>
-                    <li><a href="{{route('pages','terms-conditions')}}">{{ __('inkwave.legal_terms') }}</a></li>
-                    <li><a href="{{route('pages','refund-policy')}}">{{ __('inkwave.legal_refund') }}</a></li>
-                    <li><a href="{{route('pages','delivery-policy')}}">{{ __('inkwave.legal_delivery') }}</a></li>
+                    <li><a href="{{route('pages','privacy-policy')}}">{{ __('inkwave.ft_legal_privacy') }}</a></li>
+                    <li><a href="{{route('pages','terms-conditions')}}">{{ __('inkwave.ft_legal_terms') }}</a></li>
+                    <li><a href="{{route('pages','refund-policy')}}">{{ __('inkwave.ft_legal_refund') }}</a></li>
+                    <li><a href="{{route('pages','delivery-policy')}}">{{ __('inkwave.ft_legal_delivery') }}</a></li>
                 </ul>
             </div>
 
@@ -267,7 +267,7 @@
         <!-- Footer Bottom -->
         <div class="art-footer-bottom">
             <div class="art-footer-copyright">
-                &copy; {{ date('Y') }} <a href="{{route('home')}}">{{ $misc['Company Name'] ?? __('inkwave.fallback_company_name') }}</a>. {{ __('inkwave.rights_reserved') }}
+                &copy; {{ date('Y') }} <a href="{{route('home')}}">{{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}</a>. {{ __('inkwave.ft_rights_reserved') }}
             </div>
             <div class="art-footer-payment">
                 <img src="{{ asset('assets/images/payment.webp') }}" alt="Payment Methods">

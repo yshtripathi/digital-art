@@ -1,4 +1,4 @@
-{{-- Main Duolingo Theme Header Revamp --}}
+﻿{{-- Main Duolingo Theme Header Revamp --}}
 <style>
 /* -------------------------------------------
    Duolingo Theme Header - Artora
@@ -417,12 +417,12 @@ body {
         {{-- Main Navigation (Desktop) --}}
         <ul class="art-nav d-none d-lg-flex">
             <li class="art-nav-item">
-                <a href="{{ route('home') }}" class="art-nav-link {{ Route::is('home') ? 'active' : '' }}">{{ __('inkwave.header_home') }}</a>
+                <a href="{{ route('home') }}" class="art-nav-link {{ Route::is('home') ? 'active' : '' }}">{{ __('inkwave.nav_home') }}</a>
             </li>
 
             <li class="art-nav-item">
                 <a href="javascript:void(0)" class="art-nav-link">
-                    {{ __('inkwave.header_catalog') }} <i class="fas fa-chevron-down"></i>
+                    {{ __('inkwave.nav_categories') }} <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="art-dropdown-menu">
                     @php
@@ -441,16 +441,26 @@ body {
                             {{ $cat->title }}
                         </a>
                     @empty
-                        <span class="art-dropdown-item text-muted">{{ __('inkwave.header_no_categories') }}</span>
+                        <span class="art-dropdown-item text-muted">{{ __('inkwave.nav_no_categories') }}</span>
                     @endforelse
                 </div>
             </li>
 
             <li class="art-nav-item">
-                <a href="{{ route('about-us') }}" class="art-nav-link {{ Route::is('about-us') ? 'active' : '' }}">{{ __('inkwave.header_about') }}</a>
+                <a href="{{ route('product-lists') }}" class="art-nav-link {{ Route::is('product-lists') ? 'active' : '' }}">{{ __('inkwave.nav_courses') }}</a>
+            </li>
+
+            @if(Auth::check())
+            <li class="art-nav-item">
+                <a href="{{ route('user') }}" class="art-nav-link">{{ __('inkwave.nav_my_courses') }}</a>
             </li>
             <li class="art-nav-item">
-                <a href="{{ route('contact') }}" class="art-nav-link {{ Route::is('contact') ? 'active' : '' }}">{{ __('inkwave.header_contact') }}</a>
+                <a href="{{ route('user') }}" class="art-nav-link">{{ __('inkwave.nav_orders') }}</a>
+            </li>
+            @endif
+
+            <li class="art-nav-item">
+                <a href="{{ route('contact') }}" class="art-nav-link {{ Route::is('contact') ? 'active' : '' }}">{{ __('inkwave.nav_support') }}</a>
             </li>
         </ul>
 
@@ -505,15 +515,15 @@ body {
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <div class="art-dropdown-menu" style="min-width: 180px; left: auto; right: 0; transform: translateX(0) translateY(10px);">
-                        <a class="art-dropdown-item" href="{{ route('user') }}"><i class="fas fa-id-card"></i> {{ __('inkwave.header_account') }}</a>
-                        <a class="art-dropdown-item text-danger" href="{{ route('user.logout') }}" style="color: #ff4b4b !important;"><i class="fas fa-sign-out-alt"></i> {{ __('inkwave.header_logout') }}</a>
+                        <a class="art-dropdown-item" href="{{ route('user') }}"><i class="fas fa-id-card"></i> {{ __('inkwave.nav_account') }}</a>
+                        <a class="art-dropdown-item text-danger" href="{{ route('user.logout') }}" style="color: #ff4b4b !important;"><i class="fas fa-sign-out-alt"></i> {{ __('inkwave.nav_logout') }}</a>
                     </div>
                 </div>
             @else
                 {{-- Guest Auth --}}
                 <div class="d-none d-md-flex align-items-center gap-2">
-                    <a href="{{ route('login.form') }}" class="art-btn-login">{{ __('inkwave.header_login') }}</a>
-                    <a href="{{ route('register.form') }}" class="art-btn-register">{{ __('inkwave.header_register') }}</a>
+                    <a href="{{ route('login.form') }}" class="art-btn-login">{{ __('inkwave.nav_login') }}</a>
+                    <a href="{{ route('register.form') }}" class="art-btn-register">{{ __('inkwave.nav_register') }}</a>
                 </div>
             @endif
 
@@ -554,7 +564,7 @@ body {
 <div class="offcanvas__overlay"></div>
 <div class="cartcanvas__info">
     <div class="cart-header d-flex justify-content-between align-items-center mb-4 pb-3">
-        <h4 class="fw-bold mb-0">{{ __('inkwave.header_shopping_cart') }}</h4>
+        <h4 class="fw-bold mb-0">{{ __('inkwave.nav_cart_heading') }}</h4>
         <div class="cartcanvas__close fs-4" style="cursor: pointer;"><i class="fas fa-times"></i></div>
     </div>
 
@@ -564,7 +574,7 @@ body {
                 @foreach(Helper::getAllProductFromCart() as $cart)
                     @php
                         $isPoints = !$cart->product || $cart->product_id >= 1000;
-                        $item_title = __('inkwave.header_points_top_up');
+                        $item_title = __('inkwave.nav_credits_topup');
                         $item_photo = null;
                         $item_level = 'N/A';
 
@@ -593,11 +603,11 @@ body {
                                     <h6 class="mb-0 fw-bold">{{ $item_title }}</h6>
                                 </div>
                                 <p class="mb-0 small text-muted">
-                                    {{ $cart->quantity }} x <span class="fw-bold">{{ number_format($cart->points) }} {{ __('inkwave.header_credits') }}</span>
+                                    {{ $cart->quantity }} x <span class="fw-bold">{{ number_format($cart->points) }} {{ __('inkwave.nav_credits_label') }}</span>
                                 </p>
                             </div>
                             <div class="text-end ms-3">
-                                <p class="mb-0 small text-muted">{{ __('inkwave.header_total') }}</p>
+                                <p class="mb-0 small text-muted">{{ __('inkwave.nav_total_label') }}</p>
                                 <p class="mb-0 fw-bold fs-5 text-dark">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2) }}</p>
                             </div>
                         </li>
@@ -618,7 +628,7 @@ body {
                                     </span>
                                 </div>
                                 <p class="mb-0 small text-muted">
-                                    {{ $cart->quantity }} x <span class="fw-bold">{{ number_format($cart->points) }} {{ __('inkwave.header_credits') }}</span>
+                                    {{ $cart->quantity }} x <span class="fw-bold">{{ number_format($cart->points) }} {{ __('inkwave.nav_credits_label') }}</span>
                                 </p>
                             </div>
                         </li>
@@ -627,8 +637,8 @@ body {
             @else
                 <li class="text-center py-5 d-flex flex-column justify-content-center align-items-center h-100">
                     <div class="mb-3" style="color: #e5e5e5;"><i class="fas fa-shopping-basket fa-4x"></i></div>
-                    <p class="fw-bold text-muted mb-4">{{ __('inkwave.header_no_cart_available') }}</p>
-                    <a href="{{ route('product-lists') }}" class="art-btn-cart-outline">{{ __('inkwave.header_catalog') }}</a>
+                    <p class="fw-bold text-muted mb-4">{{ __('inkwave.nav_empty_cart_msg') }}</p>
+                    <a href="{{ route('product-lists') }}" class="art-btn-cart-outline">{{ __('inkwave.nav_courses') }}</a>
                 </li>
             @endif
         </ul>
@@ -653,24 +663,24 @@ body {
             @endphp
             <div class="cart-footer mt-auto mx-n4 px-4 pb-4">
                 <div class="d-flex justify-content-between align-items-end mb-4">
-                    <h5 class="fw-bold mb-0">{{ __('inkwave.header_total') }}:</h5>
+                    <h5 class="fw-bold mb-0">{{ __('inkwave.nav_total_label') }}:</h5>
                     @if($hasPoints && !$hasProducts)
                         <h3 class="fw-bold mb-0">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</h3>
                     @else
-                        <h3 class="fw-bold mb-0">{{ number_format($totalPoints) }} <span class="fs-6 text-muted">{{ __('inkwave.header_credits') }}</span></h3>
+                        <h3 class="fw-bold mb-0">{{ number_format($totalPoints) }} <span class="fs-6 text-muted">{{ __('inkwave.nav_credits_label') }}</span></h3>
                     @endif
                 </div>
                 <div class="d-flex flex-column gap-3">
                     @if($hasPoints && !$hasProducts)
                         <a href="{{ route('cart') }}" class="art-btn-cart-outline w-100">
-                            <i class="fas fa-shopping-cart"></i> {{ __('inkwave.header_view_cart') }}
+                            <i class="fas fa-shopping-cart"></i> {{ __('inkwave.nav_view_cart_btn') }}
                         </a>
                         <a href="{{ route('checkout') }}" class="art-btn-cart-primary w-100">
-                            {{ __('inkwave.header_checkout') }} <i class="fas fa-arrow-right"></i>
+                            {{ __('inkwave.nav_checkout_btn') }} <i class="fas fa-arrow-right"></i>
                         </a>
                     @elseif($hasProducts && !$hasPoints)
                         <a href="{{ route('coursecart') }}" class="art-btn-cart-primary w-100">
-                            <i class="fas fa-shopping-cart"></i> {{ __('inkwave.header_view_cart') }}
+                            <i class="fas fa-shopping-cart"></i> {{ __('inkwave.nav_view_cart_btn') }}
                         </a>
                     @endif
                 </div>

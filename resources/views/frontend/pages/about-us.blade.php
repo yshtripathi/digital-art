@@ -44,6 +44,7 @@
 }
 .duo-hero-card__body {
     padding: 48px;
+    background-color: var(--color-studio-purple, #f3e8ff);
 }
 .duo-hero-card__eyebrow {
     font-size: 17px;
@@ -76,7 +77,7 @@
     gap: 12px;
 }
 .duo-tag {
-    background: #f7f7f7;
+    background: var(--color-paper-white, #ffffff);
     border: 2px solid #e5e5e5;
     border-radius: 16px;
     padding: 12px 24px;
@@ -116,6 +117,18 @@
 }
 .duo-value-item:hover {
     transform: translateX(8px);
+}
+.duo-value-item:nth-child(1) {
+    background-color: var(--color-cloud-blue, #eaf7ff);
+}
+.duo-value-item:nth-child(2) {
+    background-color: var(--color-corp-mint, #e0f7e9);
+}
+.duo-value-item:nth-child(3) {
+    background-color: var(--color-soft-amber, #ffecb3);
+}
+.duo-value-item:nth-child(4) {
+    background-color: var(--color-muted-coral, #ffcdd2);
 }
 .duo-value-item__icon {
     flex-shrink: 0;

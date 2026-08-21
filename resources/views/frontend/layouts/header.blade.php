@@ -558,7 +558,7 @@ body {
         <div class="cartcanvas__close fs-4" style="cursor: pointer;"><i class="fas fa-times"></i></div>
     </div>
 
-    <div class="cart-content-wrapper h-100 d-flex flex-column px-4">
+    <div class="cart-content-wrapper h-100 d-flex flex-column px-4 pt-4">
         <ul class="cart-list list-unstyled flex-grow-1 overflow-auto pe-2">
             @if(Helper::cartCount())
                 @foreach(Helper::getAllProductFromCart() as $cart)

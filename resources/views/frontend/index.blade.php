@@ -1,4 +1,4 @@
-﻿@extends('frontend.layouts.main')
+@extends('frontend.layouts.main')
 
 @section('main-content')
 
@@ -404,7 +404,7 @@
                 </div>
                 
                 <div class="duo-tu-calc__body">
-                    <form action="{{ route('points.add-to-cart') }}" method="POST">
+                    <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form">
                         @csrf
                         
                         <div class="duo-tu-form-group">
@@ -430,7 +430,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="duo-tu-buybtn">
+                        <button type="submit" class="duo-tu-buybtn topup-btn">
                             <span>{{ __('inkwave.tu_calc_button') }}</span>
                             <i class="fas fa-arrow-right"></i>
                         </button>
@@ -513,6 +513,28 @@
 
         amountInput.addEventListener('input', calculatePoints);
         amountInput.addEventListener('change', calculatePoints);
+
+        // Topup (add to cart) — submit without redirect, then reload
+        const topupForms = document.querySelectorAll('.topup-form');
+        topupForms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const submitBtn = form.querySelector('.topup-btn');
+                const originalBtnText = submitBtn.innerHTML;
+                const originalBtnState = submitBtn.disabled;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+
+                fetch(form.action, { method: 'POST', body: new FormData(form), redirect: 'manual' })
+                    .then(response => new Promise(resolve => setTimeout(() => resolve(response), 500)))
+                    .then(() => { window.location.reload(); })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        submitBtn.disabled = originalBtnState;
+                        submitBtn.innerHTML = originalBtnText;
+                    });
+            });
+        });
     });
 </script>
 @endpush

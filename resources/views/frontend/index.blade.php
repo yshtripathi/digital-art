@@ -417,15 +417,15 @@
 
                         <div class="duo-tu-stats">
                             <div class="duo-tu-stat">
-                                <span>{{ __('inkwave.tu_calc_base_points') }}</span>
+                                <span>{{ __('inkwave.tu_calc_base_points') }}:</span>
                                 <span id="base_points">0</span>
                             </div>
                             <div class="duo-tu-stat">
-                                <span>{{ __('inkwave.tu_calc_tier_bonus') }}</span>
+                                <span>{{ __('inkwave.tu_calc_tier_bonus') }}:</span>
                                 <span id="multiplier_display">×1</span>
                             </div>
                             <div class="duo-tu-stat duo-tu-stat--total">
-                                <span>{{ __('inkwave.tu_calc_youll_get') }}</span>
+                                <span>{{ __('inkwave.tu_calc_youll_get') }}:</span>
                                 <span><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
                             </div>
                         </div>

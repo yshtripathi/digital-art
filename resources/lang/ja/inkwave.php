@@ -481,4 +481,20 @@ return [
     'receipt_credit_card' => 'クレジットカード',
     'receipt_transaction_id' => 'トランザクションID',
     'receipt_back' => '戻る',
+
+    // Homepage
+    'home_hero_title' => '日常、キャリア、クリエイティブのための実践的なスキルを学ぼう',
+    'home_hero_btn_start' => 'はじめる',
+    'home_hero_btn_account' => 'マイアカウント',
+    'home_hero_btn_login' => 'すでにアカウントをお持ちの方',
+    'home_cat_title' => 'カテゴリーを見る',
+    'home_feat1_title' => '実践的な学習',
+    'home_feat1_desc' => 'カテゴリーを探索し、あなたの個人的・専門的な目標に合ったコースを見つけましょう。',
+    'home_feat2_title' => 'どこでも学べる',
+    'home_feat2_desc' => '登録したコースにすぐにアクセスし、どのデバイスでも自分のペースで学習を進められます。',
+    'home_feat3_title' => 'スキルを構築する',
+    'home_feat3_desc' => '体系的なレッスンに沿って、明確で実践的な指導を受けながら、実社会で役立つ能力を身につけましょう。',
+    'home_super_title' => 'クレジットをチャージする',
+    'home_super_btn' => 'トップアップパッケージを試す',
+    'home_anywhere_title' => '自分のペースで学ぶ',
 ];

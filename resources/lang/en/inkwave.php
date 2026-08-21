@@ -481,4 +481,20 @@ return [
     'receipt_credit_card' => 'Credit Card',
     'receipt_transaction_id' => 'Transaction ID',
     'receipt_back' => 'Back',
+
+    // Homepage
+    'home_hero_title' => 'Learn practical skills for everyday life, career, and creativity.',
+    'home_hero_btn_start' => 'Get Started',
+    'home_hero_btn_account' => 'My Account',
+    'home_hero_btn_login' => 'I already have an account',
+    'home_cat_title' => 'Explore Our Categories',
+    'home_feat1_title' => 'Practical learning',
+    'home_feat1_desc' => 'Explore our categories and find a course that matches your personal or professional goals.',
+    'home_feat2_title' => 'Learn anywhere',
+    'home_feat2_desc' => 'Get immediate access to your enrolled courses and learn at your own pace on any device.',
+    'home_feat3_title' => 'Build your skills',
+    'home_feat3_desc' => 'Follow structured lessons and develop real-world abilities with clear, practical guidance.',
+    'home_super_title' => 'TOP UP YOUR CREDITS',
+    'home_super_btn' => 'Try a Top-Up Package',
+    'home_anywhere_title' => 'learn at your own pace',
 ];

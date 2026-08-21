@@ -1,12 +1,12 @@
-@extends('frontend.layouts.main')
-@section('title', __('inkwave.contact_title'))
+﻿@extends('frontend.layouts.main')
+@section('title', __('inkwave.contact_pg_title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('inkwave.contact_title'),
+    'title' => __('inkwave.contact_pg_title'),
     'links' => [
-        ['name' => __('inkwave.menu_home'), 'url' => route('home')],
-        ['name' => __('inkwave.contact_title')]
+        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.contact_pg_title')]
     ]
 ])
 
@@ -245,28 +245,28 @@
         
         {{-- ================= COMPANY INFO ================= --}}
         <div class="duo-contact-info">
-            <h3 class="duo-contact-info__title">{{ __('inkwave.contact_info_title') }}</h3>
-            <p class="duo-contact-info__sub">{{ __('inkwave.contact_info_sub') }}</p>
+            <h3 class="duo-contact-info__title">{{ __('inkwave.contact_inf_heading') }}</h3>
+            <p class="duo-contact-info__sub">{{ __('inkwave.contact_inf_desc') }}</p>
 
             <ul class="duo-info-list">
                 <li class="duo-info-item">
                     <span class="duo-info-item__icon"><i class="fas fa-envelope"></i></span>
                     <div class="duo-info-item__text">
-                        <span class="duo-info-item__label">{{ __('inkwave.contact_label_email') }}</span>
+                        <span class="duo-info-item__label">{{ __('inkwave.contact_lbl_mail') }}</span>
                         <a href="mailto:{{ $misc['Company Email'] ?? '[Company Email]' }}" class="duo-info-item__value">{{ $misc['Company Email'] ?? '[Company Email]' }}</a>
                     </div>
                 </li>
                 <li class="duo-info-item">
                     <span class="duo-info-item__icon"><i class="fas fa-map-marker-alt"></i></span>
                     <div class="duo-info-item__text">
-                        <span class="duo-info-item__label">{{ __('inkwave.contact_label_location') }}</span>
+                        <span class="duo-info-item__label">{{ __('inkwave.contact_lbl_loc') }}</span>
                         <span class="duo-info-item__value">{{ $misc['Company Address'] ?? '[Company Address]' }}</span>
                     </div>
                 </li>
                 <li class="duo-info-item">
                     <span class="duo-info-item__icon"><i class="fas fa-building"></i></span>
                     <div class="duo-info-item__text">
-                        <span class="duo-info-item__label">{{ __('inkwave.contact_label_company') }}</span>
+                        <span class="duo-info-item__label">{{ __('inkwave.contact_lbl_org') }}</span>
                         <span class="duo-info-item__value">{{ $misc['Company Name'] ?? '[Company Name]' }}</span>
                     </div>
                 </li>
@@ -275,52 +275,52 @@
 
         {{-- ================= CONTACT FORM ================= --}}
         <div class="duo-contact-form">
-            <h3 class="duo-form-title">{{ __('inkwave.contact_form_title') }}</h3>
+            <h3 class="duo-form-title">{{ __('inkwave.contact_frm_heading') }}</h3>
 
             <form method="POST" action="{{ route('contact.send') }}" id="contactform" onsubmit="return handleSubmit(event)">
                 @csrf
                 <div class="duo-form-row">
                     <div class="duo-field">
-                        <label class="duo-label"><i class="fas fa-user"></i> {{ __('inkwave.form_name') }}</label>
-                        <input type="text" name="name" id="name" placeholder="{{ __('inkwave.form_name') }}" class="duo-input @error('name') is-invalid @enderror">
+                        <label class="duo-label"><i class="fas fa-user"></i> {{ __('inkwave.contact_fld_name') }}</label>
+                        <input type="text" name="name" id="name" placeholder="{{ __('inkwave.contact_fld_name') }}" class="duo-input @error('name') is-invalid @enderror">
                         @error('name') <span class="duo-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
                     <div class="duo-field">
-                        <label class="duo-label"><i class="fas fa-envelope"></i> {{ __('inkwave.form_email') }}</label>
-                        <input type="email" name="email" id="email" placeholder="{{ __('inkwave.form_email') }}" class="duo-input @error('email') is-invalid @enderror">
+                        <label class="duo-label"><i class="fas fa-envelope"></i> {{ __('inkwave.contact_fld_email') }}</label>
+                        <input type="email" name="email" id="email" placeholder="{{ __('inkwave.contact_fld_email') }}" class="duo-input @error('email') is-invalid @enderror">
                         @error('email') <span class="duo-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
                 </div>
 
                 <div class="duo-form-row">
                     <div class="duo-field">
-                        <label class="duo-label"><i class="fas fa-phone"></i> {{ __('inkwave.form_phone') }}</label>
-                        <input type="text" name="phone" id="phone" placeholder="{{ __('inkwave.form_phone') }}" class="duo-input @error('phone') is-invalid @enderror" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        <label class="duo-label"><i class="fas fa-phone"></i> {{ __('inkwave.contact_fld_phone') }}</label>
+                        <input type="text" name="phone" id="phone" placeholder="{{ __('inkwave.contact_fld_phone') }}" class="duo-input @error('phone') is-invalid @enderror" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         @error('phone') <span class="duo-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
                     <div class="duo-field">
-                        <label class="duo-label"><i class="fas fa-tag"></i> {{ __('inkwave.form_subject') }}</label>
-                        <input type="text" name="subject" id="subject" placeholder="{{ __('inkwave.form_subject') }}" class="duo-input">
+                        <label class="duo-label"><i class="fas fa-tag"></i> {{ __('inkwave.contact_fld_subject') }}</label>
+                        <input type="text" name="subject" id="subject" placeholder="{{ __('inkwave.contact_fld_subject') }}" class="duo-input">
                     </div>
                 </div>
 
                 <div class="duo-field">
-                    <label class="duo-label"><i class="fas fa-message"></i> {{ __('inkwave.form_message') }}</label>
-                    <textarea name="message" id="message" rows="4" placeholder="{{ __('inkwave.form_message') }}" class="duo-input duo-textarea"></textarea>
+                    <label class="duo-label"><i class="fas fa-message"></i> {{ __('inkwave.contact_fld_msg') }}</label>
+                    <textarea name="message" id="message" rows="4" placeholder="{{ __('inkwave.contact_fld_msg') }}" class="duo-input duo-textarea"></textarea>
                 </div>
 
                 @if(env('CAPTCHA_ENABLED', true))
                     <div class="duo-field">
-                        <label class="duo-label"><i class="fas fa-shield-alt"></i> {{ __('inkwave.form_captcha') }}</label>
+                        <label class="duo-label"><i class="fas fa-shield-alt"></i> {{ __('inkwave.contact_fld_sec') }}</label>
                         <div class="duo-captcha-box @error('captcha') is-invalid @enderror">
-                            <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('inkwave.form_captcha_placeholder') }}">
+                            <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('inkwave.contact_sec_ph') }}">
                             <div class="duo-captcha-box__img">@captcha</div>
                         </div>
-                        @error('captcha') <span class="duo-error"><i class="fas fa-info-circle"></i> {{ __('inkwave.val_captcha_error') }}</span> @enderror
+                        @error('captcha') <span class="duo-error"><i class="fas fa-info-circle"></i> {{ __('inkwave.contact_val_sec_err') }}</span> @enderror
                     </div>
                 @endif
 
-                <button type="submit" class="duo-submit"><i class="fas fa-paper-plane"></i> {{ __('inkwave.btn_send_message') }}</button>
+                <button type="submit" class="duo-submit"><i class="fas fa-paper-plane"></i> {{ __('inkwave.contact_btn_submit') }}</button>
             </form>
         </div>
 
@@ -347,13 +347,13 @@
         document.querySelectorAll('.duo-input, .duo-captcha-box').forEach(el => el.classList.remove('is-invalid'));
 
         const errors = [];
-        if (!name) errors.push({ field: 'name', message: '{{ __('inkwave.val_name_req') }}' });
-        if (!email) errors.push({ field: 'email', message: '{{ __('inkwave.val_email_req') }}' });
-        else if (!isValidEmail(email)) errors.push({ field: 'email', message: '{{ __('inkwave.val_email_invalid') }}' });
-        if (!phone) errors.push({ field: 'phone', message: '{{ __('inkwave.val_phone_req') }}' });
-        if (!subject) errors.push({ field: 'subject', message: '{{ __('inkwave.val_subject_req') }}' });
-        if (!message) errors.push({ field: 'message', message: '{{ __('inkwave.val_message_req') }}' });
-        if (captchaEl && !captcha) errors.push({ field: 'captcha', message: '{{ __('inkwave.val_captcha_req') }}' });
+        if (!name) errors.push({ field: 'name', message: '{{ __('inkwave.contact_req_name') }}' });
+        if (!email) errors.push({ field: 'email', message: '{{ __('inkwave.contact_req_email') }}' });
+        else if (!isValidEmail(email)) errors.push({ field: 'email', message: '{{ __('inkwave.contact_inv_email') }}' });
+        if (!phone) errors.push({ field: 'phone', message: '{{ __('inkwave.contact_req_phone') }}' });
+        if (!subject) errors.push({ field: 'subject', message: '{{ __('inkwave.contact_req_subj') }}' });
+        if (!message) errors.push({ field: 'message', message: '{{ __('inkwave.contact_req_msg') }}' });
+        if (captchaEl && !captcha) errors.push({ field: 'captcha', message: '{{ __('inkwave.contact_req_sec') }}' });
 
         if (errors.length) {
             errors.forEach(showFieldError);

@@ -1,12 +1,12 @@
-@extends('frontend.layouts.main')
-@section('title', __('inkwave.topup_heading'))
+﻿@extends('frontend.layouts.main')
+@section('title', __('inkwave.tu_heading'))
 
 @section('main-content')
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('inkwave.topup_heading'),
+    'title' => __('inkwave.tu_heading'),
     'links' => [
-        ['name' => __('inkwave.menu_home'), 'url' => route('home')],
-        ['name' => __('inkwave.topup_heading')]
+        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.tu_heading')]
     ]
 ])
 
@@ -283,33 +283,33 @@
     <div class="duo-tu-container">
         
         <div class="duo-tu-head">
-            <p class="duo-tu-eyebrow"><i class="fas fa-coins"></i> {{ __('inkwave.topup_eyebrow') }}</p>
-            <h1 class="duo-tu-title">{{ __('inkwave.topup_heading') }}</h1>
-            <p class="duo-tu-sub">{{ __('inkwave.topup_sub') }}</p>
+            <p class="duo-tu-eyebrow"><i class="fas fa-coins"></i> {{ __('inkwave.tu_eyebrow') }}</p>
+            <h1 class="duo-tu-title">{{ __('inkwave.tu_heading') }}</h1>
+            <p class="duo-tu-sub">{{ __('inkwave.tu_sub') }}</p>
         </div>
 
         @php
             $cur = session('currency');
             if ($cur == 'JPY') {
                 $tiers = [
-                    ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'¥1 - ¥79,999',        'f'=>false],
-                    ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'¥80,000 - ¥159,999',  'f'=>false],
-                    ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'¥160,000 - ¥239,999', 'f'=>false],
-                    ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'¥240,000+',           'f'=>true],
+                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'¥1 - ¥79,999',        'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'¥80,000 - ¥159,999',  'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'¥160,000 - ¥239,999', 'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'¥240,000+',           'f'=>true],
                 ];
             } elseif ($cur == 'HKD') {
                 $tiers = [
-                    ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
-                    ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
-                    ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
-                    ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$12,000+',           'f'=>true],
+                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$12,000+',           'f'=>true],
                 ];
             } else {
                 $tiers = [
-                    ['n'=>__('inkwave.tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'$1 - $499',       'f'=>false],
-                    ['n'=>__('inkwave.tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'$500 - $999',     'f'=>false],
-                    ['n'=>__('inkwave.tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'$1,000 - $1,499', 'f'=>false],
-                    ['n'=>__('inkwave.tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'$1,500+',         'f'=>true],
+                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'$1 - $499',       'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'$500 - $999',     'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'$1,000 - $1,499', 'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'$1,500+',         'f'=>true],
                 ];
             }
         @endphp
@@ -317,33 +317,33 @@
         <div class="duo-tu-tiers">
             @foreach($tiers as $t)
                 <div class="duo-tu-card @if($t['f']) duo-tu-card--vip @endif">
-                    @if($t['f'])<span class="duo-tu-card__flag">{{ __('inkwave.best_value') }}</span>@endif
+                    @if($t['f'])<span class="duo-tu-card__flag">{{ __('inkwave.tu_best_value') }}</span>@endif
                     <span class="duo-tu-card__icon"><i class="fas {{ $t['i'] }}"></i></span>
                     <h3 class="duo-tu-card__name">{{ $t['n'] }}</h3>
                     <div class="duo-tu-card__mult">{{ $t['big'] }}</div>
                     <ul class="duo-tu-card__feats">
                         <li><i class="fas fa-check-circle"></i> {{ $t['r'] }}</li>
-                        <li><i class="fas fa-check-circle"></i> {{ __('inkwave.bonus_text') }} {{ $t['big'] }}</li>
+                        <li><i class="fas fa-check-circle"></i> {{ __('inkwave.tu_bonus_text') }} {{ $t['big'] }}</li>
                     </ul>
-                    <button type="button" class="duo-tu-btn" data-topup-focus>{{ __('inkwave.calc_button') }}</button>
+                    <button type="button" class="duo-tu-btn" data-topup-focus>{{ __('inkwave.tu_calc_button') }}</button>
                 </div>
             @endforeach
         </div>
 
         <p class="duo-tu-note">
             @if(session('currency') == 'JPY')
-                {{ __('inkwave.jpy_conversion_note') }}
+                {{ __('inkwave.tu_jpy_conversion_note') }}
             @elseif(session('currency') == 'HKD')
-                {{ __('inkwave.hkd_conversion_note') }}
+                {{ __('inkwave.tu_hkd_conversion_note') }}
             @else
-                {{ __('inkwave.usd_conversion_note') }}
+                {{ __('inkwave.tu_usd_conversion_note') }}
             @endif
         </p>
 
         <div class="duo-tu-calc" id="topup">
             <div class="duo-tu-calc__head">
-                <h2 class="duo-tu-calc__title">{{ __('inkwave.calc_title') }}</h2>
-                <p style="font-size:18px; font-weight:700; opacity:0.9;">{{ __('inkwave.calc_tagline') }}</p>
+                <h2 class="duo-tu-calc__title">{{ __('inkwave.tu_calc_title') }}</h2>
+                <p style="font-size:18px; font-weight:700; opacity:0.9;">{{ __('inkwave.tu_calc_tagline') }}</p>
             </div>
             
             <div class="duo-tu-calc__body">
@@ -351,7 +351,7 @@
                     @csrf
                     
                     <div class="duo-tu-form-group">
-                        <label class="duo-tu-label">{{ __('inkwave.calc_input_label') }}</label>
+                        <label class="duo-tu-label">{{ __('inkwave.tu_calc_input_label') }}</label>
                         <div class="duo-tu-input-wrap">
                             <span>{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
                             <input type="number" name="amount" id="topup_amount" placeholder="0" min="1" required>
@@ -360,26 +360,26 @@
 
                     <div class="duo-tu-stats">
                         <div class="duo-tu-stat">
-                            <span>{{ __('inkwave.calc_base_points') }}</span>
+                            <span>{{ __('inkwave.tu_calc_base_points') }}:</span>
                             <span id="base_points">0</span>
                         </div>
                         <div class="duo-tu-stat">
-                            <span>{{ __('inkwave.calc_tier_bonus') }}</span>
+                            <span>{{ __('inkwave.tu_calc_tier_bonus') }}:</span>
                             <span id="multiplier_display">×1</span>
                         </div>
                         <div class="duo-tu-stat duo-tu-stat--total">
-                            <span>{{ __('inkwave.calc_youll_get') }}</span>
+                            <span>{{ __('inkwave.tu_calc_youll_get') }}:</span>
                             <span><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
                         </div>
                     </div>
 
                     <button type="submit" class="duo-tu-buybtn">
-                        <span>{{ __('inkwave.calc_button') }}</span>
+                        <span>{{ __('inkwave.tu_calc_button') }}</span>
                         <i class="fas fa-arrow-right"></i>
                     </button>
                     
                     <p style="text-align:center; font-weight:700; color:var(--color-pencil-gray); margin-top:24px;">
-                        <i class="fas fa-shield-alt" style="color:var(--color-eager-green);"></i> {{ __('inkwave.calc_trust_message') }}
+                        <i class="fas fa-shield-alt" style="color:var(--color-eager-green);"></i> {{ __('inkwave.tu_calc_trust_message') }}
                     </p>
                 </form>
             </div>

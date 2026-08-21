@@ -1,11 +1,11 @@
-@extends('frontend.layouts.main')
+﻿@extends('frontend.layouts.main')
 @section('title', $page_data->page_title)
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
     'title' => $page_data->page_title,
     'links' => [
-        ['name' => __('inkwave.menu_home'), 'url' => route('home')],
+        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
         ['name' => $page_data->page_title]
     ]
 ])

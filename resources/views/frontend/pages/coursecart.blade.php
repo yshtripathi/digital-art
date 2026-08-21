@@ -1,12 +1,12 @@
-@extends('frontend.layouts.main')
-@section('title', __('inkwave.cc_title'))
+﻿@extends('frontend.layouts.main')
+@section('title', __('inkwave.cc_pg_title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('inkwave.cart_title'),
+    'title' => __('inkwave.cart_pg_title'),
     'links' => [
-        ['name' => __('inkwave.menu_home'), 'url' => route('home')],
-        ['name' => __('inkwave.cart_title')]
+        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.cart_pg_title')]
     ]
 ])
 
@@ -313,21 +313,21 @@
             <div class="duo-cc-balance">
                 <div class="duo-cc-balance__icon"><i class="fas fa-coins"></i></div>
                 <div class="duo-cc-balance__text">
-                    <span class="duo-cc-balance__label">{{ __('inkwave.cc_available_credits') }}</span>
-                    <span class="duo-cc-balance__amt">{{ number_format($points) }} <small style="font-size:24px;">{{ __('inkwave.cart_type_credits') }}</small></span>
+                    <span class="duo-cc-balance__label">{{ __('inkwave.cc_lbl_balance') }}</span>
+                    <span class="duo-cc-balance__amt">{{ number_format($points) }} <small style="font-size:24px;">{{ __('inkwave.cart_tag_credit') }}</small></span>
                 </div>
             </div>
 
             <div class="duo-cc-grid">
                 {{-- Items --}}
                 <div>
-                    <h2 class="duo-cc-h"><i class="fas fa-shopping-basket"></i> {{ __('inkwave.cart_item_summary') }}</h2>
+                    <h2 class="duo-cc-h"><i class="fas fa-shopping-basket"></i> {{ __('inkwave.cart_box_summary') }}</h2>
 
                     @if($itemCount)
                         <div class="duo-cc-cards">
                             @foreach($cartItems as $cart)
                                 @php
-                                    $item_title = __('inkwave.cart_credits_topup');
+                                    $item_title = __('inkwave.cart_item_topup');
                                     $item_image = asset('images/placeholder.jpg');
                                     $item_link = '#';
                                     $is_course = false;
@@ -349,7 +349,7 @@
                                 @endphp
 
                                 <div class="duo-cc-card">
-                                    <a href="{{ route('cart-delete', $cart->id) }}" class="duo-cc-card__remove" title="{{ __('inkwave.cart_label_remove') }}"><i class="fas fa-times"></i></a>
+                                    <a href="{{ route('cart-delete', $cart->id) }}" class="duo-cc-card__remove" title="{{ __('inkwave.cart_btn_del') }}"><i class="fas fa-times"></i></a>
 
                                     <div class="duo-cc-card__img">
                                         <img src="{{ $item_image }}" alt="{{ $item_title }}">
@@ -360,18 +360,18 @@
 
                                         <span class="duo-cc-card__pill">
                                             @if($is_course)
-                                                <i class="fas fa-star"></i> {{ __('inkwave.cc_skill_level') }}: {{ $level ? ucfirst($level->skill_level) : 'N/A' }}
+                                                <i class="fas fa-star"></i> {{ __('inkwave.cc_lbl_level') }}: {{ $level ? ucfirst($level->skill_level) : 'N/A' }}
                                             @else
-                                                <i class="fas fa-gift"></i> {{ __('inkwave.cart_credits_topup') }}
+                                                <i class="fas fa-gift"></i> {{ __('inkwave.cart_item_topup') }}
                                             @endif
                                         </span>
 
                                         <div class="duo-cc-card__cost">
                                             @if($is_course)
-                                                <i class="fas fa-coins"></i> {{ number_format($cart->points) }} {{ __('inkwave.cart_type_credits') }}
+                                                <i class="fas fa-coins"></i> {{ number_format($cart->points) }} {{ __('inkwave.cart_tag_credit') }}
                                             @else
                                                 {{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2) }}
-                                                <small style="color:var(--color-pencil-gray);font-size:16px;">({{ number_format($cart->points) }} {{ __('inkwave.cart_type_credits') }})</small>
+                                                <small style="color:var(--color-pencil-gray);font-size:16px;">({{ number_format($cart->points) }} {{ __('inkwave.cart_tag_credit') }})</small>
                                             @endif
                                         </div>
                                     </div>
@@ -381,9 +381,9 @@
                     @else
                         <div class="duo-cc-box">
                             <i class="fas fa-ghost"></i>
-                            <h3>{{ __('inkwave.cart_no_items') }}</h3>
-                            <p>{{ __('inkwave.cc_empty_msg') }}</p>
-                            <a href="{{ route('product-lists') }}" class="duo-cc-btn">{{ __('inkwave.cart_continue') }}</a>
+                            <h3>{{ __('inkwave.cart_mt_heading') }}</h3>
+                            <p>{{ __('inkwave.cc_mt_desc') }}</p>
+                            <a href="{{ route('product-lists') }}" class="duo-cc-btn">{{ __('inkwave.cart_btn_shop') }}</a>
                         </div>
                     @endif
                 </div>
@@ -391,7 +391,7 @@
                 {{-- Summary --}}
                 <aside>
                     <div class="duo-cc-summary">
-                        <h3 class="duo-cc-summary__h"><i class="fas fa-receipt"></i> {{ __('inkwave.cart_order_summary') }}</h3>
+                        <h3 class="duo-cc-summary__h"><i class="fas fa-receipt"></i> {{ __('inkwave.cart_box_summary') }}</h3>
 
                         @if($itemCount)
                             @php $total_points = Helper::totalCartPoints(); @endphp
@@ -402,21 +402,21 @@
                             </div>
 
                             <div class="duo-cc-summary__total">
-                                <span class="lbl">{{ __('inkwave.cart_total') }}:</span>
-                                <span class="amt">{{ number_format($total_points) }} <small style="font-size:18px;">{{ __('inkwave.cart_type_credits') }}</small></span>
+                                <span class="lbl">{{ __('inkwave.cart_box_total') }}:</span>
+                                <span class="amt">{{ number_format($total_points) }} <small style="font-size:18px;">{{ __('inkwave.cart_tag_credit') }}</small></span>
                             </div>
 
                             <div class="duo-cc-summary__actions">
                                 <form id="redeemPointsForm" action="{{ route('points.redeem') }}" method="POST" style="display:none;">@csrf</form>
                                 <button type="button" class="duo-cc-btn" onclick="document.getElementById('redeemPointsForm').submit();">
-                                    <i class="fas fa-lock"></i> {{ __('inkwave.cc_redeem_points') }}
+                                    <i class="fas fa-lock"></i> {{ __('inkwave.cc_btn_redeem') }}
                                 </button>
-                                <a href="{{ route('product-lists') }}" class="duo-cc-btn duo-cc-btn--ghost"><i class="fas fa-plus"></i> {{ __('inkwave.cart_continue') }}</a>
+                                <a href="{{ route('product-lists') }}" class="duo-cc-btn duo-cc-btn--ghost"><i class="fas fa-plus"></i> {{ __('inkwave.cart_btn_shop') }}</a>
                             </div>
                         @else
                             <div style="text-align:center; padding: 24px 0;">
                                 <i class="fas fa-info-circle" style="font-size:48px; color:#e5e5e5; margin-bottom:16px;"></i>
-                                <p style="font-size:18px; font-weight:700; color:var(--color-pencil-gray);">{{ __('inkwave.cart_empty_msg') }}</p>
+                                <p style="font-size:18px; font-weight:700; color:var(--color-pencil-gray);">{{ __('inkwave.cart_mt_desc') }}</p>
                             </div>
                         @endif
                     </div>
@@ -425,9 +425,9 @@
         @else
             <div class="duo-cc-box">
                 <i class="fas fa-lock"></i>
-                <h3>{{ __('inkwave.cc_sign_in_req') }}</h3>
-                <p>{{ __('inkwave.cc_sign_in_msg') }}</p>
-                <a href="{{ route('login.form') }}" class="duo-cc-btn"><i class="fas fa-sign-in-alt"></i> {{ __('inkwave.login_title') }}</a>
+                <h3>{{ __('inkwave.cc_auth_req') }}</h3>
+                <p>{{ __('inkwave.cc_auth_msg') }}</p>
+                <a href="{{ route('login.form') }}" class="duo-cc-btn"><i class="fas fa-sign-in-alt"></i> {{ __('inkwave.login_pg_title') }}</a>
             </div>
         @endauth
     </div>

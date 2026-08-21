@@ -6,7 +6,7 @@
 @include('frontend.layouts.breadcrumb', [
     'title' => __('inkwave.about_page_title'),
     'links' => [
-        ['name' => __('inkwave.menu_home'), 'url' => route('home')],
+        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
         ['name' => __('inkwave.about_page_title')]
     ]
 ])
@@ -250,11 +250,11 @@
                     {{ __('inkwave.about_intro_lead') }} {{ __('inkwave.about_intro_body') }}
                 </p>
                 <div class="duo-tags">
-                    <span class="duo-tag">{{ __('inkwave.about_tag_anime') }}</span>
-                    <span class="duo-tag">{{ __('inkwave.about_tag_pixel') }}</span>
-                    <span class="duo-tag">{{ __('inkwave.about_tag_pop') }}</span>
-                    <span class="duo-tag">{{ __('inkwave.about_tag_street') }}</span>
-                    <span class="duo-tag">{{ __('inkwave.about_tag_ukiyo') }}</span>
+                    <span class="duo-tag">{{ __('inkwave.about_tag_talk') }}</span>
+                    <span class="duo-tag">{{ __('inkwave.about_tag_career') }}</span>
+                    <span class="duo-tag">{{ __('inkwave.about_tag_tech') }}</span>
+                    <span class="duo-tag">{{ __('inkwave.about_tag_creative') }}</span>
+                    <span class="duo-tag">{{ __('inkwave.about_tag_life') }}</span>
                 </div>
             </div>
         </div>
@@ -284,7 +284,7 @@
             </div>
 
             <div class="duo-value-item">
-                <div class="duo-value-item__icon"><i class="fas fa-palette"></i></div>
+                <div class="duo-value-item__icon"><i class="fas fa-star"></i></div>
                 <div class="duo-value-item__content">
                     <h3 class="duo-value-item__title">{{ __('inkwave.about_standard_3_title') }}</h3>
                     <p class="duo-value-item__desc">{{ __('inkwave.about_standard_3_desc') }}</p>

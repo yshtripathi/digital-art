@@ -4,20 +4,20 @@
     @section('title', $category->title)
     @section('description', $category->summary)
 @else
-    @section('title', __('inkwave.pl_browse'))
-    @section('description', __('inkwave.pl_browse'))
+    @section('title', __('inkwave.cl_browse'))
+    @section('description', __('inkwave.cl_browse'))
 @endif
 
 @section('main-content')
 @php
     $isCat = isset($category->title) && $category->title;
-    $bcTitle = $isCat ? $category->title : __('inkwave.pl_browse');
+    $bcTitle = $isCat ? $category->title : __('inkwave.cl_browse');
 @endphp
 @include('frontend.layouts.breadcrumb', [
     'title' => $bcTitle,
     'links' => [
-        ['name' => __('inkwave.menu_home'), 'url' => route('home')],
-        ['name' => __('inkwave.pl_catalog'), 'url' => route('product-lists')],
+        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.cl_catalog'), 'url' => route('product-lists')],
         ['name' => $bcTitle]
     ]
 ])
@@ -85,6 +85,15 @@
 }
 .duo-pl-header--center .duo-pl-header p {
     margin: 0 auto;
+}
+.duo-pl-quote {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.4;
+    font-style: italic;
+    max-width: 800px;
+    margin: 0 auto;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 .duo-pl-header__img {
     width: 220px;
@@ -370,11 +379,17 @@
             $hasImg = $isCat && $category->photo;
         @endphp
         <div class="duo-pl-header {{ $hasImg ? 'duo-pl-header--with-img' : 'duo-pl-header--center' }}">
-            <i class="fas fa-palette duo-pl-header__bg"></i>
+            <i class="fas fa-book-open duo-pl-header__bg"></i>
             <div class="duo-pl-header__content">
                 <div class="duo-pl-header__text">
-                    <h1>{{ $isCat ? $category->title : __('inkwave.pl_browse') }}</h1>
-                    <p>{{ $isCat && $category->summary ? $category->summary : __('inkwave.pl_explore_curated') }}</p>
+                    @if($isCat)
+                        <h1>{{ $category->title }}</h1>
+                        @if($category->summary)
+                            <p>{{ $category->summary }}</p>
+                        @endif
+                    @else
+                        <h2 class="duo-pl-quote">"{{ __('inkwave.cl_explore_desc') }}"</h2>
+                    @endif
                 </div>
                 @if($hasImg)
                     <div class="duo-pl-header__img">
@@ -385,7 +400,7 @@
         </div>
 
         {{-- ================= PRODUCT GRID ================= --}}
-        <h2 class="duo-pl-title">{{ $products->count() }} {{ __('inkwave.pl_artworks') }}</h2>
+        <h2 class="duo-pl-title">{{ $products->count() }} {{ __('inkwave.cl_items') }}</h2>
         
         @if($products->count())
             <div class="duo-pl-grid">
@@ -403,16 +418,16 @@
                             <h3 class="duo-pl-card__title">{{ $course->title }}</h3>
                             @if($course->levels && $course->levels->count() > 0)
                                 <p class="duo-pl-card__price">
-                                    {{ __('inkwave.starting_from') }} 
+                                    {{ __('inkwave.cl_starting_from') }} 
                                     <strong><i class="fas fa-coins"></i> {{ number_format($course->levels->min('price_in_points')) }}</strong> 
-                                    {{ __('inkwave.pd_credits') }}
+                                    {{ __('inkwave.cl_credits_label') }}
                                 </p>
                             @else
                                 <p class="duo-pl-card__price">
-                                    <strong>{{ __('inkwave.free') }}</strong>
+                                    <strong>{{ __('inkwave.cl_free_label') }}</strong>
                                 </p>
                             @endif
-                            <div class="duo-pl-card__btn">{{ __('inkwave.pl_explore') }}</div>
+                            <div class="duo-pl-card__btn">{{ __('inkwave.cl_view_btn') }}</div>
                         </div>
                     </a>
                 @endforeach
@@ -424,8 +439,8 @@
         @else
             <div class="duo-pl-empty">
                 <i class="fas fa-box-open"></i>
-                <h3>{{ __('inkwave.pl_no_products') }}</h3>
-                <p>{{ __('inkwave.pl_explore_curated') }}</p>
+                <h3>{{ __('inkwave.cl_no_products') }}</h3>
+                <p>{{ __('inkwave.cl_explore_desc') }}</p>
             </div>
         @endif
 
@@ -439,7 +454,7 @@
 
         @if($allCategories->count())
             <div class="duo-pl-cats">
-                <h2 class="duo-pl-cats-title">{{ __('inkwave.pl_other_cats') }}</h2>
+                <h2 class="duo-pl-cats-title">{{ __('inkwave.cl_other_cats') }}</h2>
                 <div class="duo-pl-cats-grid">
                     @foreach($allCategories as $cat)
                         <a href="{{ route('product-lists', $cat->slug) }}" class="duo-pl-cat-card">

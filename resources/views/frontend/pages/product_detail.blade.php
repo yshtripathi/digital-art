@@ -1,4 +1,4 @@
-@extends('frontend.layouts.main')
+﻿@extends('frontend.layouts.main')
 
 @section('title', $product_detail->title)
 @section('description', $product_detail->summary)
@@ -7,8 +7,8 @@
 @include('frontend.layouts.breadcrumb', [
     'title' => $product_detail->title,
     'links' => [
-        ['name' => __('inkwave.menu_home'), 'url' => route('home')],
-        ['name' => __('inkwave.pl_catalog'), 'url' => route('product-lists')],
+        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.cl_catalog'), 'url' => route('product-lists')],
         ['name' => $product_detail->title]
     ]
 ])
@@ -306,7 +306,7 @@
 
             {{-- ============ INFO ============ --}}
             <div>
-                <p class="duo-pd-eyebrow"><i class="fas fa-palette"></i> {{ __('inkwave.pd_digital_art') }}</p>
+                <p class="duo-pd-eyebrow"><i class="fas fa-book"></i> {{ __('inkwave.cd_category') }}</p>
                 <h1 class="duo-pd-title">{{ $product_detail->title }}</h1>
                 
                 @if($product_detail->description)
@@ -314,7 +314,7 @@
                 @endif
 
                 @if($product_detail->levels && count($product_detail->levels))
-                    <span class="duo-pd-tabs-label">{{ __('inkwave.pd_select_level') }}</span>
+                    <span class="duo-pd-tabs-label">{{ __('inkwave.cd_select_level') }}</span>
                     
                     <div class="duo-pd-tabs">
                         @foreach($product_detail->levels as $key => $level)
@@ -333,7 +333,7 @@
                                         <div class="duo-pd-feat">
                                             <div class="duo-pd-feat__icon"><i class="fas fa-book-open"></i></div>
                                             <div class="duo-pd-feat__text">
-                                                <span class="duo-pd-feat__label">{{ __('inkwave.pd_learn_info') }}</span>
+                                                <span class="duo-pd-feat__label">{{ __('inkwave.cd_learn_info') }}</span>
                                                 <p class="duo-pd-feat__desc">{{ $level->learn_info }}</p>
                                             </div>
                                         </div>
@@ -343,7 +343,7 @@
                                         <div class="duo-pd-feat">
                                             <div class="duo-pd-feat__icon"><i class="fas fa-bullseye"></i></div>
                                             <div class="duo-pd-feat__text">
-                                                <span class="duo-pd-feat__label">{{ __('inkwave.pd_purpose') }}</span>
+                                                <span class="duo-pd-feat__label">{{ __('inkwave.cd_purpose') }}</span>
                                                 <p class="duo-pd-feat__desc">{{ $level->purpose }}</p>
                                             </div>
                                         </div>
@@ -353,7 +353,7 @@
                                         <div class="duo-pd-feat">
                                             <div class="duo-pd-feat__icon"><i class="fas fa-trophy"></i></div>
                                             <div class="duo-pd-feat__text">
-                                                <span class="duo-pd-feat__label">{{ __('inkwave.pd_outcome') }}</span>
+                                                <span class="duo-pd-feat__label">{{ __('inkwave.cd_outcome') }}</span>
                                                 <p class="duo-pd-feat__desc">{{ $level->outcome }}</p>
                                             </div>
                                         </div>
@@ -363,8 +363,8 @@
 
                             <div class="duo-pd-buybox">
                                 <div class="duo-pd-price">
-                                    <span class="duo-pd-price__label">{{ __('inkwave.pd_price') }}</span>
-                                    <span class="duo-pd-price__amt"><i class="fas fa-coins"></i> {{ number_format($level->price_in_points) }} <small>{{ __('inkwave.pd_credits') }}</small></span>
+                                    <span class="duo-pd-price__label">{{ __('inkwave.cd_price') }}</span>
+                                    <span class="duo-pd-price__amt"><i class="fas fa-coins"></i> {{ number_format($level->price_in_points) }} <small>{{ __('inkwave.cd_credits') }}</small></span>
                                 </div>
                                 <form action="{{ route('single-add-to-cart') }}" method="POST" class="enroll-form">
                                     @csrf
@@ -374,7 +374,7 @@
                                     <input type="hidden" name="price_jp" value="{{ $level->price_jp }}">
                                     <input type="hidden" name="price_hk" value="{{ $level->price_hk }}">
                                     <input type="hidden" name="level_id" value="{{ $level->id }}">
-                                    <button type="submit" class="duo-pd-buybtn enroll-btn"><span>{{ __('inkwave.pd_buy_now') }}</span> <i class="fas fa-shopping-cart"></i></button>
+                                    <button type="submit" class="duo-pd-buybtn enroll-btn"><span>{{ __('inkwave.cd_buy_now') }}</span> <i class="fas fa-shopping-cart"></i></button>
                                 </form>
                             </div>
 

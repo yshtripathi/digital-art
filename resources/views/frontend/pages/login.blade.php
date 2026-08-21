@@ -1,12 +1,12 @@
-@extends('frontend.layouts.main')
-@section('title', __('inkwave.login_title'))
+﻿@extends('frontend.layouts.main')
+@section('title', __('inkwave.login_pg_title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('inkwave.login_title'),
+    'title' => __('inkwave.login_pg_title'),
     'links' => [
-        ['name' => __('inkwave.menu_home'), 'url' => route('home')],
-        ['name' => __('inkwave.login_title')]
+        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.login_pg_title')]
     ]
 ])
 
@@ -217,37 +217,37 @@
         <div class="duo-auth-card">
             
             <div class="duo-form-head">
-                <p class="duo-eyebrow">{{ __('inkwave.login_badge') }}</p>
-                <h1 class="duo-title">{{ __('inkwave.login_title') }}</h1>
+                <p class="duo-eyebrow">{{ __('inkwave.login_pg_badge') }}</p>
+                <h1 class="duo-title">{{ __('inkwave.login_pg_title') }}</h1>
             </div>
 
             <form name="frmLogin" id="frmLogin" action="{{ route('login.submit') }}" method="post">
                 @csrf
 
                 <div class="duo-field">
-                    <label class="duo-label"><i class="fas fa-envelope"></i> {{ __('inkwave.form_email') }}</label>
-                    <input type="email" name="email" id="email" placeholder="{{ __('inkwave.form_email') }}" value="{{ old('email') }}" class="duo-input @error('email') is-invalid @enderror">
+                    <label class="duo-label"><i class="fas fa-envelope"></i> {{ __('inkwave.login_fld_email') }}</label>
+                    <input type="email" name="email" id="email" placeholder="{{ __('inkwave.login_fld_email') }}" value="{{ old('email') }}" class="duo-input @error('email') is-invalid @enderror">
                     @error('email') <span class="duo-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                 </div>
 
                 <div class="duo-field">
-                    <label class="duo-label"><i class="fas fa-lock"></i> {{ __('inkwave.form_password') }}</label>
-                    <input type="password" name="password" id="password" placeholder="{{ __('inkwave.form_password') }}" class="duo-input @error('password') is-invalid @enderror">
+                    <label class="duo-label"><i class="fas fa-lock"></i> {{ __('inkwave.login_fld_pass') }}</label>
+                    <input type="password" name="password" id="password" placeholder="{{ __('inkwave.login_fld_pass') }}" class="duo-input @error('password') is-invalid @enderror">
                     @error('password') <span class="duo-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                 </div>
 
                 <div class="duo-forgot">
-                    <a href="{{ route('forgetpwd.form') }}">{{ __('inkwave.lost_password') }}</a>
+                    <a href="{{ route('forgetpwd.form') }}">{{ __('inkwave.login_lost_pwd') }}</a>
                 </div>
 
-                <button type="submit" name="submit-form" class="duo-submit"><i class="fas fa-sign-in-alt"></i> {{ __('inkwave.btn_login') }}</button>
+                <button type="submit" name="submit-form" class="duo-submit"><i class="fas fa-sign-in-alt"></i> {{ __('inkwave.login_btn_submit') }}</button>
             </form>
 
-            <div class="duo-divider"><span>{{ __('inkwave.or_divider') }}</span></div>
+            <div class="duo-divider"><span>{{ __('inkwave.login_or_div') }}</span></div>
 
             <p class="duo-alt">
-                {{ __('inkwave.new_user_prompt') }}
-                <a href="{{ route('register.form') }}">{{ __('inkwave.create_profile_link') }}</a>
+                {{ __('inkwave.login_new_user') }}
+                <a href="{{ route('register.form') }}">{{ __('inkwave.login_create_link') }}</a>
             </p>
             
         </div>
@@ -291,10 +291,10 @@
             },
             messages: {
                 password: {
-                    required: "{{ __('inkwave.val_pass_req') }}",
-                    minlength: "{{ __('inkwave.val_pass_min') }}"
+                    required: "{{ __('inkwave.login_req_pass') }}",
+                    minlength: "{{ __('inkwave.login_min_pass') }}"
                 },
-                email: "{{ __('inkwave.val_email_req') }}"
+                email: "{{ __('inkwave.login_req_email') }}"
             }
         });
     });

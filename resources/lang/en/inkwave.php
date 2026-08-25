@@ -421,6 +421,10 @@ return [
     'cd_category' => 'Course',
     'cd_overview' => 'Course Overview & Details',
     'cd_select_level' => 'Select Level',
+    'beginner_course' => 'Beginner',
+    'intermediate_course' => 'Intermediate',
+    'advanced_course' => 'Advanced',
+    'expert_course' => 'Expert',
     'cd_concept' => 'What You Will Learn',
     'cd_learn_info' => 'What You Will Learn',
     'cd_purpose' => 'Purpose',
@@ -498,3 +502,4 @@ return [
     'home_super_btn' => 'Try a Top-Up Package',
     'home_anywhere_title' => 'learn at your own pace',
 ];
+

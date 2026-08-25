@@ -1,4 +1,4 @@
-﻿{{-- Main Duolingo Theme Header Revamp --}}
+{{-- Main Duolingo Theme Header Revamp --}}
 <style>
 /* -------------------------------------------
    Duolingo Theme Header - Artora
@@ -587,7 +587,7 @@ body {
                             $level = \App\Models\ProductLevel::where('course_id', $cart->product_id)
                                          ->where('price_in_points', $cart->points)
                                          ->first();
-                            $lvl_key = $level ? $level->skill_level . '_course' : '';
+                            $lvl_key = $level ? strtolower($level->skill_level) . '_course' : '';
                             $item_level = ($level && Lang::has('inkwave.' . $lvl_key)) ? __('inkwave.' . $lvl_key) : ($level ? ucfirst($level->skill_level) : 'N/A');
                         }
                     @endphp
@@ -624,7 +624,7 @@ body {
                                 <h6 class="mb-1 fw-bold">{{ $item_title }}</h6>
                                 <div class="mb-1">
                                     <span class="badge px-2 py-1" style="background: #e5e5e5; color: var(--color-charcoal); border-radius: 6px; font-size: 10px;">
-                                        <i class="fas fa-palette me-1"></i> {{ $item_level }}
+                                        <i class="fas fa-star me-1"></i> {{ $item_level }}
                                     </span>
                                 </div>
                                 <p class="mb-0 small text-muted">

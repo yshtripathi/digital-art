@@ -421,6 +421,10 @@ return [
     'cd_category' => 'コース',
     'cd_overview' => 'コースの概要と詳細',
     'cd_select_level' => 'レベルを選択',
+    'beginner_course' => '初級',
+    'intermediate_course' => '中級',
+    'advanced_course' => '上級',
+    'expert_course' => 'エキスパート',
     'cd_concept' => '学べること',
     'cd_learn_info' => '学べること',
     'cd_purpose' => '目的',
@@ -498,3 +502,4 @@ return [
     'home_super_btn' => 'トップアップパッケージを試す',
     'home_anywhere_title' => '自分のペースで学ぶ',
 ];
+

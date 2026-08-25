@@ -1,4 +1,4 @@
-﻿@extends('frontend.layouts.main')
+@extends('frontend.layouts.main')
 @section('title', __('inkwave.cc_pg_title'))
 @section('main-content')
 
@@ -360,7 +360,8 @@
 
                                         <span class="duo-cc-card__pill">
                                             @if($is_course)
-                                                <i class="fas fa-star"></i> {{ __('inkwave.cc_lbl_level') }}: {{ $level ? ucfirst($level->skill_level) : 'N/A' }}
+                                                @php $lvl_key = $level ? strtolower($level->skill_level) . '_course' : ''; @endphp
+                                                <i class="fas fa-star"></i> {{ __('inkwave.cc_lbl_level') }}: {{ ($level && Lang::has('inkwave.' . $lvl_key)) ? __('inkwave.' . $lvl_key) : ($level ? ucfirst($level->skill_level) : 'N/A') }}
                                             @else
                                                 <i class="fas fa-gift"></i> {{ __('inkwave.cart_item_topup') }}
                                             @endif

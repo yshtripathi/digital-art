@@ -1,5 +1,5 @@
 ﻿{{--
-  Reusable Breadcrumb Partial (Duolingo Theme)
+  Reusable Breadcrumb Partial (Gallery Theme)
   
   Usage Example:
   @include('frontend.layouts.breadcrumb', [
@@ -12,17 +12,15 @@
   ])
 --}}
 
-
-
-<div class="art-breadcrumb-wrapper">
-    <div class="art-breadcrumb-container">
+<div class="ag-breadcrumb-wrapper">
+    <div class="ag-breadcrumb-container">
         
         @if(isset($title) && !empty($title))
-            <h1 class="art-breadcrumb-title">{{ $title }}</h1>
+            <h1 class="ag-breadcrumb-title">{{ $title }}</h1>
         @endif
         
         @if(isset($links) && count($links) > 0)
-            <ul class="art-breadcrumb-list">
+            <ul class="ag-breadcrumb-list">
                 @foreach($links as $index => $link)
                     <li>
                         @if(isset($link['url']) && $index < count($links) - 1)
@@ -38,3 +36,4 @@
         
     </div>
 </div>
+

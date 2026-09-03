@@ -1,42 +1,60 @@
-﻿<!-- Main Duolingo Theme Footer -->
-
-
-<footer class="art-footer">
-    <div class="art-footer-container">
+﻿<footer class="ag-footer">
+    <div class="ag-footer-inner">
         
         <!-- Newsletter Section -->
-        <div class="art-footer-newsletter subscribe-form-wrapper">
+        <div class="ag-newsletter">
             <h4>{{ __('inkwave.ft_newsletter_title') }}</h4>
             <p>{{ __('inkwave.ft_newsletter_subtitle') }}</p>
-            <form class="art-newsletter-form subscribe-form">
+            <form class="ag-newsletter-form subscribe-form">
                 <input type="email" name="email" class="email" placeholder="{{ __('inkwave.ft_email_placeholder') }}" required>
                 <button type="submit" aria-label="Subscribe">
                     {{ __('inkwave.ft_subscribe_action') }}
                 </button>
             </form>
-            <p class="suces_rinfo mt-3">{{ __('inkwave.ft_subscribe_success') }}</p>
+            <p class="suces_rinfo" style="display: none;">{{ __('inkwave.ft_subscribe_success') }}</p>
         </div>
 
         <!-- Widgets Grid -->
-        <div class="art-footer-grid">
+        <div class="ag-footer-grid">
             
             <!-- Column 1: Brand -->
-            <div class="art-footer-column">
-                <a href="{{route('home')}}" class="art-footer-logo">
+            <div class="ag-footer-col">
+                <a href="{{route('home')}}" class="ag-footer-logo">
                     <img src="{{asset('assets/images/logo.png')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}">
                 </a>
-                <p class="art-footer-brand-bio">{{ __('inkwave.ft_brand_mission') }}</p>
-                <ul class="art-footer-contact">
-                    <li><i class="fas fa-building mt-1"></i> <span>{{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}</span></li>
-                    <li><i class="fas fa-envelope mt-1"></i> <a href="mailto:{{ $misc['Company Email'] ?? __('inkwave.ft_fallback_email') }}">{{ $misc['Company Email'] ?? __('inkwave.ft_fallback_email') }}</a></li>
-                    <li><i class="fas fa-map-marker-alt mt-1"></i> <span>{{ $misc['Company Address'] ?? __('inkwave.ft_fallback_address') }}</span></li>
+                <p class="ag-footer-text" style="margin-bottom: 24px;">{{ __('inkwave.ft_brand_mission') }}</p>
+                <ul class="ag-footer-links">
+                    <li>
+                        <span class="ag-footer-text">
+                            <i class="fas fa-building"></i> 
+                            {{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}
+                        </span>
+                    </li>
+                    <li>
+                        <a href="tel:{{ $misc['Company Phone'] ?? '+1 234 567 890' }}">
+                            <i class="fas fa-phone-alt"></i> 
+                            {{ $misc['Company Phone'] ?? '+1 234 567 890' }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:{{ $misc['Company Email'] ?? __('inkwave.ft_fallback_email') }}">
+                            <i class="fas fa-envelope"></i> 
+                            {{ $misc['Company Email'] ?? __('inkwave.ft_fallback_email') }}
+                        </a>
+                    </li>
+                    <li>
+                        <span class="ag-footer-text">
+                            <i class="fas fa-map-marker-alt"></i> 
+                            {{ $misc['Company Address'] ?? __('inkwave.ft_fallback_address') }}
+                        </span>
+                    </li>
                 </ul>
             </div>
 
             <!-- Column 2: Explore -->
-            <div class="art-footer-column">
-                <h4>{{ __('inkwave.ft_menu_explore') }}</h4>
-                <ul class="art-footer-links">
+            <div class="ag-footer-col">
+                <h5>{{ __('inkwave.ft_menu_explore') }}</h5>
+                <ul class="ag-footer-links">
                     <li><a href="{{route('home')}}">{{ __('inkwave.ft_menu_home') }}</a></li>
                     <li><a href="{{route('product-lists')}}">{{ __('inkwave.ft_menu_catalog') }}</a></li>
                     <li><a href="{{route('about-us')}}">{{ __('inkwave.ft_menu_about') }}</a></li>
@@ -45,24 +63,24 @@
             </div>
 
             <!-- Column 3: Collections -->
-            <div class="art-footer-column">
-                <h4>{{ __('inkwave.ft_menu_collections') }}</h4>
-                <ul class="art-footer-links">
+            <div class="ag-footer-col">
+                <h5>{{ __('inkwave.ft_menu_collections') }}</h5>
+                <ul class="ag-footer-links">
                     @php
                         $footerCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
                     @endphp
                     @forelse($footerCategories as $cat)
                         <li><a href="{{ route('product-lists', $cat->slug) }}">{{ $cat->title }}</a></li>
                     @empty
-                        <li><span>{{ __('inkwave.nav_no_categories') }}</span></li>
+                        <li><span class="ag-footer-text">{{ __('inkwave.nav_no_categories') }}</span></li>
                     @endforelse
                 </ul>
             </div>
 
             <!-- Column 4: Assistance -->
-            <div class="art-footer-column">
-                <h4>{{ __('inkwave.ft_menu_assistance') }}</h4>
-                <ul class="art-footer-links">
+            <div class="ag-footer-col">
+                <h5>{{ __('inkwave.ft_menu_assistance') }}</h5>
+                <ul class="ag-footer-links">
                     <li><a href="{{route('pages','privacy-policy')}}">{{ __('inkwave.ft_legal_privacy') }}</a></li>
                     <li><a href="{{route('pages','terms-conditions')}}">{{ __('inkwave.ft_legal_terms') }}</a></li>
                     <li><a href="{{route('pages','refund-policy')}}">{{ __('inkwave.ft_legal_refund') }}</a></li>
@@ -73,11 +91,11 @@
         </div>
 
         <!-- Footer Bottom -->
-        <div class="art-footer-bottom">
-            <div class="art-footer-copyright">
+        <div class="ag-footer-bottom">
+            <div>
                 &copy; {{ date('Y') }} <a href="{{route('home')}}">{{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}</a>. {{ __('inkwave.ft_rights_reserved') }}
             </div>
-            <div class="art-footer-payment">
+            <div class="ag-footer-payment">
                 <img src="{{ asset('assets/images/payment.webp') }}" alt="Payment Methods">
             </div>
         </div>
@@ -85,12 +103,10 @@
     </div>
 </footer>
 
-
-
 </div><!-- End Page Wrapper -->
 
-<!-- Scroll To Top -->
-<div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-up"></span></div>
+<!-- Scroll To Top (Invisible until scrolled) -->
+<div class="scroll-to-top scroll-to-target" data-target="html" style="background:#bc9c5c; color:#fff; border-radius:50%;"><span class="fa fa-angle-up"></span></div>
 
 <script src="{{url('assets/js/jquery.js')}}"></script> 
 <script src="{{url('assets/js/popper.min.js')}}"></script>
@@ -138,7 +154,6 @@
         var value  = ($email.val() || '').trim();
         var isValid = value !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
-        // Only show the success message for a filled, valid email
         if (!isValid) {
             if ($email[0] && $email[0].reportValidity) {
                 $email[0].reportValidity();
@@ -147,15 +162,12 @@
             return;
         }
 
-        // show the message, cancelling any previous auto-hide timer
         clearTimeout(subTimer);
-        $(".suces_rinfo").stop(true, true).fadeIn(200);
+        $(".suces_rinfo").stop(true, true).fadeIn(200).css('display', 'inline-block');
 
-        // reset the actual <form> element (this handler is bound to the wrapper div)
         var formEl = $form.is('form') ? $form[0] : $form.find('form')[0];
         if (formEl) { formEl.reset(); }
 
-        // auto-hide the message after a few seconds
         subTimer = setTimeout(function(){
             $(".suces_rinfo").fadeOut(400);
         }, 4000);
@@ -164,5 +176,11 @@
 @if(env('CONTENT_PROTECTION_ENABLED', true))
 <script src="{{ asset('js/prevention.js') }}"></script>
 @endif
+
+<!-- =======================================================
+     Flowing Ribbons Background Effect (Gallery Theme)
+     ======================================================= -->
+<script src="{{ asset('assets/js/ribbons.js') }}"></script>
+
 </body>
 </html>

@@ -249,7 +249,7 @@ form#frmForgot button[type="submit"].ag-submit-btn:hover {
                 
                 {{-- Image Side --}}
                 <div class="ag-split__img">
-                    <img src="{{ asset('assets/images/17693.jpg') }}" alt="Recover Password">
+                    <img src="{{ asset('assets/images/sqlx_1f3x_230126.jpg') }}" alt="Recover Password">
                 </div>
 
                 {{-- Form Side --}}

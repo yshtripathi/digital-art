@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -38,9 +38,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&display=swap" rel="stylesheet">
-
-    <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/theme.css') }}?v={{ time() }}" rel="stylesheet">
     @if(env('CONTENT_PROTECTION_ENABLED', true))
     <link href="{{ asset('css/prevention.css') }}" rel="stylesheet">
     @endif

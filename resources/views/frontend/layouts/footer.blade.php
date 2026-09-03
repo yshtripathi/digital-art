@@ -1,197 +1,5 @@
 ﻿<!-- Main Duolingo Theme Footer -->
-<style>
-/* -------------------------------------------
-   Duolingo Theme Footer - Artora
-------------------------------------------- */
-.art-footer {
-    background-color: #58cc02 !important;
-    padding: 64px 24px 32px !important;
-    font-family: 'Nunito', 'Nunito Sans', 'Inter', sans-serif !important;
-    color: #ffffff !important;
-}
 
-.art-footer-container {
-    max-width: 1200px !important;
-    margin: 0 auto !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 48px !important;
-}
-
-/* Newsletter Section */
-.art-footer-newsletter {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    gap: 16px !important;
-    padding-bottom: 48px !important;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2) !important;
-}
-.art-footer-newsletter h4 {
-    font-size: 32px !important;
-    font-weight: 700 !important;
-    margin: 0 !important;
-    color: #ffffff !important;
-    letter-spacing: -0.02em !important;
-}
-.art-footer-newsletter p {
-    font-size: 17px !important;
-    font-weight: 500 !important;
-    margin: 0 !important;
-    color: #d7ffb8 !important;
-}
-.art-newsletter-form {
-    display: flex !important;
-    gap: 12px !important;
-    margin-top: 16px !important;
-    width: 100% !important;
-    max-width: 500px !important;
-}
-.art-newsletter-form input {
-    flex-grow: 1 !important;
-    padding: 12px 16px !important;
-    border-radius: 12px !important;
-    border: 2px solid transparent !important;
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    outline: none !important;
-    background: #ffffff !important;
-    color: #4b4b4b !important;
-}
-.art-newsletter-form input:focus {
-    border-color: #1cb0f6 !important;
-}
-.art-newsletter-form button {
-    padding: 12px 24px !important;
-    border-radius: 12px !important;
-    border: none !important;
-    background: #1cb0f6 !important;
-    color: #ffffff !important;
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.053em !important;
-    box-shadow: 0 4px 0 #1899d6 !important;
-    cursor: pointer !important;
-    transition: all 0.1s !important;
-    white-space: nowrap !important;
-}
-.art-newsletter-form button:active {
-    transform: translateY(4px) !important;
-    box-shadow: 0 0 0 #1899d6 !important;
-}
-
-/* Grid Section */
-.art-footer-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
-    gap: 32px !important;
-}
-.art-footer-column {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 16px !important;
-}
-.art-footer-logo img {
-    height: 50px !important;
-    filter: brightness(0) invert(1) !important; /* Make logo white */
-    margin-bottom: 12px !important;
-}
-.art-footer-brand-bio {
-    font-size: 15px !important;
-    color: #d7ffb8 !important;
-    line-height: 1.4 !important;
-}
-.art-footer-contact {
-    list-style: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-.art-footer-contact li {
-    font-size: 15px !important;
-    color: #d7ffb8 !important;
-    display: flex !important;
-    gap: 8px !important;
-    align-items: flex-start !important;
-    margin-bottom: 8px !important;
-}
-.art-footer-contact a {
-    color: #d7ffb8 !important;
-    text-decoration: none !important;
-}
-
-.art-footer-column h4 {
-    font-size: 17px !important;
-    font-weight: 700 !important;
-    margin: 0 !important;
-    color: #ffffff !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.053em !important;
-}
-.art-footer-links {
-    list-style: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-}
-.art-footer-links a {
-    color: #d7ffb8 !important;
-    text-decoration: none !important;
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    transition: color 0.2s !important;
-}
-.art-footer-links a:hover {
-    color: #ffffff !important;
-}
-
-/* Footer Bottom */
-.art-footer-bottom {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    flex-wrap: wrap !important;
-    gap: 16px !important;
-    padding-top: 32px !important;
-    border-top: 2px solid rgba(255, 255, 255, 0.2) !important;
-}
-.art-footer-copyright {
-    font-size: 15px !important;
-    color: #d7ffb8 !important;
-    font-weight: 700 !important;
-}
-.art-footer-copyright a {
-    color: #ffffff !important;
-    text-decoration: none !important;
-}
-.art-footer-payment img {
-    height: 30px !important;
-    opacity: 0.9 !important;
-}
-
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-    .art-footer-newsletter h4 {
-        font-size: 24px !important;
-    }
-    .art-newsletter-form {
-        flex-direction: column !important;
-    }
-    .art-newsletter-form button {
-        width: 100% !important;
-    }
-    .art-footer-grid {
-        grid-template-columns: 1fr !important;
-    }
-    .art-footer-bottom {
-        flex-direction: column !important;
-        text-align: center !important;
-    }
-}
-</style>
 
 <footer class="art-footer">
     <div class="art-footer-container">
@@ -206,7 +14,7 @@
                     {{ __('inkwave.ft_subscribe_action') }}
                 </button>
             </form>
-            <p class="suces_rinfo mt-3" style="display: none; color: #ffffff; font-weight: 700; background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 12px;">{{ __('inkwave.ft_subscribe_success') }}</p>
+            <p class="suces_rinfo mt-3">{{ __('inkwave.ft_subscribe_success') }}</p>
         </div>
 
         <!-- Widgets Grid -->
@@ -246,7 +54,7 @@
                     @forelse($footerCategories as $cat)
                         <li><a href="{{ route('product-lists', $cat->slug) }}">{{ $cat->title }}</a></li>
                     @empty
-                        <li><span style="color: #d7ffb8;">{{ __('inkwave.nav_no_categories') }}</span></li>
+                        <li><span>{{ __('inkwave.nav_no_categories') }}</span></li>
                     @endforelse
                 </ul>
             </div>

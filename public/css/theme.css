@@ -1,0 +1,234 @@
+/* ==========================================================================
+   Art Courses Platform — Core Design System
+   ========================================================================== */
+
+/* 
+  Google Fonts: Bodoni Moda 
+  Used as the primary elegant serif, substituting the original ITC cut.
+  Includes Roman (400, 700) and Italic (400) weights with optical sizing.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&display=swap');
+
+:root {
+  /* Colors */
+  --color-vellum-white: #f6f6f6;
+  --color-paper: #ffffff;
+  --color-gallery-ink: #0a0a0a;
+  --color-letterpress-black: #000000;
+  --color-silver-wash: #b3b3b3;
+  --color-burnished-gold: #bc9c5c;
+
+  /* Typography — Font Families */
+  /* Primary Voice: Bodoni Moda */
+  --font-bodoni-roman: 'Bodoni Moda', 'BodoniSvntytwoITCStd-Book', ui-serif, Georgia, serif;
+  --font-bodoni-italic: 'Bodoni Moda', 'BodoniSvntytwoITCStd-BookIt', ui-serif, Georgia, serif;
+  
+  /* System Utility: Arial (System font, no webfont import required) */
+  --font-arial: 'Arial', Helvetica, ui-sans-serif, system-ui, sans-serif;
+
+  /* Typography — Scale */
+  --text-caption: 12px;
+  --leading-caption: 1.25;
+  
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.25;
+  
+  --text-body: 16px;
+  --leading-body: 1.25;
+  
+  --text-subheading: 22px;
+  --leading-subheading: 1.25;
+  
+  --text-heading: 42px;
+  --leading-heading: 0.95;
+
+  /* Typography — Weights */
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-128: 128px;
+
+  /* Layout */
+  --page-max-width: 1280px;
+  --section-gap: 48px;
+  --card-padding: 40px;
+  --element-gap: 20px;
+
+  /* Named Radii */
+  --radius-base: 0px;
+
+  /* Surfaces */
+  --surface-vellum: var(--color-vellum-white);
+  --surface-paper: var(--color-paper);
+  --surface-silver-wash: var(--color-silver-wash);
+  --surface-gallery-ink: var(--color-gallery-ink);
+  --surface-letterpress-black: var(--color-letterpress-black);
+}
+
+/* ==========================================================================
+   Base Global Styles
+   ========================================================================== */
+
+body {
+  background-color: var(--surface-vellum);
+  color: var(--color-letterpress-black);
+  font-family: var(--font-bodoni-roman);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Utility Classes */
+
+.font-serif {
+  font-family: var(--font-bodoni-roman);
+  font-weight: var(--font-weight-regular);
+}
+
+.font-serif-italic {
+  font-family: var(--font-bodoni-italic);
+  font-style: italic;
+  font-weight: var(--font-weight-regular);
+}
+
+.font-sans {
+  font-family: var(--font-arial);
+}
+
+/* Base text sizing */
+.text-caption {
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
+}
+
+.text-body-sm {
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+}
+
+.text-body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+.text-subheading {
+  font-size: var(--text-subheading);
+  line-height: var(--leading-subheading);
+}
+
+.text-heading {
+  font-size: var(--text-heading);
+  line-height: var(--leading-heading);
+  /* Specific override as per design system requirements */
+  letter-spacing: normal; 
+}
+/* ==========================================================================
+   Global Button Consistency Fix (Art Courses Theme)
+   ========================================================================== */
+.btn, .ui-btn, .art-btn-login, .art-btn-register, button[type="submit"] {
+    font-family: 'Bodoni Moda', ui-serif, Georgia, serif !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    padding: 8px 16px !important;
+    border-radius: 0px !important;
+    background: transparent !important;
+    color: #000000 !important;
+    border: none !important;
+    border-bottom: 1px solid #000000 !important;
+    outline: none !important;
+    transition: color 0.2s ease, border-color 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    line-height: 1.5 !important;
+    box-shadow: none !important;
+}
+.btn:focus, .ui-btn:focus, button:focus {
+    outline: none !important;
+}
+.btn:hover, .ui-btn:hover, .art-btn-login:hover, .art-btn-register:hover, button[type="submit"]:hover {
+    color: #bc9c5c !important;
+    border-bottom-color: #bc9c5c !important;
+    text-decoration: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+.btn:active, .ui-btn:active, button[type="submit"]:active {
+    transform: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.btn-close, .art-cart-btn, .mobile-nav-toggler, .close-btn {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    white-space: normal !important;
+}
+
+/* ==========================================================================
+   Preloader Styles — Art Courses Theme
+   ========================================================================== */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f6f6f6;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.st-preloader {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+.st-preloader__logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 0;
+    object-fit: cover;
+    border: 1px solid #bc9c5c;
+    box-shadow: none;
+    animation: pulseImage 2.5s infinite alternate ease-in-out;
+}
+.st-preloader__label {
+    color: #000000;
+    font-family: 'Bodoni Moda', ui-serif, Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    animation: fadeInOut 2s infinite alternate;
+}
+
+@keyframes pulseImage {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.02); opacity: 1; }
+}
+@keyframes fadeInOut {
+    0% { opacity: 0.4; }
+    100% { opacity: 1; }
+}

@@ -51,7 +51,7 @@
 
     <div id="preloader">
         <div class="art-preloader-inner">
-            <div class="art-preloader-line"></div>
+            <img src="{{ asset('assets/images/preloader-icon.webp') }}" class="art-preloader-img" alt="Loading...">
             <div class="art-preloader-text">Curating the Gallery...</div>
         </div>
     </div>

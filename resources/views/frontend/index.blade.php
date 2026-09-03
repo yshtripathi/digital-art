@@ -14,7 +14,7 @@
             min-height: 60vh;
             display: flex;
             align-items: center;
-            background-image: url('{{ asset('assets/photos/i6.jpg') }}');
+            background-image: url('{{ asset('assets/images/hero-bg.webp') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -126,7 +126,7 @@
         <div class="art-hero-container">
             <div class="art-hero-left">
                 <video autoplay loop muted playsinline>
-                    <source src="{{ asset('assets/photos/v2.mp4') }}" type="video/mp4">
+                    <source src="{{ asset('assets/videos/hero-video.mp4') }}" type="video/mp4">
                 </video>
             </div>
             <div class="art-hero-right">
@@ -239,9 +239,9 @@
     <section class="art-about">
         <div class="art-about-container">
             <div class="art-about-left">
-                <img src="{{ asset('assets/photos/i1.webp') }}" alt="Art Course" class="art-about-img art-about-img-1" loading="lazy">
-                <img src="{{ asset('assets/photos/i2.jpg') }}" alt="Art Materials" class="art-about-img art-about-img-2" loading="lazy">
-                <img src="{{ asset('assets/photos/i3.jpg') }}" alt="Student Working" class="art-about-img art-about-img-3" loading="lazy">
+                <img src="{{ asset('assets/images/about-top.webp') }}" alt="Art Course" class="art-about-img art-about-img-1" loading="lazy">
+                <img src="{{ asset('assets/images/about-bottom-left.webp') }}" alt="Art Materials" class="art-about-img art-about-img-2" loading="lazy">
+                <img src="{{ asset('assets/images/about-bottom-right.webp') }}" alt="Student Working" class="art-about-img art-about-img-3" loading="lazy">
             </div>
             <div class="art-about-right">
                 <h2>Master the Fine Arts with Industry Professionals</h2>
@@ -598,10 +598,10 @@
         <p>Immerse yourself in the creative process. Join a community of artists and start shaping your vision today.</p>
         <div class="art-insp-grid">
             <div class="art-insp-item">
-                <video src="{{ asset('assets/photos/v1.mp4') }}" autoplay loop muted playsinline></video>
+                <video src="{{ asset('assets/videos/inspiration-video.mp4') }}" autoplay loop muted playsinline></video>
             </div>
             <div class="art-insp-item">
-                <img src="{{ asset('assets/photos/i5.png') }}" alt="Creative Inspiration" loading="lazy">
+                <img src="{{ asset('assets/images/inspiration-gallery.webp') }}" alt="Creative Inspiration" loading="lazy">
             </div>
         </div>
     </section>

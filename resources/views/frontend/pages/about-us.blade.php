@@ -239,7 +239,7 @@
         <div class="ag-container">
             <div class="ag-split">
                 <div class="ag-split__img">
-                    <img src="{{ asset('assets/images/i1.jpg') }}" alt="Artora Studios Aesthetics">
+                    <img src="{{ asset('assets/images/about-aesthetics.webp') }}" alt="Artora Studios Aesthetics">
                 </div>
                 <div class="ag-split__content ag-text-block ag-bg-bone">
                     <h2 class="ag-title">Cultivating Creativity Through Asian Aesthetics</h2>
@@ -287,7 +287,7 @@
         <div class="ag-container">
             <div class="ag-split ag-split--reverse">
                 <div class="ag-split__img ag-split__img--reverse">
-                    <img src="{{ asset('assets/images/i10.jpg') }}" alt="Travel and Cultural Illustration">
+                    <img src="{{ asset('assets/images/about-cultural.webp') }}" alt="Travel and Cultural Illustration">
                 </div>
                 <div class="ag-split__content ag-text-block ag-bg-dark">
                     <h2 class="ag-title ag-title--dark">Preserving Tradition in a Modern World</h2>
@@ -334,7 +334,7 @@
             <div class="ag-grid-3">
                 <div class="ag-card">
                     <div class="ag-card__img-wrap">
-                        <img src="{{ asset('assets/images/17693.jpg') }}" alt="Japanese Architecture">
+                        <img src="{{ asset('assets/images/about-architecture.webp') }}" alt="Japanese Architecture">
                     </div>
                     <h4>Japanese Architecture</h4>
                     <p>Master perspective and balance by studying traditional Japanese spaces, interiors, and structures.</p>
@@ -342,7 +342,7 @@
                 
                 <div class="ag-card">
                     <div class="ag-card__img-wrap">
-                        <img src="{{ asset('assets/images/60004.jpg') }}" alt="Culinary Illustration">
+                        <img src="{{ asset('assets/images/about-culinary.webp') }}" alt="Culinary Illustration">
                     </div>
                     <h4>Culinary Illustration</h4>
                     <p>Capture the inviting textures, vibrant colors, and dynamic compositions of Asian cuisine.</p>
@@ -350,7 +350,7 @@
                 
                 <div class="ag-card">
                     <div class="ag-card__img-wrap">
-                        <img src="{{ asset('assets/images/9964577.jpg') }}" alt="Nature Illustration">
+                        <img src="{{ asset('assets/images/about-nature.webp') }}" alt="Nature Illustration">
                     </div>
                     <h4>Botanical & Nature</h4>
                     <p>Discover the beauty of seasonal plants, serene gardens, and natural landscapes across Asia.</p>

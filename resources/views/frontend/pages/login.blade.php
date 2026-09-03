@@ -276,7 +276,7 @@ form#frmLogin button[type="submit"].ag-submit-btn:hover {
                 
                 {{-- Image Side --}}
                 <div class="ag-split__img">
-                    <img src="{{ asset('assets/images/i8.jpg') }}" alt="Login to Artora">
+                    <img src="{{ asset('assets/images/login-bg.webp') }}" alt="Login to Artora">
                 </div>
 
                 {{-- Form Side --}}

@@ -285,7 +285,7 @@ form#contactform button[type="submit"].ag-contact-submit-btn:hover {
         <div class="ag-container">
             <div class="ag-split">
                 <div class="ag-split__img">
-                    <img src="{{ asset('assets/images/i6.jpg') }}" alt="Contact Artora Studios">
+                    <img src="{{ asset('assets/images/contact-bg.webp') }}" alt="Contact Artora Studios">
                 </div>
                 <div class="ag-split__content ag-text-block ag-bg-bone">
                     <h2 class="ag-title">{{ __('inkwave.contact_frm_heading') }}</h2>

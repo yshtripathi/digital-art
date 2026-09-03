@@ -148,7 +148,7 @@ body {
     background: transparent !important;
     color: #000000 !important;
     border: none !important;
-    border-bottom: 1px solid #000000 !important;
+    
     outline: none !important;
     transition: color 0.2s ease, border-color 0.2s ease !important;
     display: inline-flex !important;

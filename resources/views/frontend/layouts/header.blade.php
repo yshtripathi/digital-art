@@ -42,7 +42,6 @@
 
                 @if(Auth::check())
                     <a href="{{ route('user') }}" class="ag-nav-link">{{ __('inkwave.nav_my_courses') }}</a>
-                    <a href="{{ route('user') }}" class="ag-nav-link">{{ __('inkwave.nav_orders') }}</a>
                 @endif
 
                 <a href="{{ route('contact') }}" class="ag-nav-link {{ Route::is('contact') ? 'active' : '' }}">{{ __('inkwave.nav_support') }}</a>

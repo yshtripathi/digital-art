@@ -1,4 +1,4 @@
-﻿@extends('frontend.layouts.main')
+@extends('frontend.layouts.main')
 @section('title', __('inkwave.tu_heading'))
 
 @section('main-content')
@@ -10,137 +10,437 @@
     ]
 ])
 
+<style>
+/* ==========================================================================
+   Art Courses — Top Up (Credits) Page - Premium Table Layout
+   ========================================================================== */
+.ag-topup-page, .ag-topup-page *, .ag-topup-page *::before, .ag-topup-page *::after {
+    box-sizing: border-box;
+}
+.ag-topup-page {
+    padding: 40px 40px;
+    min-height: 80vh;
+}
+.ag-container {
+    max-width: 1200px; /* Reduced max-width to constrain table */
+    margin: 0 auto;
+    padding: 0 5%;
+}
 
+.ag-topup-head {
+    text-align: center;
+    margin-bottom: 64px;
+}
+.ag-page-title {
+    font-family: var(--font-bodoni-roman, 'Bodoni Moda', serif) !important;
+    font-size: 56px !important;
+    color: #000000 !important;
+    margin-bottom: 16px !important;
+    line-height: 1.1;
+}
+.ag-page-desc {
+    font-family: var(--font-arial, Arial, sans-serif);
+    font-size: 16px;
+    color: #555555;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
 
-<div class="duo-tu-wrap">
-    <div class="duo-tu-container">
+.ag-split-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    max-width: 900px; /* Constrained for vertical stacking */
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   TOP COLUMN: Tiers Table
+   ========================================================================== */
+.ag-table-card {
+    background-color: #ffffff; /* White card */
+    padding: 48px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    border-top: 6px solid #000000;
+}
+.ag-section-title {
+    font-family: var(--font-bodoni-roman, 'Bodoni Moda', serif);
+    font-size: 32px;
+    color: #000000;
+    margin-bottom: 32px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 16px;
+}
+.ag-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 32px;
+}
+.ag-tiers-table {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    font-family: var(--font-arial, Arial, sans-serif);
+}
+.ag-tiers-table th, .ag-tiers-table td {
+    padding: 20px 24px;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    text-align: left;
+    white-space: nowrap;
+}
+.ag-tiers-table th {
+    background: #f5f5f5; /* Bone header */
+    font-family: var(--font-bodoni-roman, 'Bodoni Moda', serif);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #000000;
+}
+.ag-tiers-table td {
+    font-size: 15px;
+    color: #333333;
+    vertical-align: middle;
+}
+.ag-tiers-table i {
+    color: #bc9c5c;
+    margin-right: 12px;
+    font-size: 20px;
+}
+.ag-tiers-table strong {
+    font-size: 16px;
+    color: #000000;
+}
+.ag-badge {
+    display: inline-block;
+    background: #000000;
+    color: #ffffff;
+    font-size: 11px;
+    padding: 6px 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-left: 16px;
+    vertical-align: middle;
+}
+.ag-highlight {
+    font-family: var(--font-bodoni-roman, 'Bodoni Moda', serif);
+    font-size: 24px;
+    color: #bc9c5c;
+    font-weight: bold;
+}
+.vip-row td {
+    background: #faf8f5;
+}
+
+.ag-note {
+    font-family: var(--font-arial, Arial, sans-serif);
+    font-size: 13px;
+    color: #888888;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.ag-disclaimer-box {
+    background-color: #faf8f5; /* Subtle tint */
+    border-left: 4px solid #bc9c5c;
+    padding: 16px 24px;
+    margin-top: 24px;
+    font-family: var(--font-arial, Arial, sans-serif);
+    font-size: 14px;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.ag-disclaimer-box i {
+    color: #bc9c5c;
+    font-size: 24px;
+}
+
+/* ==========================================================================
+   BOTTOM COLUMN: Calculator Form
+   ========================================================================== */
+.ag-calc-card {
+    background: #ffffff; /* White card */
+    padding: 48px;
+    border-top: 6px solid #000000;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+.ag-calc-title {
+    font-family: var(--font-bodoni-roman, 'Bodoni Moda', serif);
+    font-size: 36px;
+    color: #000000;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.ag-calc-title i { color: #bc9c5c; font-size: 28px; }
+.ag-calc-desc {
+    font-family: var(--font-arial, Arial, sans-serif);
+    font-size: 15px;
+    color: #555555;
+    margin-bottom: 40px;
+}
+
+.ag-form-group { margin-bottom: 40px; }
+.ag-label {
+    font-family: var(--font-arial, Arial, sans-serif);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #888888;
+    display: block;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+.ag-input-wrap {
+    display: flex;
+    align-items: center;
+    background: #f5f5f5; /* Inverted to Bone */
+    border: 1px solid rgba(0,0,0,0.1);
+    transition: border-color 0.3s ease;
+}
+.ag-input-wrap:focus-within {
+    border-color: #000000;
+}
+.ag-currency-symbol {
+    padding: 20px 24px;
+    background: #eeeeee;
+    font-family: var(--font-arial, Arial, sans-serif);
+    font-size: 20px;
+    color: #555555;
+    font-weight: bold;
+    border-right: 1px solid rgba(0,0,0,0.1);
+}
+.ag-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 20px;
+    font-family: var(--font-bodoni-roman, 'Bodoni Moda', serif);
+    font-size: 32px;
+    color: #000000;
+    width: 100%;
+    background: transparent;
+}
+
+.ag-calc-stats {
+    background: #f5f5f5; /* Inverted to Bone */
+    padding: 32px;
+    margin-bottom: 40px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+.ag-calc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-family: var(--font-arial, Arial, sans-serif);
+    font-size: 15px;
+    color: #555555;
+}
+.ag-calc-total {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin-bottom: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+}
+.ag-calc-total span:last-child {
+    font-family: var(--font-bodoni-roman, 'Bodoni Moda', serif);
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #000000;
+    line-height: 1;
+}
+.ag-calc-total i {
+    color: #bc9c5c;
+    font-size: 32px;
+}
+
+button[type="submit"].ag-submit-btn {
+    width: 100%;
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: 1px solid #000000 !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    padding: 24px !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+button[type="submit"].ag-submit-btn:hover {
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+.ag-trust-note {
+    text-align: center;
+    margin-top: 24px;
+    font-family: var(--font-arial, Arial, sans-serif);
+    font-size: 13px;
+    color: #888888;
+}
+.ag-trust-note i {
+    color: #bc9c5c;
+    margin-right: 8px;
+}
+</style>
+
+<div class="ag-topup-page">
+    <div class="ag-container">
         
-        <div class="duo-tu-head">
-            <p class="duo-tu-eyebrow"><i class="fas fa-coins"></i> {{ __('inkwave.tu_eyebrow') }}</p>
-            <h1 class="duo-tu-title">{{ __('inkwave.tu_heading') }}</h1>
-            <p class="duo-tu-sub">{{ __('inkwave.tu_sub') }}</p>
+        <div class="ag-topup-head">
+            <h1 class="ag-page-title">{{ __('inkwave.tu_heading') }}</h1>
+            <p class="ag-page-desc">{{ __('inkwave.tu_sub') }}</p>
         </div>
 
         @php
             $cur = session('currency');
             if ($cur == 'JPY') {
                 $tiers = [
-                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'¥1 - ¥79,999',        'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'¥80,000 - ¥159,999',  'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'¥160,000 - ¥239,999', 'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'¥240,000+',           'f'=>true],
+                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'&yen;1 - &yen;79,999',        'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'&yen;80,000 - &yen;159,999',  'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'&yen;160,000 - &yen;239,999', 'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'&yen;240,000+',           'f'=>true],
                 ];
             } elseif ($cur == 'HKD') {
                 $tiers = [
-                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'HK$12,000+',           'f'=>true],
+                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'HK$12,000+',           'f'=>true],
                 ];
             } else {
                 $tiers = [
-                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'×1',   'r'=>'$1 - $499',       'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'×1.5', 'r'=>'$500 - $999',     'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'×2',   'r'=>'$1,000 - $1,499', 'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'×2.5', 'r'=>'$1,500+',         'f'=>true],
+                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'$1 - $499',       'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'$500 - $999',     'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'$1,000 - $1,499', 'f'=>false],
+                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'$1,500+',         'f'=>true],
                 ];
             }
         @endphp
 
-        <div class="duo-tu-tiers">
-            @foreach($tiers as $t)
-                <div class="duo-tu-card @if($t['f']) duo-tu-card--vip @endif">
-                    @if($t['f'])<span class="duo-tu-card__flag">{{ __('inkwave.tu_best_value') }}</span>@endif
-                    <span class="duo-tu-card__icon"><i class="fas {{ $t['i'] }}"></i></span>
-                    <h3 class="duo-tu-card__name">{{ $t['n'] }}</h3>
-                    <div class="duo-tu-card__mult">{{ $t['big'] }}</div>
-                    <ul class="duo-tu-card__feats">
-                        <li><i class="fas fa-check-circle"></i> {{ $t['r'] }}</li>
-                        <li><i class="fas fa-check-circle"></i> {{ __('inkwave.tu_bonus_text') }} {{ $t['big'] }}</li>
-                    </ul>
-                    <button type="button" class="duo-tu-btn" data-topup-focus>{{ __('inkwave.tu_calc_button') }}</button>
-                </div>
-            @endforeach
-        </div>
-
-        <p class="duo-tu-note">
-            @if(session('currency') == 'JPY')
-                {{ __('inkwave.tu_jpy_conversion_note') }}
-            @elseif(session('currency') == 'HKD')
-                {{ __('inkwave.tu_hkd_conversion_note') }}
-            @else
-                {{ __('inkwave.tu_usd_conversion_note') }}
-            @endif
-        </p>
-
-        <div class="duo-tu-calc" id="topup">
-            <div class="duo-tu-calc__head">
-                <h2 class="duo-tu-calc__title">{{ __('inkwave.tu_calc_title') }}</h2>
-                <p>{{ __('inkwave.tu_calc_tagline') }}</p>
-            </div>
+        <div class="ag-split-grid">
             
-            <div class="duo-tu-calc__body">
-                <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form">
-                    @csrf
-                    
-                    <div class="duo-tu-form-group">
-                        <label class="duo-tu-label">{{ __('inkwave.tu_calc_input_label') }}</label>
-                        <div class="duo-tu-input-wrap">
-                            <span>{{ session('currency') == 'JPY' ? '¥' : '$' }}</span>
-                            <input type="number" name="amount" id="topup_amount" placeholder="0" min="1" required>
-                        </div>
-                    </div>
+            {{-- =========================================================
+                 LEFT: Credits / Tiers Table
+                 ========================================================= --}}
+            <div class="ag-table-card">
+                <h2 class="ag-section-title">Credit Tiers & Bonuses</h2>
+                
+                <div class="ag-table-wrap">
+                    <table class="ag-tiers-table">
+                        <thead>
+                            <tr>
+                                <th>Tier</th>
+                                <th>Purchase Range</th>
+                                <th>Bonus Multiplier</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($tiers as $t)
+                                <tr class="{{ $t['f'] ? 'vip-row' : '' }}">
+                                    <td>
+                                        <i class="fas {{ $t['i'] }}"></i> 
+                                        <strong>{{ $t['n'] }}</strong>
+                                        @if($t['f']) <span class="ag-badge">{{ __('inkwave.tu_best_value') }}</span> @endif
+                                    </td>
+                                    <td>{{ $t['r'] }}</td>
+                                    <td><span class="ag-highlight">{{ $t['big'] }}</span></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-                    <div class="duo-tu-stats">
-                        <div class="duo-tu-stat">
-                            <span>{{ __('inkwave.tu_calc_base_points') }}:</span>
-                            <span id="base_points">0</span>
-                        </div>
-                        <div class="duo-tu-stat">
-                            <span>{{ __('inkwave.tu_calc_tier_bonus') }}:</span>
-                            <span id="multiplier_display">×1</span>
-                        </div>
-                        <div class="duo-tu-stat duo-tu-stat--total">
-                            <span>{{ __('inkwave.tu_calc_youll_get') }}:</span>
-                            <span><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
-                        </div>
+                <p class="ag-note">
+                    @if(session('currency') == 'JPY')
+                        {{ __('inkwave.tu_jpy_conversion_note') }}
+                    @elseif(session('currency') == 'HKD')
+                        {{ __('inkwave.tu_hkd_conversion_note') }}
+                    @else
+                        {{ __('inkwave.tu_usd_conversion_note') }}
+                    @endif
+                </p>
+                <div class="ag-disclaimer-box">
+                    <i class="fas fa-exclamation-circle"></i> 
+                    <div>
+                        <strong>Note:</strong> Credits purchased are strictly for use on this website and are non-transferable and non-refundable.
                     </div>
-
-                    <button type="submit" class="duo-tu-buybtn topup-btn">
-                        <span>{{ __('inkwave.tu_calc_button') }}</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                    
-                    <p>
-                        <i class="fas fa-shield-alt"></i> {{ __('inkwave.tu_calc_trust_message') }}
-                    </p>
-                </form>
+                </div>
             </div>
+
+            {{-- =========================================================
+                 RIGHT: Calculator Form
+                 ========================================================= --}}
+            <div>
+                <div class="ag-calc-card">
+                    <h2 class="ag-calc-title"><i class="fas fa-calculator"></i> {{ __('inkwave.tu_calc_title') }}</h2>
+                    <p class="ag-calc-desc">{{ __('inkwave.tu_calc_tagline') }}</p>
+                    
+                    <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form">
+                        @csrf
+                        
+                        <div class="ag-form-group">
+                            <label class="ag-label">{{ __('inkwave.tu_calc_input_label') }}</label>
+                            <div class="ag-input-wrap">
+                                <span class="ag-currency-symbol">{!! session('currency') == 'JPY' ? '&yen;' : '$' !!}</span>
+                                <input type="number" name="amount" id="topup_amount" class="ag-input" placeholder="0" min="1" required>
+                            </div>
+                        </div>
+
+                        <div class="ag-calc-stats">
+                            <div class="ag-calc-row">
+                                <span>{{ __('inkwave.tu_calc_base_points') }}:</span>
+                                <span id="base_points">0</span>
+                            </div>
+                            <div class="ag-calc-row">
+                                <span>{{ __('inkwave.tu_calc_tier_bonus') }}:</span>
+                                <span id="multiplier_display">x1</span>
+                            </div>
+                            <div class="ag-calc-row ag-calc-total">
+                                <span>{{ __('inkwave.tu_calc_youll_get') }}:</span>
+                                <span><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="ag-submit-btn topup-btn">
+                            <span>{{ __('inkwave.tu_calc_button') }}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        
+                        <p class="ag-trust-note">
+                            <i class="fas fa-shield-alt"></i> {{ __('inkwave.tu_calc_trust_message') }}
+                        </p>
+                    </form>
+                </div>
+            </div>
+
         </div>
-        
     </div>
 </div>
 @endsection
 
-
-
 @push('scripts')
 <script>
-    // Tier card buttons focus the amount input
-    (function () {
-        document.querySelectorAll('.duo-tu-btn[data-topup-focus]').forEach(function (b) {
-            b.addEventListener('click', function () {
-                var a = document.getElementById('topup_amount');
-                if (a) { a.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { a.focus(); }, 350); }
-            });
-        });
-    })();
-
     // Live points calculator
     document.addEventListener('DOMContentLoaded', function() {
         const amountInput = document.getElementById('topup_amount');
         const totalPointsDisplay = document.getElementById('total_points');
-        const totalPointsLarge = document.getElementById('total_points_large');
         const basePointsDisplay = document.getElementById('base_points');
         const multiplierDisplay = document.getElementById('multiplier_display');
         if (!amountInput) return;
@@ -174,15 +474,14 @@
 
             const totalPoints = Math.round(basePoints * multiplier);
             if(basePointsDisplay) basePointsDisplay.textContent = basePoints.toLocaleString();
-            if(multiplierDisplay) multiplierDisplay.textContent = multiplier === 1 ? 'None' : '×' + multiplier.toFixed(1);
+            if(multiplierDisplay) multiplierDisplay.textContent = 'x' + multiplier;
             if(totalPointsDisplay) totalPointsDisplay.textContent = totalPoints.toLocaleString();
-            if(totalPointsLarge) totalPointsLarge.textContent = totalPoints.toLocaleString();
         }
 
         amountInput.addEventListener('input', calculatePoints);
         amountInput.addEventListener('change', calculatePoints);
 
-        // Topup (add to cart) — submit without redirect, then reload
+        // Topup (add to cart) - submit without redirect, then reload
         const topupForms = document.querySelectorAll('.topup-form');
         topupForms.forEach(form => {
             form.addEventListener('submit', function(e) {

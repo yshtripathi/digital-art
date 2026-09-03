@@ -29,8 +29,8 @@
     <meta name="twitter:image" content="{{ $og_image }}">
     @endif
 
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png">
-    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
     <link href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">

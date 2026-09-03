@@ -10,105 +10,7 @@
     ]
 ])
 
-<style>
-/* ==========================================================================
-   Art Courses — Checkout Page (Gallery Theme)
-   ========================================================================== */
-.ag-checkout-page, .ag-checkout-page *, .ag-checkout-page *::before, .ag-checkout-page *::after {
-    box-sizing: border-box;
-}
-.ag-checkout-page {
-    padding: 40px 40px; 
-}
-.ag-container { 
-    max-width: 1300px; 
-    margin: 0 auto; 
-    padding: 0; 
-}
 
-.ag-checkout-grid {
-    display: grid; 
-    grid-template-columns: 1.5fr 400px; 
-    gap: 80px; 
-    align-items: start;
-}
-@media (max-width: 1100px) { .ag-checkout-grid { grid-template-columns: 1fr; gap: 40px; } }
-
-.ag-text-block {
-    background-color: #f5f5f5; padding: 48px; margin-bottom: 32px; box-shadow: 0 15px 35px rgba(0,0,0,0.03);
-}
-.ag-text-block:last-child { margin-bottom: 0; }
-@media (max-width: 768px) { .ag-text-block { padding: 32px 24px; } }
-
-.ag-card-title {
-    font-family: var(--font-bodoni-roman, 'Bodoni Moda', serif) !important;
-    font-size: 28px !important; color: #000000 !important; margin-bottom: 32px !important;
-    line-height: 1.2 !important; display: flex; align-items: center; gap: 12px;
-    border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 16px;
-}
-.ag-card-title i { color: #bc9c5c; font-size: 24px; }
-
-.ag-field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-@media (max-width: 768px) { .ag-field-grid { grid-template-columns: 1fr; gap: 20px; } }
-
-.ag-field { margin-bottom: 24px; position: relative; }
-.ag-field--full { grid-column: 1 / -1; }
-.ag-label {
-    display: block; font-family: var(--font-arial, Arial, sans-serif); font-size: 12px;
-    text-transform: uppercase; letter-spacing: 0.15em; color: #000000; margin-bottom: 12px; font-weight: bold;
-}
-.ag-input, .ag-select, .ag-textarea {
-    width: 100%; border: 1px solid rgba(0,0,0,0.15); background: transparent; padding: 18px 24px;
-    font-family: var(--font-arial, Arial, sans-serif); font-size: 15px; color: #000000; border-radius: 0; transition: all 0.3s ease;
-}
-.ag-select {
-    appearance: none; -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E");
-    background-repeat: no-repeat; background-position: right 24px top 50%; background-size: 10px auto;
-}
-.ag-textarea { min-height: 120px; resize: vertical; }
-.ag-input:focus, .ag-select:focus, .ag-textarea:focus { outline: none; border-color: #bc9c5c; box-shadow: inset 0 0 0 1px #bc9c5c; }
-.ag-input::placeholder, .ag-textarea::placeholder { color: #aaaaaa; }
-.ag-error-msg { display: flex; align-items: center; gap: 6px; color: #d93025; font-family: var(--font-arial, Arial, sans-serif); font-size: 13px; margin-top: 8px; }
-.ag-input.is-invalid, .ag-select.is-invalid, .ag-textarea.is-invalid, .ag-captcha-box.is-invalid { border-color: #d93025 !important; }
-
-.ag-captcha-box { display: flex; align-items: center; gap: 16px; border: 1px solid rgba(0,0,0,0.15); background: transparent; padding: 8px 16px; margin-bottom: 24px; }
-.ag-captcha-box input { border: none; background: transparent; flex: 1; padding: 10px 8px; font-family: var(--font-arial, Arial, sans-serif); font-size: 15px; color: #000; }
-.ag-captcha-box input:focus { outline: none; }
-.ag-captcha-box__img img { height: 40px; display: block; }
-
-.ag-expiry-box { display: flex; align-items: center; gap: 12px; }
-.ag-expiry-box .ag-input { flex: 1; text-align: center; padding: 18px 0; }
-.ag-expiry-sep { font-family: var(--font-bodoni-roman, 'Bodoni Moda', serif); font-size: 20px; color: #000000; }
-
-.ag-check-field { margin-bottom: 16px; }
-.ag-checkbox-wrap { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-family: var(--font-arial, Arial, sans-serif); font-size: 13px; color: #555555; line-height: 1.5; }
-.ag-checkbox-wrap a { color: #000000; font-weight: bold; text-decoration: underline; text-underline-offset: 3px; }
-.ag-checkbox-wrap a:hover { color: #bc9c5c; }
-.ag-checkbox-wrap input { display: none; }
-.ag-checkbox-mark { width: 18px; height: 18px; border: 1px solid #000000; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; transition: all 0.2s ease; }
-.ag-checkbox-wrap input:checked ~ .ag-checkbox-mark { background-color: #000000; }
-.ag-checkbox-wrap input:checked ~ .ag-checkbox-mark::after { content: '\2713'; color: #ffffff; font-size: 12px; }
-
-.ag-order-summary { position: sticky; top: 140px; }
-.ag-order-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.1); font-family: var(--font-arial, Arial, sans-serif); font-size: 14px; color: #555555; }
-.ag-order-head { font-weight: bold; color: #000000; text-transform: uppercase; letter-spacing: 0.1em; }
-.ag-order-total { border-bottom: none; padding-top: 24px; font-size: 18px; font-weight: bold; color: #000000; }
-.ag-points { color: #bc9c5c; font-weight: bold; display: flex; align-items: center; gap: 8px;}
-
-form#frmCheckout button[type="submit"].ag-submit-btn {
-    background: #000000 !important; color: #ffffff !important; border: 1px solid #000000 !important; font-family: Arial, sans-serif !important; font-size: 13px !important; font-weight: bold !important; text-transform: uppercase !important; letter-spacing: 0.1em !important; cursor: pointer !important; transition: all 0.3s ease !important; padding: 18px 24px !important; white-space: nowrap !important; display: inline-block !important; text-align: center !important; border-radius: 0 !important; outline: none !important; box-shadow: none !important; width: 100%; margin-top: 24px;
-}
-form#frmCheckout button[type="submit"].ag-submit-btn:hover { background: #ffffff !important; color: #000000 !important; border-bottom-color: #000000 !important; }
-
-.ag-ghost-btn { display: block; text-align: center; font-family: var(--font-arial, Arial, sans-serif); font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #000000; text-decoration: none; border: 1px solid rgba(0,0,0,0.2); padding: 16px; margin-top: 16px; transition: all 0.3s ease; }
-.ag-ghost-btn:hover { border-color: #000000; background: rgba(0,0,0,0.02); }
-
-.ag-payment-methods { margin-top: 32px; text-align: center; }
-.ag-payment-methods img { max-width: 100%; height: auto; opacity: 0.8; }
-.ag-billnote { font-family: var(--font-arial, Arial, sans-serif); font-size: 12px; color: #888888; margin-top: 24px; line-height: 1.6; display: flex; align-items: center; gap: 16px; }
-.ag-billnote img { height: 30px; }
-</style>
 
 <div class="ag-checkout-page">
     <div class="ag-container">
@@ -354,14 +256,7 @@ form#frmCheckout button[type="submit"].ag-submit-btn:hover { background: #ffffff
                         @if(env('CAPTCHA_ENABLED', true))
                             <div class="ag-field" style="margin-top: 32px;">
                                 <label class="ag-label">{{ __('inkwave.chk_sec_code') }} *</label>
-                                <style>
-                                    .ag-captcha-stretch img {
-                                        width: 100% !important;
-                                        height: 60px !important;
-                                        object-fit: cover !important;
-                                        display: block !important;
-                                    }
-                                </style>
+                                
                                 <div class="ag-captcha-stretch" style="margin-bottom: 16px; border: 1px solid rgba(0,0,0,0.15);">
                                     @captcha
                                 </div>

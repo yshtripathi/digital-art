@@ -1,94 +1,80 @@
-﻿@extends('frontend.layouts.main')
-@section('title', __('inkwave.about_page_title'))
+@extends('frontend.layouts.main')
+@section('title', 'About Us')
 @section('main-content')
 
-{{-- Inject the new Breadcrumb component --}}
+{{-- Breadcrumb --}}
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('inkwave.about_page_title'),
+    'title' => 'About Us',
     'links' => [
-        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
-        ['name' => __('inkwave.about_page_title')]
+        ['name' => 'Home', 'url' => route('home')],
+        ['name' => 'About Us']
     ]
 ])
 
-
-
-<div class="duo-about-wrapper">
-
-    {{-- SECTION 1: Giant Hero Card --}}
-    <section class="duo-container">
-        <div class="duo-hero-card">
-            <video class="duo-hero-card__img" autoplay loop muted playsinline>
-                <source src="{{ asset('assets/images/v3.mp4') }}" type="video/mp4">
-            </video>
-            <div class="duo-hero-card__body">
-                <p class="duo-hero-card__eyebrow">{{ __('inkwave.about_intro_eyebrow') }}</p>
-                <h2 class="duo-hero-card__title">{{ __('inkwave.about_intro_heading') }}</h2>
-                <p class="duo-hero-card__desc">
-                    {{ __('inkwave.about_intro_lead') }} {{ __('inkwave.about_intro_body') }}
-                </p>
-                <div class="duo-tags">
-                    <span class="duo-tag">{{ __('inkwave.about_tag_talk') }}</span>
-                    <span class="duo-tag">{{ __('inkwave.about_tag_career') }}</span>
-                    <span class="duo-tag">{{ __('inkwave.about_tag_tech') }}</span>
-                    <span class="duo-tag">{{ __('inkwave.about_tag_creative') }}</span>
-                    <span class="duo-tag">{{ __('inkwave.about_tag_life') }}</span>
-                </div>
-            </div>
+<div class="ag-about-wrapper">
+    
+    {{-- Hero Section --}}
+    <section class="ag-about-hero">
+        <div class="ag-about-hero__image">
+            <img src="{{ asset('assets/images/i1.jpg') }}" alt="Artora Studios">
+        </div>
+        <div class="ag-about-hero__content">
+            <h2 class="ag-about-title">Cultivating Creativity Through Asian Aesthetics</h2>
+            <p class="ag-about-text">
+                Welcome to Artora Studios. We are dedicated to exploring the rich visual heritage of Japan and Southeast Asia through modern illustration. From the intricate details of traditional architecture to the vibrant energy of culinary arts, fashion, and botanical nature, our courses are designed to inspire and elevate your creative journey.
+            </p>
+            <p class="ag-about-text">
+                Whether you are a beginner looking to understand perspective and balance, or an advanced artist refining your visual storytelling and cultural illustration, our curated curriculum provides the tools and inspiration you need.
+            </p>
         </div>
     </section>
 
-    {{-- SECTION 2: Vertical Value List --}}
-    <section class="duo-values-section duo-container">
-        <div class="duo-values-header">
-            <h2>{{ __('inkwave.about_standards_heading') }}</h2>
-        </div>
-
-        <div class="duo-values-list">
-            <div class="duo-value-item">
-                <div class="duo-value-item__icon"><i class="fas fa-image"></i></div>
-                <div class="duo-value-item__content">
-                    <h3 class="duo-value-item__title">{{ __('inkwave.about_standard_1_title') }}</h3>
-                    <p class="duo-value-item__desc">{{ __('inkwave.about_standard_1_desc') }}</p>
+    {{-- Focus Areas (Categories from CSV) --}}
+    <section class="ag-about-focus">
+        <h3 class="ag-about-subtitle">What We Explore</h3>
+        <div class="ag-about-grid">
+            
+            <div class="ag-about-card">
+                <div class="ag-about-card__img-wrap">
+                    <img src="{{ asset('assets/images/i6.jpg') }}" alt="Japanese Architecture & Spatial Art">
                 </div>
+                <h4>Japanese Architecture & Spatial Art</h4>
+                <p>Master perspective and balance by studying traditional Japanese spaces, interiors, and architectural structures.</p>
             </div>
             
-            <div class="duo-value-item">
-                <div class="duo-value-item__icon"><i class="fas fa-certificate"></i></div>
-                <div class="duo-value-item__content">
-                    <h3 class="duo-value-item__title">{{ __('inkwave.about_standard_2_title') }}</h3>
-                    <p class="duo-value-item__desc">{{ __('inkwave.about_standard_2_desc') }}</p>
+            <div class="ag-about-card">
+                <div class="ag-about-card__img-wrap">
+                    <img src="{{ asset('assets/images/i7.jpg') }}" alt="Food & Culinary Illustration">
                 </div>
+                <h4>Food & Culinary Illustration</h4>
+                <p>Capture the inviting textures, colors, and compositions of Asian cuisine and vibrant dining scenes.</p>
+            </div>
+            
+            <div class="ag-about-card">
+                <div class="ag-about-card__img-wrap">
+                    <img src="{{ asset('assets/images/i8.jpg') }}" alt="Botanical & Nature Illustration">
+                </div>
+                <h4>Botanical & Nature Illustration</h4>
+                <p>Discover the beauty of seasonal plants, serene gardens, and natural landscapes across Asia.</p>
+            </div>
+            
+            <div class="ag-about-card">
+                <div class="ag-about-card__img-wrap">
+                    <img src="{{ asset('assets/images/i10.jpg') }}" alt="Travel & Cultural Illustration">
+                </div>
+                <h4>Travel & Cultural Illustration</h4>
+                <p>Turn personal travel experiences, historic landmarks, and cultural traditions into expressive visual storytelling.</p>
             </div>
 
-            <div class="duo-value-item">
-                <div class="duo-value-item__icon"><i class="fas fa-star"></i></div>
-                <div class="duo-value-item__content">
-                    <h3 class="duo-value-item__title">{{ __('inkwave.about_standard_3_title') }}</h3>
-                    <p class="duo-value-item__desc">{{ __('inkwave.about_standard_3_desc') }}</p>
-                </div>
-            </div>
-
-            <div class="duo-value-item">
-                <div class="duo-value-item__icon"><i class="fas fa-download"></i></div>
-                <div class="duo-value-item__content">
-                    <h3 class="duo-value-item__title">{{ __('inkwave.about_standard_4_title') }}</h3>
-                    <p class="duo-value-item__desc">{{ __('inkwave.about_standard_4_desc') }}</p>
-                </div>
-            </div>
         </div>
     </section>
 
-    {{-- SECTION 3: Slim CTA Banner --}}
-    <section class="duo-container">
-        <div class="duo-cta-banner">
-            <div class="duo-cta-banner__text">
-                <h2>{{ __('inkwave.about_cta_heading') }}</h2>
-                <p>{{ __('inkwave.about_cta_sub') }}</p>
-            </div>
-            <a href="{{ route('product-lists') }}" class="duo-cta-banner__btn">
-                {{ __('inkwave.about_cta_btn') }} <i class="fas fa-arrow-right"></i>
-            </a>
+    {{-- CTA Banner --}}
+    <section class="ag-about-cta">
+        <div class="ag-about-cta__box">
+            <h2>Begin Your Artistic Journey</h2>
+            <p>Join our community of creators and start mastering new illustration techniques today.</p>
+            <a href="{{ route('product-lists') }}" class="ag-btn-solid">Explore Courses</a>
         </div>
     </section>
 

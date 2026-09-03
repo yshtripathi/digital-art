@@ -690,7 +690,8 @@ body {
 .ag-dropdown-item {
     white-space: nowrap !important;
 }
- 
+
+ 
  
 /* ==========================================================================
    Art Courses — Header (Gallery Style)
@@ -795,8 +796,8 @@ body { padding-top: 120px !important; }
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-top: -160px;
-    padding: 240px 40px 80px 40px;
+    margin-top: -120px !important; /* Perfectly negates the body padding-top: 120px */
+    padding: 160px 40px 120px 40px; /* Moved text higher up away from the busy part of the image */
     text-align: center;
     margin-bottom: 64px;
     position: relative;
@@ -806,15 +807,26 @@ body { padding-top: 120px !important; }
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(255, 255, 255, 0.2); /* Lightened overlay */
+    background-color: rgba(255, 255, 255, 0.2); /* Softened overlay */
     z-index: 1;
 }
-.ag-breadcrumb-container { position: relative; z-index: 10; }
+.ag-breadcrumb-container { 
+    position: relative; 
+    z-index: 10; 
+    display: inline-block; /* Wraps tightly around the text */
+    background-color: rgba(255, 255, 255, 0.75); /* Frosted glass effect */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 40px 80px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
 .ag-breadcrumb-title {
     font-family: 'Bodoni Moda', serif !important; font-size: 56px !important; font-weight: 400 !important;
-    color: #ffffff !important; margin-bottom: 24px !important; letter-spacing: 0.02em !important; line-height: 1.2 !important;
-    -webkit-text-stroke: 1.5px #000000 !important;
-    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0px 4px 12px rgba(0,0,0,0.8) !important;
+    color: #000000 !important; margin-bottom: 24px !important; letter-spacing: 0.02em !important; line-height: 1.2 !important;
+    -webkit-text-stroke: 0 !important;
+    text-shadow: none !important;
     animation: agFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(20px);
 }
 .ag-breadcrumb-list {
@@ -824,9 +836,9 @@ body { padding-top: 120px !important; }
 }
 .ag-breadcrumb-list li { display: flex; align-items: center; gap: 16px; }
 .ag-breadcrumb-list a {
-    color: #ffffff !important; font-weight: bold !important; text-decoration: none !important; transition: color 0.3s ease !important; position: relative !important; display: inline-block !important; padding: 4px 0 !important;
-    -webkit-text-stroke: 0.5px #000000 !important;
-    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;
+    color: #000000 !important; font-weight: bold !important; text-decoration: none !important; transition: color 0.3s ease !important; position: relative !important; display: inline-block !important; padding: 4px 0 !important;
+    -webkit-text-stroke: 0 !important;
+    text-shadow: none !important;
 }
 .ag-breadcrumb-list a:hover { color: #bc9c5c !important; }
 .ag-breadcrumb-list a::after {
@@ -834,14 +846,14 @@ body { padding-top: 120px !important; }
     transform: scaleX(0); transform-origin: right; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .ag-breadcrumb-list a:hover::after { transform: scaleX(1); transform-origin: left; }
-.ag-breadcrumb-list i { font-size: 10px !important; color: #ffffff !important; -webkit-text-stroke: 0.5px #000000 !important; }
+.ag-breadcrumb-list i { font-size: 10px !important; color: #666666 !important; -webkit-text-stroke: 0 !important; }
 .ag-breadcrumb-list .active {
-    color: #ffffff !important; font-weight: bold !important;
-    -webkit-text-stroke: 0.5px #000000 !important;
-    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;
+    color: #000000 !important; font-weight: bold !important;
+    -webkit-text-stroke: 0 !important;
+    text-shadow: none !important;
 }
 @keyframes agFadeUp { to { opacity: 1; transform: translateY(0); } }
-@media (max-width: 768px) { .ag-breadcrumb-wrapper { padding: 48px 24px; margin-bottom: 40px; margin-top: -100px; } .ag-breadcrumb-title { font-size: 36px !important; } }
+@media (max-width: 768px) { .ag-breadcrumb-wrapper { padding: 120px 24px 60px 24px; margin-bottom: 40px; margin-top: -120px !important; } .ag-breadcrumb-container { padding: 32px 24px; } .ag-breadcrumb-title { font-size: 32px !important; } }
 
 
 /* ==========================================================================

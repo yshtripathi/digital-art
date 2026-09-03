@@ -1,4 +1,4 @@
-﻿<footer class="ag-footer">
+<footer class="ag-footer">
     <div class="ag-footer-inner">
         
         <!-- Newsletter Section -->
@@ -7,7 +7,7 @@
             <p>{{ __('inkwave.ft_newsletter_subtitle') }}</p>
             <form class="ag-newsletter-form subscribe-form">
                 <input type="email" name="email" class="email" placeholder="{{ __('inkwave.ft_email_placeholder') }}" required>
-                <button type="submit" aria-label="Subscribe">
+                <button type="submit" class="ag-btn-primary" aria-label="Subscribe" style="padding: 13px 24px !important; letter-spacing: 0.1em !important; font-size: 11px !important;">
                     {{ __('inkwave.ft_subscribe_action') }}
                 </button>
             </form>

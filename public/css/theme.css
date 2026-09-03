@@ -761,7 +761,7 @@ body { padding-top: 120px !important; }
 }
 .ag-newsletter-form input::placeholder { color: #888888; }
 .ag-newsletter-form button {
-    background: #bc9c5c !important; color: #ffffff !important; border: none !important; border-radius: 6px !important;
+    background: #bc9c5c !important; color: #ffffff !important; border: none !important;
     font-family: Arial, sans-serif !important; font-size: 13px !important; font-weight: bold !important;
     text-transform: uppercase !important; letter-spacing: 0.1em !important; cursor: pointer !important;
     transition: all 0.3s ease !important; padding: 12px 24px !important; white-space: nowrap !important; display: inline-block !important;
@@ -796,7 +796,7 @@ body { padding-top: 120px !important; }
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-top: -120px !important; /* Perfectly negates the body padding-top: 120px */
+    margin-top: -170px !important; /* Perfectly negates the body padding-top: 120px */
     padding: 160px 40px 120px 40px; /* Moved text higher up away from the busy part of the image */
     text-align: center;
     margin-bottom: 64px;
@@ -866,3 +866,65 @@ body { padding-top: 120px !important; }
 @keyframes artFadeInOut { 0% { opacity: 0.3; transform: translateY(4px); } 100% { opacity: 1; transform: translateY(0); } }
 @keyframes artGrowLine { 0% { height: 0px; opacity: 0; } 100% { height: 60px; opacity: 1; } }
 
+html, body, .page-wrapper { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; }
+body { padding-top: 120px !important; margin: 0 !important; }
+
+/* ==========================================================================
+   Global Theme Buttons (Unified Design)
+   ========================================================================== */
+.ag-btn-primary, .ag-btn-secondary, .ag-btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 40px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.15em !important;
+    font-family: var(--font-bodoni-roman, 'Bodoni Moda', serif) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    transition: all 0.4s ease !important;
+    border-radius: 0 !important; /* Sharp corners for gallery theme */
+    border: 1px solid transparent !important;
+    cursor: pointer;
+}
+
+.ag-btn-primary {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+.ag-btn-primary:hover {
+    background-color: transparent !important;
+    border-color: #000000 !important;
+    color: #000000 !important;
+}
+
+.ag-btn-secondary {
+    background-color: transparent !important;
+    color: #000000 !important;
+    border-color: rgba(0,0,0,0.2) !important;
+}
+.ag-btn-secondary:hover {
+    border-color: #000000 !important;
+}
+
+.ag-btn-gold {
+    background-color: var(--color-burnished-gold, #bc9c5c) !important;
+    color: #ffffff !important;
+}
+.ag-btn-gold:hover {
+    background-color: transparent !important;
+    border-color: var(--color-burnished-gold, #bc9c5c) !important;
+    color: var(--color-burnished-gold, #bc9c5c) !important;
+}
+
+.ag-btn-outline-white {
+    background-color: transparent !important;
+    border-color: rgba(255,255,255,0.6) !important;
+    color: #ffffff !important;
+}
+.ag-btn-outline-white:hover {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
+}

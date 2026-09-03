@@ -1,4 +1,4 @@
-﻿<header class="ag-header">
+<header class="ag-header">
     <div class="ag-header-inner">
         
         <!-- Left Side: Logo -->
@@ -108,7 +108,7 @@
                 <!-- Guest Auth -->
                 <div class="ag-auth-group">
                     <a href="{{ route('login.form') }}" class="ag-action-btn">{{ __('inkwave.nav_login') }}</a>
-                    <a href="{{ route('register.form') }}" class="ag-action-btn" style="background:#000; color:#fff !important; padding:8px 16px; border-radius:6px;">{{ __('inkwave.nav_register') }}</a>
+                    <a href="{{ route('register.form') }}" class="ag-btn-primary" style="padding: 10px 24px !important; margin-left: 16px;">{{ __('inkwave.nav_register') }}</a>
                 </div>
             @endif
 

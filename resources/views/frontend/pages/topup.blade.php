@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('inkwave.tu_heading'))
+@section('title', __('inkwave.credits_pg_title'))
 
 @section('main-content')
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('inkwave.tu_heading'),
+    'title' => __('inkwave.credits_pg_title'),
     'links' => [
-        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
-        ['name' => __('inkwave.tu_heading')]
+        ['name' => __('inkwave.top_nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.credits_pg_title')]
     ]
 ])
 
@@ -16,32 +16,32 @@
     <div class="ag-container">
         
         <div class="ag-topup-head">
-            <h1 class="ag-page-title">{{ __('inkwave.tu_heading') }}</h1>
-            <p class="ag-page-desc">{{ __('inkwave.tu_sub') }}</p>
+            <h1 class="ag-page-title">{{ __('inkwave.credits_pg_title') }}</h1>
+            <p class="ag-page-desc">{{ __('inkwave.credits_pg_desc') }}</p>
         </div>
 
         @php
             $cur = session('currency');
             if ($cur == 'JPY') {
                 $tiers = [
-                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'&yen;1 - &yen;79,999',        'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'&yen;80,000 - &yen;159,999',  'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'&yen;160,000 - &yen;239,999', 'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'&yen;240,000+',           'f'=>true],
+                    ['n'=>__('inkwave.credits_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'&yen;1 - &yen;79,999',        'f'=>false],
+                    ['n'=>__('inkwave.credits_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'&yen;80,000 - &yen;159,999',  'f'=>false],
+                    ['n'=>__('inkwave.credits_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'&yen;160,000 - &yen;239,999', 'f'=>false],
+                    ['n'=>__('inkwave.credits_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'&yen;240,000+',           'f'=>true],
                 ];
             } elseif ($cur == 'HKD') {
                 $tiers = [
-                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'HK$12,000+',           'f'=>true],
+                    ['n'=>__('inkwave.credits_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
+                    ['n'=>__('inkwave.credits_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
+                    ['n'=>__('inkwave.credits_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
+                    ['n'=>__('inkwave.credits_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'HK$12,000+',           'f'=>true],
                 ];
             } else {
                 $tiers = [
-                    ['n'=>__('inkwave.tu_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'$1 - $499',       'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'$500 - $999',     'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'$1,000 - $1,499', 'f'=>false],
-                    ['n'=>__('inkwave.tu_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'$1,500+',         'f'=>true],
+                    ['n'=>__('inkwave.credits_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'$1 - $499',       'f'=>false],
+                    ['n'=>__('inkwave.credits_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'$500 - $999',     'f'=>false],
+                    ['n'=>__('inkwave.credits_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'$1,000 - $1,499', 'f'=>false],
+                    ['n'=>__('inkwave.credits_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'$1,500+',         'f'=>true],
                 ];
             }
         @endphp
@@ -52,15 +52,15 @@
                  LEFT: Credits / Tiers Table
                  ========================================================= --}}
             <div class="ag-table-card">
-                <h2 class="ag-section-title">Credit Tiers & Bonuses</h2>
+                <h2 class="ag-section-title">{{ __('inkwave.credits_table_title') }}</h2>
                 
                 <div class="ag-table-wrap">
                     <table class="ag-tiers-table">
                         <thead>
                             <tr>
-                                <th>Tier</th>
-                                <th>Purchase Range</th>
-                                <th>Bonus Multiplier</th>
+                                <th>{{ __('inkwave.credits_table_col1') }}</th>
+                                <th>{{ __('inkwave.credits_table_col2') }}</th>
+                                <th>{{ __('inkwave.credits_table_col3') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,7 +69,7 @@
                                     <td>
                                         <i class="fas {{ $t['i'] }}"></i> 
                                         <strong>{{ $t['n'] }}</strong>
-                                        @if($t['f']) <span class="ag-badge">{{ __('inkwave.tu_best_value') }}</span> @endif
+                                        @if($t['f']) <span class="ag-badge">{{ __('inkwave.credits_best_value') }}</span> @endif
                                     </td>
                                     <td>{{ $t['r'] }}</td>
                                     <td><span class="ag-highlight">{{ $t['big'] }}</span></td>
@@ -81,17 +81,17 @@
 
                 <p class="ag-note">
                     @if(session('currency') == 'JPY')
-                        {{ __('inkwave.tu_jpy_conversion_note') }}
+                        {{ __('inkwave.credits_jpy_note') }}
                     @elseif(session('currency') == 'HKD')
-                        {{ __('inkwave.tu_hkd_conversion_note') }}
+                        {{ __('inkwave.credits_hkd_note') }}
                     @else
-                        {{ __('inkwave.tu_usd_conversion_note') }}
+                        {{ __('inkwave.credits_usd_note') }}
                     @endif
                 </p>
                 <div class="ag-disclaimer-box">
                     <i class="fas fa-exclamation-circle"></i> 
                     <div>
-                        <strong>Note:</strong> Credits purchased are strictly for use on this website and are non-transferable and non-refundable.
+                        <strong>{{ __('inkwave.credits_disclaimer_title') }}</strong> {{ __('inkwave.credits_disclaimer_text') }}
                     </div>
                 </div>
             </div>
@@ -101,14 +101,14 @@
                  ========================================================= --}}
             <div>
                 <div class="ag-calc-card">
-                    <h2 class="ag-calc-title"><i class="fas fa-calculator"></i> {{ __('inkwave.tu_calc_title') }}</h2>
-                    <p class="ag-calc-desc">{{ __('inkwave.tu_calc_tagline') }}</p>
+                    <h2 class="ag-calc-title"><i class="fas fa-calculator"></i> {{ __('inkwave.credits_calc_title') }}</h2>
+                    <p class="ag-calc-desc">{{ __('inkwave.credits_calc_desc') }}</p>
                     
                     <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form">
                         @csrf
                         
                         <div class="ag-form-group">
-                            <label class="ag-label">{{ __('inkwave.tu_calc_input_label') }}</label>
+                            <label class="ag-label">{{ __('inkwave.credits_calc_label') }}</label>
                             <div class="ag-input-wrap">
                                 <span class="ag-currency-symbol">{!! session('currency') == 'JPY' ? '&yen;' : '$' !!}</span>
                                 <input type="number" name="amount" id="topup_amount" class="ag-input" placeholder="0" min="1" required>
@@ -117,26 +117,26 @@
 
                         <div class="ag-calc-stats">
                             <div class="ag-calc-row">
-                                <span>{{ __('inkwave.tu_calc_base_points') }}:</span>
+                                <span>{{ __('inkwave.credits_calc_base') }}:</span>
                                 <span id="base_points">0</span>
                             </div>
                             <div class="ag-calc-row">
-                                <span>{{ __('inkwave.tu_calc_tier_bonus') }}:</span>
+                                <span>{{ __('inkwave.credits_calc_bonus') }}:</span>
                                 <span id="multiplier_display">x1</span>
                             </div>
                             <div class="ag-calc-row ag-calc-total">
-                                <span>{{ __('inkwave.tu_calc_youll_get') }}:</span>
+                                <span>{{ __('inkwave.credits_calc_total') }}:</span>
                                 <span><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
                             </div>
                         </div>
 
                         <button type="submit" class="ag-submit-btn topup-btn">
-                            <span>{{ __('inkwave.tu_calc_button') }}</span>
+                            <span>{{ __('inkwave.credits_calc_btn') }}</span>
                             <i class="fas fa-arrow-right"></i>
                         </button>
                         
                         <p class="ag-trust-note">
-                            <i class="fas fa-shield-alt"></i> {{ __('inkwave.tu_calc_trust_message') }}
+                            <i class="fas fa-shield-alt"></i> {{ __('inkwave.credits_trust_msg') }}
                         </p>
                     </form>
                 </div>

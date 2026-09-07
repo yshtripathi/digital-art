@@ -4,21 +4,21 @@
     @section('title', $category->title)
     @section('description', $category->summary)
 @else
-    @section('title', __('inkwave.cl_browse'))
-    @section('description', __('inkwave.cl_browse'))
+    @section('title', __('inkwave.cat_browse'))
+    @section('description', __('inkwave.cat_browse'))
 @endif
 
 @section('main-content')
 @php
     $isCat = isset($category->title) && $category->title;
-    $bcTitle = $isCat ? $category->title : __('inkwave.cl_browse');
+    $bcTitle = $isCat ? $category->title : __('inkwave.cat_browse');
 @endphp
 
 @include('frontend.layouts.breadcrumb', [
     'title' => $bcTitle,
     'links' => [
-        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
-        ['name' => __('inkwave.cl_catalog'), 'url' => route('product-lists')],
+        ['name' => __('inkwave.top_nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.cat_catalog'), 'url' => route('product-lists')],
         ['name' => $bcTitle]
     ]
 ])
@@ -36,8 +36,8 @@
                 <p>{{ $category->summary }}</p>
             @endif
         @else
-            <h1>{{ __('inkwave.cl_browse') }}</h1>
-            <p>{{ __('inkwave.cl_explore_desc') }}</p>
+            <h1>{{ __('inkwave.cat_browse') }}</h1>
+            <p>{{ __('inkwave.cat_explore_desc') }}</p>
         @endif
 
         @if($hasImg)
@@ -48,7 +48,7 @@
     <div class="ag-container">
         
         {{-- ================= PRODUCT GRID ================= --}}
-        <h2 class="ag-section-title">{{ $products->count() }} {{ __('inkwave.cl_items') }}</h2>
+        <h2 class="ag-section-title">{{ $products->count() }} {{ __('inkwave.cat_items') }}</h2>
         
         @if($products->count())
             <div class="ag-product-grid">
@@ -67,17 +67,17 @@
                             
                             @if($course->levels && $course->levels->count() > 0)
                                 <p class="ag-product-card__price">
-                                    {{ __('inkwave.cl_starting_from') }} 
+                                    {{ __('inkwave.cat_starting_from') }} 
                                     <strong><i class="fas fa-coins"></i> {{ number_format($course->levels->min('price_in_points')) }}</strong> 
-                                    {{ __('inkwave.cl_credits_label') }}
+                                    {{ __('inkwave.cat_credits_label') }}
                                 </p>
                             @else
                                 <p class="ag-product-card__price">
-                                    <strong>{{ __('inkwave.cl_free_label') }}</strong>
+                                    <strong>{{ __('inkwave.cat_free_label') }}</strong>
                                 </p>
                             @endif
                             
-                            <div class="ag-primary-btn">{{ __('inkwave.cl_view_btn') }}</div>
+                            <div class="ag-primary-btn">{{ __('inkwave.cat_view_btn') }}</div>
                         </div>
                     </a>
                 @endforeach
@@ -89,8 +89,8 @@
         @else
             <div class="ag-empty-state">
                 <i class="fas fa-box-open"></i>
-                <h3>{{ __('inkwave.cl_no_products') }}</h3>
-                <p>{{ __('inkwave.cl_explore_desc') }}</p>
+                <h3>{{ __('inkwave.cat_no_products') }}</h3>
+                <p>{{ __('inkwave.cat_explore_desc') }}</p>
             </div>
         @endif
 
@@ -104,7 +104,7 @@
 
         @if($allCategories->count())
             <div style="margin-top: 80px;">
-                <h2 class="ag-section-title">{{ __('inkwave.cl_other_cats') }}</h2>
+                <h2 class="ag-section-title">{{ __('inkwave.cat_other_cats') }}</h2>
                 <div class="ag-categories-grid">
                     @foreach($allCategories as $cat)
                         <a href="{{ route('product-lists', $cat->slug) }}" class="ag-cat-card">

@@ -539,7 +539,7 @@ body.mobile-menu-visible .mobile-menu .menu-box {
 }
 .ag-dropdown-item {
     font-family: 'Bodoni Moda', serif !important;
-    font-size: 15px !important;
+    font-size: 14px !important;
     font-style: italic;
     padding: 12px 32px !important;
     color: #666666 !important;
@@ -1186,7 +1186,7 @@ body.mobile-menu-visible .mobile-menu .menu-box {
     background: #f9f9f9;
     padding: 16px 20px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #000000;
     transition: border-color 0.3s;
     outline: none;
@@ -1528,7 +1528,7 @@ button[type="submit"].ag-dash-submit:hover {
         }
         .art-cat-scroll-content p {
             font-family: Arial, sans-serif;
-            font-size: 15px;
+            font-size: 14px;
             color: #555555;
             line-height: 1.6;
             margin-bottom: 24px;
@@ -1605,7 +1605,7 @@ button[type="submit"].ag-dash-submit:hover {
         }
         .art-how-card p {
             font-family: Arial, sans-serif;
-            font-size: 15px;
+            font-size: 14px;
             color: #555555;
             line-height: 1.6;
         }
@@ -1752,7 +1752,7 @@ button[type="submit"].ag-dash-submit:hover {
         color: #000000;
     }
     .ag-tiers-table td {
-        font-size: 15px;
+        font-size: 14px;
         color: #333333;
         vertical-align: middle;
     }
@@ -1834,7 +1834,7 @@ button[type="submit"].ag-dash-submit:hover {
     .ag-calc-title i { color: #bc9c5c; font-size: 28px; }
     .ag-calc-desc {
         font-family: var(--font-arial, Arial, sans-serif);
-        font-size: 15px;
+        font-size: 14px;
         color: #555555;
         margin-bottom: 40px;
     }
@@ -1869,7 +1869,7 @@ button[type="submit"].ag-dash-submit:hover {
         font-weight: bold;
         border-right: 1px solid rgba(0,0,0,0.1);
     }
-    .ag-input {
+.ag-input-wrap .ag-input {
         flex: 1;
         border: none;
         outline: none;
@@ -1893,7 +1893,7 @@ button[type="submit"].ag-dash-submit:hover {
         align-items: center;
         margin-bottom: 16px;
         font-family: var(--font-arial, Arial, sans-serif);
-        font-size: 15px;
+        font-size: 14px;
         color: #555555;
     }
     .ag-calc-total {
@@ -2591,8 +2591,8 @@ button[type="submit"].ag-dash-submit:hover {
     text-transform: uppercase; letter-spacing: 0.15em; color: #000000; margin-bottom: 12px; font-weight: bold;
 }
 .ag-input, .ag-select, .ag-textarea {
-    width: 100%; border: 1px solid rgba(0,0,0,0.15); background: transparent; padding: 18px 24px;
-    font-family: var(--font-arial, Arial, sans-serif); font-size: 15px; color: #000000; border-radius: 0; transition: all 0.3s ease;
+    width: 100%; border: 1px solid rgba(0,0,0,0.15); background: transparent; padding: 12px 16px;
+    font-family: var(--font-arial, Arial, sans-serif); font-size: 14px; color: #000000; border-radius: 0; transition: all 0.3s ease;
 }
 .ag-select {
     appearance: none; -webkit-appearance: none;
@@ -2606,7 +2606,7 @@ button[type="submit"].ag-dash-submit:hover {
 .ag-input.is-invalid, .ag-select.is-invalid, .ag-textarea.is-invalid, .ag-captcha-box.is-invalid { border-color: #d93025 !important; }
 
 .ag-captcha-box { display: flex; align-items: center; gap: 16px; border: 1px solid rgba(0,0,0,0.15); background: transparent; padding: 8px 16px; margin-bottom: 24px; }
-.ag-captcha-box input { border: none; background: transparent; flex: 1; padding: 10px 8px; font-family: var(--font-arial, Arial, sans-serif); font-size: 15px; color: #000; }
+.ag-captcha-box input { border: none; background: transparent; flex: 1; padding: 10px 8px; font-family: var(--font-arial, Arial, sans-serif); font-size: 14px; color: #000; }
 .ag-captcha-box input:focus { outline: none; }
 .ag-captcha-box__img img { height: 40px; display: block; }
 
@@ -2630,7 +2630,7 @@ button[type="submit"].ag-dash-submit:hover {
 .ag-points { color: #bc9c5c; font-weight: bold; display: flex; align-items: center; gap: 8px;}
 
 form#frmCheckout button[type="submit"].ag-submit-btn {
-    background: #000000 !important; color: #ffffff !important; border: 1px solid #000000 !important; font-family: Arial, sans-serif !important; font-size: 13px !important; font-weight: bold !important; text-transform: uppercase !important; letter-spacing: 0.1em !important; cursor: pointer !important; transition: all 0.3s ease !important; padding: 18px 24px !important; white-space: nowrap !important; display: inline-block !important; text-align: center !important; border-radius: 0 !important; outline: none !important; box-shadow: none !important; width: 100%; margin-top: 24px;
+    background: #000000 !important; color: #ffffff !important; border: 1px solid #000000 !important; font-family: Arial, sans-serif !important; font-size: 13px !important; font-weight: bold !important; text-transform: uppercase !important; letter-spacing: 0.1em !important; cursor: pointer !important; transition: all 0.3s ease !important; padding: 12px 16px !important; white-space: nowrap !important; display: inline-block !important; text-align: center !important; border-radius: 0 !important; outline: none !important; box-shadow: none !important; width: 100%; margin-top: 24px;
 }
 form#frmCheckout button[type="submit"].ag-submit-btn:hover { background: #ffffff !important; color: #000000 !important; border-bottom-color: #000000 !important; }
 
@@ -2639,7 +2639,9 @@ form#frmCheckout button[type="submit"].ag-submit-btn:hover { background: #ffffff
 
 .ag-payment-methods { margin-top: 32px; text-align: center; }
 .ag-payment-methods img { max-width: 100%; height: auto; opacity: 0.8; }
-.ag-billnote { font-family: var(--font-arial, Arial, sans-serif); font-size: 12px; color: #888888; margin-top: 24px; line-height: 1.6; display: flex; align-items: center; gap: 16px; }
+.ag-billnote { background: #f5f5f5; padding: 16px; font-family: var(--font-arial, Arial, sans-serif); font-size: 13px; color: #555; margin-top: 24px; line-height: 1.5; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.ag-billnote p { margin: 0; }
+.ag-billnote img { background: #fff; padding: 8px 12px; }
 .ag-billnote img { height: 30px; }
 .ag-captcha-stretch img {
                                         width: 100% !important;
@@ -2759,7 +2761,7 @@ form#frmCheckout button[type="submit"].ag-submit-btn:hover { background: #ffffff
 }
 .ag-card p, .ag-card a {
     font-family: var(--font-arial, Arial, sans-serif) !important;
-    font-size: 15px !important;
+    font-size: 14px !important;
     color: #666666 !important;
     line-height: 1.7 !important;
     padding: 0 24px;
@@ -2789,9 +2791,9 @@ form#frmCheckout button[type="submit"].ag-submit-btn:hover { background: #ffffff
     width: 100%;
     border: 1px solid rgba(0,0,0,0.15);
     background: transparent;
-    padding: 18px 24px;
+    padding: 12px 16px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #000000;
     border-radius: 0;
     transition: all 0.3s ease;
@@ -2836,7 +2838,7 @@ form#frmCheckout button[type="submit"].ag-submit-btn:hover { background: #ffffff
     flex: 1;
     padding: 10px 8px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #000;
 }
 .ag-captcha-box input:focus {
@@ -3208,9 +3210,9 @@ form#contactform button[type="submit"].ag-contact-submit-btn:hover {
     width: 100%;
     border: 1px solid rgba(0,0,0,0.15);
     background: transparent;
-    padding: 18px 24px;
+    padding: 12px 16px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #000000;
     border-radius: 0;
     transition: all 0.3s ease;
@@ -3251,7 +3253,7 @@ form#contactform button[type="submit"].ag-contact-submit-btn:hover {
     flex: 1;
     padding: 10px 8px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #000;
 }
 .ag-captcha-box input:focus {
@@ -3440,9 +3442,9 @@ form#frmForgot button[type="submit"].ag-submit-btn:hover {
     width: 100%;
     border: 1px solid rgba(0,0,0,0.15);
     background: transparent;
-    padding: 18px 24px;
+    padding: 12px 16px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #000000;
     border-radius: 0;
     transition: all 0.3s ease;
@@ -3920,7 +3922,7 @@ form#frmLogin button[type="submit"].ag-submit-btn:hover {
     font-family: var(--font-arial, Arial, sans-serif);
     color: #333333;
     line-height: 1.8;
-    font-size: 15px; /* REDUCED BASE FONT SIZE */
+    font-size: 14px; /* REDUCED BASE FONT SIZE */
 }
 
 /* Headings */
@@ -3945,7 +3947,7 @@ form#frmLogin button[type="submit"].ag-submit-btn:hover {
 .ag-prose p {
     margin-bottom: 24px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px; /* REDUCED */
+    font-size: 14px; /* REDUCED */
 }
 .ag-prose p:last-child {
     margin-bottom: 0;
@@ -3956,7 +3958,7 @@ form#frmLogin button[type="submit"].ag-submit-btn:hover {
     margin-bottom: 32px;
     padding-left: 32px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px; /* REDUCED */
+    font-size: 14px; /* REDUCED */
 }
 .ag-prose li {
     margin-bottom: 12px;
@@ -4443,7 +4445,7 @@ form#frmLogin button[type="submit"].ag-submit-btn:hover {
 }
 .ag-pd-feat__desc {
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #555555;
     line-height: 1.6;
 }
@@ -4610,9 +4612,9 @@ button[type="submit"].ag-submit-btn:hover {
     width: 100%;
     border: 1px solid rgba(0,0,0,0.15);
     background: transparent;
-    padding: 18px 24px;
+    padding: 12px 16px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #000000;
     border-radius: 0;
     transition: all 0.3s ease;
@@ -4653,7 +4655,7 @@ button[type="submit"].ag-submit-btn:hover {
     flex: 1;
     padding: 10px 8px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #000;
 }
 .ag-captcha-box input:focus {
@@ -4835,7 +4837,7 @@ form#frmRegister button[type="submit"].ag-submit-btn:hover {
     color: #000000;
 }
 .ag-tiers-table td {
-    font-size: 15px;
+    font-size: 14px;
     color: #333333;
     vertical-align: middle;
 }
@@ -4916,7 +4918,7 @@ form#frmRegister button[type="submit"].ag-submit-btn:hover {
 .ag-calc-title i { color: #bc9c5c; font-size: 28px; }
 .ag-calc-desc {
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #555555;
     margin-bottom: 40px;
 }
@@ -4951,7 +4953,7 @@ form#frmRegister button[type="submit"].ag-submit-btn:hover {
     font-weight: bold;
     border-right: 1px solid rgba(0,0,0,0.1);
 }
-.ag-input {
+.ag-input-wrap .ag-input {
     flex: 1;
     border: none;
     outline: none;
@@ -4975,7 +4977,7 @@ form#frmRegister button[type="submit"].ag-submit-btn:hover {
     align-items: center;
     margin-bottom: 16px;
     font-family: var(--font-arial, Arial, sans-serif);
-    font-size: 15px;
+    font-size: 14px;
     color: #555555;
 }
 .ag-calc-total {

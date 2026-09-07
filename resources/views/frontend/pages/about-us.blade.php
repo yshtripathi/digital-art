@@ -1,17 +1,15 @@
 @extends('frontend.layouts.main')
-@section('title', 'About Us')
+@section('title', __('inkwave.about_page_title'))
 @section('main-content')
 
 {{-- Breadcrumb --}}
 @include('frontend.layouts.breadcrumb', [
-    'title' => 'About Us',
+    'title' => __('inkwave.about_page_title'),
     'links' => [
-        ['name' => 'Home', 'url' => route('home')],
-        ['name' => 'About Us']
+        ['name' => __('inkwave.top_nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.about_page_title')]
     ]
 ])
-
-
 
 <div class="ag-about-page">
     
@@ -20,43 +18,43 @@
         <div class="ag-container">
             <div class="ag-split">
                 <div class="ag-split__img">
-                    <img src="{{ asset('assets/images/about-aesthetics.webp') }}" alt="Artora Studios Aesthetics">
+                    <img src="{{ asset('assets/images/about-aesthetics.webp') }}" alt="Aesthetics">
                 </div>
                 <div class="ag-split__content ag-text-block ag-bg-bone">
-                    <h2 class="ag-title">Cultivating Creativity Through Asian Aesthetics</h2>
+                    <h2 class="ag-title">{{ __('inkwave.about_hero_title') }}</h2>
                     <p class="ag-text ag-text-lead">
-                        Welcome to Artora Studios. We are a premium illustration platform dedicated to exploring the rich visual heritage of Japan and Southeast Asia. 
+                        {{ __('inkwave.about_hero_lead') }}
                     </p>
                     <p class="ag-text">
-                        Whether you are an emerging artist seeking foundational skills or a seasoned professional looking to refine your technique, our expert-led modules provide a deep dive into regional art styles, bridging the gap between historical reverence and contemporary illustration.
+                        {{ __('inkwave.about_hero_body') }}
                     </p>
                     
                     <ul class="ag-list-elegant">
                         <li>
                             <span class="ag-bullet-icon"></span>
                             <div>
-                                <strong>Master Traditional Tools</strong>
-                                Dive deep into classical ink, brush, and digital rendering techniques used by industry veterans.
+                                <strong>{{ __('inkwave.about_hero_point1_title') }}</strong>
+                                {{ __('inkwave.about_hero_point1_desc') }}
                             </div>
                         </li>
                         <li>
                             <span class="ag-bullet-icon"></span>
                             <div>
-                                <strong>Cinematic Lighting</strong>
-                                Explore atmospheric lighting and composition inspired by iconic Asian cinema and animation.
+                                <strong>{{ __('inkwave.about_hero_point2_title') }}</strong>
+                                {{ __('inkwave.about_hero_point2_desc') }}
                             </div>
                         </li>
                         <li>
                             <span class="ag-bullet-icon"></span>
                             <div>
-                                <strong>Authentic Reference Library</strong>
-                                Build a culturally accurate and visually stunning library to ground your artwork in reality.
+                                <strong>{{ __('inkwave.about_hero_point3_title') }}</strong>
+                                {{ __('inkwave.about_hero_point3_desc') }}
                             </div>
                         </li>
                     </ul>
 
                     <div style="margin-top: 40px;">
-                        <a href="{{ route('contact') }}" class="ag-btn-primary">Contact Us</a>
+                        <a href="{{ route('contact') }}" class="ag-btn-primary">{{ __('inkwave.about_cta_btn_contact') }}</a>
                     </div>
                 </div>
             </div>
@@ -68,37 +66,37 @@
         <div class="ag-container">
             <div class="ag-split ag-split--reverse">
                 <div class="ag-split__img ag-split__img--reverse">
-                    <img src="{{ asset('assets/images/about-cultural.webp') }}" alt="Travel and Cultural Illustration">
+                    <img src="{{ asset('assets/images/about-cultural.webp') }}" alt="Philosophy">
                 </div>
                 <div class="ag-split__content ag-text-block ag-bg-dark">
-                    <h2 class="ag-title ag-title--dark">Preserving Tradition in a Modern World</h2>
+                    <h2 class="ag-title ag-title--dark">{{ __('inkwave.about_phil_title') }}</h2>
                     <p class="ag-text ag-text-lead ag-text--white">
-                        We believe that illustration is more than just drawing—it is a powerful tool for preserving and sharing the rich cultural tapestry of Asia. 
+                        {{ __('inkwave.about_phil_lead') }}
                     </p>
                     <p class="ag-text ag-text--dark">
-                        Our curriculum goes far beyond surface-level aesthetics. We encourage students to understand the context behind the visuals—the seasonal significance of flora, the architectural logic of heritage sites, and the storytelling woven into local textiles.
+                        {{ __('inkwave.about_phil_body') }}
                     </p>
 
                     <ul class="ag-list-elegant ag-list-elegant--dark">
                         <li>
                             <span class="ag-bullet-icon"></span>
                             <div>
-                                <strong>Folklore & Mythology</strong>
-                                Study the rich history of regional myths to master narrative-driven character design.
+                                <strong>{{ __('inkwave.about_phil_point1_title') }}</strong>
+                                {{ __('inkwave.about_phil_point1_desc') }}
                             </div>
                         </li>
                         <li>
                             <span class="ag-bullet-icon"></span>
                             <div>
-                                <strong>Anatomical Precision</strong>
-                                Render detailed studies of traditional garments, intricate textiles, and historical armor.
+                                <strong>{{ __('inkwave.about_phil_point2_title') }}</strong>
+                                {{ __('inkwave.about_phil_point2_desc') }}
                             </div>
                         </li>
                         <li>
                             <span class="ag-bullet-icon"></span>
                             <div>
-                                <strong>Atmospheric Environments</strong>
-                                Utilize advanced techniques for painting serene, natural, and grand architectural landscapes.
+                                <strong>{{ __('inkwave.about_phil_point3_title') }}</strong>
+                                {{ __('inkwave.about_phil_point3_desc') }}
                             </div>
                         </li>
                     </ul>
@@ -110,31 +108,31 @@
     {{-- SECTION 3: Curated Disciplines (No Background) --}}
     <section class="ag-section">
         <div class="ag-container">
-            <h2 class="ag-title ag-title--center">Our Curated Disciplines</h2>
+            <h2 class="ag-title ag-title--center">{{ __('inkwave.about_disc_title') }}</h2>
             
             <div class="ag-grid-3">
                 <div class="ag-card">
                     <div class="ag-card__img-wrap">
-                        <img src="{{ asset('assets/images/about-architecture.webp') }}" alt="Japanese Architecture">
+                        <img src="{{ asset('assets/images/about-architecture.webp') }}" alt="Architecture">
                     </div>
-                    <h4>Japanese Architecture</h4>
-                    <p>Master perspective and balance by studying traditional Japanese spaces, interiors, and structures.</p>
+                    <h4>{{ __('inkwave.about_disc1_title') }}</h4>
+                    <p>{{ __('inkwave.about_disc1_desc') }}</p>
                 </div>
                 
                 <div class="ag-card">
                     <div class="ag-card__img-wrap">
-                        <img src="{{ asset('assets/images/about-culinary.webp') }}" alt="Culinary Illustration">
+                        <img src="{{ asset('assets/images/about-culinary.webp') }}" alt="Sustainable">
                     </div>
-                    <h4>Culinary Illustration</h4>
-                    <p>Capture the inviting textures, vibrant colors, and dynamic compositions of Asian cuisine.</p>
+                    <h4>{{ __('inkwave.about_disc2_title') }}</h4>
+                    <p>{{ __('inkwave.about_disc2_desc') }}</p>
                 </div>
                 
                 <div class="ag-card">
                     <div class="ag-card__img-wrap">
-                        <img src="{{ asset('assets/images/about-nature.webp') }}" alt="Nature Illustration">
+                        <img src="{{ asset('assets/images/about-nature.webp') }}" alt="Residential">
                     </div>
-                    <h4>Botanical & Nature</h4>
-                    <p>Discover the beauty of seasonal plants, serene gardens, and natural landscapes across Asia.</p>
+                    <h4>{{ __('inkwave.about_disc3_title') }}</h4>
+                    <p>{{ __('inkwave.about_disc3_desc') }}</p>
                 </div>
             </div>
         </div>
@@ -144,13 +142,13 @@
     <section class="ag-section">
         <div class="ag-container">
             <div class="ag-cta-box ag-text-block ag-bg-gold">
-                <h2 class="ag-title ag-title--dark">Take the Next Step in Your Art</h2>
+                <h2 class="ag-title ag-title--dark">{{ __('inkwave.about_cta_title') }}</h2>
                 <p class="ag-text ag-text--white">
-                    Whether you are refining your technique or starting fresh, our expert-led masterclasses provide the perfect environment to hone your craft.
+                    {{ __('inkwave.about_cta_body') }}
                 </p>
                 <div class="ag-cta-actions">
-                    <a href="{{ route('product-lists') }}" class="ag-btn-primary">Enroll in Masterclasses</a>
-                    <a href="{{ route('contact') }}" class="ag-btn-outline-white ag-btn-secondary">Contact Us</a>
+                    <a href="{{ route('product-lists') }}" class="ag-btn-primary">{{ __('inkwave.about_cta_btn_enroll') }}</a>
+                    <a href="{{ route('contact') }}" class="ag-btn-outline-white ag-btn-secondary">{{ __('inkwave.about_cta_btn_contact') }}</a>
                 </div>
             </div>
         </div>

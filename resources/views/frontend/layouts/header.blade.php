@@ -11,11 +11,11 @@
         <!-- Center: Main Navigation (Desktop) -->
         <div class="ag-header-center ag-desktop-only">
             <nav class="ag-nav">
-                <a href="{{ route('home') }}" class="ag-nav-link {{ Route::is('home') ? 'active' : '' }}">{{ __('inkwave.nav_home') }}</a>
+                <a href="{{ route('home') }}" class="ag-nav-link {{ Route::is('home') ? 'active' : '' }}">{{ __('inkwave.top_nav_home') }}</a>
 
                 <div class="ag-nav-dropdown">
                     <a href="javascript:void(0)" class="ag-nav-link" style="display:flex; align-items:center; gap:4px;">
-                        {{ __('inkwave.nav_categories') }}
+                        {{ __('inkwave.top_nav_categories') }}
                         <i class="fas fa-chevron-down" style="font-size:10px;"></i>
                     </a>
                     <div class="ag-dropdown-menu">
@@ -33,18 +33,18 @@
                                 {{ $cat->title }}
                             </a>
                         @empty
-                            <span class="ag-dropdown-item text-muted">{{ __('inkwave.nav_no_categories') }}</span>
+                            <span class="ag-dropdown-item text-muted">{{ __('inkwave.top_nav_no_categories') }}</span>
                         @endforelse
                     </div>
                 </div>
 
-                <a href="{{ route('product-lists') }}" class="ag-nav-link {{ Route::is('product-lists') ? 'active' : '' }}">{{ __('inkwave.nav_courses') }}</a>
+                <a href="{{ route('product-lists') }}" class="ag-nav-link {{ Route::is('product-lists') ? 'active' : '' }}">{{ __('inkwave.top_nav_courses') }}</a>
 
                 @if(Auth::check())
-                    <a href="{{ route('user') }}" class="ag-nav-link">{{ __('inkwave.nav_my_courses') }}</a>
+                    <a href="{{ route('user') }}" class="ag-nav-link">{{ __('inkwave.top_nav_my_courses') }}</a>
                 @endif
 
-                <a href="{{ route('contact') }}" class="ag-nav-link {{ Route::is('contact') ? 'active' : '' }}">{{ __('inkwave.nav_support') }}</a>
+                <a href="{{ route('contact') }}" class="ag-nav-link {{ Route::is('contact') ? 'active' : '' }}">{{ __('inkwave.top_nav_support') }}</a>
             </nav>
         </div>
 
@@ -99,15 +99,15 @@
                         <i class="fas fa-chevron-down" style="font-size:10px;"></i>
                     </button>
                     <div class="ag-dropdown-menu" style="min-width: 180px;">
-                        <a class="ag-dropdown-item" href="{{ route('user') }}">{{ __('inkwave.nav_account') }}</a>
-                        <a class="ag-dropdown-item" href="{{ route('user.logout') }}">{{ __('inkwave.nav_logout') }}</a>
+                        <a class="ag-dropdown-item" href="{{ route('user') }}">{{ __('inkwave.top_nav_account') }}</a>
+                        <a class="ag-dropdown-item" href="{{ route('user.logout') }}">{{ __('inkwave.top_nav_logout') }}</a>
                     </div>
                 </div>
             @else
                 <!-- Guest Auth -->
                 <div class="ag-auth-group">
-                    <a href="{{ route('login.form') }}" class="ag-action-btn">{{ __('inkwave.nav_login') }}</a>
-                    <a href="{{ route('register.form') }}" class="ag-btn-primary" style="padding: 10px 24px !important; margin-left: 16px;">{{ __('inkwave.nav_register') }}</a>
+                    <a href="{{ route('login.form') }}" class="ag-action-btn">{{ __('inkwave.top_nav_login') }}</a>
+                    <a href="{{ route('register.form') }}" class="ag-btn-primary" style="padding: 10px 24px !important; margin-left: 16px;">{{ __('inkwave.top_nav_register') }}</a>
                 </div>
             @endif
 
@@ -135,10 +135,10 @@
                 <button class="close-btn ag-action-btn" style="font-size:20px;"><i class="fas fa-times"></i></button>
             </div>
             <ul class="navigation ag-list-unstyled ag-p-4" style="font-family: 'Bodoni Moda', serif; margin: 0; padding: 24px; list-style: none; display: flex; flex-direction: column; gap: 16px;">
-                <li><a href="{{ route('home') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.nav_home') }}</a></li>
+                <li><a href="{{ route('home') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.top_nav_home') }}</a></li>
                 
                 <li>
-                    <div style="color: #000; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">{{ __('inkwave.nav_categories') }}</div>
+                    <div style="color: #000; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">{{ __('inkwave.top_nav_categories') }}</div>
                     <ul style="list-style: none; padding-left: 16px; margin: 0; display: flex; flex-direction: column; gap: 12px;">
                         @php
                             $categories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
@@ -146,23 +146,23 @@
                         @forelse($categories as $cat)
                             <li><a href="{{ route('product-lists', $cat->slug) }}" style="color: #666; text-decoration: none; font-size: 14px;">{{ $cat->title }}</a></li>
                         @empty
-                            <li><span style="color: #999; font-size: 14px;">{{ __('inkwave.nav_no_categories') }}</span></li>
+                            <li><span style="color: #999; font-size: 14px;">{{ __('inkwave.top_nav_no_categories') }}</span></li>
                         @endforelse
                     </ul>
                 </li>
 
-                <li><a href="{{ route('product-lists') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.nav_courses') }}</a></li>
+                <li><a href="{{ route('product-lists') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.top_nav_courses') }}</a></li>
 
                 @if(Auth::check())
-                    <li><a href="{{ route('user') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.nav_my_courses') }}</a></li>
+                    <li><a href="{{ route('user') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.top_nav_my_courses') }}</a></li>
                     <li><a href="{{ route('points.topup') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;"><i class="fas fa-coins" style="color:#bc9c5c;"></i> {{ Auth::user()->points_balance ?? 0 }}</a></li>
-                    <li><a href="{{ route('user.logout') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.nav_logout') }}</a></li>
+                    <li><a href="{{ route('user.logout') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.top_nav_logout') }}</a></li>
                 @else
                     <li style="margin-top: 16px;">
-                        <a href="{{ route('login.form') }}" class="ag-action-btn" style="border: 1px solid #000; padding: 12px; display: block; text-align: center; text-decoration: none;">{{ __('inkwave.nav_login') }}</a>
+                        <a href="{{ route('login.form') }}" class="ag-action-btn" style="border: 1px solid #000; padding: 12px; display: block; text-align: center; text-decoration: none;">{{ __('inkwave.top_nav_login') }}</a>
                     </li>
                     <li>
-                        <a href="{{ route('register.form') }}" class="ag-btn-primary" style="background: #000; color: #fff; padding: 12px; display: block; text-align: center; text-decoration: none;">{{ __('inkwave.nav_register') }}</a>
+                        <a href="{{ route('register.form') }}" class="ag-btn-primary" style="background: #000; color: #fff; padding: 12px; display: block; text-align: center; text-decoration: none;">{{ __('inkwave.top_nav_register') }}</a>
                     </li>
                 @endif
                 
@@ -195,7 +195,7 @@
 <div class="offcanvas__overlay"></div>
 <div class="cartcanvas__info">
     <div class="ag-cart-header ag-flex ag-justify-between ag-align-center">
-        <h4 class="ag-fw-bold" style="margin:0;">{{ __('inkwave.nav_cart_heading') }}</h4>
+        <h4 class="ag-fw-bold" style="margin:0;">{{ __('inkwave.top_nav_cart_heading') }}</h4>
         <div class="cartcanvas__close ag-action-btn" style="cursor:pointer; font-size:20px;"><i class="fas fa-times"></i></div>
     </div>
 
@@ -205,7 +205,7 @@
                 @foreach(Helper::getAllProductFromCart() as $cart)
                     @php
                         $isPoints = !$cart->product || $cart->product_id >= 1000;
-                        $item_title = __('inkwave.nav_credits_topup');
+                        $item_title = __('inkwave.top_nav_credits_topup');
                         $item_photo = null;
                         $item_level = 'N/A';
 
@@ -229,7 +229,7 @@
                             </a>
                             <h6 class="ag-mb-2"><i class="fas fa-coins" style="color:#bc9c5c;"></i> {{ $item_title }}</h6>
                             <p class="ag-mb-2" style="font-family: Arial, sans-serif; font-size: 12px; margin:0;">
-                                {{ $cart->quantity }} x <strong class="ag-fw-bold">{{ number_format($cart->points) }} {{ __('inkwave.nav_credits_label') }}</strong>
+                                {{ $cart->quantity }} x <strong class="ag-fw-bold">{{ number_format($cart->points) }} {{ __('inkwave.top_nav_credits_label') }}</strong>
                             </p>
                             <p style="font-family: Arial, sans-serif; font-weight: bold; font-size: 14px; margin:0; color:#bc9c5c;">
                                 {{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2) }}
@@ -250,7 +250,7 @@
                                     <span class="badge" style="padding:4px 8px; font-size:10px; background:transparent; border:1px solid #bc9c5c; color:#bc9c5c; border-radius:4px; font-weight:normal;">{{ $item_level }}</span>
                                 </div>
                                 <p style="font-family: Arial, sans-serif; font-size: 12px; margin:0; color:#666;">
-                                    {{ $cart->quantity }} x <strong class="ag-fw-bold" style="color:#000;">{{ number_format($cart->points) }} {{ __('inkwave.nav_credits_label') }}</strong>
+                                    {{ $cart->quantity }} x <strong class="ag-fw-bold" style="color:#000;">{{ number_format($cart->points) }} {{ __('inkwave.top_nav_credits_label') }}</strong>
                                 </p>
                             </div>
                         </li>
@@ -261,9 +261,9 @@
                     <div style="width:64px; height:64px; border-radius:50%; background:#f6f6f6; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
                         <i class="fas fa-shopping-bag" style="font-size:24px; color:#cccccc;"></i>
                     </div>
-                    <p style="font-family: 'Bodoni Moda', serif; font-size: 18px; font-style: italic; color:#666;">{{ __('inkwave.nav_empty_cart_msg') }}</p>
+                    <p style="font-family: 'Bodoni Moda', serif; font-size: 18px; font-style: italic; color:#666;">{{ __('inkwave.top_nav_empty_cart_msg') }}</p>
                     <a href="{{ route('product-lists') }}" class="ag-action-btn ag-w-100" style="justify-content:center; border:1px solid #000; padding:12px; margin-top:24px; border-radius:6px;">
-                        {{ __('inkwave.nav_courses') }}
+                        {{ __('inkwave.top_nav_courses') }}
                     </a>
                 </li>
             @endif
@@ -289,19 +289,19 @@
             @endphp
             <div class="ag-cart-footer ag-mt-auto">
                 <div class="ag-flex ag-justify-between ag-align-end ag-mb-4" style="font-family: Arial, sans-serif;">
-                    <span class="ag-fw-bold" style="font-size:14px; text-transform:uppercase; letter-spacing:0.1em; color:#666;">{{ __('inkwave.nav_total_label') }}:</span>
+                    <span class="ag-fw-bold" style="font-size:14px; text-transform:uppercase; letter-spacing:0.1em; color:#666;">{{ __('inkwave.top_nav_total_label') }}:</span>
                     @if($hasPoints && !$hasProducts)
                         <span class="ag-fw-bold" style="font-size:24px;">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</span>
                     @else
-                        <span class="ag-fw-bold" style="font-size:24px;">{{ number_format($totalPoints) }} <span style="font-size:14px; color:#bc9c5c;">{{ __('inkwave.nav_credits_label') }}</span></span>
+                        <span class="ag-fw-bold" style="font-size:24px;">{{ number_format($totalPoints) }} <span style="font-size:14px; color:#bc9c5c;">{{ __('inkwave.top_nav_credits_label') }}</span></span>
                     @endif
                 </div>
                 <div class="ag-flex ag-flex-col ag-gap-2">
                     @if($hasPoints && !$hasProducts)
-                        <a href="{{ route('checkout') }}" class="ag-action-btn ag-w-100" style="justify-content:center; background:#000; color:#fff !important; padding:16px; border-radius:6px;">{{ __('inkwave.nav_checkout_btn') }}</a>
-                        <a href="{{ route('cart') }}" class="ag-action-btn ag-w-100" style="justify-content:center; border:1px solid rgba(0,0,0,0.1); padding:16px; border-radius:6px;">{{ __('inkwave.nav_view_cart_btn') }}</a>
+                        <a href="{{ route('checkout') }}" class="ag-action-btn ag-w-100" style="justify-content:center; background:#000; color:#fff !important; padding:16px; border-radius:6px;">{{ __('inkwave.top_nav_checkout_btn') }}</a>
+                        <a href="{{ route('cart') }}" class="ag-action-btn ag-w-100" style="justify-content:center; border:1px solid rgba(0,0,0,0.1); padding:16px; border-radius:6px;">{{ __('inkwave.top_nav_view_cart_btn') }}</a>
                     @elseif($hasProducts && !$hasPoints)
-                        <a href="{{ route('coursecart') }}" class="ag-action-btn ag-w-100" style="justify-content:center; background:#000; color:#fff !important; padding:16px; border-radius:6px;">{{ __('inkwave.nav_view_cart_btn') }}</a>
+                        <a href="{{ route('coursecart') }}" class="ag-action-btn ag-w-100" style="justify-content:center; background:#000; color:#fff !important; padding:16px; border-radius:6px;">{{ __('inkwave.top_nav_view_cart_btn') }}</a>
                     @endif
                 </div>
             </div>

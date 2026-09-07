@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('inkwave.db_title'))
+@section('title', __('inkwave.userdash_title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('inkwave.db_my_account'),
+    'title' => __('inkwave.userdash_my_account'),
     'links' => [
-        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
-        ['name' => __('inkwave.db_my_account')]
+        ['name' => __('inkwave.top_nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.userdash_my_account')]
     ]
 ])
 
@@ -29,24 +29,24 @@
 
                 <div class="ag-dash-stats">
                     <div class="ag-dash-stat">
-                        <span>{{ __('inkwave.db_available_points') }}</span>
+                        <span>{{ __('inkwave.userdash_credits_avail') }}</span>
                         <span><i class="fas fa-coins"></i> {{ number_format($u->points_balance ?? 0) }}</span>
                     </div>
                     <div class="ag-dash-stat">
-                        <span>{{ __('inkwave.db_courses_enrolled') }}</span>
+                        <span>{{ __('inkwave.userdash_courses_enrolled') }}</span>
                         <span>{{ isset($redeemedOrders) ? count($redeemedOrders) : 0 }}</span>
                     </div>
                     <div class="ag-dash-stat">
-                        <span>{{ __('inkwave.db_member_since') }}</span>
+                        <span>{{ __('inkwave.userdash_member_since') }}</span>
                         <span>{{ $u->created_at->format('M Y') }}</span>
                     </div>
                 </div>
 
                 <nav class="ag-dash-nav">
-                    <button type="button" class="ag-dash-navbtn active" data-tab="purchased"><i class="fas fa-gift"></i> {{ __('inkwave.db_points_purchased') }}</button>
-                    <button type="button" class="ag-dash-navbtn" data-tab="redeemed"><i class="fas fa-book-reader"></i> {{ __('inkwave.db_points_redeemed') }}</button>
-                    <button type="button" class="ag-dash-navbtn" data-tab="password"><i class="fas fa-lock"></i> {{ __('inkwave.db_change_password') }}</button>
-                    <a href="{{ route('user.logout') }}" class="ag-dash-navbtn ag-dash-navbtn--logout"><i class="fas fa-sign-out-alt"></i> {{ __('inkwave.db_logout') }}</a>
+                    <button type="button" class="ag-dash-navbtn active" data-tab="purchased"><i class="fas fa-gift"></i> {{ __('inkwave.userdash_tab_purchased') }}</button>
+                    <button type="button" class="ag-dash-navbtn" data-tab="redeemed"><i class="fas fa-book-reader"></i> {{ __('inkwave.userdash_tab_redeemed') }}</button>
+                    <button type="button" class="ag-dash-navbtn" data-tab="password"><i class="fas fa-lock"></i> {{ __('inkwave.userdash_tab_pwd') }}</button>
+                    <a href="{{ route('user.logout') }}" class="ag-dash-navbtn ag-dash-navbtn--logout"><i class="fas fa-sign-out-alt"></i> {{ __('inkwave.userdash_logout') }}</a>
                 </nav>
             </aside>
 
@@ -56,18 +56,18 @@
                 {{-- Purchases --}}
                 <div class="ag-dash-panel active" data-panel="purchased">
                     <div class="ag-dash-card">
-                        <h2 class="ag-dash-h"><i class="fas fa-gift"></i> {{ __('inkwave.db_points_purchased_wallet') }}</h2>
+                        <h2 class="ag-dash-h"><i class="fas fa-gift"></i> {{ __('inkwave.userdash_heading_purchased') }}</h2>
                         @if(isset($purchasedOrders) && count($purchasedOrders) > 0)
                             <div class="ag-dash-tablewrap">
                                 <table class="ag-dash-table">
                                     <thead>
                                         <tr>
-                                            <th>{{ __('inkwave.db_order_number') }}</th>
-                                            <th>{{ __('inkwave.db_points_bought') }}</th>
-                                            <th>{{ __('inkwave.db_price_paid') }}</th>
-                                            <th>{{ __('inkwave.db_payment_status') }}</th>
-                                            <th>{{ __('inkwave.db_date') }}</th>
-                                            <th>{{ __('inkwave.db_action') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_order_num') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_credits') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_price') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_status') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_date') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -78,11 +78,11 @@
                                                 <td class="is-strong">{!! $order->currency=='JPY' ? '&yen;' : Helper::getCurrencySymbol($order->currency) !!}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}</td>
                                                 <td>
                                                     @if($order->payment_status === 'Completed')
-                                                        <span class="ag-dash-tag ag-dash-tag--ok">{{ __('inkwave.db_paid') }}</span>
+                                                        <span class="ag-dash-tag ag-dash-tag--ok">{{ __('inkwave.userdash_status_paid') }}</span>
                                                     @elseif($order->payment_status === 'Failed')
-                                                        <span class="ag-dash-tag ag-dash-tag--err">{{ __('inkwave.db_failed') }}</span>
+                                                        <span class="ag-dash-tag ag-dash-tag--err">{{ __('inkwave.userdash_status_failed') }}</span>
                                                     @else
-                                                        <span class="ag-dash-tag">{{ __('inkwave.db_pending') }}</span>
+                                                        <span class="ag-dash-tag">{{ __('inkwave.userdash_status_pending') }}</span>
                                                     @endif
                                                 </td>
                                                 <td>{{ $order->created_at->format('d M Y') }}</td>
@@ -95,7 +95,7 @@
                         @else
                             <div class="ag-dash-empty">
                                 <i class="fas fa-box-open"></i>
-                                <p>{{ __('inkwave.db_no_past_orders') }}</p>
+                                <p>{{ __('inkwave.userdash_empty_purchased') }}</p>
                             </div>
                         @endif
                     </div>
@@ -104,18 +104,18 @@
                 {{-- Redeemed --}}
                 <div class="ag-dash-panel" data-panel="redeemed">
                     <div class="ag-dash-card">
-                        <h2 class="ag-dash-h"><i class="fas fa-book-reader"></i> {{ __('inkwave.db_points_redeemed_courses') }}</h2>
+                        <h2 class="ag-dash-h"><i class="fas fa-book-reader"></i> {{ __('inkwave.userdash_heading_redeemed') }}</h2>
                         @if(isset($redeemedOrders) && count($redeemedOrders) > 0)
                             <div class="ag-dash-tablewrap">
                                 <table class="ag-dash-table">
                                     <thead>
                                         <tr>
-                                            <th>{{ __('inkwave.db_order_number') }}</th>
-                                            <th>{{ __('inkwave.db_course_name') }}</th>
-                                            <th>{{ __('inkwave.db_level') }}</th>
-                                            <th>{{ __('inkwave.db_points_used') }}</th>
-                                            <th>{{ __('inkwave.db_payment_status') }}</th>
-                                            <th>{{ __('inkwave.db_date') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_order_num') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_course') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_level') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_credits_used') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_status') }}</th>
+                                            <th>{{ __('inkwave.userdash_col_date') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -138,7 +138,7 @@
                                                 <td><span class="ag-dash-pill"><i class="fas fa-coins"></i> {{ number_format($order->cart_info->sum('points')) }}</span></td>
                                                 <td>
                                                     @if(strtolower($order->status) === 'completed')
-                                                        <span class="ag-dash-tag ag-dash-tag--ok">{{ __('inkwave.db_redeemed') }}</span>
+                                                        <span class="ag-dash-tag ag-dash-tag--ok">{{ __('inkwave.userdash_status_redeemed') }}</span>
                                                     @else
                                                         <span class="ag-dash-tag">{{ $order->status }}</span>
                                                     @endif
@@ -152,7 +152,7 @@
                         @else
                             <div class="ag-dash-empty">
                                 <i class="fas fa-box-open"></i>
-                                <p>{{ __('inkwave.db_no_past_orders') }}</p>
+                                <p>{{ __('inkwave.userdash_empty_purchased') }}</p>
                             </div>
                         @endif
                     </div>
@@ -161,7 +161,7 @@
                 {{-- Change password --}}
                 <div class="ag-dash-panel" data-panel="password">
                     <div class="ag-dash-card">
-                        <h2 class="ag-dash-h"><i class="fas fa-lock"></i> {{ __('inkwave.db_change_password') }}</h2>
+                        <h2 class="ag-dash-h"><i class="fas fa-lock"></i> {{ __('inkwave.userdash_tab_pwd') }}</h2>
                         <form action="{{ route('change.password') }}" method="POST">
                             @csrf
                             <div class="ag-dash-field">

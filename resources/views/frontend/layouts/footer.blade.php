@@ -3,15 +3,15 @@
         
         <!-- Newsletter Section -->
         <div class="ag-newsletter">
-            <h4>{{ __('inkwave.ft_newsletter_title') }}</h4>
-            <p>{{ __('inkwave.ft_newsletter_subtitle') }}</p>
+            <h4>{{ __('inkwave.footer_newsletter_title') }}</h4>
+            <p>{{ __('inkwave.footer_newsletter_desc') }}</p>
             <form class="ag-newsletter-form subscribe-form">
-                <input type="email" name="email" class="email" placeholder="{{ __('inkwave.ft_email_placeholder') }}" required>
+                <input type="email" name="email" class="email" placeholder="{{ __('inkwave.footer_newsletter_placeholder') }}" required>
                 <button type="submit" class="ag-btn-primary" aria-label="Subscribe" style="padding: 13px 24px !important; letter-spacing: 0.1em !important; font-size: 11px !important;">
-                    {{ __('inkwave.ft_subscribe_action') }}
+                    {{ __('inkwave.footer_newsletter_btn') }}
                 </button>
             </form>
-            <p class="suces_rinfo" style="display: none;">{{ __('inkwave.ft_subscribe_success') }}</p>
+            <p class="suces_rinfo" style="display: none;">{{ __('inkwave.footer_newsletter_success') }}</p>
         </div>
 
         <!-- Widgets Grid -->
@@ -20,32 +20,32 @@
             <!-- Column 1: Brand -->
             <div class="ag-footer-col">
                 <a href="{{route('home')}}" class="ag-footer-logo">
-                    <img src="{{asset('assets/images/logo.png')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}" style="height: 50px; width: auto; object-fit: contain; aspect-ratio: auto;">
+                    <img src="{{asset('assets/images/logo.png')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.footer_company_fallback') }}" style="height: 50px; width: auto; object-fit: contain; aspect-ratio: auto;">
                 </a>
-                <p class="ag-footer-text" style="margin-bottom: 24px;">{{ __('inkwave.ft_brand_mission') }}</p>
+                <p class="ag-footer-text" style="margin-bottom: 24px;">{{ __('inkwave.footer_brand_desc') }}</p>
                 <ul class="ag-footer-links">
                     <li>
                         <span class="ag-footer-text">
                             <i class="fas fa-building"></i> 
-                            {{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}
+                            {{ $misc['Company Name'] ?? __('inkwave.footer_company_fallback') }}
                         </span>
                     </li>
                     <li>
-                        <a href="tel:{{ $misc['Company Phone'] ?? '+1 234 567 890' }}">
+                        <a href="tel:{{ $misc['Company Phone'] ?? __('inkwave.footer_phone_fallback') }}">
                             <i class="fas fa-phone-alt"></i> 
-                            {{ $misc['Company Phone'] ?? '+1 234 567 890' }}
+                            {{ $misc['Company Phone'] ?? __('inkwave.footer_phone_fallback') }}
                         </a>
                     </li>
                     <li>
-                        <a href="mailto:{{ $misc['Company Email'] ?? __('inkwave.ft_fallback_email') }}">
+                        <a href="mailto:{{ $misc['Company Email'] ?? __('inkwave.footer_email_fallback') }}">
                             <i class="fas fa-envelope"></i> 
-                            {{ $misc['Company Email'] ?? __('inkwave.ft_fallback_email') }}
+                            {{ $misc['Company Email'] ?? __('inkwave.footer_email_fallback') }}
                         </a>
                     </li>
                     <li>
                         <span class="ag-footer-text">
                             <i class="fas fa-map-marker-alt"></i> 
-                            {{ $misc['Company Address'] ?? __('inkwave.ft_fallback_address') }}
+                            {{ $misc['Company Address'] ?? __('inkwave.footer_address_fallback') }}
                         </span>
                     </li>
                 </ul>
@@ -53,18 +53,18 @@
 
             <!-- Column 2: Explore -->
             <div class="ag-footer-col">
-                <h5>{{ __('inkwave.ft_menu_explore') }}</h5>
+                <h5>{{ __('inkwave.footer_nav_explore') }}</h5>
                 <ul class="ag-footer-links">
-                    <li><a href="{{route('home')}}">{{ __('inkwave.ft_menu_home') }}</a></li>
-                    <li><a href="{{route('product-lists')}}">{{ __('inkwave.ft_menu_catalog') }}</a></li>
-                    <li><a href="{{route('about-us')}}">{{ __('inkwave.ft_menu_about') }}</a></li>
-                    <li><a href="{{route('contact')}}">{{ __('inkwave.ft_menu_contact') }}</a></li>
+                    <li><a href="{{route('home')}}">{{ __('inkwave.footer_nav_home') }}</a></li>
+                    <li><a href="{{route('product-lists')}}">{{ __('inkwave.footer_nav_catalog') }}</a></li>
+                    <li><a href="{{route('about-us')}}">{{ __('inkwave.footer_nav_about') }}</a></li>
+                    <li><a href="{{route('contact')}}">{{ __('inkwave.footer_nav_contact') }}</a></li>
                 </ul>
             </div>
 
             <!-- Column 3: Collections -->
             <div class="ag-footer-col">
-                <h5>{{ __('inkwave.ft_menu_collections') }}</h5>
+                <h5>{{ __('inkwave.footer_nav_categories') }}</h5>
                 <ul class="ag-footer-links">
                     @php
                         $footerCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
@@ -79,12 +79,12 @@
 
             <!-- Column 4: Assistance -->
             <div class="ag-footer-col">
-                <h5>{{ __('inkwave.ft_menu_assistance') }}</h5>
+                <h5>{{ __('inkwave.footer_nav_support') }}</h5>
                 <ul class="ag-footer-links">
-                    <li><a href="{{route('pages','privacy-policy')}}">{{ __('inkwave.ft_legal_privacy') }}</a></li>
-                    <li><a href="{{route('pages','terms-conditions')}}">{{ __('inkwave.ft_legal_terms') }}</a></li>
-                    <li><a href="{{route('pages','refund-policy')}}">{{ __('inkwave.ft_legal_refund') }}</a></li>
-                    <li><a href="{{route('pages','delivery-policy')}}">{{ __('inkwave.ft_legal_delivery') }}</a></li>
+                    <li><a href="{{route('pages','privacy-policy')}}">{{ __('inkwave.footer_legal_privacy') }}</a></li>
+                    <li><a href="{{route('pages','terms-conditions')}}">{{ __('inkwave.footer_legal_terms') }}</a></li>
+                    <li><a href="{{route('pages','refund-policy')}}">{{ __('inkwave.footer_legal_refund') }}</a></li>
+                    <li><a href="{{route('pages','delivery-policy')}}">{{ __('inkwave.footer_legal_delivery') }}</a></li>
                 </ul>
             </div>
 
@@ -93,7 +93,7 @@
         <!-- Footer Bottom -->
         <div class="ag-footer-bottom">
             <div>
-                &copy; {{ date('Y') }} <a href="{{route('home')}}">{{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}</a>. {{ __('inkwave.ft_rights_reserved') }}
+                &copy; {{ date('Y') }} <a href="{{route('home')}}">{{ $misc['Company Name'] ?? __('inkwave.footer_company_fallback') }}</a>. {{ __('inkwave.footer_copyright_rights') }}
             </div>
             <div class="ag-footer-payment">
                 <img src="{{ asset('assets/images/payment.webp') }}" alt="Payment Methods">

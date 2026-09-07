@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('inkwave.cart_pg_title'))
+@section('title', __('inkwave.mycart_title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('inkwave.cart_pg_title'),
+    'title' => __('inkwave.mycart_title'),
     'links' => [
-        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
-        ['name' => __('inkwave.cart_pg_title')]
+        ['name' => __('inkwave.top_nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.mycart_title')]
     ]
 ])
 
@@ -14,7 +14,7 @@
 
 <div class="ag-cart-page">
     <div class="ag-container">
-        <h1 class="ag-page-title">{{ __('inkwave.cart_pg_title') }}</h1>
+        <h1 class="ag-page-title">{{ __('inkwave.mycart_title') }}</h1>
         
         @if(Helper::cartCount())
             @php
@@ -33,7 +33,7 @@
                 <div class="ag-cart-items">
                     @foreach($cartItems as $cart)
                         @php
-                            $item_title = __('inkwave.cart_item_topup');
+                            $item_title = __('inkwave.mycart_item_topup');
                             $item_link = '#';
                             if($cart->product) {
                                 $item_title = $cart->product->title;
@@ -43,21 +43,21 @@
                         <div class="ag-cart-card">
                             <div class="ag-cart-card__main">
                                 <a href="{{ $item_link }}" class="ag-cart-card__title">{{ $item_title }}</a>
-                                <span class="ag-cart-card__tag">{{ $cart->product ? __('inkwave.cart_tag_course') : __('inkwave.cart_tag_credit') }}</span>
+                                <span class="ag-cart-card__tag">{{ $cart->product ? __('inkwave.mycart_tag_course') : __('inkwave.mycart_tag_credit') }}</span>
                             </div>
 
                             <div class="ag-cart-card__meta">
                                 <div class="ag-cart-card__col">
-                                    <span class="ag-cart-card__label">{{ __('inkwave.cart_lbl_pts') }}</span>
+                                    <span class="ag-cart-card__label">{{ __('inkwave.mycart_lbl_pts') }}</span>
                                     <span class="ag-cart-card__val"><i class="fas fa-coins"></i>{{ number_format($cart->points) }}</span>
                                 </div>
                                 <div class="ag-cart-card__col">
-                                    <span class="ag-cart-card__label">{{ __('inkwave.cart_lbl_amt') }}</span>
+                                    <span class="ag-cart-card__label">{{ __('inkwave.mycart_lbl_amt') }}</span>
                                     <span class="ag-cart-card__val">{{ $sym }}{{ number_format($cart['price'], $isJPY ? 0 : 2) }}</span>
                                 </div>
                             </div>
 
-                            <a href="{{ route('cart-delete', $cart->id) }}" class="ag-cart-card__remove" aria-label="{{ __('inkwave.cart_btn_del') }}" title="Remove Item"><i class="fas fa-times"></i></a>
+                            <a href="{{ route('cart-delete', $cart->id) }}" class="ag-cart-card__remove" aria-label="{{ __('inkwave.mycart_btn_del') }}" title="Remove Item"><i class="fas fa-times"></i></a>
                         </div>
                     @endforeach
                 </div>
@@ -65,26 +65,26 @@
                 {{-- Right Side: Summary --}}
                 <aside>
                     <div class="ag-summary-card">
-                        <h3 class="ag-summary-title"><i class="fas fa-shopping-bag"></i> {{ __('inkwave.cart_box_summary') }}</h3>
+                        <h3 class="ag-summary-title"><i class="fas fa-shopping-bag"></i> {{ __('inkwave.mycart_box_summary') }}</h3>
                         
                         {{-- Explicitly removed Subtotal row per request --}}
 
                         @if($discount > 0)
                             <div class="ag-summary-row">
-                                <span>{{ __('inkwave.cart_box_promo') }}</span>
+                                <span>{{ __('inkwave.mycart_box_promo') }}</span>
                                 <span>&minus; {{ $sym }}{{ number_format($discount, $isJPY ? 0 : 2) }}</span>
                             </div>
                         @endif
 
                         <div class="ag-summary-total">
-                            <span>{{ __('inkwave.cart_box_total') }}:</span>
+                            <span>{{ __('inkwave.mycart_box_total') }}:</span>
                             <span>{{ $sym }}{{ number_format($total_amount, $isJPY ? 0 : 2) }}</span>
                         </div>
 
-                        <a href="{{ route('checkout') }}" class="ag-primary-btn">{{ __('inkwave.cart_btn_pay') }} <i class="fas fa-arrow-right" style="margin-left:8px;"></i></a>
+                        <a href="{{ route('checkout') }}" class="ag-primary-btn">{{ __('inkwave.mycart_btn_pay') }} <i class="fas fa-arrow-right" style="margin-left:8px;"></i></a>
 
                         @if(Helper::totalCartPoints() > 0)
-                            <a href="{{ route('product-lists') }}" class="ag-ghost-btn"><i class="fas fa-arrow-left" style="margin-right:8px;"></i> {{ __('inkwave.cart_btn_shop') }}</a>
+                            <a href="{{ route('product-lists') }}" class="ag-ghost-btn"><i class="fas fa-arrow-left" style="margin-right:8px;"></i> {{ __('inkwave.mycart_btn_shop') }}</a>
                         @endif
                         
                         <div class="ag-payment-methods">
@@ -97,9 +97,9 @@
         @else
             <div class="ag-cart-empty">
                 <i class="fas fa-shopping-basket"></i>
-                <h3>{{ __('inkwave.cart_mt_heading') }}</h3>
-                <p>{{ __('inkwave.cart_mt_desc') }}</p>
-                <a href="{{ route('product-lists') }}" class="ag-primary-btn" style="display:inline-block !important; margin-top:0;">{{ __('inkwave.cart_btn_shop') }}</a>
+                <h3>{{ __('inkwave.mycart_mt_heading') }}</h3>
+                <p>{{ __('inkwave.mycart_mt_desc') }}</p>
+                <a href="{{ route('product-lists') }}" class="ag-primary-btn" style="display:inline-block !important; margin-top:0;">{{ __('inkwave.mycart_btn_shop') }}</a>
             </div>
         @endif
     </div>

@@ -62,8 +62,8 @@
                     <i class="fas fa-chevron-down" style="font-size:10px;"></i>
                 </button>
                 <div class="ag-dropdown-menu" style="min-width: 140px;">
-                    <a class="ag-dropdown-item" href="{{ route('change.language', 'en') }}"><i class="fi fi-gb"></i> EN â€” English</a>
-                    <a class="ag-dropdown-item" href="{{ route('change.language', 'ja') }}"><i class="fi fi-jp"></i> JA â€” æ—¥æœ¬èªž</a>
+                    <a class="ag-dropdown-item" href="{{ route('change.language', 'en') }}"><i class="fi fi-gb"></i> EN English</a>
+                    <a class="ag-dropdown-item" href="{{ route('change.language', 'ja') }}"><i class="fi fi-jp"></i> JA Japanese</a>
                 </div>
             </div>
 

@@ -18,7 +18,7 @@
             </div>
             <div class="art-hero-right">
                 <h1>{{ __('inkwave.home_hero_title') }}</h1>
-                <p>Immerse yourself in world-class art courses. Learn from masters, refine your skills, and unleash your creativity with our curated collection of expert-led programs.</p>
+                <p>{{ __('inkwave.home_hero_desc') }}</p>
                 <div class="art-hero-btns">
                     <a href="{{ route('product-lists') }}" class="art-hero-btn">{{ __('inkwave.home_hero_btn_start') }}</a>
                     @if(Auth::check())
@@ -42,15 +42,15 @@
                 <img src="{{ asset('assets/images/about-bottom-right.webp') }}" alt="Student Working" class="art-about-img art-about-img-3" loading="lazy">
             </div>
             <div class="art-about-right">
-                <h2>Master the Fine Arts with Industry Professionals</h2>
-                <p>Whether you're picking up a brush for the first time or refining your advanced techniques, our platform brings the world's most renowned art studios directly to your screen.</p>
-                <p>Experience hands-on learning through high-definition video tutorials, comprehensive resources, and real-time feedback.</p>
+                <h2>{{ __('inkwave.home_about_title') }}</h2>
+                <p>{{ __('inkwave.home_about_desc_1') }}</p>
+                <p>{{ __('inkwave.home_about_desc_2') }}</p>
                 <ul class="art-about-list">
-                    <li><i class="fas fa-check-circle"></i> <strong>Expert Guidance:</strong> Learn from award-winning contemporary artists.</li>
-                    <li><i class="fas fa-check-circle"></i> <strong>Flexible Learning:</strong> Access your courses 24/7 from any device.</li>
-                    <li><i class="fas fa-check-circle"></i> <strong>Vibrant Community:</strong> Connect with thousands of passionate creators worldwide.</li>
+                    <li><i class="fas fa-check-circle"></i> {!! __('inkwave.home_about_feat_1') !!}</li>
+                    <li><i class="fas fa-check-circle"></i> {!! __('inkwave.home_about_feat_2') !!}</li>
+                    <li><i class="fas fa-check-circle"></i> {!! __('inkwave.home_about_feat_3') !!}</li>
                 </ul>
-                <a href="{{ route('product-lists') }}" class="art-hero-btn">Explore Courses</a>
+                <a href="{{ route('product-lists') }}" class="art-hero-btn">{{ __('inkwave.home_about_btn') }}</a>
             </div>
         </div>
     </section>
@@ -63,7 +63,7 @@
     
 
     <section class="art-cat-carousel-section">
-        <h2>Explore Products</h2>
+        <h2>{{ __('inkwave.home_products_title') }}</h2>
         <div class="art-cat-layout">
             <button class="art-cat-nav-btn" id="artCatPrevBtn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
             <div class="art-cat-scroll-container" id="artCatScrollContainer">
@@ -82,7 +82,7 @@
                         <div class="art-cat-scroll-content">
                             <h3>{{ $product->title }}</h3>
                             <p>{{ $product->summary ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 100, '...') }}</p>
-                            <a href="{{ route('product-detail', $product->slug) }}" class="art-hero-btn">View Product</a>
+                            <a href="{{ route('product-detail', $product->slug) }}" class="art-hero-btn">{{ __('inkwave.home_products_btn') }}</a>
                         </div>
                     </div>
                 @endforeach
@@ -118,28 +118,28 @@
     
 
     <section class="art-how-section">
-        <h2 class="art-how-title">How It Works</h2>
+        <h2 class="art-how-title">{{ __('inkwave.home_steps_title') }}</h2>
         <div class="art-how-grid">
             <div class="art-how-card">
                 <div class="art-how-icon">
                     <i class="fas fa-compass"></i>
                 </div>
-                <h3>1. Explore Courses</h3>
-                <p>Browse our curated selection of fine art courses. Filter by category, difficulty, or instructor to find the perfect fit for your creative journey.</p>
+                <h3>{{ __('inkwave.home_steps_1_title') }}</h3>
+                <p>{{ __('inkwave.home_steps_1_desc') }}</p>
             </div>
             <div class="art-how-card">
                 <div class="art-how-icon">
                     <i class="fas fa-play-circle"></i>
                 </div>
-                <h3>2. Learn from Masters</h3>
-                <p>Watch high-definition video tutorials and follow step-by-step instructions from award-winning contemporary artists and professionals.</p>
+                <h3>{{ __('inkwave.home_steps_2_title') }}</h3>
+                <p>{{ __('inkwave.home_steps_2_desc') }}</p>
             </div>
             <div class="art-how-card">
                 <div class="art-how-icon">
                     <i class="fas fa-palette"></i>
                 </div>
-                <h3>3. Start Creating</h3>
-                <p>Apply what you've learned to your own projects. Practice at your own pace and refine your unique artistic voice.</p>
+                <h3>{{ __('inkwave.home_steps_3_title') }}</h3>
+                <p>{{ __('inkwave.home_steps_3_desc') }}</p>
             </div>
         </div>
     </section>
@@ -150,8 +150,8 @@
         {{-- 6. INSPIRATION GALLERY (Remaining Assets) --}}
     
     <section class="art-inspiration-section">
-        <h2>Endless Inspiration</h2>
-        <p>Immerse yourself in the creative process. Join a community of artists and start shaping your vision today.</p>
+        <h2>{{ __('inkwave.home_inspire_title') }}</h2>
+        <p>{{ __('inkwave.home_inspire_desc') }}</p>
         <div class="art-insp-grid">
             <div class="art-insp-item">
                 <video src="{{ asset('assets/videos/inspiration-video.mp4') }}" autoplay loop muted playsinline></video>
@@ -202,15 +202,15 @@
             <div class="ag-split-grid">
                 
                 <div class="ag-table-card">
-                    <h2 class="ag-section-title">Credit Tiers & Bonuses</h2>
+                    <h2 class="ag-section-title">{{ __('inkwave.credits_table_title') }}</h2>
                     
                     <div class="ag-table-wrap">
                         <table class="ag-tiers-table">
                             <thead>
                                 <tr>
-                                    <th>Tier</th>
-                                    <th>Purchase Range</th>
-                                    <th>Bonus Multiplier</th>
+                                    <th>{{ __('inkwave.credits_table_col1') }}</th>
+                                    <th>{{ __('inkwave.credits_table_col2') }}</th>
+                                    <th>{{ __('inkwave.credits_table_col3') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -241,7 +241,7 @@
                     <div class="ag-disclaimer-box">
                         <i class="fas fa-exclamation-circle"></i> 
                         <div>
-                            <strong>Note:</strong> Credits purchased are strictly for use on this website and are non-transferable and non-refundable.
+                            <strong>{{ __('inkwave.credits_disclaimer_title') }}</strong> {{ __('inkwave.credits_disclaimer_text') }}
                         </div>
                     </div>
                 </div>

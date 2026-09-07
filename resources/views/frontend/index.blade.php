@@ -9,7 +9,7 @@
     {{-- 1. HERO SECTION --}}
     
 
-    <section class="art-hero">
+    <section class="art-hero" style="background-image: url('{{ asset('assets/images/hero-bg.webp') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="art-hero-container">
             <div class="art-hero-left">
                 <video autoplay loop muted playsinline>

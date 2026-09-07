@@ -20,7 +20,7 @@
             <!-- Column 1: Brand -->
             <div class="ag-footer-col">
                 <a href="{{route('home')}}" class="ag-footer-logo">
-                    <img src="{{asset('assets/images/logo.png')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}">
+                    <img src="{{asset('assets/images/logo.png')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.ft_fallback_company_name') }}" style="height: 50px; width: auto; object-fit: contain; aspect-ratio: auto;">
                 </a>
                 <p class="ag-footer-text" style="margin-bottom: 24px;">{{ __('inkwave.ft_brand_mission') }}</p>
                 <ul class="ag-footer-links">

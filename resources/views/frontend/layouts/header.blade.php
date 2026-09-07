@@ -4,7 +4,7 @@
         <!-- Left Side: Logo -->
         <div class="ag-header-left">
             <a href="{{ route('home') }}" class="ag-logo">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="[Website Name]" style="height: 40px; width: auto; object-fit: contain;">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="[Website Name]" style="height: 40px; width: auto; object-fit: contain; aspect-ratio: auto;">
             </a>
         </div>
 
@@ -130,12 +130,61 @@
         <nav class="menu-box" style="border-left: 1px solid #000;">
             <div class="ag-flex ag-justify-between ag-align-center ag-p-4" style="border-bottom: 1px solid rgba(0,0,0,0.1);">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style="height: 32px;">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style="height: 32px; width: auto; object-fit: contain; aspect-ratio: auto;">
                 </a>
                 <button class="close-btn ag-action-btn" style="font-size:20px;"><i class="fas fa-times"></i></button>
             </div>
-            <ul class="navigation ag-list-unstyled ag-p-4" style="font-family: 'Bodoni Moda', serif;">
-                <!-- JS Populated -->
+            <ul class="navigation ag-list-unstyled ag-p-4" style="font-family: 'Bodoni Moda', serif; margin: 0; padding: 24px; list-style: none; display: flex; flex-direction: column; gap: 16px;">
+                <li><a href="{{ route('home') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.nav_home') }}</a></li>
+                
+                <li>
+                    <div style="color: #000; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">{{ __('inkwave.nav_categories') }}</div>
+                    <ul style="list-style: none; padding-left: 16px; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                        @php
+                            $categories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+                        @endphp
+                        @forelse($categories as $cat)
+                            <li><a href="{{ route('product-lists', $cat->slug) }}" style="color: #666; text-decoration: none; font-size: 14px;">{{ $cat->title }}</a></li>
+                        @empty
+                            <li><span style="color: #999; font-size: 14px;">{{ __('inkwave.nav_no_categories') }}</span></li>
+                        @endforelse
+                    </ul>
+                </li>
+
+                <li><a href="{{ route('product-lists') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.nav_courses') }}</a></li>
+
+                @if(Auth::check())
+                    <li><a href="{{ route('user') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.nav_my_courses') }}</a></li>
+                    <li><a href="{{ route('points.topup') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;"><i class="fas fa-coins" style="color:#bc9c5c;"></i> {{ Auth::user()->points_balance ?? 0 }}</a></li>
+                    <li><a href="{{ route('user.logout') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('inkwave.nav_logout') }}</a></li>
+                @else
+                    <li style="margin-top: 16px;">
+                        <a href="{{ route('login.form') }}" class="ag-action-btn" style="border: 1px solid #000; padding: 12px; display: block; text-align: center; text-decoration: none;">{{ __('inkwave.nav_login') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('register.form') }}" class="ag-btn-primary" style="background: #000; color: #fff; padding: 12px; display: block; text-align: center; text-decoration: none;">{{ __('inkwave.nav_register') }}</a>
+                    </li>
+                @endif
+                
+                <!-- Language / Currency -->
+                <li style="margin-top: 16px; border-top: 1px solid #eee; padding-top: 16px; display: flex; gap: 24px;">
+                    <div>
+                        @if(session('app_locale') == 'ja' || app()->getLocale() == 'ja')
+                            <a href="{{ route('change.language', 'en') }}" style="color: #666; text-decoration: none; font-size: 14px;"><i class="fi fi-gb"></i> EN</a>
+                        @else
+                            <a href="{{ route('change.language', 'ja') }}" style="color: #666; text-decoration: none; font-size: 14px;"><i class="fi fi-jp"></i> JA</a>
+                        @endif
+                    </div>
+                    <div>
+                        @php
+                            $currentCurrency = session('currency', 'USD');
+                            $nextCurrency = $currentCurrency == 'USD' ? 'JPY' : 'USD';
+                        @endphp
+                        <a href="{{ route('change.currency', $nextCurrency) }}" style="color: #666; text-decoration: none; font-size: 14px;">
+                            {{ $currentCurrency }} &rarr; {{ $nextCurrency }}
+                        </a>
+                    </div>
+                </li>
             </ul>
         </nav>
     </div>

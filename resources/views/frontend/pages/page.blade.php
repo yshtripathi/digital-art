@@ -5,7 +5,7 @@
 @include('frontend.layouts.breadcrumb', [
     'title' => $page_data->page_title,
     'links' => [
-        ['name' => __('inkwave.nav_home'), 'url' => route('home')],
+        ['name' => __('inkwave.top_nav_home'), 'url' => route('home')],
         ['name' => $page_data->page_title]
     ]
 ])

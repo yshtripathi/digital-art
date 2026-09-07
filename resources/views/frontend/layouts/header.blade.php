@@ -287,8 +287,8 @@
                     }
                 }
             @endphp
-            <div class="ag-cart-footer ag-mt-auto">
-                <div class="ag-flex ag-justify-between ag-align-end ag-mb-4" style="font-family: Arial, sans-serif;">
+            <div class="ag-cart-footer ag-mt-auto" style="box-sizing: border-box !important; width: 100% !important; max-width: 100% !important;">
+                <div class="ag-flex ag-justify-between ag-align-end ag-mb-4" style="font-family: Arial, sans-serif; box-sizing: border-box !important;">
                     <span class="ag-fw-bold" style="font-size:14px; text-transform:uppercase; letter-spacing:0.1em; color:#666;">{{ __('inkwave.top_nav_total_label') }}:</span>
                     @if($hasPoints && !$hasProducts)
                         <span class="ag-fw-bold" style="font-size:24px;">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</span>
@@ -296,12 +296,12 @@
                         <span class="ag-fw-bold" style="font-size:24px;">{{ number_format($totalPoints) }} <span style="font-size:14px; color:#bc9c5c;">{{ __('inkwave.top_nav_credits_label') }}</span></span>
                     @endif
                 </div>
-                <div class="ag-flex ag-flex-col ag-gap-2">
+                <div class="ag-flex ag-flex-col ag-gap-2" style="box-sizing: border-box !important; width: 100%;">
                     @if($hasPoints && !$hasProducts)
-                        <a href="{{ route('checkout') }}" class="ag-action-btn ag-w-100" style="justify-content:center; background:#000; color:#fff !important; padding:16px; border-radius:6px;">{{ __('inkwave.top_nav_checkout_btn') }}</a>
-                        <a href="{{ route('cart') }}" class="ag-action-btn ag-w-100" style="justify-content:center; border:1px solid rgba(0,0,0,0.1); padding:16px; border-radius:6px;">{{ __('inkwave.top_nav_view_cart_btn') }}</a>
+                        <a href="{{ route('checkout') }}" class="ag-submit-btn ag-w-100" style="justify-content:center; display:flex; padding:16px; box-sizing: border-box !important;">{{ __('inkwave.top_nav_checkout_btn') }}</a>
+                        <a href="{{ route('cart') }}" class="ag-ghost-btn ag-w-100" style="justify-content:center; display:flex; padding:16px; box-sizing: border-box !important;">{{ __('inkwave.top_nav_view_cart_btn') }}</a>
                     @elseif($hasProducts && !$hasPoints)
-                        <a href="{{ route('coursecart') }}" class="ag-action-btn ag-w-100" style="justify-content:center; background:#000; color:#fff !important; padding:16px; border-radius:6px;">{{ __('inkwave.top_nav_view_cart_btn') }}</a>
+                        <a href="{{ route('coursecart') }}" class="ag-submit-btn ag-w-100" style="justify-content:center; display:flex; padding:16px; box-sizing: border-box !important;">{{ __('inkwave.top_nav_view_cart_btn') }}</a>
                     @endif
                 </div>
             </div>
@@ -309,5 +309,6 @@
     </div>
 </div>
 
-@cookieconsentview
 
+
+@cookieconsentview

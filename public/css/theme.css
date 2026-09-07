@@ -5037,3 +5037,6 @@ button[type="submit"].ag-submit-btn:hover {
     color: #bc9c5c;
     margin-right: 8px;
 }
+
+.cartcanvas__info, .cartcanvas__info *, .cartcanvas__info *::before, .cartcanvas__info *::after { box-sizing: border-box; }
+

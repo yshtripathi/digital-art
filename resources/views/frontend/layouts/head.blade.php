@@ -6,25 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', '[Website Name] – Premium Masterclasses in Illustration & Architecture')</title>
-    <meta name="title" content="@yield('title', '[Website Name] – Premium Masterclasses in Illustration & Architecture')">
-    <meta name="description" content="Premium illustration masterclasses. Master Japanese Architecture, Food & Culinary Arts, Fashion Styling, Botanical, and Travel Illustration. Learn Bento Illustration, Japanese Streetscapes, and more.">
-    <meta name="keywords" content="art courses, japanese architecture, culinary illustration, fashion illustration, botanical art, travel illustration, japanese interior sketching, traditional japanese architecture, japanese garden illustration, japanese streetscape drawing, bento illustration, streetwear fashion, online masterclass">
-    <meta name="author" content="[Website Name]">
+    <title>@yield('title', 'ManageNovaX – Premium Masterclasses in Project Management & Operational Excellence')</title>
+    <meta name="title" content="@yield('title', 'ManageNovaX – Premium Masterclasses in Project Management & Operational Excellence')">
+    <meta name="description" content="ManageNovaX provides structured learning pathways and premium masterclasses for project management professionals. Master Agile methodologies, strategic operations, and enterprise leadership.">
+    <meta name="keywords" content="project management, operational excellence, agile methodologies, strategic operations, enterprise leadership, professional development, masterclass, business courses">
+    <meta name="author" content="ManageNovaX">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title', '[Website Name] – Premium Masterclasses in Illustration & Architecture')">
-    <meta property="og:description" content="Premium illustration masterclasses. Master Japanese Architecture, Food & Culinary Arts, Fashion Styling, Botanical, and Travel Illustration. Learn Bento Illustration, Japanese Streetscapes, and more.">
+    <meta property="og:title" content="@yield('title', 'ManageNovaX – Premium Masterclasses in Project Management & Operational Excellence')">
+    <meta property="og:description" content="ManageNovaX provides structured learning pathways and premium masterclasses for project management professionals. Master Agile methodologies, strategic operations, and enterprise leadership.">
     @if(isset($og_image))
     <meta property="og:image" content="{{ $og_image }}">
     @endif
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:site_name" content="[Website Name]">
+    <meta property="og:site_name" content="ManageNovaX">
     <meta property="og:locale" content="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('title', '[Website Name] – Premium Masterclasses in Illustration & Architecture')">
-    <meta name="twitter:description" content="Premium illustration masterclasses. Master Japanese Architecture, Food & Culinary Arts, Fashion Styling, Botanical, and Travel Illustration. Learn Bento Illustration, Japanese Streetscapes, and more.">
+    <meta name="twitter:title" content="@yield('title', 'ManageNovaX – Premium Masterclasses in Project Management & Operational Excellence')">
+    <meta name="twitter:description" content="ManageNovaX provides structured learning pathways and premium masterclasses for project management professionals. Master Agile methodologies, strategic operations, and enterprise leadership.">
     @if(isset($og_image))
     <meta name="twitter:image" content="{{ $og_image }}">
     @endif

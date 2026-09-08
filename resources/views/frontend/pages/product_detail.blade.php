@@ -7,8 +7,8 @@
 @include('frontend.layouts.breadcrumb', [
     'title' => $product_detail->title,
     'links' => [
-        ['name' => __('inkwave.top_nav_home'), 'url' => route('home')],
-        ['name' => __('inkwave.cat_catalog'), 'url' => route('product-lists')],
+        ['name' => __('managenovax.header.home'), 'url' => route('home')],
+        ['name' => __('managenovax.catalog.title'), 'url' => route('product-lists')],
         ['name' => $product_detail->title]
     ]
 ])
@@ -46,7 +46,7 @@
 
             {{-- ============ INFO ============ --}}
             <div class="ag-pd-content-card">
-                <p class="ag-pd-eyebrow"><i class="fas fa-book-open"></i> {{ __('inkwave.course_category') }}</p>
+                <p class="ag-pd-eyebrow"><i class="fas fa-book-open"></i> {{ __('managenovax.course.category') }}</p>
                 <h1 class="ag-pd-title">{{ $product_detail->title }}</h1>
                 
                 @if($product_detail->description)
@@ -54,12 +54,12 @@
                 @endif
 
                 @if($product_detail->levels && count($product_detail->levels))
-                    <span class="ag-pd-tabs-label">{{ __('inkwave.course_select_level') }}</span>
+                    <span class="ag-pd-tabs-label">{{ __('managenovax.course.select_level') }}</span>
                     
                     <div class="ag-pd-tabs">
                         @foreach($product_detail->levels as $key => $level)
                             <button type="button" class="ag-pd-tab {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}">
-                                {{ ucfirst($level->skill_level) }}
+                                {{ __('managenovax.course.skill_' . strtolower($level->skill_level)) }}
                             </button>
                         @endforeach
                     </div>
@@ -73,7 +73,7 @@
                                         <div class="ag-pd-feat">
                                             <div class="ag-pd-feat__icon"><i class="fas fa-gem"></i></div>
                                             <div class="ag-pd-feat__text">
-                                                <span class="ag-pd-feat__label">{{ __('inkwave.course_learn_info') }}</span>
+                                                <span class="ag-pd-feat__label">{{ __('managenovax.course.learn_info') }}</span>
                                                 <p class="ag-pd-feat__desc">{{ $level->learn_info }}</p>
                                             </div>
                                         </div>
@@ -83,7 +83,7 @@
                                         <div class="ag-pd-feat">
                                             <div class="ag-pd-feat__icon"><i class="fas fa-bullseye"></i></div>
                                             <div class="ag-pd-feat__text">
-                                                <span class="ag-pd-feat__label">{{ __('inkwave.course_purpose') }}</span>
+                                                <span class="ag-pd-feat__label">{{ __('managenovax.course.purpose') }}</span>
                                                 <p class="ag-pd-feat__desc">{{ $level->purpose }}</p>
                                             </div>
                                         </div>
@@ -93,7 +93,7 @@
                                         <div class="ag-pd-feat">
                                             <div class="ag-pd-feat__icon"><i class="fas fa-trophy"></i></div>
                                             <div class="ag-pd-feat__text">
-                                                <span class="ag-pd-feat__label">{{ __('inkwave.course_outcome') }}</span>
+                                                <span class="ag-pd-feat__label">{{ __('managenovax.course.outcome') }}</span>
                                                 <p class="ag-pd-feat__desc">{{ $level->outcome }}</p>
                                             </div>
                                         </div>
@@ -103,10 +103,10 @@
 
                             {{-- BUY BOX --}}
                             <div class="ag-pd-buybox">
-                                <span class="ag-pd-price__label">{{ __('inkwave.course_price') }}</span>
+                                <span class="ag-pd-price__label">{{ __('managenovax.course.price') }}</span>
                                 <div class="ag-pd-price__amt">
                                     <i class="fas fa-coins"></i> {{ number_format($level->price_in_points) }} 
-                                    <small>{{ __('inkwave.course_credits') }}</small>
+                                    <small>{{ __('managenovax.course.credits') }}</small>
                                 </div>
 
                                 <form action="{{ route('single-add-to-cart') }}" method="POST" class="enroll-form">
@@ -118,7 +118,7 @@
                                     <input type="hidden" name="price_hk" value="{{ $level->price_hk }}">
                                     <input type="hidden" name="level_id" value="{{ $level->id }}">
                                     <button type="submit" class="ag-submit-btn enroll-btn">
-                                        <span>{{ __('inkwave.course_enroll_btn') }}</span> 
+                                        <span>{{ __('managenovax.course.enroll_btn') }}</span> 
                                         <i class="fas fa-arrow-right"></i>
                                     </button>
                                 </form>

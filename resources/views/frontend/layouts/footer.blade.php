@@ -1,70 +1,59 @@
 <footer class="ag-footer">
     <div class="ag-footer-inner">
         
-        <!-- Newsletter Section -->
+                <!-- Newsletter Section -->
         <div class="ag-newsletter">
-            <h4>{{ __('inkwave.footer_newsletter_title') }}</h4>
-            <p>{{ __('inkwave.footer_newsletter_desc') }}</p>
+            <h4>{{ __('managenovax.footer.newsletter_title') }}</h4>
+            <p>{{ __('managenovax.footer.newsletter_desc') }}</p>
             <form class="ag-newsletter-form subscribe-form">
-                <input type="email" name="email" class="email" placeholder="{{ __('inkwave.footer_newsletter_placeholder') }}" required>
+                <input type="email" name="email" class="email" placeholder="{{ __('managenovax.footer.newsletter_ph') }}" required>
                 <button type="submit" class="ag-btn-primary" aria-label="Subscribe" style="padding: 13px 24px !important; letter-spacing: 0.1em !important; font-size: 11px !important;">
-                    {{ __('inkwave.footer_newsletter_btn') }}
+                    {{ __('managenovax.footer.newsletter_btn') }}
                 </button>
             </form>
-            <p class="suces_rinfo" style="display: none;">{{ __('inkwave.footer_newsletter_success') }}</p>
+            <p class="suces_rinfo" style="display: none;">{{ __('managenovax.footer.newsletter_success') }}</p>
         </div>
 
-        <!-- Widgets Grid -->
+                <!-- Widgets Grid -->
         <div class="ag-footer-grid">
             
             <!-- Column 1: Brand -->
             <div class="ag-footer-col">
                 <a href="{{route('home')}}" class="ag-footer-logo">
-                    <img src="{{asset('assets/images/logo.webp')}}" alt="{{ $misc['Company Name'] ?? __('inkwave.footer_company_fallback') }}" style="height: 70px; width: auto; object-fit: contain; background-color: #ffffff; padding: 8px; border-radius: 6px; filter: none !important;">
+                    <img src="{{asset('assets/images/logo.webp')}}" alt="{{ $misc['Company Name'] ?? __('managenovax.footer.company_fallback') }}" style="height: 70px; width: auto; object-fit: contain; background-color: #ffffff; padding: 8px; border-radius: 6px; filter: none !important;">
                 </a>
-                <p class="ag-footer-text" style="margin-bottom: 24px;">{{ __('inkwave.footer_brand_desc') }}</p>
+                <p class="ag-footer-text" style="margin-bottom: 24px;">{{ __('managenovax.footer.brand_desc') }}</p>
                 <ul class="ag-footer-links">
                     <li>
                         <span class="ag-footer-text">
                             <i class="fas fa-building"></i> 
-                            {{ $misc['Company Name'] ?? __('inkwave.footer_company_fallback') }}
+                            {{ $misc['Company Name'] ?? __('managenovax.footer.company_fallback') }}
                         </span>
                     </li>
                     <li>
-                        <a href="tel:{{ $misc['Company Phone'] ?? __('inkwave.footer_phone_fallback') }}">
+                        <a href="tel:{{ $misc['Company Phone'] ?? __('managenovax.footer.phone_fallback') }}">
                             <i class="fas fa-phone-alt"></i> 
-                            {{ $misc['Company Phone'] ?? __('inkwave.footer_phone_fallback') }}
+                            {{ $misc['Company Phone'] ?? __('managenovax.footer.phone_fallback') }}
                         </a>
                     </li>
                     <li>
-                        <a href="mailto:{{ $misc['Company Email'] ?? __('inkwave.footer_email_fallback') }}">
+                        <a href="mailto:{{ $misc['Company Email'] ?? __('managenovax.footer.email_fallback') }}">
                             <i class="fas fa-envelope"></i> 
-                            {{ $misc['Company Email'] ?? __('inkwave.footer_email_fallback') }}
+                            {{ $misc['Company Email'] ?? __('managenovax.footer.email_fallback') }}
                         </a>
                     </li>
                     <li>
                         <span class="ag-footer-text">
                             <i class="fas fa-map-marker-alt"></i> 
-                            {{ $misc['Company Address'] ?? __('inkwave.footer_address_fallback') }}
+                            {{ $misc['Company Address'] ?? __('managenovax.footer.address_fallback') }}
                         </span>
                     </li>
                 </ul>
             </div>
 
-            <!-- Column 2: Explore -->
+            <!-- Column 2: Categories -->
             <div class="ag-footer-col">
-                <h5>{{ __('inkwave.footer_nav_explore') }}</h5>
-                <ul class="ag-footer-links">
-                    <li><a href="{{route('home')}}">{{ __('inkwave.footer_nav_home') }}</a></li>
-                    <li><a href="{{route('product-lists')}}">{{ __('inkwave.footer_nav_catalog') }}</a></li>
-                    <li><a href="{{route('about-us')}}">{{ __('inkwave.footer_nav_about') }}</a></li>
-                    <li><a href="{{route('contact')}}">{{ __('inkwave.footer_nav_contact') }}</a></li>
-                </ul>
-            </div>
-
-            <!-- Column 3: Collections -->
-            <div class="ag-footer-col">
-                <h5>{{ __('inkwave.footer_nav_categories') }}</h5>
+                <h5>{{ __('managenovax.footer.categories') }}</h5>
                 <ul class="ag-footer-links">
                     @php
                         $footerCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
@@ -72,28 +61,44 @@
                     @forelse($footerCategories as $cat)
                         <li><a href="{{ route('product-lists', $cat->slug) }}">{{ $cat->title }}</a></li>
                     @empty
-                        <li><span class="ag-footer-text">{{ __('inkwave.nav_no_categories') }}</span></li>
+                        <li><span class="ag-footer-text">{{ __('managenovax.header.no_categories') }}</span></li>
                     @endforelse
                 </ul>
             </div>
 
-            <!-- Column 4: Assistance -->
+            <!-- Column 3: Company & Account -->
             <div class="ag-footer-col">
-                <h5>{{ __('inkwave.footer_nav_support') }}</h5>
+                <h5>{{ __('managenovax.footer.company_account') }}</h5>
                 <ul class="ag-footer-links">
-                    <li><a href="{{route('pages','privacy-policy')}}">{{ __('inkwave.footer_legal_privacy') }}</a></li>
-                    <li><a href="{{route('pages','terms-conditions')}}">{{ __('inkwave.footer_legal_terms') }}</a></li>
-                    <li><a href="{{route('pages','refund-policy')}}">{{ __('inkwave.footer_legal_refund') }}</a></li>
-                    <li><a href="{{route('pages','delivery-policy')}}">{{ __('inkwave.footer_legal_delivery') }}</a></li>
+                    <li><a href="{{route('about-us')}}">{{ __('managenovax.footer.about') }}</a></li>
+                    <li><a href="{{route('contact')}}">{{ __('managenovax.footer.contact') }}</a></li>
+                    @if(Auth::check())
+                        <li><a href="{{route('user')}}">{{ __('managenovax.footer.my_account') }}</a></li>
+                        <li><a href="{{route('user.logout')}}">{{ __('managenovax.footer.logout') }}</a></li>
+                    @else
+                        <li><a href="{{route('login.form')}}">{{ __('managenovax.footer.login') }}</a></li>
+                        <li><a href="{{route('register.form')}}">{{ __('managenovax.footer.register') }}</a></li>
+                    @endif
+                </ul>
+            </div>
+
+            <!-- Column 4: Policies -->
+            <div class="ag-footer-col">
+                <h5>{{ __('managenovax.footer.policies') }}</h5>
+                <ul class="ag-footer-links">
+                    <li><a href="{{route('pages','terms-conditions')}}">{{ __('managenovax.footer.terms') }}</a></li>
+                    <li><a href="{{route('pages','privacy-policy')}}">{{ __('managenovax.footer.privacy') }}</a></li>
+                    <li><a href="{{route('pages','refund-policy')}}">{{ __('managenovax.footer.refund') }}</a></li>
+                    <li><a href="{{route('pages','delivery-policy')}}">{{ __('managenovax.footer.delivery') }}</a></li>
                 </ul>
             </div>
 
         </div>
 
-        <!-- Footer Bottom -->
+                <!-- Footer Bottom -->
         <div class="ag-footer-bottom">
             <div>
-                &copy; {{ date('Y') }} <a href="{{route('home')}}">{{ $misc['Company Name'] ?? __('inkwave.footer_company_fallback') }}</a>. {{ __('inkwave.footer_copyright_rights') }}
+                {!! __('managenovax.footer.copyright', ['year' => date('Y'), 'company' => '<a href="' . route('home') . '">' . ($misc['Company Name'] ?? __('managenovax.footer.company_fallback')) . '</a>']) !!}
             </div>
             <div class="ag-footer-payment">
                 <img src="{{ asset('assets/images/payment.webp') }}" alt="Payment Methods">

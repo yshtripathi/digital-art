@@ -270,6 +270,7 @@ return [
 
     'credits' => [
         'pg_title' => 'Buy Credits',
+        'table_title' => 'Pricing Tiers',
         'pg_desc' => 'Purchase credits to enroll in our professional courses. The more you buy, the higher your bonus multiplier.',
         'tier_standard' => 'Standard',
         'tier_premium' => 'Premium',
@@ -436,5 +437,35 @@ return [
         'lbl_method' => 'Payment Method',
         'lbl_card' => 'Credit Card',
         'lbl_trans_id' => 'Transaction ID',
+    ],
+
+    'home' => [
+        'hero_title' => 'Master Strategic Project Management',
+        'hero_desc' => 'Structured learning pathways for professionals. Advance your career through expertly designed courses in agile methodologies and strategic leadership.',
+        'hero_btn_start' => 'Explore Courses',
+        'hero_btn_account' => 'My Dashboard',
+        'hero_btn_login' => 'Sign In',
+        
+        'about_title' => 'Why Choose ManageNovaX?',
+        'about_desc_1' => 'We provide comprehensive, structured learning experiences tailored specifically for project management professionals.',
+        'about_desc_2' => 'Whether you are starting from the ground up or refining your strategic leadership abilities, our curated pathways are built to ensure your continued professional growth.',
+        'about_feat_1' => '<strong>Five Core Categories</strong> ranging from foundational Agile to executive-level operations.',
+        'about_feat_2' => '<strong>Four Skill Levels</strong> to perfectly match your current experience.',
+        'about_feat_3' => '<strong>Structured Pathways</strong> designed to translate directly into real-world outcomes.',
+        'about_btn' => 'View Catalog',
+        
+        'products_title' => 'Featured Programs',
+        'products_btn' => 'View Details',
+        
+        'steps_title' => 'How It Works',
+        'steps_1_title' => 'Select Your Pathway',
+        'steps_1_desc' => 'Browse our specialized course categories.',
+        'steps_2_title' => 'Choose Your Level',
+        'steps_2_desc' => 'Pick between Beginner, Intermediate, Advanced, or Expert.',
+        'steps_3_title' => 'Purchase Credits & Enroll',
+        'steps_3_desc' => 'Top up your account with credits to unlock immediate access.',
+        
+        'inspire_title' => 'Empowering Professionals',
+        'inspire_desc' => 'Join a global community of ambitious professionals dedicated to operational excellence. Discover how industry leaders are leveraging our structured pathways to streamline workflows, lead high-performing agile teams, and drive measurable impact across their organizations.',
     ],
 ];

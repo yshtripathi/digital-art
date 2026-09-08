@@ -17,14 +17,14 @@
                 </video>
             </div>
             <div class="art-hero-right">
-                <h1>{{ __('inkwave.home_hero_title') }}</h1>
-                <p>{{ __('inkwave.home_hero_desc') }}</p>
+                <h1>{{ __('managenovax.home.hero_title') }}</h1>
+                <p>{{ __('managenovax.home.hero_desc') }}</p>
                 <div class="art-hero-btns">
-                    <a href="{{ route('product-lists') }}" class="art-hero-btn">{{ __('inkwave.home_hero_btn_start') }}</a>
+                    <a href="{{ route('product-lists') }}" class="art-hero-btn">{{ __('managenovax.home.hero_btn_start') }}</a>
                     @if(Auth::check())
-                        <a href="{{ route('user') }}" class="art-hero-btn art-hero-btn-outline">{{ __('inkwave.home_hero_btn_account') }}</a>
+                        <a href="{{ route('user') }}" class="art-hero-btn art-hero-btn-outline">{{ __('managenovax.home.hero_btn_account') }}</a>
                     @else
-                        <a href="{{ route('login.form') }}" class="art-hero-btn art-hero-btn-outline">{{ __('inkwave.home_hero_btn_login') }}</a>
+                        <a href="{{ route('login.form') }}" class="art-hero-btn art-hero-btn-outline">{{ __('managenovax.home.hero_btn_login') }}</a>
                     @endif
                 </div>
             </div>
@@ -42,15 +42,15 @@
                 <img src="{{ asset('assets/images/hero-3.webp') }}" alt="Student Working" class="art-about-img art-about-img-3" loading="lazy">
             </div>
             <div class="art-about-right">
-                <h2>{{ __('inkwave.home_about_title') }}</h2>
-                <p>{{ __('inkwave.home_about_desc_1') }}</p>
-                <p>{{ __('inkwave.home_about_desc_2') }}</p>
+                <h2>{{ __('managenovax.home.about_title') }}</h2>
+                <p>{{ __('managenovax.home.about_desc_1') }}</p>
+                <p>{{ __('managenovax.home.about_desc_2') }}</p>
                 <ul class="art-about-list">
-                    <li><i class="fas fa-check-circle"></i> {!! __('inkwave.home_about_feat_1') !!}</li>
-                    <li><i class="fas fa-check-circle"></i> {!! __('inkwave.home_about_feat_2') !!}</li>
-                    <li><i class="fas fa-check-circle"></i> {!! __('inkwave.home_about_feat_3') !!}</li>
+                    <li><i class="fas fa-check-circle"></i> {!! __('managenovax.home.about_feat_1') !!}</li>
+                    <li><i class="fas fa-check-circle"></i> {!! __('managenovax.home.about_feat_2') !!}</li>
+                    <li><i class="fas fa-check-circle"></i> {!! __('managenovax.home.about_feat_3') !!}</li>
                 </ul>
-                <a href="{{ route('product-lists') }}" class="art-hero-btn">{{ __('inkwave.home_about_btn') }}</a>
+                <a href="{{ route('product-lists') }}" class="art-hero-btn">{{ __('managenovax.home.about_btn') }}</a>
             </div>
         </div>
     </section>
@@ -63,7 +63,7 @@
     
 
     <section class="art-cat-carousel-section">
-        <h2>{{ __('inkwave.home_products_title') }}</h2>
+        <h2>{{ __('managenovax.home.products_title') }}</h2>
         <div class="art-cat-layout">
             <button class="art-cat-nav-btn" id="artCatPrevBtn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
             <div class="art-cat-scroll-container" id="artCatScrollContainer">
@@ -82,7 +82,7 @@
                         <div class="art-cat-scroll-content">
                             <h3>{{ $product->title }}</h3>
                             <p>{{ $product->summary ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 100, '...') }}</p>
-                            <a href="{{ route('product-detail', $product->slug) }}" class="art-hero-btn">{{ __('inkwave.home_products_btn') }}</a>
+                            <a href="{{ route('product-detail', $product->slug) }}" class="art-hero-btn">{{ __('managenovax.home.products_btn') }}</a>
                         </div>
                     </div>
                 @endforeach
@@ -118,28 +118,28 @@
     
 
     <section class="art-how-section">
-        <h2 class="art-how-title">{{ __('inkwave.home_steps_title') }}</h2>
+        <h2 class="art-how-title">{{ __('managenovax.home.steps_title') }}</h2>
         <div class="art-how-grid">
             <div class="art-how-card">
                 <div class="art-how-icon">
                     <i class="fas fa-compass"></i>
                 </div>
-                <h3>{{ __('inkwave.home_steps_1_title') }}</h3>
-                <p>{{ __('inkwave.home_steps_1_desc') }}</p>
+                <h3>{{ __('managenovax.home.steps_1_title') }}</h3>
+                <p>{{ __('managenovax.home.steps_1_desc') }}</p>
             </div>
             <div class="art-how-card">
                 <div class="art-how-icon">
                     <i class="fas fa-play-circle"></i>
                 </div>
-                <h3>{{ __('inkwave.home_steps_2_title') }}</h3>
-                <p>{{ __('inkwave.home_steps_2_desc') }}</p>
+                <h3>{{ __('managenovax.home.steps_2_title') }}</h3>
+                <p>{{ __('managenovax.home.steps_2_desc') }}</p>
             </div>
             <div class="art-how-card">
                 <div class="art-how-icon">
                     <i class="fas fa-palette"></i>
                 </div>
-                <h3>{{ __('inkwave.home_steps_3_title') }}</h3>
-                <p>{{ __('inkwave.home_steps_3_desc') }}</p>
+                <h3>{{ __('managenovax.home.steps_3_title') }}</h3>
+                <p>{{ __('managenovax.home.steps_3_desc') }}</p>
             </div>
         </div>
     </section>
@@ -150,8 +150,8 @@
         {{-- 6. INSPIRATION GALLERY (Remaining Assets) --}}
     
     <section class="art-inspiration-section">
-        <h2>{{ __('inkwave.home_inspire_title') }}</h2>
-        <p>{{ __('inkwave.home_inspire_desc') }}</p>
+        <h2>{{ __('managenovax.home.inspire_title') }}</h2>
+        <p>{{ __('managenovax.home.inspire_desc') }}</p>
         <div class="art-insp-grid">
             <div class="art-insp-item">
                 <video src="{{ asset('assets/videos/inspire.webm') }}" autoplay loop muted playsinline></video>
@@ -169,32 +169,32 @@
         <div class="ag-container">
             
             <div class="ag-topup-head">
-                <h2 class="ag-page-title">{{ __('inkwave.credits_pg_title') }}</h2>
-                <p class="ag-page-desc">{{ __('inkwave.credits_pg_desc') }}</p>
+                <h2 class="ag-page-title">{{ __('managenovax.credits.pg_title') }}</h2>
+                <p class="ag-page-desc">{{ __('managenovax.credits.pg_desc') }}</p>
             </div>
 
             @php
                 $cur = session('currency');
                 if ($cur == 'JPY') {
                     $tiers = [
-                        ['n'=>__('inkwave.credits_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'&yen;1 - &yen;79,999',        'f'=>false],
-                        ['n'=>__('inkwave.credits_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'&yen;80,000 - &yen;159,999',  'f'=>false],
-                        ['n'=>__('inkwave.credits_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'&yen;160,000 - &yen;239,999', 'f'=>false],
-                        ['n'=>__('inkwave.credits_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'&yen;240,000+',           'f'=>true],
+                        ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'&yen;1 - &yen;79,999',        'f'=>false],
+                        ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'&yen;80,000 - &yen;159,999',  'f'=>false],
+                        ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'&yen;160,000 - &yen;239,999', 'f'=>false],
+                        ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'&yen;240,000+',           'f'=>true],
                     ];
                 } elseif ($cur == 'HKD') {
                     $tiers = [
-                        ['n'=>__('inkwave.credits_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
-                        ['n'=>__('inkwave.credits_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
-                        ['n'=>__('inkwave.credits_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
-                        ['n'=>__('inkwave.credits_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'HK$12,000+',           'f'=>true],
+                        ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
+                        ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
+                        ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
+                        ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'HK$12,000+',           'f'=>true],
                     ];
                 } else {
                     $tiers = [
-                        ['n'=>__('inkwave.credits_tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'$1 - $499',       'f'=>false],
-                        ['n'=>__('inkwave.credits_tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'$500 - $999',     'f'=>false],
-                        ['n'=>__('inkwave.credits_tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'$1,000 - $1,499', 'f'=>false],
-                        ['n'=>__('inkwave.credits_tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'$1,500+',         'f'=>true],
+                        ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'$1 - $499',       'f'=>false],
+                        ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'$500 - $999',     'f'=>false],
+                        ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'$1,000 - $1,499', 'f'=>false],
+                        ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'$1,500+',         'f'=>true],
                     ];
                 }
             @endphp
@@ -202,15 +202,15 @@
             <div class="ag-split-grid">
                 
                 <div class="ag-table-card">
-                    <h2 class="ag-section-title">{{ __('inkwave.credits_table_title') }}</h2>
+                    <h2 class="ag-section-title">{{ __('managenovax.credits.table_title') }}</h2>
                     
                     <div class="ag-table-wrap">
                         <table class="ag-tiers-table">
                             <thead>
                                 <tr>
-                                    <th>{{ __('inkwave.credits_table_col1') }}</th>
-                                    <th>{{ __('inkwave.credits_table_col2') }}</th>
-                                    <th>{{ __('inkwave.credits_table_col3') }}</th>
+                                    <th>{{ __('managenovax.credits.table_col1') }}</th>
+                                    <th>{{ __('managenovax.credits.table_col2') }}</th>
+                                    <th>{{ __('managenovax.credits.table_col3') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -219,7 +219,7 @@
                                         <td>
                                             <i class="fas {{ $t['i'] }}"></i> 
                                             <strong>{{ $t['n'] }}</strong>
-                                            @if($t['f']) <span class="ag-badge">{{ __('inkwave.credits_best_value') }}</span> @endif
+                                            @if($t['f']) <span class="ag-badge">{{ __('managenovax.credits.best_value') }}</span> @endif
                                         </td>
                                         <td>{!! $t['r'] !!}</td>
                                         <td><span class="ag-highlight">{{ $t['big'] }}</span></td>
@@ -231,31 +231,31 @@
 
                     <p class="ag-note">
                         @if(session('currency') == 'JPY')
-                            {{ __('inkwave.credits_jpy_note') }}
+                            {{ __('managenovax.credits.jpy_note') }}
                         @elseif(session('currency') == 'HKD')
-                            {{ __('inkwave.credits_hkd_note') }}
+                            {{ __('managenovax.credits.hkd_note') }}
                         @else
-                            {{ __('inkwave.credits_usd_note') }}
+                            {{ __('managenovax.credits.usd_note') }}
                         @endif
                     </p>
                     <div class="ag-disclaimer-box">
                         <i class="fas fa-exclamation-circle"></i> 
                         <div>
-                            <strong>{{ __('inkwave.credits_disclaimer_title') }}</strong> {{ __('inkwave.credits_disclaimer_text') }}
+                            <strong>{{ __('managenovax.credits.disclaimer_title') }}</strong> {{ __('managenovax.credits.disclaimer_text') }}
                         </div>
                     </div>
                 </div>
 
                 <div>
                     <div class="ag-calc-card">
-                        <h2 class="ag-calc-title"><i class="fas fa-calculator"></i> {{ __('inkwave.credits_calc_title') }}</h2>
-                        <p class="ag-calc-desc">{{ __('inkwave.credits_calc_desc') }}</p>
+                        <h2 class="ag-calc-title"><i class="fas fa-calculator"></i> {{ __('managenovax.credits.calc_title') }}</h2>
+                        <p class="ag-calc-desc">{{ __('managenovax.credits.calc_desc') }}</p>
                         
                         <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form">
                             @csrf
                             
                             <div class="ag-form-group">
-                                <label class="ag-label">{{ __('inkwave.credits_calc_label') }}</label>
+                                <label class="ag-label">{{ __('managenovax.credits.calc_label') }}</label>
                                 <div class="ag-input-wrap">
                                     <span class="ag-currency-symbol">{!! session('currency') == 'JPY' ? '&yen;' : '$' !!}</span>
                                     <input type="number" name="amount" id="topup_amount" class="ag-input" placeholder="0" min="1" required>
@@ -264,26 +264,26 @@
 
                             <div class="ag-calc-stats">
                                 <div class="ag-calc-row">
-                                    <span>{{ __('inkwave.credits_calc_base') }}:</span>
+                                    <span>{{ __('managenovax.credits.calc_base') }}:</span>
                                     <span id="base_points">0</span>
                                 </div>
                                 <div class="ag-calc-row">
-                                    <span>{{ __('inkwave.credits_calc_bonus') }}:</span>
+                                    <span>{{ __('managenovax.credits.calc_bonus') }}:</span>
                                     <span id="multiplier_display">x1</span>
                                 </div>
                                 <div class="ag-calc-row ag-calc-total">
-                                    <span>{{ __('inkwave.credits_calc_total') }}:</span>
+                                    <span>{{ __('managenovax.credits.calc_total') }}:</span>
                                     <span><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
                                 </div>
                             </div>
 
                             <button type="submit" class="ag-submit-btn topup-btn">
-                                <span>{{ __('inkwave.credits_calc_btn') }}</span>
+                                <span>{{ __('managenovax.credits.calc_btn') }}</span>
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                             
                             <p class="ag-trust-note">
-                                <i class="fas fa-shield-alt"></i> {{ __('inkwave.credits_trust_msg') }}
+                                <i class="fas fa-shield-alt"></i> {{ __('managenovax.credits.trust_msg') }}
                             </p>
                         </form>
                     </div>

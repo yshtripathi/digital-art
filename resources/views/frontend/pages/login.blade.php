@@ -21,7 +21,7 @@
                 
                 {{-- Image Side --}}
                 <div class="ag-split__img">
-                    <img src="{{ asset('assets/images/login-bg.webp') }}" alt="Login to Artora">
+                    <img src="{{ asset('assets/images/login.webp') }}" alt="Login to Artora">
                 </div>
 
                 {{-- Form Side --}}

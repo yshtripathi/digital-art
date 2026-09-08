@@ -87,7 +87,7 @@
 			<div class="auto-container">
 				<div class="inner-container">
 					<div class="logo-box">
-						<div class="logo"><a href="{{route('home')}}"><img src="{{url('assets/images/logo.png')}}" alt=""></a></div>
+						<div class="logo"><a href="{{route('home')}}"><img src="{{url('assets/images/logo.webp')}}" alt=""></a></div>
 					</div>
 
 					<ul class="contact-info-outer">
@@ -233,7 +233,7 @@
 				<div class="inner-container">
 					<!--Logo-->
 					<div class="logo">
-						<a href="{{route('home')}}" title=""><img src="{{url('assets/images/logo.png')}}" alt="" title=""></a>
+						<a href="{{route('home')}}" title=""><img src="{{url('assets/images/logo.webp')}}" alt="" title=""></a>
 					</div>
 
 					<!--Right Col-->

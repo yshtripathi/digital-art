@@ -21,7 +21,7 @@
                 
                 {{-- Image Side --}}
                 <div class="ag-split__img">
-                    <img src="{{ asset('assets/images/recover-pwd-bg.webp') }}" alt="Recover Password">
+                    <img src="{{ asset('assets/images/forget-password.webp') }}" alt="Recover Password">
                 </div>
 
                 {{-- Form Side --}}

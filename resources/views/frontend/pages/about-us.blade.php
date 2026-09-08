@@ -18,7 +18,7 @@
         <div class="ag-container">
             <div class="ag-split">
                 <div class="ag-split__img">
-                    <img src="{{ asset('assets/images/about-aesthetics.webp') }}" alt="Aesthetics">
+                    <img src="{{ asset('assets/images/about-1.webp') }}" alt="Aesthetics">
                 </div>
                 <div class="ag-split__content ag-text-block ag-bg-bone">
                     <h2 class="ag-title">{{ __('inkwave.about_hero_title') }}</h2>
@@ -66,7 +66,7 @@
         <div class="ag-container">
             <div class="ag-split ag-split--reverse">
                 <div class="ag-split__img ag-split__img--reverse">
-                    <img src="{{ asset('assets/images/about-cultural.webp') }}" alt="Philosophy">
+                    <img src="{{ asset('assets/images/about-2.webp') }}" alt="Philosophy">
                 </div>
                 <div class="ag-split__content ag-text-block ag-bg-dark">
                     <h2 class="ag-title ag-title--dark">{{ __('inkwave.about_phil_title') }}</h2>
@@ -113,7 +113,7 @@
             <div class="ag-grid-3">
                 <div class="ag-card">
                     <div class="ag-card__img-wrap">
-                        <img src="{{ asset('assets/images/about-architecture.webp') }}" alt="Architecture">
+                        <img src="{{ asset('assets/images/about-3.webp') }}" alt="Architecture">
                     </div>
                     <h4>{{ __('inkwave.about_disc1_title') }}</h4>
                     <p>{{ __('inkwave.about_disc1_desc') }}</p>
@@ -121,7 +121,7 @@
                 
                 <div class="ag-card">
                     <div class="ag-card__img-wrap">
-                        <img src="{{ asset('assets/images/about-culinary.webp') }}" alt="Sustainable">
+                        <img src="{{ asset('assets/images/about-4.webp') }}" alt="Sustainable">
                     </div>
                     <h4>{{ __('inkwave.about_disc2_title') }}</h4>
                     <p>{{ __('inkwave.about_disc2_desc') }}</p>
@@ -129,7 +129,7 @@
                 
                 <div class="ag-card">
                     <div class="ag-card__img-wrap">
-                        <img src="{{ asset('assets/images/about-nature.webp') }}" alt="Residential">
+                        <img src="{{ asset('assets/images/about-5.webp') }}" alt="Residential">
                     </div>
                     <h4>{{ __('inkwave.about_disc3_title') }}</h4>
                     <p>{{ __('inkwave.about_disc3_desc') }}</p>

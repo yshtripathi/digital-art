@@ -4,7 +4,7 @@
         <!-- Left Side: Logo -->
         <div class="ag-header-left">
             <a href="{{ route('home') }}" class="ag-logo">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="[Website Name]" style="height: 40px; width: auto; object-fit: contain; aspect-ratio: auto;">
+                <img src="{{ asset('assets/images/logo.webp') }}" alt="[Website Name]" style="height: 55px; width: auto; object-fit: contain; mix-blend-mode: multiply;">
             </a>
         </div>
 
@@ -130,7 +130,7 @@
         <nav class="menu-box" style="border-left: 1px solid #000;">
             <div class="ag-flex ag-justify-between ag-align-center ag-p-4" style="border-bottom: 1px solid rgba(0,0,0,0.1);">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style="height: 32px; width: auto; object-fit: contain; aspect-ratio: auto;">
+                    <img src="{{ asset('assets/images/logo.webp') }}" alt="Logo" style="height: 45px; width: auto; object-fit: contain; mix-blend-mode: multiply;">
                 </a>
                 <button class="close-btn ag-action-btn" style="font-size:20px;"><i class="fas fa-times"></i></button>
             </div>

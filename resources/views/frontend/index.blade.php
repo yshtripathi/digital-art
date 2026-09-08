@@ -9,11 +9,11 @@
     {{-- 1. HERO SECTION --}}
     
 
-    <section class="art-hero" style="background-image: url('{{ asset('assets/images/hero-bg.webp') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <section class="art-hero" style="background-image: url('{{ asset('assets/images/hero.webp') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="art-hero-container">
             <div class="art-hero-left">
                 <video autoplay loop muted playsinline>
-                    <source src="{{ asset('assets/videos/hero-video.mp4') }}" type="video/mp4">
+                    <source src="{{ asset('assets/videos/hero.webm') }}" type="video/webm">
                 </video>
             </div>
             <div class="art-hero-right">
@@ -37,9 +37,9 @@
     <section class="art-about">
         <div class="art-about-container">
             <div class="art-about-left">
-                <img src="{{ asset('assets/images/about-top.webp') }}" alt="Art Course" class="art-about-img art-about-img-1" loading="lazy">
-                <img src="{{ asset('assets/images/about-bottom-left.webp') }}" alt="Art Materials" class="art-about-img art-about-img-2" loading="lazy">
-                <img src="{{ asset('assets/images/about-bottom-right.webp') }}" alt="Student Working" class="art-about-img art-about-img-3" loading="lazy">
+                <img src="{{ asset('assets/images/hero-1.webp') }}" alt="Art Course" class="art-about-img art-about-img-1" loading="lazy">
+                <img src="{{ asset('assets/images/hero-2.webp') }}" alt="Art Materials" class="art-about-img art-about-img-2" loading="lazy">
+                <img src="{{ asset('assets/images/hero-3.webp') }}" alt="Student Working" class="art-about-img art-about-img-3" loading="lazy">
             </div>
             <div class="art-about-right">
                 <h2>{{ __('inkwave.home_about_title') }}</h2>
@@ -154,10 +154,10 @@
         <p>{{ __('inkwave.home_inspire_desc') }}</p>
         <div class="art-insp-grid">
             <div class="art-insp-item">
-                <video src="{{ asset('assets/videos/inspiration-video.mp4') }}" autoplay loop muted playsinline></video>
+                <video src="{{ asset('assets/videos/inspire.webm') }}" autoplay loop muted playsinline></video>
             </div>
             <div class="art-insp-item">
-                <img src="{{ asset('assets/images/inspiration-gallery.webp') }}" alt="Creative Inspiration" loading="lazy">
+                <img src="{{ asset('assets/images/hero-4.webp') }}" alt="Creative Inspiration" loading="lazy">
             </div>
         </div>
     </section>

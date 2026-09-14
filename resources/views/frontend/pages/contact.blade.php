@@ -10,108 +10,142 @@
     ]
 ])
 
+@php
+    $ctPhone   = $misc['Company Phone'] ?? __('managenovax.footer.phone_fallback');
+    $ctEmail   = $misc['Company Email'] ?? __('managenovax.footer.email_fallback');
+    $ctAddress = $misc['Company Address'] ?? __('managenovax.footer.address_fallback');
+    $ctCompany = $misc['Company Name'] ?? __('managenovax.footer.company_fallback');
+@endphp
 
+<section class="ct">
+    <div class="ct__grid">
 
-
-
-<div class="ag-contact-page">
-    
-    {{-- SECTION 1: Company Details (Grid Layout) --}}
-    <section class="ag-section" style="padding-top: 40px;">
-        <div class="ag-container">
-            <h2 class="ag-title ag-title--center">{{ __('managenovax.contact.info_heading') }}</h2>
-            
-            <div class="ag-grid-4">
-                <div class="ag-card" style="padding: 40px 16px;">
-                    <i class="fas fa-phone" style="font-size: 32px; color: #bc9c5c; margin-bottom: 24px;"></i>
-                    <h4>{{ __('managenovax.contact.lbl_phone') }}</h4>
-                    <p style="margin-top: 16px;"><a href="tel:{{ $misc['Company Phone'] ?? __('managenovax.footer.phone_fallback') }}" style="color: #555; text-decoration: none;">{{ $misc['Company Phone'] ?? __('managenovax.footer.phone_fallback') }}</a></p>
-                </div>
-
-                <div class="ag-card" style="padding: 40px 16px;">
-                    <i class="fas fa-envelope" style="font-size: 32px; color: #bc9c5c; margin-bottom: 24px;"></i>
-                    <h4>{{ __('managenovax.contact.lbl_email') }}</h4>
-                    <p style="margin-top: 16px;"><a href="mailto:{{ $misc['Company Email'] ?? __('managenovax.footer.email_fallback') }}">{{ $misc['Company Email'] ?? __('managenovax.footer.email_fallback') }}</a></p>
-                </div>
-                
-                <div class="ag-card" style="padding: 40px 16px;">
-                    <i class="fas fa-map-marker-alt" style="font-size: 32px; color: #bc9c5c; margin-bottom: 24px;"></i>
-                    <h4>{{ __('managenovax.contact.lbl_location') }}</h4>
-                    <p style="margin-top: 16px;">{{ $misc['Company Address'] ?? __('managenovax.footer.address_fallback') }}</p>
-                </div>
-                
-                <div class="ag-card" style="padding: 40px 16px;">
-                    <i class="fas fa-building" style="font-size: 32px; color: #bc9c5c; margin-bottom: 24px;"></i>
-                    <h4>{{ __('managenovax.contact.lbl_company') }}</h4>
-                    <p style="margin-top: 16px;">{{ $misc['Company Name'] ?? __('managenovax.footer.company_fallback') }}</p>
-                </div>
+        {{-- Contact details (colour block, no image) --}}
+        <aside class="ct-info">
+            <div>
+                <span class="ct-info__eyebrow">{{ __('managenovax.contact.page_title') }}</span>
+                <h2 class="ct-info__title">{{ __('managenovax.contact.info_heading') }}</h2>
             </div>
-        </div>
-    </section>
 
-    {{-- SECTION 2: Contact Form (Split Layout) --}}
-    <section class="ag-section">
-        <div class="ag-container">
-            <div class="ag-split">
-                <div class="ag-split__img">
-                    <img src="{{ asset('assets/images/contact.webp') }}" alt="Contact Artora Studios">
+            <ul class="ct-list">
+                <li>
+                    <a href="tel:{{ $ctPhone }}" class="ct-item">
+                        <span class="ct-item__icon"><i class="fas fa-phone-alt"></i></span>
+                        <span class="ct-item__body">
+                            <span class="ct-item__label">{{ __('managenovax.contact.lbl_phone') }}</span>
+                            <span class="ct-item__value">{{ $ctPhone }}</span>
+                        </span>
+                        <i class="fas fa-arrow-right ct-item__arrow" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:{{ $ctEmail }}" class="ct-item">
+                        <span class="ct-item__icon"><i class="fas fa-envelope"></i></span>
+                        <span class="ct-item__body">
+                            <span class="ct-item__label">{{ __('managenovax.contact.lbl_email') }}</span>
+                            <span class="ct-item__value">{{ $ctEmail }}</span>
+                        </span>
+                        <i class="fas fa-arrow-right ct-item__arrow" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <div class="ct-item">
+                        <span class="ct-item__icon"><i class="fas fa-map-marker-alt"></i></span>
+                        <span class="ct-item__body">
+                            <span class="ct-item__label">{{ __('managenovax.contact.lbl_location') }}</span>
+                            <span class="ct-item__value">{{ $ctAddress }}</span>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <div class="ct-item">
+                        <span class="ct-item__icon"><i class="fas fa-building"></i></span>
+                        <span class="ct-item__body">
+                            <span class="ct-item__label">{{ __('managenovax.contact.lbl_company') }}</span>
+                            <span class="ct-item__value">{{ $ctCompany }}</span>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </aside>
+
+        {{-- Form --}}
+        <div class="ct-card">
+            <h2 class="au-title ct-card__title">{{ __('managenovax.contact.form_heading') }}</h2>
+            <p class="ct-card__desc">{{ __('managenovax.contact.form_desc') }}</p>
+
+            <form method="POST" action="{{ route('contact.send') }}" id="contactform" class="au-form" onsubmit="return handleSubmit(event)" novalidate>
+                @csrf
+
+                <div class="au-row">
+                    <div class="au-field">
+                        <label class="au-label" for="name">{{ __('managenovax.contact.fld_name') }}</label>
+                        <div class="au-input">
+                            <i class="fas fa-user au-input__icon" aria-hidden="true"></i>
+                            <input type="text" name="name" id="name" autocomplete="name" value="{{ old('name') }}" placeholder="{{ __('managenovax.contact.ph_name') }}" class="@error('name') is-invalid @enderror">
+                        </div>
+                        @error('name') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="au-field">
+                        <label class="au-label" for="email">{{ __('managenovax.contact.fld_email') }}</label>
+                        <div class="au-input">
+                            <i class="fas fa-envelope au-input__icon" aria-hidden="true"></i>
+                            <input type="email" name="email" id="email" autocomplete="email" value="{{ old('email') }}" placeholder="{{ __('managenovax.contact.ph_email') }}" class="@error('email') is-invalid @enderror">
+                        </div>
+                        @error('email') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
+                    </div>
                 </div>
-                <div class="ag-split__content ag-text-block ag-bg-bone">
-                    <h2 class="ag-title">{{ __('managenovax.contact.form_heading') }}</h2>
-                    <p class="ag-text" style="margin-bottom: 40px !important;">{{ __('managenovax.contact.form_desc') }}</p>
-                    
-                    <form method="POST" action="{{ route('contact.send') }}" id="contactform" onsubmit="return handleSubmit(event)">
-                        @csrf
-                        <div class="ag-field">
-                            <label class="ag-label">{{ __('managenovax.contact.fld_name') }}</label>
-                            <input type="text" name="name" id="name" placeholder="{{ __('managenovax.contact.ph_name') }}" class="ag-input @error('name') is-invalid @enderror">
-                            @error('name') <span class="ag-error-msg"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
-                        </div>
-                        
-                        <div class="ag-field">
-                            <label class="ag-label">{{ __('managenovax.contact.fld_email') }}</label>
-                            <input type="email" name="email" id="email" placeholder="{{ __('managenovax.contact.ph_email') }}" class="ag-input @error('email') is-invalid @enderror">
-                            @error('email') <span class="ag-error-msg"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
-                        </div>
-                        
-                        <div class="ag-field">
-                            <label class="ag-label">{{ __('managenovax.contact.fld_phone') }}</label>
-                            <input type="tel" name="phone" id="phone" placeholder="{{ __('managenovax.contact.ph_phone') }}" class="ag-input @error('phone') is-invalid @enderror" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')">
-                            @error('phone') <span class="ag-error-msg"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
-                        </div>
-                        
-                        <div class="ag-field">
-                            <label class="ag-label">{{ __('managenovax.contact.fld_subject') }}</label>
-                            <input type="text" name="subject" id="subject" placeholder="{{ __('managenovax.contact.ph_subject') }}" class="ag-input">
-                        </div>
-                        
-                        <div class="ag-field">
-                            <label class="ag-label">{{ __('managenovax.contact.fld_msg') }}</label>
-                            <textarea name="message" id="message" placeholder="{{ __('managenovax.contact.ph_msg') }}" class="ag-input ag-textarea @error('message') is-invalid @enderror"></textarea>
-                            @error('message') <span class="ag-error-msg"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
-                        </div>
 
-                        @if(env('CAPTCHA_ENABLED', true))
-                            <div class="ag-field">
-                                <label class="ag-label">{{ __('managenovax.contact.fld_captcha') }}</label>
-                                <div class="ag-captcha-box @error('captcha') is-invalid @enderror">
-                                    <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('managenovax.contact.ph_captcha') }}">
-                                    <div class="ag-captcha-box__img">@captcha</div>
-                                </div>
-                                @error('captcha') <span class="ag-error-msg"><i class="fas fa-info-circle"></i> {{ __('managenovax.contact.err_captcha_inv') }}</span> @enderror
-                            </div>
-                        @endif
-
-                        <div style="margin-top: 48px;">
-                            <button type="submit" class="ag-contact-submit-btn">{{ __('managenovax.contact.btn_submit') }}</button>
+                <div class="au-row">
+                    <div class="au-field">
+                        <label class="au-label" for="phone">{{ __('managenovax.contact.fld_phone') }}</label>
+                        <div class="au-input">
+                            <i class="fas fa-phone-alt au-input__icon" aria-hidden="true"></i>
+                            <input type="tel" name="phone" id="phone" autocomplete="tel" value="{{ old('phone') }}" placeholder="{{ __('managenovax.contact.ph_phone') }}" class="@error('phone') is-invalid @enderror" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')">
                         </div>
-                    </form>
+                        @error('phone') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="au-field">
+                        <label class="au-label" for="subject">{{ __('managenovax.contact.fld_subject') }}</label>
+                        <div class="au-input">
+                            <i class="fas fa-tag au-input__icon" aria-hidden="true"></i>
+                            <input type="text" name="subject" id="subject" value="{{ old('subject') }}" placeholder="{{ __('managenovax.contact.ph_subject') }}" class="@error('subject') is-invalid @enderror">
+                        </div>
+                        @error('subject') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
+                    </div>
                 </div>
-            </div>
+
+                <div class="au-field">
+                    <label class="au-label" for="message">{{ __('managenovax.contact.fld_msg') }}</label>
+                    <div class="au-input ct-textarea">
+                        <i class="fas fa-comment-dots au-input__icon" aria-hidden="true"></i>
+                        <textarea name="message" id="message" rows="5" placeholder="{{ __('managenovax.contact.ph_msg') }}" class="@error('message') is-invalid @enderror">{{ old('message') }}</textarea>
+                    </div>
+                    @error('message') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
+                </div>
+
+                @if(env('CAPTCHA_ENABLED', true))
+                    <div class="au-field">
+                        <label class="au-label" for="captcha">{{ __('managenovax.contact.fld_captcha') }}</label>
+                        <div class="au-captcha @error('captcha') is-invalid @enderror">
+                            <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('managenovax.contact.ph_captcha') }}">
+                            <div class="au-captcha__img">@captcha</div>
+                            <button type="button" class="au-captcha__refresh" data-au-captcha aria-label="Refresh code"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                        @error('captcha') <span class="au-error"><i class="fas fa-info-circle"></i> {{ __('managenovax.contact.err_captcha_inv') }}</span> @enderror
+                    </div>
+                @endif
+
+                <button type="submit" class="au-submit">
+                    {{ __('managenovax.contact.btn_submit') }} <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
         </div>
-    </section>
-    
-</div>
+
+    </div>
+</section>
 
 @endsection
 
@@ -130,7 +164,7 @@
 
         // Clear previous client-side messages
         document.querySelectorAll('.custom-error-message').forEach(el => el.remove());
-        document.querySelectorAll('.ag-input, .ag-captcha-box').forEach(el => el.classList.remove('is-invalid'));
+        document.querySelectorAll('#contactform .is-invalid').forEach(el => el.classList.remove('is-invalid'));
 
         const errors = [];
         if (!name) errors.push({ field: 'name', message: '{{ __('managenovax.contact.err_name') }}' });
@@ -143,6 +177,7 @@
 
         if (errors.length) {
             errors.forEach(showFieldError);
+            document.getElementById(errors[0].field).focus();
             return false;
         }
 
@@ -152,14 +187,14 @@
     function showFieldError(error) {
         const field = document.getElementById(error.field);
         if (!field) return;
-        if(error.field === 'captcha') {
-            field.parentElement.classList.add('is-invalid');
+        if (error.field === 'captcha') {
+            field.closest('.au-captcha').classList.add('is-invalid');
         } else {
             field.classList.add('is-invalid');
         }
-        const wrapper = field.closest('.ag-field') || field.parentElement;
+        const wrapper = field.closest('.au-field') || field.parentElement;
         const span = document.createElement('span');
-        span.className = 'ag-error-msg custom-error-message';
+        span.className = 'au-error custom-error-message';
         span.innerHTML = '<i class="fas fa-info-circle"></i> ' + error.message;
         wrapper.appendChild(span);
     }
@@ -172,25 +207,31 @@
         const el = document.getElementById(id);
         if (!el) return;
         el.addEventListener('input', function () {
-            const ok = validator(this.value.trim());
-            if (ok) {
-                if(this.id === 'captcha') {
-                    this.parentElement.classList.remove('is-invalid');
-                } else {
-                    this.classList.remove('is-invalid');
-                }
-                const wrapper = this.closest('.ag-field');
-                const msg = wrapper && wrapper.querySelector('.custom-error-message');
-                if (msg) msg.remove();
+            if (!validator(this.value.trim())) return;
+            if (this.id === 'captcha') {
+                this.closest('.au-captcha').classList.remove('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
             }
+            const wrapper = this.closest('.au-field');
+            const msg = wrapper && wrapper.querySelector('.custom-error-message');
+            if (msg) msg.remove();
         });
     }
-    
+
     bindClear('name', v => !!v);
     bindClear('email', v => v && isValidEmail(v));
     bindClear('phone', v => !!v);
     bindClear('subject', v => !!v);
     bindClear('message', v => !!v);
     bindClear('captcha', v => !!v);
+
+    // Refresh captcha image
+    document.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-au-captcha]');
+        if (!btn) return;
+        var img = btn.parentElement.querySelector('.au-captcha__img img');
+        if (img) img.click();
+    });
 </script>
 @endpush

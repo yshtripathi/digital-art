@@ -10,207 +10,278 @@
     ]
 ])
 
+@php
+    $u = Auth::user();
+    $purchasedCount = isset($purchasedOrders) ? count($purchasedOrders) : 0;
+    $redeemedCount = isset($redeemedOrders) ? count($redeemedOrders) : 0;
+    $levelLabel = function ($level) {
+        $key = 'managenovax.course.skill_' . strtolower((string) $level->skill_level);
+        return Lang::has($key) ? __($key) : ucfirst((string) $level->skill_level);
+    };
+@endphp
 
+<section class="ds">
+    <div class="ds__wrap">
 
+        {{-- ================= OVERVIEW ================= --}}
+        <div class="ds-top">
+            <div class="ds-hello">
+                <span class="ds-hello__avatar">{{ strtoupper(mb_substr($u->name ?? 'U', 0, 1)) }}</span>
+                <div class="ds-hello__text">
+                    <span class="ds-hello__eyebrow">{{ __('managenovax.dashboard.welcome') }}</span>
+                    <h2 class="ds-hello__name">{{ $u->name }}</h2>
+                    <span class="ds-hello__email"><i class="fas fa-envelope"></i> {{ $u->email }}</span>
+                </div>
+                <a href="{{ route('user.logout') }}" class="ds-hello__logout"><i class="fas fa-sign-out-alt"></i> {{ __('managenovax.dashboard.logout') }}</a>
+            </div>
 
-<div class="ag-dash-wrap">
-    @php $u = Auth::user(); @endphp
-    <div class="ag-container">
+            <div class="ds-stats">
+                <div class="ds-stat ds-stat--lime">
+                    <span class="ds-stat__icon"><i class="fas fa-coins"></i></span>
+                    <span class="ds-stat__label">{{ __('managenovax.dashboard.credits_avail') }}</span>
+                    <strong class="ds-stat__value">{{ number_format($u->points_balance ?? 0) }}</strong>
+                    <a href="{{ route('points.topup') }}" class="ds-stat__link">{{ __('managenovax.credits.pg_title') }} <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="ds-stat ds-stat--cobalt">
+                    <span class="ds-stat__icon"><i class="fas fa-graduation-cap"></i></span>
+                    <span class="ds-stat__label">{{ __('managenovax.dashboard.courses_enrolled') }}</span>
+                    <strong class="ds-stat__value">{{ $redeemedCount }}</strong>
+                    <a href="{{ route('product-lists') }}" class="ds-stat__link">{{ __('managenovax.cart.btn_shop') }} <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="ds-stat ds-stat--maroon">
+                    <span class="ds-stat__icon"><i class="fas fa-receipt"></i></span>
+                    <span class="ds-stat__label">{{ __('managenovax.dashboard.tab_purchased') }}</span>
+                    <strong class="ds-stat__value">{{ $purchasedCount }}</strong>
+                </div>
+                <div class="ds-stat ds-stat--white">
+                    <span class="ds-stat__icon"><i class="fas fa-calendar-alt"></i></span>
+                    <span class="ds-stat__label">{{ __('managenovax.dashboard.member_since') }}</span>
+                    <strong class="ds-stat__value ds-stat__value--sm">{{ $u->created_at->format('M Y') }}</strong>
+                </div>
+            </div>
+        </div>
 
-        <div class="ag-dash-grid">
-            
-            {{-- ================= SIDEBAR ================= --}}
-            <aside class="ag-dash-sidebar">
-                <div class="ag-dash-profile">
-                    <div class="ag-dash-avatar">{{ strtoupper(substr($u->name ?? 'U', 0, 1)) }}</div>
-                    <span class="ag-dash-name">{{ $u->name }}</span>
-                    <span class="ag-dash-email">{{ $u->email }}</span>
+        {{-- ================= TABS ================= --}}
+        <div class="ds-tabs" role="tablist">
+            <button type="button" role="tab" class="ds-tab active" data-tab="purchased" aria-selected="true">
+                <i class="fas fa-gift"></i> {{ __('managenovax.dashboard.tab_purchased') }} <span class="ds-tab__count">{{ $purchasedCount }}</span>
+            </button>
+            <button type="button" role="tab" class="ds-tab" data-tab="redeemed" aria-selected="false">
+                <i class="fas fa-book-reader"></i> {{ __('managenovax.dashboard.tab_redeemed') }} <span class="ds-tab__count">{{ $redeemedCount }}</span>
+            </button>
+            <button type="button" role="tab" class="ds-tab" data-tab="password" aria-selected="false">
+                <i class="fas fa-lock"></i> {{ __('managenovax.dashboard.tab_pwd') }}
+            </button>
+        </div>
+
+        {{-- ================= PURCHASES ================= --}}
+        <div class="ds-panel active" data-panel="purchased" role="tabpanel">
+            <div class="ds-card">
+                <h2 class="ds-card__title">{{ __('managenovax.dashboard.heading_purchased') }}</h2>
+
+                @if($purchasedCount > 0)
+                    <div class="ds-list__head" aria-hidden="true">
+                        <span>{{ __('managenovax.dashboard.col_order_num') }}</span>
+                        <span>{{ __('managenovax.dashboard.col_credits') }}</span>
+                        <span>{{ __('managenovax.dashboard.col_price') }}</span>
+                        <span>{{ __('managenovax.dashboard.col_status') }}</span>
+                        <span>{{ __('managenovax.dashboard.col_date') }}</span>
+                        <span>{{ __('managenovax.dashboard.col_action') }}</span>
+                    </div>
+                    <ul class="ds-list">
+                        @foreach($purchasedOrders as $order)
+                            <li class="ds-row">
+                                <span class="ds-row__cell ds-row__order" data-label="{{ __('managenovax.dashboard.col_order_num') }}">
+                                    <span class="ds-row__icon"><i class="fas fa-coins"></i></span>
+                                    {{ $order->order_number }}
+                                </span>
+                                <span class="ds-row__cell" data-label="{{ __('managenovax.dashboard.col_credits') }}">
+                                    <span class="ds-pill"><i class="fas fa-coins"></i> {{ number_format($order->cart_info->sum('points')) }}</span>
+                                </span>
+                                <span class="ds-row__cell ds-row__strong" data-label="{{ __('managenovax.dashboard.col_price') }}">
+                                    {!! $order->currency=='JPY' ? '&yen;' : Helper::getCurrencySymbol($order->currency) !!}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}
+                                </span>
+                                <span class="ds-row__cell" data-label="{{ __('managenovax.dashboard.col_status') }}">
+                                    @if($order->payment_status === 'Completed')
+                                        <span class="ds-status ds-status--ok">{{ __('managenovax.dashboard.status_paid') }}</span>
+                                    @elseif($order->payment_status === 'Failed')
+                                        <span class="ds-status ds-status--err">{{ __('managenovax.dashboard.status_failed') }}</span>
+                                    @else
+                                        <span class="ds-status ds-status--wait">{{ __('managenovax.dashboard.status_pending') }}</span>
+                                    @endif
+                                </span>
+                                <span class="ds-row__cell ds-row__muted" data-label="{{ __('managenovax.dashboard.col_date') }}">{{ $order->created_at->format('d M Y') }}</span>
+                                <span class="ds-row__cell ds-row__action">
+                                    <a href="{{ route('user.order.show', $order->id) }}" class="ds-btn ds-btn--dark ds-btn--sm">
+                                        <i class="fas fa-eye"></i> {{ __('managenovax.dashboard.view_receipt') }}
+                                    </a>
+                                </span>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <div class="ds-empty">
+                        <span class="ds-empty__icon"><i class="fas fa-box-open"></i></span>
+                        <p>{{ __('managenovax.dashboard.empty_purchased') }}</p>
+                        <a href="{{ route('points.topup') }}" class="ds-btn ds-btn--lime"><i class="fas fa-coins"></i> {{ __('managenovax.credits.pg_title') }}</a>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        {{-- ================= ENROLLED COURSES ================= --}}
+        <div class="ds-panel" data-panel="redeemed" role="tabpanel" hidden>
+            <div class="ds-card">
+                <h2 class="ds-card__title">{{ __('managenovax.dashboard.heading_redeemed') }}</h2>
+
+                @if($redeemedCount > 0)
+                    <ul class="ds-courses">
+                        @foreach($redeemedOrders as $order)
+                            @php
+                                $cartItem = $order->cart_info->first();
+                                $level = null;
+                                if($cartItem) {
+                                    $level = \App\Models\ProductLevel::where('course_id', $cartItem->product_id)
+                                                                     ->where('price_in_points', $cartItem->points)
+                                                                     ->first();
+                                }
+                                $product = $cartItem ? $cartItem->product : null;
+                                $cimg = $product && $product->photo ? explode(',', $product->photo)[0] : null;
+                            @endphp
+                            <li class="ds-course">
+                                <div class="ds-course__media">
+                                    @if($cimg)
+                                        <img src="{{ asset(ltrim($cimg, '/')) }}" alt="" loading="lazy">
+                                    @else
+                                        <span class="ds-course__ph"><i class="fas fa-graduation-cap"></i></span>
+                                    @endif
+                                    @if(strtolower($order->status) === 'completed')
+                                        <span class="ds-status ds-status--ok ds-course__status">{{ __('managenovax.dashboard.status_redeemed') }}</span>
+                                    @else
+                                        <span class="ds-status ds-status--wait ds-course__status">{{ $order->status }}</span>
+                                    @endif
+                                </div>
+                                <div class="ds-course__body">
+                                    <div class="ds-course__tags">
+                                        @if($level)
+                                            <span class="cp-tag cc-level cc-level--{{ strtolower($level->skill_level) }}"><i class="fas fa-signal"></i> {{ $levelLabel($level) }}</span>
+                                        @else
+                                            <span class="cp-tag cc-level cc-level--na">N/A</span>
+                                        @endif
+                                        <span class="ds-pill"><i class="fas fa-coins"></i> {{ number_format($order->cart_info->sum('points')) }}</span>
+                                    </div>
+                                    <h3 class="ds-course__title">{{ $product ? $product->title : 'N/A' }}</h3>
+                                    <div class="ds-course__meta">
+                                        <span><i class="fas fa-hashtag"></i> {{ $order->order_number }}</span>
+                                        <span><i class="far fa-calendar"></i> {{ $order->created_at->format('d M Y') }}</span>
+                                    </div>
+                                    @if($product)
+                                        <a href="{{ route('product-detail', $product->slug) }}" class="ds-btn ds-btn--outline ds-btn--sm ds-course__btn">
+                                            {{ __('managenovax.dashboard.view_course') }} <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    @endif
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <div class="ds-empty">
+                        <span class="ds-empty__icon"><i class="fas fa-book-open"></i></span>
+                        <p>{{ __('managenovax.dashboard.empty_redeemed') }}</p>
+                        <a href="{{ route('product-lists') }}" class="ds-btn ds-btn--dark"><i class="fas fa-graduation-cap"></i> {{ __('managenovax.cart.btn_shop') }}</a>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        {{-- ================= CHANGE PASSWORD ================= --}}
+        <div class="ds-panel" data-panel="password" role="tabpanel" hidden>
+            <div class="ds-pwd">
+                <div class="ds-card">
+                    <h2 class="ds-card__title">{{ __('managenovax.dashboard.tab_pwd') }}</h2>
+                    <form action="{{ route('change.password') }}" method="POST" class="au-form">
+                        @csrf
+                        <div class="au-field">
+                            <label class="au-label" for="current_password">{{ __('managenovax.dashboard.db_current_password') }}</label>
+                            <div class="au-input au-input--pass">
+                                <i class="fas fa-lock au-input__icon" aria-hidden="true"></i>
+                                <input type="password" id="current_password" name="current_password" autocomplete="current-password" placeholder="{{ __('managenovax.dashboard.db_current_password_placeholder') }}" class="@error('current_password') is-invalid @enderror">
+                                <button type="button" class="au-eye" data-au-toggle aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                            </div>
+                            @error('current_password')<span class="au-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>@enderror
+                        </div>
+                        <div class="au-row">
+                            <div class="au-field">
+                                <label class="au-label" for="new_password">{{ __('managenovax.dashboard.db_new_password') }}</label>
+                                <div class="au-input au-input--pass">
+                                    <i class="fas fa-key au-input__icon" aria-hidden="true"></i>
+                                    <input type="password" id="new_password" name="new_password" autocomplete="new-password" placeholder="{{ __('managenovax.dashboard.db_new_password_placeholder') }}" class="@error('new_password') is-invalid @enderror">
+                                    <button type="button" class="au-eye" data-au-toggle aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                                </div>
+                                @error('new_password')<span class="au-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>@enderror
+                            </div>
+                            <div class="au-field">
+                                <label class="au-label" for="new_confirm_password">{{ __('managenovax.dashboard.db_confirm_password') }}</label>
+                                <div class="au-input au-input--pass">
+                                    <i class="fas fa-key au-input__icon" aria-hidden="true"></i>
+                                    <input type="password" id="new_confirm_password" name="new_confirm_password" autocomplete="new-password" placeholder="{{ __('managenovax.dashboard.db_confirm_password_placeholder') }}" class="@error('new_confirm_password') is-invalid @enderror">
+                                    <button type="button" class="au-eye" data-au-toggle aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                                </div>
+                                @error('new_confirm_password')<span class="au-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                        <button type="submit" class="au-submit"><i class="fas fa-check"></i> {{ __('managenovax.dashboard.db_update_password') }}</button>
+                    </form>
                 </div>
 
-                <div class="ag-dash-stats">
-                    <div class="ag-dash-stat">
-                        <span>{{ __('managenovax.dashboard.credits_avail') }}</span>
-                        <span><i class="fas fa-coins"></i> {{ number_format($u->points_balance ?? 0) }}</span>
-                    </div>
-                    <div class="ag-dash-stat">
-                        <span>{{ __('managenovax.dashboard.courses_enrolled') }}</span>
-                        <span>{{ isset($redeemedOrders) ? count($redeemedOrders) : 0 }}</span>
-                    </div>
-                    <div class="ag-dash-stat">
-                        <span>{{ __('managenovax.dashboard.member_since') }}</span>
-                        <span>{{ $u->created_at->format('M Y') }}</span>
-                    </div>
-                </div>
-
-                <nav class="ag-dash-nav">
-                    <button type="button" class="ag-dash-navbtn active" data-tab="purchased"><i class="fas fa-gift"></i> {{ __('managenovax.dashboard.tab_purchased') }}</button>
-                    <button type="button" class="ag-dash-navbtn" data-tab="redeemed"><i class="fas fa-book-reader"></i> {{ __('managenovax.dashboard.tab_redeemed') }}</button>
-                    <button type="button" class="ag-dash-navbtn" data-tab="password"><i class="fas fa-lock"></i> {{ __('managenovax.dashboard.tab_pwd') }}</button>
-                    <a href="{{ route('user.logout') }}" class="ag-dash-navbtn ag-dash-navbtn--logout"><i class="fas fa-sign-out-alt"></i> {{ __('managenovax.dashboard.logout') }}</a>
-                </nav>
-            </aside>
-
-            {{-- ================= CONTENT ================= --}}
-            <div class="ag-dash-main">
-
-                {{-- Purchases --}}
-                <div class="ag-dash-panel active" data-panel="purchased">
-                    <div class="ag-dash-card">
-                        <h2 class="ag-dash-h"><i class="fas fa-gift"></i> {{ __('managenovax.dashboard.heading_purchased') }}</h2>
-                        @if(isset($purchasedOrders) && count($purchasedOrders) > 0)
-                            <div class="ag-dash-tablewrap">
-                                <table class="ag-dash-table">
-                                    <thead>
-                                        <tr>
-                                            <th>{{ __('managenovax.dashboard.col_order_num') }}</th>
-                                            <th>{{ __('managenovax.dashboard.col_credits') }}</th>
-                                            <th>{{ __('managenovax.dashboard.col_price') }}</th>
-                                            <th>{{ __('managenovax.dashboard.col_status') }}</th>
-                                            <th>{{ __('managenovax.dashboard.col_date') }}</th>
-                                            <th>{{ __('managenovax.dashboard.col_action') }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($purchasedOrders as $order)
-                                            <tr>
-                                                <td class="is-strong">{{ $order->order_number }}</td>
-                                                <td><span class="ag-dash-pill"><i class="fas fa-coins"></i> {{ number_format($order->cart_info->sum('points')) }}</span></td>
-                                                <td class="is-strong">{!! $order->currency=='JPY' ? '&yen;' : Helper::getCurrencySymbol($order->currency) !!}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}</td>
-                                                <td>
-                                                    @if($order->payment_status === 'Completed')
-                                                        <span class="ag-dash-tag ag-dash-tag--ok">{{ __('managenovax.dashboard.status_paid') }}</span>
-                                                    @elseif($order->payment_status === 'Failed')
-                                                        <span class="ag-dash-tag ag-dash-tag--err">{{ __('managenovax.dashboard.status_failed') }}</span>
-                                                    @else
-                                                        <span class="ag-dash-tag">{{ __('managenovax.dashboard.status_pending') }}</span>
-                                                    @endif
-                                                </td>
-                                                <td>{{ $order->created_at->format('d M Y') }}</td>
-                                                <td><a href="{{ route('user.order.show', $order->id) }}" class="ag-dash-view"><i class="fas fa-eye"></i></a></td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            <div class="ag-dash-empty">
-                                <i class="fas fa-box-open"></i>
-                                <p>{{ __('managenovax.dashboard.empty_redeemed') }}</p>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-
-                {{-- Redeemed --}}
-                <div class="ag-dash-panel" data-panel="redeemed">
-                    <div class="ag-dash-card">
-                        <h2 class="ag-dash-h"><i class="fas fa-book-reader"></i> {{ __('managenovax.dashboard.heading_redeemed') }}</h2>
-                        @if(isset($redeemedOrders) && count($redeemedOrders) > 0)
-                            <div class="ag-dash-tablewrap">
-                                <table class="ag-dash-table">
-                                    <thead>
-                                        <tr>
-                                            <th>{{ __('managenovax.dashboard.col_order_num') }}</th>
-                                            <th>{{ __('managenovax.dashboard.col_course') }}</th>
-                                            <th>{{ __('managenovax.dashboard.col_level') }}</th>
-                                            <th>{{ __('managenovax.dashboard.col_credits_used') }}</th>
-                                            <th>{{ __('managenovax.dashboard.col_status') }}</th>
-                                            <th>{{ __('managenovax.dashboard.col_date') }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($redeemedOrders as $order)
-                                            @php
-                                                $cartItem = $order->cart_info->first();
-                                                $level = null;
-                                                if($cartItem) {
-                                                    $level = \App\Models\ProductLevel::where('course_id', $cartItem->product_id)
-                                                                                     ->where('price_in_points', $cartItem->points)
-                                                                                     ->first();
-                                                }
-                                            @endphp
-                                            <tr>
-                                                <td class="is-strong">{{ $order->order_number }}</td>
-                                                <td class="is-strong">{{ $cartItem && $cartItem->product ? $cartItem->product->title : 'N/A' }}</td>
-                                                <td>
-                                                    @if($level)<span class="ag-dash-tag">{{ __('managenovax.course.skill_' . strtolower($level->skill_level)) }}</span>@else<span class="ag-dash-tag ag-dash-tag--muted">N/A</span>@endif
-                                                </td>
-                                                <td><span class="ag-dash-pill"><i class="fas fa-coins"></i> {{ number_format($order->cart_info->sum('points')) }}</span></td>
-                                                <td>
-                                                    @if(strtolower($order->status) === 'completed')
-                                                        <span class="ag-dash-tag ag-dash-tag--ok">{{ __('managenovax.dashboard.status_redeemed') }}</span>
-                                                    @else
-                                                        <span class="ag-dash-tag">{{ $order->status }}</span>
-                                                    @endif
-                                                </td>
-                                                <td>{{ $order->created_at->format('d M Y') }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            <div class="ag-dash-empty">
-                                <i class="fas fa-box-open"></i>
-                                <p>{{ __('managenovax.dashboard.empty_redeemed') }}</p>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-
-                {{-- Change password --}}
-                <div class="ag-dash-panel" data-panel="password">
-                    <div class="ag-dash-card">
-                        <h2 class="ag-dash-h"><i class="fas fa-lock"></i> {{ __('managenovax.dashboard.tab_pwd') }}</h2>
-                        <form action="{{ route('change.password') }}" method="POST">
-                            @csrf
-                            <div class="ag-dash-field">
-                                <label class="ag-dash-label" for="current_password">{{ __('managenovax.dashboard.db_current_password') }}</label>
-                                <input type="password" id="current_password" name="current_password" placeholder="{{ __('managenovax.dashboard.db_current_password_placeholder') }}" class="ag-dash-input @error('current_password') is-invalid @enderror">
-                                @error('current_password')<span class="ag-dash-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>@enderror
-                            </div>
-                            <div class="ag-dash-field">
-                                <label class="ag-dash-label" for="new_password">{{ __('managenovax.dashboard.db_new_password') }}</label>
-                                <input type="password" id="new_password" name="new_password" placeholder="{{ __('managenovax.dashboard.db_new_password_placeholder') }}" class="ag-dash-input @error('new_password') is-invalid @enderror">
-                                @error('new_password')<span class="ag-dash-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>@enderror
-                            </div>
-                            <div class="ag-dash-field">
-                                <label class="ag-dash-label" for="new_confirm_password">{{ __('managenovax.dashboard.db_confirm_password') }}</label>
-                                <input type="password" id="new_confirm_password" name="new_confirm_password" placeholder="{{ __('managenovax.dashboard.db_confirm_password_placeholder') }}" class="ag-dash-input @error('new_confirm_password') is-invalid @enderror">
-                                @error('new_confirm_password')<span class="ag-dash-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>@enderror
-                            </div>
-                            <button type="submit" class="ag-dash-submit"><i class="fas fa-check"></i> {{ __('managenovax.dashboard.db_update_password') }}</button>
-                        </form>
-                    </div>
-                </div>
-
+                <aside class="ds-tip">
+                    <span class="ds-tip__icon"><i class="fas fa-shield-alt"></i></span>
+                    <h3 class="ds-tip__title">{{ __('managenovax.dashboard.pwd_tip_title') }}</h3>
+                    <ul class="ds-tip__list">
+                        <li><i class="fas fa-check"></i> {{ __('managenovax.dashboard.pwd_tip_1') }}</li>
+                        <li><i class="fas fa-check"></i> {{ __('managenovax.dashboard.pwd_tip_2') }}</li>
+                        <li><i class="fas fa-check"></i> {{ __('managenovax.dashboard.pwd_tip_3') }}</li>
+                    </ul>
+                </aside>
             </div>
         </div>
 
     </div>
-</div>
+</section>
 @endsection
 
 @push('scripts')
 <script>
     (function () {
-        var btns = document.querySelectorAll('.ag-dash-navbtn[data-tab]');
-        var panels = document.querySelectorAll('.ag-dash-panel');
+        var btns = document.querySelectorAll('.ds-tab[data-tab]');
+        var panels = document.querySelectorAll('.ds-panel');
         btns.forEach(function (b) {
             b.addEventListener('click', function () {
                 var t = this.getAttribute('data-tab');
-                btns.forEach(function (x) { x.classList.remove('active'); });
-                panels.forEach(function (p) { p.classList.remove('active'); });
+                btns.forEach(function (x) { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+                panels.forEach(function (p) { p.classList.remove('active'); p.hidden = true; });
                 this.classList.add('active');
-                var panel = document.querySelector('.ag-dash-panel[data-panel="' + t + '"]');
-                if (panel) panel.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+                var panel = document.querySelector('.ds-panel[data-panel="' + t + '"]');
+                if (panel) { panel.hidden = false; panel.classList.add('active'); }
             });
         });
         // If there are validation errors on the password form, open that tab
         @if($errors->any())
-            var passTab = document.querySelector('.ag-dash-navbtn[data-tab="password"]');
+            var passTab = document.querySelector('.ds-tab[data-tab="password"]');
             if (passTab) passTab.click();
         @endif
+
+        // Show / hide password
+        document.addEventListener('click', function (e) {
+            var btn = e.target.closest('[data-au-toggle]');
+            if (!btn) return;
+            var input = btn.parentElement.querySelector('input');
+            var show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            btn.setAttribute('aria-pressed', show ? 'true' : 'false');
+            btn.querySelector('i').className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
+        });
     })();
 </script>
 @endpush

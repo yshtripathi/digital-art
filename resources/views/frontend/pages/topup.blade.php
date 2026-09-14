@@ -10,141 +10,163 @@
     ]
 ])
 
+@php
+    $cur = session('currency');
+    if ($cur == 'JPY') {
+        $tiers = [
+            ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'&yen;1 - &yen;79,999',        'f'=>false],
+            ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'&yen;80,000 - &yen;159,999',  'f'=>false],
+            ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'&yen;160,000 - &yen;239,999', 'f'=>false],
+            ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'&yen;240,000+',           'f'=>true],
+        ];
+        $quick = [16000, 80000, 160000, 240000];
+        $symbol = '&yen;';
+        $rateNote = __('managenovax.credits.jpy_note');
+    } elseif ($cur == 'HKD') {
+        $tiers = [
+            ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
+            ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
+            ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
+            ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'HK$12,000+',           'f'=>true],
+        ];
+        $quick = [800, 4000, 8000, 12000];
+        $symbol = 'HK$';
+        $rateNote = __('managenovax.credits.hkd_note');
+    } else {
+        $tiers = [
+            ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'$1 - $499',       'f'=>false],
+            ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'$500 - $999',     'f'=>false],
+            ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'$1,000 - $1,499', 'f'=>false],
+            ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'$1,500+',         'f'=>true],
+        ];
+        $quick = [100, 500, 1000, 1500];
+        $symbol = '$';
+        $rateNote = __('managenovax.credits.usd_note');
+    }
+@endphp
 
+<section class="tu">
+    <div class="tu__wrap">
 
-<div class="ag-topup-page">
-    <div class="ag-container">
-        
-        <div class="ag-topup-head">
-            <h1 class="ag-page-title">{{ __('managenovax.credits.pg_title') }}</h1>
-            <p class="ag-page-desc">{{ __('managenovax.credits.pg_desc') }}</p>
+        {{-- Intro strip --}}
+        <div class="tu-intro">
+            <p class="tu-intro__desc">{{ __('managenovax.credits.pg_desc') }}</p>
+            <div class="tu-intro__chips">
+                <span class="tu-chip"><i class="fas fa-exchange-alt"></i> {{ $rateNote }}</span>
+                <span class="tu-chip tu-chip--warn"><i class="fas fa-exclamation-circle"></i> <strong>{{ __('managenovax.credits.disclaimer_title') }}</strong> {{ __('managenovax.credits.disclaimer_text') }}</span>
+            </div>
         </div>
 
-        @php
-            $cur = session('currency');
-            if ($cur == 'JPY') {
-                $tiers = [
-                    ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'&yen;1 - &yen;79,999',        'f'=>false],
-                    ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'&yen;80,000 - &yen;159,999',  'f'=>false],
-                    ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'&yen;160,000 - &yen;239,999', 'f'=>false],
-                    ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'&yen;240,000+',           'f'=>true],
-                ];
-            } elseif ($cur == 'HKD') {
-                $tiers = [
-                    ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
-                    ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
-                    ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
-                    ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'HK$12,000+',           'f'=>true],
-                ];
-            } else {
-                $tiers = [
-                    ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'$1 - $499',       'f'=>false],
-                    ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'$500 - $999',     'f'=>false],
-                    ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'$1,000 - $1,499', 'f'=>false],
-                    ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'$1,500+',         'f'=>true],
-                ];
-            }
-        @endphp
+        <div class="tu__grid">
 
-        <div class="ag-split-grid">
-            
-            {{-- =========================================================
-                 LEFT: Credits / Tiers Table
-                 ========================================================= --}}
-            <div class="ag-table-card">
-                <h2 class="ag-section-title">{{ __('inkwave.credits_table_title') }}</h2>
-                
-                <div class="ag-table-wrap">
-                    <table class="ag-tiers-table">
-                        <thead>
-                            <tr>
-                                <th>{{ __('managenovax.credits.table_col1') }}</th>
-                                <th>{{ __('managenovax.credits.table_col2') }}</th>
-                                <th>{{ __('managenovax.credits.table_col3') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($tiers as $t)
-                                <tr class="{{ $t['f'] ? 'vip-row' : '' }}">
-                                    <td>
-                                        <i class="fas {{ $t['i'] }}"></i> 
-                                        <strong>{{ $t['n'] }}</strong>
-                                        @if($t['f']) <span class="ag-badge">{{ __('managenovax.credits.best_value') }}</span> @endif
-                                    </td>
-                                    <td>{!! $t['r'] !!}</td>
-                                    <td><span class="ag-highlight">{{ $t['big'] }}</span></td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+            {{-- Pricing tiers --}}
+            <div class="tu-tiers">
+                <div class="tu-tiers__head">
+                    <h2 class="tu-tiers__title">{{ __('managenovax.credits.table_title') }}</h2>
+                    <span class="tu-tiers__cols">{{ __('managenovax.credits.table_col1') }} · {{ __('managenovax.credits.table_col2') }} · {{ __('managenovax.credits.table_col3') }}</span>
                 </div>
 
-                <p class="ag-note">
-                    @if(session('currency') == 'JPY')
-                        {{ __('managenovax.credits.jpy_note') }}
-                    @elseif(session('currency') == 'HKD')
-                        {{ __('managenovax.credits.hkd_note') }}
-                    @else
-                        {{ __('managenovax.credits.usd_note') }}
-                    @endif
-                </p>
-                <div class="ag-disclaimer-box">
-                    <i class="fas fa-exclamation-circle"></i> 
+                <ul class="tu-tiers__grid">
+                    @foreach($tiers as $index => $t)
+                        <li class="tu-tier tu-tier--{{ $index + 1 }} {{ $t['f'] ? 'tu-tier--best' : '' }}" data-mult="{{ $t['big'] }}">
+                            <div class="tu-tier__top">
+                                <span class="tu-tier__icon"><i class="fas {{ $t['i'] }}"></i></span>
+                                @if($t['f'])
+                                    <span class="tu-tier__badge">{{ __('managenovax.credits.best_value') }}</span>
+                                @endif
+                                <span class="tu-tier__current"><i class="fas fa-check"></i> {{ __('managenovax.credits.your_tier') }}</span>
+                            </div>
+                            <p class="tu-tier__mult">{{ $t['big'] }}</p>
+                            <div class="tu-tier__meta">
+                                <strong class="tu-tier__name">{{ $t['n'] }}</strong>
+                                <span class="tu-tier__range">{!! $t['r'] !!}</span>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            {{-- Calculator --}}
+            <div class="tu-calc">
+                <div class="tu-calc__head">
+                    <span class="tu-calc__icon"><i class="fas fa-calculator"></i></span>
                     <div>
-                        <strong>{{ __('managenovax.credits.disclaimer_title') }}</strong> {{ __('managenovax.credits.disclaimer_text') }}
+                        <h2 class="tu-calc__title">{{ __('managenovax.credits.calc_title') }}</h2>
+                        <p class="tu-calc__desc">{{ __('managenovax.credits.calc_desc') }}</p>
                     </div>
                 </div>
-            </div>
 
-            {{-- =========================================================
-                 RIGHT: Calculator Form
-                 ========================================================= --}}
-            <div>
-                <div class="ag-calc-card">
-                    <h2 class="ag-calc-title"><i class="fas fa-calculator"></i> {{ __('managenovax.credits.calc_title') }}</h2>
-                    <p class="ag-calc-desc">{{ __('managenovax.credits.calc_desc') }}</p>
-                    
-                    <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form">
-                        @csrf
-                        
-                        <div class="ag-form-group">
-                            <label class="ag-label">{{ __('managenovax.credits.calc_label') }}</label>
-                            <div class="ag-input-wrap">
-                                <span class="ag-currency-symbol">{!! session('currency') == 'JPY' ? '&yen;' : '$' !!}</span>
-                                <input type="number" name="amount" id="topup_amount" class="ag-input" placeholder="0" min="1" required>
-                            </div>
+                <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form tu-form">
+                    @csrf
+
+                    <label class="tu-form__label" for="topup_amount">{{ __('managenovax.credits.calc_label') }}</label>
+                    <div class="tu-amount">
+                        <span class="tu-amount__symbol">{!! $symbol !!}</span>
+                        <input type="number" name="amount" id="topup_amount" class="tu-amount__input" placeholder="0" min="1" required inputmode="decimal">
+                    </div>
+
+                    <span class="tu-form__label tu-form__label--sm">{{ __('managenovax.credits.quick_label') }}</span>
+                    <div class="tu-quick">
+                        @foreach($quick as $q)
+                            <button type="button" class="tu-quick__btn" data-amount="{{ $q }}">{!! $symbol !!}{{ number_format($q) }}</button>
+                        @endforeach
+                    </div>
+
+                    <div class="tu-stats">
+                        <div class="tu-stats__row">
+                            <span>{{ __('managenovax.credits.calc_base') }}</span>
+                            <span id="base_points">0</span>
                         </div>
-
-                        <div class="ag-calc-stats">
-                            <div class="ag-calc-row">
-                                <span>{{ __('managenovax.credits.calc_base') }}:</span>
-                                <span id="base_points">0</span>
-                            </div>
-                            <div class="ag-calc-row">
-                                <span>{{ __('managenovax.credits.calc_bonus') }}:</span>
-                                <span id="multiplier_display">x1</span>
-                            </div>
-                            <div class="ag-calc-row ag-calc-total">
-                                <span>{{ __('managenovax.credits.calc_total') }}:</span>
-                                <span><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
-                            </div>
+                        <div class="tu-stats__row">
+                            <span>{{ __('managenovax.credits.calc_bonus') }}</span>
+                            <span class="tu-stats__mult" id="multiplier_display">x1</span>
                         </div>
+                        <div class="tu-stats__total">
+                            <span class="tu-stats__total-label">{{ __('managenovax.credits.calc_total') }}</span>
+                            <span class="tu-stats__total-value"><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
+                        </div>
+                    </div>
 
-                        <button type="submit" class="ag-submit-btn topup-btn">
-                            <span>{{ __('managenovax.credits.calc_btn') }}</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                        
-                        <p class="ag-trust-note">
-                            <i class="fas fa-shield-alt"></i> {{ __('managenovax.credits.trust_msg') }}
-                        </p>
-                    </form>
-                </div>
+                    <button type="submit" class="topup-btn tu-submit">
+                        <span>{{ __('managenovax.credits.calc_btn') }}</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <p class="tu-trust">
+                        <i class="fas fa-shield-alt"></i> {{ __('managenovax.credits.trust_msg') }}
+                    </p>
+                </form>
             </div>
 
         </div>
+
+        {{-- How it works --}}
+        <div class="tu-how">
+            <h2 class="tu-how__title">{{ __('managenovax.credits.how_title') }}</h2>
+            <ol class="tu-how__steps">
+                <li class="tu-step">
+                    <span class="tu-step__num">01</span>
+                    <span class="tu-step__icon"><i class="fas fa-hand-pointer"></i></span>
+                    <h3 class="tu-step__title">{{ __('managenovax.credits.step1_title') }}</h3>
+                    <p class="tu-step__desc">{{ __('managenovax.credits.step1_desc') }}</p>
+                </li>
+                <li class="tu-step">
+                    <span class="tu-step__num">02</span>
+                    <span class="tu-step__icon"><i class="fas fa-lock"></i></span>
+                    <h3 class="tu-step__title">{{ __('managenovax.credits.step2_title') }}</h3>
+                    <p class="tu-step__desc">{{ __('managenovax.credits.step2_desc') }}</p>
+                </li>
+                <li class="tu-step">
+                    <span class="tu-step__num">03</span>
+                    <span class="tu-step__icon"><i class="fas fa-graduation-cap"></i></span>
+                    <h3 class="tu-step__title">{{ __('managenovax.credits.step3_title') }}</h3>
+                    <p class="tu-step__desc">{{ __('managenovax.credits.step3_desc') }}</p>
+                </li>
+            </ol>
+        </div>
+
     </div>
-</div>
+</section>
 @endsection
 
 @push('scripts')
@@ -214,6 +236,42 @@
                     });
             });
         });
+    });
+</script>
+
+<script>
+    // UI only: quick amounts, current-tier highlight and total pulse.
+    // Reads the calculator's output; the calculation above is unchanged.
+    document.addEventListener('DOMContentLoaded', function () {
+        const input = document.getElementById('topup_amount');
+        const multiplier = document.getElementById('multiplier_display');
+        const total = document.getElementById('total_points');
+        if (!input || !multiplier || !total) return;
+
+        document.querySelectorAll('.tu-quick__btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                input.value = btn.dataset.amount;
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                input.focus();
+            });
+        });
+
+        const tiers = document.querySelectorAll('.tu-tier');
+        const quickBtns = document.querySelectorAll('.tu-quick__btn');
+        const totalWrap = total.closest('.tu-stats__total');
+
+        new MutationObserver(function () {
+            const hasAmount = (parseFloat(input.value) || 0) > 0;
+            tiers.forEach(function (tier) {
+                tier.classList.toggle('is-current', hasAmount && tier.dataset.mult === multiplier.textContent.trim());
+            });
+            quickBtns.forEach(function (btn) {
+                btn.classList.toggle('is-active', btn.dataset.amount === input.value);
+            });
+            totalWrap.classList.remove('is-pulse');
+            void totalWrap.offsetWidth;
+            totalWrap.classList.add('is-pulse');
+        }).observe(total, { childList: true, characterData: true, subtree: true });
     });
 </script>
 @endpush

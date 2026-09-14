@@ -119,6 +119,9 @@ return [
         'intermediate_course' => 'Intermediate',
         'advanced_course' => 'Advanced',
         'expert_course' => 'Expert',
+        'lbl_after' => 'Balance after enrollment',
+        'low_balance' => 'You need more credits to enroll in these courses.',
+        'lbl_coverage' => 'Credits used',
     ],
 
     'payment' => [
@@ -219,6 +222,19 @@ return [
         'view_btn' => 'View Course',
         'no_products' => 'No courses found',
         'other_cats' => 'Other Categories',
+        'all' => 'All Courses',
+        'search_ph' => 'Search courses on this page...',
+        'sort_label' => 'Sort by',
+        'sort_default' => 'Recommended',
+        'sort_az' => 'Title (A–Z)',
+        'sort_low' => 'Credits: low to high',
+        'sort_high' => 'Credits: high to low',
+        'levels_label' => 'levels',
+        'no_match' => 'No courses match your search.',
+        'clear' => 'Clear search',
+        'showing' => 'Showing',
+        'prev' => 'Previous',
+        'next' => 'Next',
     ],
 
     'course' => [
@@ -234,6 +250,17 @@ return [
         'skill_intermediate' => 'Intermediate',
         'skill_advanced' => 'Advanced',
         'skill_expert' => 'Expert',
+        'about' => 'About this course',
+        'choose_level' => 'Choose your level',
+        'compare' => 'Compare levels',
+        'level' => 'Level',
+        'selected' => 'Selected',
+        'includes' => 'This course includes',
+        'inc_levels' => ':count skill levels to choose from',
+        'inc_category' => 'Part of :category',
+        'inc_credits' => 'Pay once with your credits',
+        'related' => 'More courses in this category',
+        'view_all' => 'View all',
     ],
 
     'contact' => [
@@ -293,6 +320,16 @@ return [
         'calc_total' => 'Total Credits',
         'calc_btn' => 'Add to Cart',
         'trust_msg' => 'Secure payment processing.',
+        'quick_label' => 'Quick amounts',
+        'your_tier' => 'Your tier',
+        'rate_label' => 'Base rate',
+        'how_title' => 'How it works',
+        'step1_title' => 'Choose an amount',
+        'step1_desc' => 'Enter any amount or pick a quick option. Bigger top-ups unlock higher bonus multipliers.',
+        'step2_title' => 'Checkout securely',
+        'step2_desc' => 'Add the credits to your cart and complete payment in a few simple steps.',
+        'step3_title' => 'Start learning',
+        'step3_desc' => 'Credits are added to your account and can be used to enroll in any course.',
     ],
 
     'checkout' => [
@@ -418,6 +455,13 @@ return [
         'db_confirm_password' => 'Confirm New Password',
         'db_confirm_password_placeholder' => 'Confirm new password',
         'db_update_password' => 'Update Password',
+        'welcome' => 'Welcome back',
+        'view_receipt' => 'View receipt',
+        'view_course' => 'View course',
+        'pwd_tip_title' => 'Keep your account secure',
+        'pwd_tip_1' => 'Use at least 8 characters.',
+        'pwd_tip_2' => 'Mix letters, numbers and symbols.',
+        'pwd_tip_3' => 'Avoid reusing passwords from other websites.',
     ],
     
     'receipt' => [
@@ -437,6 +481,10 @@ return [
         'lbl_method' => 'Payment Method',
         'lbl_card' => 'Credit Card',
         'lbl_trans_id' => 'Transaction ID',
+        'hdg_items' => 'Items',
+        'btn_print' => 'Print',
+        'not_found' => 'Receipt not found',
+        'not_found_msg' => 'We could not find this order. It may have been removed.',
     ],
 
     'home' => [
@@ -467,5 +515,14 @@ return [
         
         'inspire_title' => 'Empowering Professionals',
         'inspire_desc' => 'Join a global community of ambitious professionals dedicated to operational excellence. Discover how industry leaders are leveraging our structured pathways to streamline workflows, lead high-performing agile teams, and drive measurable impact across their organizations.',
+    ],
+
+    'page' => [
+        'toc' => 'On this page',
+        'progress' => 'Read',
+        'help_title' => 'Have a question?',
+        'help_msg' => 'Our team is happy to help with anything on this page.',
+        'help_btn' => 'Contact Us',
+        'back_top' => 'Back to top',
     ],
 ];

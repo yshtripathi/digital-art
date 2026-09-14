@@ -10,46 +10,55 @@
     ]
 ])
 
+@php $supportEmail = $misc['Company Email'] ?? '[Company Email]'; @endphp
 
+<section class="rs rs--failed">
+    <div class="rs__grid">
 
-<div class="ag-page-wrapper">
-    <div class="ag-alert-card">
-        
-        <div class="ag-alert-icon">
-            <i class="fas fa-times"></i>
-        </div>
-        
-        <h1 class="ag-alert-title">{{ __('managenovax.payment.fail_heading') }}</h1>
-        <p class="ag-alert-desc">{{ __('managenovax.payment.fail_msg') }}</p>
+        {{-- Status hero --}}
+        <div class="rs-hero">
+            <div class="rs-status" aria-hidden="true">
+                <span class="rs-status__ring"></span>
+                <span class="rs-status__icon"><i class="fas fa-times"></i></span>
+            </div>
 
-        <div class="ag-alert-help">
-            <h6><i class="fas fa-exclamation-triangle"></i> {{ __('managenovax.payment.fail_help_title') }}</h6>
-            <ul>
-                <li><i class="fas fa-arrow-right"></i> <span>{{ __('managenovax.payment.fail_help_1') }}</span></li>
-                <li><i class="fas fa-arrow-right"></i> <span>{{ __('managenovax.payment.fail_help_2') }}</span></li>
-                <li><i class="fas fa-arrow-right"></i> <span>{{ __('managenovax.payment.fail_help_3') }}</span></li>
-            </ul>
-        </div>
+            <h2 class="rs-hero__title">{{ __('managenovax.payment.fail_heading') }}</h2>
+            <p class="rs-hero__msg">{{ __('managenovax.payment.fail_msg') }}</p>
 
-        <div class="ag-alert-actions">
-            <a href="{{ route('cart') }}" class="ag-submit-btn">
-                <i class="fas fa-shopping-cart"></i> {{ __('managenovax.payment.fail_cart') }}
-            </a>
-            <a href="{{ route('home') }}" class="ag-ghost-btn">
-                <i class="fas fa-home"></i> {{ __('managenovax.payment.fail_home') }}
-            </a>
+            <div class="rs-actions">
+                <a href="{{ route('cart') }}" class="rs-btn rs-btn--lime">
+                    <i class="fas fa-shopping-cart"></i> {{ __('managenovax.payment.fail_cart') }}
+                </a>
+                <a href="{{ route('home') }}" class="rs-btn rs-btn--outline">
+                    <i class="fas fa-home"></i> {{ __('managenovax.payment.fail_home') }}
+                </a>
+            </div>
         </div>
 
-        <div class="ag-alert-assist">
-            <h6>{{ __('managenovax.payment.fail_assist_title') }}</h6>
-            <p>
-                {{ __('managenovax.payment.fail_assist_msg1') }}
-                <a href="mailto:{{ $misc['Company Email'] ?? '[Company Email]' }}">{{ $misc['Company Email'] ?? '[Company Email]' }}</a>
-                {{ __('managenovax.payment.fail_assist_msg2') }}
-            </p>
+        {{-- Help --}}
+        <div class="rs-help">
+            <span class="rs-help__eyebrow"><i class="fas fa-exclamation-triangle"></i> {{ __('managenovax.payment.fail_help_title') }}</span>
+
+            <ol class="rs-steps">
+                <li class="rs-step"><span class="rs-step__num">1</span><span>{{ __('managenovax.payment.fail_help_1') }}</span></li>
+                <li class="rs-step"><span class="rs-step__num">2</span><span>{{ __('managenovax.payment.fail_help_2') }}</span></li>
+                <li class="rs-step"><span class="rs-step__num">3</span><span>{{ __('managenovax.payment.fail_help_3') }}</span></li>
+            </ol>
+
+            <div class="rs-assist">
+                <span class="rs-assist__icon" aria-hidden="true"><i class="fas fa-headset"></i></span>
+                <div>
+                    <h3 class="rs-assist__title">{{ __('managenovax.payment.fail_assist_title') }}</h3>
+                    <p class="rs-assist__msg">
+                        {{ __('managenovax.payment.fail_assist_msg1') }}
+                        <a href="mailto:{{ $supportEmail }}">{{ $supportEmail }}</a>
+                        {{ __('managenovax.payment.fail_assist_msg2') }}
+                    </p>
+                </div>
+            </div>
         </div>
-        
+
     </div>
-</div>
+</section>
 
 @endsection

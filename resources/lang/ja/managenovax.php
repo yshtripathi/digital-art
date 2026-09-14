@@ -119,6 +119,9 @@ return [
         'intermediate_course' => '中級',
         'advanced_course' => '上級',
         'expert_course' => 'エキスパート',
+        'lbl_after' => '受講後の残高',
+        'low_balance' => 'これらのコースを受講するにはクレジットが不足しています。',
+        'lbl_coverage' => '使用クレジット',
     ],
 
     'payment' => [
@@ -219,6 +222,19 @@ return [
         'view_btn' => 'コースを見る',
         'no_products' => 'コースが見つかりません',
         'other_cats' => 'その他のカテゴリー',
+        'all' => 'すべてのコース',
+        'search_ph' => 'このページのコースを検索...',
+        'sort_label' => '並び替え',
+        'sort_default' => 'おすすめ',
+        'sort_az' => 'タイトル（A–Z）',
+        'sort_low' => 'クレジット：低い順',
+        'sort_high' => 'クレジット：高い順',
+        'levels_label' => 'レベル',
+        'no_match' => '検索に一致するコースはありません。',
+        'clear' => '検索をクリア',
+        'showing' => '表示中',
+        'prev' => '前へ',
+        'next' => '次へ',
     ],
 
     'course' => [
@@ -234,6 +250,17 @@ return [
         'skill_intermediate' => '中級',
         'skill_advanced' => '上級',
         'skill_expert' => 'エキスパート',
+        'about' => 'コースについて',
+        'choose_level' => 'レベルを選択',
+        'compare' => 'レベルを比較',
+        'level' => 'レベル',
+        'selected' => '選択中',
+        'includes' => 'このコースに含まれるもの',
+        'inc_levels' => '選べる:count つのスキルレベル',
+        'inc_category' => ':category のコース',
+        'inc_credits' => 'クレジットで一括支払い',
+        'related' => 'このカテゴリーの他のコース',
+        'view_all' => 'すべて見る',
     ],
 
     'contact' => [
@@ -293,6 +320,16 @@ return [
         'calc_total' => '合計クレジット',
         'calc_btn' => 'カートに追加',
         'trust_msg' => '安全な支払い処理。',
+        'quick_label' => 'クイック金額',
+        'your_tier' => '現在のティア',
+        'rate_label' => '基本レート',
+        'how_title' => 'ご利用の流れ',
+        'step1_title' => '金額を選ぶ',
+        'step1_desc' => '任意の金額を入力するか、クイック金額を選択してください。金額が大きいほどボーナス倍率が上がります。',
+        'step2_title' => '安全にお支払い',
+        'step2_desc' => 'クレジットをカートに追加し、簡単な手順でお支払いを完了します。',
+        'step3_title' => '学習を始める',
+        'step3_desc' => 'クレジットがアカウントに追加され、すべてのコースの受講に使用できます。',
     ],
 
     'checkout' => [
@@ -418,6 +455,13 @@ return [
         'db_confirm_password' => '新しいパスワードを確認',
         'db_confirm_password_placeholder' => '新しいパスワードを確認',
         'db_update_password' => 'パスワードを更新',
+        'welcome' => 'おかえりなさい',
+        'view_receipt' => '領収書を見る',
+        'view_course' => 'コースを見る',
+        'pwd_tip_title' => 'アカウントを安全に保つために',
+        'pwd_tip_1' => '8文字以上を使用してください。',
+        'pwd_tip_2' => '英字・数字・記号を組み合わせてください。',
+        'pwd_tip_3' => '他のサイトと同じパスワードの使い回しは避けてください。',
     ],
     
     'receipt' => [
@@ -437,6 +481,10 @@ return [
         'lbl_method' => '支払い方法',
         'lbl_card' => 'クレジットカード',
         'lbl_trans_id' => '取引ID',
+        'hdg_items' => '明細',
+        'btn_print' => '印刷',
+        'not_found' => '領収書が見つかりません',
+        'not_found_msg' => 'この注文が見つかりませんでした。削除された可能性があります。',
     ],
 
     'home' => [
@@ -467,5 +515,14 @@ return [
         
         'inspire_title' => 'プロフェッショナルを支援',
         'inspire_desc' => '運用の卓越性に専念する野心的なプロフェッショナルのグローバルコミュニティに参加しましょう。業界のリーダーたちが私たちの構造化されたパスウェイをどのように活用して、ワークフローを合理化し、高性能なアジャイルチームを率いて、組織全体で測定可能な影響を推進しているかをご覧ください。',
+    ],
+
+    'page' => [
+        'toc' => 'このページの内容',
+        'progress' => '既読',
+        'help_title' => 'ご質問がありますか？',
+        'help_msg' => 'このページの内容について、お気軽にお問い合わせください。',
+        'help_btn' => 'お問い合わせ',
+        'back_top' => 'トップへ戻る',
     ],
 ];

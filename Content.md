@@ -256,6 +256,10 @@ return [
 - Every key in the group is used by the view. Remove unused keys.
 - No hardcoded customer-facing text is left in the view, including ALT text, `aria-label`, `title` and JavaScript messages.
 - The view compiles without errors.
+- Every claim on the page was checked against the code (section 25.1).
+- No raw database values are shown: statuses, level names, dates and counts are translated (section 25A).
+- No English text is left inside JavaScript, and forms use `novalidate` (section 25B).
+- Page validation matches the server rules (section 19.2).
 
 - After replacing content, search the whole project for old keys, delete any that are no longer used, and search again to confirm.
 - Translation files must contain only keys that are actually used.
@@ -833,6 +837,9 @@ Every input on every form must have a label, a placeholder and clear validation 
 - Keep the user's other entered values when the form reloads with errors, except passwords.
 - Validation messages are stored in the lang files and localized.
 - For numeric limits (such as password length), use the real rule from the application, not a guessed number.
+- **Page validation must match the server rules exactly.** Before writing JavaScript rules, read the Laravel validation in the controller and copy the same required fields and limits. For example, if the server requires `min:6` for the password, the page must also check 6, not 5.
+- Show the real limit in the message by passing it as a parameter, for example `__('frontend.register.password_min', ['min' => 6])`.
+- Do not add page-only rules the server does not have (for example, a minimum password length on the login form).
 
 ### 19.3 Shared fields
 
@@ -1161,6 +1168,75 @@ Never invent:
 
 If the data does not support a claim, do not write it.
 
+### 25.1 Check the code before writing a claim
+
+Before describing what happens on the website (payments, cart, credits, access, emails, refunds, limits), read the controller or view that does it. Write only what the code really does.
+
+Real mistakes this rule prevents:
+
+| Wrong claim | What the code actually does | Correct wording |
+|---|---|---|
+| "Your cart has been kept" after a failed payment | Cart items are attached to the order before payment, so the cart is empty | "No credits were added. Please try buying your credits again." |
+| Payment method "Card" on every receipt | Orders unlocked with credits have no card payment | Show "Credits" for credit orders and "Card" for card payments |
+| "Free" on courses with no levels | No levels means nothing can be unlocked yet, not that it is free | "Levels coming soon" |
+| "24/7 access" | Nothing in the system guarantees round-the-clock access | "Online · Self-paced learning" |
+| "Popular Courses" | There is no popularity data | "Featured Courses" |
+
+---
+
+## 25A. Never Show Raw Database Values
+
+Database values are for the system, not for customers. Always convert them into clear, translated text.
+
+- **Statuses:** map values such as `Completed`, `Pending`, `Failed` and `Payment Failed` to translated labels. Never output `ucwords($order->status)` directly.
+- **Level names:** map `Beginner`, `Intermediate`, `Advanced` and `Expert` to translated labels.
+- **Missing data:** never show `N/A`. Use a clear message such as "Level not found" or "Course no longer available".
+- **Dates:** use the language's own format with `translatedFormat()`, and store the format in the lang file.
+- **Counts:** use `trans_choice` so singular and plural are correct.
+
+```php
+// lang/en/frontend.php
+'date_format' => 'd M Y',                      // 23 Jul 2026
+'items'       => ':count item|:count items',   // 1 item / 5 items
+'statuses'    => ['completed' => 'Completed', 'payment failed' => 'Payment failed'],
+
+// lang/ja/frontend.php
+'date_format' => 'Y年n月j日',                   // 2026年7月23日
+'items'       => ':count 件',
+'statuses'    => ['completed' => '完了', 'payment failed' => 'お支払い失敗'],
+```
+
+```blade
+@php
+    $statusKey = 'frontend.receipt.statuses.' . strtolower(trim($order->status));
+    $statusText = Lang::has($statusKey) ? __($statusKey) : ucwords($order->status);
+@endphp
+
+{{ $statusText }}
+{{ $order->created_at->locale(app()->getLocale())->translatedFormat(__('frontend.receipt.date_format')) }}
+{{ trans_choice('frontend.cart.items', $count, ['count' => $count]) }}
+```
+
+---
+
+## 25B. No English Left in JavaScript
+
+Text created or changed by JavaScript must be translated like any other text.
+
+- Pass translated strings into scripts with `@json(__('...'))`. Never type English text inside a script.
+- This includes loading text ("Loading..."), button labels that change (play/pause, show/hide password), and validation messages.
+- Add `novalidate` to every form, so the browser never shows its own English validation messages. Show the translated message from JavaScript instead.
+
+```blade
+<form class="topup-form" novalidate>...</form>
+
+<script>
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + @json(__('frontend.topup.loading'));
+    btn.setAttribute('aria-label', video.paused ? @json(__('frontend.home.video_play')) : @json(__('frontend.home.video_pause')));
+    field.setCustomValidity(@json(__('frontend.topup.amount_req')));
+</script>
+```
+
 ---
 
 ## 26. No Repetition
@@ -1238,6 +1314,10 @@ If a content requirement seems to need a database change, stop, explain which st
 - [ ] Copyright company name comes from the `miscs` table and links to the home page
 - [ ] Translation keys are short and simple (`file.key`)
 - [ ] No fake promises anywhere
+- [ ] Every claim about payments, cart, credits, access and emails matches what the code actually does
+- [ ] Page validation rules match the server validation rules
+- [ ] No raw database values (statuses, level names, `N/A`) are shown; dates and counts are translated
+- [ ] No English text inside JavaScript; all forms use `novalidate`
 - [ ] Every language is complete
 - [ ] No hardcoded customer-facing text in views or JavaScript
 - [ ] No unused translation keys

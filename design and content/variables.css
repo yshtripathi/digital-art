@@ -1,0 +1,116 @@
+/* [Website Name] — e-learning design tokens (same color-block theme, tuned for course pages) */
+:root {
+  /* Colors */
+  --color-voltage-lime: #d2e823;
+  --color-cobalt-signal: #2665d6;
+  --color-bordeaux-maroon: #780016;
+  --color-midnight-ink: #1e2330;
+  --color-plaster-white: #ffffff;
+  --color-bone-canvas: #f3f3f1;
+  --color-cement-gray: #adadad;
+  --color-slate-mute: #676b5f;
+  --color-carbon: #222222;
+  --color-lilac-whisper: #e9c0e9;
+  --color-indigo-abyss: #061492;
+  --color-forest-depth: #254f1a;
+  --color-saffron: #d6a337;
+
+  /* Colors — Learning states (new) */
+  --color-success: #1f7a3a;   /* completed lessons, payment success — 5.38:1 on white */
+  --color-error: #c0262d;     /* form errors, payment failed — 5.9:1 on white */
+  --color-rating: #d6a337;    /* star icons (Saffron) — icons only, not text on white */
+  --color-progress-track: #e4e4df;
+
+  /* Typography — Font Families */
+  --font-primary: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+  --font-arial: 'Arial', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Typography — Scale */
+  --text-caption: 12px;
+  --leading-caption: 1.5;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.5;
+  --tracking-body-sm: -0.28px;
+  --text-body: 16px;
+  --leading-body: 1.5;
+  --tracking-body: -0.16px;
+  --text-subheading: 20px;
+  --leading-subheading: 1.31;
+  --tracking-subheading: -0.4px;
+  --text-heading-sm: 24px;
+  --leading-heading-sm: 1.2;
+  --tracking-heading-sm: -0.48px;
+  --text-heading: 28px;
+  --leading-heading: 1.2;
+  --tracking-heading: -0.56px;
+  --text-heading-lg: 51px;
+  --leading-heading-lg: 1.06;
+  --tracking-heading-lg: -1.22px;
+  --text-display-alt: 56px;
+  --leading-display-alt: 1.06;
+  --tracking-display-alt: -1.34px;
+  --text-display: 80px;
+  --leading-display: 1;
+  --tracking-display: -3.44px;
+
+  /* Typography — Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Spacing */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-10: 10px;
+  --spacing-14: 14px;
+  --spacing-16: 16px;
+  --spacing-18: 18px;
+  --spacing-20: 20px;
+  --spacing-22: 22px;
+  --spacing-24: 24px;
+  --spacing-26: 26px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-65: 65px;
+  --spacing-128: 128px;
+  --spacing-216: 216px;
+
+  /* Layout */
+  --page-max-width: 1280px;
+  --section-gap: 80px;
+  --card-padding: 24px;
+  --element-gap: 16px;
+
+  /* Border Radius */
+  --radius-lg: 8px;
+  --radius-2xl: 16px;
+  --radius-3xl: 28px;
+  --radius-3xl-2: 32px;
+  --radius-3xl-3: 40px;
+  --radius-full: 64px;
+  --radius-full-2: 99px;
+  --radius-full-3: 1000px;
+
+  /* Named Radii */
+  --radius-nav: 1000px;
+  --radius-tags: 9999px;
+  --radius-cards: 32px;
+  --radius-course-card: 24px;
+  --radius-thumbnail: 16px;
+  --radius-pills: 1000px;
+  --radius-inputs: 8px;
+  --radius-buttons: 9999px;
+
+  /* Focus */
+  --focus-ring: 0 0 0 3px #1e2330, 0 0 0 5px #d2e823;
+
+  /* Surfaces */
+  --surface-bone-canvas: #f3f3f1;
+  --surface-plaster-white: #ffffff;
+  --surface-color-section-band: #d2e823;
+  --surface-color-section-band-alt: #2665d6;
+  --surface-deep-section-band: #780016;
+  --surface-cement-overlay: #adadad;
+}

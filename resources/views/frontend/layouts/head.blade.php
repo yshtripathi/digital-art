@@ -37,8 +37,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&display=swap" rel="stylesheet">
-    <link href="{{ asset('css/theme.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}?v={{ filemtime(public_path('css/main.css')) }}" rel="stylesheet">
     @if(env('CONTENT_PROTECTION_ENABLED', true))
     <link href="{{ asset('css/prevention.css') }}" rel="stylesheet">
     @endif

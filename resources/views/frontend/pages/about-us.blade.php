@@ -40,9 +40,9 @@
             <figure class="ab-intro__media">
                 <img
                     src="{{ asset('assets/images/about/learn-together.webp') }}"
-                    srcset="{{ asset('assets/images/about/learn-together-sm.webp') }} 700w, {{ asset('assets/images/about/learn-together.webp') }} 1200w"
+                    srcset="{{ asset('assets/images/about/learn-together-sm.webp') }} 700w, {{ asset('assets/images/about/learn-together.webp') }} 768w"
                     sizes="(max-width: 991px) 100vw, 45vw"
-                    width="1200" height="1800"
+                    width="768" height="1152"
                     alt="{{ __('managenovax.about.intro_title') }}"
                     loading="lazy">
                 <figcaption class="ab-intro__badge"><i class="fas fa-clock"></i> {{ __('managenovax.about.photo_badge') }}</figcaption>

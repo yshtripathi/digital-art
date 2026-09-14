@@ -22,13 +22,13 @@ return [
     ],
 
     'footer' => [
-        'newsletter_title' => 'Subscribe to ManageNovaX',
-        'newsletter_desc' => 'Get the latest insights on project management, agile, product strategy, and leadership.',
+        'newsletter_title' => 'Subscribe to [Website Name]',
+        'newsletter_desc' => 'Get new courses, learning tips and special offers delivered to your inbox.',
         'newsletter_ph' => 'Enter your email address',
         'newsletter_btn' => 'Subscribe',
         'newsletter_success' => 'Thank you for subscribing!',
         
-        'brand_desc' => 'A structured online learning platform providing expert-led courses on Project Management, Agile, and Business Analysis.',
+        'brand_desc' => 'An online learning platform with structured courses from Beginner to Expert, so anyone can learn new skills at their own pace.',
         'company_fallback' => '[Company Name]',
         'phone_fallback' => '[Company Phone]',
         'email_fallback' => '[Company Email]',
@@ -188,7 +188,7 @@ return [
         'login_lost_pwd' => 'Forgot Password?',
         'login_btn' => 'Sign In',
         'login_or' => 'or',
-        'login_new_prompt' => 'New to ManageNovaX?',
+        'login_new_prompt' => 'New to [Website Name]?',
         'login_create_link' => 'Create an Account',
         'login_req_pass' => 'Password is required',
         'login_min_pass' => 'Password must be at least 5 characters',
@@ -223,8 +223,8 @@ return [
 
     'catalog' => [
         'title' => 'Catalog',
-        'browse' => 'Professional Development Courses',
-        'explore_desc' => 'Advance your career with our structured learning pathways. Master in-demand skills across project management, agile methodologies, and strategic leadership to drive real-world business outcomes.',
+        'browse' => 'All Online Courses',
+        'explore_desc' => 'Explore structured online courses with clear levels from Beginner to Expert. Find a topic you love, choose your level and learn at your own pace.',
         'items' => 'Courses',
         'starting_from' => 'Starting from',
         'credits_label' => 'Credits',
@@ -281,7 +281,7 @@ return [
         'lbl_location' => 'Location',
         'lbl_company' => 'Company',
         'form_heading' => 'Send Us a Message',
-        'form_desc' => 'Have questions about our professional learning programs? We are here to help.',
+        'form_desc' => 'Have a question about our courses, credits or your account? We are here to help.',
         'fld_name' => 'Name',
         'ph_name' => 'Enter your name',
         'fld_email' => 'Email Address',
@@ -308,7 +308,7 @@ return [
     'credits' => [
         'pg_title' => 'Buy Credits',
         'table_title' => 'Pricing Tiers',
-        'pg_desc' => 'Purchase credits to enroll in our professional courses. The more you buy, the higher your bonus multiplier.',
+        'pg_desc' => 'Purchase credits to enroll in any course. The more you buy, the higher your bonus multiplier.',
         'tier_standard' => 'Standard',
         'tier_premium' => 'Premium',
         'tier_elite' => 'Elite',

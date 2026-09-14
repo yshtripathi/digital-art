@@ -1,5 +1,4 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.home.hero_title'))
 @section('main-content')
 @php
     $hmCourses    = \App\Models\Product::where('status', 'active')->count();
@@ -16,11 +15,12 @@
 
     $hmCur = session('currency');
     $hmSym = $hmCur == 'JPY' ? '&yen;' : ($hmCur == 'HKD' ? 'HK$' : '$');
+    // Same ranges as the top-up page: [multiplier, from, to] — the last tier has no upper limit
     $hmTiers = $hmCur == 'JPY'
-        ? [['x1', '1'], ['x1.5', '80,000'], ['x2', '160,000'], ['x2.5', '240,000']]
+        ? [['x1', '1', '79,999'], ['x1.5', '80,000', '159,999'], ['x2', '160,000', '239,999'], ['x2.5', '240,000', null]]
         : ($hmCur == 'HKD'
-            ? [['x1', '1'], ['x1.5', '4,000'], ['x2', '8,000'], ['x2.5', '12,000']]
-            : [['x1', '1'], ['x1.5', '500'], ['x2', '1,000'], ['x2.5', '1,500']]);
+            ? [['x1', '1', '3,999'], ['x1.5', '4,000', '7,999'], ['x2', '8,000', '11,999'], ['x2.5', '12,000', null]]
+            : [['x1', '1', '499'], ['x1.5', '500', '999'], ['x2', '1,000', '1,499'], ['x2.5', '1,500', null]]);
     $hmTierNames = [__('managenovax.credits.tier_standard'), __('managenovax.credits.tier_premium'), __('managenovax.credits.tier_elite'), __('managenovax.credits.tier_vip')];
 @endphp
 
@@ -228,11 +228,17 @@
                     <h2 class="hm-credits__title">{{ __('managenovax.home.credits_title') }}</h2>
                     <p class="hm-credits__desc">{{ __('managenovax.home.credits_desc') }}</p>
                     <ul class="hm-tiers">
-                        @foreach($hmTiers as $t => [$mult, $from])
-                            <li class="hm-tier {{ $t === 3 ? 'is-best' : '' }}">
+                        @foreach($hmTiers as $t => [$mult, $from, $to])
+                            <li class="hm-tier {{ $to === null ? 'is-best' : '' }}">
                                 <span class="hm-tier__mult">{{ $mult }}</span>
                                 <span class="hm-tier__name">{{ $hmTierNames[$t] }}</span>
-                                <span class="hm-tier__from">{!! $hmSym !!}{{ $from }}+</span>
+                                <span class="hm-tier__from">
+                                    @if($to !== null)
+                                        {!! $hmSym !!}{{ $from }} &ndash; {!! $hmSym !!}{{ $to }}
+                                    @else
+                                        {!! $hmSym !!}{{ $from }}+
+                                    @endif
+                                </span>
                             </li>
                         @endforeach
                     </ul>

@@ -22,13 +22,13 @@ return [
     ],
 
     'footer' => [
-        'newsletter_title' => 'ManageNovaXに登録する',
-        'newsletter_desc' => 'プロジェクトマネジメント、アジャイル、製品戦略、リーダーシップに関する最新の洞察を入手してください。',
+        'newsletter_title' => '[Website Name]に登録する',
+        'newsletter_desc' => '新しいコース、学習のヒント、特別なお知らせをメールでお届けします。',
         'newsletter_ph' => 'メールアドレスを入力してください',
         'newsletter_btn' => '登録する',
         'newsletter_success' => 'ご登録ありがとうございます！',
         
-        'brand_desc' => 'プロジェクトマネジメント、アジャイル、ビジネス分析に関する専門家主導のコースを提供する構造化されたオンライン学習プラットフォーム。',
+        'brand_desc' => '初級からエキスパートまで体系的なコースを提供し、誰もが自分のペースで新しいスキルを学べるオンライン学習プラットフォーム。',
         'company_fallback' => '[Company Name]',
         'phone_fallback' => '[Company Phone]',
         'email_fallback' => '[Company Email]',
@@ -188,7 +188,7 @@ return [
         'login_lost_pwd' => 'パスワードをお忘れですか？',
         'login_btn' => 'サインイン',
         'login_or' => 'または',
-        'login_new_prompt' => 'ManageNovaXは初めてですか？',
+        'login_new_prompt' => '[Website Name]は初めてですか？',
         'login_create_link' => 'アカウントを作成',
         'login_req_pass' => 'パスワードが必要です',
         'login_min_pass' => 'パスワードは5文字以上である必要があります',
@@ -223,8 +223,8 @@ return [
 
     'catalog' => [
         'title' => 'カタログ',
-        'browse' => '専門能力開発コース',
-        'explore_desc' => '構造化された学習パスウェイでキャリアを前進させましょう。プロジェクトマネジメント、アジャイル手法、戦略的リーダーシップにわたる需要の高いスキルを習得し、現実のビジネス成果を推進します。',
+        'browse' => 'すべてのオンラインコース',
+        'explore_desc' => '初級からエキスパートまで明確なレベルで構成されたオンラインコースを探しましょう。好きなテーマを見つけ、レベルを選び、自分のペースで学べます。',
         'items' => 'コース',
         'starting_from' => '開始価格',
         'credits_label' => 'クレジット',
@@ -281,7 +281,7 @@ return [
         'lbl_location' => '所在地',
         'lbl_company' => '会社名',
         'form_heading' => 'メッセージを送信',
-        'form_desc' => 'プロフェッショナルな学習プログラムについてご質問がありますか？喜んでお手伝いいたします。',
+        'form_desc' => 'コース、クレジット、アカウントについてご質問がありますか？喜んでお手伝いいたします。',
         'fld_name' => 'お名前',
         'ph_name' => '名前を入力してください',
         'fld_email' => 'メールアドレス',
@@ -308,7 +308,7 @@ return [
     'credits' => [
         'pg_title' => 'クレジットを購入',
         'table_title' => '価格帯',
-        'pg_desc' => 'プロフェッショナルコースに登録するためのクレジットを購入します。多く購入するほど、ボーナス乗数が高くなります。',
+        'pg_desc' => 'クレジットを購入して、お好きなコースに登録できます。多く購入するほど、ボーナス乗数が高くなります。',
         'tier_standard' => 'スタンダード',
         'tier_premium' => 'プレミアム',
         'tier_elite' => 'エリート',

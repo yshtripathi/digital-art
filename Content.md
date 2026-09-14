@@ -1,1990 +1,1174 @@
-# ManageNovaX — Complete Website Content & Implementation Master Prompt
+# E-Learning Website — Universal Content & Implementation Guide
 
-## 1. ROLE
-
-You are an expert website content strategist, UX writer, localization specialist, and senior web implementation assistant.
-
-Your task is to transform the existing website into a professional online learning platform called:
-
-**ManageNovaX**
-
-The website provides structured online courses focused on:
-
-* Project Management
-* Agile & Scrum
-* Product Management
-* Business Analysis
-* Strategic Project Leadership
-
-The website must communicate these subjects in a simple, clear, professional, and trustworthy way.
-
-The content should be understandable to a learner who may be completely new to the subject while still being useful to experienced professionals.
+This guide works for any e-learning website, whatever it teaches: art, music, languages, coding, business, finance, wellness, exam preparation or anything else. Nothing in it depends on one brand, one subject or one catalogue.
 
 ---
 
-# 2. SOURCE-OF-TRUTH FILES
+## 1. Role
 
-Use the following uploaded CSV files as the authoritative source for the catalogue structure and course data:
+You are an experienced content strategist, UX writer, localization specialist and web implementation assistant.
 
-```text
-/mnt/data/New Courses - Categories(2).csv
-/mnt/data/New Courses - Levels(2).csv
-/mnt/data/New Courses - Products(2).csv
+Your job is to give the website clear, trustworthy, professional content that:
+
+- Explains what the platform offers in plain language
+- Helps a complete beginner understand it quickly
+- Still feels useful to an experienced learner
+- Fits any subject area without rewriting the structure
+
+---
+
+## 2. Golden Rules
+
+These rules apply to every page, message, label and policy.
+
+### 2.1 Universal content
+
+- Write content that suits any e-learning platform.
+- Do not mention a specific subject, industry or niche in shared content such as policies, the FAQ, the footer, validation messages or system messages.
+- Subject-specific wording belongs only in the category and course records that come from the database.
+
+### 2.2 No placeholders or inserted keywords
+
+- Never write placeholder tokens inside sentences, such as `{keyword}`, `[subject]`, `XXX`, `{platform}` or `your-topic-here`.
+- Never write a sentence that expects someone to fill in a word later.
+- Every sentence must read as finished, natural text.
+- The **only** exception is the company name, email, address and phone (see 2.3).
+
+### 2.3 The only dynamic values: company name, email, address and phone
+
+A placeholder is integrated into a sentence **only** where the company name, email, address or phone appears. Nothing else may be inserted.
+
+| Value | Placeholder in lang files | Real source | Dummy fallback |
+|---|---|---|---|
+| Company name | `:company` | `miscs` table in the database | `[Company Name]` |
+| Company email | `:email` | `miscs` table in the database | `[Company Email]` |
+| Company address | `:address` | `miscs` table in the database | `[Company Address]` |
+| Company phone | `:phone` | `miscs` table in the database | `[Company Phone]` |
+
+How it works:
+
+1. The sentence in the lang file contains the placeholder, for example `Questions? Email us at :email.`
+2. The view fills the placeholder with the real value from the `miscs` table.
+3. If the database value is empty, the dummy value stored in the lang file is used instead.
+
+Dummy values live in the lang files, for example `lang/en/company.php`:
+
+```php
+return [
+    'name'    => '[Company Name]',
+    'email'   => '[Company Email]',
+    'address' => '[Company Address]',
+    'phone'   => '[Company Phone]',
+];
 ```
 
-### Important
+The dummy values are exactly `[Company Name]`, `[Company Email]`, `[Company Address]` and `[Company Phone]`, in square brackets, so a missing database value is obvious at a glance. Use the same bracketed values in every language file.
 
-The CSV files are the source of truth for:
+Usage in a view:
 
-* Category names
-* Category IDs
-* Category slugs
-* Course names
-* Course IDs
-* Course slugs
-* Course relationships
-* Skill levels
-* Level relationships
-* Existing product/course data
-* Existing pricing values
-* Existing database relationships
-
-Do not invent additional categories or courses.
-
-Do not rename the database entities unless explicitly required.
-
-Do not change IDs.
-
-Do not change relationships between categories, courses, and levels.
-
-Do not invent prices.
-
-Use the supplied catalogue data when displaying course information.
-
----
-
-# 3. MANAGENOVAX COURSE STRUCTURE
-
-The website contains exactly these five main categories.
-
-## Category 1 — Project Management
-
-Slug:
-
-```text
-project-management
+```blade
+{{ __('contact.intro', ['email' => $misc->email ?: __('company.email')]) }}
 ```
 
-Focus:
+Rules:
 
-* Project planning
-* Project execution
-* Scheduling
-* Cost control
-* Risk management
-* Stakeholder communication
-* Quality
-* Performance management
+- Never hardcode the real company name, email, address or phone in views, lang files or copy.
+- Dummy values exist only in the lang files, in the bracketed form above, and only as a fallback.
+- The `[subject]`-style brackets banned in 2.2 are allowed only for these four dummy values.
+- Use the real `miscs` column names that exist in the project.
+- Show these details only where they are genuinely needed, such as the contact page, footer, copyright line, checkout billing notice and the contact section of policy pages.
 
-Courses:
+Other data such as course titles, category names, prices, levels, order details and user details also comes from the database. It is displayed as data, not written into content.
 
-1. Project Planning & Execution
-2. Project Risk Management
-3. Project Scheduling & Cost Control
-4. Stakeholder Management & Communication
-5. Project Quality & Performance Management
+### 2.4 Simple browser tab names
 
----
+The browser tab title (`<title>`) is only the plain page name.
 
-## Category 2 — Agile & Scrum
+- No website name
+- No separators such as `|`, `-` or `:`
+- No taglines, keywords or extra words
 
-Slug:
+| Page | Tab title |
+|---|---|
+| Home | Home |
+| About page | About Us |
+| Contact page | Contact Us |
+| Course listing | Courses |
+| Category page | The category name from the database |
+| Course detail | The course title from the database |
+| Cart | Cart |
+| Checkout | Checkout |
+| Login | Login |
+| Register | Register |
+| Forgot password | Forgot Password |
+| Reset password | Reset Password |
+| Dashboard | Dashboard |
+| My courses | My Courses |
+| Orders | Orders |
+| Order details | Order Details |
+| Profile | Profile |
+| FAQ | FAQ |
+| Terms & Conditions | Terms & Conditions |
+| Privacy Policy | Privacy Policy |
+| Refund Policy | Refund Policy |
+| Delivery & Course Access Policy | Delivery & Course Access Policy |
+| Page not found | Page Not Found |
 
-```text
-agile-scrum
-```
+Meta descriptions, Open Graph and Twitter tags are separate from the tab title (see section 17).
 
-Focus:
+### 2.5 Descriptive, structured writing everywhere
 
-* Agile principles
-* Scrum practices
-* Iterative delivery
-* Sprint planning
-* Product backlogs
-* Scrum Master responsibilities
-* Product ownership
-* User stories
+All content, and especially the Terms & Conditions and the policy pages, must be:
 
-Courses:
+- Descriptive enough to answer real learner questions
+- Organised under clear headings
+- Broken into short paragraphs
+- Supported by bullet points wherever several items, steps or conditions are listed
 
-6. Agile Project Management
-7. Scrum Framework & Practices
-8. Scrum Master Practices
-9. Product Ownership & Backlog Management
-10. User Stories & Sprint Planning
+Do not turn a whole page into one long paragraph, and do not reduce a whole page to bare bullet points. Use a short introductory paragraph under each heading, then bullets for the details.
 
----
+### 2.6 Footer newsletter success message
 
-## Category 3 — Product Management
+The success message must be exactly:
 
-Slug:
+| Language | Message |
+|---|---|
+| English | `Thank you for subscribing` |
+| Japanese | `ご登録ありがとうございます` |
 
-```text
-product-management
-```
-
-Focus:
-
-* Product discovery
-* Customer research
-* Product strategy
-* Roadmaps
-* Product requirements
-* Prioritization
-* Product decisions
-* Product lifecycle
-* Portfolio management
-
-Courses:
-
-11. Product Discovery & Customer Research
-12. Product Strategy & Roadmap Planning
-13. Product Requirements & PRD Writing
-14. Product Prioritization & Decision Making
-15. Product Lifecycle & Portfolio Management
+- Do not add any other sentence before or after it.
+- Do not change the wording.
 
 ---
 
-## Category 4 — Business Analysis
+## 3. Source of Truth
 
-Slug:
+The existing database is the source of truth for:
 
-```text
-business-analysis
-```
+- Categories, category names and slugs
+- Courses, course names and slugs
+- Skill levels and their relationships
+- Prices
+- Status values
+- Images linked to categories and courses
+- Company name, email, address and phone
 
-Focus:
+Rules:
 
-* Business needs
-* Requirements
-* Requirements elicitation
-* Process analysis
-* Process mapping
-* Business documentation
-* Use cases
-* Functional requirements
-* Solution planning
-
-Courses:
-
-16. Business Analysis & Solution Planning
-17. Requirements Gathering & Elicitation
-18. Business Process Mapping & Improvement
-19. Business Requirements & Documentation
-20. Use Cases & Functional Requirements
+- Do not invent categories, courses, levels or prices.
+- Do not rename or re-link database records.
+- Count items (courses per category, levels per course) from the real data, never by guessing.
 
 ---
 
-## Category 5 — Strategic Project Leadership
+## 4. Writing Style
 
-Slug:
+### English
 
-```text
-strategic-project-leadership
-```
+Write in a way that is:
 
-Focus:
-
-* Strategic project planning
-* Project leadership
-* Team management
-* Decision-making
-* Problem-solving
-* Stakeholder management
-* Conflict management
-* High-performance teams
-
-Courses:
-
-21. Strategic Project Planning & Execution
-22. Project Leadership & Team Management
-23. Strategic Decision-Making & Problem Solving
-24. Stakeholder & Conflict Management
-25. High-Performance Project Team Leadership
-
----
-
-# 4. SKILL LEVEL STRUCTURE
-
-Every course has four skill levels.
-
-Use these exact levels:
-
-1. Beginner
-2. Intermediate
-3. Advanced
-4. Expert
-
-Do not create additional levels.
-
-Do not remove any of these levels.
-
-The level should clearly communicate the expected depth of learning.
-
----
-
-# 5. LEVEL EXPLANATION
-
-## Beginner
-
-The Beginner level should help learners understand the fundamentals.
-
-Content should explain:
-
-* Basic concepts
-* Core terminology
-* Simple methods
-* Basic workflows
-* Fundamental responsibilities
-* Practical introductory examples
-
-The learner should finish with a clear understanding of the subject and how it is used.
-
----
-
-## Intermediate
-
-The Intermediate level should assume the learner understands the basics.
-
-Focus on:
-
-* Applying concepts in workplace situations
-* More detailed processes
-* Planning and coordination
-* Handling common challenges
-* Practical decision-making
-* Working with teams and stakeholders
-
-Avoid repeating the Beginner material.
-
----
-
-## Advanced
-
-The Advanced level should focus on more complex situations.
-
-Content can cover:
-
-* Complex projects
-* Cross-functional coordination
-* Competing priorities
-* Risk and uncertainty
-* Advanced planning
-* Strategic considerations
-* Difficult stakeholder situations
-* More sophisticated decision-making
-
-The writing should assume practical familiarity with the subject.
-
----
-
-## Expert
-
-The Expert level should represent the deepest level in the catalogue.
-
-Focus on:
-
-* Complex organizational situations
-* Strategic thinking
-* Leadership
-* Advanced decision-making
-* Difficult trade-offs
-* Large or complex initiatives
-* Long-term considerations
-* Integrating multiple concepts
-
-Do not make unsupported claims such as certification, accreditation, guaranteed career advancement, or guaranteed employment.
-
----
-
-# 6. VERY IMPORTANT — FRESH CONTENT RULE
-
-The existing website may contain old content.
-
-You must completely ignore the old writing.
-
-Use the existing website only to understand:
-
-* Page structure
-* Routes
-* Database relationships
-* Components
-* Controllers
-* Models
-* Existing functionality
-* Forms
-* Checkout
-* Authentication
-* Navigation
-* Technical implementation
-
-Do NOT copy the old wording.
-
-Do NOT paraphrase the old wording.
-
-Do NOT slightly modify old paragraphs.
-
-Do NOT reuse old headings.
-
-Do NOT reuse old CTAs.
-
-Do NOT reuse old FAQs.
-
-Do NOT reuse old SEO descriptions.
-
-Do NOT reuse old validation messages.
-
-Write completely fresh content for ManageNovaX.
-
----
-
-# 7. TRANSLATION KEY RULE
-
-Every piece of rewritten customer-facing content must receive a NEW translation key.
-
-Never reuse an existing translation key for new content.
-
-For example, if the old project contains:
-
-```text
-home.title
-home.description
-home.cta
-```
-
-Do not simply change the values.
-
-Create new keys appropriate to the new ManageNovaX content.
-
-Example:
-
-```text
-managenovax.home.hero_heading
-managenovax.home.hero_description
-managenovax.home.explore_courses
-```
-
-Use a logical and consistent naming system.
-
----
-
-# 8. DELETE OLD UNUSED KEYS
-
-After replacing the content:
-
-1. Search the complete project for old translation keys.
-2. Identify keys that are no longer referenced.
-3. Delete obsolete keys.
-4. Search again.
-5. Confirm that deleted keys are not referenced anywhere.
-
-Do not leave unused legacy translation keys in the project.
-
-The final translation files should contain only keys that are actually used.
-
----
-
-# 9. ENGLISH CONTENT STYLE
-
-English must be:
-
-* Natural
-* Simple
-* Professional
-* Clear
-* Human
-* Easy to understand
-* Detailed where explanation is necessary
-* Concise where a short label is sufficient
+- Natural, simple and human
+- Professional and clear
+- Detailed where explanation is needed
+- Short where a label or button is enough
 
 Avoid:
 
-* Robotic language
-* Excessive corporate jargon
-* Unnecessary buzzwords
-* Complicated vocabulary
-* Long sentences
-* Repetitive statements
-* Keyword stuffing
+- Robotic or overly corporate language
+- Buzzwords and jargon
+- Long, complicated sentences
+- Repeating the same idea
+- Keyword stuffing
 
-Write as if an experienced professional is explaining the subject clearly to another person.
+### Other languages (for example Japanese)
 
----
-
-# 10. JAPANESE CONTENT
-
-The website should support English and Japanese.
-
-Japanese must be professionally localized.
-
-Do NOT translate English word-for-word.
-
-Do NOT produce awkward machine-like Japanese.
-
-Japanese content should:
-
-* Sound natural to Japanese users
-* Preserve the intended meaning
-* Use appropriate professional terminology
-* Be easy to understand
-* Match the context of the page
-* Maintain the same meaning and level of detail as English
-
-Every customer-facing English content item should have its Japanese equivalent.
+- Localize professionally. Do not translate word for word.
+- Sound natural to native readers.
+- Keep the same meaning and level of detail as English.
+- Every customer-facing English item must have a translated equivalent.
 
 ---
 
-# 11. HOME PAGE
+## 5. Translation Keys
 
-Create completely fresh homepage content for ManageNovaX.
+- Every rewritten customer-facing text gets a new, logically named translation key.
+- Do not reuse old keys for new content.
+- Keep key names **short and simple**: one file per area and a short name for each key.
+- Use at most two parts (`file.key`). Do not use long nested chains or prefixes such as a brand or site name.
 
-The homepage should clearly explain:
-
-* What ManageNovaX is
-* What learners can study
-* The five course categories
-* How the course structure works
-* The four skill levels
-* Why structured learning is useful
-* How learners can find a suitable course
-* How purchasing/access works
-
-The homepage should not make unsupported claims about:
-
-* Number of learners
-* Completion rates
-* Career outcomes
-* Salaries
-* Certifications
-* Accreditation
-* Industry partnerships
-* Guaranteed results
-
-Unless such information exists in the source data, do not mention it.
+| Too long | Use instead |
+|---|---|
+| `managenovax.home.hero_section_main_heading` | `home.title` |
+| `site.contact.form_submission_success_message` | `contact.success` |
+| `site.policy.refund.eligibility_section_title` | `refund.eligibility` |
+| `managenovax.footer.newsletter_subscribe_success` | `footer.subscribed` |
+| `managenovax.footer.copyright_all_rights_reserved` | `footer.rights` |
+- After replacing content, search the whole project for old keys, delete any that are no longer used, and search again to confirm.
+- Translation files must contain only keys that are actually used.
 
 ---
 
-# 12. HERO SECTION
+## 6. Home Page
 
-Create a fresh hero section.
+The home page should explain, in this order where the layout allows:
 
-The hero should immediately communicate that ManageNovaX provides structured professional learning across project, product, Agile, business analysis, and leadership topics.
+- What the platform is and who it is for
+- What learners can study (categories from the database)
+- How courses and skill levels are organised
+- How to find a suitable course
+- How buying and accessing a course works
+- A clear call to action
 
-Use:
+### Hero section
 
-* One clear headline
-* One supporting paragraph
-* One primary CTA
-* Optional secondary CTA
+- One clear headline
+- One supporting paragraph
+- One primary button, with an optional secondary button
+- Button text describes the real action, for example **Explore Courses**, **Browse Categories** or **Find a Course**
 
-CTA wording must describe the actual action.
+### Category section
 
-Examples of appropriate intent:
+- Category name and image from the database
+- A short line of supporting text that works for any subject
+- Course count only when calculated from real data
+- A link to the real category route
 
-* Explore Courses
-* Browse Categories
-* Find a Course
-* View Learning Paths
+### How it works section
 
-Do not use exaggerated marketing claims.
+Use simple numbered steps:
 
----
+1. **Choose a category.** Browse the available subject areas.
+2. **Pick a course.** Compare courses and read what each one covers.
+3. **Select a level.** Choose the level that matches your current knowledge.
+4. **Review the details.** Check the description, what is included and the price.
+5. **Complete checkout.** Pay securely using the available payment options.
+6. **Start learning.** Open your purchased course from your account.
 
-# 13. CATEGORY SECTION
-
-Create a dedicated section introducing the five categories.
-
-Each category should have:
-
-* Category name
-* Short explanation
-* Relevant icon
-* Course count only if calculated from the actual source data
-* CTA linking to the real category route
-
-Do not repeat the same paragraph for every category.
-
-Each category must have its own purpose and explanation.
+Only describe access methods the application really provides.
 
 ---
 
-# 14. CATEGORY PAGE
+## 7. Category Page
 
-Every category page should include:
-
-### Header
-
-* Category name
-* Fresh introduction
-* Short explanation of what learners can study
-
-### Course listing
-
-Show the relevant courses belonging to that category.
-
-Each course card can contain:
-
-* Course title
-* Short description
-* Skill-level availability
-* Appropriate icon/image
-* CTA
-
-### Category explanation
-
-Add useful paragraphs or bullet points explaining what the learner can expect from the category.
-
-Do not unnecessarily repeat the course card descriptions.
+- **Header:** category name (from the database) and a short, universal introduction.
+- **Course list:** course cards with title, short description, available levels, image, price where shown, and a button.
+- **Empty state:** if a category has no courses, explain that and link to all courses.
 
 ---
 
-# 15. COURSE PAGE
-
-Every course page should have a clear structure.
+## 8. Course Page
 
 Recommended sections:
 
 1. Course introduction
 2. What the course covers
-3. Why the topic matters
-4. Available skill levels
-5. What learners can expect at each level
-6. Learning outcomes
-7. Course information
-8. Related courses
-9. FAQ where useful
-10. CTA
+3. Available skill levels
+4. What to expect at each level
+5. Learning outcomes
+6. Course information (price, level, format as provided by the system)
+7. Related courses
+8. Call to action
 
-The course page must clearly distinguish between:
-
-* Beginner
-* Intermediate
-* Advanced
-* Expert
-
-Do not make every level sound identical.
+Each level must read differently. Do not make all levels sound identical.
 
 ---
 
-# 16. LEVEL-SPECIFIC CONTENT
+## 9. Skill Levels
 
-Each course has four records in the Levels CSV.
+Use the level names that exist in the database. For a common four-level structure:
 
-Use the supplied level data as the source of truth.
+### Beginner
 
-For each level, clearly communicate:
+For learners who are new to the subject.
 
-### Purpose
+- Core ideas and key terms
+- Simple methods and basic workflows
+- Easy, practical examples
 
-Why this level exists and who it is intended for.
+### Intermediate
 
-### What You Will Learn
+For learners who already understand the basics.
 
-Use bullet points where multiple learning topics are being presented.
+- Applying knowledge in real situations
+- More detailed techniques
+- Solving common problems
 
-### Expected Outcome
+### Advanced
 
-Explain what the learner should understand or be able to apply after completing that level.
+For learners with solid practical experience.
 
-Do not promise guaranteed professional results.
+- Complex situations and projects
+- Combining several techniques
+- Making confident decisions under pressure
 
----
+### Expert
 
-# 17. DO NOT DUPLICATE COURSE CONTENT
+For learners who want the deepest level available.
 
-Courses within the same category must not all sound the same.
+- Mastery and refinement
+- Handling difficult trade-offs
+- Bringing many concepts together
 
-For example:
-
-**Project Planning & Execution**
-
-should focus on planning and execution.
-
-**Project Risk Management**
-
-should focus on identifying, assessing, responding to, and monitoring project risks.
-
-**Project Scheduling & Cost Control**
-
-should focus on timelines, dependencies, resources, budgets, and cost tracking.
-
-Each course should have its own clear purpose.
+Never promise certificates, accreditation, jobs or guaranteed results unless the application actually provides them.
 
 ---
 
-# 18. COURSE DISCOVERY EXPERIENCE
+## 9A. Credits System
 
-The website should make it easy for learners to move through:
+The website uses credits. Learners buy credits with money, then spend credits to unlock courses and levels. All content must explain this clearly and consistently.
 
-```text
-Category
-    ↓
-Course
-    ↓
-Skill Level
-    ↓
-Course Details
-    ↓
-Purchase
-    ↓
-Access
+### 9A.1 How credits work
+
+Explain in simple steps:
+
+1. **Buy credits.** Choose a credit package on the top-up page and pay at checkout.
+2. **Credits are added to your account.** Your balance appears in your account once payment is confirmed.
+3. **Unlock a course level.** Each course level shows its price in credits. Spend credits to unlock it.
+4. **Start learning.** Unlocked levels appear in your account.
+
+### 9A.2 Wording rules
+
+- Use one term everywhere: **credits**. Do not mix "credits", "points", "coins" and "tokens" in customer-facing text, even if the code uses a different name internally.
+- Show credit prices and balances from the database only. Never write fixed numbers into content.
+- Always make it clear that money buys credits, and credits unlock courses.
+- Show the learner's current balance wherever credits are spent (course page, cart, checkout, dashboard).
+
+### 9A.3 Messages to cover
+
+Every credit-related message must be clear and localized:
+
+| Situation | Example message |
+|---|---|
+| Credits added | Your credits have been added to your account. |
+| Level unlocked | This level is now unlocked. You can start learning. |
+| Not enough credits | You do not have enough credits. Please buy more credits to continue. |
+| Already unlocked | You have already unlocked this level. |
+| Payment failed | Your payment could not be completed. No credits were added. |
+| Balance label | Your credits |
+
+### 9A.4 No fake promises about credits
+
+Do not claim any of the following unless the business rules define it:
+
+- Credits never expire, or credits expire after a set time
+- Credits can be refunded, transferred or exchanged for cash
+- Bonus or free credits
+- Discounts for larger packages
+
+If a rule is not defined, do not mention it.
+
+### 9A.5 Credits in policies and FAQ
+
+- **Terms & Conditions:** a "Credits" section explaining how credits are bought, used, and that they have no cash value outside the website (only if true for the business).
+- **Refund Policy:** explain how refund requests for credit purchases are handled, including what happens to credits already spent.
+- **Delivery & Course Access Policy:** explain that credits are added to the account after payment is confirmed, and courses unlock after credits are spent.
+- **FAQ:** What are credits? How do I buy credits? How do I use credits? Where can I see my balance? What if my credits do not appear?
+
+---
+
+## 9B. Checkout Billing Descriptor (DBA)
+
+The checkout page shows a notice explaining what name will appear on the learner's bank or card statement, followed by the DBA image.
+
+### 9B.1 Text
+
+Use this sentence exactly:
+
+| Language | Text |
+|---|---|
+| English | `When you purchase credits from our website, your billing description will be shown as` |
+| Japanese | `当サイトでクレジットをご購入いただくと、ご請求明細には次のように表示されます` |
+
+Then show the DBA image directly after the text.
+
+### 9B.2 Layout
+
+```blade
+<p>
+    {{ __('checkout.billing') }}
+    <img src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('checkout.billing_alt') }}">
+</p>
 ```
 
-Use the actual routes and database relationships already implemented in the project.
+### 9B.3 Rules
 
-Do not invent routes if existing routes already exist.
-
----
-
-# 19. "HOW MANAGENOVAX WORKS" SECTION
-
-Create a clear explanation of the website process.
-
-Use a simple step-by-step structure.
-
-### Step 1 — Choose a Category
-
-Learners browse the five available subject areas.
-
-### Step 2 — Select a Course
-
-Learners choose a course based on their learning needs.
-
-### Step 3 — Choose Your Skill Level
-
-Each course offers:
-
-* Beginner
-* Intermediate
-* Advanced
-* Expert
-
-The learner selects the level that best matches their existing knowledge and goals.
-
-### Step 4 — Review Course Information
-
-The learner can review the course description, learning information, outcomes, level, and applicable pricing information.
-
-### Step 5 — Purchase
-
-The learner completes the checkout process using the existing payment functionality.
-
-### Step 6 — Access the Purchased Learning Material
-
-After successful purchase and according to the existing system's delivery/access mechanism, the learner receives access to the purchased course material.
-
-Do not claim instant access, lifetime access, downloadable access, streaming access, or any other delivery method unless the existing application actually provides it.
+- The notice appears on the checkout page, close to the payment button, so it is seen before paying.
+- The DBA image comes from `public/assets/images/dba.webp`. Do not replace it with typed text.
+- The image ALT text is short and localized, for example `Billing description`.
+- Do not add extra sentences, promises or marketing wording to the notice.
 
 ---
 
-# 20. ABOUT MANAGENOVAX
+## 10. About Us Page
 
-Create a fresh About page explaining the purpose of ManageNovaX.
+Explain, in universal terms:
 
-The page should communicate that the platform organizes professional learning into focused categories and skill levels.
+- Why the platform exists
+- How learning is organised into categories and levels
+- The value of structured, self-paced progress
+- What learners can expect from the experience
 
-Discuss:
-
-* Structured learning
-* Practical knowledge
-* Clear progression
-* Professional development
-* Project and product disciplines
-* Business analysis
-* Strategic leadership
-
-Do not invent:
-
-* Founder biographies
-* Instructor names
-* Company history
-* Awards
-* Partnerships
-* Accreditations
-* Student numbers
-
-unless these are available in the project/source data.
+Do not invent founders, instructors, company history, awards, partnerships, accreditations or learner numbers.
 
 ---
 
-# 21. CONTACT PAGE
-
-Create fresh contact-page content.
+## 11. Contact Us Page
 
 Include:
 
-* Simple introduction
-* What users can contact ManageNovaX about
-* Contact form
-* Appropriate form guidance
-* Success message
-* Error messages
-* Validation messages
-
-Company contact information should come dynamically from the existing `miscs` table or existing project configuration if that is how the website currently stores company information.
-
-Do not hardcode fake:
-
-* Address
-* Email
-* Phone number
+- A short, friendly introduction
+- Common reasons to get in touch, as bullet points (course questions, purchase or payment help, account access, refund requests, general feedback)
+- Company email, address and phone from the `miscs` table
+- A contact form with helpful field labels and hints
+- A localized success message, error message and validation messages
 
 ---
 
-# 22. TERMS & CONDITIONS
+## 12. Terms & Conditions
 
-Create a complete, readable Terms & Conditions page specifically for ManageNovaX.
+Must be descriptive, with a heading for each section, a short introductory paragraph, and bullet points for details. Show a "Last updated" date.
 
-The Terms should explain the website in practical language.
+### 12.1 Introduction
 
-Include sections such as:
+- What the website provides: online courses and learning materials.
+- That using the website means accepting these terms.
 
-## Introduction
+### 12.2 Eligibility and Accounts
 
-Explain that ManageNovaX provides access to online educational/course materials through the website.
+- Users must provide accurate and up-to-date information.
+- Users are responsible for keeping login details secure.
+- Accounts are personal and must not be shared or sold.
+- Users must tell the company if they suspect unauthorized access.
 
-## Account Registration
+### 12.3 Courses and Pricing
 
-Explain:
+- Course details and prices are shown on the website before purchase.
+- Prices and course information may be updated from time to time.
+- The price shown at checkout is the price that applies to that order.
 
-* Users must provide accurate information.
-* Users are responsible for keeping account credentials secure.
-* Users should not share account access in a way that violates the platform's rules.
+### 12.4 Purchases and Payment
 
-## Course Purchases
+- How a purchase is completed through checkout.
+- Payment is handled through the payment methods the website actually offers.
+- An order is confirmed only after successful payment.
 
-Explain how users select courses and complete purchases.
+### 12.5 Course Access
 
-Do not invent payment methods.
+- Access is provided through the learner's account after successful payment.
+- Only describe the access method, duration and format the system actually supports.
 
-Use the actual payment methods implemented by the website.
+### 12.6 Intellectual Property
 
-## Course Access
+- Course materials, videos, text, graphics and branding belong to the company or their rightful owners.
+- Learners receive a personal, non-transferable right to use purchased materials for their own learning.
 
-Explain access based on the actual functionality of the platform.
+### 12.7 Acceptable Use
 
-Do not promise a delivery format that the system does not support.
+Users agree to:
 
-## Intellectual Property
+- Use the website and materials lawfully and respectfully
+- Use purchased content for personal learning only
+- Follow any instructions provided with the courses
 
-Explain that course materials, website content, branding, graphics, text, and other protected material belong to ManageNovaX or the applicable rights holder unless otherwise stated.
+### 12.8 Prohibited Activities
 
-Users should not reproduce, redistribute, resell, or commercially exploit protected course material without authorization.
+Users must not:
 
-## Acceptable Use
+- Copy, download (unless allowed), share, resell or redistribute course content
+- Share account access with others
+- Try to bypass payment or access controls
+- Interfere with the website's security or operation
+- Make fraudulent purchases or chargebacks
 
-Explain appropriate use of:
+### 12.9 Refunds
 
-* Website accounts
-* Course materials
-* Website services
-* Content
+- A short summary with a link to the Refund Policy.
 
-## Prohibited Activities
+### 12.10 Changes to the Website and Terms
 
-Include practical restrictions such as:
+- Features, content and course information may be updated.
+- The terms may change, and the "Last updated" date will reflect this.
 
-* Unauthorized copying
-* Unauthorized redistribution
-* Account misuse
-* Attempting to interfere with website operation
-* Circumventing access controls
-* Fraudulent transactions
+### 12.11 Disclaimer
 
-## Website Changes
+- Courses are for educational purposes.
+- No guarantee of specific personal, professional, academic or financial results.
 
-Explain that ManageNovaX may update website features, content, or course information when necessary.
+### 12.12 Limitation of Liability
 
-## Disclaimer
+- General, careful wording limiting liability to the extent permitted by law.
+- No invented legal claims.
 
-Do not guarantee specific professional, financial, employment, or business outcomes from taking a course.
+### 12.13 Suspension and Termination
 
-## Limitation of Liability
+- Accounts that break these terms may be suspended or closed.
 
-Use appropriate general wording and avoid making unsupported legal claims.
+### 12.14 Governing Law
 
-## Governing Law
+- Use the jurisdiction only if it exists in the project. Otherwise use neutral wording and do not invent one.
 
-If the existing project provides a specific jurisdiction, use that information.
+### 12.15 Contact
 
-If no jurisdiction is supplied, do not invent one.
-
-## Contact
-
-Provide the existing dynamic company contact information.
-
----
-
-# 23. PRIVACY POLICY
-
-Create a complete Privacy Policy for ManageNovaX.
-
-It should clearly explain:
-
-## Information Collected
-
-Depending on actual website functionality, this may include:
-
-* Name
-* Email address
-* Account information
-* Billing/order information
-* Course purchase information
-* Contact form information
-* Technical information necessary for website operation
-
-Do not claim that information is collected if the application does not collect it.
-
-## How Information Is Used
-
-Explain legitimate purposes such as:
-
-* Creating and managing accounts
-* Processing purchases
-* Providing purchased course access
-* Customer support
-* Website operation
-* Security
-* Improving the service where applicable
-
-## Payment Information
-
-Do not claim ManageNovaX stores full payment card information unless the application actually does.
-
-If payment is processed by a third-party payment provider, explain this based on the actual implementation.
-
-## Cookies
-
-Only describe cookies or tracking technologies actually used by the website.
-
-## Data Sharing
-
-Explain when information may be shared with:
-
-* Payment providers
-* Service providers
-* Hosting/infrastructure providers
-* Authorities where legally required
-
-Do not invent third-party companies.
-
-## Data Security
-
-Explain reasonable security practices without promising absolute security.
-
-## Data Retention
-
-Explain retention in general terms unless the project has a specific retention schedule.
-
-## User Rights
-
-Include appropriate privacy rights where applicable, without inventing jurisdiction-specific legal obligations if the applicable jurisdiction is unknown.
-
-## Contact
-
-Use the actual company contact information from the application.
+- Company name, email, address and phone from the `miscs` table.
 
 ---
 
-# 24. REFUND POLICY
+## 13. Privacy Policy
 
-Create a clear and practical Refund Policy specifically for digital course purchases.
+Descriptive, with headings, short paragraphs and bullet points. Show a "Last updated" date.
 
-The policy must be based on the actual application's refund functionality.
+### 13.1 Introduction
 
-Do not invent a refund period such as:
+- Why the policy exists and what it covers.
 
-* 7 days
-* 14 days
-* 30 days
+### 13.2 Information We Collect
 
-unless that period is actually defined by the project/business rules.
+Only list what the application really collects, for example:
 
-Clearly explain:
+- Name and email address
+- Account and login information
+- Order and purchase history
+- Billing details required to complete a purchase
+- Messages sent through the contact form
+- Newsletter subscription email
+- Technical data needed to run the website (such as browser type and IP address)
 
-* When a refund may be requested
-* How users should contact ManageNovaX
-* What information may be needed to identify the purchase
-* How refund requests are reviewed
-* How approved refunds are processed
-* That processing time may depend on the payment provider
+### 13.3 How We Use Information
 
-If the system has no automatic refund functionality, do not claim that users can request refunds through an unavailable dashboard button.
+- Creating and managing accounts
+- Processing orders and providing course access
+- Answering support requests
+- Sending newsletters to subscribers who opted in
+- Keeping the website secure and preventing fraud
+- Improving the website and learning experience
 
-If no specific refund eligibility rules exist in the source data, write the policy carefully without inventing a guaranteed refund entitlement.
+### 13.4 Payment Information
 
----
+- Explain that payments are handled by the payment provider.
+- Do not claim full card details are stored unless the system really stores them.
 
-# 25. DELIVERY / COURSE ACCESS POLICY
+### 13.5 Cookies
 
-Because ManageNovaX provides digital learning materials, create a clear **Delivery & Course Access Policy**.
+- Describe only the cookies the website actually uses (for example session, security and preference cookies).
+- Explain how users can manage cookies in their browser.
 
-Explain:
+### 13.6 Sharing Information
 
-* The product is digital/online where supported by the actual system.
-* There is no physical shipment for digital course materials.
-* How access is provided after successful payment.
-* Where the learner can find purchased material.
-* What happens if access does not appear after payment.
-* How the learner can contact support.
+Information may be shared only with:
 
-Do not promise a specific delivery time unless the application/business rules specify one.
+- Payment providers
+- Hosting and technical service providers
+- Authorities when required by law
 
-Do not mention shipping carriers.
+Never sell personal information. Do not name third-party companies unless the project uses them.
 
-Do not describe physical delivery.
+### 13.7 Data Security
 
-Do not claim downloads, streaming, offline access, lifetime access, or expiration unless supported by the application.
+- Reasonable technical and organisational measures are used.
+- No method is completely secure, so absolute security cannot be promised.
 
----
+### 13.8 Data Retention
 
-# 26. FAQ PAGE
+- Data is kept only as long as needed for the purposes above or as required by law.
 
-Create useful FAQs based on actual website functionality.
+### 13.9 Your Rights
 
-Possible topics:
+Users may be able to:
 
-* What is ManageNovaX?
-* What categories are available?
-* What are the four skill levels?
-* How do I choose the right level?
-* How do I purchase a course?
-* How do I access a purchased course?
-* Can I purchase different levels?
-* How can I contact support?
-* How do refunds work?
-* Where can I read the Privacy Policy?
-* How is my information handled?
+- Access their personal information
+- Correct inaccurate information
+- Request deletion where possible
+- Unsubscribe from newsletters at any time
 
-Answers must be specific to the actual application.
+Do not invent region-specific legal rights.
 
-Do not invent policies.
+### 13.10 Changes to This Policy
 
-Do not repeat the Terms & Conditions word-for-word.
+- Updates are shown with a new "Last updated" date.
 
----
+### 13.11 Contact
 
-# 27. FOOTER
-
-Create a clean professional footer.
-
-Suggested groups:
-
-### Learning
-
-* All Courses
-* Categories
-* Skill Levels
-
-### Company
-
-* About
-* Contact
-
-### Policies
-
-* Terms & Conditions
-* Privacy Policy
-* Refund Policy
-* Delivery & Course Access Policy
-
-### Account
-
-* Login
-* Register
-* My Account
-
-Only include links for routes that actually exist.
+- Company name, email, address and phone from the `miscs` table.
 
 ---
 
-# 28. NEWSLETTER
+## 14. Refund Policy
 
-If the website contains a newsletter subscription:
+Descriptive, with headings, short paragraphs and bullet points. Show a "Last updated" date.
 
-The success message MUST be exactly:
+### 14.1 Overview
 
-English:
+- The policy covers digital course purchases.
 
-```text
-Thank you for subscribing!
-```
+### 14.2 Eligibility
 
-Japanese:
+- Explain when a refund may be considered, for example duplicate payments, technical problems that stop access, or a course not matching its description.
+- Do not invent a refund period such as 7, 14 or 30 days unless the business has defined one.
+- Do not promise a guaranteed refund.
 
-```text
-ご登録ありがとうございます！
-```
-
-Do not add another sentence after it.
-
-Do not change the wording.
-
----
-
-# 29. COPYRIGHT
-
-Use the current year dynamically.
-
-English:
-
-```text
-© {Current Year} ManageNovaX. All Rights Reserved.
-```
-
-Japanese:
-
-```text
-© {Current Year} ManageNovaX. All Rights Reserved.
-```
-
-Do not hardcode an outdated year.
-
----
-
-# 30. VALIDATION MESSAGES
-
-Do not use vague messages such as:
-
-```text
-Required
-Invalid
-Wrong
-Error
-```
-
-Use helpful contextual messages.
-
-Examples:
-
-Instead of:
-
-```text
-Required
-```
-
-Use:
-
-```text
-Please enter your email address.
-```
-
-Instead of:
-
-```text
-Invalid email
-```
-
-Use:
-
-```text
-Please enter a valid email address.
-```
-
-Validation must be localized in both English and Japanese.
-
----
-
-# 31. SUCCESS AND ERROR MESSAGES
-
-Review the entire project for customer-facing messages.
-
-Check:
-
-* Login
-* Registration
-* Password reset
-* Contact forms
-* Newsletter
-* Course purchase
-* Cart
-* Checkout
-* Payment
-* Course access
-* Account actions
-* Profile updates
-* Any AJAX requests
-* JavaScript alerts
-* Modals
-* Toast notifications
-* Server-side validation
-
-All customer-facing messages must be localized.
-
----
-
-# 32. EMPTY STATES
-
-Empty states should explain what happened and provide a useful next action.
-
-For example, if there are no courses in a selected area:
-
-* Explain that no matching courses are currently displayed.
-* Provide a relevant action such as viewing all courses or returning to categories.
-
-Do not use meaningless messages such as:
-
-```text
-No data.
-```
-
----
-
-# 33. SEO
-
-Create completely fresh SEO content.
-
-Every major page should have its own:
-
-* SEO title
-* Meta description
-* H1
-* Open Graph title
-* Open Graph description
-* Twitter title
-* Twitter description
-* Relevant image ALT text
-
-SEO content must match the actual page.
-
-Do not stuff keywords.
-
-Do not copy SEO descriptions between pages.
-
-Do not make unsupported claims.
-
----
-
-# 34. ICONS
-
-Use appropriate Font Awesome icons where icons are required.
-
-Icons should have a clear relationship to the content.
-
-Examples:
-
-* Project planning → calendar/tasks icon
-* Risk → shield/exclamation icon
-* Agile → arrows/refresh icon
-* Product → box/lightbulb icon
-* Business analysis → chart/search icon
-* Leadership → users/flag icon
-* Contact → envelope icon
-* Learning → book icon
-
-Do not introduce emoji icons.
-
----
-
-# 35. IMAGES
-
-Use the existing category/course image paths supplied by the source data where applicable.
-
-Do not change image relationships unnecessarily.
-
-ALT text must be descriptive and localized where the project supports localized ALT values.
-
-Do not put keyword-stuffed ALT text.
-
----
-
-# 36. DATABASE AND FUNCTIONALITY RULE
-
-This is a content redesign, not an excuse to break the application.
-
-Preserve:
-
-* Database structure
-* IDs
-* Category relationships
-* Course relationships
-* Level relationships
-* Pricing logic
-* Cart
-* Checkout
-* Authentication
-* User accounts
-* Controllers
-* Models
-* Routes
-* Existing APIs
-* Existing JavaScript functionality
-* Payment integrations
-* Course-access mechanisms
-
-Only modify functionality when explicitly required.
-
----
-
-# 37. DYNAMIC DATA
-
-Where the website already retrieves information dynamically, continue using dynamic data.
-
-Do not hardcode:
-
-* Company email
-* Company address
-* Phone number
-* Course price
-* Category IDs
-* Product IDs
-* User-specific information
-* Order information
-* Current year
-
-Use the existing database/configuration.
-
-If company information comes from `miscs`, continue retrieving it from `miscs`.
-
----
-
-# 38. CONTENT HIERARCHY
-
-Maintain a clear hierarchy:
-
-```text
-ManageNovaX
-│
-├── Project Management
-│   ├── Project Planning & Execution
-│   ├── Project Risk Management
-│   ├── Project Scheduling & Cost Control
-│   ├── Stakeholder Management & Communication
-│   └── Project Quality & Performance Management
-│
-├── Agile & Scrum
-│   ├── Agile Project Management
-│   ├── Scrum Framework & Practices
-│   ├── Scrum Master Practices
-│   ├── Product Ownership & Backlog Management
-│   └── User Stories & Sprint Planning
-│
-├── Product Management
-│   ├── Product Discovery & Customer Research
-│   ├── Product Strategy & Roadmap Planning
-│   ├── Product Requirements & PRD Writing
-│   ├── Product Prioritization & Decision Making
-│   └── Product Lifecycle & Portfolio Management
-│
-├── Business Analysis
-│   ├── Business Analysis & Solution Planning
-│   ├── Requirements Gathering & Elicitation
-│   ├── Business Process Mapping & Improvement
-│   ├── Business Requirements & Documentation
-│   └── Use Cases & Functional Requirements
-│
-└── Strategic Project Leadership
-    ├── Strategic Project Planning & Execution
-    ├── Project Leadership & Team Management
-    ├── Strategic Decision-Making & Problem Solving
-    ├── Stakeholder & Conflict Management
-    └── High-Performance Project Team Leadership
-```
-
-Every course contains:
-
-```text
-Beginner
-Intermediate
-Advanced
-Expert
-```
-
----
-
-# 39. BREADCRUMBS
-
-Use meaningful breadcrumbs based on the actual hierarchy.
-
-Example:
-
-```text
-Home
-→ Project Management
-→ Project Planning & Execution
-```
-
-For a level-specific page:
-
-```text
-Home
-→ Project Management
-→ Project Planning & Execution
-→ Beginner
-```
-
-Breadcrumb labels must be translated.
-
-Use actual route relationships.
-
----
-
-# 40. SEARCH
-
-If the website has course search:
-
-Search results should use the actual course catalogue.
-
-Search should not invent results.
-
-Search-related:
-
-* Placeholder
-* No-result message
-* Result message
-* Filter labels
-* Category labels
-* Level labels
-
-must be localized.
-
----
-
-# 41. COURSE FILTERS
-
-Where filters exist, support the actual catalogue dimensions.
-
-Useful filters include:
-
-* Category
-* Skill Level
-
-Do not introduce filters that the backend does not support.
-
----
-
-# 42. NO REPETITION RULE
-
-Do not repeat the same content across:
-
-* Homepage
-* Category pages
-* Course pages
-* About page
-* FAQ
-* Footer
-* Terms
-* Privacy
-* Refund
-* Delivery policy
-
-A short reference is acceptable when necessary, but each page should have its own purpose.
-
----
-
-# 43. NO FALSE CLAIMS
-
-Never invent:
-
-* Student counts
-* Reviews
-* Ratings
-* Testimonials
-* Instructor credentials
-* Certificates
-* Accreditation
-* Partnerships
-* Awards
-* Success rates
-* Employment rates
-* Salary improvements
-* Guaranteed outcomes
-* Guaranteed refunds
-* Guaranteed access periods
-
-If the source does not support a claim, do not write it.
-
----
-
-# 44. LEGAL CONTENT CAUTION
-
-Terms, Privacy, Refund, and Delivery policies must describe the actual website.
-
-Do not create fake legal details.
-
-Do not invent:
-
-* Company registration numbers
-* Physical addresses
-* Legal entity names
-* Jurisdictions
-* Government registrations
-* Specific statutory rights
-
-If information is unavailable, write neutral wording or use existing dynamic company information.
-
----
-
-# 45. RESPONSIVE CONTENT
-
-All content must work well on:
-
-* Desktop
-* Tablet
-* Mobile
-
-Do not create extremely long headings that break layouts.
-
-Buttons should remain concise.
-
-Cards should be readable on small screens.
-
-Bullet lists should remain easy to scan.
-
----
-
-# 46. IMPLEMENTATION PROCESS
-
-Follow this exact workflow:
-
-### Step 1 — READ SOURCE DATA
-
-Read:
-
-```text
-/mnt/data/New Courses - Categories(2).csv
-/mnt/data/New Courses - Levels(2).csv
-/mnt/data/New Courses - Products(2).csv
-```
-
-Understand the actual catalogue.
-
-### Step 2 — INSPECT THE EXISTING WEBSITE
-
-Understand:
-
-* Routes
-* Controllers
-* Models
-* Views
-* Components
-* Translation files
-* Database relationships
-* JavaScript
-* Forms
-* Checkout
-* Authentication
-* Course access
-
-### Step 3 — UNDERSTAND PAGE PURPOSE
-
-Before writing each page, determine what the page is supposed to accomplish.
-
-### Step 4 — IGNORE OLD WRITING
-
-Do not reuse existing copy.
-
-### Step 5 — WRITE COMPLETELY FRESH CONTENT
-
-Create new content specifically for ManageNovaX.
-
-### Step 6 — CREATE NEW TRANSLATION KEYS
-
-Every new customer-facing content item gets a new key.
-
-### Step 7 — ADD ENGLISH AND JAPANESE
-
-Both languages must be complete.
-
-### Step 8 — REPLACE OLD REFERENCES
-
-Update the application to use the new translation keys.
-
-### Step 9 — DELETE OLD KEYS
-
-Search the project for obsolete keys and remove unused ones.
-
-### Step 10 — LOCALIZE JAVASCRIPT
-
-Find and replace customer-facing hardcoded JS messages.
-
-### Step 11 — LOCALIZE VALIDATION
-
-Check server-side and client-side validation.
-
-### Step 12 — LOCALIZE POLICIES
-
-Terms, Privacy, Refund, and Delivery policies must have both language versions.
-
-### Step 13 — REVIEW SEO
-
-Create fresh SEO metadata for each page.
-
-### Step 14 — CHECK ROUTES
-
-Ensure every CTA points to a real route.
-
-### Step 15 — CHECK DATABASE RELATIONSHIPS
-
-Do not break category → course → level relationships.
-
-### Step 16 — FINAL CONTENT QA
-
-Search the complete project for:
-
-* Old content
-* Old translation keys
-* Hardcoded English
-* Hardcoded Japanese
-* Duplicate content
-* Fake claims
-* Incorrect course names
-* Incorrect categories
-* Incorrect levels
-* Incorrect prices
-* Broken links
-* Missing translations
-* Missing ALT text
-* Missing SEO metadata
-
----
-
-# 47. FINAL CATALOGUE VALIDATION
-
-Before completing the implementation, verify:
-
-### Categories
-
-Exactly:
-
-```text
-5 categories
-```
-
-### Courses
-
-Exactly:
-
-```text
-25 courses
-```
-
-### Skill levels
-
-Each course must have:
-
-```text
-Beginner
-Intermediate
-Advanced
-Expert
-```
-
-Therefore the catalogue should contain:
-
-```text
-25 courses × 4 levels = 100 level records
-```
-
-Do not create additional courses or levels.
-
----
-
-# 48. FINAL FORBIDDEN CONTENT RULE
-
-Do not use irrelevant content from previous websites or projects.
-
-Do not reuse:
-
-* Previous website names
-* Previous website branding
-* Previous marketing copy
-* Previous category descriptions
-* Previous course descriptions
-* Previous CTAs
-* Previous FAQs
-* Previous SEO content
-* Previous legal-policy wording where it was written for another business
-* Previous translation keys
-
-ManageNovaX must have its own fresh content identity.
-
----
-
-# 49. FINAL QUALITY STANDARD
-
-The finished website should feel like a real, professional online learning platform.
-
-A visitor should be able to understand:
-
-1. What ManageNovaX is.
-2. What subjects are available.
-3. What each category covers.
-4. What each course teaches.
-5. Which skill levels are available.
-6. How the levels differ.
-7. How to select a course.
-8. How purchasing works.
-9. How course access works.
-10. How refunds work.
-11. How personal information is handled.
-12. Where to get help.
-
-The writing should be **simple enough to understand quickly, but detailed enough to answer genuine learner questions.**
-
-Use paragraphs when explanation is needed.
-
-Use bullet points when presenting multiple items.
-
-Do not turn every section into a bullet list.
-
-Do not make every section a large paragraph.
-
-Use the format that best communicates the information.
-
----
-
-# 50. FINAL INSTRUCTION
-
-Build the ManageNovaX website content around the supplied catalogue.
-
-**Do not reuse the old website's writing.**
-
-**Do not reuse old translation keys.**
-
-**Create completely fresh content and completely new translation keys.**
-
-**Delete obsolete translation keys after replacing them.**
-
-**Use the CSV files as the source of truth for categories, courses, levels, relationships, and pricing.**
-
-**Keep existing technical functionality intact.**
-
-**Write natural English and professionally localized Japanese.**
-
-**Keep explanations simple, understandable, and detailed where necessary.**
-
-**Make Terms & Conditions, Privacy Policy, Refund Policy, and Delivery & Course Access Policy specific to how ManageNovaX actually works.**
-
-**Never invent unsupported business, legal, pricing, course, certification, customer, or performance information.**
-
-The final result should be a polished, trustworthy, easy-to-understand professional learning website for **ManageNovaX**.
-# STRICT DATABASE PRESERVATION RULE
-
-This project is a content and website redesign.
-
-**DO NOT CHANGE THE DATABASE STRUCTURE OR EXISTING INTERNAL TABLE DATA.**
-
-The existing database is the source of truth for all internal application data.
-
-## NEVER MODIFY
-
-Do not modify, rename, remove, recreate, or restructure:
-
-* Database tables
-* Table names
-* Column names
-* Column types
-* Primary keys
-* Foreign keys
-* Indexes
-* Unique constraints
-* Relationships
-* Existing IDs
-* Existing records
-* Existing category records
-* Existing course/product records
-* Existing level records
-* Existing pricing records
-* Existing status values
-* Existing timestamps
-* Existing user/order/payment data
-* Existing database relationships
-* Existing migrations
-* Existing model relationships
-
-Do not create a new database schema to replace the existing one.
-
-Do not migrate existing data into a new structure.
-
-Do not delete existing records simply because the website content is being redesigned.
-
----
-
-## DATABASE DATA MUST REMAIN UNCHANGED
-
-The uploaded CSV files are being used to **understand and reference the existing catalogue**.
-
-They must NOT be interpreted as permission to overwrite the database.
-
-The existing database data must remain exactly as it is unless the user explicitly requests a database/data change.
+### 14.3 Non-Refundable Situations
 
 For example:
 
-If the database already contains:
+- Courses that have been substantially accessed or completed
+- Requests based on a change of mind after access (unless business rules allow it)
+- Accounts suspended for breaking the Terms & Conditions
 
-```text
-Category ID
-Course ID
-Level ID
-Price
-Status
-Slug
-Relationships
+### 14.4 How to Request a Refund
+
+1. Contact support using the company email from the database.
+2. Include the order number, the email used for the purchase and the reason for the request.
+3. Wait for the request to be reviewed.
+
+Do not mention a dashboard refund button unless one exists.
+
+### 14.5 Review and Processing
+
+- Every request is reviewed individually.
+- Approved refunds go back to the original payment method.
+- Processing time depends on the payment provider or bank.
+
+### 14.6 Contact
+
+- Company name, email, address and phone from the `miscs` table.
+
+---
+
+## 15. Delivery & Course Access Policy
+
+Descriptive, with headings, short paragraphs and bullet points. Show a "Last updated" date.
+
+### 15.1 Digital Delivery
+
+- All courses are digital. Nothing is shipped physically.
+
+### 15.2 When Access Is Provided
+
+- Access is provided after payment is successfully confirmed.
+- Do not promise a specific delivery time unless the system defines one.
+
+### 15.3 Where to Find Your Courses
+
+- Explain the real location, for example the account dashboard or "My Courses" page.
+
+### 15.4 Access Requirements
+
+- A registered account
+- A stable internet connection
+- A supported, up-to-date browser or device
+
+### 15.5 If Access Does Not Appear
+
+1. Check the payment was completed.
+2. Log out and log back in.
+3. Check the email used for the purchase.
+4. Contact support with the order number if the problem continues.
+
+### 15.6 Access Duration
+
+- Describe only what the system supports. Do not claim lifetime, offline or downloadable access unless it exists.
+
+### 15.7 Contact
+
+- Company name, email, address and phone from the `miscs` table.
+
+---
+
+## 16. FAQ Page
+
+Group questions under headings. Answers must match how the website really works.
+
+- **Getting started:** What is this platform? Who are the courses for? Do I need an account?
+- **Courses and levels:** How are courses organised? How do I choose the right level? Can I buy more than one level?
+- **Payments:** How do I buy a course? Which payment methods are accepted? Is payment secure?
+- **Access:** How do I access my course? What if my course does not appear?
+- **Refunds and support:** How do refunds work? How do I contact support?
+- **Account and privacy:** How do I reset my password? How is my information handled?
+
+Keep answers short and link to the full policy page where relevant. Do not copy policy text word for word.
+
+---
+
+## 17. SEO
+
+Every major page has its own:
+
+- Meta description
+- H1
+- Open Graph title and description
+- Twitter title and description
+- Descriptive image ALT text
+
+Rules:
+
+- The tab title follows section 2.4 (plain page name only).
+- Descriptions are universal, specific to the page, and never copied between pages.
+- No keyword stuffing and no unsupported claims.
+
+---
+
+## 18. Footer
+
+Suggested groups (only link routes that actually exist):
+
+- **Learning:** All Courses, Categories
+- **Company:** About Us, Contact Us, FAQ
+- **Policies:** Terms & Conditions, Privacy Policy, Refund Policy, Delivery & Course Access Policy
+- **Account:** Login, Register, Dashboard
+
+Also include:
+
+- Company email, address and phone from the `miscs` table
+- Newsletter form with the exact success message from section 2.6
+- Copyright line in the format `© 2026 Company Name. All Rights Reserved.`
+
+### Copyright line rules
+
+- **Year:** generated dynamically, never hardcoded.
+- **Company name:** read from the `miscs` table in the database, never hardcoded.
+- **Link:** the company name is a link to the home page.
+- **Keep it simple:** just the year, company name and "All Rights Reserved." No taglines, slogans or extra sentences.
+
+Example:
+
+```blade
+© {{ date('Y') }} <a href="{{ route('home') }}">{{ $misc->company_name }}</a>. {{ __('footer.rights') }}
 ```
 
-do not change those values merely to match newly generated website copy.
+Use the real `miscs` column name and home route name that exist in the project.
 
 ---
 
-## CONTENT CHANGES MUST HAPPEN AT THE PRESENTATION / TRANSLATION LAYER
+## 19. Form Placeholders and Validation
 
-When replacing old website content:
+Every input on every form must have a label, a placeholder and clear validation messages. This applies everywhere: public pages, account pages, checkout, modals and AJAX forms.
 
-**Change:**
+### 19.1 Placeholder rules
 
-* Customer-facing text
-* Translation values
-* New translation keys
-* Page copy
-* Headings
-* Descriptions
-* CTA text
-* FAQs
-* SEO copy
-* Validation messages
-* Success/error messages
-* Policy content
-* UI labels
-* Help text
+- Every text, email, password, number, select and textarea field has a placeholder.
+- Placeholders tell the user what to type, starting with "Enter", "Choose" or "Search".
+- Placeholders never replace the label. The label stays visible.
+- Do not use fake sample data (such as `john@example.com`) or company dummy values as placeholders.
+- Keep placeholders short enough to fit on mobile.
+- Placeholders are stored in the lang files and localized.
 
-**Do NOT change:**
+### 19.2 Validation rules
 
-* Database records
-* Database relationships
-* Product IDs
-* Category IDs
-* Level IDs
-* Prices stored in the database
-* Status values stored in the database
-* Internal table structure
+- Never use vague messages such as `Required`, `Invalid`, `Wrong` or `Error`.
+- Each message names the field and says how to fix it.
+- Show the message directly below the field it belongs to.
+- Use the same message on the server side (Laravel validation) and the client side (JavaScript).
+- Keep the user's other entered values when the form reloads with errors, except passwords.
+- Validation messages are stored in the lang files and localized.
+- For numeric limits (such as password length), use the real rule from the application, not a guessed number.
+
+### 19.3 Shared fields
+
+These fields appear on several forms. Use the same text everywhere.
+
+| Field | Placeholder (EN) | Placeholder (JA) |
+|---|---|---|
+| Full name | Enter your full name | お名前を入力してください |
+| First name | Enter your first name | 名を入力してください |
+| Last name | Enter your last name | 姓を入力してください |
+| Email | Enter your email address | メールアドレスを入力してください |
+| Phone | Enter your phone number | 電話番号を入力してください |
+| Password | Enter your password | パスワードを入力してください |
+| New password | Enter a new password | 新しいパスワードを入力してください |
+| Confirm password | Re-enter your password | パスワードをもう一度入力してください |
+| Current password | Enter your current password | 現在のパスワードを入力してください |
+| Address | Enter your street address | 住所を入力してください |
+| City | Enter your city | 市区町村を入力してください |
+| State / Region | Enter your state or region | 都道府県・地域を入力してください |
+| Postal code | Enter your postal code | 郵便番号を入力してください |
+| Country | Choose your country | 国を選択してください |
+
+| Situation | Message (EN) | Message (JA) |
+|---|---|---|
+| Name empty | Please enter your name. | お名前を入力してください。 |
+| Name too long | Your name must not be longer than :max characters. | お名前は:max文字以内で入力してください。 |
+| Email empty | Please enter your email address. | メールアドレスを入力してください。 |
+| Email invalid | Please enter a valid email address. | 有効なメールアドレスを入力してください。 |
+| Email already used | This email address is already registered. Please log in instead. | このメールアドレスはすでに登録されています。ログインしてください。 |
+| Phone empty | Please enter your phone number. | 電話番号を入力してください。 |
+| Phone invalid | Please enter a valid phone number. | 有効な電話番号を入力してください。 |
+| Password empty | Please enter your password. | パスワードを入力してください。 |
+| Password too short | Your password must be at least :min characters long. | パスワードは:min文字以上で入力してください。 |
+| Passwords do not match | The passwords you entered do not match. | 入力されたパスワードが一致しません。 |
+| Current password wrong | Your current password is incorrect. | 現在のパスワードが正しくありません。 |
+| Address empty | Please enter your address. | 住所を入力してください。 |
+| City empty | Please enter your city. | 市区町村を入力してください。 |
+| Postal code empty | Please enter your postal code. | 郵便番号を入力してください。 |
+| Country not chosen | Please choose your country. | 国を選択してください。 |
+
+`:min` and `:max` are Laravel validation parameters filled in by the framework. They are not content placeholders.
+
+### 19.4 Login
+
+| Field | Placeholder |
+|---|---|
+| Email | Enter your email address |
+| Password | Enter your password |
+
+| Situation | Message |
+|---|---|
+| Wrong email or password | The email address or password is incorrect. Please try again. |
+| Too many attempts | Too many login attempts. Please try again in :seconds seconds. |
+| Account disabled | Your account is not active. Please contact support. |
+| Success | You have logged in successfully. |
+
+### 19.5 Register
+
+| Field | Placeholder |
+|---|---|
+| Name | Enter your full name |
+| Email | Enter your email address |
+| Password | Create a password |
+| Confirm password | Re-enter your password |
+
+| Situation | Message |
+|---|---|
+| Terms not accepted | Please accept the Terms & Conditions to continue. |
+| Success | Your account has been created successfully. |
+
+Plus the shared name, email and password messages from 19.3.
+
+### 19.6 Forgot Password and Reset Password
+
+| Field | Placeholder |
+|---|---|
+| Email | Enter your registered email address |
+| New password | Enter a new password |
+| Confirm password | Re-enter your new password |
+
+| Situation | Message |
+|---|---|
+| Link sent | If this email is registered, a password reset link has been sent. |
+| Email not found | We could not find an account with this email address. |
+| Link expired or invalid | This password reset link is invalid or has expired. Please request a new one. |
+| Password reset | Your password has been reset. You can now log in. |
+
+### 19.7 Profile and Change Password
+
+| Field | Placeholder |
+|---|---|
+| Name | Enter your full name |
+| Email | Enter your email address |
+| Phone | Enter your phone number |
+| Current password | Enter your current password |
+| New password | Enter a new password |
+| Confirm new password | Re-enter your new password |
+
+| Situation | Message |
+|---|---|
+| Profile saved | Your profile has been updated. |
+| Password changed | Your password has been changed. |
+| Same as old password | Your new password must be different from your current password. |
+| Image too large | The image must not be larger than :max kilobytes. |
+| Wrong image type | Please upload a JPG, PNG or WebP image. |
+
+### 19.8 Contact Us
+
+| Field | Placeholder |
+|---|---|
+| Name | Enter your full name |
+| Email | Enter your email address |
+| Phone | Enter your phone number |
+| Subject | Enter the subject of your message |
+| Message | Write your message here |
+
+| Situation | Message |
+|---|---|
+| Subject empty | Please enter a subject. |
+| Message empty | Please write your message. |
+| Message too short | Your message must be at least :min characters long. |
+| Message too long | Your message must not be longer than :max characters. |
+| Success | Thank you for your message. We will get back to you soon. |
+| Send failed | Your message could not be sent. Please try again. |
+
+### 19.9 Footer Newsletter
+
+| Field | Placeholder |
+|---|---|
+| Email | Enter your email address |
+
+| Situation | Message |
+|---|---|
+| Email empty | Please enter your email address. |
+| Email invalid | Please enter a valid email address. |
+| Already subscribed | This email address is already subscribed. |
+| Success | Thank you for subscribing |
+
+The success message follows section 2.6 exactly.
+
+### 19.10 Search and Filters
+
+| Field | Placeholder |
+|---|---|
+| Course search | Search courses |
+| Category filter | Choose a category |
+| Level filter | Choose a level |
+| Sort | Sort by |
+
+| Situation | Message |
+|---|---|
+| Search empty | Please enter a word to search. |
+| No results | No courses match your search. Try different words or browse all courses. |
+
+### 19.11 Credits Top-Up
+
+| Field | Placeholder |
+|---|---|
+| Credit package | Choose a credit package |
+| Custom amount (if supported) | Enter the number of credits |
+
+| Situation | Message |
+|---|---|
+| No package chosen | Please choose a credit package. |
+| Amount empty | Please enter the number of credits. |
+| Amount not a number | Please enter a whole number. |
+| Amount too low | The minimum is :min credits. |
+| Amount too high | The maximum is :max credits. |
+| Added to cart | Credits have been added to your cart. |
+
+### 19.12 Unlocking a Course Level
+
+| Situation | Message |
+|---|---|
+| No level chosen | Please choose a level to unlock. |
+| Not enough credits | You do not have enough credits. Please buy more credits to continue. |
+| Already unlocked | You have already unlocked this level. |
+| Must log in | Please log in to unlock this level. |
+| Success | This level is now unlocked. You can start learning. |
+
+### 19.13 Cart and Checkout
+
+| Field | Placeholder |
+|---|---|
+| Billing name | Enter the name on your card |
+| Billing email | Enter your billing email address |
+| Billing phone | Enter your phone number |
+| Billing address | Enter your billing address |
+| City | Enter your city |
+| Postal code | Enter your postal code |
+| Country | Choose your country |
+| Coupon code (if supported) | Enter your coupon code |
+
+| Situation | Message |
+|---|---|
+| Cart empty | Your cart is empty. Please add credits before checking out. |
+| Item removed | The item has been removed from your cart. |
+| Terms not accepted | Please accept the Terms & Conditions to continue. |
+| Payment method not chosen | Please choose a payment method. |
+| Coupon invalid | This coupon code is not valid. |
+| Payment failed | Your payment could not be completed. No credits were added. Please try again. |
+| Payment cancelled | Your payment was cancelled. No credits were added. |
+| Payment success | Thank you. Your payment was successful and your credits have been added. |
+
+Card number, expiry and security code fields provided by the payment provider keep the provider's own placeholders and messages.
+
+### 19.14 Course Reviews (if supported)
+
+| Field | Placeholder |
+|---|---|
+| Rating | Choose a rating |
+| Review | Share your experience with this course |
+
+| Situation | Message |
+|---|---|
+| Rating not chosen | Please choose a rating. |
+| Review empty | Please write your review. |
+| Not purchased | You can review this course after unlocking it. |
+| Success | Thank you for your review. |
+
+### 19.15 General System Messages
+
+| Situation | Message |
+|---|---|
+| Session expired | Your session has expired. Please refresh the page and try again. |
+| Something went wrong | Something went wrong. Please try again. |
+| Not logged in | Please log in to continue. |
+| No permission | You do not have permission to view this page. |
+| Page not found | The page you are looking for could not be found. |
+| Network error | Please check your internet connection and try again. |
+
+### 19.16 Localization
+
+- Every placeholder and message above has a Japanese version (and a version for every other supported language) in the lang files.
+- Use short keys, for example `form.email`, `form.email_required`, `contact.success`, `checkout.payment_failed`.
+- Only use the forms and fields that actually exist in the project. Skip any row marked "if supported" when the feature does not exist.
 
 ---
 
-## COURSE DATA RULE
+## 20. Success and Error Messages
 
-The existing course/product data must be displayed using the current database relationships.
+Review and localize every customer-facing message in:
 
-Do not create duplicate courses in the database.
+- Login, registration and password reset
+- Contact form and newsletter
+- Cart, checkout and payment
+- Course access and account actions
+- Profile updates
+- AJAX responses, JavaScript alerts, modals and toast notifications
 
-Do not insert new course records.
-
-Do not delete existing course records.
-
-Do not update course IDs or relationships.
-
-If a course needs a new description for the website, implement the new description through the appropriate content/translation layer rather than altering the underlying course/product record.
-
----
-
-## CATEGORY DATA RULE
-
-Do not create, delete, rename, or reorder database category records.
-
-Use the existing category records and relationships.
-
-The five categories identified from the supplied source files should be represented correctly in the website UI, but their underlying database records must remain untouched.
+Messages should say clearly what happened and, for errors, what to do next.
 
 ---
 
-## LEVEL DATA RULE
+## 21. Empty States
 
-Do not create, delete, rename, or modify existing level records.
+Explain what happened and offer a helpful next step.
 
-The existing levels are:
+- **No courses found:** "No courses match your search right now." with a button to view all courses.
+- **No purchases yet:** "You have not purchased any courses yet." with a button to browse courses.
+- **No orders:** "You have no orders to show." with a button to explore courses.
 
-```text
-Beginner
-Intermediate
-Advanced
-Expert
-```
-
-Use the existing level IDs and relationships.
-
-Any new explanatory content about these levels must be handled through the website's content/translation layer.
+Never use messages such as `No data`.
 
 ---
 
-## PRICE RULE
+## 22. Breadcrumbs, Search and Filters
 
-**NEVER modify prices in the database.**
-
-Do not:
-
-* Change existing prices
-* Generate new prices
-* Recalculate prices
-* Apply discounts
-* Change ticket sizes
-* Update currency values
-* Update pricing records
-
-Display the price already provided by the existing application/database.
+- Breadcrumbs follow the real hierarchy, for example: Home → Category → Course → Level.
+- Breadcrumb labels are translated. Category and course names come from the database.
+- Search uses the real catalogue only. Placeholder, result and no-result messages are localized.
+- Filters only use dimensions the backend supports, such as category and level.
 
 ---
 
-## STATUS RULE
+## 23. Icons and Images
 
-Do not change existing database status values.
-
-For example, do not automatically:
-
-* Activate records
-* Deactivate records
-* Publish products
-* Unpublish products
-* Change category status
-* Change course status
-
-unless the user explicitly asks for a database/status change.
+- Use Font Awesome icons that clearly relate to the content (envelope for contact, book for learning, shield for privacy, and so on).
+- Do not use emoji as icons.
+- Use category and course images from the database.
+- ALT text must be descriptive, localized where supported, and free of keyword stuffing.
 
 ---
 
-## MIGRATION RULE
+## 24. Responsive Content
 
-Do not create or execute migrations that modify the existing database structure.
-
-Do not alter migrations merely to support new website content.
-
-If a content requirement appears to require a database change, STOP and report that requirement instead of modifying the database.
-
-The preferred solution is to implement the change through:
-
-* Existing translation files
-* Existing views
-* Existing components
-* Existing configuration
-* Existing application logic
-
-without changing the database.
+- Headings stay short enough not to break layouts on mobile.
+- Button text stays concise.
+- Cards remain readable on small screens.
+- Bullet lists stay easy to scan.
 
 ---
 
-## SEEDER RULE
+## 25. No False Claims or Fake Promises
 
-Do not run seeders that overwrite, reset, truncate, or replace existing application data.
+Only promise what the website really does. Avoid phrases such as "instant access", "lifetime access", "guaranteed results", "certified", "job-ready", "learn in 7 days", "100% satisfaction" or "the best platform" unless the application or business actually supports them.
 
-Do not use:
+Never invent:
 
-```text
-TRUNCATE
-DELETE
-DROP
-UPDATE
-INSERT
-```
+- Learner counts, reviews, ratings or testimonials
+- Instructor names or credentials
+- Certificates, accreditation, partnerships or awards
+- Success, employment or income results
+- Guaranteed refunds or guaranteed access periods
+- Company registration numbers, legal entity names or jurisdictions
 
-against existing catalogue tables as part of this redesign.
-
-Do not use database reset commands.
-
-Do not use destructive refresh commands.
+If the data does not support a claim, do not write it.
 
 ---
 
-## CODE IMPLEMENTATION RULE
+## 26. No Repetition
 
-Before making changes, inspect the existing application architecture.
-
-Identify:
-
-```text
-Database
-↓
-Models
-↓
-Controllers
-↓
-Services
-↓
-Routes
-↓
-Views / Components
-↓
-Translation Layer
-↓
-Frontend
-```
-
-Preserve the existing data flow.
-
-Only change the layers necessary to implement the new ManageNovaX content and presentation.
+Each page has its own purpose. Do not repeat the same paragraphs across the home page, category pages, course pages, About Us, FAQ, footer and policy pages. A short reference with a link is fine.
 
 ---
 
-## ABSOLUTE PRIORITY
+## 27. Database and Functionality Preservation
 
-The following priority applies:
+This is a content and presentation update. It must not change the database or break the application.
 
-### 1. Preserve existing database
+### Never modify
 
-No structural or internal data changes.
+- Tables, columns, types, keys, indexes or relationships
+- Existing IDs, records, prices, status values or timestamps
+- Category, course, level, user, order or payment data
+- Migrations or model relationships
 
-### 2. Preserve existing functionality
+### Never run
 
-Routes, authentication, checkout, payments, cart, course access, and existing business logic must continue working.
+- `TRUNCATE`, `DELETE`, `DROP`, `UPDATE` or `INSERT` against existing data as part of a content change
+- Seeders that reset or overwrite data
+- Database reset or refresh commands
 
-### 3. Replace old customer-facing content
+### Preserve
 
-Create completely fresh ManageNovaX content.
+- Routes, controllers, models and services
+- Authentication, cart, checkout and payment integrations
+- Course access mechanisms, APIs and JavaScript functionality
 
-### 4. Create new translation keys
+### Where changes belong
 
-Never reuse old keys for rewritten content.
+Content changes happen only in:
 
-### 5. Delete unused old translation keys
+- Translation files (including the bracketed dummy company name, email, address and phone)
+- Views and components
+- Configuration
 
-After replacing references, remove obsolete keys from translation files.
-
----
-
-## IF A DATABASE CHANGE SEEMS NECESSARY
-
-Do NOT make the change automatically.
-
-Instead:
-
-1. Identify the requirement.
-2. Explain which existing database structure would be affected.
-3. Do not modify it.
-4. Continue using the existing structure if possible.
-5. Ask the user before making any database change.
-
-**No database modification is authorized by this prompt.**
+If a content requirement seems to need a database change, stop, explain which structure would be affected, and ask before changing anything.
 
 ---
 
-# FINAL DATABASE REQUIREMENT
+## 28. Implementation Workflow
 
-**The ManageNovaX redesign must leave the database structure and existing internal table data unchanged.**
+1. **Inspect the project:** routes, controllers, models, views, translation files, JavaScript, forms, checkout, authentication and course access.
+2. **Read the real data:** categories, courses, levels, prices and company details from the database.
+3. **Understand each page's purpose** before writing it.
+4. **Write fresh, universal content** following the golden rules in section 2.
+5. **Create new translation keys** for all languages.
+6. **Update views** to use the new keys.
+7. **Set tab titles** to plain page names only.
+8. **Localize JavaScript and validation messages.**
+9. **Write the Terms & Conditions and all three policy pages** with headings, paragraphs and bullet points.
+10. **Set the newsletter success message** exactly as defined.
+11. **Write SEO metadata** for each page.
+12. **Check that every link** points to a real route.
+13. **Delete unused translation keys** and confirm they are no longer referenced.
 
-The goal is:
+---
 
-```text
-EXISTING DATABASE
-        ↓
-   DO NOT CHANGE
-        ↓
-EXISTING APPLICATION LOGIC
-        ↓
-   PRESERVE
-        ↓
-NEW MANAGENOVAX CONTENT
-        ↓
-NEW TRANSLATION KEYS
-        ↓
-NEW UI / PRESENTATION
-```
+## 29. Final QA Checklist
 
-The website should look and read like a completely refreshed ManageNovaX platform while continuing to operate on the **same database structure, same internal records, same IDs, same relationships, and same existing data**.
+- [ ] Tab titles are plain page names with no website name or extra text
+- [ ] No placeholders or inserted keywords, except `:company`, `:email`, `:address` and `:phone`
+- [ ] Company name, email, address and phone come only from the `miscs` table
+- [ ] Dummy values are exactly `[Company Name]`, `[Company Email]`, `[Company Address]` and `[Company Phone]`, stored only in the lang files
+- [ ] Every form field has a label, placeholder and specific validation messages
+- [ ] Server-side and client-side validation messages match and are localized
+- [ ] Credits are called "credits" everywhere, with prices and balances from the database
+- [ ] Checkout shows the billing descriptor text followed by the DBA image
+- [ ] Content is universal and fits any e-learning subject
+- [ ] Terms & Conditions, Privacy, Refund and Delivery pages are descriptive, with headings and bullet points
+- [ ] Newsletter success message is exactly `Thank you for subscribing`
+- [ ] Copyright company name comes from the `miscs` table and links to the home page
+- [ ] Translation keys are short and simple (`file.key`)
+- [ ] No fake promises anywhere
+- [ ] Every language is complete
+- [ ] No hardcoded customer-facing text in views or JavaScript
+- [ ] No unused translation keys
+- [ ] No fake claims
+- [ ] No broken links
+- [ ] All images have ALT text
+- [ ] Every page has SEO metadata
+- [ ] Database structure and data are unchanged
+- [ ] Checkout, payments, authentication and course access still work
+
+---
+
+## 30. Final Standard
+
+A visitor should quickly understand:
+
+1. What the platform offers
+2. What subjects and courses are available
+3. How skill levels differ
+4. How to choose and buy a course
+5. How to access purchased courses
+6. How refunds work
+7. How personal information is handled
+8. Where to get help
+
+The writing should be **simple enough to understand quickly and detailed enough to answer genuine learner questions**, with the same clear, professional quality on every e-learning website it is used for.

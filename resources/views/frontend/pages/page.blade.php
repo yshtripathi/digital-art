@@ -5,7 +5,7 @@
 @include('frontend.layouts.breadcrumb', [
     'title' => $page_data->page_title,
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
         ['name' => $page_data->page_title]
     ]
 ])
@@ -15,10 +15,10 @@
 
         {{-- Sidebar: table of contents (built from the article's h2 headings) + help --}}
         <aside class="pg-side">
-            <nav class="pg-toc" id="pgToc" aria-label="{{ __('managenovax.page.toc') }}" hidden>
+            <nav class="pg-toc" id="pgToc" aria-label="{{ __('frontend.page.toc') }}" hidden>
                 <div class="pg-toc__head">
-                    <span class="pg-toc__title">{{ __('managenovax.page.toc') }}</span>
-                    <span class="pg-toc__pct"><span id="pgPct">0</span>% {{ __('managenovax.page.progress') }}</span>
+                    <span class="pg-toc__title">{{ __('frontend.page.toc') }}</span>
+                    <span class="pg-toc__pct"><span id="pgPct">0</span>% {{ __('frontend.page.progress') }}</span>
                 </div>
                 <div class="pg-toc__bar"><span id="pgBar"></span></div>
                 <ol class="pg-toc__list" id="pgTocList"></ol>
@@ -26,9 +26,9 @@
 
             <div class="pg-help">
                 <span class="pg-help__icon" aria-hidden="true"><i class="fas fa-comments"></i></span>
-                <h2 class="pg-help__title">{{ __('managenovax.page.help_title') }}</h2>
-                <p class="pg-help__msg">{{ __('managenovax.page.help_msg') }}</p>
-                <a href="{{ route('contact') }}" class="pg-help__btn">{{ __('managenovax.page.help_btn') }} <i class="fas fa-arrow-right"></i></a>
+                <h2 class="pg-help__title">{{ __('frontend.page.help_title') }}</h2>
+                <p class="pg-help__msg">{{ __('frontend.page.help_text') }}</p>
+                <a href="{{ route('contact') }}" class="pg-help__btn">{{ __('frontend.page.help_btn') }} <i class="fas fa-arrow-right"></i></a>
             </div>
         </aside>
 
@@ -39,7 +39,7 @@
             </article>
 
             <a href="#top" class="pg-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">
-                <i class="fas fa-arrow-up"></i> {{ __('managenovax.page.back_top') }}
+                <i class="fas fa-arrow-up"></i> {{ __('frontend.page.to_top') }}
             </a>
         </div>
 

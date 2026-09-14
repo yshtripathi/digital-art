@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.auth.pwd_title'))
+@section('title', __('frontend.forgot.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('managenovax.auth.pwd_title'),
+    'title' => __('frontend.forgot.title'),
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
-        ['name' => __('managenovax.auth.pwd_title')]
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.forgot.title')]
     ]
 ])
 
@@ -37,48 +37,52 @@
                 </span>
             </div>
 
-            <p class="au-aside__headline">{{ __('managenovax.auth.pwd_title') }}</p>
+            <p class="au-aside__headline">{{ __('frontend.forgot.aside') }}</p>
         </aside>
 
         <div class="au-card">
             <div class="au-card__inner">
-                <span class="au-eyebrow">{{ __('managenovax.auth.pwd_badge') }}</span>
-                <h2 class="au-title">{{ __('managenovax.auth.pwd_title') }}</h2>
+                <span class="au-eyebrow">{{ __('frontend.forgot.label') }}</span>
+                <h2 class="au-title">{{ __('frontend.forgot.heading') }}</h2>
+
+                @if(session('status'))
+                    <div class="au-alert au-alert--success" role="status"><i class="fas fa-check-circle"></i> {{ __('frontend.forgot.sent') }}</div>
+                @endif
 
                 <form name="frmForgot" id="frmForgot" class="au-form" action="{{ route('password.email') }}" method="post" novalidate>
                     @csrf
 
                     <div class="au-field">
-                        <label class="au-label" for="email">{{ __('managenovax.auth.pwd_lbl_email') }}</label>
+                        <label class="au-label" for="email">{{ __('frontend.forgot.email') }}</label>
                         <div class="au-input">
                             <i class="fas fa-envelope au-input__icon" aria-hidden="true"></i>
-                            <input type="email" name="email" id="email" autocomplete="email" placeholder="{{ __('managenovax.auth.pwd_ph_email') }}" value="{{ old('email') }}" class="@error('email') is-invalid @enderror">
+                            <input type="email" name="email" id="email" autocomplete="email" placeholder="{{ __('frontend.forgot.email_ph') }}" value="{{ old('email') }}" class="@error('email') is-invalid @enderror">
                         </div>
                         @error('email') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
 
                     @if(env('CAPTCHA_ENABLED', true))
                         <div class="au-field">
-                            <label class="au-label" for="captcha">{{ __('managenovax.auth.pwd_lbl_sec') }}</label>
+                            <label class="au-label" for="captcha">{{ __('frontend.forgot.captcha') }}</label>
                             <div class="au-captcha @error('captcha') is-invalid @enderror">
-                                <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('managenovax.auth.pwd_ph_sec') }}">
+                                <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('frontend.forgot.captcha_ph') }}">
                                 <div class="au-captcha__img">@captcha</div>
-                                <button type="button" class="au-captcha__refresh" data-au-captcha aria-label="Refresh code"><i class="fas fa-sync-alt"></i></button>
+                                <button type="button" class="au-captcha__refresh" data-au-captcha aria-label="{{ __('frontend.forgot.refresh') }}"><i class="fas fa-sync-alt"></i></button>
                             </div>
-                            @error('captcha') <span class="au-error"><i class="fas fa-info-circle"></i> {{ __('managenovax.auth.pwd_err_sec') }}</span> @enderror
+                            @error('captcha') <span class="au-error"><i class="fas fa-info-circle"></i> {{ __('frontend.forgot.captcha_bad') }}</span> @enderror
                         </div>
                     @endif
 
                     <button type="submit" name="submit-form" class="au-submit">
-                        {{ __('managenovax.auth.pwd_btn') }} <i class="fas fa-paper-plane"></i>
+                        {{ __('frontend.forgot.submit') }} <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
 
-                <div class="au-divider">{{ __('managenovax.auth.pwd_or') }}</div>
+                <div class="au-divider">{{ __('frontend.forgot.or') }}</div>
 
                 <div class="au-alt">
-                    <span>{{ __('managenovax.auth.pwd_remember_prompt') }}</span>
-                    <a href="{{ route('login.form') }}">{{ __('managenovax.auth.pwd_signin_link') }}</a>
+                    <span>{{ __('frontend.forgot.remember') }}</span>
+                    <a href="{{ route('login.form') }}">{{ __('frontend.forgot.login') }}</a>
                 </div>
             </div>
         </div>
@@ -120,9 +124,12 @@
                 @endif
             },
             messages: {
-                email: "{{ __('managenovax.auth.pwd_req_email') }}",
+                email: {
+                    required: @json(__('frontend.forgot.email_req')),
+                    email: @json(__('frontend.forgot.email_valid'))
+                },
                 @if(env('CAPTCHA_ENABLED', true))
-                captcha: "{{ __('managenovax.auth.pwd_req_sec') }}"
+                captcha: @json(__('frontend.forgot.captcha_req'))
                 @endif
             }
         });

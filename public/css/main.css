@@ -4818,6 +4818,7 @@ a.cp-item__title:hover { text-decoration: underline; color: var(--color-midnight
     font-weight: var(--font-weight-medium);
 }
 .au-alert i { margin-top: 3px; }
+.au-alert--success { background: #e3f3e8; color: var(--color-success); }
 
 /* Fields */
 .au-form { display: grid; gap: 20px; }

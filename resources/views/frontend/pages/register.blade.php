@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.auth.reg_title'))
+@section('title', __('frontend.register.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('managenovax.auth.reg_title'),
+    'title' => __('frontend.register.title'),
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
-        ['name' => __('managenovax.auth.reg_title')]
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.register.title')]
     ]
 ])
 
@@ -37,52 +37,52 @@
                 </span>
             </div>
 
-            <p class="au-aside__headline">{{ __('managenovax.auth.reg_title') }}</p>
+            <p class="au-aside__headline">{{ __('frontend.register.aside') }}</p>
         </aside>
 
         <div class="au-card">
             <div class="au-card__inner">
-                <span class="au-eyebrow">{{ __('managenovax.auth.reg_badge') }}</span>
-                <h2 class="au-title">{{ __('managenovax.auth.reg_title') }}</h2>
+                <span class="au-eyebrow">{{ __('frontend.register.label') }}</span>
+                <h2 class="au-title">{{ __('frontend.register.heading') }}</h2>
 
                 <form name="frmRegister" id="frmRegister" class="au-form" action="{{ route('register.submit') }}" method="post" novalidate>
                     @csrf
 
                     <div class="au-field">
-                        <label class="au-label" for="name">{{ __('managenovax.auth.reg_lbl_name') }}</label>
+                        <label class="au-label" for="name">{{ __('frontend.register.name') }}</label>
                         <div class="au-input">
                             <i class="fas fa-user au-input__icon" aria-hidden="true"></i>
-                            <input type="text" name="name" id="name" autocomplete="name" placeholder="{{ __('managenovax.auth.reg_ph_name') }}" value="{{ old('name') }}" class="@error('name') is-invalid @enderror">
+                            <input type="text" name="name" id="name" autocomplete="name" placeholder="{{ __('frontend.register.name_ph') }}" value="{{ old('name') }}" class="@error('name') is-invalid @enderror">
                         </div>
                         @error('name') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
 
                     <div class="au-field">
-                        <label class="au-label" for="email">{{ __('managenovax.auth.reg_lbl_email') }}</label>
+                        <label class="au-label" for="email">{{ __('frontend.register.email') }}</label>
                         <div class="au-input">
                             <i class="fas fa-envelope au-input__icon" aria-hidden="true"></i>
-                            <input type="email" name="email" id="email" autocomplete="email" placeholder="{{ __('managenovax.auth.reg_ph_email') }}" value="{{ old('email') }}" class="@error('email') is-invalid @enderror">
+                            <input type="email" name="email" id="email" autocomplete="email" placeholder="{{ __('frontend.register.email_ph') }}" value="{{ old('email') }}" class="@error('email') is-invalid @enderror">
                         </div>
                         @error('email') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
 
                     <div class="au-row">
                         <div class="au-field">
-                            <label class="au-label" for="password">{{ __('managenovax.auth.reg_lbl_pass') }}</label>
+                            <label class="au-label" for="password">{{ __('frontend.register.password') }}</label>
                             <div class="au-input au-input--pass">
                                 <i class="fas fa-lock au-input__icon" aria-hidden="true"></i>
-                                <input type="password" name="password" id="password" autocomplete="new-password" placeholder="{{ __('managenovax.auth.reg_ph_pass') }}" class="@error('password') is-invalid @enderror">
-                                <button type="button" class="au-eye" data-au-toggle aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                                <input type="password" name="password" id="password" autocomplete="new-password" placeholder="{{ __('frontend.register.password_ph') }}" class="@error('password') is-invalid @enderror">
+                                <button type="button" class="au-eye" data-au-toggle data-show="{{ __('frontend.register.show') }}" data-hide="{{ __('frontend.register.hide') }}" aria-label="{{ __('frontend.register.show') }}" aria-pressed="false"><i class="fas fa-eye"></i></button>
                             </div>
                             @error('password') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                         </div>
 
                         <div class="au-field">
-                            <label class="au-label" for="password_confirmation">{{ __('managenovax.auth.reg_lbl_conf_pass') }}</label>
+                            <label class="au-label" for="password_confirmation">{{ __('frontend.register.confirm') }}</label>
                             <div class="au-input au-input--pass">
                                 <i class="fas fa-lock au-input__icon" aria-hidden="true"></i>
-                                <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="new-password" placeholder="{{ __('managenovax.auth.reg_ph_conf_pass') }}" class="@error('password_confirmation') is-invalid @enderror">
-                                <button type="button" class="au-eye" data-au-toggle aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                                <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="new-password" placeholder="{{ __('frontend.register.confirm_ph') }}" class="@error('password_confirmation') is-invalid @enderror">
+                                <button type="button" class="au-eye" data-au-toggle data-show="{{ __('frontend.register.show') }}" data-hide="{{ __('frontend.register.hide') }}" aria-label="{{ __('frontend.register.show') }}" aria-pressed="false"><i class="fas fa-eye"></i></button>
                             </div>
                             @error('password_confirmation') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                         </div>
@@ -90,26 +90,26 @@
 
                     @if(env('CAPTCHA_ENABLED', true))
                         <div class="au-field">
-                            <label class="au-label" for="captcha">{{ __('managenovax.auth.reg_lbl_sec') }}</label>
+                            <label class="au-label" for="captcha">{{ __('frontend.register.captcha') }}</label>
                             <div class="au-captcha @error('captcha') is-invalid @enderror">
-                                <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('managenovax.auth.reg_ph_sec') }}">
+                                <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('frontend.register.captcha_ph') }}">
                                 <div class="au-captcha__img">@captcha</div>
-                                <button type="button" class="au-captcha__refresh" data-au-captcha aria-label="Refresh code"><i class="fas fa-sync-alt"></i></button>
+                                <button type="button" class="au-captcha__refresh" data-au-captcha aria-label="{{ __('frontend.register.refresh') }}"><i class="fas fa-sync-alt"></i></button>
                             </div>
-                            @error('captcha') <span class="au-error"><i class="fas fa-info-circle"></i> {{ __('managenovax.auth.reg_err_sec') }}</span> @enderror
+                            @error('captcha') <span class="au-error"><i class="fas fa-info-circle"></i> {{ __('frontend.register.captcha_bad') }}</span> @enderror
                         </div>
                     @endif
 
                     <button type="submit" name="submit-form" class="au-submit">
-                        {{ __('managenovax.auth.reg_btn') }} <i class="fas fa-arrow-right"></i>
+                        {{ __('frontend.register.submit') }} <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
 
-                <div class="au-divider">{{ __('managenovax.auth.reg_or') }}</div>
+                <div class="au-divider">{{ __('frontend.register.or') }}</div>
 
                 <div class="au-alt">
-                    <span>{{ __('managenovax.auth.reg_exist_prompt') }}</span>
-                    <a href="{{ route('login.form') }}">{{ __('managenovax.auth.reg_signin_link') }}</a>
+                    <span>{{ __('frontend.register.have') }}</span>
+                    <a href="{{ route('login.form') }}">{{ __('frontend.register.login') }}</a>
                 </div>
             </div>
         </div>
@@ -145,28 +145,33 @@
                 }
             },
             rules: {
-                name: { required: true, minlength: 5 },
-                password: { required: true, minlength: 5 },
-                password_confirmation: { required: true, minlength: 5, equalTo: "#password" },
+                name: { required: true, minlength: 2 },
+                password: { required: true, minlength: 6 },
+                password_confirmation: { required: true, equalTo: "#password" },
                 email: { required: true, email: true },
                 @if(env('CAPTCHA_ENABLED', true))
                 captcha: "required"
                 @endif
             },
             messages: {
-                name: "{{ __('managenovax.auth.reg_req_name') }}",
+                name: {
+                    required: @json(__('frontend.register.name_req')),
+                    minlength: @json(__('frontend.register.name_min', ['min' => 2]))
+                },
                 password: {
-                    required: "{{ __('managenovax.auth.reg_req_pass') }}",
-                    minlength: "{{ __('managenovax.auth.reg_min_pass') }}"
+                    required: @json(__('frontend.register.password_req')),
+                    minlength: @json(__('frontend.register.password_min', ['min' => 6]))
                 },
                 password_confirmation: {
-                    required: "{{ __('managenovax.auth.reg_req_conf_pass') }}",
-                    minlength: "{{ __('managenovax.auth.reg_min_pass') }}",
-                    equalTo: "{{ __('managenovax.auth.reg_match_pass') }}"
+                    required: @json(__('frontend.register.confirm_req')),
+                    equalTo: @json(__('frontend.register.match'))
                 },
-                email: "{{ __('managenovax.auth.reg_req_email') }}",
+                email: {
+                    required: @json(__('frontend.register.email_req')),
+                    email: @json(__('frontend.register.email_valid'))
+                },
                 @if(env('CAPTCHA_ENABLED', true))
-                captcha: "{{ __('managenovax.auth.reg_req_sec') }}"
+                captcha: @json(__('frontend.register.captcha_req'))
                 @endif
             }
         });
@@ -182,6 +187,7 @@
         var show = input.type === 'password';
         input.type = show ? 'text' : 'password';
         btn.setAttribute('aria-pressed', show ? 'true' : 'false');
+        btn.setAttribute('aria-label', show ? btn.dataset.hide : btn.dataset.show);
         btn.querySelector('i').className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
     });
 

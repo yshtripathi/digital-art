@@ -1,15 +1,15 @@
 {{-- ==========================================================================
-     [Website Name] — Site Footer
+     Site Footer
      Lime newsletter card + maroon footer panel (see design and content/DESIGN.md).
      Styles: public/css/main.css
      JS hooks kept: .subscribe-form, input[type="email"], .suces_rinfo, .scroll-to-top.scroll-to-target
      ========================================================================== --}}
 @php
     $footerCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
-    $ftCompany = $misc['Company Name'] ?? __('managenovax.footer.company_fallback');
-    $ftPhone   = $misc['Company Phone'] ?? __('managenovax.footer.phone_fallback');
-    $ftEmail   = $misc['Company Email'] ?? __('managenovax.footer.email_fallback');
-    $ftAddress = $misc['Company Address'] ?? __('managenovax.footer.address_fallback');
+    $ftCompany = $misc['Company Name'] ?? __('frontend.company.name');
+    $ftPhone   = $misc['Company Phone'] ?? __('frontend.company.phone');
+    $ftEmail   = $misc['Company Email'] ?? __('frontend.company.email');
+    $ftAddress = $misc['Company Address'] ?? __('frontend.company.address');
 @endphp
 
 
@@ -19,19 +19,19 @@
         {{-- Newsletter --}}
         <section class="ft-news" aria-labelledby="ft-news-title">
             <div>
-                <span class="ft-news__eyebrow"><i class="fas fa-envelope-open-text"></i> {{ __('managenovax.footer.newsletter_btn') }}</span>
-                <h4 class="ft-news__title" id="ft-news-title">{{ __('managenovax.footer.newsletter_title') }}</h4>
-                <p class="ft-news__desc">{{ __('managenovax.footer.newsletter_desc') }}</p>
+                <span class="ft-news__eyebrow"><i class="fas fa-envelope-open-text"></i> {{ __('frontend.footer.news_label') }}</span>
+                <h4 class="ft-news__title" id="ft-news-title">{{ __('frontend.footer.news_title') }}</h4>
+                <p class="ft-news__desc">{{ __('frontend.footer.news_desc') }}</p>
             </div>
 
             <div class="ft-news__side">
-                <form class="ft-news__form subscribe-form">
-                    <input type="email" name="email" class="ft-news__input email" placeholder="{{ __('managenovax.footer.newsletter_ph') }}" aria-label="{{ __('managenovax.footer.newsletter_ph') }}" required>
+                <form class="ft-news__form subscribe-form" novalidate>
+                    <input type="email" name="email" class="ft-news__input email" placeholder="{{ __('frontend.footer.news_ph') }}" aria-label="{{ __('frontend.footer.news_ph') }}" required>
                     <button type="submit" class="ft-news__btn">
-                        {{ __('managenovax.footer.newsletter_btn') }} <i class="fas fa-arrow-right"></i>
+                        {{ __('frontend.footer.news_btn') }} <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
-                <p class="suces_rinfo" style="display: none;"><i class="fas fa-check"></i> {{ __('managenovax.footer.newsletter_success') }}</p>
+                <p class="suces_rinfo" style="display: none;"><i class="fas fa-check"></i> {{ __('frontend.footer.news_success') }}</p>
             </div>
         </section>
 
@@ -44,8 +44,8 @@
                     <a href="{{ route('home') }}" class="ft-brand__logo">
                         <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $ftCompany }}">
                     </a>
-                    <p class="ft-brand__desc">{{ __('managenovax.footer.brand_desc') }}</p>
-                    <ul class="ft-contact">
+                    <p class="ft-brand__desc">{{ __('frontend.footer.about') }}</p>
+                    <ul class="ft-contact" aria-label="{{ __('frontend.footer.contact') }}">
                         <li>
                             <span class="ft-contact__item">
                                 <span class="ft-contact__icon"><i class="fas fa-building"></i></span>
@@ -74,42 +74,42 @@
                 </div>
 
                 {{-- Categories --}}
-                <nav aria-label="{{ __('managenovax.footer.categories') }}">
-                    <h5 class="ft-col__title">{{ __('managenovax.footer.categories') }}</h5>
+                <nav aria-label="{{ __('frontend.footer.categories') }}">
+                    <h5 class="ft-col__title">{{ __('frontend.footer.categories') }}</h5>
                     <ul class="ft-links">
                         @forelse($footerCategories as $cat)
                             <li><a href="{{ route('product-lists', $cat->slug) }}" class="ft-link">{{ $cat->title }}</a></li>
                         @empty
-                            <li><span class="ft-links__empty">{{ __('managenovax.header.no_categories') }}</span></li>
+                            <li><span class="ft-links__empty">{{ __('frontend.footer.no_categories') }}</span></li>
                         @endforelse
                     </ul>
                 </nav>
 
                 {{-- Company & account --}}
-                <nav aria-label="{{ __('managenovax.footer.company_account') }}">
-                    <h5 class="ft-col__title">{{ __('managenovax.footer.company_account') }}</h5>
+                <nav aria-label="{{ __('frontend.footer.company') }}">
+                    <h5 class="ft-col__title">{{ __('frontend.footer.company') }}</h5>
                     <ul class="ft-links">
-                        <li><a href="{{ route('product-lists') }}" class="ft-link">{{ __('managenovax.footer.courses') }}</a></li>
-                        <li><a href="{{ route('about-us') }}" class="ft-link">{{ __('managenovax.footer.about') }}</a></li>
-                        <li><a href="{{ route('contact') }}" class="ft-link">{{ __('managenovax.footer.contact') }}</a></li>
+                        <li><a href="{{ route('product-lists') }}" class="ft-link">{{ __('frontend.footer.all_courses') }}</a></li>
+                        <li><a href="{{ route('about-us') }}" class="ft-link">{{ __('frontend.footer.about_us') }}</a></li>
+                        <li><a href="{{ route('contact') }}" class="ft-link">{{ __('frontend.footer.contact_us') }}</a></li>
                         @if(Auth::check())
-                            <li><a href="{{ route('user') }}" class="ft-link">{{ __('managenovax.footer.my_account') }}</a></li>
-                            <li><a href="{{ route('user.logout') }}" class="ft-link">{{ __('managenovax.footer.logout') }}</a></li>
+                            <li><a href="{{ route('user') }}" class="ft-link">{{ __('frontend.footer.my_account') }}</a></li>
+                            <li><a href="{{ route('user.logout') }}" class="ft-link">{{ __('frontend.footer.logout') }}</a></li>
                         @else
-                            <li><a href="{{ route('login.form') }}" class="ft-link">{{ __('managenovax.footer.login') }}</a></li>
-                            <li><a href="{{ route('register.form') }}" class="ft-link">{{ __('managenovax.footer.register') }}</a></li>
+                            <li><a href="{{ route('login.form') }}" class="ft-link">{{ __('frontend.footer.login') }}</a></li>
+                            <li><a href="{{ route('register.form') }}" class="ft-link">{{ __('frontend.footer.register') }}</a></li>
                         @endif
                     </ul>
                 </nav>
 
                 {{-- Policies --}}
-                <nav aria-label="{{ __('managenovax.footer.policies') }}">
-                    <h5 class="ft-col__title">{{ __('managenovax.footer.policies') }}</h5>
+                <nav aria-label="{{ __('frontend.footer.policies') }}">
+                    <h5 class="ft-col__title">{{ __('frontend.footer.policies') }}</h5>
                     <ul class="ft-links">
-                        <li><a href="{{ route('pages','terms-conditions') }}" class="ft-link">{{ __('managenovax.footer.terms') }}</a></li>
-                        <li><a href="{{ route('pages','privacy-policy') }}" class="ft-link">{{ __('managenovax.footer.privacy') }}</a></li>
-                        <li><a href="{{ route('pages','refund-policy') }}" class="ft-link">{{ __('managenovax.footer.refund') }}</a></li>
-                        <li><a href="{{ route('pages','delivery-policy') }}" class="ft-link">{{ __('managenovax.footer.delivery') }}</a></li>
+                        <li><a href="{{ route('pages','terms-conditions') }}" class="ft-link">{{ __('frontend.footer.terms') }}</a></li>
+                        <li><a href="{{ route('pages','privacy-policy') }}" class="ft-link">{{ __('frontend.footer.privacy') }}</a></li>
+                        <li><a href="{{ route('pages','refund-policy') }}" class="ft-link">{{ __('frontend.footer.refund') }}</a></li>
+                        <li><a href="{{ route('pages','delivery-policy') }}" class="ft-link">{{ __('frontend.footer.delivery') }}</a></li>
                     </ul>
                 </nav>
             </div>
@@ -118,10 +118,10 @@
 
             <div class="ft-bottom">
                 <div>
-                    {!! __('managenovax.footer.copyright', ['year' => date('Y'), 'company' => '<a href="' . route('home') . '">' . e($ftCompany) . '</a>']) !!}
+                    &copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $ftCompany }}</a>. {{ __('frontend.footer.rights') }}
                 </div>
                 <div class="ft-pay">
-                    <img src="{{ asset('assets/images/payment.webp') }}" alt="Payment Methods">
+                    <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.payments') }}">
                 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
 </div><!-- End Page Wrapper -->
 
 <!-- Scroll To Top (JS: .scroll-to-target) -->
-<div class="scroll-to-top scroll-to-target ft-top" data-target="html" role="button" tabindex="0" aria-label="Back to top"><span class="fa fa-arrow-up"></span></div>
+<div class="scroll-to-top scroll-to-target ft-top" data-target="html" role="button" tabindex="0" aria-label="{{ __('frontend.footer.to_top') }}"><span class="fa fa-arrow-up"></span></div>
 
 <script src="{{url('assets/js/jquery.js')}}"></script>
 <script src="{{url('assets/js/popper.min.js')}}"></script>
@@ -172,6 +172,11 @@
     $(".suces_rinfo").hide();
     var subTimer;
 
+    // Clear the custom validation message while the user edits the email
+    $(".subscribe-form").on('input', 'input[type="email"]', function(){
+        this.setCustomValidity('');
+    });
+
     $(".subscribe-form").on('submit', function(event){
         event.preventDefault();
 
@@ -181,7 +186,8 @@
         var isValid = value !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
         if (!isValid) {
-            if ($email[0] && $email[0].reportValidity) {
+            if ($email[0] && $email[0].setCustomValidity) {
+                $email[0].setCustomValidity(@json(__('frontend.footer.news_invalid')));
                 $email[0].reportValidity();
             }
             $email.trigger('focus');

@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.cart.title'))
+@section('title', __('frontend.cart.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('managenovax.cart.title'),
+    'title' => __('frontend.cart.title'),
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
-        ['name' => __('managenovax.cart.title')]
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.cart.title')]
     ]
 ])
 
@@ -28,14 +28,14 @@
                 {{-- Items --}}
                 <div class="cp-items">
                     <div class="cp-items__head">
-                        <h2 class="cp-items__title">{{ __('managenovax.cart.title') }}</h2>
-                        <span class="cp-count">{{ count($cartItems) }} {{ __('managenovax.cart.item_count') }}</span>
+                        <h2 class="cp-items__title">{{ __('frontend.cart.items_title') }}</h2>
+                        <span class="cp-count">{{ trans_choice('frontend.cart.items', count($cartItems), ['count' => count($cartItems)]) }}</span>
                     </div>
 
                     <ul class="cp-list">
                         @foreach($cartItems as $cart)
                             @php
-                                $item_title = __('managenovax.cart.item_topup');
+                                $item_title = __('frontend.cart.package');
                                 $item_link = '#';
                                 $item_photo = null;
                                 if($cart->product) {
@@ -57,7 +57,7 @@
 
                                 <div class="cp-item__body">
                                     <span class="cp-tag {{ $cart->product ? 'cp-tag--course' : 'cp-tag--credit' }}">
-                                        {{ $cart->product ? __('managenovax.cart.tag_course') : __('managenovax.cart.tag_credit') }}
+                                        {{ $cart->product ? __('frontend.cart.tag_course') : __('frontend.cart.tag_credits') }}
                                     </span>
                                     @if($cart->product)
                                         <a href="{{ $item_link }}" class="cp-item__title">{{ $item_title }}</a>
@@ -67,18 +67,18 @@
 
                                     <div class="cp-item__meta">
                                         <span class="cp-meta">
-                                            <span class="cp-meta__label">{{ __('managenovax.cart.lbl_pts') }}</span>
+                                            <span class="cp-meta__label">{{ __('frontend.cart.credits') }}</span>
                                             <span class="cp-meta__value"><i class="fas fa-coins"></i> {{ number_format($cart->points) }}</span>
                                         </span>
                                         <span class="cp-meta">
-                                            <span class="cp-meta__label">{{ __('managenovax.cart.lbl_amt') }}</span>
+                                            <span class="cp-meta__label">{{ __('frontend.cart.amount') }}</span>
                                             <span class="cp-meta__value">{{ $sym }}{{ number_format($cart['price'], $isJPY ? 0 : 2) }}</span>
                                         </span>
                                     </div>
                                 </div>
 
-                                <a href="{{ route('cart-delete', $cart->id) }}" class="cp-item__remove" aria-label="{{ __('managenovax.cart.btn_del') }}: {{ $item_title }}">
-                                    <i class="fas fa-trash-alt"></i><span>{{ __('managenovax.cart.btn_del') }}</span>
+                                <a href="{{ route('cart-delete', $cart->id) }}" class="cp-item__remove" aria-label="{{ __('frontend.cart.remove') }}: {{ $item_title }}">
+                                    <i class="fas fa-trash-alt"></i><span>{{ __('frontend.cart.remove') }}</span>
                                 </a>
                             </li>
                         @endforeach
@@ -87,11 +87,11 @@
 
                 {{-- Summary --}}
                 <aside class="cp-summary">
-                    <h2 class="cp-summary__title"><i class="fas fa-receipt"></i> {{ __('managenovax.cart.box_summary') }}</h2>
+                    <h2 class="cp-summary__title"><i class="fas fa-receipt"></i> {{ __('frontend.cart.summary') }}</h2>
 
                     <div class="cp-summary__rows">
                         <div class="cp-summary__row">
-                            <span>{{ __('managenovax.cart.item_count') }}</span>
+                            <span>{{ __('frontend.cart.item_count') }}</span>
                             <span>{{ count($cartItems) }}</span>
                         </div>
 
@@ -99,31 +99,31 @@
 
                         @if($discount > 0)
                             <div class="cp-summary__row cp-summary__row--discount">
-                                <span>{{ __('managenovax.cart.box_promo') }}</span>
+                                <span>{{ __('frontend.cart.discount') }}</span>
                                 <span>&minus; {{ $sym }}{{ number_format($discount, $isJPY ? 0 : 2) }}</span>
                             </div>
                         @endif
                     </div>
 
                     <div class="cp-summary__total">
-                        <span>{{ __('managenovax.cart.box_total') }}</span>
+                        <span>{{ __('frontend.cart.total') }}:</span>
                         <strong>{{ $sym }}{{ number_format($total_amount, $isJPY ? 0 : 2) }}</strong>
                     </div>
 
                     <a href="{{ route('checkout') }}" class="cp-btn cp-btn--lime">
-                        {{ __('managenovax.cart.btn_pay') }} <i class="fas fa-arrow-right"></i>
+                        {{ __('frontend.cart.checkout') }} <i class="fas fa-arrow-right"></i>
                     </a>
 
                     @if(Helper::totalCartPoints() > 0)
                         <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--outline">
-                            <i class="fas fa-arrow-left"></i> {{ __('managenovax.cart.btn_shop') }}
+                            <i class="fas fa-arrow-left"></i> {{ __('frontend.cart.browse') }}
                         </a>
                     @endif
 
-                    <p class="cp-summary__trust"><i class="fas fa-shield-alt"></i> {{ __('managenovax.credits.trust_msg') }}</p>
+                    <p class="cp-summary__trust"><i class="fas fa-shield-alt"></i> {{ __('frontend.cart.secure') }}</p>
 
                     <div class="cp-summary__pay">
-                        <img src="{{ asset('assets/images/payment.webp') }}" alt="Payment methods">
+                        <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.cart.payments') }}">
                     </div>
                 </aside>
 
@@ -138,14 +138,14 @@
                     <span class="cp-empty__dot cp-empty__dot--2"></span>
                     <span class="cp-empty__dot cp-empty__dot--3"></span>
                 </div>
-                <h2 class="cp-empty__title">{{ __('managenovax.cart.mt_heading') }}</h2>
-                <p class="cp-empty__desc">{{ __('managenovax.cart.mt_desc') }}</p>
+                <h2 class="cp-empty__title">{{ __('frontend.cart.empty_title') }}</h2>
+                <p class="cp-empty__desc">{{ __('frontend.cart.empty_desc') }}</p>
                 <div class="cp-empty__actions">
                     <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--dark">
-                        <i class="fas fa-graduation-cap"></i> {{ __('managenovax.cart.btn_shop') }}
+                        <i class="fas fa-graduation-cap"></i> {{ __('frontend.cart.empty_courses') }}
                     </a>
                     <a href="{{ route('points.topup') }}" class="cp-btn cp-btn--lime">
-                        <i class="fas fa-coins"></i> {{ __('managenovax.credits.pg_title') }}
+                        <i class="fas fa-coins"></i> {{ __('frontend.cart.empty_credits') }}
                     </a>
                 </div>
             </div>

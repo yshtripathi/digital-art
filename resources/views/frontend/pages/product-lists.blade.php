@@ -4,14 +4,14 @@
     @section('title', $category->title)
     @section('description', $category->summary)
 @else
-    @section('title', __('managenovax.catalog.browse'))
-    @section('description', __('managenovax.catalog.browse'))
+    @section('title', __('frontend.catalog.title'))
+    @section('description', __('frontend.catalog.description'))
 @endif
 
 @section('main-content')
 @php
     $isCat = isset($category->title) && $category->title;
-    $bcTitle = $isCat ? $category->title : __('managenovax.catalog.browse');
+    $bcTitle = $isCat ? $category->title : __('frontend.catalog.title');
     $allCategories = \App\Models\Category::where('status','active')
         ->where('is_parent',1)
         ->orderBy('title','ASC')
@@ -24,8 +24,8 @@
     $bcData = [
         'title' => $bcTitle,
         'links' => [
-            ['name' => __('managenovax.header.home'), 'url' => route('home')],
-            ['name' => __('managenovax.catalog.title'), 'url' => route('product-lists')],
+            ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+            ['name' => __('frontend.catalog.title'), 'url' => route('product-lists')],
             ['name' => $bcTitle]
         ],
     ];
@@ -42,14 +42,14 @@
         {{-- Intro + category navigation --}}
         <div class="pl-intro">
             <div class="pl-intro__text">
-                <span class="pl-intro__count"><strong>{{ $totalCourses }}</strong> {{ __('managenovax.catalog.items') }}</span>
-                <p class="pl-intro__desc">{{ $isCat && $category->summary ? $category->summary : __('managenovax.catalog.explore_desc') }}</p>
+                <span class="pl-intro__count"><strong>{{ $totalCourses }}</strong> {{ trans_choice('frontend.catalog.count', $totalCourses) }}</span>
+                <p class="pl-intro__desc">{{ $isCat && $category->summary ? $category->summary : __('frontend.catalog.intro') }}</p>
             </div>
 
             @if($allCategories->count())
-                <nav class="pl-cats" aria-label="{{ __('managenovax.header.categories') }}">
+                <nav class="pl-cats" aria-label="{{ __('frontend.catalog.cats_label') }}">
                     <a href="{{ route('product-lists') }}" class="pl-cats__pill {{ $isCat ? '' : 'is-active' }}">
-                        <i class="fas fa-th-large"></i> {{ __('managenovax.catalog.all') }}
+                        <i class="fas fa-th-large"></i> {{ __('frontend.catalog.all') }}
                     </a>
                     @foreach($allCategories as $cat)
                         <a href="{{ route('product-lists', $cat->slug) }}" class="pl-cats__pill {{ $isCat && $category->id == $cat->id ? 'is-active' : '' }}">
@@ -65,18 +65,18 @@
             <div class="pl-toolbar">
                 <label class="pl-search">
                     <i class="fas fa-search" aria-hidden="true"></i>
-                    <input type="search" id="plSearch" placeholder="{{ __('managenovax.catalog.search_ph') }}" aria-label="{{ __('managenovax.catalog.search_ph') }}">
+                    <input type="search" id="plSearch" placeholder="{{ __('frontend.catalog.search_ph') }}" aria-label="{{ __('frontend.catalog.search_label') }}">
                 </label>
 
                 <div class="pl-toolbar__right">
-                    <span class="pl-showing" id="plShowing">{{ __('managenovax.catalog.showing') }} <strong>{{ $products->count() }}</strong></span>
+                    <span class="pl-showing" id="plShowing">{{ __('frontend.catalog.showing') }} <strong>{{ $products->count() }}</strong></span>
                     <label class="pl-sort">
-                        <span>{{ __('managenovax.catalog.sort_label') }}</span>
+                        <span>{{ __('frontend.catalog.sort') }}</span>
                         <select id="plSort">
-                            <option value="default">{{ __('managenovax.catalog.sort_default') }}</option>
-                            <option value="az">{{ __('managenovax.catalog.sort_az') }}</option>
-                            <option value="low">{{ __('managenovax.catalog.sort_low') }}</option>
-                            <option value="high">{{ __('managenovax.catalog.sort_high') }}</option>
+                            <option value="default">{{ __('frontend.catalog.sort_default') }}</option>
+                            <option value="az">{{ __('frontend.catalog.sort_az') }}</option>
+                            <option value="low">{{ __('frontend.catalog.sort_low') }}</option>
+                            <option value="high">{{ __('frontend.catalog.sort_high') }}</option>
                         </select>
                         <i class="fas fa-chevron-down" aria-hidden="true"></i>
                     </label>
@@ -107,7 +107,7 @@
 
                             <div class="pl-card__body">
                                 @if($levelCount)
-                                    <span class="pl-card__levels"><i class="fas fa-signal"></i> {{ $levelCount }} {{ __('managenovax.catalog.levels_label') }}</span>
+                                    <span class="pl-card__levels"><i class="fas fa-signal"></i> {{ trans_choice('frontend.catalog.levels', $levelCount, ['count' => $levelCount]) }}</span>
                                 @endif
                                 <h3 class="pl-card__title">{{ $course->title }}</h3>
                                 @if($course->summary)
@@ -117,14 +117,14 @@
                                 <div class="pl-card__foot">
                                     @if($levelCount)
                                         <span class="pl-card__price">
-                                            <small>{{ __('managenovax.catalog.starting_from') }}</small>
+                                            <small>{{ __('frontend.catalog.from') }}</small>
                                             <strong><i class="fas fa-coins"></i> {{ number_format($minPoints) }}</strong>
-                                            <small>{{ __('managenovax.catalog.credits_label') }}</small>
+                                            <small>{{ __('frontend.catalog.credits') }}</small>
                                         </span>
                                     @else
-                                        <span class="pl-card__price"><strong class="pl-card__free">{{ __('managenovax.catalog.free_label') }}</strong></span>
+                                        <span class="pl-card__price"><strong class="pl-card__free">{{ __('frontend.catalog.no_levels') }}</strong></span>
                                     @endif
-                                    <span class="pl-card__go" aria-label="{{ __('managenovax.catalog.view_btn') }}"><i class="fas fa-arrow-right"></i></span>
+                                    <span class="pl-card__go" aria-hidden="true" title="{{ __('frontend.catalog.view') }}"><i class="fas fa-arrow-right"></i></span>
                                 </div>
                             </div>
                         </a>
@@ -134,17 +134,17 @@
 
             <div class="pl-nomatch" id="plNoMatch" hidden>
                 <i class="fas fa-search"></i>
-                <p>{{ __('managenovax.catalog.no_match') }}</p>
-                <button type="button" class="pl-btn pl-btn--dark" id="plClear">{{ __('managenovax.catalog.clear') }}</button>
+                <p>{{ __('frontend.catalog.no_match') }}</p>
+                <button type="button" class="pl-btn pl-btn--dark" id="plClear">{{ __('frontend.catalog.clear') }}</button>
             </div>
 
             {{-- Pagination --}}
             @if($isPaginator && $products->hasPages())
-                <nav class="pl-pages" aria-label="Pagination">
+                <nav class="pl-pages" aria-label="{{ __('frontend.catalog.pagination') }}">
                     @if($products->onFirstPage())
-                        <span class="pl-pages__btn is-disabled"><i class="fas fa-arrow-left"></i> {{ __('managenovax.catalog.prev') }}</span>
+                        <span class="pl-pages__btn is-disabled"><i class="fas fa-arrow-left"></i> {{ __('frontend.catalog.prev') }}</span>
                     @else
-                        <a href="{{ $products->previousPageUrl() }}" class="pl-pages__btn"><i class="fas fa-arrow-left"></i> {{ __('managenovax.catalog.prev') }}</a>
+                        <a href="{{ $products->previousPageUrl() }}" class="pl-pages__btn"><i class="fas fa-arrow-left"></i> {{ __('frontend.catalog.prev') }}</a>
                     @endif
 
                     @if(method_exists($products, 'lastPage'))
@@ -160,9 +160,9 @@
                     @endif
 
                     @if($products->hasMorePages())
-                        <a href="{{ $products->nextPageUrl() }}" class="pl-pages__btn">{{ __('managenovax.catalog.next') }} <i class="fas fa-arrow-right"></i></a>
+                        <a href="{{ $products->nextPageUrl() }}" class="pl-pages__btn">{{ __('frontend.catalog.next') }} <i class="fas fa-arrow-right"></i></a>
                     @else
-                        <span class="pl-pages__btn is-disabled">{{ __('managenovax.catalog.next') }} <i class="fas fa-arrow-right"></i></span>
+                        <span class="pl-pages__btn is-disabled">{{ __('frontend.catalog.next') }} <i class="fas fa-arrow-right"></i></span>
                     @endif
                 </nav>
             @endif
@@ -175,10 +175,10 @@
                     <span class="cp-empty__dot cp-empty__dot--2"></span>
                     <span class="cp-empty__dot cp-empty__dot--3"></span>
                 </div>
-                <h2 class="cp-empty__title">{{ __('managenovax.catalog.no_products') }}</h2>
-                <p class="cp-empty__desc">{{ __('managenovax.catalog.explore_desc') }}</p>
+                <h2 class="cp-empty__title">{{ __('frontend.catalog.empty_title') }}</h2>
+                <p class="cp-empty__desc">{{ __('frontend.catalog.empty_desc') }}</p>
                 <div class="cp-empty__actions">
-                    <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--dark"><i class="fas fa-th-large"></i> {{ __('managenovax.catalog.all') }}</a>
+                    <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--dark"><i class="fas fa-th-large"></i> {{ __('frontend.catalog.all') }}</a>
                 </div>
             </div>
         @endif
@@ -186,7 +186,7 @@
         {{-- Category tiles --}}
         @if($allCategories->count())
             <div class="pl-other">
-                <h2 class="pl-other__title">{{ __('managenovax.catalog.other_cats') }}</h2>
+                <h2 class="pl-other__title">{{ __('frontend.catalog.other') }}</h2>
                 <ul class="pl-tiles">
                     @foreach($allCategories as $i => $cat)
                         <li>

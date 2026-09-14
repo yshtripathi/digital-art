@@ -51,7 +51,7 @@ How it works:
 2. The view fills the placeholder with the real value from the `miscs` table.
 3. If the database value is empty, the dummy value stored in the lang file is used instead.
 
-Dummy values live in the lang files, for example `lang/en/company.php`:
+Dummy values live in the `company` group of `resources/lang/en/frontend.php` and `resources/lang/ja/frontend.php`:
 
 ```php
 return [
@@ -67,7 +67,7 @@ The dummy values are exactly `[Company Name]`, `[Company Email]`, `[Company Addr
 Usage in a view:
 
 ```blade
-{{ __('contact.intro', ['email' => $misc->email ?: __('company.email')]) }}
+{{ __('frontend.contact.intro', ['email' => $misc['Company Email'] ?? __('frontend.company.email')]) }}
 ```
 
 Rules:
@@ -186,6 +186,18 @@ Avoid:
 - Sound natural to native readers.
 - Keep the same meaning and level of detail as English.
 - Every customer-facing English item must have a translated equivalent.
+- **No English left on the Japanese site.** This includes stock phrases such as "All Rights Reserved.", button labels, empty messages and short labels like "Menu", "Close", "Language" and "Currency".
+- **Hidden text is translated too:** image ALT text, `aria-label` values, `title` tooltips and JavaScript validation messages.
+- The only text that may stay the same in every language is data from the database (course titles, category names, company name, email, address and phone) , the language names themselves in the language switcher (`English`, `日本語`), and the country names in the checkout country dropdown (see section 19.13).
+
+Common stock phrases:
+
+| English | Japanese |
+|---|---|
+| All Rights Reserved. | 無断転載を禁じます。 |
+| Thank you for subscribing | ご登録ありがとうございます |
+| Back to top | ページの先頭へ戻る |
+| Accepted payment methods | ご利用いただけるお支払い方法 |
 
 ---
 
@@ -193,16 +205,58 @@ Avoid:
 
 - Every rewritten customer-facing text gets a new, logically named translation key.
 - Do not reuse old keys for new content.
-- Keep key names **short and simple**: one file per area and a short name for each key.
-- Use at most two parts (`file.key`). Do not use long nested chains or prefixes such as a brand or site name.
+- Keep key names **short and simple**. Do not use long names or prefixes such as a brand or site name.
+
+### 5.1 File structure
+
+All customer-facing website text lives in one file per language:
+
+```text
+resources/lang/en/frontend.php
+resources/lang/ja/frontend.php
+```
+
+- Both files always contain exactly the same keys.
+- Inside the file, text is grouped by the view it belongs to, with a comment naming that view.
+- Build the file **one view at a time**. Only add keys that the view actually uses. Do not fill the file with general text in advance.
+- Keys are three short parts: `frontend.group.key`.
+
+```php
+return [
+
+    // Dummy fallbacks, used only when the miscs table value is empty
+    'company' => [
+        'name'    => '[Company Name]',
+        'email'   => '[Company Email]',
+        'address' => '[Company Address]',
+        'phone'   => '[Company Phone]',
+    ],
+
+    // resources/views/frontend/layouts/footer.blade.php
+    'footer' => [
+        'news_title'   => 'Stay up to date with new courses',
+        'news_success' => 'Thank you for subscribing',
+        'rights'       => 'All Rights Reserved.',
+    ],
+
+];
+```
 
 | Too long | Use instead |
 |---|---|
-| `managenovax.home.hero_section_main_heading` | `home.title` |
-| `site.contact.form_submission_success_message` | `contact.success` |
-| `site.policy.refund.eligibility_section_title` | `refund.eligibility` |
-| `managenovax.footer.newsletter_subscribe_success` | `footer.subscribed` |
-| `managenovax.footer.copyright_all_rights_reserved` | `footer.rights` |
+| `managenovax.home.hero_section_main_heading` | `frontend.home.title` |
+| `site.contact.form_submission_success_message` | `frontend.contact.success` |
+| `site.policy.refund.eligibility_section_title` | `frontend.refund.eligibility` |
+| `managenovax.footer.newsletter_subscribe_success` | `frontend.footer.news_success` |
+| `managenovax.footer.copyright_all_rights_reserved` | `frontend.footer.rights` |
+
+### 5.2 Checks after each view
+
+- Every key used in the view exists in both language files.
+- Every key in the group is used by the view. Remove unused keys.
+- No hardcoded customer-facing text is left in the view, including ALT text, `aria-label`, `title` and JavaScript messages.
+- The view compiles without errors.
+
 - After replacing content, search the whole project for old keys, delete any that are no longer used, and search again to confirm.
 - Translation files must contain only keys that are actually used.
 
@@ -385,8 +439,8 @@ Then show the DBA image directly after the text.
 
 ```blade
 <p>
-    {{ __('checkout.billing') }}
-    <img src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('checkout.billing_alt') }}">
+    {{ __('frontend.checkout.billing') }}
+    <img src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('frontend.checkout.billing_alt') }}">
 </p>
 ```
 
@@ -727,15 +781,33 @@ Also include:
 - **Year:** generated dynamically, never hardcoded.
 - **Company name:** read from the `miscs` table in the database, never hardcoded.
 - **Link:** the company name is a link to the home page.
-- **Keep it simple:** just the year, company name and "All Rights Reserved." No taglines, slogans or extra sentences.
+- **Fallback:** if the company name is empty in the database, show `[Company Name]` from the lang file.
+- **Translated:** "All Rights Reserved." is translated on every language version of the site.
+- **Keep it simple:** just the year, company name and the rights phrase. No taglines, slogans or extra sentences.
+
+| Language | Result |
+|---|---|
+| English | `© 2026 Company Name. All Rights Reserved.` |
+| Japanese | `© 2026 Company Name. 無断転載を禁じます。` |
 
 Example:
 
 ```blade
-© {{ date('Y') }} <a href="{{ route('home') }}">{{ $misc->company_name }}</a>. {{ __('footer.rights') }}
+@php
+    $ftCompany = $misc['Company Name'] ?? __('frontend.company.name');
+@endphp
+
+&copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $ftCompany }}</a>. {{ __('frontend.footer.rights') }}
 ```
 
-Use the real `miscs` column name and home route name that exist in the project.
+Use the real `miscs` keys and home route name that exist in the project.
+
+### Other footer text
+
+- Newsletter: a short label, a clear title and a description explaining what subscribers receive.
+- The newsletter email error is translated. Add `novalidate` to the form so the browser's own English message is never shown, and show the translated message from JavaScript instead.
+- The payment methods image has translated ALT text.
+- The back-to-top button has a translated `aria-label`.
 
 ---
 
@@ -967,6 +1039,26 @@ The success message follows section 2.6 exactly.
 
 Card number, expiry and security code fields provided by the payment provider keep the provider's own placeholders and messages.
 
+#### Country dropdown
+
+- The dropdown lists **all countries and territories** (the full ISO 3166 list, about 250 entries), sorted alphabetically by name.
+- The options are written **directly in the checkout view** as `<option>` tags. Country names are **not** stored in the lang files.
+- Country names are shown in English on every language version of the site.
+- Only the first, empty option ("Choose your country") comes from the lang file, so it is translated.
+- Option values are two-letter country codes. Keep any existing values unchanged so saved orders still match (for example, this project uses `UK` for United Kingdom instead of `GB`).
+- Save the view as UTF-8 so names such as Åland Islands, Côte d'Ivoire and Réunion display correctly.
+
+```blade
+<select name="country" id="country" autocomplete="country">
+    <option value="">{{ __('frontend.checkout.country_ph') }}</option>
+    <option value="AF">Afghanistan</option>
+    <option value="AX">Åland Islands</option>
+    <option value="AL">Albania</option>
+    {{-- ...every other country... --}}
+    <option value="ZW">Zimbabwe</option>
+</select>
+```
+
 ### 19.14 Course Reviews (if supported)
 
 | Field | Placeholder |
@@ -995,7 +1087,7 @@ Card number, expiry and security code fields provided by the payment provider ke
 ### 19.16 Localization
 
 - Every placeholder and message above has a Japanese version (and a version for every other supported language) in the lang files.
-- Use short keys, for example `form.email`, `form.email_required`, `contact.success`, `checkout.payment_failed`.
+- Use short keys in `frontend.php`, for example `frontend.contact.email_ph`, `frontend.contact.success`, `frontend.checkout.failed`.
 - Only use the forms and fields that actually exist in the project. Skip any row marked "if supported" when the feature does not exist.
 
 ---

@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.cart.course_title'))
+@section('title', __('frontend.coursecart.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('managenovax.cart.course_title'),
+    'title' => __('frontend.coursecart.title'),
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
-        ['name' => __('managenovax.cart.course_title')]
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.coursecart.title')]
     ]
 ])
 
@@ -25,11 +25,11 @@
             <div class="cc-balance">
                 <span class="cc-balance__icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
                 <div class="cc-balance__text">
-                    <span class="cc-balance__label">{{ __('managenovax.cart.lbl_balance') }}</span>
-                    <span class="cc-balance__amt">{{ number_format($points) }} <small>{{ __('managenovax.cart.tag_credit') }}</small></span>
+                    <span class="cc-balance__label">{{ __('frontend.coursecart.balance') }}</span>
+                    <span class="cc-balance__amt">{{ number_format($points) }} <small>{{ __('frontend.coursecart.credits') }}</small></span>
                 </div>
                 <a href="{{ route('points.topup') }}" class="cp-btn cp-btn--lime cc-balance__btn">
-                    <i class="fas fa-plus"></i> {{ __('managenovax.credits.pg_title') }}
+                    <i class="fas fa-plus"></i> {{ __('frontend.coursecart.buy') }}
                 </a>
             </div>
 
@@ -45,14 +45,14 @@
                     {{-- Items --}}
                     <div class="cp-items">
                         <div class="cp-items__head">
-                            <h2 class="cp-items__title">{{ __('managenovax.cart.course_title') }}</h2>
-                            <span class="cp-count">{{ $itemCount }} {{ __('managenovax.cart.item_count') }}</span>
+                            <h2 class="cp-items__title">{{ __('frontend.coursecart.items_title') }}</h2>
+                            <span class="cp-count">{{ trans_choice('frontend.coursecart.items', $itemCount, ['count' => $itemCount]) }}</span>
                         </div>
 
                         <ul class="cp-list">
                             @foreach($cartItems as $cart)
                                 @php
-                                    $item_title = __('managenovax.cart.item_topup');
+                                    $item_title = __('frontend.coursecart.package');
                                     $item_photo = null;
                                     $item_link = '#';
                                     $is_course = false;
@@ -73,8 +73,8 @@
                                     }
 
                                     $lvl_slug = $level ? strtolower($level->skill_level) : '';
-                                    $lvl_key = $lvl_slug ? $lvl_slug . '_course' : '';
-                                    $lvl_label = ($level && Lang::has('managenovax.cart.' . $lvl_key)) ? __('managenovax.cart.' . $lvl_key) : ($level ? ucfirst($level->skill_level) : 'N/A');
+                                    $lvl_key = 'frontend.coursecart.levels.' . $lvl_slug;
+                                    $lvl_label = $level ? (Lang::has($lvl_key) ? __($lvl_key) : ucfirst($level->skill_level)) : null;
                                 @endphp
 
                                 <li class="cp-item">
@@ -90,11 +90,13 @@
 
                                     <div class="cp-item__body">
                                         @if($is_course)
-                                            <span class="cp-tag cc-level cc-level--{{ $lvl_slug ?: 'na' }}">
-                                                <i class="fas fa-signal"></i> {{ $lvl_label }}
-                                            </span>
+                                            @if($lvl_label)
+                                                <span class="cp-tag cc-level cc-level--{{ $lvl_slug }}">
+                                                    <i class="fas fa-signal"></i> {{ $lvl_label }}
+                                                </span>
+                                            @endif
                                         @else
-                                            <span class="cp-tag cp-tag--credit"><i class="fas fa-gift"></i> {{ __('managenovax.cart.item_topup') }}</span>
+                                            <span class="cp-tag cp-tag--credit"><i class="fas fa-gift"></i> {{ __('frontend.coursecart.package') }}</span>
                                         @endif
 
                                         @if($cart->product)
@@ -106,23 +108,23 @@
                                         <div class="cp-item__meta">
                                             @if($is_course)
                                                 <span class="cp-meta">
-                                                    <span class="cp-meta__label">{{ __('managenovax.cart.tag_credit') }}</span>
+                                                    <span class="cp-meta__label">{{ __('frontend.coursecart.price') }}</span>
                                                     <span class="cp-meta__value"><i class="fas fa-coins"></i> {{ number_format($cart->points) }}</span>
                                                 </span>
                                             @else
                                                 <span class="cp-meta">
-                                                    <span class="cp-meta__label">{{ __('managenovax.cart.lbl_amt') }}</span>
+                                                    <span class="cp-meta__label">{{ __('frontend.coursecart.amount') }}</span>
                                                     <span class="cp-meta__value">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2) }}</span>
                                                 </span>
                                                 <span class="cp-meta">
-                                                    <span class="cp-meta__value"><i class="fas fa-coins"></i> {{ number_format($cart->points) }} {{ __('managenovax.cart.tag_credit') }}</span>
+                                                    <span class="cp-meta__value"><i class="fas fa-coins"></i> {{ number_format($cart->points) }} {{ __('frontend.coursecart.credits') }}</span>
                                                 </span>
                                             @endif
                                         </div>
                                     </div>
 
-                                    <a href="{{ route('cart-delete', $cart->id) }}" class="cp-item__remove" aria-label="{{ __('managenovax.cart.btn_del') }}: {{ $item_title }}">
-                                        <i class="fas fa-trash-alt"></i><span>{{ __('managenovax.cart.btn_del') }}</span>
+                                    <a href="{{ route('cart-delete', $cart->id) }}" class="cp-item__remove" aria-label="{{ __('frontend.coursecart.remove') }}: {{ $item_title }}">
+                                        <i class="fas fa-trash-alt"></i><span>{{ __('frontend.coursecart.remove') }}</span>
                                     </a>
                                 </li>
                             @endforeach
@@ -131,48 +133,48 @@
 
                     {{-- Summary --}}
                     <aside class="cp-summary">
-                        <h2 class="cp-summary__title"><i class="fas fa-receipt"></i> {{ __('managenovax.cart.box_summary') }}</h2>
+                        <h2 class="cp-summary__title"><i class="fas fa-receipt"></i> {{ __('frontend.coursecart.summary') }}</h2>
 
                         <div class="cp-summary__rows">
                             <div class="cp-summary__row">
-                                <span>{{ __('managenovax.cart.item_count') }}</span>
+                                <span>{{ __('frontend.coursecart.item_count') }}</span>
                                 <span>{{ $itemCount }}</span>
                             </div>
                             <div class="cp-summary__row">
-                                <span>{{ __('managenovax.cart.lbl_balance') }}</span>
+                                <span>{{ __('frontend.coursecart.balance') }}</span>
                                 <span>{{ number_format($points) }}</span>
                             </div>
                         </div>
 
                         <div class="cp-summary__total">
-                            <span>{{ __('managenovax.cart.box_total') }}</span>
-                            <strong>{{ number_format($total_points) }} <small class="cc-unit">{{ __('managenovax.cart.tag_credit') }}</small></strong>
+                            <span>{{ __('frontend.coursecart.total') }}:</span>
+                            <strong>{{ number_format($total_points) }} <small class="cc-unit">{{ __('frontend.coursecart.credits') }}</small></strong>
                         </div>
 
                         <div class="cc-coverage {{ $remaining < 0 ? 'is-low' : '' }}">
                             <div class="cc-coverage__head">
-                                <span>{{ __('managenovax.cart.lbl_coverage') }}</span>
+                                <span>{{ __('frontend.coursecart.coverage') }}</span>
                                 <span>{{ $coverage }}%</span>
                             </div>
                             <div class="cc-coverage__bar"><span style="width: {{ $coverage }}%"></span></div>
                             <div class="cc-coverage__after">
-                                <span>{{ __('managenovax.cart.lbl_after') }}</span>
+                                <span>{{ __('frontend.coursecart.after') }}</span>
                                 <strong>{{ number_format($remaining) }}</strong>
                             </div>
                             @if($remaining < 0)
                                 <p class="cc-coverage__warn">
-                                    <i class="fas fa-exclamation-triangle"></i> {{ __('managenovax.cart.low_balance') }}
-                                    <a href="{{ route('points.topup') }}">{{ __('managenovax.credits.pg_title') }}</a>
+                                    <i class="fas fa-exclamation-triangle"></i> {{ __('frontend.coursecart.low') }}
+                                    <a href="{{ route('points.topup') }}">{{ __('frontend.coursecart.buy') }}</a>
                                 </p>
                             @endif
                         </div>
 
                         <form id="redeemPointsForm" action="{{ route('points.redeem') }}" method="POST">@csrf</form>
                         <button type="button" class="cp-btn cp-btn--lime cc-redeem" onclick="document.getElementById('redeemPointsForm').submit();">
-                            <i class="fas fa-lock"></i> {{ __('managenovax.cart.btn_redeem') }}
+                            <i class="fas fa-lock"></i> {{ __('frontend.coursecart.unlock') }}
                         </button>
                         <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--outline">
-                            <i class="fas fa-plus"></i> {{ __('managenovax.cart.btn_shop') }}
+                            <i class="fas fa-plus"></i> {{ __('frontend.coursecart.browse') }}
                         </a>
                     </aside>
                 </div>
@@ -185,11 +187,11 @@
                         <span class="cp-empty__dot cp-empty__dot--2"></span>
                         <span class="cp-empty__dot cp-empty__dot--3"></span>
                     </div>
-                    <h2 class="cp-empty__title">{{ __('managenovax.cart.mt_heading') }}</h2>
-                    <p class="cp-empty__desc">{{ __('managenovax.cart.mt_course_desc') }}</p>
+                    <h2 class="cp-empty__title">{{ __('frontend.coursecart.empty_title') }}</h2>
+                    <p class="cp-empty__desc">{{ __('frontend.coursecart.empty_desc') }}</p>
                     <div class="cp-empty__actions">
                         <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--dark">
-                            <i class="fas fa-graduation-cap"></i> {{ __('managenovax.cart.btn_shop') }}
+                            <i class="fas fa-graduation-cap"></i> {{ __('frontend.coursecart.empty_btn') }}
                         </a>
                     </div>
                 </div>
@@ -204,14 +206,14 @@
                     <span class="cp-empty__dot cp-empty__dot--2"></span>
                     <span class="cp-empty__dot cp-empty__dot--3"></span>
                 </div>
-                <h2 class="cp-empty__title">{{ __('managenovax.cart.auth_req') }}</h2>
-                <p class="cp-empty__desc">{{ __('managenovax.cart.auth_msg') }}</p>
+                <h2 class="cp-empty__title">{{ __('frontend.coursecart.auth_title') }}</h2>
+                <p class="cp-empty__desc">{{ __('frontend.coursecart.auth_desc') }}</p>
                 <div class="cp-empty__actions">
                     <a href="{{ route('login.form') }}" class="cp-btn cp-btn--lime">
-                        <i class="fas fa-sign-in-alt"></i> {{ __('managenovax.header.login') }}
+                        <i class="fas fa-sign-in-alt"></i> {{ __('frontend.coursecart.login') }}
                     </a>
                     <a href="{{ route('register.form') }}" class="cp-btn cp-btn--dark">
-                        <i class="fas fa-user-plus"></i> {{ __('managenovax.header.register') }}
+                        <i class="fas fa-user-plus"></i> {{ __('frontend.coursecart.register') }}
                     </a>
                 </div>
             </div>

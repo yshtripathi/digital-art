@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.credits.pg_title'))
+@section('title', __('frontend.topup.title'))
 
 @section('main-content')
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('managenovax.credits.pg_title'),
+    'title' => __('frontend.topup.title'),
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
-        ['name' => __('managenovax.credits.pg_title')]
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.topup.title')]
     ]
 ])
 
@@ -14,34 +14,34 @@
     $cur = session('currency');
     if ($cur == 'JPY') {
         $tiers = [
-            ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'&yen;1 - &yen;79,999',        'f'=>false],
-            ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'&yen;80,000 - &yen;159,999',  'f'=>false],
-            ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'&yen;160,000 - &yen;239,999', 'f'=>false],
-            ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'&yen;240,000+',           'f'=>true],
+            ['n'=>__('frontend.topup.tier1'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'&yen;1 - &yen;79,999',        'f'=>false],
+            ['n'=>__('frontend.topup.tier2'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'&yen;80,000 - &yen;159,999',  'f'=>false],
+            ['n'=>__('frontend.topup.tier3'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'&yen;160,000 - &yen;239,999', 'f'=>false],
+            ['n'=>__('frontend.topup.tier4'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'&yen;240,000+',           'f'=>true],
         ];
         $quick = [16000, 80000, 160000, 240000];
         $symbol = '&yen;';
-        $rateNote = __('managenovax.credits.jpy_note');
+        $rateNote = __('frontend.topup.rate_jpy');
     } elseif ($cur == 'HKD') {
         $tiers = [
-            ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
-            ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
-            ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
-            ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'HK$12,000+',           'f'=>true],
+            ['n'=>__('frontend.topup.tier1'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
+            ['n'=>__('frontend.topup.tier2'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
+            ['n'=>__('frontend.topup.tier3'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
+            ['n'=>__('frontend.topup.tier4'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'HK$12,000+',           'f'=>true],
         ];
         $quick = [800, 4000, 8000, 12000];
         $symbol = 'HK$';
-        $rateNote = __('managenovax.credits.hkd_note');
+        $rateNote = __('frontend.topup.rate_hkd');
     } else {
         $tiers = [
-            ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'$1 - $499',       'f'=>false],
-            ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'$500 - $999',     'f'=>false],
-            ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'$1,000 - $1,499', 'f'=>false],
-            ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'$1,500+',         'f'=>true],
+            ['n'=>__('frontend.topup.tier1'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'$1 - $499',       'f'=>false],
+            ['n'=>__('frontend.topup.tier2'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'$500 - $999',     'f'=>false],
+            ['n'=>__('frontend.topup.tier3'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'$1,000 - $1,499', 'f'=>false],
+            ['n'=>__('frontend.topup.tier4'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'$1,500+',         'f'=>true],
         ];
         $quick = [100, 500, 1000, 1500];
         $symbol = '$';
-        $rateNote = __('managenovax.credits.usd_note');
+        $rateNote = __('frontend.topup.rate_usd');
     }
 @endphp
 
@@ -50,10 +50,10 @@
 
         {{-- Intro strip --}}
         <div class="tu-intro">
-            <p class="tu-intro__desc">{{ __('managenovax.credits.pg_desc') }}</p>
+            <p class="tu-intro__desc">{{ __('frontend.topup.intro') }}</p>
             <div class="tu-intro__chips">
                 <span class="tu-chip"><i class="fas fa-exchange-alt"></i> {{ $rateNote }}</span>
-                <span class="tu-chip tu-chip--warn"><i class="fas fa-exclamation-circle"></i> <strong>{{ __('managenovax.credits.disclaimer_title') }}</strong> {{ __('managenovax.credits.disclaimer_text') }}</span>
+                <span class="tu-chip tu-chip--warn"><i class="fas fa-exclamation-circle"></i> <strong>{{ __('frontend.topup.note_title') }}</strong> {{ __('frontend.topup.note_text') }}</span>
             </div>
         </div>
 
@@ -62,8 +62,8 @@
             {{-- Pricing tiers --}}
             <div class="tu-tiers">
                 <div class="tu-tiers__head">
-                    <h2 class="tu-tiers__title">{{ __('managenovax.credits.table_title') }}</h2>
-                    <span class="tu-tiers__cols">{{ __('managenovax.credits.table_col1') }} · {{ __('managenovax.credits.table_col2') }} · {{ __('managenovax.credits.table_col3') }}</span>
+                    <h2 class="tu-tiers__title">{{ __('frontend.topup.tiers_title') }}</h2>
+                    <span class="tu-tiers__cols">{{ __('frontend.topup.tiers_cols') }}</span>
                 </div>
 
                 <ul class="tu-tiers__grid">
@@ -72,9 +72,9 @@
                             <div class="tu-tier__top">
                                 <span class="tu-tier__icon"><i class="fas {{ $t['i'] }}"></i></span>
                                 @if($t['f'])
-                                    <span class="tu-tier__badge">{{ __('managenovax.credits.best_value') }}</span>
+                                    <span class="tu-tier__badge">{{ __('frontend.topup.best') }}</span>
                                 @endif
-                                <span class="tu-tier__current"><i class="fas fa-check"></i> {{ __('managenovax.credits.your_tier') }}</span>
+                                <span class="tu-tier__current"><i class="fas fa-check"></i> {{ __('frontend.topup.current') }}</span>
                             </div>
                             <p class="tu-tier__mult">{{ $t['big'] }}</p>
                             <div class="tu-tier__meta">
@@ -91,21 +91,21 @@
                 <div class="tu-calc__head">
                     <span class="tu-calc__icon"><i class="fas fa-calculator"></i></span>
                     <div>
-                        <h2 class="tu-calc__title">{{ __('managenovax.credits.calc_title') }}</h2>
-                        <p class="tu-calc__desc">{{ __('managenovax.credits.calc_desc') }}</p>
+                        <h2 class="tu-calc__title">{{ __('frontend.topup.calc_title') }}</h2>
+                        <p class="tu-calc__desc">{{ __('frontend.topup.calc_desc') }}</p>
                     </div>
                 </div>
 
-                <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form tu-form">
+                <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form tu-form" novalidate>
                     @csrf
 
-                    <label class="tu-form__label" for="topup_amount">{{ __('managenovax.credits.calc_label') }}</label>
+                    <label class="tu-form__label" for="topup_amount">{{ __('frontend.topup.amount') }}</label>
                     <div class="tu-amount">
                         <span class="tu-amount__symbol">{!! $symbol !!}</span>
                         <input type="number" name="amount" id="topup_amount" class="tu-amount__input" placeholder="0" min="1" required inputmode="decimal">
                     </div>
 
-                    <span class="tu-form__label tu-form__label--sm">{{ __('managenovax.credits.quick_label') }}</span>
+                    <span class="tu-form__label tu-form__label--sm">{{ __('frontend.topup.quick') }}</span>
                     <div class="tu-quick">
                         @foreach($quick as $q)
                             <button type="button" class="tu-quick__btn" data-amount="{{ $q }}">{!! $symbol !!}{{ number_format($q) }}</button>
@@ -114,26 +114,26 @@
 
                     <div class="tu-stats">
                         <div class="tu-stats__row">
-                            <span>{{ __('managenovax.credits.calc_base') }}</span>
+                            <span>{{ __('frontend.topup.base') }}</span>
                             <span id="base_points">0</span>
                         </div>
                         <div class="tu-stats__row">
-                            <span>{{ __('managenovax.credits.calc_bonus') }}</span>
+                            <span>{{ __('frontend.topup.multiplier') }}</span>
                             <span class="tu-stats__mult" id="multiplier_display">x1</span>
                         </div>
                         <div class="tu-stats__total">
-                            <span class="tu-stats__total-label">{{ __('managenovax.credits.calc_total') }}</span>
+                            <span class="tu-stats__total-label">{{ __('frontend.topup.total') }}</span>
                             <span class="tu-stats__total-value"><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
                         </div>
                     </div>
 
                     <button type="submit" class="topup-btn tu-submit">
-                        <span>{{ __('managenovax.credits.calc_btn') }}</span>
+                        <span>{{ __('frontend.topup.submit') }}</span>
                         <i class="fas fa-arrow-right"></i>
                     </button>
 
                     <p class="tu-trust">
-                        <i class="fas fa-shield-alt"></i> {{ __('managenovax.credits.trust_msg') }}
+                        <i class="fas fa-shield-alt"></i> {{ __('frontend.topup.secure') }}
                     </p>
                 </form>
             </div>
@@ -142,25 +142,25 @@
 
         {{-- How it works --}}
         <div class="tu-how">
-            <h2 class="tu-how__title">{{ __('managenovax.credits.how_title') }}</h2>
+            <h2 class="tu-how__title">{{ __('frontend.topup.how_title') }}</h2>
             <ol class="tu-how__steps">
                 <li class="tu-step">
                     <span class="tu-step__num">01</span>
                     <span class="tu-step__icon"><i class="fas fa-hand-pointer"></i></span>
-                    <h3 class="tu-step__title">{{ __('managenovax.credits.step1_title') }}</h3>
-                    <p class="tu-step__desc">{{ __('managenovax.credits.step1_desc') }}</p>
+                    <h3 class="tu-step__title">{{ __('frontend.topup.step1_title') }}</h3>
+                    <p class="tu-step__desc">{{ __('frontend.topup.step1_desc') }}</p>
                 </li>
                 <li class="tu-step">
                     <span class="tu-step__num">02</span>
                     <span class="tu-step__icon"><i class="fas fa-lock"></i></span>
-                    <h3 class="tu-step__title">{{ __('managenovax.credits.step2_title') }}</h3>
-                    <p class="tu-step__desc">{{ __('managenovax.credits.step2_desc') }}</p>
+                    <h3 class="tu-step__title">{{ __('frontend.topup.step2_title') }}</h3>
+                    <p class="tu-step__desc">{{ __('frontend.topup.step2_desc') }}</p>
                 </li>
                 <li class="tu-step">
                     <span class="tu-step__num">03</span>
                     <span class="tu-step__icon"><i class="fas fa-graduation-cap"></i></span>
-                    <h3 class="tu-step__title">{{ __('managenovax.credits.step3_title') }}</h3>
-                    <p class="tu-step__desc">{{ __('managenovax.credits.step3_desc') }}</p>
+                    <h3 class="tu-step__title">{{ __('frontend.topup.step3_title') }}</h3>
+                    <p class="tu-step__desc">{{ __('frontend.topup.step3_desc') }}</p>
                 </li>
             </ol>
         </div>
@@ -213,6 +213,7 @@
         }
 
         amountInput.addEventListener('input', calculatePoints);
+        amountInput.addEventListener('input', function () { this.setCustomValidity(''); });
         amountInput.addEventListener('change', calculatePoints);
 
         // Topup (add to cart) - submit without redirect, then reload
@@ -220,11 +221,17 @@
         topupForms.forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
+                const amountField = form.querySelector('#topup_amount');
+                if (amountField && !((parseFloat(amountField.value) || 0) >= 1)) {
+                    amountField.setCustomValidity(@json(__('frontend.topup.amount_req')));
+                    amountField.reportValidity();
+                    return;
+                }
                 const submitBtn = form.querySelector('.topup-btn');
                 const originalBtnText = submitBtn.innerHTML;
                 const originalBtnState = submitBtn.disabled;
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + @json(__('frontend.topup.loading'));
 
                 fetch(form.action, { method: 'POST', body: new FormData(form), redirect: 'manual' })
                     .then(response => new Promise(resolve => setTimeout(() => resolve(response), 500)))

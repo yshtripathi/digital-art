@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.payment.success_title'))
+@section('title', __('frontend.success.title'))
 @php
     use App\Models\Order;
     $transaction_id = $transaction_id ?? null;
@@ -9,10 +9,10 @@
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('managenovax.payment.success_title'),
+    'title' => __('frontend.success.title'),
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
-        ['name' => __('managenovax.payment.success_title')]
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.success.title')]
     ]
 ])
 
@@ -31,17 +31,17 @@
                 <span class="rs-status__icon"><i class="fas fa-check"></i></span>
             </div>
 
-            <h2 class="rs-hero__title">{{ __('managenovax.payment.success_heading') }}</h2>
-            <p class="rs-hero__msg">{{ __('managenovax.payment.success_msg') }}</p>
+            <h2 class="rs-hero__title">{{ __('frontend.success.heading') }}</h2>
+            <p class="rs-hero__msg">{{ __('frontend.success.message') }}</p>
 
             <div class="rs-actions">
                 @if($order)
                     <a href="{{ route('user.order.show', $order->id) }}" class="rs-btn rs-btn--dark">
-                        <i class="fas fa-eye"></i> {{ __('managenovax.payment.success_view_order') }}
+                        <i class="fas fa-eye"></i> {{ __('frontend.success.view_order') }}
                     </a>
                 @endif
                 <a href="{{ route('home') }}" class="rs-btn rs-btn--outline">
-                    <i class="fas fa-home"></i> {{ __('managenovax.payment.success_home') }}
+                    <i class="fas fa-home"></i> {{ __('frontend.success.home') }}
                 </a>
             </div>
         </div>
@@ -56,10 +56,12 @@
                     default => '$',
                 };
                 $isPaid = in_array(strtolower((string) $order->payment_status), ['paid', 'completed', 'success']);
+                $statusKey = 'frontend.success.statuses.' . strtolower((string) $order->payment_status);
+                $statusText = Lang::has($statusKey) ? __($statusKey) : ucwords((string) $order->payment_status);
             @endphp
             <div class="rs-receipt">
                 <div class="rs-receipt__top">
-                    <span class="rs-receipt__label">{{ __('managenovax.payment.success_order_no') }}</span>
+                    <span class="rs-receipt__label">{{ __('frontend.success.order_no') }}</span>
                     <strong class="rs-receipt__number">{{ $order->order_number }}</strong>
                 </div>
 
@@ -67,29 +69,29 @@
 
                 <dl class="rs-receipt__rows">
                     <div class="rs-receipt__row rs-receipt__row--total">
-                        <dt>{{ __('managenovax.payment.success_amount') }}</dt>
+                        <dt>{{ __('frontend.success.amount') }}</dt>
                         <dd>{!! $currency !!}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</dd>
                     </div>
                     <div class="rs-receipt__row">
-                        <dt>{{ __('managenovax.payment.success_txn_id') }}</dt>
+                        <dt>{{ __('frontend.success.txn') }}</dt>
                         <dd class="rs-receipt__mono">{{ $transaction_id }}</dd>
                     </div>
                     <div class="rs-receipt__row">
-                        <dt>{{ __('managenovax.payment.success_status') }}</dt>
-                        <dd><span class="rs-pill {{ $isPaid ? 'rs-pill--ok' : 'rs-pill--wait' }}">{{ ucwords($order->payment_status) }}</span></dd>
+                        <dt>{{ __('frontend.success.status') }}</dt>
+                        <dd><span class="rs-pill {{ $isPaid ? 'rs-pill--ok' : 'rs-pill--wait' }}">{{ $statusText }}</span></dd>
                     </div>
                 </dl>
 
                 <a href="{{ route('order.pdf', $order->id) }}" class="rs-btn rs-btn--lime rs-btn--block">
-                    <i class="fas fa-download"></i> {{ __('managenovax.payment.success_invoice') }}
+                    <i class="fas fa-download"></i> {{ __('frontend.success.invoice') }}
                 </a>
 
                 @if($email_status == 'inactive')
                     <p class="rs-note">
                         <i class="fas fa-info-circle"></i>
                         <span>
-                            {{ __('managenovax.payment.success_note') }}
-                            <a href="{{ route('order.pdf', $order->id) }}">{{ __('managenovax.payment.success_invoice') }}</a>
+                            {{ __('frontend.success.no_email') }}
+                            <a href="{{ route('order.pdf', $order->id) }}">{{ __('frontend.success.invoice') }}</a>
                         </span>
                     </p>
                 @endif

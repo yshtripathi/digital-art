@@ -1,14 +1,12 @@
 @php
-    // Site identity — replace these placeholders when the platform gets its real name.
-    $siteName        = '[Website Name]';
-    $siteTagline     = 'Online Courses for Every Skill Level';
-    $siteDescription = '[Website Name] is an online learning platform with structured courses from Beginner to Expert. Learn new skills at your own pace, on any device, and enroll with simple credits.';
-    $siteKeywords    = 'online learning, e-learning, online courses, learn online, skill development, beginner to expert, self-paced courses, [Website Name]';
+    // Company name comes from the miscs table; the lang file holds the dummy fallback
+    $siteName    = $misc['Company Name'] ?? __('frontend.company.name');
 
     $locale      = str_replace('_', '-', app()->getLocale());
+    // Tab title is the plain page name only (no site name, no separators)
     $pageTitle   = trim(html_entity_decode($__env->yieldContent('title'), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
-    $fullTitle   = $pageTitle !== '' ? $pageTitle . ' | ' . $siteName : $siteName . ' – ' . $siteTagline;
-    $description = trim(html_entity_decode(strip_tags($__env->yieldContent('description')), ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?: $siteDescription;
+    $fullTitle   = $pageTitle !== '' ? $pageTitle : __('frontend.head.home');
+    $description = trim(html_entity_decode(strip_tags($__env->yieldContent('description')), ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?: __('frontend.head.description');
     $description = \Illuminate\Support\Str::limit(preg_replace('/\s+/', ' ', $description), 160, '…');
     $shareImage  = $og_image ?? asset('assets/images/breadcrumb.webp');
 @endphp
@@ -26,7 +24,6 @@
     <title>{{ $fullTitle }}</title>
     <meta name="title" content="{{ $fullTitle }}">
     <meta name="description" content="{{ $description }}">
-    <meta name="keywords" content="{{ $siteKeywords }}">
     <meta name="author" content="{{ $siteName }}">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ url()->current() }}">
@@ -71,7 +68,7 @@
 <div class="page-wrapper">
 
     {{-- Preloader (faded out by assets/js/script.js) --}}
-    <div id="preloader" role="status" aria-label="Loading">
+    <div id="preloader" role="status" aria-label="{{ __('frontend.head.loading') }}">
         <div class="pl">
             <div class="pl__bars" aria-hidden="true">
                 <span class="pl__bar"></span>

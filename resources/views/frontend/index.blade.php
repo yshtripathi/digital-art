@@ -21,7 +21,7 @@
         : ($hmCur == 'HKD'
             ? [['x1', '1', '3,999'], ['x1.5', '4,000', '7,999'], ['x2', '8,000', '11,999'], ['x2.5', '12,000', null]]
             : [['x1', '1', '499'], ['x1.5', '500', '999'], ['x2', '1,000', '1,499'], ['x2.5', '1,500', null]]);
-    $hmTierNames = [__('managenovax.credits.tier_standard'), __('managenovax.credits.tier_premium'), __('managenovax.credits.tier_elite'), __('managenovax.credits.tier_vip')];
+    $hmTierNames = [__('frontend.home.tier1'), __('frontend.home.tier2'), __('frontend.home.tier3'), __('frontend.home.tier4')];
 @endphp
 
 <div class="hm">
@@ -30,36 +30,36 @@
     <section class="hm-hero">
         <div class="hm-hero__inner">
             <div class="hm-hero__content">
-                <span class="hm-eyebrow">{{ __('managenovax.home.hero_eyebrow') }}</span>
-                <h1 class="hm-hero__title">{{ __('managenovax.home.hero_title') }}</h1>
-                <p class="hm-hero__desc">{{ __('managenovax.home.hero_desc') }}</p>
+                <span class="hm-eyebrow">{{ __('frontend.home.hero_label') }}</span>
+                <h1 class="hm-hero__title">{{ __('frontend.home.hero_title') }}</h1>
+                <p class="hm-hero__desc">{{ __('frontend.home.hero_desc') }}</p>
 
                 <form class="hm-search" action="{{ route('product-lists') }}" method="GET" role="search">
                     <i class="fas fa-search" aria-hidden="true"></i>
-                    <input type="search" name="q" placeholder="{{ __('managenovax.home.hero_search_ph') }}" aria-label="{{ __('managenovax.home.hero_search_ph') }}">
-                    <button type="submit">{{ __('managenovax.home.hero_search_btn') }}</button>
+                    <input type="search" name="q" placeholder="{{ __('frontend.home.search_ph') }}" aria-label="{{ __('frontend.home.search_label') }}">
+                    <button type="submit">{{ __('frontend.home.search_btn') }}</button>
                 </form>
 
                 <div class="hm-hero__actions">
-                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--dark">{{ __('managenovax.home.hero_btn_start') }} <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--dark">{{ __('frontend.home.hero_courses') }} <i class="fas fa-arrow-right"></i></a>
                     @auth
-                        <a href="{{ route('user') }}" class="hm-btn hm-btn--outline">{{ __('managenovax.home.hero_btn_account') }}</a>
+                        <a href="{{ route('user') }}" class="hm-btn hm-btn--outline">{{ __('frontend.home.hero_account') }}</a>
                     @else
-                        <a href="{{ route('register.form') }}" class="hm-btn hm-btn--outline">{{ __('managenovax.home.hero_btn_signup') }}</a>
+                        <a href="{{ route('register.form') }}" class="hm-btn hm-btn--outline">{{ __('frontend.home.hero_register') }}</a>
                     @endauth
                 </div>
             </div>
 
             <div class="hm-hero__media">
                 <div class="hm-hero__frame">
-                    <video class="hm-video" autoplay muted loop playsinline preload="metadata" poster="{{ asset('assets/images/home/hero-poster.webp') }}" aria-label="{{ __('managenovax.home.hero_title') }}">
+                    <video class="hm-video" autoplay muted loop playsinline preload="metadata" poster="{{ asset('assets/images/home/hero-poster.webp') }}" aria-label="{{ __('frontend.home.video_label') }}">
                         <source src="{{ asset('assets/videos/hero.webm') }}" type="video/webm">
                     </video>
-                    <button type="button" class="hm-video__toggle" data-hm-video aria-label="Pause video"><i class="fas fa-pause"></i></button>
+                    <button type="button" class="hm-video__toggle" data-hm-video aria-label="{{ __('frontend.home.video_pause') }}"><i class="fas fa-pause"></i></button>
                 </div>
-                <span class="hm-float hm-float--1"><i class="fas fa-signal"></i> {{ __('managenovax.home.hero_card_levels') }}</span>
-                <span class="hm-float hm-float--2"><i class="fas fa-clock"></i> {{ __('managenovax.home.hero_card_access') }}</span>
-                <span class="hm-float hm-float--3"><i class="fas fa-coins"></i> {{ __('managenovax.home.hero_card_credits') }}</span>
+                <span class="hm-float hm-float--1"><i class="fas fa-signal"></i> {{ __('frontend.home.card_levels') }}</span>
+                <span class="hm-float hm-float--2"><i class="fas fa-clock"></i> {{ __('frontend.home.card_pace') }}</span>
+                <span class="hm-float hm-float--3"><i class="fas fa-coins"></i> {{ __('frontend.home.card_credits') }}</span>
                 <span class="hm-hero__ring" aria-hidden="true"></span>
             </div>
         </div>
@@ -69,10 +69,10 @@
 
         {{-- ================= 2. STATS ================= --}}
         <ul class="hm-stats">
-            <li class="hm-stat"><strong data-count="{{ $hmCourses }}">{{ $hmCourses }}</strong><span><i class="fas fa-book-open"></i> {{ __('managenovax.home.stat_courses') }}</span></li>
-            <li class="hm-stat"><strong data-count="{{ $hmCategories }}">{{ $hmCategories }}</strong><span><i class="fas fa-layer-group"></i> {{ __('managenovax.home.stat_categories') }}</span></li>
-            <li class="hm-stat"><strong data-count="{{ $hmLevels }}">{{ $hmLevels }}</strong><span><i class="fas fa-signal"></i> {{ __('managenovax.home.stat_levels') }}</span></li>
-            <li class="hm-stat"><strong>24/7</strong><span><i class="fas fa-laptop"></i> {{ __('managenovax.home.stat_access') }}</span></li>
+            <li class="hm-stat"><strong data-count="{{ $hmCourses }}">{{ $hmCourses }}</strong><span><i class="fas fa-book-open"></i> {{ __('frontend.home.stat_courses') }}</span></li>
+            <li class="hm-stat"><strong data-count="{{ $hmCategories }}">{{ $hmCategories }}</strong><span><i class="fas fa-layer-group"></i> {{ __('frontend.home.stat_categories') }}</span></li>
+            <li class="hm-stat"><strong data-count="{{ $hmLevels }}">{{ $hmLevels }}</strong><span><i class="fas fa-signal"></i> {{ __('frontend.home.stat_levels') }}</span></li>
+            <li class="hm-stat"><strong>{{ __('frontend.home.stat_online') }}</strong><span><i class="fas fa-laptop"></i> {{ __('frontend.home.stat_online_label') }}</span></li>
         </ul>
 
         {{-- ================= 3. CATEGORIES ================= --}}
@@ -80,10 +80,10 @@
             <section class="hm-cats hm-reveal">
                 <div class="hm-head hm-head--light">
                     <div>
-                        <span class="hm-eyebrow hm-eyebrow--lime">{{ __('managenovax.home.cats_eyebrow') }}</span>
-                        <h2 class="hm-head__title">{{ __('managenovax.home.cats_title') }}</h2>
+                        <span class="hm-eyebrow hm-eyebrow--lime">{{ __('frontend.home.cats_label') }}</span>
+                        <h2 class="hm-head__title">{{ __('frontend.home.cats_title') }}</h2>
                     </div>
-                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--white">{{ __('managenovax.home.cats_all') }} <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--white">{{ __('frontend.home.cats_all') }} <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <ul class="hm-cats__grid">
                     @foreach($category_lists as $i => $cat)
@@ -98,7 +98,7 @@
                                 </span>
                                 <span class="hm-cat__body">
                                     <span class="hm-cat__title">{{ $cat->title }}</span>
-                                    <span class="hm-cat__count">{{ __('managenovax.home.cats_courses', ['count' => $cat->products_count ?? 0]) }}</span>
+                                    <span class="hm-cat__count">{{ trans_choice('frontend.home.cats_count', $cat->products_count ?? 0, ['count' => $cat->products_count ?? 0]) }}</span>
                                 </span>
                                 <span class="hm-cat__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
                             </a>
@@ -113,10 +113,10 @@
             <section class="hm-featured hm-reveal">
                 <div class="hm-head">
                     <div>
-                        <span class="hm-eyebrow">{{ __('managenovax.home.featured_eyebrow') }}</span>
-                        <h2 class="hm-head__title">{{ __('managenovax.home.featured_title') }}</h2>
+                        <span class="hm-eyebrow">{{ __('frontend.home.featured_label') }}</span>
+                        <h2 class="hm-head__title">{{ __('frontend.home.featured_title') }}</h2>
                     </div>
-                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--dark">{{ __('managenovax.home.featured_all') }} <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--dark">{{ __('frontend.home.featured_all') }} <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <ul class="pl-grid">
                     @foreach($hmFeatured as $course)
@@ -141,7 +141,7 @@
                                 </div>
                                 <div class="pl-card__body">
                                     @if($cCount)
-                                        <span class="pl-card__levels"><i class="fas fa-signal"></i> {{ $cCount }} {{ __('managenovax.catalog.levels_label') }}</span>
+                                        <span class="pl-card__levels"><i class="fas fa-signal"></i> {{ trans_choice('frontend.home.levels', $cCount, ['count' => $cCount]) }}</span>
                                     @endif
                                     <h3 class="pl-card__title">{{ $course->title }}</h3>
                                     @if($course->summary)
@@ -150,12 +150,12 @@
                                     <div class="pl-card__foot">
                                         @if($cMin !== null)
                                             <span class="pl-card__price">
-                                                <small>{{ __('managenovax.catalog.starting_from') }}</small>
+                                                <small>{{ __('frontend.home.from') }}</small>
                                                 <strong><i class="fas fa-coins"></i> {{ number_format($cMin) }}</strong>
-                                                <small>{{ __('managenovax.catalog.credits_label') }}</small>
+                                                <small>{{ __('frontend.home.credits') }}</small>
                                             </span>
                                         @else
-                                            <span class="pl-card__price"><strong class="pl-card__free">{{ __('managenovax.catalog.free_label') }}</strong></span>
+                                            <span class="pl-card__price"><strong class="pl-card__free">{{ __('frontend.home.no_levels') }}</strong></span>
                                         @endif
                                         <span class="pl-card__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
                                     </div>
@@ -170,20 +170,20 @@
         {{-- ================= 5. HOW IT WORKS ================= --}}
         <section class="hm-steps hm-reveal">
             <div class="hm-steps__media">
-                <img src="{{ asset('assets/images/home/how-it-works.webp') }}" width="1200" height="800" alt="{{ __('managenovax.home.steps_title') }}" loading="lazy">
-                <span class="hm-steps__badge"><i class="fas fa-play"></i> {{ __('managenovax.home.step4_title') }}</span>
+                <img src="{{ asset('assets/images/home/how-it-works.webp') }}" width="1200" height="800" alt="{{ __('frontend.home.steps_alt') }}" loading="lazy">
+                <span class="hm-steps__badge"><i class="fas fa-play"></i> {{ __('frontend.home.steps_badge') }}</span>
             </div>
             <div class="hm-steps__content">
-                <span class="hm-eyebrow hm-eyebrow--lime">{{ __('managenovax.home.steps_eyebrow') }}</span>
-                <h2 class="hm-steps__title">{{ __('managenovax.home.steps_title') }}</h2>
+                <span class="hm-eyebrow hm-eyebrow--lime">{{ __('frontend.home.steps_label') }}</span>
+                <h2 class="hm-steps__title">{{ __('frontend.home.steps_title') }}</h2>
                 <ol class="hm-steps__list">
                     @foreach([['fa-search', 1], ['fa-sliders-h', 2], ['fa-coins', 3], ['fa-graduation-cap', 4]] as [$icon, $n])
                         <li class="hm-step">
                             <span class="hm-step__num">0{{ $n }}</span>
                             <span class="hm-step__icon"><i class="fas {{ $icon }}"></i></span>
                             <div>
-                                <h3 class="hm-step__title">{{ __('managenovax.home.step' . $n . '_title') }}</h3>
-                                <p class="hm-step__desc">{{ __('managenovax.home.step' . $n . '_desc') }}</p>
+                                <h3 class="hm-step__title">{{ __('frontend.home.step' . $n . '_title') }}</h3>
+                                <p class="hm-step__desc">{{ __('frontend.home.step' . $n . '_desc') }}</p>
                             </div>
                         </li>
                     @endforeach
@@ -191,29 +191,29 @@
             </div>
             <div class="ab-path hm-steps__path">
                 <div class="ab-path__track" aria-hidden="true">
-                    <span class="ab-path__lvl ab-path__lvl--beginner">{{ __('managenovax.course.skill_beginner') }}</span>
+                    <span class="ab-path__lvl ab-path__lvl--beginner">{{ __('frontend.home.beginner') }}</span>
                     <i class="fas fa-chevron-right"></i>
-                    <span class="ab-path__lvl ab-path__lvl--intermediate">{{ __('managenovax.course.skill_intermediate') }}</span>
+                    <span class="ab-path__lvl ab-path__lvl--intermediate">{{ __('frontend.home.intermediate') }}</span>
                     <i class="fas fa-chevron-right"></i>
-                    <span class="ab-path__lvl ab-path__lvl--advanced">{{ __('managenovax.course.skill_advanced') }}</span>
+                    <span class="ab-path__lvl ab-path__lvl--advanced">{{ __('frontend.home.advanced') }}</span>
                     <i class="fas fa-chevron-right"></i>
-                    <span class="ab-path__lvl ab-path__lvl--expert">{{ __('managenovax.course.skill_expert') }}</span>
+                    <span class="ab-path__lvl ab-path__lvl--expert">{{ __('frontend.home.expert') }}</span>
                 </div>
-                <p class="ab-path__caption">{{ __('managenovax.home.path_caption') }}</p>
+                <p class="ab-path__caption">{{ __('frontend.home.path_caption') }}</p>
             </div>
         </section>
 
         {{-- ================= 6. WHY + CREDITS ================= --}}
         <section class="hm-why hm-reveal">
             <div class="hm-why__card">
-                <span class="hm-eyebrow">{{ __('managenovax.home.why_eyebrow') }}</span>
-                <h2 class="hm-head__title">{{ __('managenovax.home.why_title') }}</h2>
+                <span class="hm-eyebrow">{{ __('frontend.home.why_label') }}</span>
+                <h2 class="hm-head__title">{{ __('frontend.home.why_title') }}</h2>
                 <ul class="ab-reasons hm-why__grid">
                     @foreach([['fa-sitemap', 'lime'], ['fa-globe', 'cobalt'], ['fa-tools', 'saffron'], ['fa-headset', 'maroon']] as $i => [$icon, $tone])
                         <li class="ab-reason">
                             <span class="ab-reason__icon ab-reason__icon--{{ $tone }}"><i class="fas {{ $icon }}"></i></span>
-                            <h3 class="ab-reason__title">{{ __('managenovax.home.why' . ($i + 1) . '_title') }}</h3>
-                            <p class="ab-reason__desc">{{ __('managenovax.home.why' . ($i + 1) . '_desc') }}</p>
+                            <h3 class="ab-reason__title">{{ __('frontend.home.why' . ($i + 1) . '_title') }}</h3>
+                            <p class="ab-reason__desc">{{ __('frontend.home.why' . ($i + 1) . '_desc') }}</p>
                         </li>
                     @endforeach
                 </ul>
@@ -225,9 +225,9 @@
                     <span class="hm-credits__coin" aria-hidden="true"><i class="fas fa-coins"></i></span>
                 </div>
                 <div class="hm-credits__body">
-                    <h2 class="hm-credits__title">{{ __('managenovax.home.credits_title') }}</h2>
-                    <p class="hm-credits__desc">{{ __('managenovax.home.credits_desc') }}</p>
-                    <ul class="hm-tiers">
+                    <h2 class="hm-credits__title">{{ __('frontend.home.credits_title') }}</h2>
+                    <p class="hm-credits__desc">{{ __('frontend.home.credits_desc') }}</p>
+                    <ul class="hm-tiers" aria-label="{{ __('frontend.home.tiers_label') }}">
                         @foreach($hmTiers as $t => [$mult, $from, $to])
                             <li class="hm-tier {{ $to === null ? 'is-best' : '' }}">
                                 <span class="hm-tier__mult">{{ $mult }}</span>
@@ -242,7 +242,7 @@
                             </li>
                         @endforeach
                     </ul>
-                    <a href="{{ route('points.topup') }}" class="hm-btn hm-btn--dark hm-btn--block">{{ __('managenovax.home.credits_btn') }} <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('points.topup') }}" class="hm-btn hm-btn--dark hm-btn--block">{{ __('frontend.home.credits_btn') }} <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </section>
@@ -250,11 +250,11 @@
         {{-- ================= 7. FINAL CTA ================= --}}
         <section class="hm-cta hm-reveal">
             <div class="hm-cta__content">
-                <h2 class="hm-cta__title">{{ __('managenovax.home.cta_title') }}</h2>
-                <p class="hm-cta__desc">{{ __('managenovax.home.cta_desc') }}</p>
+                <h2 class="hm-cta__title">{{ __('frontend.home.cta_title') }}</h2>
+                <p class="hm-cta__desc">{{ __('frontend.home.cta_desc') }}</p>
                 <div class="hm-cta__actions">
-                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--lime">{{ __('managenovax.home.cta_btn_courses') }} <i class="fas fa-arrow-right"></i></a>
-                    <a href="{{ route('contact') }}" class="hm-btn hm-btn--outline-light">{{ __('managenovax.home.cta_btn_contact') }}</a>
+                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--lime">{{ __('frontend.home.cta_courses') }} <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('contact') }}" class="hm-btn hm-btn--outline-light">{{ __('frontend.home.cta_contact') }}</a>
                 </div>
             </div>
             <div class="hm-cta__media">
@@ -278,7 +278,7 @@
             if (reduce) { video.removeAttribute('autoplay'); video.pause(); }
             var sync = function () {
                 btn.querySelector('i').className = video.paused ? 'fas fa-play' : 'fas fa-pause';
-                btn.setAttribute('aria-label', video.paused ? 'Play video' : 'Pause video');
+                btn.setAttribute('aria-label', video.paused ? @json(__('frontend.home.video_play')) : @json(__('frontend.home.video_pause')));
             };
             btn.addEventListener('click', function () { video.paused ? video.play() : video.pause(); });
             video.addEventListener('play', sync);

@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.auth.login_title'))
+@section('title', __('frontend.login.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('managenovax.auth.login_title'),
+    'title' => __('frontend.login.title'),
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
-        ['name' => __('managenovax.auth.login_title')]
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.login.title')]
     ]
 ])
 
@@ -37,13 +37,13 @@
                 </span>
             </div>
 
-            <p class="au-aside__headline">{{ __('managenovax.auth.login_title') }}</p>
+            <p class="au-aside__headline">{{ __('frontend.login.aside') }}</p>
         </aside>
 
         <div class="au-card">
             <div class="au-card__inner">
-                <span class="au-eyebrow">{{ __('managenovax.auth.login_badge') }}</span>
-                <h2 class="au-title">{{ __('managenovax.auth.login_title') }}</h2>
+                <span class="au-eyebrow">{{ __('frontend.login.label') }}</span>
+                <h2 class="au-title">{{ __('frontend.login.heading') }}</h2>
 
                 @if(session('loginerror'))
                     <div class="au-alert" role="alert"><i class="fas fa-exclamation-circle"></i> {{ session('loginerror') }}</div>
@@ -53,20 +53,20 @@
                     @csrf
 
                     <div class="au-field">
-                        <label class="au-label" for="email">{{ __('managenovax.auth.login_lbl_email') }}</label>
+                        <label class="au-label" for="email">{{ __('frontend.login.email') }}</label>
                         <div class="au-input">
                             <i class="fas fa-envelope au-input__icon" aria-hidden="true"></i>
-                            <input type="email" name="email" id="email" autocomplete="email" placeholder="{{ __('managenovax.auth.login_ph_email') }}" value="{{ old('email') }}" class="@error('email') is-invalid @enderror">
+                            <input type="email" name="email" id="email" autocomplete="email" placeholder="{{ __('frontend.login.email_ph') }}" value="{{ old('email') }}" class="@error('email') is-invalid @enderror">
                         </div>
                         @error('email') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
 
                     <div class="au-field">
-                        <label class="au-label" for="password">{{ __('managenovax.auth.login_lbl_pass') }}</label>
+                        <label class="au-label" for="password">{{ __('frontend.login.password') }}</label>
                         <div class="au-input au-input--pass">
                             <i class="fas fa-lock au-input__icon" aria-hidden="true"></i>
-                            <input type="password" name="password" id="password" autocomplete="current-password" placeholder="{{ __('managenovax.auth.login_ph_pass') }}" class="@error('password') is-invalid @enderror">
-                            <button type="button" class="au-eye" data-au-toggle aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                            <input type="password" name="password" id="password" autocomplete="current-password" placeholder="{{ __('frontend.login.password_ph') }}" class="@error('password') is-invalid @enderror">
+                            <button type="button" class="au-eye" data-au-toggle data-show="{{ __('frontend.login.show') }}" data-hide="{{ __('frontend.login.hide') }}" aria-label="{{ __('frontend.login.show') }}" aria-pressed="false"><i class="fas fa-eye"></i></button>
                         </div>
                         @error('password') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
@@ -74,21 +74,21 @@
                     <div class="au-extras">
                         <label class="au-check">
                             <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                            {{ __('managenovax.auth.login_remember') }}
+                            {{ __('frontend.login.remember') }}
                         </label>
-                        <a href="{{ route('forgetpwd.form') }}" class="au-link">{{ __('managenovax.auth.login_lost_pwd') }}</a>
+                        <a href="{{ route('forgetpwd.form') }}" class="au-link">{{ __('frontend.login.forgot') }}</a>
                     </div>
 
                     <button type="submit" name="submit-form" class="au-submit">
-                        {{ __('managenovax.auth.login_btn') }} <i class="fas fa-arrow-right"></i>
+                        {{ __('frontend.login.submit') }} <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
 
-                <div class="au-divider">{{ __('managenovax.auth.login_or') }}</div>
+                <div class="au-divider">{{ __('frontend.login.or') }}</div>
 
                 <div class="au-alt">
-                    <span>{{ __('managenovax.auth.login_new_prompt') }}</span>
-                    <a href="{{ route('register.form') }}">{{ __('managenovax.auth.login_create_link') }}</a>
+                    <span>{{ __('frontend.login.new') }}</span>
+                    <a href="{{ route('register.form') }}">{{ __('frontend.login.register') }}</a>
                 </div>
             </div>
         </div>
@@ -116,15 +116,17 @@
                 $(element).removeClass('is-invalid');
             },
             rules: {
-                password: { required: true, minlength: 5 },
+                password: { required: true },
                 email: { required: true, email: true }
             },
             messages: {
                 password: {
-                    required: "{{ __('managenovax.auth.login_req_pass') }}",
-                    minlength: "{{ __('managenovax.auth.login_min_pass') }}"
+                    required: @json(__('frontend.login.password_req'))
                 },
-                email: "{{ __('managenovax.auth.login_req_email') }}"
+                email: {
+                    required: @json(__('frontend.login.email_req')),
+                    email: @json(__('frontend.login.email_valid'))
+                }
             }
         });
     });
@@ -139,6 +141,7 @@
         var show = input.type === 'password';
         input.type = show ? 'text' : 'password';
         btn.setAttribute('aria-pressed', show ? 'true' : 'false');
+        btn.setAttribute('aria-label', show ? btn.dataset.hide : btn.dataset.show);
         btn.querySelector('i').className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
     });
 </script>

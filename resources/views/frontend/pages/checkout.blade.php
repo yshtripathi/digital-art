@@ -1,13 +1,13 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.checkout.title'))
+@section('title', __('frontend.checkout.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('managenovax.checkout.title'),
+    'title' => __('frontend.checkout.title'),
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
-        ['name' => __('managenovax.cart.title'), 'url' => route('cart')],
-        ['name' => __('managenovax.checkout.title')]
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.checkout.cart'), 'url' => route('cart')],
+        ['name' => __('frontend.checkout.title')]
     ]
 ])
 
@@ -15,11 +15,11 @@
     <div class="co__wrap">
 
         {{-- Progress --}}
-        <ol class="co-steps" aria-label="Checkout progress">
-            <li class="co-steps__item is-done"><span class="co-steps__dot"><i class="fas fa-check"></i></span> {{ __('managenovax.cart.title') }}</li>
-            <li class="co-steps__item is-current"><span class="co-steps__dot">2</span> {{ __('managenovax.checkout.billing') }}</li>
-            <li class="co-steps__item is-current"><span class="co-steps__dot">3</span> {{ __('managenovax.checkout.card_details') }}</li>
-            <li class="co-steps__item"><span class="co-steps__dot">4</span> {{ __('managenovax.checkout.btn_place') }}</li>
+        <ol class="co-steps" aria-label="{{ __('frontend.checkout.progress') }}">
+            <li class="co-steps__item is-done"><span class="co-steps__dot"><i class="fas fa-check"></i></span> {{ __('frontend.checkout.cart') }}</li>
+            <li class="co-steps__item is-current"><span class="co-steps__dot">2</span> {{ __('frontend.checkout.step_billing') }}</li>
+            <li class="co-steps__item is-current"><span class="co-steps__dot">3</span> {{ __('frontend.checkout.step_card') }}</li>
+            <li class="co-steps__item"><span class="co-steps__dot">4</span> {{ __('frontend.checkout.step_confirm') }}</li>
         </ol>
 
         <form name="frmCheckout" id="frmCheckout" method="POST" action="{{ route('cart.order') }}" novalidate>
@@ -33,136 +33,330 @@
                     <div class="co-card">
                         <div class="co-card__head">
                             <span class="co-card__num">01</span>
-                            <h2 class="co-card__title"><i class="fas fa-user-circle"></i> {{ __('managenovax.checkout.billing') }}</h2>
+                            <h2 class="co-card__title"><i class="fas fa-user-circle"></i> {{ __('frontend.checkout.billing') }}</h2>
                         </div>
 
                         <div class="co-fields">
                             <div class="au-field">
-                                <label class="au-label" for="first_name">{{ __('managenovax.checkout.lbl_fname') }} <span class="co-req">*</span></label>
+                                <label class="au-label" for="first_name">{{ __('frontend.checkout.first_name') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                 <div class="au-input">
                                     <i class="fas fa-user au-input__icon" aria-hidden="true"></i>
-                                    <input type="text" name="first_name" id="first_name" value="" autocomplete="given-name" placeholder="{{ __('managenovax.checkout.ph_fname') }}">
+                                    <input type="text" name="first_name" id="first_name" value="" autocomplete="given-name" placeholder="{{ __('frontend.checkout.first_name_ph') }}">
                                 </div>
                                 @error('first_name')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
                             <div class="au-field">
-                                <label class="au-label" for="last_name">{{ __('managenovax.checkout.lbl_lname') }} <span class="co-req">*</span></label>
+                                <label class="au-label" for="last_name">{{ __('frontend.checkout.last_name') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                 <div class="au-input">
                                     <i class="fas fa-user au-input__icon" aria-hidden="true"></i>
-                                    <input type="text" name="last_name" id="last_name" value="" autocomplete="family-name" placeholder="{{ __('managenovax.checkout.ph_lname') }}">
+                                    <input type="text" name="last_name" id="last_name" value="" autocomplete="family-name" placeholder="{{ __('frontend.checkout.last_name_ph') }}">
                                 </div>
                                 @error('last_name')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
                             <div class="au-field">
-                                <label class="au-label" for="email">{{ __('managenovax.checkout.lbl_email') }} <span class="co-req">*</span></label>
+                                <label class="au-label" for="email">{{ __('frontend.checkout.email') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                 <div class="au-input">
                                     <i class="fas fa-envelope au-input__icon" aria-hidden="true"></i>
-                                    <input name="email" type="email" id="email" value="{{ auth()->user()->email ?? '' }}" autocomplete="email" placeholder="{{ __('managenovax.checkout.ph_email') }}">
+                                    <input name="email" type="email" id="email" value="{{ auth()->user()->email ?? '' }}" autocomplete="email" placeholder="{{ __('frontend.checkout.email_ph') }}">
                                 </div>
                                 @error('email')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
                             <div class="au-field">
-                                <label class="au-label" for="phone">{{ __('managenovax.checkout.lbl_phone') }} <span class="co-req">*</span></label>
+                                <label class="au-label" for="phone">{{ __('frontend.checkout.phone') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                 <div class="au-input">
                                     <i class="fas fa-phone-alt au-input__icon" aria-hidden="true"></i>
-                                    <input type="tel" name="phone" id="phone" placeholder="{{ __('managenovax.checkout.ph_phone') }}" value="{{ auth()->user()->phone ?? '' }}" autocomplete="tel" pattern="[\d\+\-\(\)\s]{7,}" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')" inputmode="tel">
+                                    <input type="tel" name="phone" id="phone" placeholder="{{ __('frontend.checkout.phone_ph') }}" value="{{ auth()->user()->phone ?? '' }}" autocomplete="tel" pattern="[\d\+\-\(\)\s]{7,}" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')" inputmode="tel">
                                 </div>
                                 @error('phone')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
                             <div class="au-field co-fields__full">
-                                <label class="au-label" for="address">{{ __('managenovax.checkout.lbl_address') }} <span class="co-req">*</span></label>
+                                <label class="au-label" for="address">{{ __('frontend.checkout.address') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                 <div class="au-input">
                                     <i class="fas fa-map-marker-alt au-input__icon" aria-hidden="true"></i>
-                                    <input type="text" name="address1" id="address" value="{{ auth()->user()->address ?? '' }}" autocomplete="street-address" placeholder="{{ __('managenovax.checkout.ph_address') }}">
+                                    <input type="text" name="address1" id="address" value="{{ auth()->user()->address ?? '' }}" autocomplete="street-address" placeholder="{{ __('frontend.checkout.address_ph') }}">
                                 </div>
                                 @error('address1')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
                             <div class="au-field">
-                                <label class="au-label" for="city">{{ __('managenovax.checkout.lbl_city') }} <span class="co-req">*</span></label>
+                                <label class="au-label" for="city">{{ __('frontend.checkout.city') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                 <div class="au-input">
                                     <i class="fas fa-city au-input__icon" aria-hidden="true"></i>
-                                    <input type="text" name="city" id="city" value="{{ auth()->user()->city ?? '' }}" autocomplete="address-level2" placeholder="{{ __('managenovax.checkout.ph_city') }}">
+                                    <input type="text" name="city" id="city" value="{{ auth()->user()->city ?? '' }}" autocomplete="address-level2" placeholder="{{ __('frontend.checkout.city_ph') }}">
                                 </div>
                                 @error('city')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
                             <div class="au-field">
-                                <label class="au-label" for="post_code">{{ __('managenovax.checkout.lbl_zip') }} <span class="co-req">*</span></label>
+                                <label class="au-label" for="post_code">{{ __('frontend.checkout.postcode') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                 <div class="au-input">
                                     <i class="fas fa-mail-bulk au-input__icon" aria-hidden="true"></i>
-                                    <input type="text" name="post_code" id="post_code" pattern="[0-9]*" autocomplete="postal-code" placeholder="{{ __('managenovax.checkout.ph_zip') }}" value="{{ auth()->user()->zip ?? '' }}">
+                                    <input type="text" name="post_code" id="post_code" pattern="[0-9]*" autocomplete="postal-code" placeholder="{{ __('frontend.checkout.postcode_ph') }}" value="{{ auth()->user()->zip ?? '' }}">
                                 </div>
                                 @error('post_code')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
                             <div class="au-field">
-                                <label class="au-label" for="state">{{ __('managenovax.checkout.lbl_state') }} <span class="co-req">*</span></label>
+                                <label class="au-label" for="state">{{ __('frontend.checkout.state') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                 <div class="au-input">
                                     <i class="fas fa-map au-input__icon" aria-hidden="true"></i>
-                                    <input type="text" name="state" id="state" value="{{ auth()->user()->state ?? '' }}" autocomplete="address-level1" placeholder="{{ __('managenovax.checkout.ph_state') }}">
+                                    <input type="text" name="state" id="state" value="{{ auth()->user()->state ?? '' }}" autocomplete="address-level1" placeholder="{{ __('frontend.checkout.state_ph') }}">
                                 </div>
                                 @error('state')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
                             <div class="au-field">
-                                <label class="au-label" for="country">{{ __('managenovax.checkout.lbl_country') }} <span class="co-req">*</span></label>
+                                <label class="au-label" for="country">{{ __('frontend.checkout.country') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                 <div class="au-input co-select">
                                     <i class="fas fa-globe au-input__icon" aria-hidden="true"></i>
                                     <select name="country" id="country" autocomplete="country">
-                                        <option value="">{{ __('managenovax.checkout.ph_country') }}</option>
+                                        <option value="">{{ __('frontend.checkout.country_ph') }}</option>
                                         <option value="AF">Afghanistan</option>
+                                        <option value="AX">Åland Islands</option>
                                         <option value="AL">Albania</option>
                                         <option value="DZ">Algeria</option>
+                                        <option value="AS">American Samoa</option>
+                                        <option value="AD">Andorra</option>
+                                        <option value="AO">Angola</option>
+                                        <option value="AI">Anguilla</option>
+                                        <option value="AQ">Antarctica</option>
+                                        <option value="AG">Antigua and Barbuda</option>
                                         <option value="AR">Argentina</option>
+                                        <option value="AM">Armenia</option>
+                                        <option value="AW">Aruba</option>
                                         <option value="AU">Australia</option>
                                         <option value="AT">Austria</option>
+                                        <option value="AZ">Azerbaijan</option>
+                                        <option value="BS">Bahamas</option>
+                                        <option value="BH">Bahrain</option>
                                         <option value="BD">Bangladesh</option>
+                                        <option value="BB">Barbados</option>
+                                        <option value="BY">Belarus</option>
                                         <option value="BE">Belgium</option>
+                                        <option value="BZ">Belize</option>
+                                        <option value="BJ">Benin</option>
+                                        <option value="BM">Bermuda</option>
+                                        <option value="BT">Bhutan</option>
+                                        <option value="BO">Bolivia</option>
+                                        <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+                                        <option value="BA">Bosnia and Herzegovina</option>
+                                        <option value="BW">Botswana</option>
+                                        <option value="BV">Bouvet Island</option>
                                         <option value="BR">Brazil</option>
+                                        <option value="IO">British Indian Ocean Territory</option>
+                                        <option value="BN">Brunei Darussalam</option>
+                                        <option value="BG">Bulgaria</option>
+                                        <option value="BF">Burkina Faso</option>
+                                        <option value="BI">Burundi</option>
+                                        <option value="CV">Cabo Verde</option>
+                                        <option value="KH">Cambodia</option>
+                                        <option value="CM">Cameroon</option>
                                         <option value="CA">Canada</option>
+                                        <option value="KY">Cayman Islands</option>
+                                        <option value="CF">Central African Republic</option>
+                                        <option value="TD">Chad</option>
+                                        <option value="CL">Chile</option>
                                         <option value="CN">China</option>
+                                        <option value="CX">Christmas Island</option>
+                                        <option value="CC">Cocos (Keeling) Islands</option>
                                         <option value="CO">Colombia</option>
+                                        <option value="KM">Comoros</option>
+                                        <option value="CG">Congo</option>
+                                        <option value="CD">Congo, Democratic Republic of the</option>
+                                        <option value="CK">Cook Islands</option>
+                                        <option value="CR">Costa Rica</option>
+                                        <option value="CI">Côte d&#039;Ivoire</option>
                                         <option value="HR">Croatia</option>
+                                        <option value="CU">Cuba</option>
+                                        <option value="CW">Curaçao</option>
+                                        <option value="CY">Cyprus</option>
                                         <option value="CZ">Czech Republic</option>
                                         <option value="DK">Denmark</option>
+                                        <option value="DJ">Djibouti</option>
+                                        <option value="DM">Dominica</option>
+                                        <option value="DO">Dominican Republic</option>
+                                        <option value="EC">Ecuador</option>
                                         <option value="EG">Egypt</option>
+                                        <option value="SV">El Salvador</option>
+                                        <option value="GQ">Equatorial Guinea</option>
+                                        <option value="ER">Eritrea</option>
+                                        <option value="EE">Estonia</option>
+                                        <option value="SZ">Eswatini</option>
+                                        <option value="ET">Ethiopia</option>
+                                        <option value="FK">Falkland Islands (Malvinas)</option>
+                                        <option value="FO">Faroe Islands</option>
+                                        <option value="FJ">Fiji</option>
                                         <option value="FI">Finland</option>
                                         <option value="FR">France</option>
+                                        <option value="GF">French Guiana</option>
+                                        <option value="PF">French Polynesia</option>
+                                        <option value="TF">French Southern Territories</option>
+                                        <option value="GA">Gabon</option>
+                                        <option value="GM">Gambia</option>
+                                        <option value="GE">Georgia</option>
                                         <option value="DE">Germany</option>
                                         <option value="GH">Ghana</option>
+                                        <option value="GI">Gibraltar</option>
                                         <option value="GR">Greece</option>
+                                        <option value="GL">Greenland</option>
+                                        <option value="GD">Grenada</option>
+                                        <option value="GP">Guadeloupe</option>
+                                        <option value="GU">Guam</option>
+                                        <option value="GT">Guatemala</option>
+                                        <option value="GG">Guernsey</option>
+                                        <option value="GN">Guinea</option>
+                                        <option value="GW">Guinea-Bissau</option>
+                                        <option value="GY">Guyana</option>
+                                        <option value="HT">Haiti</option>
+                                        <option value="HM">Heard Island and McDonald Islands</option>
+                                        <option value="VA">Holy See</option>
+                                        <option value="HN">Honduras</option>
                                         <option value="HK">Hong Kong SAR China</option>
                                         <option value="HU">Hungary</option>
+                                        <option value="IS">Iceland</option>
                                         <option value="IN">India</option>
                                         <option value="ID">Indonesia</option>
+                                        <option value="IR">Iran</option>
+                                        <option value="IQ">Iraq</option>
                                         <option value="IE">Ireland</option>
+                                        <option value="IM">Isle of Man</option>
                                         <option value="IL">Israel</option>
                                         <option value="IT">Italy</option>
+                                        <option value="JM">Jamaica</option>
                                         <option value="JP">Japan</option>
+                                        <option value="JE">Jersey</option>
+                                        <option value="JO">Jordan</option>
+                                        <option value="KZ">Kazakhstan</option>
                                         <option value="KE">Kenya</option>
-                                        <option value="KR">South Korea</option>
+                                        <option value="KI">Kiribati</option>
+                                        <option value="XK">Kosovo</option>
+                                        <option value="KW">Kuwait</option>
+                                        <option value="KG">Kyrgyzstan</option>
+                                        <option value="LA">Laos</option>
+                                        <option value="LV">Latvia</option>
+                                        <option value="LB">Lebanon</option>
+                                        <option value="LS">Lesotho</option>
+                                        <option value="LR">Liberia</option>
+                                        <option value="LY">Libya</option>
+                                        <option value="LI">Liechtenstein</option>
+                                        <option value="LT">Lithuania</option>
+                                        <option value="LU">Luxembourg</option>
+                                        <option value="MO">Macao SAR China</option>
+                                        <option value="MG">Madagascar</option>
+                                        <option value="MW">Malawi</option>
                                         <option value="MY">Malaysia</option>
+                                        <option value="MV">Maldives</option>
+                                        <option value="ML">Mali</option>
+                                        <option value="MT">Malta</option>
+                                        <option value="MH">Marshall Islands</option>
+                                        <option value="MQ">Martinique</option>
+                                        <option value="MR">Mauritania</option>
+                                        <option value="MU">Mauritius</option>
+                                        <option value="YT">Mayotte</option>
                                         <option value="MX">Mexico</option>
+                                        <option value="FM">Micronesia</option>
+                                        <option value="MD">Moldova</option>
+                                        <option value="MC">Monaco</option>
+                                        <option value="MN">Mongolia</option>
+                                        <option value="ME">Montenegro</option>
+                                        <option value="MS">Montserrat</option>
+                                        <option value="MA">Morocco</option>
+                                        <option value="MZ">Mozambique</option>
+                                        <option value="MM">Myanmar</option>
+                                        <option value="NA">Namibia</option>
+                                        <option value="NR">Nauru</option>
+                                        <option value="NP">Nepal</option>
                                         <option value="NL">Netherlands</option>
+                                        <option value="NC">New Caledonia</option>
                                         <option value="NZ">New Zealand</option>
+                                        <option value="NI">Nicaragua</option>
+                                        <option value="NE">Niger</option>
                                         <option value="NG">Nigeria</option>
+                                        <option value="NU">Niue</option>
+                                        <option value="NF">Norfolk Island</option>
+                                        <option value="KP">North Korea</option>
+                                        <option value="MK">North Macedonia</option>
+                                        <option value="MP">Northern Mariana Islands</option>
                                         <option value="NO">Norway</option>
+                                        <option value="OM">Oman</option>
                                         <option value="PK">Pakistan</option>
+                                        <option value="PW">Palau</option>
+                                        <option value="PS">Palestine</option>
+                                        <option value="PA">Panama</option>
+                                        <option value="PG">Papua New Guinea</option>
+                                        <option value="PY">Paraguay</option>
+                                        <option value="PE">Peru</option>
                                         <option value="PH">Philippines</option>
+                                        <option value="PN">Pitcairn</option>
                                         <option value="PL">Poland</option>
                                         <option value="PT">Portugal</option>
+                                        <option value="PR">Puerto Rico</option>
+                                        <option value="QA">Qatar</option>
+                                        <option value="RE">Réunion</option>
+                                        <option value="RO">Romania</option>
                                         <option value="RU">Russia</option>
+                                        <option value="RW">Rwanda</option>
+                                        <option value="BL">Saint Barthélemy</option>
+                                        <option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
+                                        <option value="KN">Saint Kitts and Nevis</option>
+                                        <option value="LC">Saint Lucia</option>
+                                        <option value="MF">Saint Martin (French part)</option>
+                                        <option value="PM">Saint Pierre and Miquelon</option>
+                                        <option value="VC">Saint Vincent and the Grenadines</option>
+                                        <option value="WS">Samoa</option>
+                                        <option value="SM">San Marino</option>
+                                        <option value="ST">Sao Tome and Principe</option>
                                         <option value="SA">Saudi Arabia</option>
+                                        <option value="SN">Senegal</option>
+                                        <option value="RS">Serbia</option>
+                                        <option value="SC">Seychelles</option>
+                                        <option value="SL">Sierra Leone</option>
                                         <option value="SG">Singapore</option>
+                                        <option value="SX">Sint Maarten (Dutch part)</option>
+                                        <option value="SK">Slovakia</option>
+                                        <option value="SI">Slovenia</option>
+                                        <option value="SB">Solomon Islands</option>
+                                        <option value="SO">Somalia</option>
                                         <option value="ZA">South Africa</option>
+                                        <option value="GS">South Georgia and the South Sandwich Islands</option>
+                                        <option value="KR">South Korea</option>
+                                        <option value="SS">South Sudan</option>
                                         <option value="ES">Spain</option>
+                                        <option value="LK">Sri Lanka</option>
+                                        <option value="SD">Sudan</option>
+                                        <option value="SR">Suriname</option>
+                                        <option value="SJ">Svalbard and Jan Mayen</option>
                                         <option value="SE">Sweden</option>
                                         <option value="CH">Switzerland</option>
+                                        <option value="SY">Syria</option>
                                         <option value="TW">Taiwan</option>
+                                        <option value="TJ">Tajikistan</option>
+                                        <option value="TZ">Tanzania</option>
                                         <option value="TH">Thailand</option>
+                                        <option value="TL">Timor-Leste</option>
+                                        <option value="TG">Togo</option>
+                                        <option value="TK">Tokelau</option>
+                                        <option value="TO">Tonga</option>
+                                        <option value="TT">Trinidad and Tobago</option>
+                                        <option value="TN">Tunisia</option>
                                         <option value="TR">Turkey</option>
+                                        <option value="TM">Turkmenistan</option>
+                                        <option value="TC">Turks and Caicos Islands</option>
+                                        <option value="TV">Tuvalu</option>
+                                        <option value="UG">Uganda</option>
                                         <option value="UA">Ukraine</option>
                                         <option value="AE">United Arab Emirates</option>
                                         <option value="UK">United Kingdom</option>
                                         <option value="US">United States</option>
+                                        <option value="UM">United States Minor Outlying Islands</option>
+                                        <option value="UY">Uruguay</option>
+                                        <option value="UZ">Uzbekistan</option>
+                                        <option value="VU">Vanuatu</option>
+                                        <option value="VE">Venezuela</option>
                                         <option value="VN">Vietnam</option>
+                                        <option value="VG">Virgin Islands (British)</option>
+                                        <option value="VI">Virgin Islands (U.S.)</option>
+                                        <option value="WF">Wallis and Futuna</option>
+                                        <option value="EH">Western Sahara</option>
+                                        <option value="YE">Yemen</option>
+                                        <option value="ZM">Zambia</option>
+                                        <option value="ZW">Zimbabwe</option>
                                     </select>
                                     <i class="fas fa-chevron-down co-select__chev" aria-hidden="true"></i>
                                 </div>
@@ -175,13 +369,13 @@
                     <div class="co-card">
                         <div class="co-card__head">
                             <span class="co-card__num">02</span>
-                            <h2 class="co-card__title"><i class="fas fa-clipboard-list"></i> {{ __('managenovax.checkout.add_info') }}</h2>
+                            <h2 class="co-card__title"><i class="fas fa-clipboard-list"></i> {{ __('frontend.checkout.extra') }}</h2>
                         </div>
                         <div class="au-field">
-                            <label class="au-label" for="note">{{ __('managenovax.checkout.lbl_notes') }}</label>
+                            <label class="au-label" for="note">{{ __('frontend.checkout.notes') }}</label>
                             <div class="au-input ct-textarea">
                                 <i class="fas fa-comment-dots au-input__icon" aria-hidden="true"></i>
-                                <textarea name="note" id="note" rows="4" placeholder="{{ __('managenovax.checkout.ph_notes') }}"></textarea>
+                                <textarea name="note" id="note" rows="4" placeholder="{{ __('frontend.checkout.notes_ph') }}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -190,7 +384,7 @@
                     <div class="co-card">
                         <div class="co-card__head">
                             <span class="co-card__num">03</span>
-                            <h2 class="co-card__title"><i class="fas fa-credit-card"></i> {{ __('managenovax.checkout.card_details') }}</h2>
+                            <h2 class="co-card__title"><i class="fas fa-credit-card"></i> {{ __('frontend.checkout.card') }}</h2>
                         </div>
 
                         <div class="co-pay">
@@ -205,11 +399,11 @@
                                         <div class="co-cc__number" id="coCardNumber">•••• •••• •••• ••••</div>
                                         <div class="co-cc__row">
                                             <div>
-                                                <span class="co-cc__label">{{ __('managenovax.checkout.lbl_card_name') }}</span>
+                                                <span class="co-cc__label">{{ __('frontend.checkout.card_name') }}</span>
                                                 <span class="co-cc__value" id="coCardName">—</span>
                                             </div>
                                             <div class="co-cc__right">
-                                                <span class="co-cc__label">MM/YY</span>
+                                                <span class="co-cc__label">{{ __('frontend.checkout.expiry_short') }}</span>
                                                 <span class="co-cc__value" id="coCardExp">••/••</span>
                                             </div>
                                         </div>
@@ -217,7 +411,7 @@
                                     <div class="co-cc__face co-cc__back">
                                         <span class="co-cc__stripe"></span>
                                         <div class="co-cc__sign">
-                                            <span class="co-cc__label">{{ __('managenovax.checkout.lbl_cvv') }}</span>
+                                            <span class="co-cc__label">{{ __('frontend.checkout.cvv') }}</span>
                                             <span class="co-cc__cvv" id="coCardCvv">•••</span>
                                         </div>
                                     </div>
@@ -226,40 +420,40 @@
 
                             <div class="co-fields co-fields--card">
                                 <div class="au-field co-fields__full">
-                                    <label class="au-label" for="name_on_card">{{ __('managenovax.checkout.lbl_card_name') }} <span class="co-req">*</span></label>
+                                    <label class="au-label" for="name_on_card">{{ __('frontend.checkout.card_name') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="au-input">
                                         <i class="fas fa-user au-input__icon" aria-hidden="true"></i>
-                                        <input type="text" name="name" id="name_on_card" autocomplete="cc-name" placeholder="{{ __('managenovax.checkout.ph_card_name') }}">
+                                        <input type="text" name="name" id="name_on_card" autocomplete="cc-name" placeholder="{{ __('frontend.checkout.card_name_ph') }}">
                                     </div>
                                     @error('name')<span class="au-error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="au-field co-fields__full">
-                                    <label class="au-label" for="card_number">{{ __('managenovax.checkout.lbl_card_num') }} <span class="co-req">*</span></label>
+                                    <label class="au-label" for="card_number">{{ __('frontend.checkout.card_number') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="au-input">
                                         <i class="fas fa-credit-card au-input__icon" aria-hidden="true"></i>
-                                        <input type="text" name="card_number" id="card_number" placeholder="{{ __('managenovax.checkout.ph_card_num') }}" class="cc-number co-mono" pattern="[0-9\s]{19}" inputmode="numeric" maxlength="19" autocomplete="cc-number">
+                                        <input type="text" name="card_number" id="card_number" placeholder="{{ __('frontend.checkout.card_number_ph') }}" class="cc-number co-mono" pattern="[0-9\s]{19}" inputmode="numeric" maxlength="19" autocomplete="cc-number">
                                     </div>
                                     @error('card_number')<span class="au-error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="au-field">
-                                    <label class="au-label" for="expiry_month">{{ __('managenovax.checkout.lbl_exp_month') }} <span class="co-req">*</span></label>
+                                    <label class="au-label" for="expiry_month">{{ __('frontend.checkout.expiry') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="co-expiry">
                                         <div class="au-input au-input--plain">
-                                            <input type="text" name="expiry_month" id="expiry_month" placeholder="{{ __('managenovax.checkout.ph_exp_month') }}" pattern="[0-9]{2}" inputmode="numeric" maxlength="2" autocomplete="cc-exp-month">
+                                            <input type="text" name="expiry_month" id="expiry_month" placeholder="{{ __('frontend.checkout.month_ph') }}" pattern="[0-9]{2}" inputmode="numeric" maxlength="2" autocomplete="cc-exp-month">
                                         </div>
                                         <span class="co-expiry__sep">/</span>
                                         <div class="au-input au-input--plain">
-                                            <input type="text" name="expiry_year" id="expiry_year" placeholder="{{ __('managenovax.checkout.ph_exp_year') }}" pattern="[0-9]{4}" inputmode="numeric" maxlength="4" autocomplete="cc-exp-year">
+                                            <input type="text" name="expiry_year" id="expiry_year" placeholder="{{ __('frontend.checkout.year_ph') }}" pattern="[0-9]{4}" inputmode="numeric" maxlength="4" autocomplete="cc-exp-year">
                                         </div>
                                     </div>
                                     @error('expiry_month')<span class="au-error">{{ $message }}</span>@enderror
                                     @error('expiry_year')<span class="au-error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="au-field">
-                                    <label class="au-label" for="cvv">{{ __('managenovax.checkout.lbl_cvv') }} <span class="co-req">*</span></label>
+                                    <label class="au-label" for="cvv">{{ __('frontend.checkout.cvv') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="au-input">
                                         <i class="fas fa-lock au-input__icon" aria-hidden="true"></i>
-                                        <input id="cvv" name="cvv" type="text" autocomplete="off" placeholder="{{ __('managenovax.checkout.ph_cvv') }}" class="cc-cvc co-mono" pattern="[0-9]{3,4}" inputmode="numeric" maxlength="4">
+                                        <input id="cvv" name="cvv" type="text" autocomplete="off" placeholder="{{ __('frontend.checkout.cvv_ph') }}" class="cc-cvc co-mono" pattern="[0-9]{3,4}" inputmode="numeric" maxlength="4">
                                     </div>
                                     @error('cvv')<span class="au-error">{{ $message }}</span>@enderror
                                 </div>
@@ -271,7 +465,7 @@
                     <div class="co-card">
                         <div class="co-card__head">
                             <span class="co-card__num">04</span>
-                            <h2 class="co-card__title"><i class="fas fa-file-signature"></i> {{ __('managenovax.checkout.terms') }}</h2>
+                            <h2 class="co-card__title"><i class="fas fa-file-signature"></i> {{ __('frontend.checkout.terms_title') }}</h2>
                         </div>
 
                         <div class="co-agree">
@@ -279,7 +473,7 @@
                                 <label class="co-check__row">
                                     <input type="checkbox" id="terms" name="terms" value="1">
                                     <span class="co-check__box"><i class="fas fa-check"></i></span>
-                                    <span class="co-check__text">{{ __('managenovax.checkout.agree_terms') }} <a href="{{ route('pages', 'terms-conditions') }}" target="_blank">{{ __('managenovax.checkout.link_terms') }}</a></span>
+                                    <span class="co-check__text">{{ __('frontend.checkout.agree_terms') }} <a href="{{ route('pages', 'terms-conditions') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.read_terms') }}</a></span>
                                 </label>
                                 @error('terms')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
@@ -287,7 +481,7 @@
                                 <label class="co-check__row">
                                     <input type="checkbox" id="privacy" name="privacy" value="1">
                                     <span class="co-check__box"><i class="fas fa-check"></i></span>
-                                    <span class="co-check__text">{{ __('managenovax.checkout.agree_privacy') }} <a href="{{ route('pages', 'privacy-policy') }}" target="_blank">{{ __('managenovax.checkout.link_privacy') }}</a></span>
+                                    <span class="co-check__text">{{ __('frontend.checkout.agree_privacy') }} <a href="{{ route('pages', 'privacy-policy') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.read_privacy') }}</a></span>
                                 </label>
                                 @error('privacy')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
@@ -295,7 +489,7 @@
                                 <label class="co-check__row">
                                     <input type="checkbox" id="delivery" name="delivery" value="1">
                                     <span class="co-check__box"><i class="fas fa-check"></i></span>
-                                    <span class="co-check__text">{{ __('managenovax.checkout.agree_delivery') }} <a href="{{ route('pages', 'delivery-policy') }}" target="_blank">{{ __('managenovax.checkout.link_delivery') }}</a></span>
+                                    <span class="co-check__text">{{ __('frontend.checkout.agree_delivery') }} <a href="{{ route('pages', 'delivery-policy') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.read_delivery') }}</a></span>
                                 </label>
                                 @error('delivery')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
@@ -303,7 +497,7 @@
                                 <label class="co-check__row">
                                     <input type="checkbox" id="refund" name="refund" value="1">
                                     <span class="co-check__box"><i class="fas fa-check"></i></span>
-                                    <span class="co-check__text">{{ __('managenovax.checkout.agree_refund') }} <a href="{{ route('pages', 'refund-policy') }}" target="_blank">{{ __('managenovax.checkout.link_refund') }}</a></span>
+                                    <span class="co-check__text">{{ __('frontend.checkout.agree_refund') }} <a href="{{ route('pages', 'refund-policy') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.read_refund') }}</a></span>
                                 </label>
                                 @error('refund')<span class="au-error">{{ $message }}</span>@enderror
                             </div>
@@ -311,14 +505,14 @@
 
                         <div class="co-billnote">
                             <i class="fas fa-info-circle co-billnote__icon" aria-hidden="true"></i>
-                            <p>{{ __('managenovax.checkout.card_bill_desc') }} <img src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('managenovax.checkout.brand_logo') }}"></p>
+                            <p>{{ __('frontend.checkout.billing_note') }} <img src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('frontend.checkout.billing_alt') }}"></p>
                         </div>
                     </div>
                 </div>
 
                 {{-- ===================== SUMMARY COLUMN ===================== --}}
                 <aside class="co-summary">
-                    <h2 class="co-summary__title"><i class="fas fa-shopping-bag"></i> {{ __('managenovax.checkout.your_order') }}</h2>
+                    <h2 class="co-summary__title"><i class="fas fa-shopping-bag"></i> {{ __('frontend.checkout.order') }}</h2>
 
                     @php
                         $total_amount = Helper::totalCartPrice();
@@ -329,8 +523,8 @@
 
                     <div class="co-order">
                         <div class="co-order__head">
-                            <span>{{ __('managenovax.checkout.product') }}</span>
-                            <span>{{ __('managenovax.checkout.total') }}</span>
+                            <span>{{ __('frontend.checkout.item') }}</span>
+                            <span>{{ __('frontend.checkout.total') }}</span>
                         </div>
                         @if(Helper::getAllProductFromCart())
                             @foreach(Helper::getAllProductFromCart() as $key => $cart)
@@ -341,7 +535,7 @@
                                 <div class="co-order__row">
                                     <span class="co-order__item">
                                         <span class="co-order__icon"><i class="fas fa-coins"></i></span>
-                                        {{ number_format($points, 0, '.', ',') }} {{ __('managenovax.checkout.points') }}
+                                        {{ number_format($points, 0, '.', ',') }} {{ __('frontend.checkout.credits') }}
                                     </span>
                                     <span class="co-order__price">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2, '.', ',') }}</span>
                                 </div>
@@ -350,36 +544,36 @@
                     </div>
 
                     <div class="co-summary__total">
-                        <span>{{ __('managenovax.checkout.total') }}</span>
+                        <span>{{ __('frontend.checkout.total') }}:</span>
                         <strong>{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($total_amount, session('currency')=='JPY' ? 0 : 2, '.', ',') }}</strong>
                     </div>
 
                     @if(env('CAPTCHA_ENABLED', true))
                         <div class="au-field co-summary__captcha">
-                            <label class="au-label" for="captcha">{{ __('managenovax.checkout.lbl_sec') }} <span class="co-req">*</span></label>
+                            <label class="au-label" for="captcha">{{ __('frontend.checkout.captcha') }} <span class="co-req" title="{{ __('frontend.checkout.required') }}" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                             <div class="co-captcha">
                                 <div class="co-captcha__top">
                                     <div class="co-captcha__img">@captcha</div>
-                                    <button type="button" class="co-captcha__refresh" data-au-captcha aria-label="Refresh code"><i class="fas fa-sync-alt"></i></button>
+                                    <button type="button" class="co-captcha__refresh" data-au-captcha aria-label="{{ __('frontend.checkout.refresh') }}"><i class="fas fa-sync-alt"></i></button>
                                 </div>
                                 <div class="au-input">
                                     <i class="fas fa-shield-alt au-input__icon" aria-hidden="true"></i>
-                                    <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('managenovax.checkout.ph_sec') }}">
+                                    <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('frontend.checkout.captcha_ph') }}">
                                 </div>
                             </div>
-                            @error('captcha')<span class="au-error">{{ __('managenovax.checkout.err_captcha') }}</span>@enderror
+                            @error('captcha')<span class="au-error">{{ __('frontend.checkout.captcha_bad') }}</span>@enderror
                         </div>
                     @endif
 
                     <button type="submit" class="co-btn co-btn--lime" id="button-confirm">
-                        <i class="fas fa-lock"></i> {{ __('managenovax.checkout.btn_place') }}
+                        <i class="fas fa-lock"></i> {{ __('frontend.checkout.pay') }}
                     </button>
-                    <a href="{{ route('home') }}" class="co-btn co-btn--outline">{{ __('managenovax.checkout.btn_continue') }}</a>
+                    <a href="{{ route('home') }}" class="co-btn co-btn--outline">{{ __('frontend.checkout.continue') }}</a>
 
-                    <p class="co-summary__trust"><i class="fas fa-shield-alt"></i> {{ __('managenovax.credits.trust_msg') }}</p>
+                    <p class="co-summary__trust"><i class="fas fa-shield-alt"></i> {{ __('frontend.checkout.secure') }}</p>
 
                     <div class="co-summary__pay">
-                        <img src="{{ asset('assets/images/payment.webp') }}" alt="Payment Methods">
+                        <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.checkout.payments') }}">
                     </div>
                 </aside>
             </div>
@@ -444,28 +638,31 @@
                 @endif
             },
             messages: {
-                first_name: "{{ __('managenovax.checkout.err_fname') }}",
-                last_name: "{{ __('managenovax.checkout.err_lname') }}",
-                email: "{{ __('managenovax.checkout.err_email') }}",
-                phone: {
-                    required: "{{ __('managenovax.checkout.err_phone') }}",
-                    minlength: "{{ __('managenovax.checkout.err_phone_min') }}"
+                first_name: @json(__('frontend.checkout.first_name_req')),
+                last_name: @json(__('frontend.checkout.last_name_req')),
+                email: {
+                    required: @json(__('frontend.checkout.email_req')),
+                    email: @json(__('frontend.checkout.email_valid'))
                 },
-                address1: "{{ __('managenovax.checkout.err_address') }}",
-                post_code: "{{ __('managenovax.checkout.err_zip') }}",
-                city: "{{ __('managenovax.checkout.err_city') }}",
-                state: "{{ __('managenovax.checkout.err_state') }}",
-                country: "{{ __('managenovax.checkout.err_country') }}",
-                name: "{{ __('managenovax.checkout.err_card_name') }}",
-                card_number: "{{ __('managenovax.checkout.err_card_num') }}",
-                expiry_month: "{{ __('managenovax.checkout.err_exp_month') }}",
-                expiry_year: "{{ __('managenovax.checkout.err_exp_year') }}",
-                cvv: "{{ __('managenovax.checkout.err_cvv') }}",
-                terms: "{{ __('managenovax.checkout.err_terms') }}",
-                privacy: "{{ __('managenovax.checkout.err_privacy') }}",
-                delivery: "{{ __('managenovax.checkout.err_delivery') }}",
-                refund: "{{ __('managenovax.checkout.err_refund') }}",
-                captcha: "{{ __('managenovax.checkout.err_captcha') }}"
+                phone: {
+                    required: @json(__('frontend.checkout.phone_req')),
+                    minlength: @json(__('frontend.checkout.phone_min', ['min' => 10]))
+                },
+                address1: @json(__('frontend.checkout.address_req')),
+                post_code: @json(__('frontend.checkout.postcode_req')),
+                city: @json(__('frontend.checkout.city_req')),
+                state: @json(__('frontend.checkout.state_req')),
+                country: @json(__('frontend.checkout.country_req')),
+                name: @json(__('frontend.checkout.card_name_req')),
+                card_number: @json(__('frontend.checkout.card_number_req')),
+                expiry_month: @json(__('frontend.checkout.month_req')),
+                expiry_year: @json(__('frontend.checkout.year_req')),
+                cvv: @json(__('frontend.checkout.cvv_req')),
+                terms: @json(__('frontend.checkout.terms_req')),
+                privacy: @json(__('frontend.checkout.privacy_req')),
+                delivery: @json(__('frontend.checkout.delivery_req')),
+                refund: @json(__('frontend.checkout.refund_req')),
+                captcha: @json(__('frontend.checkout.captcha_req'))
             }
         });
 

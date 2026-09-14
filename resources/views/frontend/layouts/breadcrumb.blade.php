@@ -1,6 +1,6 @@
 {{--
   ==========================================================================
-  [Website Name] — Page Banner + Breadcrumb
+  Page Banner + Breadcrumb
   Cobalt color-block panel with a contained photo on the right (see DESIGN.md).
   Styles: public/css/main.css
 
@@ -26,7 +26,7 @@
     <div class="bc__panel">
         <div class="bc__content">
             @if(isset($links) && count($links) > 0)
-                <nav aria-label="Breadcrumb">
+                <nav aria-label="{{ __('frontend.breadcrumb.label') }}">
                     <ol class="bc__list">
                         @foreach($links as $index => $link)
                             <li class="bc__item">
@@ -58,7 +58,7 @@
                 alt=""
                 fetchpriority="high"
                 decoding="async">
-            <a href="{{ route('product-lists') }}" class="bc__badge"><i class="fas fa-graduation-cap" aria-hidden="true"></i> {{ __('managenovax.header.courses') }}</a>
+            <a href="{{ route('product-lists') }}" class="bc__badge"><i class="fas fa-graduation-cap" aria-hidden="true"></i> {{ __('frontend.breadcrumb.badge') }}</a>
         </div>
     </div>
 </section>

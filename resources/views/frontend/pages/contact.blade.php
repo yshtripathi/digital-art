@@ -1,20 +1,20 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.contact.page_title'))
+@section('title', __('frontend.contact.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('managenovax.contact.page_title'),
+    'title' => __('frontend.contact.title'),
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
-        ['name' => __('managenovax.contact.page_title')]
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.contact.title')]
     ]
 ])
 
 @php
-    $ctPhone   = $misc['Company Phone'] ?? __('managenovax.footer.phone_fallback');
-    $ctEmail   = $misc['Company Email'] ?? __('managenovax.footer.email_fallback');
-    $ctAddress = $misc['Company Address'] ?? __('managenovax.footer.address_fallback');
-    $ctCompany = $misc['Company Name'] ?? __('managenovax.footer.company_fallback');
+    $ctPhone   = $misc['Company Phone'] ?? __('frontend.company.phone');
+    $ctEmail   = $misc['Company Email'] ?? __('frontend.company.email');
+    $ctAddress = $misc['Company Address'] ?? __('frontend.company.address');
+    $ctCompany = $misc['Company Name'] ?? __('frontend.company.name');
 @endphp
 
 <section class="ct">
@@ -23,8 +23,8 @@
         {{-- Contact details (colour block, no image) --}}
         <aside class="ct-info">
             <div>
-                <span class="ct-info__eyebrow">{{ __('managenovax.contact.page_title') }}</span>
-                <h2 class="ct-info__title">{{ __('managenovax.contact.info_heading') }}</h2>
+                <span class="ct-info__eyebrow">{{ __('frontend.contact.info_label') }}</span>
+                <h2 class="ct-info__title">{{ __('frontend.contact.info_title') }}</h2>
             </div>
 
             <ul class="ct-list">
@@ -32,7 +32,7 @@
                     <a href="tel:{{ $ctPhone }}" class="ct-item">
                         <span class="ct-item__icon"><i class="fas fa-phone-alt"></i></span>
                         <span class="ct-item__body">
-                            <span class="ct-item__label">{{ __('managenovax.contact.lbl_phone') }}</span>
+                            <span class="ct-item__label">{{ __('frontend.contact.phone') }}</span>
                             <span class="ct-item__value">{{ $ctPhone }}</span>
                         </span>
                         <i class="fas fa-arrow-right ct-item__arrow" aria-hidden="true"></i>
@@ -42,7 +42,7 @@
                     <a href="mailto:{{ $ctEmail }}" class="ct-item">
                         <span class="ct-item__icon"><i class="fas fa-envelope"></i></span>
                         <span class="ct-item__body">
-                            <span class="ct-item__label">{{ __('managenovax.contact.lbl_email') }}</span>
+                            <span class="ct-item__label">{{ __('frontend.contact.email') }}</span>
                             <span class="ct-item__value">{{ $ctEmail }}</span>
                         </span>
                         <i class="fas fa-arrow-right ct-item__arrow" aria-hidden="true"></i>
@@ -52,7 +52,7 @@
                     <div class="ct-item">
                         <span class="ct-item__icon"><i class="fas fa-map-marker-alt"></i></span>
                         <span class="ct-item__body">
-                            <span class="ct-item__label">{{ __('managenovax.contact.lbl_location') }}</span>
+                            <span class="ct-item__label">{{ __('frontend.contact.address') }}</span>
                             <span class="ct-item__value">{{ $ctAddress }}</span>
                         </span>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="ct-item">
                         <span class="ct-item__icon"><i class="fas fa-building"></i></span>
                         <span class="ct-item__body">
-                            <span class="ct-item__label">{{ __('managenovax.contact.lbl_company') }}</span>
+                            <span class="ct-item__label">{{ __('frontend.contact.company') }}</span>
                             <span class="ct-item__value">{{ $ctCompany }}</span>
                         </span>
                     </div>
@@ -71,27 +71,27 @@
 
         {{-- Form --}}
         <div class="ct-card">
-            <h2 class="au-title ct-card__title">{{ __('managenovax.contact.form_heading') }}</h2>
-            <p class="ct-card__desc">{{ __('managenovax.contact.form_desc') }}</p>
+            <h2 class="au-title ct-card__title">{{ __('frontend.contact.form_title') }}</h2>
+            <p class="ct-card__desc">{{ __('frontend.contact.form_desc') }}</p>
 
             <form method="POST" action="{{ route('contact.send') }}" id="contactform" class="au-form" onsubmit="return handleSubmit(event)" novalidate>
                 @csrf
 
                 <div class="au-row">
                     <div class="au-field">
-                        <label class="au-label" for="name">{{ __('managenovax.contact.fld_name') }}</label>
+                        <label class="au-label" for="name">{{ __('frontend.contact.name') }}</label>
                         <div class="au-input">
                             <i class="fas fa-user au-input__icon" aria-hidden="true"></i>
-                            <input type="text" name="name" id="name" autocomplete="name" value="{{ old('name') }}" placeholder="{{ __('managenovax.contact.ph_name') }}" class="@error('name') is-invalid @enderror">
+                            <input type="text" name="name" id="name" autocomplete="name" value="{{ old('name') }}" placeholder="{{ __('frontend.contact.name_ph') }}" class="@error('name') is-invalid @enderror">
                         </div>
                         @error('name') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
 
                     <div class="au-field">
-                        <label class="au-label" for="email">{{ __('managenovax.contact.fld_email') }}</label>
+                        <label class="au-label" for="email">{{ __('frontend.contact.email_label') }}</label>
                         <div class="au-input">
                             <i class="fas fa-envelope au-input__icon" aria-hidden="true"></i>
-                            <input type="email" name="email" id="email" autocomplete="email" value="{{ old('email') }}" placeholder="{{ __('managenovax.contact.ph_email') }}" class="@error('email') is-invalid @enderror">
+                            <input type="email" name="email" id="email" autocomplete="email" value="{{ old('email') }}" placeholder="{{ __('frontend.contact.email_ph') }}" class="@error('email') is-invalid @enderror">
                         </div>
                         @error('email') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
@@ -99,47 +99,47 @@
 
                 <div class="au-row">
                     <div class="au-field">
-                        <label class="au-label" for="phone">{{ __('managenovax.contact.fld_phone') }}</label>
+                        <label class="au-label" for="phone">{{ __('frontend.contact.phone_label') }}</label>
                         <div class="au-input">
                             <i class="fas fa-phone-alt au-input__icon" aria-hidden="true"></i>
-                            <input type="tel" name="phone" id="phone" autocomplete="tel" value="{{ old('phone') }}" placeholder="{{ __('managenovax.contact.ph_phone') }}" class="@error('phone') is-invalid @enderror" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')">
+                            <input type="tel" name="phone" id="phone" autocomplete="tel" value="{{ old('phone') }}" placeholder="{{ __('frontend.contact.phone_ph') }}" class="@error('phone') is-invalid @enderror" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')">
                         </div>
                         @error('phone') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
 
                     <div class="au-field">
-                        <label class="au-label" for="subject">{{ __('managenovax.contact.fld_subject') }}</label>
+                        <label class="au-label" for="subject">{{ __('frontend.contact.subject') }}</label>
                         <div class="au-input">
                             <i class="fas fa-tag au-input__icon" aria-hidden="true"></i>
-                            <input type="text" name="subject" id="subject" value="{{ old('subject') }}" placeholder="{{ __('managenovax.contact.ph_subject') }}" class="@error('subject') is-invalid @enderror">
+                            <input type="text" name="subject" id="subject" value="{{ old('subject') }}" placeholder="{{ __('frontend.contact.subject_ph') }}" class="@error('subject') is-invalid @enderror">
                         </div>
                         @error('subject') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                     </div>
                 </div>
 
                 <div class="au-field">
-                    <label class="au-label" for="message">{{ __('managenovax.contact.fld_msg') }}</label>
+                    <label class="au-label" for="message">{{ __('frontend.contact.message') }}</label>
                     <div class="au-input ct-textarea">
                         <i class="fas fa-comment-dots au-input__icon" aria-hidden="true"></i>
-                        <textarea name="message" id="message" rows="5" placeholder="{{ __('managenovax.contact.ph_msg') }}" class="@error('message') is-invalid @enderror">{{ old('message') }}</textarea>
+                        <textarea name="message" id="message" rows="5" placeholder="{{ __('frontend.contact.message_ph') }}" class="@error('message') is-invalid @enderror">{{ old('message') }}</textarea>
                     </div>
                     @error('message') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
                 </div>
 
                 @if(env('CAPTCHA_ENABLED', true))
                     <div class="au-field">
-                        <label class="au-label" for="captcha">{{ __('managenovax.contact.fld_captcha') }}</label>
+                        <label class="au-label" for="captcha">{{ __('frontend.contact.captcha') }}</label>
                         <div class="au-captcha @error('captcha') is-invalid @enderror">
-                            <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('managenovax.contact.ph_captcha') }}">
+                            <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('frontend.contact.captcha_ph') }}">
                             <div class="au-captcha__img">@captcha</div>
-                            <button type="button" class="au-captcha__refresh" data-au-captcha aria-label="Refresh code"><i class="fas fa-sync-alt"></i></button>
+                            <button type="button" class="au-captcha__refresh" data-au-captcha aria-label="{{ __('frontend.contact.refresh') }}"><i class="fas fa-sync-alt"></i></button>
                         </div>
-                        @error('captcha') <span class="au-error"><i class="fas fa-info-circle"></i> {{ __('managenovax.contact.err_captcha_inv') }}</span> @enderror
+                        @error('captcha') <span class="au-error"><i class="fas fa-info-circle"></i> {{ __('frontend.contact.captcha_bad') }}</span> @enderror
                     </div>
                 @endif
 
                 <button type="submit" class="au-submit">
-                    {{ __('managenovax.contact.btn_submit') }} <i class="fas fa-paper-plane"></i>
+                    {{ __('frontend.contact.submit') }} <i class="fas fa-paper-plane"></i>
                 </button>
             </form>
         </div>
@@ -167,13 +167,13 @@
         document.querySelectorAll('#contactform .is-invalid').forEach(el => el.classList.remove('is-invalid'));
 
         const errors = [];
-        if (!name) errors.push({ field: 'name', message: '{{ __('managenovax.contact.err_name') }}' });
-        if (!email) errors.push({ field: 'email', message: '{{ __('managenovax.contact.err_email_req') }}' });
-        else if (!isValidEmail(email)) errors.push({ field: 'email', message: '{{ __('managenovax.contact.err_email_inv') }}' });
-        if (!phone) errors.push({ field: 'phone', message: '{{ __('managenovax.contact.err_phone') }}' });
-        if (!subject) errors.push({ field: 'subject', message: '{{ __('managenovax.contact.err_subj') }}' });
-        if (!message) errors.push({ field: 'message', message: '{{ __('managenovax.contact.err_msg') }}' });
-        if (captchaEl && !captcha) errors.push({ field: 'captcha', message: '{{ __('managenovax.contact.err_captcha_req') }}' });
+        if (!name) errors.push({ field: 'name', message: @json(__('frontend.contact.name_req')) });
+        if (!email) errors.push({ field: 'email', message: @json(__('frontend.contact.email_req')) });
+        else if (!isValidEmail(email)) errors.push({ field: 'email', message: @json(__('frontend.contact.email_valid')) });
+        if (!phone) errors.push({ field: 'phone', message: @json(__('frontend.contact.phone_req')) });
+        if (!subject) errors.push({ field: 'subject', message: @json(__('frontend.contact.subject_req')) });
+        if (!message) errors.push({ field: 'message', message: @json(__('frontend.contact.message_req')) });
+        if (captchaEl && !captcha) errors.push({ field: 'captcha', message: @json(__('frontend.contact.captcha_req')) });
 
         if (errors.length) {
             errors.forEach(showFieldError);
@@ -195,7 +195,8 @@
         const wrapper = field.closest('.au-field') || field.parentElement;
         const span = document.createElement('span');
         span.className = 'au-error custom-error-message';
-        span.innerHTML = '<i class="fas fa-info-circle"></i> ' + error.message;
+        span.innerHTML = '<i class="fas fa-info-circle"></i> ';
+        span.appendChild(document.createTextNode(error.message));
         wrapper.appendChild(span);
     }
 

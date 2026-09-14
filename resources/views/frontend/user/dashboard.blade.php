@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('managenovax.dashboard.title'))
+@section('title', __('frontend.dashboard.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('managenovax.dashboard.my_account'),
+    'title' => __('frontend.dashboard.account'),
     'links' => [
-        ['name' => __('managenovax.header.home'), 'url' => route('home')],
-        ['name' => __('managenovax.dashboard.my_account')]
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.dashboard.account')]
     ]
 ])
 
@@ -15,9 +15,14 @@
     $purchasedCount = isset($purchasedOrders) ? count($purchasedOrders) : 0;
     $redeemedCount = isset($redeemedOrders) ? count($redeemedOrders) : 0;
     $levelLabel = function ($level) {
-        $key = 'managenovax.course.skill_' . strtolower((string) $level->skill_level);
+        $key = 'frontend.dashboard.levels.' . strtolower((string) $level->skill_level);
         return Lang::has($key) ? __($key) : ucfirst((string) $level->skill_level);
     };
+    $statusLabel = function ($value) {
+        $key = 'frontend.dashboard.statuses.' . strtolower(trim((string) $value));
+        return Lang::has($key) ? __($key) : ucwords((string) $value);
+    };
+    $fmtDate = fn ($date, $format) => $date->locale(app()->getLocale())->translatedFormat($format);
 @endphp
 
 <section class="ds">
@@ -28,92 +33,92 @@
             <div class="ds-hello">
                 <span class="ds-hello__avatar">{{ strtoupper(mb_substr($u->name ?? 'U', 0, 1)) }}</span>
                 <div class="ds-hello__text">
-                    <span class="ds-hello__eyebrow">{{ __('managenovax.dashboard.welcome') }}</span>
+                    <span class="ds-hello__eyebrow">{{ __('frontend.dashboard.welcome') }}</span>
                     <h2 class="ds-hello__name">{{ $u->name }}</h2>
                     <span class="ds-hello__email"><i class="fas fa-envelope"></i> {{ $u->email }}</span>
                 </div>
-                <a href="{{ route('user.logout') }}" class="ds-hello__logout"><i class="fas fa-sign-out-alt"></i> {{ __('managenovax.dashboard.logout') }}</a>
+                <a href="{{ route('user.logout') }}" class="ds-hello__logout"><i class="fas fa-sign-out-alt"></i> {{ __('frontend.dashboard.logout') }}</a>
             </div>
 
             <div class="ds-stats">
                 <div class="ds-stat ds-stat--lime">
                     <span class="ds-stat__icon"><i class="fas fa-coins"></i></span>
-                    <span class="ds-stat__label">{{ __('managenovax.dashboard.credits_avail') }}</span>
+                    <span class="ds-stat__label">{{ __('frontend.dashboard.credits') }}</span>
                     <strong class="ds-stat__value">{{ number_format($u->points_balance ?? 0) }}</strong>
-                    <a href="{{ route('points.topup') }}" class="ds-stat__link">{{ __('managenovax.credits.pg_title') }} <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('points.topup') }}" class="ds-stat__link">{{ __('frontend.dashboard.buy') }} <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="ds-stat ds-stat--cobalt">
                     <span class="ds-stat__icon"><i class="fas fa-graduation-cap"></i></span>
-                    <span class="ds-stat__label">{{ __('managenovax.dashboard.courses_enrolled') }}</span>
+                    <span class="ds-stat__label">{{ __('frontend.dashboard.unlocked') }}</span>
                     <strong class="ds-stat__value">{{ $redeemedCount }}</strong>
-                    <a href="{{ route('product-lists') }}" class="ds-stat__link">{{ __('managenovax.cart.btn_shop') }} <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('product-lists') }}" class="ds-stat__link">{{ __('frontend.dashboard.browse') }} <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="ds-stat ds-stat--maroon">
                     <span class="ds-stat__icon"><i class="fas fa-receipt"></i></span>
-                    <span class="ds-stat__label">{{ __('managenovax.dashboard.tab_purchased') }}</span>
+                    <span class="ds-stat__label">{{ __('frontend.dashboard.purchases') }}</span>
                     <strong class="ds-stat__value">{{ $purchasedCount }}</strong>
                 </div>
                 <div class="ds-stat ds-stat--white">
                     <span class="ds-stat__icon"><i class="fas fa-calendar-alt"></i></span>
-                    <span class="ds-stat__label">{{ __('managenovax.dashboard.member_since') }}</span>
-                    <strong class="ds-stat__value ds-stat__value--sm">{{ $u->created_at->format('M Y') }}</strong>
+                    <span class="ds-stat__label">{{ __('frontend.dashboard.member') }}</span>
+                    <strong class="ds-stat__value ds-stat__value--sm">{{ $fmtDate($u->created_at, __('frontend.dashboard.member_format')) }}</strong>
                 </div>
             </div>
         </div>
 
         {{-- ================= TABS ================= --}}
-        <div class="ds-tabs" role="tablist">
+        <div class="ds-tabs" role="tablist" aria-label="{{ __('frontend.dashboard.tabs') }}">
             <button type="button" role="tab" class="ds-tab active" data-tab="purchased" aria-selected="true">
-                <i class="fas fa-gift"></i> {{ __('managenovax.dashboard.tab_purchased') }} <span class="ds-tab__count">{{ $purchasedCount }}</span>
+                <i class="fas fa-gift"></i> {{ __('frontend.dashboard.tab_purchases') }} <span class="ds-tab__count">{{ $purchasedCount }}</span>
             </button>
             <button type="button" role="tab" class="ds-tab" data-tab="redeemed" aria-selected="false">
-                <i class="fas fa-book-reader"></i> {{ __('managenovax.dashboard.tab_redeemed') }} <span class="ds-tab__count">{{ $redeemedCount }}</span>
+                <i class="fas fa-book-reader"></i> {{ __('frontend.dashboard.tab_courses') }} <span class="ds-tab__count">{{ $redeemedCount }}</span>
             </button>
             <button type="button" role="tab" class="ds-tab" data-tab="password" aria-selected="false">
-                <i class="fas fa-lock"></i> {{ __('managenovax.dashboard.tab_pwd') }}
+                <i class="fas fa-lock"></i> {{ __('frontend.dashboard.tab_password') }}
             </button>
         </div>
 
         {{-- ================= PURCHASES ================= --}}
         <div class="ds-panel active" data-panel="purchased" role="tabpanel">
             <div class="ds-card">
-                <h2 class="ds-card__title">{{ __('managenovax.dashboard.heading_purchased') }}</h2>
+                <h2 class="ds-card__title">{{ __('frontend.dashboard.purchases_title') }}</h2>
 
                 @if($purchasedCount > 0)
                     <div class="ds-list__head" aria-hidden="true">
-                        <span>{{ __('managenovax.dashboard.col_order_num') }}</span>
-                        <span>{{ __('managenovax.dashboard.col_credits') }}</span>
-                        <span>{{ __('managenovax.dashboard.col_price') }}</span>
-                        <span>{{ __('managenovax.dashboard.col_status') }}</span>
-                        <span>{{ __('managenovax.dashboard.col_date') }}</span>
-                        <span>{{ __('managenovax.dashboard.col_action') }}</span>
+                        <span>{{ __('frontend.dashboard.order') }}</span>
+                        <span>{{ __('frontend.dashboard.amount_credits') }}</span>
+                        <span>{{ __('frontend.dashboard.price') }}</span>
+                        <span>{{ __('frontend.dashboard.status') }}</span>
+                        <span>{{ __('frontend.dashboard.date') }}</span>
+                        <span>{{ __('frontend.dashboard.action') }}</span>
                     </div>
                     <ul class="ds-list">
                         @foreach($purchasedOrders as $order)
                             <li class="ds-row">
-                                <span class="ds-row__cell ds-row__order" data-label="{{ __('managenovax.dashboard.col_order_num') }}">
+                                <span class="ds-row__cell ds-row__order" data-label="{{ __('frontend.dashboard.order') }}">
                                     <span class="ds-row__icon"><i class="fas fa-coins"></i></span>
                                     {{ $order->order_number }}
                                 </span>
-                                <span class="ds-row__cell" data-label="{{ __('managenovax.dashboard.col_credits') }}">
+                                <span class="ds-row__cell" data-label="{{ __('frontend.dashboard.amount_credits') }}">
                                     <span class="ds-pill"><i class="fas fa-coins"></i> {{ number_format($order->cart_info->sum('points')) }}</span>
                                 </span>
-                                <span class="ds-row__cell ds-row__strong" data-label="{{ __('managenovax.dashboard.col_price') }}">
+                                <span class="ds-row__cell ds-row__strong" data-label="{{ __('frontend.dashboard.price') }}">
                                     {!! $order->currency=='JPY' ? '&yen;' : Helper::getCurrencySymbol($order->currency) !!}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}
                                 </span>
-                                <span class="ds-row__cell" data-label="{{ __('managenovax.dashboard.col_status') }}">
+                                <span class="ds-row__cell" data-label="{{ __('frontend.dashboard.status') }}">
                                     @if($order->payment_status === 'Completed')
-                                        <span class="ds-status ds-status--ok">{{ __('managenovax.dashboard.status_paid') }}</span>
+                                        <span class="ds-status ds-status--ok">{{ $statusLabel('Completed') }}</span>
                                     @elseif($order->payment_status === 'Failed')
-                                        <span class="ds-status ds-status--err">{{ __('managenovax.dashboard.status_failed') }}</span>
+                                        <span class="ds-status ds-status--err">{{ $statusLabel('Failed') }}</span>
                                     @else
-                                        <span class="ds-status ds-status--wait">{{ __('managenovax.dashboard.status_pending') }}</span>
+                                        <span class="ds-status ds-status--wait">{{ $statusLabel('Pending') }}</span>
                                     @endif
                                 </span>
-                                <span class="ds-row__cell ds-row__muted" data-label="{{ __('managenovax.dashboard.col_date') }}">{{ $order->created_at->format('d M Y') }}</span>
+                                <span class="ds-row__cell ds-row__muted" data-label="{{ __('frontend.dashboard.date') }}">{{ $fmtDate($order->created_at, __('frontend.dashboard.date_format')) }}</span>
                                 <span class="ds-row__cell ds-row__action">
                                     <a href="{{ route('user.order.show', $order->id) }}" class="ds-btn ds-btn--dark ds-btn--sm">
-                                        <i class="fas fa-eye"></i> {{ __('managenovax.dashboard.view_receipt') }}
+                                        <i class="fas fa-eye"></i> {{ __('frontend.dashboard.view') }}
                                     </a>
                                 </span>
                             </li>
@@ -122,8 +127,8 @@
                 @else
                     <div class="ds-empty">
                         <span class="ds-empty__icon"><i class="fas fa-box-open"></i></span>
-                        <p>{{ __('managenovax.dashboard.empty_purchased') }}</p>
-                        <a href="{{ route('points.topup') }}" class="ds-btn ds-btn--lime"><i class="fas fa-coins"></i> {{ __('managenovax.credits.pg_title') }}</a>
+                        <p>{{ __('frontend.dashboard.purchases_empty') }}</p>
+                        <a href="{{ route('points.topup') }}" class="ds-btn ds-btn--lime"><i class="fas fa-coins"></i> {{ __('frontend.dashboard.buy') }}</a>
                     </div>
                 @endif
             </div>
@@ -132,7 +137,7 @@
         {{-- ================= ENROLLED COURSES ================= --}}
         <div class="ds-panel" data-panel="redeemed" role="tabpanel" hidden>
             <div class="ds-card">
-                <h2 class="ds-card__title">{{ __('managenovax.dashboard.heading_redeemed') }}</h2>
+                <h2 class="ds-card__title">{{ __('frontend.dashboard.courses_title') }}</h2>
 
                 @if($redeemedCount > 0)
                     <ul class="ds-courses">
@@ -156,9 +161,9 @@
                                         <span class="ds-course__ph"><i class="fas fa-graduation-cap"></i></span>
                                     @endif
                                     @if(strtolower($order->status) === 'completed')
-                                        <span class="ds-status ds-status--ok ds-course__status">{{ __('managenovax.dashboard.status_redeemed') }}</span>
+                                        <span class="ds-status ds-status--ok ds-course__status">{{ __('frontend.dashboard.badge') }}</span>
                                     @else
-                                        <span class="ds-status ds-status--wait ds-course__status">{{ $order->status }}</span>
+                                        <span class="ds-status ds-status--wait ds-course__status">{{ $statusLabel($order->status) }}</span>
                                     @endif
                                 </div>
                                 <div class="ds-course__body">
@@ -166,18 +171,18 @@
                                         @if($level)
                                             <span class="cp-tag cc-level cc-level--{{ strtolower($level->skill_level) }}"><i class="fas fa-signal"></i> {{ $levelLabel($level) }}</span>
                                         @else
-                                            <span class="cp-tag cc-level cc-level--na">N/A</span>
+                                            <span class="cp-tag cc-level cc-level--na">{{ __('frontend.dashboard.no_level') }}</span>
                                         @endif
                                         <span class="ds-pill"><i class="fas fa-coins"></i> {{ number_format($order->cart_info->sum('points')) }}</span>
                                     </div>
-                                    <h3 class="ds-course__title">{{ $product ? $product->title : 'N/A' }}</h3>
+                                    <h3 class="ds-course__title">{{ $product ? $product->title : __('frontend.dashboard.no_course') }}</h3>
                                     <div class="ds-course__meta">
                                         <span><i class="fas fa-hashtag"></i> {{ $order->order_number }}</span>
-                                        <span><i class="far fa-calendar"></i> {{ $order->created_at->format('d M Y') }}</span>
+                                        <span><i class="far fa-calendar"></i> {{ $fmtDate($order->created_at, __('frontend.dashboard.date_format')) }}</span>
                                     </div>
                                     @if($product)
                                         <a href="{{ route('product-detail', $product->slug) }}" class="ds-btn ds-btn--outline ds-btn--sm ds-course__btn">
-                                            {{ __('managenovax.dashboard.view_course') }} <i class="fas fa-arrow-right"></i>
+                                            {{ __('frontend.dashboard.view_course') }} <i class="fas fa-arrow-right"></i>
                                         </a>
                                     @endif
                                 </div>
@@ -187,8 +192,8 @@
                 @else
                     <div class="ds-empty">
                         <span class="ds-empty__icon"><i class="fas fa-book-open"></i></span>
-                        <p>{{ __('managenovax.dashboard.empty_redeemed') }}</p>
-                        <a href="{{ route('product-lists') }}" class="ds-btn ds-btn--dark"><i class="fas fa-graduation-cap"></i> {{ __('managenovax.cart.btn_shop') }}</a>
+                        <p>{{ __('frontend.dashboard.courses_empty') }}</p>
+                        <a href="{{ route('product-lists') }}" class="ds-btn ds-btn--dark"><i class="fas fa-graduation-cap"></i> {{ __('frontend.dashboard.browse') }}</a>
                     </div>
                 @endif
             </div>
@@ -198,49 +203,49 @@
         <div class="ds-panel" data-panel="password" role="tabpanel" hidden>
             <div class="ds-pwd">
                 <div class="ds-card">
-                    <h2 class="ds-card__title">{{ __('managenovax.dashboard.tab_pwd') }}</h2>
+                    <h2 class="ds-card__title">{{ __('frontend.dashboard.password_title') }}</h2>
                     <form action="{{ route('change.password') }}" method="POST" class="au-form">
                         @csrf
                         <div class="au-field">
-                            <label class="au-label" for="current_password">{{ __('managenovax.dashboard.db_current_password') }}</label>
+                            <label class="au-label" for="current_password">{{ __('frontend.dashboard.current') }}</label>
                             <div class="au-input au-input--pass">
                                 <i class="fas fa-lock au-input__icon" aria-hidden="true"></i>
-                                <input type="password" id="current_password" name="current_password" autocomplete="current-password" placeholder="{{ __('managenovax.dashboard.db_current_password_placeholder') }}" class="@error('current_password') is-invalid @enderror">
-                                <button type="button" class="au-eye" data-au-toggle aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                                <input type="password" id="current_password" name="current_password" autocomplete="current-password" placeholder="{{ __('frontend.dashboard.current_ph') }}" class="@error('current_password') is-invalid @enderror">
+                                <button type="button" class="au-eye" data-au-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false"><i class="fas fa-eye"></i></button>
                             </div>
                             @error('current_password')<span class="au-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>@enderror
                         </div>
                         <div class="au-row">
                             <div class="au-field">
-                                <label class="au-label" for="new_password">{{ __('managenovax.dashboard.db_new_password') }}</label>
+                                <label class="au-label" for="new_password">{{ __('frontend.dashboard.new') }}</label>
                                 <div class="au-input au-input--pass">
                                     <i class="fas fa-key au-input__icon" aria-hidden="true"></i>
-                                    <input type="password" id="new_password" name="new_password" autocomplete="new-password" placeholder="{{ __('managenovax.dashboard.db_new_password_placeholder') }}" class="@error('new_password') is-invalid @enderror">
-                                    <button type="button" class="au-eye" data-au-toggle aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                                    <input type="password" id="new_password" name="new_password" autocomplete="new-password" placeholder="{{ __('frontend.dashboard.new_ph') }}" class="@error('new_password') is-invalid @enderror">
+                                    <button type="button" class="au-eye" data-au-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false"><i class="fas fa-eye"></i></button>
                                 </div>
                                 @error('new_password')<span class="au-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>@enderror
                             </div>
                             <div class="au-field">
-                                <label class="au-label" for="new_confirm_password">{{ __('managenovax.dashboard.db_confirm_password') }}</label>
+                                <label class="au-label" for="new_confirm_password">{{ __('frontend.dashboard.confirm') }}</label>
                                 <div class="au-input au-input--pass">
                                     <i class="fas fa-key au-input__icon" aria-hidden="true"></i>
-                                    <input type="password" id="new_confirm_password" name="new_confirm_password" autocomplete="new-password" placeholder="{{ __('managenovax.dashboard.db_confirm_password_placeholder') }}" class="@error('new_confirm_password') is-invalid @enderror">
-                                    <button type="button" class="au-eye" data-au-toggle aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                                    <input type="password" id="new_confirm_password" name="new_confirm_password" autocomplete="new-password" placeholder="{{ __('frontend.dashboard.confirm_ph') }}" class="@error('new_confirm_password') is-invalid @enderror">
+                                    <button type="button" class="au-eye" data-au-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false"><i class="fas fa-eye"></i></button>
                                 </div>
                                 @error('new_confirm_password')<span class="au-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>@enderror
                             </div>
                         </div>
-                        <button type="submit" class="au-submit"><i class="fas fa-check"></i> {{ __('managenovax.dashboard.db_update_password') }}</button>
+                        <button type="submit" class="au-submit"><i class="fas fa-check"></i> {{ __('frontend.dashboard.save') }}</button>
                     </form>
                 </div>
 
                 <aside class="ds-tip">
                     <span class="ds-tip__icon"><i class="fas fa-shield-alt"></i></span>
-                    <h3 class="ds-tip__title">{{ __('managenovax.dashboard.pwd_tip_title') }}</h3>
+                    <h3 class="ds-tip__title">{{ __('frontend.dashboard.tip_title') }}</h3>
                     <ul class="ds-tip__list">
-                        <li><i class="fas fa-check"></i> {{ __('managenovax.dashboard.pwd_tip_1') }}</li>
-                        <li><i class="fas fa-check"></i> {{ __('managenovax.dashboard.pwd_tip_2') }}</li>
-                        <li><i class="fas fa-check"></i> {{ __('managenovax.dashboard.pwd_tip_3') }}</li>
+                        <li><i class="fas fa-check"></i> {{ __('frontend.dashboard.tip1') }}</li>
+                        <li><i class="fas fa-check"></i> {{ __('frontend.dashboard.tip2') }}</li>
+                        <li><i class="fas fa-check"></i> {{ __('frontend.dashboard.tip3') }}</li>
                     </ul>
                 </aside>
             </div>
@@ -280,6 +285,7 @@
             var show = input.type === 'password';
             input.type = show ? 'text' : 'password';
             btn.setAttribute('aria-pressed', show ? 'true' : 'false');
+            btn.setAttribute('aria-label', show ? btn.dataset.hide : btn.dataset.show);
             btn.querySelector('i').className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
         });
     })();

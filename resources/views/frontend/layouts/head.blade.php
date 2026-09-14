@@ -39,20 +39,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}?v={{ filemtime(public_path('css/main.css')) }}" rel="stylesheet">
+    <link href="{{ asset('css/notifications.css') }}?v={{ filemtime(public_path('css/notifications.css')) }}" rel="stylesheet">
     @if(env('CONTENT_PROTECTION_ENABLED', true))
     <link href="{{ asset('css/prevention.css') }}" rel="stylesheet">
     @endif
 
     @cookieconsentscripts
+
 </head>
 
 <body class="antialiased">
 <div class="page-wrapper">
 
-    <div id="preloader">
-        <div class="art-preloader-inner">
-            <img src="{{ asset('assets/images/preloader-icon.webp') }}" class="art-preloader-img" alt="Loading...">
-            <div class="art-preloader-text">Working...</div>
+    <div id="preloader" role="status" aria-label="Loading">
+        <div class="pl">
+            <div class="pl__bars" aria-hidden="true">
+                <span class="pl__bar"></span>
+                <span class="pl__bar"></span>
+                <span class="pl__bar"></span>
+                <span class="pl__bar"></span>
+            </div>
+            <div class="pl__track" aria-hidden="true"></div>
         </div>
     </div>
 

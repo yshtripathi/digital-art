@@ -1,313 +1,358 @@
-<header class="ag-header">
-    <div class="ag-header-inner">
-        
-        <!-- Left Side: Logo -->
-        <div class="ag-header-left">
-            <a href="{{ route('home') }}" class="ag-logo">
-                <img src="{{ asset('assets/images/logo.webp') }}" alt="[Website Name]" style="height: 55px; width: auto; object-fit: contain; mix-blend-mode: multiply;">
+{{-- ==========================================================================
+     [Website Name] — Site Header
+     Floating pill navigation (see design and content/DESIGN.md).
+     Styles: public/css/main.css
+     JS hooks kept: .mobile-nav-toggler, .mobile-menu, .menu-backdrop, .close-btn,
+     .ui-btn.bb-cart-toggle, .offcanvas__overlay, .cartcanvas__info, .cartcanvas__close
+     ========================================================================== --}}
+@php
+    $headerCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+    $currentCurrency  = session('currency', 'USD');
+    $currencies       = Helper::CurrenciesList();
+    $isJa             = session('app_locale') == 'ja' || app()->getLocale() == 'ja';
+@endphp
+
+
+{{-- Top bar: language + currency --}}
+<div class="hd-top">
+    <div class="hd-top__inner">
+        @php $topEmail = $misc['Company Email'] ?? null; @endphp
+        @if($topEmail)
+            <a href="mailto:{{ $topEmail }}" class="hd-top__link">
+                <i class="fas fa-envelope"></i> {{ $topEmail }}
             </a>
-        </div>
+        @else
+            <span></span>
+        @endif
 
-        <!-- Center: Main Navigation (Desktop) -->
-        <div class="ag-header-center ag-desktop-only">
-            <nav class="ag-nav">
-                <a href="{{ route('home') }}" class="ag-nav-link {{ Route::is('home') ? 'active' : '' }}">{{ __('managenovax.header.home') }}</a>
-
-                <div class="ag-nav-dropdown">
-                    <a href="javascript:void(0)" class="ag-nav-link" style="display:flex; align-items:center; gap:4px;">
-                        {{ __('managenovax.header.categories') }}
-                        <i class="fas fa-chevron-down" style="font-size:10px;"></i>
-                    </a>
-                    <div class="ag-dropdown-menu">
-                        @php
-                            $categories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
-                        @endphp
-                        @forelse($categories as $cat)
-                            @php
-                                $cimg = $cat->photo ? explode(',', $cat->photo)[0] : null;
-                            @endphp
-                            <a class="ag-dropdown-item {{ (isset($category->id) && $category->id == $cat->id) ? 'active' : '' }}" href="{{ route('product-lists', $cat->slug) }}">
-                                @if($cimg)
-                                    <img src="{{ asset($cimg) }}" alt="{{ $cat->title }}">
-                                @endif
-                                {{ $cat->title }}
-                            </a>
-                        @empty
-                            <span class="ag-dropdown-item text-muted">{{ __('managenovax.header.no_categories') }}</span>
-                        @endforelse
+        <div class="hd-top__right">
+            {{-- Language --}}
+            <div class="hd__dd">
+                <button type="button" class="hd-top__trigger" aria-haspopup="true">
+                    <i class="fi {{ $isJa ? 'fi-jp' : 'fi-gb' }}"></i>
+                    {{ $isJa ? '日本語' : 'English' }}
+                    <i class="fas fa-chevron-down hd__chev"></i>
+                </button>
+                <div class="hd__panel hd__panel--right">
+                    <div class="hd__card">
+                        <a class="hd__item {{ !$isJa ? 'is-active' : '' }}" href="{{ route('change.language', 'en') }}"><i class="fi fi-gb"></i> English</a>
+                        <a class="hd__item {{ $isJa ? 'is-active' : '' }}" href="{{ route('change.language', 'ja') }}"><i class="fi fi-jp"></i> 日本語</a>
                     </div>
                 </div>
+            </div>
 
-                <a href="{{ route('product-lists') }}" class="ag-nav-link {{ Route::is('product-lists') ? 'active' : '' }}">{{ __('managenovax.header.courses') }}</a>
+            <span class="hd-top__sep" aria-hidden="true"></span>
 
-                @if(Auth::check())
-                    <a href="{{ route('user') }}" class="ag-nav-link">{{ __('managenovax.header.my_courses') }}</a>
-                @endif
-
-                <a href="{{ route('contact') }}" class="ag-nav-link {{ Route::is('contact') ? 'active' : '' }}">{{ __('managenovax.header.support') }}</a>
-            </nav>
+            {{-- Currency --}}
+            <div class="hd__dd">
+                <button type="button" class="hd-top__trigger" aria-haspopup="true">
+                    {{ Helper::getCurrencySymbol($currentCurrency) }} {{ $currentCurrency }}
+                    <i class="fas fa-chevron-down hd__chev"></i>
+                </button>
+                <div class="hd__panel hd__panel--right">
+                    <div class="hd__card">
+                        @foreach($currencies as $cur)
+                            <a class="hd__item {{ $currentCurrency == $cur->code ? 'is-active' : '' }}" href="{{ route('change.currency', $cur->code) }}">
+                                <span class="hd-top__sym">{{ Helper::getCurrencySymbol($cur->code) }}</span> {{ $cur->code }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
 
-        <!-- Right Side: Actions -->
-        <div class="ag-header-right">
-            
-            <!-- Language Dropdown -->
-            <div class="ag-nav-dropdown ag-desktop-only">
-                <button class="ag-action-btn" style="display:flex; align-items:center; gap:6px;">
-                    @if(session('app_locale') == 'ja' || app()->getLocale() == 'ja')
-                        <i class="fi fi-jp"></i> JA
-                    @else
-                        <i class="fi fi-gb"></i> EN
-                    @endif
-                    <i class="fas fa-chevron-down" style="font-size:10px;"></i>
-                </button>
-                <div class="ag-dropdown-menu" style="min-width: 140px;">
-                    <a class="ag-dropdown-item" href="{{ route('change.language', 'en') }}"><i class="fi fi-gb"></i> EN English</a>
-                    <a class="ag-dropdown-item" href="{{ route('change.language', 'ja') }}"><i class="fi fi-jp"></i> JA Japanese</a>
-                </div>
-            </div>
+<header class="hd">
+    <div class="hd__pill">
 
-            <!-- Currency Dropdown -->
-            <div class="ag-nav-dropdown ag-desktop-only">
-                @php
-                    $currentCurrency = session('currency', 'USD');
-                    $currencies = Helper::CurrenciesList();
-                @endphp
-                <button class="ag-action-btn" style="display:flex; align-items:center; gap:4px;">
-                    {{ $currentCurrency }}
-                    <i class="fas fa-chevron-down" style="font-size:10px;"></i>
+        {{-- Logo --}}
+        <a href="{{ route('home') }}" class="hd__logo">
+            <img src="{{ asset('assets/images/logo.webp') }}" alt="[Website Name]">
+        </a>
+
+        {{-- Desktop navigation --}}
+        <nav class="hd__nav" aria-label="Main">
+            <a href="{{ route('home') }}" class="hd__link {{ Route::is('home') ? 'is-active' : '' }}">{{ __('managenovax.header.home') }}</a>
+
+            <div class="hd__dd">
+                <button type="button" class="hd__link" aria-haspopup="true">
+                    {{ __('managenovax.header.categories') }}
+                    <i class="fas fa-chevron-down hd__chev"></i>
                 </button>
-                <div class="ag-dropdown-menu" style="min-width: 120px;">
-                    @foreach($currencies as $cur)
-                        <a class="ag-dropdown-item {{ $currentCurrency == $cur->code ? 'active' : '' }}" href="{{ route('change.currency', $cur->code) }}">
-                            {{ $cur->code }} ({{ Helper::getCurrencySymbol($cur->code) }})
+                <div class="hd__panel">
+                    <div class="hd__card hd__mega">
+                        <div class="hd__mega-list">
+                            @forelse($headerCategories as $cat)
+                                @php $cimg = $cat->photo ? explode(',', $cat->photo)[0] : null; @endphp
+                                <a class="hd__item {{ (isset($category->id) && $category->id == $cat->id) ? 'is-active' : '' }}" href="{{ route('product-lists', $cat->slug) }}">
+                                    <span class="hd__thumb">
+                                        @if($cimg)
+                                            <img src="{{ asset($cimg) }}" alt="">
+                                        @else
+                                            <i class="fas fa-book-open"></i>
+                                        @endif
+                                    </span>
+                                    {{ $cat->title }}
+                                </a>
+                            @empty
+                                <span class="hd__item">{{ __('managenovax.header.no_categories') }}</span>
+                            @endforelse
+                        </div>
+                        <a href="{{ route('product-lists') }}" class="hd__promo">
+                            <p class="hd__promo-title">{{ __('managenovax.header.courses') }}</p>
+                            <span class="hd__btn hd__btn--lime">{{ __('managenovax.header.courses') }} <i class="fas fa-arrow-right"></i></span>
                         </a>
-                    @endforeach
+                    </div>
                 </div>
             </div>
+
+            <a href="{{ route('product-lists') }}" class="hd__link {{ Route::is('product-lists') ? 'is-active' : '' }}">{{ __('managenovax.header.courses') }}</a>
 
             @if(Auth::check())
-                <!-- Points -->
-                <a href="{{ route('points.topup') }}" class="ag-action-btn ag-desktop-only" style="display:flex; align-items:center; gap:6px;">
-                    <i class="fas fa-coins" style="color:#bc9c5c;"></i> {{ Auth::user()->points_balance ?? 0 }}
+                <a href="{{ route('user') }}" class="hd__link {{ Route::is('user') ? 'is-active' : '' }}">{{ __('managenovax.header.my_courses') }}</a>
+            @endif
+
+            <a href="{{ route('contact') }}" class="hd__link {{ Route::is('contact') ? 'is-active' : '' }}">{{ __('managenovax.header.support') }}</a>
+        </nav>
+
+        {{-- Actions --}}
+        <div class="hd__actions">
+
+            @if(Auth::check())
+                {{-- Credits balance --}}
+                <a href="{{ route('points.topup') }}" class="hd__chip hd__chip--credits hd__desktop">
+                    <i class="fas fa-coins hd__coin"></i>
+                    {{ number_format(Auth::user()->points_balance ?? 0) }}
                 </a>
 
-                <!-- User Profile -->
-                <div class="ag-nav-dropdown">
-                    <button class="ag-action-btn" style="display:flex; align-items:center; gap:4px;">
+                {{-- User menu --}}
+                <div class="hd__dd hd__desktop">
+                    <button type="button" class="hd__chip hd__chip--user" aria-haspopup="true">
+                        <span class="hd__avatar">{{ mb_substr(Auth::user()->name, 0, 1) }}</span>
                         {{ explode(' ', Auth::user()->name)[0] }}
-                        <i class="fas fa-chevron-down" style="font-size:10px;"></i>
+                        <i class="fas fa-chevron-down hd__chev"></i>
                     </button>
-                    <div class="ag-dropdown-menu" style="min-width: 180px;">
-                        <a class="ag-dropdown-item" href="{{ route('user') }}">{{ __('managenovax.header.account') }}</a>
-                        <a class="ag-dropdown-item" href="{{ route('user.logout') }}">{{ __('managenovax.header.logout') }}</a>
+                    <div class="hd__panel hd__panel--right">
+                        <div class="hd__card">
+                            <a class="hd__item" href="{{ route('user') }}"><i class="fas fa-user"></i> {{ __('managenovax.header.account') }}</a>
+                            <a class="hd__item" href="{{ route('user') }}"><i class="fas fa-graduation-cap"></i> {{ __('managenovax.header.my_courses') }}</a>
+                            <a class="hd__item" href="{{ route('points.topup') }}"><i class="fas fa-coins"></i> {{ __('managenovax.header.credits_topup') }}</a>
+                            <div class="hd__divider"></div>
+                            <a class="hd__item" href="{{ route('user.logout') }}"><i class="fas fa-sign-out-alt"></i> {{ __('managenovax.header.logout') }}</a>
+                        </div>
                     </div>
                 </div>
             @else
-                <!-- Guest Auth -->
-                <div class="ag-auth-group">
-                    <a href="{{ route('login.form') }}" class="ag-action-btn">{{ __('managenovax.header.login') }}</a>
-                    <a href="{{ route('register.form') }}" class="ag-btn-primary" style="padding: 10px 24px !important; margin-left: 16px;">{{ __('managenovax.header.register') }}</a>
-                </div>
+                <a href="{{ route('login.form') }}" class="hd__btn hd__btn--ghost hd__guest">{{ __('managenovax.header.login') }}</a>
+                <a href="{{ route('register.form') }}" class="hd__btn hd__btn--dark hd__guest">{{ __('managenovax.header.register') }}</a>
             @endif
 
-            <!-- Cart Toggle (JS Class preserved) -->
-            <button class="ag-action-btn ui-btn bb-cart-toggle" aria-label="Toggle Cart" style="position:relative; display:flex; align-items:center; justify-content:center; width:44px; height:44px; font-size:18px; border: 1px solid rgba(0,0,0,0.1) !important; border-radius:50%; background:transparent; transition: all 0.3s ease;">
-                <i class="fas fa-shopping-bag"></i> 
-                <span class="ag-cart-count" style="position:absolute; top:-4px; right:-4px; background:#bc9c5c; color:#fff; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:bold; margin:0;">{{ Helper::totalCartQuantity() }}</span>
+            {{-- Cart toggle (JS: .ui-btn / .bb-cart-toggle) --}}
+            <button type="button" class="hd__icon-btn ui-btn bb-cart-toggle" aria-label="{{ __('managenovax.header.cart_heading') }}">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="hd__count">{{ Helper::totalCartQuantity() }}</span>
             </button>
 
-            <!-- Mobile Toggler (JS Class preserved) -->
-            <button class="ag-action-btn mobile-nav-toggler ag-mobile-only" aria-label="Menu" style="font-size:18px;">
+            {{-- Mobile menu toggle (JS: .mobile-nav-toggler) --}}
+            <button type="button" class="hd__icon-btn hd__icon-btn--light hd__mobile mobile-nav-toggler" aria-label="Menu">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </div>
 
-    <!-- Mobile Sidebar Drawer (JS Classes preserved) -->
+    {{-- Mobile drawer (JS: .mobile-menu / .menu-backdrop / .close-btn) --}}
     <div class="mobile-menu">
         <div class="menu-backdrop"></div>
-        <nav class="menu-box" style="border-left: 1px solid #000;">
-            <div class="ag-flex ag-justify-between ag-align-center ag-p-4" style="border-bottom: 1px solid rgba(0,0,0,0.1);">
-                <a href="{{ route('home') }}">
-                    <img src="{{ asset('assets/images/logo.webp') }}" alt="Logo" style="height: 45px; width: auto; object-fit: contain; mix-blend-mode: multiply;">
+        <nav class="menu-box" aria-label="Mobile">
+            <div class="hd__drawer-top">
+                <a href="{{ route('home') }}" class="hd__logo">
+                    <img src="{{ asset('assets/images/logo.webp') }}" alt="[Website Name]">
                 </a>
-                <button class="close-btn ag-action-btn" style="font-size:20px;"><i class="fas fa-times"></i></button>
+                <button type="button" class="hd__icon-btn close-btn" aria-label="Close"><i class="fas fa-times"></i></button>
             </div>
-            <ul class="navigation ag-list-unstyled ag-p-4" style="font-family: 'Bodoni Moda', serif; margin: 0; padding: 24px; list-style: none; display: flex; flex-direction: column; gap: 16px;">
-                <li><a href="{{ route('home') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('managenovax.header.home') }}</a></li>
-                
-                <li>
-                    <div style="color: #000; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">{{ __('managenovax.header.categories') }}</div>
-                    <ul style="list-style: none; padding-left: 16px; margin: 0; display: flex; flex-direction: column; gap: 12px;">
-                        @php
-                            $categories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
-                        @endphp
-                        @forelse($categories as $cat)
-                            <li><a href="{{ route('product-lists', $cat->slug) }}" style="color: #666; text-decoration: none; font-size: 14px;">{{ $cat->title }}</a></li>
-                        @empty
-                            <li><span style="color: #999; font-size: 14px;">{{ __('managenovax.header.no_categories') }}</span></li>
-                        @endforelse
-                    </ul>
-                </li>
 
-                <li><a href="{{ route('product-lists') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('managenovax.header.courses') }}</a></li>
-
+            <div class="hd__drawer-body">
                 @if(Auth::check())
-                    <li><a href="{{ route('user') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('managenovax.header.my_courses') }}</a></li>
-                    <li><a href="{{ route('points.topup') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;"><i class="fas fa-coins" style="color:#bc9c5c;"></i> {{ Auth::user()->points_balance ?? 0 }}</a></li>
-                    <li><a href="{{ route('user.logout') }}" style="color: #000; text-decoration: none; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em;">{{ __('managenovax.header.logout') }}</a></li>
-                @else
-                    <li style="margin-top: 16px;">
-                        <a href="{{ route('login.form') }}" class="ag-action-btn" style="border: 1px solid #000; padding: 12px; display: block; text-align: center; text-decoration: none;">{{ __('managenovax.header.login') }}</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('register.form') }}" class="ag-btn-primary" style="background: #000; color: #fff; padding: 12px; display: block; text-align: center; text-decoration: none;">{{ __('managenovax.header.register') }}</a>
-                    </li>
+                    <div class="hd__user-card">
+                        <span class="hd__avatar">{{ mb_substr(Auth::user()->name, 0, 1) }}</span>
+                        <div>
+                            <div class="hd__user-name">{{ Auth::user()->name }}</div>
+                            <a href="{{ route('points.topup') }}" class="hd__user-credits">
+                                <i class="fas fa-coins"></i> {{ number_format(Auth::user()->points_balance ?? 0) }} {{ __('managenovax.header.credits_label') }}
+                            </a>
+                        </div>
+                    </div>
                 @endif
-                
-                <!-- Language / Currency -->
-                <li style="margin-top: 16px; border-top: 1px solid #eee; padding-top: 16px; display: flex; gap: 24px;">
-                    <div>
-                        @if(session('app_locale') == 'ja' || app()->getLocale() == 'ja')
-                            <a href="{{ route('change.language', 'en') }}" style="color: #666; text-decoration: none; font-size: 14px;"><i class="fi fi-gb"></i> EN</a>
-                        @else
-                            <a href="{{ route('change.language', 'ja') }}" style="color: #666; text-decoration: none; font-size: 14px;"><i class="fi fi-jp"></i> JA</a>
-                        @endif
+
+                <div class="hd__drawer-group">
+                    <a href="{{ route('home') }}" class="hd__drawer-link {{ Route::is('home') ? 'is-active' : '' }}">{{ __('managenovax.header.home') }}</a>
+
+                    <details class="hd__acc">
+                        <summary class="hd__drawer-link">
+                            {{ __('managenovax.header.categories') }}
+                            <i class="fas fa-chevron-down hd__chev"></i>
+                        </summary>
+                        <div class="hd__acc-list">
+                            @forelse($headerCategories as $cat)
+                                @php $cimg = $cat->photo ? explode(',', $cat->photo)[0] : null; @endphp
+                                <a class="hd__item" href="{{ route('product-lists', $cat->slug) }}">
+                                    <span class="hd__thumb">
+                                        @if($cimg)
+                                            <img src="{{ asset($cimg) }}" alt="">
+                                        @else
+                                            <i class="fas fa-book-open"></i>
+                                        @endif
+                                    </span>
+                                    {{ $cat->title }}
+                                </a>
+                            @empty
+                                <span class="hd__item">{{ __('managenovax.header.no_categories') }}</span>
+                            @endforelse
+                        </div>
+                    </details>
+
+                    <a href="{{ route('product-lists') }}" class="hd__drawer-link {{ Route::is('product-lists') ? 'is-active' : '' }}">{{ __('managenovax.header.courses') }} <i class="fas fa-arrow-right"></i></a>
+
+                    @if(Auth::check())
+                        <a href="{{ route('user') }}" class="hd__drawer-link {{ Route::is('user') ? 'is-active' : '' }}">{{ __('managenovax.header.my_courses') }} <i class="fas fa-arrow-right"></i></a>
+                    @endif
+
+                    <a href="{{ route('contact') }}" class="hd__drawer-link {{ Route::is('contact') ? 'is-active' : '' }}">{{ __('managenovax.header.support') }} <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="hd__drawer-group">
+                    <span class="hd__label">Language</span>
+                    <div class="hd__pills">
+                        <a class="hd__chip {{ !$isJa ? 'is-active' : '' }}" href="{{ route('change.language', 'en') }}"><i class="fi fi-gb"></i> English</a>
+                        <a class="hd__chip {{ $isJa ? 'is-active' : '' }}" href="{{ route('change.language', 'ja') }}"><i class="fi fi-jp"></i> 日本語</a>
                     </div>
-                    <div>
-                        @php
-                            $currentCurrency = session('currency', 'USD');
-                            $nextCurrency = $currentCurrency == 'USD' ? 'JPY' : 'USD';
-                        @endphp
-                        <a href="{{ route('change.currency', $nextCurrency) }}" style="color: #666; text-decoration: none; font-size: 14px;">
-                            {{ $currentCurrency }} &rarr; {{ $nextCurrency }}
-                        </a>
+                    <span class="hd__label">Currency</span>
+                    <div class="hd__pills">
+                        @foreach($currencies as $cur)
+                            <a class="hd__chip {{ $currentCurrency == $cur->code ? 'is-active' : '' }}" href="{{ route('change.currency', $cur->code) }}">
+                                {{ Helper::getCurrencySymbol($cur->code) }} {{ $cur->code }}
+                            </a>
+                        @endforeach
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
+
+            <div class="hd__drawer-foot">
+                @if(Auth::check())
+                    <a href="{{ route('user') }}" class="hd__btn hd__btn--lime hd__btn--block">{{ __('managenovax.header.account') }}</a>
+                    <a href="{{ route('user.logout') }}" class="hd__btn hd__btn--outline hd__btn--block">{{ __('managenovax.header.logout') }}</a>
+                @else
+                    <a href="{{ route('register.form') }}" class="hd__btn hd__btn--lime hd__btn--block">{{ __('managenovax.header.register') }}</a>
+                    <a href="{{ route('login.form') }}" class="hd__btn hd__btn--outline hd__btn--block">{{ __('managenovax.header.login') }}</a>
+                @endif
+            </div>
         </nav>
     </div>
 </header>
 
 
-<!-- Cart Sidebar (JS Classes preserved) -->
+{{-- Cart drawer (JS: .offcanvas__overlay / .cartcanvas__info / .cartcanvas__close) --}}
 <div class="offcanvas__overlay"></div>
-<div class="cartcanvas__info">
-    <div class="ag-cart-header ag-flex ag-justify-between ag-align-center">
-        <h4 class="ag-fw-bold" style="margin:0;">{{ __('managenovax.header.cart_heading') }}</h4>
-        <div class="cartcanvas__close ag-action-btn" style="cursor:pointer; font-size:20px;"><i class="fas fa-times"></i></div>
-    </div>
-
-    <div class="ag-h-100 ag-flex ag-flex-col">
-        <ul class="ag-cart-body ag-list-unstyled ag-flex-grow-1 ag-overflow-auto">
+<aside class="cartcanvas__info" aria-label="{{ __('managenovax.header.cart_heading') }}">
+    <div class="hd-cart__top">
+        <h4 class="hd-cart__title">
+            {{ __('managenovax.header.cart_heading') }}
             @if(Helper::cartCount())
-                @foreach(Helper::getAllProductFromCart() as $cart)
-                    @php
-                        $isPoints = !$cart->product || $cart->product_id >= 1000;
-                        $item_title = __('managenovax.header.credits_topup');
-                        $item_photo = null;
-                        $item_level = 'N/A';
-
-                        if($cart->product && $cart->product_id < 1000) {
-                            $photo_arr = explode(',', $cart->product->photo);
-                            $item_photo = $photo_arr[0];
-                            $item_title = $cart->product->title;
-
-                            $level = \App\Models\ProductLevel::where('course_id', $cart->product_id)
-                                         ->where('price_in_points', $cart->points)
-                                         ->first();
-                            $lvl_key = $level ? strtolower($level->skill_level) . '_course' : '';
-                            $item_level = ($level && Lang::has('inkwave.' . $lvl_key)) ? __('inkwave.' . $lvl_key) : ($level ? ucfirst($level->skill_level) : 'N/A');
-                        }
-                    @endphp
-                    @if($isPoints)
-                        <!-- Points Item -->
-                        <li class="ag-cart-item ag-position-relative">
-                            <a href="{{ route('cart-delete',$cart->id) }}" class="ag-position-absolute ag-top-0 ag-end-0 text-dark" style="color:#000; text-decoration:none; margin-top:24px;">
-                                <i class="fas fa-times"></i>
-                            </a>
-                            <h6 class="ag-mb-2"><i class="fas fa-coins" style="color:#bc9c5c;"></i> {{ $item_title }}</h6>
-                            <p class="ag-mb-2" style="font-family: Arial, sans-serif; font-size: 12px; margin:0;">
-                                {{ $cart->quantity }} x <strong class="ag-fw-bold">{{ number_format($cart->points) }} {{ __('managenovax.header.credits_label') }}</strong>
-                            </p>
-                            <p style="font-family: Arial, sans-serif; font-weight: bold; font-size: 14px; margin:0; color:#bc9c5c;">
-                                {{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2) }}
-                            </p>
-                        </li>
-                    @else
-                        <!-- Product Item -->
-                        <li class="ag-cart-item ag-flex ag-gap-3 ag-position-relative">
-                            <a href="{{ route('cart-delete',$cart->id) }}" class="ag-position-absolute ag-top-0 ag-end-0 text-dark" style="color:#000; text-decoration:none; margin-top:24px;">
-                                <i class="fas fa-times"></i>
-                            </a>
-                            <div class="ag-img-wrap" style="width: 80px; height: 80px; flex-shrink: 0; border-radius:4px; overflow:hidden;">
-                                <img src="{{ asset($item_photo) }}" style="width:100%; height:100%; object-fit:cover;" alt="">
-                            </div>
-                            <div class="ag-flex-grow-1" style="min-width:0; padding-right:24px;">
-                                <h6 style="margin:0 0 8px 0; line-height:1.4;">{{ $item_title }}</h6>
-                                <div class="ag-mb-2">
-                                    <span class="badge" style="padding:4px 8px; font-size:10px; background:transparent; border:1px solid #bc9c5c; color:#bc9c5c; border-radius:4px; font-weight:normal;">{{ $item_level }}</span>
-                                </div>
-                                <p style="font-family: Arial, sans-serif; font-size: 12px; margin:0; color:#666;">
-                                    {{ $cart->quantity }} x <strong class="ag-fw-bold" style="color:#000;">{{ number_format($cart->points) }} {{ __('managenovax.header.credits_label') }}</strong>
-                                </p>
-                            </div>
-                        </li>
-                    @endif
-                @endforeach
-            @else
-                <li class="ag-text-center ag-py-5 ag-flex ag-flex-col ag-align-center ag-h-100" style="justify-content:center;">
-                    <div style="width:64px; height:64px; border-radius:50%; background:#f6f6f6; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
-                        <i class="fas fa-shopping-bag" style="font-size:24px; color:#cccccc;"></i>
-                    </div>
-                    <p style="font-family: 'Bodoni Moda', serif; font-size: 18px; font-style: italic; color:#666;">{{ __('managenovax.header.empty_cart_msg') }}</p>
-                    <a href="{{ route('product-lists') }}" class="ag-action-btn ag-w-100" style="justify-content:center; border:1px solid #000; padding:12px; margin-top:24px; border-radius:6px;">
-                        {{ __('managenovax.header.courses') }}
-                    </a>
-                </li>
+                <span class="hd-cart__qty">{{ Helper::totalCartQuantity() }}</span>
             @endif
-        </ul>
-
-        @if(Helper::cartCount())
-            @php
-                $cartItems = Helper::getAllProductFromCart();
-                $hasPoints = false;
-                $hasProducts = false;
-                $totalPrice = 0;
-                $totalPoints = 0;
-
-                foreach($cartItems as $item) {
-                    if(!$item->product || $item->product_id >= 1000) {
-                        $hasPoints = true;
-                        $totalPrice += $item['price'];
-                    } else {
-                        $hasProducts = true;
-                        $totalPoints += ($item->quantity * $item->points);
-                    }
-                }
-            @endphp
-            <div class="ag-cart-footer ag-mt-auto" style="box-sizing: border-box !important; width: 100% !important; max-width: 100% !important;">
-                <div class="ag-flex ag-justify-between ag-align-end ag-mb-4" style="font-family: Arial, sans-serif; box-sizing: border-box !important;">
-                    <span class="ag-fw-bold" style="font-size:14px; text-transform:uppercase; letter-spacing:0.1em; color:#666;">{{ __('managenovax.header.total_label') }}:</span>
-                    @if($hasPoints && !$hasProducts)
-                        <span class="ag-fw-bold" style="font-size:24px;">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</span>
-                    @else
-                        <span class="ag-fw-bold" style="font-size:24px;">{{ number_format($totalPoints) }} <span style="font-size:14px; color:#bc9c5c;">{{ __('managenovax.header.credits_label') }}</span></span>
-                    @endif
-                </div>
-                <div class="ag-flex ag-flex-col ag-gap-2" style="box-sizing: border-box !important; width: 100%;">
-                    @if($hasPoints && !$hasProducts)
-                        <a href="{{ route('checkout') }}" class="ag-submit-btn ag-w-100" style="justify-content:center; display:flex; padding:16px; box-sizing: border-box !important;">{{ __('managenovax.header.checkout_btn') }}</a>
-                        <a href="{{ route('cart') }}" class="ag-ghost-btn ag-w-100" style="justify-content:center; display:flex; padding:16px; box-sizing: border-box !important;">{{ __('managenovax.header.view_cart_btn') }}</a>
-                    @elseif($hasProducts && !$hasPoints)
-                        <a href="{{ route('coursecart') }}" class="ag-submit-btn ag-w-100" style="justify-content:center; display:flex; padding:16px; box-sizing: border-box !important;">{{ __('managenovax.header.view_cart_btn') }}</a>
-                    @endif
-                </div>
-            </div>
-        @endif
+        </h4>
+        <button type="button" class="hd__icon-btn cartcanvas__close" aria-label="Close"><i class="fas fa-times"></i></button>
     </div>
-</div>
+
+    <ul class="hd-cart__list">
+        @if(Helper::cartCount())
+            @foreach(Helper::getAllProductFromCart() as $cart)
+                @php
+                    $isPoints = !$cart->product || $cart->product_id >= 1000;
+                    $item_title = __('managenovax.header.credits_topup');
+                    $item_photo = null;
+                    $item_level = 'N/A';
+
+                    if($cart->product && $cart->product_id < 1000) {
+                        $photo_arr = explode(',', $cart->product->photo);
+                        $item_photo = $photo_arr[0];
+                        $item_title = $cart->product->title;
+
+                        $level = \App\Models\ProductLevel::where('course_id', $cart->product_id)
+                                     ->where('price_in_points', $cart->points)
+                                     ->first();
+                        $lvl_key = $level ? strtolower($level->skill_level) . '_course' : '';
+                        $item_level = ($level && Lang::has('inkwave.' . $lvl_key)) ? __('inkwave.' . $lvl_key) : ($level ? ucfirst($level->skill_level) : 'N/A');
+                    }
+                @endphp
+
+                <li class="hd-cart__item">
+                    <a href="{{ route('cart-delete',$cart->id) }}" class="hd-cart__remove" aria-label="Remove"><i class="fas fa-times"></i></a>
+
+                    @if($isPoints)
+                        <div class="hd-cart__img hd-cart__img--credits"><i class="fas fa-coins"></i></div>
+                        <div class="hd-cart__info">
+                            <h6 class="hd-cart__name">{{ $item_title }}</h6>
+                            <p class="hd-cart__meta">{{ $cart->quantity }} × <strong>{{ number_format($cart->points) }} {{ __('managenovax.header.credits_label') }}</strong></p>
+                            <p class="hd-cart__price">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2) }}</p>
+                        </div>
+                    @else
+                        <div class="hd-cart__img"><img src="{{ asset($item_photo) }}" alt=""></div>
+                        <div class="hd-cart__info">
+                            <h6 class="hd-cart__name">{{ $item_title }}</h6>
+                            <span class="hd-cart__tag">{{ $item_level }}</span>
+                            <p class="hd-cart__meta">{{ $cart->quantity }} × <strong>{{ number_format($cart->points) }} {{ __('managenovax.header.credits_label') }}</strong></p>
+                        </div>
+                    @endif
+                </li>
+            @endforeach
+        @else
+            <li class="hd-cart__empty">
+                <span class="hd-cart__empty-icon"><i class="fas fa-shopping-bag"></i></span>
+                <p>{{ __('managenovax.header.empty_cart_msg') }}</p>
+                <a href="{{ route('product-lists') }}" class="hd__btn hd__btn--dark">{{ __('managenovax.header.courses') }} <i class="fas fa-arrow-right"></i></a>
+            </li>
+        @endif
+    </ul>
+
+    @if(Helper::cartCount())
+        @php
+            $cartItems = Helper::getAllProductFromCart();
+            $hasPoints = false;
+            $hasProducts = false;
+            $totalPrice = 0;
+            $totalPoints = 0;
+
+            foreach($cartItems as $item) {
+                if(!$item->product || $item->product_id >= 1000) {
+                    $hasPoints = true;
+                    $totalPrice += $item['price'];
+                } else {
+                    $hasProducts = true;
+                    $totalPoints += ($item->quantity * $item->points);
+                }
+            }
+        @endphp
+        <div class="hd-cart__foot">
+            <div class="hd-cart__total">
+                <span class="hd-cart__total-label">{{ __('managenovax.header.total_label') }}</span>
+                @if($hasPoints && !$hasProducts)
+                    <span class="hd-cart__total-value">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</span>
+                @else
+                    <span class="hd-cart__total-value">{{ number_format($totalPoints) }} <small>{{ __('managenovax.header.credits_label') }}</small></span>
+                @endif
+            </div>
+
+            @if($hasPoints && !$hasProducts)
+                <a href="{{ route('checkout') }}" class="hd__btn hd__btn--lime hd__btn--block">{{ __('managenovax.header.checkout_btn') }}</a>
+                <a href="{{ route('cart') }}" class="hd__btn hd__btn--outline hd__btn--block">{{ __('managenovax.header.view_cart_btn') }}</a>
+            @elseif($hasProducts && !$hasPoints)
+                <a href="{{ route('coursecart') }}" class="hd__btn hd__btn--lime hd__btn--block">{{ __('managenovax.header.view_cart_btn') }}</a>
+            @endif
+        </div>
+    @endif
+</aside>
 
 
 

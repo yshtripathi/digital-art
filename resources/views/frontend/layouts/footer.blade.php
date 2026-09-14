@@ -1,107 +1,128 @@
-<footer class="ag-footer">
-    <div class="ag-footer-inner">
-        
-                <!-- Newsletter Section -->
-        <div class="ag-newsletter">
-            <h4>{{ __('managenovax.footer.newsletter_title') }}</h4>
-            <p>{{ __('managenovax.footer.newsletter_desc') }}</p>
-            <form class="ag-newsletter-form subscribe-form">
-                <input type="email" name="email" class="email" placeholder="{{ __('managenovax.footer.newsletter_ph') }}" required>
-                <button type="submit" class="ag-btn-primary" aria-label="Subscribe" style="padding: 13px 24px !important; letter-spacing: 0.1em !important; font-size: 11px !important;">
-                    {{ __('managenovax.footer.newsletter_btn') }}
-                </button>
-            </form>
-            <p class="suces_rinfo" style="display: none;">{{ __('managenovax.footer.newsletter_success') }}</p>
-        </div>
+{{-- ==========================================================================
+     [Website Name] — Site Footer
+     Lime newsletter card + maroon footer panel (see design and content/DESIGN.md).
+     Styles: public/css/main.css
+     JS hooks kept: .subscribe-form, input[type="email"], .suces_rinfo, .scroll-to-top.scroll-to-target
+     ========================================================================== --}}
+@php
+    $footerCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+    $ftCompany = $misc['Company Name'] ?? __('managenovax.footer.company_fallback');
+    $ftPhone   = $misc['Company Phone'] ?? __('managenovax.footer.phone_fallback');
+    $ftEmail   = $misc['Company Email'] ?? __('managenovax.footer.email_fallback');
+    $ftAddress = $misc['Company Address'] ?? __('managenovax.footer.address_fallback');
+@endphp
 
-                <!-- Widgets Grid -->
-        <div class="ag-footer-grid">
-            
-            <!-- Column 1: Brand -->
-            <div class="ag-footer-col">
-                <a href="{{route('home')}}" class="ag-footer-logo">
-                    <img src="{{asset('assets/images/logo.webp')}}" alt="{{ $misc['Company Name'] ?? __('managenovax.footer.company_fallback') }}" style="height: 70px; width: auto; object-fit: contain; background-color: #ffffff; padding: 8px; border-radius: 6px; filter: none !important;">
-                </a>
-                <p class="ag-footer-text" style="margin-bottom: 24px;">{{ __('managenovax.footer.brand_desc') }}</p>
-                <ul class="ag-footer-links">
-                    <li>
-                        <span class="ag-footer-text">
-                            <i class="fas fa-building"></i> 
-                            {{ $misc['Company Name'] ?? __('managenovax.footer.company_fallback') }}
-                        </span>
-                    </li>
-                    <li>
-                        <a href="tel:{{ $misc['Company Phone'] ?? __('managenovax.footer.phone_fallback') }}">
-                            <i class="fas fa-phone-alt"></i> 
-                            {{ $misc['Company Phone'] ?? __('managenovax.footer.phone_fallback') }}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="mailto:{{ $misc['Company Email'] ?? __('managenovax.footer.email_fallback') }}">
-                            <i class="fas fa-envelope"></i> 
-                            {{ $misc['Company Email'] ?? __('managenovax.footer.email_fallback') }}
-                        </a>
-                    </li>
-                    <li>
-                        <span class="ag-footer-text">
-                            <i class="fas fa-map-marker-alt"></i> 
-                            {{ $misc['Company Address'] ?? __('managenovax.footer.address_fallback') }}
-                        </span>
-                    </li>
-                </ul>
-            </div>
 
-            <!-- Column 2: Categories -->
-            <div class="ag-footer-col">
-                <h5>{{ __('managenovax.footer.categories') }}</h5>
-                <ul class="ag-footer-links">
-                    @php
-                        $footerCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
-                    @endphp
-                    @forelse($footerCategories as $cat)
-                        <li><a href="{{ route('product-lists', $cat->slug) }}">{{ $cat->title }}</a></li>
-                    @empty
-                        <li><span class="ag-footer-text">{{ __('managenovax.header.no_categories') }}</span></li>
-                    @endforelse
-                </ul>
-            </div>
+<footer class="ft">
+    <div class="ft__wrap">
 
-            <!-- Column 3: Company & Account -->
-            <div class="ag-footer-col">
-                <h5>{{ __('managenovax.footer.company_account') }}</h5>
-                <ul class="ag-footer-links">
-                    <li><a href="{{route('about-us')}}">{{ __('managenovax.footer.about') }}</a></li>
-                    <li><a href="{{route('contact')}}">{{ __('managenovax.footer.contact') }}</a></li>
-                    @if(Auth::check())
-                        <li><a href="{{route('user')}}">{{ __('managenovax.footer.my_account') }}</a></li>
-                        <li><a href="{{route('user.logout')}}">{{ __('managenovax.footer.logout') }}</a></li>
-                    @else
-                        <li><a href="{{route('login.form')}}">{{ __('managenovax.footer.login') }}</a></li>
-                        <li><a href="{{route('register.form')}}">{{ __('managenovax.footer.register') }}</a></li>
-                    @endif
-                </ul>
-            </div>
-
-            <!-- Column 4: Policies -->
-            <div class="ag-footer-col">
-                <h5>{{ __('managenovax.footer.policies') }}</h5>
-                <ul class="ag-footer-links">
-                    <li><a href="{{route('pages','terms-conditions')}}">{{ __('managenovax.footer.terms') }}</a></li>
-                    <li><a href="{{route('pages','privacy-policy')}}">{{ __('managenovax.footer.privacy') }}</a></li>
-                    <li><a href="{{route('pages','refund-policy')}}">{{ __('managenovax.footer.refund') }}</a></li>
-                    <li><a href="{{route('pages','delivery-policy')}}">{{ __('managenovax.footer.delivery') }}</a></li>
-                </ul>
-            </div>
-
-        </div>
-
-                <!-- Footer Bottom -->
-        <div class="ag-footer-bottom">
+        {{-- Newsletter --}}
+        <section class="ft-news" aria-labelledby="ft-news-title">
             <div>
-                {!! __('managenovax.footer.copyright', ['year' => date('Y'), 'company' => '<a href="' . route('home') . '">' . ($misc['Company Name'] ?? __('managenovax.footer.company_fallback')) . '</a>']) !!}
+                <span class="ft-news__eyebrow"><i class="fas fa-envelope-open-text"></i> {{ __('managenovax.footer.newsletter_btn') }}</span>
+                <h4 class="ft-news__title" id="ft-news-title">{{ __('managenovax.footer.newsletter_title') }}</h4>
+                <p class="ft-news__desc">{{ __('managenovax.footer.newsletter_desc') }}</p>
             </div>
-            <div class="ag-footer-payment">
-                <img src="{{ asset('assets/images/payment.webp') }}" alt="Payment Methods">
+
+            <div class="ft-news__side">
+                <form class="ft-news__form subscribe-form">
+                    <input type="email" name="email" class="ft-news__input email" placeholder="{{ __('managenovax.footer.newsletter_ph') }}" aria-label="{{ __('managenovax.footer.newsletter_ph') }}" required>
+                    <button type="submit" class="ft-news__btn">
+                        {{ __('managenovax.footer.newsletter_btn') }} <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+                <p class="suces_rinfo" style="display: none;"><i class="fas fa-check"></i> {{ __('managenovax.footer.newsletter_success') }}</p>
+            </div>
+        </section>
+
+        {{-- Main footer --}}
+        <div class="ft-main">
+            <div class="ft-main__grid">
+
+                {{-- Brand + contact --}}
+                <div class="ft-brand">
+                    <a href="{{ route('home') }}" class="ft-brand__logo">
+                        <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $ftCompany }}">
+                    </a>
+                    <p class="ft-brand__desc">{{ __('managenovax.footer.brand_desc') }}</p>
+                    <ul class="ft-contact">
+                        <li>
+                            <span class="ft-contact__item">
+                                <span class="ft-contact__icon"><i class="fas fa-building"></i></span>
+                                <span class="ft-contact__text">{{ $ftCompany }}</span>
+                            </span>
+                        </li>
+                        <li>
+                            <a href="tel:{{ $ftPhone }}" class="ft-contact__item">
+                                <span class="ft-contact__icon"><i class="fas fa-phone-alt"></i></span>
+                                <span class="ft-contact__text">{{ $ftPhone }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:{{ $ftEmail }}" class="ft-contact__item">
+                                <span class="ft-contact__icon"><i class="fas fa-envelope"></i></span>
+                                <span class="ft-contact__text">{{ $ftEmail }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <span class="ft-contact__item">
+                                <span class="ft-contact__icon"><i class="fas fa-map-marker-alt"></i></span>
+                                <span class="ft-contact__text">{{ $ftAddress }}</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                {{-- Categories --}}
+                <nav aria-label="{{ __('managenovax.footer.categories') }}">
+                    <h5 class="ft-col__title">{{ __('managenovax.footer.categories') }}</h5>
+                    <ul class="ft-links">
+                        @forelse($footerCategories as $cat)
+                            <li><a href="{{ route('product-lists', $cat->slug) }}" class="ft-link">{{ $cat->title }}</a></li>
+                        @empty
+                            <li><span class="ft-links__empty">{{ __('managenovax.header.no_categories') }}</span></li>
+                        @endforelse
+                    </ul>
+                </nav>
+
+                {{-- Company & account --}}
+                <nav aria-label="{{ __('managenovax.footer.company_account') }}">
+                    <h5 class="ft-col__title">{{ __('managenovax.footer.company_account') }}</h5>
+                    <ul class="ft-links">
+                        <li><a href="{{ route('product-lists') }}" class="ft-link">{{ __('managenovax.footer.courses') }}</a></li>
+                        <li><a href="{{ route('about-us') }}" class="ft-link">{{ __('managenovax.footer.about') }}</a></li>
+                        <li><a href="{{ route('contact') }}" class="ft-link">{{ __('managenovax.footer.contact') }}</a></li>
+                        @if(Auth::check())
+                            <li><a href="{{ route('user') }}" class="ft-link">{{ __('managenovax.footer.my_account') }}</a></li>
+                            <li><a href="{{ route('user.logout') }}" class="ft-link">{{ __('managenovax.footer.logout') }}</a></li>
+                        @else
+                            <li><a href="{{ route('login.form') }}" class="ft-link">{{ __('managenovax.footer.login') }}</a></li>
+                            <li><a href="{{ route('register.form') }}" class="ft-link">{{ __('managenovax.footer.register') }}</a></li>
+                        @endif
+                    </ul>
+                </nav>
+
+                {{-- Policies --}}
+                <nav aria-label="{{ __('managenovax.footer.policies') }}">
+                    <h5 class="ft-col__title">{{ __('managenovax.footer.policies') }}</h5>
+                    <ul class="ft-links">
+                        <li><a href="{{ route('pages','terms-conditions') }}" class="ft-link">{{ __('managenovax.footer.terms') }}</a></li>
+                        <li><a href="{{ route('pages','privacy-policy') }}" class="ft-link">{{ __('managenovax.footer.privacy') }}</a></li>
+                        <li><a href="{{ route('pages','refund-policy') }}" class="ft-link">{{ __('managenovax.footer.refund') }}</a></li>
+                        <li><a href="{{ route('pages','delivery-policy') }}" class="ft-link">{{ __('managenovax.footer.delivery') }}</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="ft-mark" aria-hidden="true">{{ $ftCompany }}</div>
+
+            <div class="ft-bottom">
+                <div>
+                    {!! __('managenovax.footer.copyright', ['year' => date('Y'), 'company' => '<a href="' . route('home') . '">' . e($ftCompany) . '</a>']) !!}
+                </div>
+                <div class="ft-pay">
+                    <img src="{{ asset('assets/images/payment.webp') }}" alt="Payment Methods">
+                </div>
             </div>
         </div>
 
@@ -110,10 +131,10 @@
 
 </div><!-- End Page Wrapper -->
 
-<!-- Scroll To Top (Invisible until scrolled) -->
-<div class="scroll-to-top scroll-to-target" data-target="html" style="background:#bc9c5c; color:#fff; border-radius:50%;"><span class="fa fa-angle-up"></span></div>
+<!-- Scroll To Top (JS: .scroll-to-target) -->
+<div class="scroll-to-top scroll-to-target ft-top" data-target="html" role="button" tabindex="0" aria-label="Back to top"><span class="fa fa-arrow-up"></span></div>
 
-<script src="{{url('assets/js/jquery.js')}}"></script> 
+<script src="{{url('assets/js/jquery.js')}}"></script>
 <script src="{{url('assets/js/popper.min.js')}}"></script>
 <!--Revolution Slider-->
 <script src="{{url('assets/plugins/revolution/js/jquery.themepunch.revolution.min.js')}}"></script>
@@ -185,7 +206,6 @@
 <!-- =======================================================
      Flowing Ribbons Background Effect (Gallery Theme)
      ======================================================= -->
-<script src="{{ asset('assets/js/ribbons.js') }}"></script>
 
 </body>
 </html>

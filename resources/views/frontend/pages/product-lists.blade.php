@@ -249,6 +249,10 @@
         search.addEventListener('input', apply);
         sort.addEventListener('change', apply);
         clear.addEventListener('click', function () { search.value = ''; apply(); search.focus(); });
+
+        // Prefill from the homepage search (?q=...)
+        var q = new URLSearchParams(window.location.search).get('q');
+        if (q) { search.value = q; apply(); }
     });
 </script>
 @endpush

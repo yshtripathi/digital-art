@@ -1,380 +1,319 @@
 @extends('frontend.layouts.main')
-
+@section('title', __('managenovax.home.hero_title'))
 @section('main-content')
+@php
+    $hmCourses    = \App\Models\Product::where('status', 'active')->count();
+    $hmCategories = isset($category_lists) ? $category_lists->count() : 0;
+    $hmLevels     = \App\Models\ProductLevel::distinct()->count('skill_level') ?: 4;
 
+    // Featured first, then newest courses to fill up to six cards
+    $hmFeatured = collect($featured ?? []);
+    if ($hmFeatured->count() < 6 && isset($product_lists)) {
+        $hmFeatured = $hmFeatured->concat(
+            collect($product_lists)->whereNotIn('id', $hmFeatured->pluck('id'))->take(6 - $hmFeatured->count())
+        );
+    }
 
+    $hmCur = session('currency');
+    $hmSym = $hmCur == 'JPY' ? '&yen;' : ($hmCur == 'HKD' ? 'HK$' : '$');
+    $hmTiers = $hmCur == 'JPY'
+        ? [['x1', '1'], ['x1.5', '80,000'], ['x2', '160,000'], ['x2.5', '240,000']]
+        : ($hmCur == 'HKD'
+            ? [['x1', '1'], ['x1.5', '4,000'], ['x2', '8,000'], ['x2.5', '12,000']]
+            : [['x1', '1'], ['x1.5', '500'], ['x2', '1,000'], ['x2.5', '1,500']]);
+    $hmTierNames = [__('managenovax.credits.tier_standard'), __('managenovax.credits.tier_premium'), __('managenovax.credits.tier_elite'), __('managenovax.credits.tier_vip')];
+@endphp
 
-<div class="duo-lp-wrap">
-    
-    {{-- 1. HERO SECTION --}}
-    
+<div class="hm">
 
-    <section class="art-hero" style="background-image: url('{{ asset('assets/images/hero.webp') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-        <div class="art-hero-container">
-            <div class="art-hero-left">
-                <video autoplay loop muted playsinline>
-                    <source src="{{ asset('assets/videos/hero.webm') }}" type="video/webm">
-                </video>
-            </div>
-            <div class="art-hero-right">
-                <h1>{{ __('managenovax.home.hero_title') }}</h1>
-                <p>{{ __('managenovax.home.hero_desc') }}</p>
-                <div class="art-hero-btns">
-                    <a href="{{ route('product-lists') }}" class="art-hero-btn">{{ __('managenovax.home.hero_btn_start') }}</a>
-                    @if(Auth::check())
-                        <a href="{{ route('user') }}" class="art-hero-btn art-hero-btn-outline">{{ __('managenovax.home.hero_btn_account') }}</a>
+    {{-- ================= 1. HERO ================= --}}
+    <section class="hm-hero">
+        <div class="hm-hero__inner">
+            <div class="hm-hero__content">
+                <span class="hm-eyebrow">{{ __('managenovax.home.hero_eyebrow') }}</span>
+                <h1 class="hm-hero__title">{{ __('managenovax.home.hero_title') }}</h1>
+                <p class="hm-hero__desc">{{ __('managenovax.home.hero_desc') }}</p>
+
+                <form class="hm-search" action="{{ route('product-lists') }}" method="GET" role="search">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <input type="search" name="q" placeholder="{{ __('managenovax.home.hero_search_ph') }}" aria-label="{{ __('managenovax.home.hero_search_ph') }}">
+                    <button type="submit">{{ __('managenovax.home.hero_search_btn') }}</button>
+                </form>
+
+                <div class="hm-hero__actions">
+                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--dark">{{ __('managenovax.home.hero_btn_start') }} <i class="fas fa-arrow-right"></i></a>
+                    @auth
+                        <a href="{{ route('user') }}" class="hm-btn hm-btn--outline">{{ __('managenovax.home.hero_btn_account') }}</a>
                     @else
-                        <a href="{{ route('login.form') }}" class="art-hero-btn art-hero-btn-outline">{{ __('managenovax.home.hero_btn_login') }}</a>
-                    @endif
+                        <a href="{{ route('register.form') }}" class="hm-btn hm-btn--outline">{{ __('managenovax.home.hero_btn_signup') }}</a>
+                    @endauth
                 </div>
+            </div>
+
+            <div class="hm-hero__media">
+                <div class="hm-hero__frame">
+                    <video class="hm-video" autoplay muted loop playsinline preload="metadata" poster="{{ asset('assets/images/home/hero-poster.webp') }}" aria-label="{{ __('managenovax.home.hero_title') }}">
+                        <source src="{{ asset('assets/videos/hero.webm') }}" type="video/webm">
+                    </video>
+                    <button type="button" class="hm-video__toggle" data-hm-video aria-label="Pause video"><i class="fas fa-pause"></i></button>
+                </div>
+                <span class="hm-float hm-float--1"><i class="fas fa-signal"></i> {{ __('managenovax.home.hero_card_levels') }}</span>
+                <span class="hm-float hm-float--2"><i class="fas fa-clock"></i> {{ __('managenovax.home.hero_card_access') }}</span>
+                <span class="hm-float hm-float--3"><i class="fas fa-coins"></i> {{ __('managenovax.home.hero_card_credits') }}</span>
+                <span class="hm-hero__ring" aria-hidden="true"></span>
             </div>
         </div>
     </section>
 
-    {{-- 1.5 ABOUT / COLLAGE SECTION --}}
-    
+    <div class="hm__wrap">
 
-    <section class="art-about">
-        <div class="art-about-container">
-            <div class="art-about-left">
-                <img src="{{ asset('assets/images/hero-1.webp') }}" alt="Art Course" class="art-about-img art-about-img-1" loading="lazy">
-                <img src="{{ asset('assets/images/hero-2.webp') }}" alt="Art Materials" class="art-about-img art-about-img-2" loading="lazy">
-                <img src="{{ asset('assets/images/hero-3.webp') }}" alt="Student Working" class="art-about-img art-about-img-3" loading="lazy">
-            </div>
-            <div class="art-about-right">
-                <h2>{{ __('managenovax.home.about_title') }}</h2>
-                <p>{{ __('managenovax.home.about_desc_1') }}</p>
-                <p>{{ __('managenovax.home.about_desc_2') }}</p>
-                <ul class="art-about-list">
-                    <li><i class="fas fa-check-circle"></i> {!! __('managenovax.home.about_feat_1') !!}</li>
-                    <li><i class="fas fa-check-circle"></i> {!! __('managenovax.home.about_feat_2') !!}</li>
-                    <li><i class="fas fa-check-circle"></i> {!! __('managenovax.home.about_feat_3') !!}</li>
+        {{-- ================= 2. STATS ================= --}}
+        <ul class="hm-stats">
+            <li class="hm-stat"><strong data-count="{{ $hmCourses }}">{{ $hmCourses }}</strong><span><i class="fas fa-book-open"></i> {{ __('managenovax.home.stat_courses') }}</span></li>
+            <li class="hm-stat"><strong data-count="{{ $hmCategories }}">{{ $hmCategories }}</strong><span><i class="fas fa-layer-group"></i> {{ __('managenovax.home.stat_categories') }}</span></li>
+            <li class="hm-stat"><strong data-count="{{ $hmLevels }}">{{ $hmLevels }}</strong><span><i class="fas fa-signal"></i> {{ __('managenovax.home.stat_levels') }}</span></li>
+            <li class="hm-stat"><strong>24/7</strong><span><i class="fas fa-laptop"></i> {{ __('managenovax.home.stat_access') }}</span></li>
+        </ul>
+
+        {{-- ================= 3. CATEGORIES ================= --}}
+        @if(isset($category_lists) && $category_lists->count())
+            <section class="hm-cats hm-reveal">
+                <div class="hm-head hm-head--light">
+                    <div>
+                        <span class="hm-eyebrow hm-eyebrow--lime">{{ __('managenovax.home.cats_eyebrow') }}</span>
+                        <h2 class="hm-head__title">{{ __('managenovax.home.cats_title') }}</h2>
+                    </div>
+                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--white">{{ __('managenovax.home.cats_all') }} <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <ul class="hm-cats__grid">
+                    @foreach($category_lists as $i => $cat)
+                        <li>
+                            <a href="{{ route('product-lists', $cat->slug) }}" class="hm-cat hm-cat--{{ ($i % 4) + 1 }}">
+                                <span class="hm-cat__media">
+                                    @if($cat->photo)
+                                        <img src="{{ asset(ltrim($cat->photo, '/')) }}" alt="" loading="lazy">
+                                    @else
+                                        <i class="fas fa-layer-group"></i>
+                                    @endif
+                                </span>
+                                <span class="hm-cat__body">
+                                    <span class="hm-cat__title">{{ $cat->title }}</span>
+                                    <span class="hm-cat__count">{{ __('managenovax.home.cats_courses', ['count' => $cat->products_count ?? 0]) }}</span>
+                                </span>
+                                <span class="hm-cat__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
-                <a href="{{ route('product-lists') }}" class="art-hero-btn">{{ __('managenovax.home.about_btn') }}</a>
-            </div>
-        </div>
-    </section>
+            </section>
+        @endif
 
-    {{-- 2. PRODUCTS CAROUSEL --}}
-    @php
-        $visualProducts = \App\Models\Product::where('status','active')->get();
-    @endphp
-    @if($visualProducts->count() > 0)
-    
-
-    <section class="art-cat-carousel-section">
-        <h2>{{ __('managenovax.home.products_title') }}</h2>
-        <div class="art-cat-layout">
-            <button class="art-cat-nav-btn" id="artCatPrevBtn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
-            <div class="art-cat-scroll-container" id="artCatScrollContainer">
-                @foreach($visualProducts as $product)
-                    @php 
-                        $pimg = $product->photo ? explode(',', $product->photo)[0] : null; 
-                    @endphp
-                    <div class="art-cat-scroll-card">
-                        <div class="art-cat-scroll-img">
-                            @if($pimg)
-                                <img src="{{ url($pimg) }}" alt="{{ $product->title }}" loading="lazy">
-                            @else
-                                <div class="placeholder"><i class="fas fa-layer-group"></i></div>
-                            @endif
-                        </div>
-                        <div class="art-cat-scroll-content">
-                            <h3>{{ $product->title }}</h3>
-                            <p>{{ $product->summary ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 100, '...') }}</p>
-                            <a href="{{ route('product-detail', $product->slug) }}" class="art-hero-btn">{{ __('managenovax.home.products_btn') }}</a>
-                        </div>
+        {{-- ================= 4. FEATURED COURSES ================= --}}
+        @if($hmFeatured->count())
+            <section class="hm-featured hm-reveal">
+                <div class="hm-head">
+                    <div>
+                        <span class="hm-eyebrow">{{ __('managenovax.home.featured_eyebrow') }}</span>
+                        <h2 class="hm-head__title">{{ __('managenovax.home.featured_title') }}</h2>
                     </div>
-                @endforeach
-            </div>
-            <button class="art-cat-nav-btn" id="artCatNextBtn" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const scrollContainer = document.getElementById('artCatScrollContainer');
-            const prevBtn = document.getElementById('artCatPrevBtn');
-            const nextBtn = document.getElementById('artCatNextBtn');
-            if(scrollContainer && prevBtn && nextBtn) {
-                // Calculate scroll amount dynamically based on card width + gap
-                const scrollAmount = () => {
-                    const card = scrollContainer.querySelector('.art-cat-scroll-card');
-                    return card ? card.offsetWidth + 30 : 400; // 30 is the gap
-                };
-
-                prevBtn.addEventListener('click', () => {
-                    scrollContainer.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
-                });
-                nextBtn.addEventListener('click', () => {
-                    scrollContainer.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
-                });
-            }
-        });
-    </script>
-    @endif
-
-    {{-- 3. HOW IT WORKS (CARDS) --}}
-    
-
-    <section class="art-how-section">
-        <h2 class="art-how-title">{{ __('managenovax.home.steps_title') }}</h2>
-        <div class="art-how-grid">
-            <div class="art-how-card">
-                <div class="art-how-icon">
-                    <i class="fas fa-compass"></i>
+                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--dark">{{ __('managenovax.home.featured_all') }} <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <h3>{{ __('managenovax.home.steps_1_title') }}</h3>
-                <p>{{ __('managenovax.home.steps_1_desc') }}</p>
-            </div>
-            <div class="art-how-card">
-                <div class="art-how-icon">
-                    <i class="fas fa-play-circle"></i>
-                </div>
-                <h3>{{ __('managenovax.home.steps_2_title') }}</h3>
-                <p>{{ __('managenovax.home.steps_2_desc') }}</p>
-            </div>
-            <div class="art-how-card">
-                <div class="art-how-icon">
-                    <i class="fas fa-palette"></i>
-                </div>
-                <h3>{{ __('managenovax.home.steps_3_title') }}</h3>
-                <p>{{ __('managenovax.home.steps_3_desc') }}</p>
-            </div>
-        </div>
-    </section>
-
-
-
-
-        {{-- 6. INSPIRATION GALLERY (Remaining Assets) --}}
-    
-    <section class="art-inspiration-section">
-        <h2>{{ __('managenovax.home.inspire_title') }}</h2>
-        <p>{{ __('managenovax.home.inspire_desc') }}</p>
-        <div class="art-insp-grid">
-            <div class="art-insp-item">
-                <video src="{{ asset('assets/videos/inspire.webm') }}" autoplay loop muted playsinline></video>
-            </div>
-            <div class="art-insp-item">
-                <img src="{{ asset('assets/images/hero-4.webp') }}" alt="Creative Inspiration" loading="lazy">
-            </div>
-        </div>
-    </section>
-
-    {{-- 5. TOP UP SECTION (Imported from topup.blade.php) --}}
-    
-
-    <div class="ag-topup-page">
-        <div class="ag-container">
-            
-            <div class="ag-topup-head">
-                <h2 class="ag-page-title">{{ __('managenovax.credits.pg_title') }}</h2>
-                <p class="ag-page-desc">{{ __('managenovax.credits.pg_desc') }}</p>
-            </div>
-
-            @php
-                $cur = session('currency');
-                if ($cur == 'JPY') {
-                    $tiers = [
-                        ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'&yen;1 - &yen;79,999',        'f'=>false],
-                        ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'&yen;80,000 - &yen;159,999',  'f'=>false],
-                        ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'&yen;160,000 - &yen;239,999', 'f'=>false],
-                        ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'&yen;240,000+',           'f'=>true],
-                    ];
-                } elseif ($cur == 'HKD') {
-                    $tiers = [
-                        ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'HK$1 - HK$3,999',       'f'=>false],
-                        ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'HK$4,000 - HK$7,999',     'f'=>false],
-                        ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'HK$8,000 - HK$11,999', 'f'=>false],
-                        ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'HK$12,000+',           'f'=>true],
-                    ];
-                } else {
-                    $tiers = [
-                        ['n'=>__('managenovax.credits.tier_standard'), 'i'=>'fa-feather', 'big'=>'x1',   'r'=>'$1 - $499',       'f'=>false],
-                        ['n'=>__('managenovax.credits.tier_premium'),  'i'=>'fa-star',    'big'=>'x1.5', 'r'=>'$500 - $999',     'f'=>false],
-                        ['n'=>__('managenovax.credits.tier_elite'),    'i'=>'fa-gem',     'big'=>'x2',   'r'=>'$1,000 - $1,499', 'f'=>false],
-                        ['n'=>__('managenovax.credits.tier_vip'),      'i'=>'fa-crown',   'big'=>'x2.5', 'r'=>'$1,500+',         'f'=>true],
-                    ];
-                }
-            @endphp
-
-            <div class="ag-split-grid">
-                
-                <div class="ag-table-card">
-                    <h2 class="ag-section-title">{{ __('managenovax.credits.table_title') }}</h2>
-                    
-                    <div class="ag-table-wrap">
-                        <table class="ag-tiers-table">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('managenovax.credits.table_col1') }}</th>
-                                    <th>{{ __('managenovax.credits.table_col2') }}</th>
-                                    <th>{{ __('managenovax.credits.table_col3') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($tiers as $t)
-                                    <tr class="{{ $t['f'] ? 'vip-row' : '' }}">
-                                        <td>
-                                            <i class="fas {{ $t['i'] }}"></i> 
-                                            <strong>{{ $t['n'] }}</strong>
-                                            @if($t['f']) <span class="ag-badge">{{ __('managenovax.credits.best_value') }}</span> @endif
-                                        </td>
-                                        <td>{!! $t['r'] !!}</td>
-                                        <td><span class="ag-highlight">{{ $t['big'] }}</span></td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <p class="ag-note">
-                        @if(session('currency') == 'JPY')
-                            {{ __('managenovax.credits.jpy_note') }}
-                        @elseif(session('currency') == 'HKD')
-                            {{ __('managenovax.credits.hkd_note') }}
-                        @else
-                            {{ __('managenovax.credits.usd_note') }}
-                        @endif
-                    </p>
-                    <div class="ag-disclaimer-box">
-                        <i class="fas fa-exclamation-circle"></i> 
-                        <div>
-                            <strong>{{ __('managenovax.credits.disclaimer_title') }}</strong> {{ __('managenovax.credits.disclaimer_text') }}
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="ag-calc-card">
-                        <h2 class="ag-calc-title"><i class="fas fa-calculator"></i> {{ __('managenovax.credits.calc_title') }}</h2>
-                        <p class="ag-calc-desc">{{ __('managenovax.credits.calc_desc') }}</p>
-                        
-                        <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form">
-                            @csrf
-                            
-                            <div class="ag-form-group">
-                                <label class="ag-label">{{ __('managenovax.credits.calc_label') }}</label>
-                                <div class="ag-input-wrap">
-                                    <span class="ag-currency-symbol">{!! session('currency') == 'JPY' ? '&yen;' : '$' !!}</span>
-                                    <input type="number" name="amount" id="topup_amount" class="ag-input" placeholder="0" min="1" required>
+                <ul class="pl-grid">
+                    @foreach($hmFeatured as $course)
+                        @php
+                            $cimg = $course->photo ? explode(',', $course->photo)[0] : null;
+                            $cLevels = $course->levels;
+                            $cCount = $cLevels ? $cLevels->count() : 0;
+                            $cMin = $cCount ? $cLevels->min('price_in_points') : null;
+                            $cCat = optional($course->cat_info)->title;
+                        @endphp
+                        <li class="pl-card-wrap">
+                            <a href="{{ route('product-detail', $course->slug) }}" class="pl-card">
+                                <div class="pl-card__media">
+                                    @if($cimg)
+                                        <img src="{{ asset(ltrim($cimg, '/')) }}" alt="{{ $course->title }}" loading="lazy">
+                                    @else
+                                        <span class="pl-card__placeholder"><i class="fas fa-graduation-cap"></i></span>
+                                    @endif
+                                    @if($cCat)
+                                        <span class="pl-card__cat">{{ $cCat }}</span>
+                                    @endif
                                 </div>
+                                <div class="pl-card__body">
+                                    @if($cCount)
+                                        <span class="pl-card__levels"><i class="fas fa-signal"></i> {{ $cCount }} {{ __('managenovax.catalog.levels_label') }}</span>
+                                    @endif
+                                    <h3 class="pl-card__title">{{ $course->title }}</h3>
+                                    @if($course->summary)
+                                        <p class="pl-card__summary">{{ \Illuminate\Support\Str::limit(strip_tags($course->summary), 120) }}</p>
+                                    @endif
+                                    <div class="pl-card__foot">
+                                        @if($cMin !== null)
+                                            <span class="pl-card__price">
+                                                <small>{{ __('managenovax.catalog.starting_from') }}</small>
+                                                <strong><i class="fas fa-coins"></i> {{ number_format($cMin) }}</strong>
+                                                <small>{{ __('managenovax.catalog.credits_label') }}</small>
+                                            </span>
+                                        @else
+                                            <span class="pl-card__price"><strong class="pl-card__free">{{ __('managenovax.catalog.free_label') }}</strong></span>
+                                        @endif
+                                        <span class="pl-card__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </section>
+        @endif
+
+        {{-- ================= 5. HOW IT WORKS ================= --}}
+        <section class="hm-steps hm-reveal">
+            <div class="hm-steps__media">
+                <img src="{{ asset('assets/images/home/how-it-works.webp') }}" width="1200" height="800" alt="{{ __('managenovax.home.steps_title') }}" loading="lazy">
+                <span class="hm-steps__badge"><i class="fas fa-play"></i> {{ __('managenovax.home.step4_title') }}</span>
+            </div>
+            <div class="hm-steps__content">
+                <span class="hm-eyebrow hm-eyebrow--lime">{{ __('managenovax.home.steps_eyebrow') }}</span>
+                <h2 class="hm-steps__title">{{ __('managenovax.home.steps_title') }}</h2>
+                <ol class="hm-steps__list">
+                    @foreach([['fa-search', 1], ['fa-sliders-h', 2], ['fa-coins', 3], ['fa-graduation-cap', 4]] as [$icon, $n])
+                        <li class="hm-step">
+                            <span class="hm-step__num">0{{ $n }}</span>
+                            <span class="hm-step__icon"><i class="fas {{ $icon }}"></i></span>
+                            <div>
+                                <h3 class="hm-step__title">{{ __('managenovax.home.step' . $n . '_title') }}</h3>
+                                <p class="hm-step__desc">{{ __('managenovax.home.step' . $n . '_desc') }}</p>
                             </div>
-
-                            <div class="ag-calc-stats">
-                                <div class="ag-calc-row">
-                                    <span>{{ __('managenovax.credits.calc_base') }}:</span>
-                                    <span id="base_points">0</span>
-                                </div>
-                                <div class="ag-calc-row">
-                                    <span>{{ __('managenovax.credits.calc_bonus') }}:</span>
-                                    <span id="multiplier_display">x1</span>
-                                </div>
-                                <div class="ag-calc-row ag-calc-total">
-                                    <span>{{ __('managenovax.credits.calc_total') }}:</span>
-                                    <span><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="ag-submit-btn topup-btn">
-                                <span>{{ __('managenovax.credits.calc_btn') }}</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
-                            
-                            <p class="ag-trust-note">
-                                <i class="fas fa-shield-alt"></i> {{ __('managenovax.credits.trust_msg') }}
-                            </p>
-                        </form>
-                    </div>
-                </div>
-
+                        </li>
+                    @endforeach
+                </ol>
             </div>
-        </div>
+            <div class="ab-path hm-steps__path">
+                <div class="ab-path__track" aria-hidden="true">
+                    <span class="ab-path__lvl ab-path__lvl--beginner">{{ __('managenovax.course.skill_beginner') }}</span>
+                    <i class="fas fa-chevron-right"></i>
+                    <span class="ab-path__lvl ab-path__lvl--intermediate">{{ __('managenovax.course.skill_intermediate') }}</span>
+                    <i class="fas fa-chevron-right"></i>
+                    <span class="ab-path__lvl ab-path__lvl--advanced">{{ __('managenovax.course.skill_advanced') }}</span>
+                    <i class="fas fa-chevron-right"></i>
+                    <span class="ab-path__lvl ab-path__lvl--expert">{{ __('managenovax.course.skill_expert') }}</span>
+                </div>
+                <p class="ab-path__caption">{{ __('managenovax.home.path_caption') }}</p>
+            </div>
+        </section>
+
+        {{-- ================= 6. WHY + CREDITS ================= --}}
+        <section class="hm-why hm-reveal">
+            <div class="hm-why__card">
+                <span class="hm-eyebrow">{{ __('managenovax.home.why_eyebrow') }}</span>
+                <h2 class="hm-head__title">{{ __('managenovax.home.why_title') }}</h2>
+                <ul class="ab-reasons hm-why__grid">
+                    @foreach([['fa-sitemap', 'lime'], ['fa-globe', 'cobalt'], ['fa-tools', 'saffron'], ['fa-headset', 'maroon']] as $i => [$icon, $tone])
+                        <li class="ab-reason">
+                            <span class="ab-reason__icon ab-reason__icon--{{ $tone }}"><i class="fas {{ $icon }}"></i></span>
+                            <h3 class="ab-reason__title">{{ __('managenovax.home.why' . ($i + 1) . '_title') }}</h3>
+                            <p class="ab-reason__desc">{{ __('managenovax.home.why' . ($i + 1) . '_desc') }}</p>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div class="hm-credits">
+                <div class="hm-credits__media">
+                    <img src="{{ asset('assets/images/home/credits.webp') }}" width="800" height="800" alt="" loading="lazy">
+                    <span class="hm-credits__coin" aria-hidden="true"><i class="fas fa-coins"></i></span>
+                </div>
+                <div class="hm-credits__body">
+                    <h2 class="hm-credits__title">{{ __('managenovax.home.credits_title') }}</h2>
+                    <p class="hm-credits__desc">{{ __('managenovax.home.credits_desc') }}</p>
+                    <ul class="hm-tiers">
+                        @foreach($hmTiers as $t => [$mult, $from])
+                            <li class="hm-tier {{ $t === 3 ? 'is-best' : '' }}">
+                                <span class="hm-tier__mult">{{ $mult }}</span>
+                                <span class="hm-tier__name">{{ $hmTierNames[$t] }}</span>
+                                <span class="hm-tier__from">{!! $hmSym !!}{{ $from }}+</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <a href="{{ route('points.topup') }}" class="hm-btn hm-btn--dark hm-btn--block">{{ __('managenovax.home.credits_btn') }} <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        {{-- ================= 7. FINAL CTA ================= --}}
+        <section class="hm-cta hm-reveal">
+            <div class="hm-cta__content">
+                <h2 class="hm-cta__title">{{ __('managenovax.home.cta_title') }}</h2>
+                <p class="hm-cta__desc">{{ __('managenovax.home.cta_desc') }}</p>
+                <div class="hm-cta__actions">
+                    <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--lime">{{ __('managenovax.home.cta_btn_courses') }} <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('contact') }}" class="hm-btn hm-btn--outline-light">{{ __('managenovax.home.cta_btn_contact') }}</a>
+                </div>
+            </div>
+            <div class="hm-cta__media">
+                <img src="{{ asset('assets/images/home/start-today.webp') }}" width="1200" height="600" alt="" loading="lazy">
+            </div>
+        </section>
+
     </div>
-
-
-
 </div>
+@endsection
+
 @push('scripts')
 <script>
-    // Tier card buttons focus the amount input
-    (function () {
-        document.querySelectorAll('.duo-tu-btn[data-topup-focus]').forEach(function (b) {
-            b.addEventListener('click', function () {
-                var a = document.getElementById('topup_amount');
-                if (a) { a.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { a.focus(); }, 350); }
-            });
+    document.addEventListener('DOMContentLoaded', function () {
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Hero video: pause for reduced motion + play/pause button
+        document.querySelectorAll('[data-hm-video]').forEach(function (btn) {
+            var video = btn.parentElement.querySelector('video');
+            if (!video) return;
+            if (reduce) { video.removeAttribute('autoplay'); video.pause(); }
+            var sync = function () {
+                btn.querySelector('i').className = video.paused ? 'fas fa-play' : 'fas fa-pause';
+                btn.setAttribute('aria-label', video.paused ? 'Play video' : 'Pause video');
+            };
+            btn.addEventListener('click', function () { video.paused ? video.play() : video.pause(); });
+            video.addEventListener('play', sync);
+            video.addEventListener('pause', sync);
+            sync();
         });
-    })();
 
-    // Live points calculator
-    document.addEventListener('DOMContentLoaded', function() {
-        const amountInput = document.getElementById('topup_amount');
-        const totalPointsDisplay = document.getElementById('total_points');
-        const basePointsDisplay = document.getElementById('base_points');
-        const multiplierDisplay = document.getElementById('multiplier_display');
-        if (!amountInput) return;
-
-        function calculatePoints() {
-            const amount = parseFloat(amountInput.value) || 0;
-            let multiplier = 1;
-            const isJPY = {{ session('currency') == 'JPY' ? 'true' : 'false' }};
-            const isHKD = {{ session('currency') == 'HKD' ? 'true' : 'false' }};
-            let basePoints = 0;
-
-            if (isJPY) {
-                basePoints = Math.floor(amount / 160);
-                if (amount >= 240000) multiplier = 2.5;
-                else if (amount >= 160000) multiplier = 2;
-                else if (amount >= 80000) multiplier = 1.5;
-                else multiplier = 1;
-            } else if (isHKD) {
-                basePoints = Math.floor(amount / 8);
-                if (amount >= 12000) multiplier = 2.5;
-                else if (amount >= 8000) multiplier = 2;
-                else if (amount >= 4000) multiplier = 1.5;
-                else multiplier = 1;
-            } else {
-                basePoints = Math.floor(amount);
-                if (amount >= 1500) multiplier = 2.5;
-                else if (amount >= 1000) multiplier = 2;
-                else if (amount >= 500) multiplier = 1.5;
-                else multiplier = 1;
-            }
-
-            const totalPoints = Math.round(basePoints * multiplier);
-            if(basePointsDisplay) basePointsDisplay.textContent = basePoints.toLocaleString();
-            if(multiplierDisplay) multiplierDisplay.textContent = multiplier === 1 ? '×1' : '×' + multiplier.toFixed(1);
-            if(totalPointsDisplay) totalPointsDisplay.textContent = totalPoints.toLocaleString();
+        if (!('IntersectionObserver' in window)) {
+            document.querySelectorAll('.hm-reveal').forEach(function (el) { el.classList.add('is-visible'); });
+            return;
         }
 
-        amountInput.addEventListener('input', calculatePoints);
-        amountInput.addEventListener('change', calculatePoints);
-
-        // Topup (add to cart) — submit without redirect, then reload
-        const topupForms = document.querySelectorAll('.topup-form');
-        topupForms.forEach(form => {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const submitBtn = form.querySelector('.topup-btn');
-                const originalBtnText = submitBtn.innerHTML;
-                const originalBtnState = submitBtn.disabled;
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-
-                fetch(form.action, { method: 'POST', body: new FormData(form), redirect: 'manual' })
-                    .then(response => new Promise(resolve => setTimeout(() => resolve(response), 500)))
-                    .then(() => { window.location.reload(); })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        submitBtn.disabled = originalBtnState;
-                        submitBtn.innerHTML = originalBtnText;
-                    });
+        // Reveal sections on scroll
+        var revealIO = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-visible');
+                revealIO.unobserve(entry.target);
             });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.hm-reveal').forEach(function (el) {
+            if (reduce) el.classList.add('is-visible'); else revealIO.observe(el);
         });
+
+        // Count-up stats
+        if (reduce) return;
+        var countIO = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                var el = entry.target, end = parseInt(el.dataset.count, 10) || 0, start = null;
+                var step = function (t) {
+                    if (!start) start = t;
+                    var p = Math.min((t - start) / 900, 1);
+                    el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
+                    if (p < 1) requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+                countIO.unobserve(el);
+            });
+        }, { threshold: 0.6 });
+        document.querySelectorAll('.hm-stat strong[data-count]').forEach(function (n) { countIO.observe(n); });
     });
 </script>
 @endpush
-
-@endsection

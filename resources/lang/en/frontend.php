@@ -101,6 +101,8 @@ return [
     'home' => [
         // Hero
         'hero_label'    => 'Online Learning',
+        'prev'          => 'Previous course',
+        'next'          => 'Next course',
         'hero_title'    => 'Learn new skills with courses built around your level',
         'hero_desc'     => 'Browse courses by category, choose the skill level that matches what you already know, and move forward one step at a time. Every course is online, so you can study whenever and wherever it suits you.',
         'search_ph'     => 'Search courses',

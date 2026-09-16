@@ -2984,6 +2984,718 @@ body.mobile-menu-visible .menu-box { transform: none; }
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
+   14k. Home
+   A featured-course carousel fills the opening band — the course still is the
+   background, its details sit over it, and a thumbnail strip switches between
+   them. Then categories, the credits explainer and a closing call to action.
+   Markup: frontend/index.blade.php
+   -------------------------------------------------------------------------- */
+.hm { min-width: 0; }
+
+.hm__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--section-gap) var(--container-padding);
+}
+
+/* ---------- Carousel ---------- */
+.hc {
+  position: relative;
+  min-height: clamp(30rem, 24rem + 26vw, 42rem);
+  overflow: hidden;
+  background: var(--color-bg-inverse);
+  isolation: isolate;
+}
+
+.hc-slide {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: inherit;
+}
+
+/* The incoming slide fades up as it takes over. The outgoing one cannot be
+   animated — it is removed with the hidden attribute so it also leaves the
+   accessibility tree — so the entrance carries the transition. */
+.hc-slide.is-active { animation: hc-in 520ms var(--ease-standard) both; }
+.hc-slide.is-active .hc-slide__body { animation: hc-rise 640ms var(--ease-standard) both; }
+
+@keyframes hc-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes hc-rise {
+  from { opacity: 0; transform: translateY(1rem); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Countdown to the next slide ---------- */
+.hc-progress {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 2;
+  height: 3px;
+  background: var(--color-overlay);
+}
+.hc-progress span,
+.cx-progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--color-primary);
+  animation: hc-bar 5s linear forwards;
+}
+
+@keyframes hc-bar {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+/* Paused on hover or focus — the bar holds where it is */
+.is-paused .hc-progress span,
+.is-paused .cx-progress span { animation-play-state: paused; }
+
+/* No entrance animation without motion; the slides still advance on time */
+@media (prefers-reduced-motion: reduce) {
+  .hc-slide.is-active,
+  .hc-slide.is-active .hc-slide__body,
+  .cx-slide.is-active,
+  .cx-slide.is-active .cx-slide__body { animation: none; }
+}
+
+.hc-slide__img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Reads from the leading edge so the picture stays open on the far side */
+.hc-slide__veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to top, var(--color-bg-inverse) 0%, var(--color-overlay) 40%, transparent 78%),
+    linear-gradient(to right, var(--color-bg-inverse) 0%, var(--color-overlay) 45%, transparent 80%);
+}
+
+.hc-slide__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-10) var(--container-padding) var(--space-12);
+  color: var(--color-text-inverse);
+}
+
+.hc-slide__kicker {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+}
+
+.hc-slide__title {
+  margin: 0;
+  max-width: 18ch;
+  font-size: var(--text-hero);
+  line-height: var(--leading-hero);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.hc-slide__desc {
+  max-width: 54ch;
+  margin: 0;
+  color: var(--color-text-inverse);
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body-lg);
+}
+
+/* The price is the one figure on the slide, so it gets its own plate. The
+   subtle/solid pair is AA in both themes, unlike terracotta on the photo. */
+.hc-slide__meta {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid var(--color-primary-subtle-border);
+  border-radius: var(--radius-full);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+}
+.hc-slide__meta strong {
+  font-family: var(--font-mono);
+  font-size: var(--text-heading-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+}
+
+/* ---------- Thumbnail picker ---------- */
+.hc-picker {
+  position: absolute;
+  inset-inline: var(--container-padding);
+  bottom: var(--space-5);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hc-picker__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  flex: none;
+  padding: 0;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-overlay);
+  color: var(--color-text-inverse);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+.hc-picker__arrow:hover {
+  background: var(--color-bg-surface);
+  color: var(--color-text);
+}
+
+.hc-thumbs {
+  display: flex;
+  gap: var(--space-2);
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-width: none;
+}
+.hc-thumbs::-webkit-scrollbar { display: none; }
+
+.hc-thumb {
+  display: block;
+  width: 7.5rem;
+  flex: none;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-muted);
+  /* Course stills are 16:9 */
+  aspect-ratio: 16 / 9;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}
+.hc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.hc-thumb:hover { opacity: 1; }
+.hc-thumb.is-active {
+  opacity: 1;
+  border-color: var(--color-primary);
+}
+
+/* The band supplies its own ring — the default is built for light surfaces */
+.hc :focus-visible {
+  outline: 2px solid var(--color-text-inverse);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+/* ---------- Sections ---------- */
+/* Spacing between sections comes from the wrapper's gap */
+.hm-cats,
+.hm-how { min-width: 0; }
+
+.hm-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+.hm-head__title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-heading-lg);
+  line-height: var(--leading-heading-lg);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.hm-head__desc {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+/* ---------- Buttons ---------- */
+.hm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-button);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.25;
+  white-space: nowrap;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+}
+.hm-btn--primary {
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+.hm-btn--primary:hover { background: var(--color-primary-hover); }
+
+.hm-btn--secondary {
+  background: var(--color-bg-surface);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+.hm-btn--secondary:hover { background: var(--color-bg-muted); }
+
+.hm-btn--onDark {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-inverse);
+}
+.hm-btn--onDark:hover {
+  background: var(--color-text-inverse);
+  color: var(--color-text);
+}
+
+/* ---------- Collage ---------- */
+.hg { min-width: 0; }
+
+.hg__title {
+  margin: 0 0 var(--space-8);
+  max-width: 22ch;
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.hg__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--grid-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  align-items: start;
+}
+
+/* --1 sits at the top of the band; --2 and --3 step down from lg */
+.hg__item,
+.hg__item--1 { min-width: 0; }
+
+.hg-tile {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-bg-muted);
+}
+
+.hg-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Two of the three stills are square; the middle one is portrait */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-standard);
+}
+.hg-tile--tall img { aspect-ratio: 2 / 3; }
+.hg-tile:hover img { transform: scale(1.03); }
+
+/* Caption plate, so it holds up over any part of the picture */
+.hg-tile__caption {
+  position: absolute;
+  inset-inline: var(--space-3);
+  bottom: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-overlay);
+  color: var(--color-text-inverse);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+}
+@supports (backdrop-filter: blur(2px)) {
+  .hg-tile__caption { backdrop-filter: blur(3px); }
+}
+
+/* ---------- Category carousel ---------- */
+.cx {
+  position: relative;
+  min-width: 0;
+}
+
+.cx-slide {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.cx-slide.is-active { animation: hc-in 520ms var(--ease-standard) both; }
+.cx-slide.is-active .cx-slide__body { animation: hc-rise 640ms var(--ease-standard) both; }
+
+.cx-slide__media {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-bg-muted);
+  /* Category stills are 16:9 */
+  aspect-ratio: 16 / 9;
+}
+.cx-slide__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cx-slide__ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--color-text-muted);
+  font-size: var(--text-display);
+}
+
+.cx-slide__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.cx-slide__kicker {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+}
+
+.cx-slide__title {
+  margin: 0;
+  font-size: var(--text-heading-lg);
+  line-height: var(--leading-heading-lg);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.cx-slide__desc {
+  max-width: 54ch;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body-lg);
+}
+
+/* Same plate as the price on the course slides, so the pair reads as a family */
+.cx-slide__count {
+  display: inline-flex;
+  align-items: baseline;
+  margin: 0;
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid var(--color-primary-subtle-border);
+  border-radius: var(--radius-full);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+}
+
+.cx-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.cx-nav__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  flex: none;
+  padding: 0;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}
+.cx-nav__arrow:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+.cx-nav__count {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+}
+.cx-nav__count span { color: var(--color-text); font-weight: var(--font-weight-semibold); }
+
+.cx-progress {
+  flex: 1;
+  height: 3px;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background: var(--color-progress-track);
+}
+
+/* ---------- Why learn here: video + portrait pair ---------- */
+.hw {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: stretch;
+}
+
+.hw__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.hw-video {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-bg-inverse);
+  /* The clip is 16:9 */
+  aspect-ratio: 16 / 9;
+}
+.hw-video__el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hw-video__toggle {
+  position: absolute;
+  inset-inline-end: var(--space-4);
+  bottom: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+.hw-video__toggle:hover { background: var(--color-bg-muted); }
+
+.hw__text { min-width: 0; }
+
+.hw__title {
+  margin: 0 0 var(--space-5);
+  font-size: var(--text-heading-lg);
+  line-height: var(--leading-heading-lg);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.hw-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.hw-point {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-block: var(--space-4);
+  padding-inline-start: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Terracotta marker, aligned to the middle of the name's first line */
+.hw-point::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: calc(var(--space-4) + 0.7em);
+  width: 0.4375rem;
+  height: 0.4375rem;
+  margin-top: -0.21875rem;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+}
+
+.hw-point__name {
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: var(--text-subheading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-subheading);
+}
+
+.hw-point__desc {
+  color: var(--color-text-secondary);
+  font-size: var(--text-small);
+  line-height: var(--leading-body);
+}
+
+/* The portrait keeps its own 2:3 ratio on narrow screens and stretches to the
+   height of the column beside it once the band goes two-up. */
+.hw__figure {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-bg-muted);
+}
+.hw__figure img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+/* ---------- Closing call to action ---------- */
+.hm-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-12) var(--space-6);
+  border-top: 2px solid var(--color-primary);
+  border-radius: var(--radius-card);
+  background: var(--color-bg-inverse);
+  color: var(--color-text-inverse);
+}
+
+.hm-cta__title {
+  margin: 0;
+  font-size: var(--text-heading-lg);
+  line-height: var(--leading-heading-lg);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.hm-cta__desc {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--color-text-inverse);
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body-lg);
+}
+
+.hm-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.hm-cta :focus-visible {
+  outline: 2px solid var(--color-text-inverse);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+/* ---------- Home responsive ---------- */
+@media (min-width: 40rem) {
+  .hg__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hm-cta { padding: var(--space-12) var(--space-8); }
+}
+
+@media (min-width: 64rem) {
+  /* Stepped down left to right, so the three stills read as a collage rather
+     than as a row of equal tiles */
+  .hg__item--2 { margin-top: var(--space-10); }
+  .hg__item--3 { margin-top: var(--space-16); }
+
+  .hw {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: var(--space-10);
+  }
+  /* Filling the column means the ratio no longer drives the height */
+  .hw__figure img { height: 100%; aspect-ratio: auto; }
+
+  .hc-slide__body { padding-block: var(--space-12) var(--space-16); }
+  /* Copy clears the thumbnail strip in the corner */
+  .hc-slide__desc,
+  .hc-slide__meta { max-width: 46%; }
+
+  .hc-picker {
+    inset-inline-start: auto;
+    inset-inline-end: var(--container-padding);
+    width: min(38rem, 55%);
+  }
+
+  /* Still on the left, its details on the right */
+  .cx-slide {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: var(--space-12);
+  }
+
+  .hm-cta {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-10);
+    padding: var(--space-16) var(--space-12);
+  }
+  .hm-cta__title   { flex: 0 1 22rem; }
+  .hm-cta__desc    { flex: 1; font-size: var(--text-body); }
+  .hm-cta__actions { flex: none; margin-top: 0; }
+}
+
+
+/* --------------------------------------------------------------------------
    14j. About us
    Two sections only: what this is, then how it works. The steps climb the way
    the course levels do. Markup: frontend/pages/about-us.blade.php

@@ -1,5 +1,6 @@
 @extends('frontend.layouts.main')
 @section('title', __('frontend.topup.title'))
+@section('description', __('frontend.topup.meta'))
 
 @section('main-content')
 @include('frontend.layouts.breadcrumb', [
@@ -114,15 +115,15 @@
 
                     <div class="tu-stats">
                         <div class="tu-stats__row">
-                            <span>{{ __('frontend.topup.base') }}</span>
+                            <span>{{ __('frontend.topup.base') }}:</span>
                             <span id="base_points">0</span>
                         </div>
                         <div class="tu-stats__row">
-                            <span>{{ __('frontend.topup.multiplier') }}</span>
+                            <span>{{ __('frontend.topup.multiplier') }}:</span>
                             <span class="tu-stats__mult" id="multiplier_display">x1</span>
                         </div>
                         <div class="tu-stats__total">
-                            <span class="tu-stats__total-label">{{ __('frontend.topup.total') }}</span>
+                            <span class="tu-stats__total-label">{{ __('frontend.topup.total') }}:</span>
                             <span class="tu-stats__total-value"><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
                         </div>
                     </div>

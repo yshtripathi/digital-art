@@ -384,7 +384,7 @@
         @endphp
         <div class="hd-cart__foot">
             <div class="hd-cart__total">
-                <span class="hd-cart__total-label">{{ __('frontend.header.cart_total') }}</span>
+                <span class="hd-cart__total-label">{{ __('frontend.header.cart_total') }}:</span>
                 @if($hasPoints && !$hasProducts)
                     <span class="hd-cart__total-value hd-num">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</span>
                 @else

@@ -1,4 +1,8 @@
 @extends('frontend.layouts.main')
+
+@section('title', __('frontend.home.tab'))
+@section('description', __('frontend.home.meta'))
+
 @section('main-content')
 @php
     $hmCategories = isset($category_lists) ? $category_lists : collect();
@@ -69,7 +73,7 @@
                             @endif
                         </p>
 
-                        <h1 class="hc-slide__title">{{ $course->title }}</h1>
+                        <h2 class="hc-slide__title">{{ $course->title }}</h2>
 
                         @if($course->summary)
                             <p class="hc-slide__desc">{{ \Illuminate\Support\Str::limit(strip_tags($course->summary), 260) }}</p>
@@ -122,7 +126,7 @@
 
         {{-- ================= 2. COLLAGE ================= --}}
         <section class="hg">
-            <h2 class="hg__title">{{ __('frontend.home.hero_title') }}</h2>
+            <h1 class="hg__title">{{ __('frontend.home.hero_title') }}</h1>
 
             <ul class="hg__grid">
                 <li class="hg__item hg__item--1">
@@ -285,15 +289,15 @@
 
                         <div class="tu-stats">
                             <div class="tu-stats__row">
-                                <span>{{ __('frontend.topup.base') }}</span>
+                                <span>{{ __('frontend.topup.base') }}:</span>
                                 <span id="base_points">0</span>
                             </div>
                             <div class="tu-stats__row">
-                                <span>{{ __('frontend.topup.multiplier') }}</span>
+                                <span>{{ __('frontend.topup.multiplier') }}:</span>
                                 <span class="tu-stats__mult" id="multiplier_display">x1</span>
                             </div>
                             <div class="tu-stats__total">
-                                <span class="tu-stats__total-label">{{ __('frontend.topup.total') }}</span>
+                                <span class="tu-stats__total-label">{{ __('frontend.topup.total') }}:</span>
                                 <span class="tu-stats__total-value"><i class="fas fa-coins" aria-hidden="true"></i> <span id="total_points">0</span></span>
                             </div>
                         </div>

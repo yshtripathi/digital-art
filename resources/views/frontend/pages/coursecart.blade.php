@@ -135,11 +135,11 @@
 
                         <div class="cp-summary__rows">
                             <div class="cp-summary__row">
-                                <span>{{ __('frontend.coursecart.item_count') }}</span>
+                                <span>{{ __('frontend.coursecart.item_count') }}:</span>
                                 <span>{{ $itemCount }}</span>
                             </div>
                             <div class="cp-summary__row">
-                                <span>{{ __('frontend.coursecart.balance') }}</span>
+                                <span>{{ __('frontend.coursecart.balance') }}:</span>
                                 <span>{{ number_format($points) }}</span>
                             </div>
                         </div>

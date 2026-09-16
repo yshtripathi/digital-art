@@ -125,7 +125,7 @@
                                             {{ trans_choice('frontend.catalog.levels', $levelCount, ['count' => $levelCount]) }}
                                         </span>
                                         <span class="pl-row__price">
-                                            {{ __('frontend.catalog.from') }}
+                                            <span class="pl-row__from">{{ __('frontend.catalog.from') }}</span>
                                             <strong>{{ number_format($minPoints) }}</strong>
                                             {{ __('frontend.catalog.credits') }}
                                         </span>

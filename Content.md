@@ -44,6 +44,9 @@ A placeholder is integrated into a sentence **only** where the company name, ema
 | Company email | `:email` | `miscs` table in the database | `[Company Email]` |
 | Company address | `:address` | `miscs` table in the database | `[Company Address]` |
 | Company phone | `:phone` | `miscs` table in the database | `[Company Phone]` |
+| Website name | `:site` | The `head` group of the lang file | `[Website Name]` |
+
+The website name is **not** a company value. One company can run several websites, so the name belongs to the site, not to the company record. It is stored per language in `frontend.head.site` and never read from the `miscs` table. Everything else in this table still comes from `miscs`.
 
 How it works:
 
@@ -88,9 +91,18 @@ The browser tab title (`<title>`) is only the plain page name.
 - No separators such as `|`, `-` or `:`
 - No taglines, keywords or extra words
 
+**One exception: the home page.** The home page has no page name of its own, so its title carries the website name and a short description of the platform, built from `frontend.head.home` with the `:site` placeholder:
+
+```php
+'site' => '[Website Name]',
+'home' => ':site — Online Learning Platform',
+```
+
+Every other page keeps its plain page name. Do not add the website name to any other title.
+
 | Page | Tab title |
 |---|---|
-| Home | Home |
+| Home | The website name and a short platform description (see the exception above) |
 | About page | About Us |
 | Contact page | Contact Us |
 | Course listing | Courses |
@@ -126,6 +138,20 @@ All content, and especially the Terms & Conditions and the policy pages, must be
 - Supported by bullet points wherever several items, steps or conditions are listed
 
 Do not turn a whole page into one long paragraph, and do not reduce a whole page to bare bullet points. Use a short introductory paragraph under each heading, then bullets for the details.
+
+#### Bullet point punctuation
+
+- Do not put a full stop at the end of a bullet point
+- This applies to every language, including the Japanese full stop `。`
+- Commas and other punctuation inside a bullet are fine, only the closing full stop is removed
+- If a bullet really needs more than one sentence, write it as a short paragraph instead, or split it into separate bullets
+- Question marks and exclamation marks stay where they belong, for example in an FAQ question
+- Full stops are still used normally in paragraphs, labels, validation messages and system messages
+
+| Wrong | Right |
+|---|---|
+| - Users are responsible for keeping login details secure. | - Users are responsible for keeping login details secure |
+| - アカウントは個人用です。 | - アカウントは個人用です |
 
 ### 2.6 Footer newsletter success message
 
@@ -1300,9 +1326,9 @@ If a content requirement seems to need a database change, stop, explain which st
 
 ## 29. Final QA Checklist
 
-- [ ] Tab titles are plain page names with no website name or extra text
-- [ ] No placeholders or inserted keywords, except `:company`, `:email`, `:address` and `:phone`
-- [ ] Company name, email, address and phone come only from the `miscs` table
+- [ ] Tab titles are plain page names with no website name or extra text, apart from the home page
+- [ ] No placeholders or inserted keywords, except `:company`, `:email`, `:address`, `:phone` and `:site`
+- [ ] Company name, email, address and phone come only from the `miscs` table, and the website name only from `frontend.head.site`
 - [ ] Dummy values are exactly `[Company Name]`, `[Company Email]`, `[Company Address]` and `[Company Phone]`, stored only in the lang files
 - [ ] Every form field has a label, placeholder and specific validation messages
 - [ ] Server-side and client-side validation messages match and are localized
@@ -1310,6 +1336,7 @@ If a content requirement seems to need a database change, stop, explain which st
 - [ ] Checkout shows the billing descriptor text followed by the DBA image
 - [ ] Content is universal and fits any e-learning subject
 - [ ] Terms & Conditions, Privacy, Refund and Delivery pages are descriptive, with headings and bullet points
+- [ ] No bullet point ends with a full stop, in any language
 - [ ] Newsletter success message is exactly `Thank you for subscribing`
 - [ ] Copyright company name comes from the `miscs` table and links to the home page
 - [ ] Translation keys are short and simple (`file.key`)

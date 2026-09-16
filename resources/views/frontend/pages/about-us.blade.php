@@ -1,5 +1,7 @@
 @extends('frontend.layouts.main')
 @section('title', __('frontend.about.title'))
+@section('description', __('frontend.about.meta'))
+
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [

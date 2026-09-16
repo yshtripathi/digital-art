@@ -91,7 +91,7 @@
 
                     <div class="cp-summary__rows">
                         <div class="cp-summary__row">
-                            <span>{{ __('frontend.cart.item_count') }}</span>
+                            <span>{{ __('frontend.cart.item_count') }}:</span>
                             <span>{{ count($cartItems) }}</span>
                         </div>
 
@@ -99,7 +99,7 @@
 
                         @if($discount > 0)
                             <div class="cp-summary__row cp-summary__row--discount">
-                                <span>{{ __('frontend.cart.discount') }}</span>
+                                <span>{{ __('frontend.cart.discount') }}:</span>
                                 <span>&minus; {{ $sym }}{{ number_format($discount, $isJPY ? 0 : 2) }}</span>
                             </div>
                         @endif

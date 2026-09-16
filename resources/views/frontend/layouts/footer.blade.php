@@ -22,11 +22,17 @@
             <div class="ft-news__copy">
                 <h2 class="ft-news__title" id="ft-news-title">{{ __('frontend.footer.news_title') }}</h2>
                 <p class="ft-news__desc">{{ __('frontend.footer.news_desc') }}</p>
+                <ul class="ft-news__list">
+                    @foreach(__('frontend.footer.news_points') as $point)
+                        <li class="ft-news__point">{{ $point }}</li>
+                    @endforeach
+                </ul>
+                <p class="ft-news__note">{{ __('frontend.footer.news_note') }}</p>
             </div>
 
             <div class="ft-news__side">
                 <form class="ft-news__form subscribe-form" novalidate>
-                    <label class="ft-news__label" for="ft-news-email">{{ __('frontend.footer.news_ph') }}</label>
+                    <label class="ft-news__label" for="ft-news-email">{{ __('frontend.footer.news_email') }}</label>
                     <div class="ft-news__field">
                         <input type="email" name="email" id="ft-news-email" class="ft-news__input email" placeholder="{{ __('frontend.footer.news_ph') }}" required>
                         <button type="submit" class="ft-news__btn">

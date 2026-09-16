@@ -1,11 +1,13 @@
 @php
-    // Company name comes from the miscs table; the lang file holds the dummy fallback
-    $siteName    = $misc['Company Name'] ?? __('frontend.company.name');
+    // The website name lives in the lang file: one company runs several sites,
+    // so the name belongs to the site, not to the company record in miscs.
+    $siteName    = __('frontend.head.site');
 
     $locale      = str_replace('_', '-', app()->getLocale());
-    // Tab title is the plain page name only (no site name, no separators)
+    // Each page sets its own plain tab title. Only the home fallback carries the
+    // website name, since the home page has no page name of its own.
     $pageTitle   = trim(html_entity_decode($__env->yieldContent('title'), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
-    $fullTitle   = $pageTitle !== '' ? $pageTitle : __('frontend.head.home');
+    $fullTitle   = $pageTitle !== '' ? $pageTitle : __('frontend.head.home', ['site' => $siteName]);
     $description = trim(html_entity_decode(strip_tags($__env->yieldContent('description')), ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?: __('frontend.head.description');
     $description = \Illuminate\Support\Str::limit(preg_replace('/\s+/', ' ', $description), 160, '…');
     $shareImage  = $og_image ?? asset('assets/images/breadcrumb.webp');

@@ -2,7 +2,7 @@
   ==========================================================================
   Page Banner + Breadcrumb
   Cobalt color-block panel with a contained photo on the right (see DESIGN.md).
-  Styles: public/css/main.css
+  Styles: public/css/app.css
 
   Usage:
   @include('frontend.layouts.breadcrumb', [

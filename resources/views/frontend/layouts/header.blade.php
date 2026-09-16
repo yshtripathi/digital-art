@@ -1,7 +1,7 @@
 {{-- ==========================================================================
      Site Header
      Floating pill navigation (see design and content/DESIGN.md).
-     Styles: public/css/main.css
+     Styles: public/css/app.css
      JS hooks kept: .mobile-nav-toggler, .mobile-menu, .menu-backdrop, .close-btn,
      .ui-btn.bb-cart-toggle, .offcanvas__overlay, .cartcanvas__info, .cartcanvas__close
      ========================================================================== --}}

@@ -1,0 +1,506 @@
+/* ==========================================================================
+   [Website Name] — Main Stylesheet
+   Base layer only. Page and component designs are added one by one.
+   Tokens mirror: design/variables.css and design/tokens.json
+   Fonts are loaded in frontend/layouts/head.blade.php
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. Design Tokens
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  /* ---------- Surfaces ---------- */
+  --color-bg-canvas: #fbf8f3;
+  --color-bg-surface: #ffffff;
+  --color-bg-muted: #f4efe7;
+  --color-bg-inverse: #1c1917;
+  --color-overlay: rgba(20, 17, 15, 0.6);
+
+  /* ---------- Borders ---------- */
+  --color-border: #e6dfd3;
+  --color-border-strong: #cfc5b4;
+  --color-border-input: #8f877d;
+
+  /* ---------- Text ---------- */
+  --color-text: #1c1917;
+  --color-text-secondary: #57534e;
+  --color-text-muted: #6f6862;
+  --color-text-inverse: #fbf8f3;
+  --color-text-on-primary: #ffffff;
+
+  /* ---------- Primary action ---------- */
+  --color-primary: #c2410c;
+  --color-primary-hover: #9a3412;
+  --color-primary-subtle: #fff4ed;
+  --color-primary-subtle-border: #ffe4d3;
+
+  /* ---------- Accent (links, active nav, focus) ---------- */
+  --color-accent: #3730a3;
+  --color-accent-hover: #312e81;
+  --color-accent-subtle: #eef2ff;
+  --color-focus-ring: #4f46e5;
+
+  /* ---------- Status ---------- */
+  --color-success: #15803d;
+  --color-success-subtle: #ecfdf3;
+  --color-warning: #b45309;
+  --color-warning-subtle: #fffbeb;
+  --color-error: #b91c1c;
+  --color-error-subtle: #fef2f2;
+  --color-info: #1d4ed8;
+  --color-info-subtle: #eff6ff;
+
+  /* ---------- Learning components ---------- */
+  --color-progress-track: #e6dfd3;
+  --color-progress-fill: #15803d;
+  --color-rating: #d97706;
+  --color-disabled-bg: #f4efe7;
+  --color-disabled-text: #8a827a;
+
+  /* ---------- Subject categories ---------- */
+  --color-cat-creative-bg: #fff4ed;
+  --color-cat-creative-fg: #9a3412;
+  --color-cat-business-bg: #f4efe7;
+  --color-cat-business-fg: #3a3430;
+  --color-cat-technology-bg: #eef2ff;
+  --color-cat-technology-fg: #3730a3;
+  --color-cat-science-bg: #ecfdf3;
+  --color-cat-science-fg: #166534;
+  --color-cat-language-bg: #fdf2f8;
+  --color-cat-language-fg: #9d174d;
+  --color-cat-health-bg: #ecfeff;
+  --color-cat-health-fg: #155e75;
+
+  /* ---------- Typography — families ---------- */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans JP', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* ---------- Typography — weights ---------- */
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ---------- Typography — scale (rem respects user font size) ---------- */
+  --text-caption: 0.75rem;     /* 12px */
+  --leading-caption: 1.4;
+  --text-small: 0.875rem;      /* 14px */
+  --leading-small: 1.5;
+  --text-body: 1rem;           /* 16px */
+  --leading-body: 1.6;
+  --text-body-lg: 1.125rem;    /* 18px — lesson reading text */
+  --leading-body-lg: 1.7;
+  --text-subheading: 1.125rem; /* 18px */
+  --leading-subheading: 1.4;
+  --text-heading-sm: 1.25rem;  /* 20px */
+  --leading-heading-sm: 1.35;
+  --text-heading: 1.5rem;      /* 24px */
+  --leading-heading: 1.3;
+  --text-heading-lg: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);  /* 28 -> 36px */
+  --leading-heading-lg: 1.2;
+  --text-display: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);      /* 36 -> 56px */
+  --leading-display: 1.1;
+  --text-hero: clamp(2.75rem, 1.8rem + 4vw, 4.5rem);           /* 44 -> 72px */
+  --leading-hero: 1.05;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.06em;
+
+  /* ---------- Spacing (4px base) ---------- */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4 */
+  --space-2: 0.5rem;    /* 8 */
+  --space-3: 0.75rem;   /* 12 */
+  --space-4: 1rem;      /* 16 */
+  --space-5: 1.25rem;   /* 20 */
+  --space-6: 1.5rem;    /* 24 */
+  --space-8: 2rem;      /* 32 */
+  --space-10: 2.5rem;   /* 40 */
+  --space-12: 3rem;     /* 48 */
+  --space-16: 4rem;     /* 64 */
+  --space-20: 5rem;     /* 80 */
+  --space-24: 6rem;     /* 96 */
+
+  /* ---------- Layout ---------- */
+  --container-max: 80rem;         /* 1280px */
+  --container-padding: clamp(1rem, 0.5rem + 2vw, 2rem);
+  --reading-max: 70ch;
+  --sidebar-width: 20rem;
+  --header-height: 4rem;
+  --section-gap: clamp(3rem, 2rem + 4vw, 6rem);
+  --card-padding: var(--space-5);
+  --grid-gap: var(--space-6);
+  --touch-target: 2.75rem;        /* 44px minimum tap size */
+
+  /* Breakpoints — reference only; CSS variables can't be used inside @media.
+     sm 40rem (640) · md 48rem (768) · lg 64rem (1024) · xl 80rem (1280) */
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+
+  /* ---------- Radius ---------- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  --radius-tag: var(--radius-sm);
+  --radius-button: var(--radius-md);
+  --radius-input: var(--radius-md);
+  --radius-card: var(--radius-lg);
+  --radius-modal: var(--radius-xl);
+  --radius-pill: var(--radius-full);
+
+  /* ---------- Shadows ---------- */
+  --shadow-sm: 0 1px 2px 0 rgba(28, 25, 23, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(28, 25, 23, 0.10), 0 2px 4px -2px rgba(28, 25, 23, 0.06);
+  --shadow-lg: 0 16px 40px -8px rgba(28, 25, 23, 0.18), 0 4px 12px -4px rgba(28, 25, 23, 0.08);
+
+  --shadow-card: var(--shadow-sm);
+  --shadow-card-hover: var(--shadow-md);
+  --shadow-dropdown: var(--shadow-md);
+  --shadow-modal: var(--shadow-lg);
+
+  /* ---------- Focus ---------- */
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+  --focus-ring: 0 0 0 var(--focus-ring-offset) var(--color-bg-surface),
+                0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--color-focus-ring);
+
+  /* ---------- Motion ---------- */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1.2);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ---------- Z-index ---------- */
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-overlay: 1200;
+  --z-modal: 1300;
+  --z-toast: 1400;
+  --z-tooltip: 1500;
+
+  /* ---------- Media ---------- */
+  --aspect-video: 16 / 9;
+  --aspect-course-thumb: 16 / 10;
+  --aspect-portrait: 4 / 5;
+  --aspect-avatar: 1 / 1;
+}
+
+/* ---------- Dark theme: OS preference (unless forced light) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --color-bg-canvas: #14110f;
+    --color-bg-surface: #1c1917;
+    --color-bg-muted: #292524;
+    --color-bg-inverse: #0c0a09;
+    --color-overlay: rgba(0, 0, 0, 0.7);
+
+    --color-border: #3a3430;
+    --color-border-strong: #57504a;
+    --color-border-input: #7a716a;
+
+    --color-text: #f5f0e8;
+    --color-text-secondary: #d6cfc4;
+    --color-text-muted: #a8a097;
+    --color-text-inverse: #f5f0e8;
+    --color-text-on-primary: #1c1917;
+
+    --color-primary: #fb923c;
+    --color-primary-hover: #fdba74;
+    --color-primary-subtle: #3b2418;
+    --color-primary-subtle-border: #5c3420;
+
+    --color-accent: #a5b4fc;
+    --color-accent-hover: #c7d2fe;
+    --color-accent-subtle: #25234a;
+    --color-focus-ring: #a5b4fc;
+
+    --color-success: #4ade80;
+    --color-success-subtle: #12291b;
+    --color-warning: #fbbf24;
+    --color-warning-subtle: #2e2410;
+    --color-error: #f87171;
+    --color-error-subtle: #331616;
+    --color-info: #60a5fa;
+    --color-info-subtle: #152238;
+
+    --color-progress-track: #3a3430;
+    --color-progress-fill: #4ade80;
+    --color-rating: #fbbf24;
+    --color-disabled-bg: #292524;
+    --color-disabled-text: #78716c;
+
+    --color-cat-creative-bg: #3b2418;
+    --color-cat-creative-fg: #fdba74;
+    --color-cat-business-bg: #292524;
+    --color-cat-business-fg: #e7e0d5;
+    --color-cat-technology-bg: #25234a;
+    --color-cat-technology-fg: #c7d2fe;
+    --color-cat-science-bg: #12291b;
+    --color-cat-science-fg: #86efac;
+    --color-cat-language-bg: #3a1528;
+    --color-cat-language-fg: #f9a8d4;
+    --color-cat-health-bg: #0f2a30;
+    --color-cat-health-fg: #67e8f9;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.6), 0 4px 12px -4px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ---------- Dark theme: explicit toggle (keep in sync with block above) ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg-canvas: #14110f;
+  --color-bg-surface: #1c1917;
+  --color-bg-muted: #292524;
+  --color-bg-inverse: #0c0a09;
+  --color-overlay: rgba(0, 0, 0, 0.7);
+
+  --color-border: #3a3430;
+  --color-border-strong: #57504a;
+  --color-border-input: #7a716a;
+
+  --color-text: #f5f0e8;
+  --color-text-secondary: #d6cfc4;
+  --color-text-muted: #a8a097;
+  --color-text-inverse: #f5f0e8;
+  --color-text-on-primary: #1c1917;
+
+  --color-primary: #fb923c;
+  --color-primary-hover: #fdba74;
+  --color-primary-subtle: #3b2418;
+  --color-primary-subtle-border: #5c3420;
+
+  --color-accent: #a5b4fc;
+  --color-accent-hover: #c7d2fe;
+  --color-accent-subtle: #25234a;
+  --color-focus-ring: #a5b4fc;
+
+  --color-success: #4ade80;
+  --color-success-subtle: #12291b;
+  --color-warning: #fbbf24;
+  --color-warning-subtle: #2e2410;
+  --color-error: #f87171;
+  --color-error-subtle: #331616;
+  --color-info: #60a5fa;
+  --color-info-subtle: #152238;
+
+  --color-progress-track: #3a3430;
+  --color-progress-fill: #4ade80;
+  --color-rating: #fbbf24;
+  --color-disabled-bg: #292524;
+  --color-disabled-text: #78716c;
+
+  --color-cat-creative-bg: #3b2418;
+  --color-cat-creative-fg: #fdba74;
+  --color-cat-business-bg: #292524;
+  --color-cat-business-fg: #e7e0d5;
+  --color-cat-technology-bg: #25234a;
+  --color-cat-technology-fg: #c7d2fe;
+  --color-cat-science-bg: #12291b;
+  --color-cat-science-fg: #86efac;
+  --color-cat-language-bg: #3a1528;
+  --color-cat-language-fg: #f9a8d4;
+  --color-cat-health-bg: #0f2a30;
+  --color-cat-health-fg: #67e8f9;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.6), 0 4px 12px -4px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}
+
+
+/* ==========================================================================
+   2. Reset & Base
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  background-color: var(--color-bg-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+
+/* ==========================================================================
+   3. Typography
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+}
+
+h1 {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--font-weight-bold);
+}
+h2 { font-size: var(--text-heading-lg); line-height: var(--leading-heading-lg); }
+h3 { font-size: var(--text-heading);    line-height: var(--leading-heading); }
+h4 { font-size: var(--text-heading-sm); line-height: var(--leading-heading-sm); }
+
+/* Fraunces is only used from 20px up, so the small headings stay on the sans */
+h5, h6 {
+  font-family: var(--font-body);
+  font-size: var(--text-subheading);
+  line-height: var(--leading-subheading);
+}
+
+p {
+  margin: 0 0 var(--space-4);
+}
+
+code, kbd, pre, samp {
+  font-family: var(--font-mono);
+}
+
+
+/* ==========================================================================
+   4. Layout
+   ========================================================================== */
+.page-wrapper {
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.section {
+  padding-block: var(--section-gap);
+}
+
+
+/* ==========================================================================
+   5. Preloader
+   ========================================================================== */
+/* To be designed */
+
+
+/* ==========================================================================
+   6. Header
+   ========================================================================== */
+/* To be designed */
+
+
+/* ==========================================================================
+   7. Footer
+   ========================================================================== */
+/* To be designed */
+
+
+/* ==========================================================================
+   8. Breadcrumb
+   ========================================================================== */
+/* To be designed */
+
+
+/* ==========================================================================
+   9. Buttons
+   ========================================================================== */
+/* To be designed */
+
+
+/* ==========================================================================
+   10. Forms
+   ========================================================================== */
+/* To be designed */
+
+
+/* ==========================================================================
+   11. Cards
+   ========================================================================== */
+/* To be designed */
+
+
+/* ==========================================================================
+   12. Notifications
+   ========================================================================== */
+/* To be designed */
+
+
+/* ==========================================================================
+   13. Cookie Consent
+   ========================================================================== */
+/* To be designed */
+
+
+/* ==========================================================================
+   14. Pages
+   ========================================================================== */
+/* To be designed */

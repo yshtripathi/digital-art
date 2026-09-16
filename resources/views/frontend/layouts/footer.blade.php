@@ -1,7 +1,7 @@
 {{-- ==========================================================================
      Site Footer
      Lime newsletter card + maroon footer panel (see design and content/DESIGN.md).
-     Styles: public/css/main.css
+     Styles: public/css/app.css
      JS hooks kept: .subscribe-form, input[type="email"], .suces_rinfo, .scroll-to-top.scroll-to-target
      ========================================================================== --}}
 @php

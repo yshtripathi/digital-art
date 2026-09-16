@@ -41,24 +41,24 @@
             </div>
 
             <div class="ds-stats">
-                <div class="ds-stat ds-stat--lime">
+                <div class="ds-stat ds-stat--credits">
                     <span class="ds-stat__icon"><i class="fas fa-coins"></i></span>
                     <span class="ds-stat__label">{{ __('frontend.dashboard.credits') }}</span>
                     <strong class="ds-stat__value">{{ number_format($u->points_balance ?? 0) }}</strong>
                     <a href="{{ route('points.topup') }}" class="ds-stat__link">{{ __('frontend.dashboard.buy') }} <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="ds-stat ds-stat--cobalt">
+                <div class="ds-stat ds-stat--courses">
                     <span class="ds-stat__icon"><i class="fas fa-graduation-cap"></i></span>
                     <span class="ds-stat__label">{{ __('frontend.dashboard.unlocked') }}</span>
                     <strong class="ds-stat__value">{{ $redeemedCount }}</strong>
                     <a href="{{ route('product-lists') }}" class="ds-stat__link">{{ __('frontend.dashboard.browse') }} <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="ds-stat ds-stat--maroon">
+                <div class="ds-stat ds-stat--orders">
                     <span class="ds-stat__icon"><i class="fas fa-receipt"></i></span>
                     <span class="ds-stat__label">{{ __('frontend.dashboard.purchases') }}</span>
                     <strong class="ds-stat__value">{{ $purchasedCount }}</strong>
                 </div>
-                <div class="ds-stat ds-stat--white">
+                <div class="ds-stat ds-stat--member">
                     <span class="ds-stat__icon"><i class="fas fa-calendar-alt"></i></span>
                     <span class="ds-stat__label">{{ __('frontend.dashboard.member') }}</span>
                     <strong class="ds-stat__value ds-stat__value--sm">{{ $fmtDate($u->created_at, __('frontend.dashboard.member_format')) }}</strong>
@@ -117,7 +117,7 @@
                                 </span>
                                 <span class="ds-row__cell ds-row__muted" data-label="{{ __('frontend.dashboard.date') }}">{{ $fmtDate($order->created_at, __('frontend.dashboard.date_format')) }}</span>
                                 <span class="ds-row__cell ds-row__action">
-                                    <a href="{{ route('user.order.show', $order->id) }}" class="ds-btn ds-btn--dark ds-btn--sm">
+                                    <a href="{{ route('user.order.show', $order->id) }}" class="ds-btn ds-btn--inverse ds-btn--sm">
                                         <i class="fas fa-eye"></i> {{ __('frontend.dashboard.view') }}
                                     </a>
                                 </span>
@@ -128,7 +128,7 @@
                     <div class="ds-empty">
                         <span class="ds-empty__icon"><i class="fas fa-box-open"></i></span>
                         <p>{{ __('frontend.dashboard.purchases_empty') }}</p>
-                        <a href="{{ route('points.topup') }}" class="ds-btn ds-btn--lime"><i class="fas fa-coins"></i> {{ __('frontend.dashboard.buy') }}</a>
+                        <a href="{{ route('points.topup') }}" class="ds-btn ds-btn--primary"><i class="fas fa-coins"></i> {{ __('frontend.dashboard.buy') }}</a>
                     </div>
                 @endif
             </div>
@@ -181,7 +181,7 @@
                                         <span><i class="far fa-calendar"></i> {{ $fmtDate($order->created_at, __('frontend.dashboard.date_format')) }}</span>
                                     </div>
                                     @if($product)
-                                        <a href="{{ route('product-detail', $product->slug) }}" class="ds-btn ds-btn--outline ds-btn--sm ds-course__btn">
+                                        <a href="{{ route('product-detail', $product->slug) }}" class="ds-btn ds-btn--secondary ds-btn--sm ds-course__btn">
                                             {{ __('frontend.dashboard.view_course') }} <i class="fas fa-arrow-right"></i>
                                         </a>
                                     @endif
@@ -193,7 +193,7 @@
                     <div class="ds-empty">
                         <span class="ds-empty__icon"><i class="fas fa-book-open"></i></span>
                         <p>{{ __('frontend.dashboard.courses_empty') }}</p>
-                        <a href="{{ route('product-lists') }}" class="ds-btn ds-btn--dark"><i class="fas fa-graduation-cap"></i> {{ __('frontend.dashboard.browse') }}</a>
+                        <a href="{{ route('product-lists') }}" class="ds-btn ds-btn--inverse"><i class="fas fa-graduation-cap"></i> {{ __('frontend.dashboard.browse') }}</a>
                     </div>
                 @endif
             </div>

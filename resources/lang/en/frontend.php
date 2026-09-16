@@ -765,4 +765,11 @@ return [
         'captcha_bad'    => 'The security code is incorrect. Please try again with the new code.',
     ],
 
+    // resources/views/user/layouts/notification.blade.php
+    'notify' => [
+        'success' => 'Success',
+        'error'   => 'Error',
+        'close'   => 'Dismiss',
+    ],
+
 ];

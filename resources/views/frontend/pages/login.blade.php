@@ -13,36 +13,8 @@
 <section class="au au--login">
     <div class="au__grid">
 
-        {{-- Colour-block side panel (CSS-only illustration, no images) --}}
-        <aside class="au-aside">
-            <div class="au-art" aria-hidden="true">
-                <div class="au-art__card">
-                    <div class="au-art__row">
-                        <span class="au-art__dot"><i class="fas fa-user"></i></span>
-                        <span class="au-art__lines">
-                            <span class="au-art__line"></span>
-                            <span class="au-art__line au-art__line--short"></span>
-                        </span>
-                    </div>
-                    <div class="au-art__progress"><span></span></div>
-                    <div class="au-art__chips">
-                        <span class="au-art__chip"></span>
-                        <span class="au-art__chip"></span>
-                        <span class="au-art__chip"></span>
-                    </div>
-                </div>
-                <span class="au-art__badge"><i class="fas fa-check"></i></span>
-                <span class="au-art__stars">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </span>
-            </div>
-
-            <p class="au-aside__headline">{{ __('frontend.login.aside') }}</p>
-        </aside>
-
         <div class="au-card">
             <div class="au-card__inner">
-                <span class="au-eyebrow">{{ __('frontend.login.label') }}</span>
                 <h2 class="au-title">{{ __('frontend.login.heading') }}</h2>
 
                 @if(session('loginerror'))
@@ -84,14 +56,17 @@
                     </button>
                 </form>
 
-                <div class="au-divider">{{ __('frontend.login.or') }}</div>
-
-                <div class="au-alt">
-                    <span>{{ __('frontend.login.new') }}</span>
+                <p class="au-alt">
+                    {{ __('frontend.login.new') }}
                     <a href="{{ route('register.form') }}">{{ __('frontend.login.register') }}</a>
-                </div>
+                </p>
             </div>
         </div>
+
+        @include('frontend.layouts.auth-panel', [
+            'kicker' => __('frontend.login.label'),
+            'copy'   => __('frontend.login.aside'),
+        ])
 
     </div>
 </section>

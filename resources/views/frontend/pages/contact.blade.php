@@ -17,64 +17,16 @@
     $ctCompany = $misc['Company Name'] ?? __('frontend.company.name');
 @endphp
 
-<section class="ct">
-    <div class="ct__grid">
-
-        {{-- Contact details (colour block, no image) --}}
-        <aside class="ct-info">
-            <div>
-                <span class="ct-info__eyebrow">{{ __('frontend.contact.info_label') }}</span>
-                <h2 class="ct-info__title">{{ __('frontend.contact.info_title') }}</h2>
-            </div>
-
-            <ul class="ct-list">
-                <li>
-                    <a href="tel:{{ $ctPhone }}" class="ct-item">
-                        <span class="ct-item__icon"><i class="fas fa-phone-alt"></i></span>
-                        <span class="ct-item__body">
-                            <span class="ct-item__label">{{ __('frontend.contact.phone') }}</span>
-                            <span class="ct-item__value">{{ $ctPhone }}</span>
-                        </span>
-                        <i class="fas fa-arrow-right ct-item__arrow" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="mailto:{{ $ctEmail }}" class="ct-item">
-                        <span class="ct-item__icon"><i class="fas fa-envelope"></i></span>
-                        <span class="ct-item__body">
-                            <span class="ct-item__label">{{ __('frontend.contact.email') }}</span>
-                            <span class="ct-item__value">{{ $ctEmail }}</span>
-                        </span>
-                        <i class="fas fa-arrow-right ct-item__arrow" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li>
-                    <div class="ct-item">
-                        <span class="ct-item__icon"><i class="fas fa-map-marker-alt"></i></span>
-                        <span class="ct-item__body">
-                            <span class="ct-item__label">{{ __('frontend.contact.address') }}</span>
-                            <span class="ct-item__value">{{ $ctAddress }}</span>
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div class="ct-item">
-                        <span class="ct-item__icon"><i class="fas fa-building"></i></span>
-                        <span class="ct-item__body">
-                            <span class="ct-item__label">{{ __('frontend.contact.company') }}</span>
-                            <span class="ct-item__value">{{ $ctCompany }}</span>
-                        </span>
-                    </div>
-                </li>
-            </ul>
-        </aside>
+<section class="au au--contact">
+    <div class="au__grid">
 
         {{-- Form --}}
-        <div class="ct-card">
-            <h2 class="au-title ct-card__title">{{ __('frontend.contact.form_title') }}</h2>
-            <p class="ct-card__desc">{{ __('frontend.contact.form_desc') }}</p>
+        <div class="au-card">
+            <div class="au-card__inner">
+                <h2 class="au-title">{{ __('frontend.contact.form_title') }}</h2>
+                <p class="au-lead">{{ __('frontend.contact.form_desc') }}</p>
 
-            <form method="POST" action="{{ route('contact.send') }}" id="contactform" class="au-form" onsubmit="return handleSubmit(event)" novalidate>
+                <form method="POST" action="{{ route('contact.send') }}" id="contactform" class="au-form" onsubmit="return handleSubmit(event)" novalidate>
                 @csrf
 
                 <div class="au-row">
@@ -130,7 +82,10 @@
                     <div class="au-field">
                         <label class="au-label" for="captcha">{{ __('frontend.contact.captcha') }}</label>
                         <div class="au-captcha @error('captcha') is-invalid @enderror">
-                            <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('frontend.contact.captcha_ph') }}">
+                            <div class="au-input au-captcha__field">
+                                <i class="fas fa-shield-alt au-input__icon" aria-hidden="true"></i>
+                                <input type="text" id="captcha" name="captcha" autocomplete="off" placeholder="{{ __('frontend.contact.captcha_ph') }}">
+                            </div>
                             <div class="au-captcha__img">@captcha</div>
                             <button type="button" class="au-captcha__refresh" data-au-captcha aria-label="{{ __('frontend.contact.refresh') }}"><i class="fas fa-sync-alt"></i></button>
                         </div>
@@ -141,8 +96,34 @@
                 <button type="submit" class="au-submit">
                     {{ __('frontend.contact.submit') }} <i class="fas fa-paper-plane"></i>
                 </button>
-            </form>
+                </form>
+            </div>
         </div>
+
+        {{-- Contact details as ruled rows, matching the footer directory --}}
+        <aside class="ct-info">
+            <p class="ct-info__kicker">{{ __('frontend.contact.info_label') }}</p>
+            <p class="ct-info__copy">{{ __('frontend.contact.info_title') }}</p>
+
+            <ul class="ct-rows">
+                <li class="ct-row">
+                    <span class="ct-row__label">{{ __('frontend.contact.phone') }}</span>
+                    <a href="tel:{{ $ctPhone }}" class="ct-row__value ct-row__value--link">{{ $ctPhone }}</a>
+                </li>
+                <li class="ct-row">
+                    <span class="ct-row__label">{{ __('frontend.contact.email') }}</span>
+                    <a href="mailto:{{ $ctEmail }}" class="ct-row__value ct-row__value--link">{{ $ctEmail }}</a>
+                </li>
+                <li class="ct-row">
+                    <span class="ct-row__label">{{ __('frontend.contact.address') }}</span>
+                    <span class="ct-row__value">{{ $ctAddress }}</span>
+                </li>
+                <li class="ct-row">
+                    <span class="ct-row__label">{{ __('frontend.contact.company') }}</span>
+                    <span class="ct-row__value">{{ $ctCompany }}</span>
+                </li>
+            </ul>
+        </aside>
 
     </div>
 </section>

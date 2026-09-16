@@ -68,13 +68,10 @@
 
     {{-- Preloader (faded out by assets/js/script.js) --}}
     <div id="preloader" role="status" aria-label="{{ __('frontend.head.loading') }}">
-        <div class="pl">
-            <div class="pl__bars" aria-hidden="true">
-                <span class="pl__bar"></span>
-                <span class="pl__bar"></span>
-                <span class="pl__bar"></span>
-                <span class="pl__bar"></span>
+        <div class="pre">
+            <p class="pre__mark">{{ $siteName }}</p>
+            <div class="pre__track" aria-hidden="true">
+                <span class="pre__bar"></span>
             </div>
-            <div class="pl__track" aria-hidden="true"></div>
         </div>
     </div>

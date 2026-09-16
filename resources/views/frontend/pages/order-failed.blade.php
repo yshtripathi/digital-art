@@ -18,7 +18,6 @@
         {{-- Status hero --}}
         <div class="rs-hero">
             <div class="rs-status" aria-hidden="true">
-                <span class="rs-status__ring"></span>
                 <span class="rs-status__icon"><i class="fas fa-times"></i></span>
             </div>
 
@@ -26,18 +25,18 @@
             <p class="rs-hero__msg">{{ __('frontend.failed.message') }}</p>
 
             <div class="rs-actions">
-                <a href="{{ route('points.topup') }}" class="rs-btn rs-btn--lime">
-                    <i class="fas fa-coins"></i> {{ __('frontend.failed.retry') }}
+                <a href="{{ route('points.topup') }}" class="rs-btn rs-btn--primary">
+                    <i class="fas fa-coins" aria-hidden="true"></i> {{ __('frontend.failed.retry') }}
                 </a>
-                <a href="{{ route('home') }}" class="rs-btn rs-btn--outline">
-                    <i class="fas fa-home"></i> {{ __('frontend.failed.home') }}
+                <a href="{{ route('home') }}" class="rs-btn rs-btn--secondary">
+                    <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.failed.home') }}
                 </a>
             </div>
         </div>
 
         {{-- Help --}}
         <div class="rs-help">
-            <span class="rs-help__eyebrow"><i class="fas fa-exclamation-triangle"></i> {{ __('frontend.failed.help_title') }}</span>
+            <h3 class="rs-help__title">{{ __('frontend.failed.help_title') }}</h3>
 
             <ol class="rs-steps">
                 <li class="rs-step"><span class="rs-step__num">1</span><span>{{ __('frontend.failed.help1') }}</span></li>

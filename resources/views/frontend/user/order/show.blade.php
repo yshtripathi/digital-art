@@ -128,30 +128,24 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('order.pdf', $order->id) }}" class="ds-btn ds-btn--lime ds-btn--block">
+                    <a href="{{ route('order.pdf', $order->id) }}" class="ds-btn ds-btn--primary ds-btn--block">
                         <i class="fas fa-download"></i> {{ __('frontend.receipt.pdf') }}
                     </a>
                     <button type="button" class="ds-btn ds-btn--ghost ds-btn--block" onclick="window.print();">
                         <i class="fas fa-print"></i> {{ __('frontend.receipt.print') }}
                     </button>
-                    <a href="{{ route('user') }}" class="ds-btn ds-btn--outline-light ds-btn--block">
+                    <a href="{{ route('user') }}" class="ds-btn ds-btn--secondary ds-btn--block">
                         <i class="fas fa-arrow-left"></i> {{ __('frontend.receipt.back') }}
                     </a>
                 </aside>
             </div>
         @else
             <div class="cp-empty">
-                <div class="cp-empty__art" aria-hidden="true">
-                    <span class="cp-empty__ring"></span>
-                    <span class="cp-empty__icon"><i class="fas fa-file-invoice"></i></span>
-                    <span class="cp-empty__dot cp-empty__dot--1"></span>
-                    <span class="cp-empty__dot cp-empty__dot--2"></span>
-                    <span class="cp-empty__dot cp-empty__dot--3"></span>
-                </div>
+                <span class="cp-empty__icon"><i class="fas fa-file-invoice"></i></span>
                 <h2 class="cp-empty__title">{{ __('frontend.receipt.missing') }}</h2>
                 <p class="cp-empty__desc">{{ __('frontend.receipt.missing_text') }}</p>
                 <div class="cp-empty__actions">
-                    <a href="{{ route('user') }}" class="cp-btn cp-btn--dark"><i class="fas fa-arrow-left"></i> {{ __('frontend.receipt.back') }}</a>
+                    <a href="{{ route('user') }}" class="cp-btn cp-btn--inverse"><i class="fas fa-arrow-left"></i> {{ __('frontend.receipt.back') }}</a>
                 </div>
             </div>
         @endif

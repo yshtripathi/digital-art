@@ -14,14 +14,6 @@
 <section class="co">
     <div class="co__wrap">
 
-        {{-- Progress --}}
-        <ol class="co-steps" aria-label="{{ __('frontend.checkout.progress') }}">
-            <li class="co-steps__item is-done"><span class="co-steps__dot"><i class="fas fa-check"></i></span> {{ __('frontend.checkout.cart') }}</li>
-            <li class="co-steps__item is-current"><span class="co-steps__dot">2</span> {{ __('frontend.checkout.step_billing') }}</li>
-            <li class="co-steps__item is-current"><span class="co-steps__dot">3</span> {{ __('frontend.checkout.step_card') }}</li>
-            <li class="co-steps__item"><span class="co-steps__dot">4</span> {{ __('frontend.checkout.step_confirm') }}</li>
-        </ol>
-
         <form name="frmCheckout" id="frmCheckout" method="POST" action="{{ route('cart.order') }}" novalidate>
             @csrf
             <div class="co__grid">
@@ -565,10 +557,10 @@
                         </div>
                     @endif
 
-                    <button type="submit" class="co-btn co-btn--lime" id="button-confirm">
+                    <button type="submit" class="co-btn co-btn--primary" id="button-confirm">
                         <i class="fas fa-lock"></i> {{ __('frontend.checkout.pay') }}
                     </button>
-                    <a href="{{ route('home') }}" class="co-btn co-btn--outline">{{ __('frontend.checkout.continue') }}</a>
+                    <a href="{{ route('home') }}" class="co-btn co-btn--secondary">{{ __('frontend.checkout.continue') }}</a>
 
                     <p class="co-summary__trust"><i class="fas fa-shield-alt"></i> {{ __('frontend.checkout.secure') }}</p>
 

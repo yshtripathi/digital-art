@@ -1,8 +1,9 @@
 {{--
   ==========================================================================
   Page Banner + Breadcrumb
-  Cobalt color-block panel with a contained photo on the right (see DESIGN.md).
-  Styles: public/css/app.css
+  Full-bleed photographic band. On wide screens a solid inverse panel with a
+  diagonal edge carries the text, cut to echo the escalator rails in the photo.
+  Styles: public/css/app.css — section 8
 
   Usage:
   @include('frontend.layouts.breadcrumb', [
@@ -17,12 +18,27 @@
   ==========================================================================
 --}}
 @php
-    $bcImage   = $image ?? 'assets/images/breadcrumb.webp';
+    $bcImage   = $image ?? 'assets/images/breadcrumb-commute.webp';
     $bcDefault = !isset($image);
 @endphp
 
 
-<section class="bc {{ empty($title) ? 'bc--compact' : '' }}">
+<section class="bc {{ empty($title) ? 'bc--compact' : '' }} {{ $bcDefault ? 'bc--default' : '' }}">
+
+    <div class="bc__media">
+        <img
+            src="{{ asset($bcImage) }}"
+            @if($bcDefault)
+                srcset="{{ asset('assets/images/breadcrumb-commute-sm.webp') }} 800w, {{ asset('assets/images/breadcrumb-commute.webp') }} 1600w"
+                sizes="100vw"
+                width="1600" height="600"
+            @endif
+            alt=""
+            fetchpriority="high"
+            decoding="async">
+        <span class="bc__veil" aria-hidden="true"></span>
+    </div>
+
     <div class="bc__panel">
         <div class="bc__content">
             @if(isset($links) && count($links) > 0)
@@ -47,18 +63,9 @@
             @endif
         </div>
 
-        <div class="bc__media">
-            <img
-                src="{{ asset($bcImage) }}"
-                @if($bcDefault)
-                    srcset="{{ asset('assets/images/breadcrumb-sm.webp') }} 800w, {{ asset('assets/images/breadcrumb.webp') }} 1600w"
-                    sizes="(max-width: 991px) 100vw, 45vw"
-                    width="1600" height="600"
-                @endif
-                alt=""
-                fetchpriority="high"
-                decoding="async">
-            <a href="{{ route('product-lists') }}" class="bc__badge"><i class="fas fa-graduation-cap" aria-hidden="true"></i> {{ __('frontend.breadcrumb.badge') }}</a>
-        </div>
+        <a href="{{ route('product-lists') }}" class="bc__badge">
+            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+            {{ __('frontend.breadcrumb.badge') }}
+        </a>
     </div>
 </section>

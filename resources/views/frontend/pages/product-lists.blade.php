@@ -20,58 +20,61 @@
     $totalCourses = $isPaginator && method_exists($products, 'total') ? $products->total() : $products->count();
 @endphp
 
-@php
-    $bcData = [
-        'title' => $bcTitle,
-        'links' => [
-            ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
-            ['name' => __('frontend.catalog.title'), 'url' => route('product-lists')],
-            ['name' => $bcTitle]
-        ],
-    ];
-    // Category pages show the category photo in the banner
-    if ($isCat && !empty($category->photo)) {
-        $bcData['image'] = ltrim($category->photo, '/');
-    }
-@endphp
-@include('frontend.layouts.breadcrumb', $bcData)
+@include('frontend.layouts.breadcrumb', [
+    'title' => $bcTitle,
+    'links' => [
+        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.catalog.title'), 'url' => route('product-lists')],
+        ['name' => $bcTitle]
+    ],
+])
 
 <section class="pl">
     <div class="pl__wrap">
 
-        {{-- Intro + category navigation --}}
-        <div class="pl-intro">
-            <div class="pl-intro__text">
-                <span class="pl-intro__count"><strong>{{ $totalCourses }}</strong> {{ trans_choice('frontend.catalog.count', $totalCourses) }}</span>
-                <p class="pl-intro__desc">{{ $isCat && $category->summary ? $category->summary : __('frontend.catalog.intro') }}</p>
+        {{-- Category rail --}}
+        @if($allCategories->count())
+            <nav class="pl-rail" aria-label="{{ __('frontend.catalog.cats_label') }}">
+                <a href="{{ route('product-lists') }}" class="pl-rail__item {{ $isCat ? '' : 'is-active' }}" @if(!$isCat) aria-current="page" @endif>
+                    {{ __('frontend.catalog.all') }}
+                </a>
+                @foreach($allCategories as $cat)
+                    <a href="{{ route('product-lists', $cat->slug) }}" class="pl-rail__item {{ $isCat && $category->id == $cat->id ? 'is-active' : '' }}" @if($isCat && $category->id == $cat->id) aria-current="page" @endif>
+                        {{ $cat->title }}
+                    </a>
+                @endforeach
+            </nav>
+        @endif
+
+        {{-- Count, intro and sort. Category pages lead with the category still. --}}
+        @php $plCover = $isCat && !empty($category->photo) ? ltrim($category->photo, '/') : null; @endphp
+        <div class="pl-head {{ $plCover ? 'pl-head--cover' : '' }}">
+            @if($plCover)
+                <div class="pl-head__media">
+                    <img src="{{ asset($plCover) }}" alt="" fetchpriority="high" decoding="async">
+                </div>
+            @endif
+
+            <div class="pl-head__text">
+                <p class="pl-head__count">
+                    <strong id="plShowing">{{ $totalCourses }}</strong>
+                    {{ trans_choice('frontend.catalog.count', $totalCourses) }}
+                </p>
+                <p class="pl-head__desc">{{ $isCat && $category->summary ? $category->summary : __('frontend.catalog.intro') }}</p>
             </div>
 
-            @if($allCategories->count())
-                <nav class="pl-cats" aria-label="{{ __('frontend.catalog.cats_label') }}">
-                    <a href="{{ route('product-lists') }}" class="pl-cats__pill {{ $isCat ? '' : 'is-active' }}">
-                        <i class="fas fa-th-large"></i> {{ __('frontend.catalog.all') }}
-                    </a>
-                    @foreach($allCategories as $cat)
-                        <a href="{{ route('product-lists', $cat->slug) }}" class="pl-cats__pill {{ $isCat && $category->id == $cat->id ? 'is-active' : '' }}">
-                            {{ $cat->title }}
-                        </a>
-                    @endforeach
-                </nav>
-            @endif
-        </div>
+            @if($products->count())
+                <div class="pl-head__tools">
+                    {{-- Shown only when the homepage search sent a ?q= term --}}
+                    <p class="pl-filter" id="plFilter" hidden>
+                        <span id="plFilterText"></span>
+                        <button type="button" id="plClear" class="pl-filter__clear" aria-label="{{ __('frontend.catalog.clear') }}">
+                            <i class="fas fa-times" aria-hidden="true"></i>
+                        </button>
+                    </p>
 
-        @if($products->count())
-            {{-- Toolbar (filters the courses on this page) --}}
-            <div class="pl-toolbar">
-                <label class="pl-search">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                    <input type="search" id="plSearch" placeholder="{{ __('frontend.catalog.search_ph') }}" aria-label="{{ __('frontend.catalog.search_label') }}">
-                </label>
-
-                <div class="pl-toolbar__right">
-                    <span class="pl-showing" id="plShowing">{{ __('frontend.catalog.showing') }} <strong>{{ $products->count() }}</strong></span>
                     <label class="pl-sort">
-                        <span>{{ __('frontend.catalog.sort') }}</span>
+                        <span class="pl-sort__label">{{ __('frontend.catalog.sort') }}</span>
                         <select id="plSort">
                             <option value="default">{{ __('frontend.catalog.sort_default') }}</option>
                             <option value="az">{{ __('frontend.catalog.sort_az') }}</option>
@@ -81,10 +84,12 @@
                         <i class="fas fa-chevron-down" aria-hidden="true"></i>
                     </label>
                 </div>
-            </div>
+            @endif
+        </div>
 
-            {{-- Course grid --}}
-            <ul class="pl-grid" id="plGrid">
+        @if($products->count())
+            {{-- Course index: one ruled row per course, 16:9 still on the lead edge --}}
+            <ul class="pl-index" id="plGrid">
                 @foreach($products as $index => $course)
                     @php
                         $pimg = $course->photo ? explode(',', $course->photo)[0] : null;
@@ -92,59 +97,57 @@
                         $minPoints = $levelCount ? $course->levels->min('price_in_points') : 0;
                         $catTitle = optional($course->cat_info)->title;
                     @endphp
-                    <li class="pl-card-wrap" data-title="{{ \Illuminate\Support\Str::lower($course->title) }}" data-price="{{ (int) $minPoints }}" data-index="{{ $index }}">
-                        <a href="{{ route('product-detail', $course->slug) }}" class="pl-card">
-                            <div class="pl-card__media">
+                    <li class="pl-row" data-title="{{ \Illuminate\Support\Str::lower($course->title) }}" data-price="{{ (int) $minPoints }}" data-index="{{ $index }}">
+                        <a href="{{ route('product-detail', $course->slug) }}" class="pl-row__link">
+                            <span class="pl-row__media">
                                 @if($pimg)
-                                    <img src="{{ url($pimg) }}" alt="{{ $course->title }}" loading="lazy">
+                                    <img src="{{ url($pimg) }}" alt="" loading="lazy" decoding="async">
                                 @else
-                                    <span class="pl-card__placeholder"><i class="fas fa-graduation-cap"></i></span>
+                                    <span class="pl-row__placeholder" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
                                 @endif
+                            </span>
+
+                            <span class="pl-row__body">
                                 @if($catTitle)
-                                    <span class="pl-card__cat">{{ $catTitle }}</span>
+                                    <span class="pl-row__cat">{{ $catTitle }}</span>
                                 @endif
-                            </div>
 
-                            <div class="pl-card__body">
-                                @if($levelCount)
-                                    <span class="pl-card__levels"><i class="fas fa-signal"></i> {{ trans_choice('frontend.catalog.levels', $levelCount, ['count' => $levelCount]) }}</span>
-                                @endif
-                                <h3 class="pl-card__title">{{ $course->title }}</h3>
+                                <span class="pl-row__title">{{ $course->title }}</span>
+
                                 @if($course->summary)
-                                    <p class="pl-card__summary">{{ \Illuminate\Support\Str::limit(strip_tags($course->summary), 140) }}</p>
+                                    <span class="pl-row__summary">{{ \Illuminate\Support\Str::limit(strip_tags($course->summary), 180) }}</span>
                                 @endif
 
-                                <div class="pl-card__foot">
+                                <span class="pl-row__meta">
                                     @if($levelCount)
-                                        <span class="pl-card__price">
-                                            <small>{{ __('frontend.catalog.from') }}</small>
-                                            <strong><i class="fas fa-coins"></i> {{ number_format($minPoints) }}</strong>
-                                            <small>{{ __('frontend.catalog.credits') }}</small>
+                                        <span class="pl-row__levels">
+                                            <i class="fas fa-signal" aria-hidden="true"></i>
+                                            {{ trans_choice('frontend.catalog.levels', $levelCount, ['count' => $levelCount]) }}
+                                        </span>
+                                        <span class="pl-row__price">
+                                            {{ __('frontend.catalog.from') }}
+                                            <strong>{{ number_format($minPoints) }}</strong>
+                                            {{ __('frontend.catalog.credits') }}
                                         </span>
                                     @else
-                                        <span class="pl-card__price"><strong class="pl-card__free">{{ __('frontend.catalog.no_levels') }}</strong></span>
+                                        <span class="pl-row__price">{{ __('frontend.catalog.no_levels') }}</span>
                                     @endif
-                                    <span class="pl-card__go" aria-hidden="true" title="{{ __('frontend.catalog.view') }}"><i class="fas fa-arrow-right"></i></span>
-                                </div>
-                            </div>
+                                </span>
+                            </span>
+
+                            <span class="pl-row__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
                         </a>
                     </li>
                 @endforeach
             </ul>
 
-            <div class="pl-nomatch" id="plNoMatch" hidden>
-                <i class="fas fa-search"></i>
-                <p>{{ __('frontend.catalog.no_match') }}</p>
-                <button type="button" class="pl-btn pl-btn--dark" id="plClear">{{ __('frontend.catalog.clear') }}</button>
-            </div>
-
             {{-- Pagination --}}
             @if($isPaginator && $products->hasPages())
                 <nav class="pl-pages" aria-label="{{ __('frontend.catalog.pagination') }}">
                     @if($products->onFirstPage())
-                        <span class="pl-pages__btn is-disabled"><i class="fas fa-arrow-left"></i> {{ __('frontend.catalog.prev') }}</span>
+                        <span class="pl-pages__btn is-disabled"><i class="fas fa-arrow-left" aria-hidden="true"></i> {{ __('frontend.catalog.prev') }}</span>
                     @else
-                        <a href="{{ $products->previousPageUrl() }}" class="pl-pages__btn"><i class="fas fa-arrow-left"></i> {{ __('frontend.catalog.prev') }}</a>
+                        <a href="{{ $products->previousPageUrl() }}" class="pl-pages__btn"><i class="fas fa-arrow-left" aria-hidden="true"></i> {{ __('frontend.catalog.prev') }}</a>
                     @endif
 
                     @if(method_exists($products, 'lastPage'))
@@ -160,51 +163,42 @@
                     @endif
 
                     @if($products->hasMorePages())
-                        <a href="{{ $products->nextPageUrl() }}" class="pl-pages__btn">{{ __('frontend.catalog.next') }} <i class="fas fa-arrow-right"></i></a>
+                        <a href="{{ $products->nextPageUrl() }}" class="pl-pages__btn">{{ __('frontend.catalog.next') }} <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     @else
-                        <span class="pl-pages__btn is-disabled">{{ __('frontend.catalog.next') }} <i class="fas fa-arrow-right"></i></span>
+                        <span class="pl-pages__btn is-disabled">{{ __('frontend.catalog.next') }} <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
                     @endif
                 </nav>
             @endif
         @else
-            <div class="cp-empty pl-empty">
-                <div class="cp-empty__art" aria-hidden="true">
-                    <span class="cp-empty__ring"></span>
-                    <span class="cp-empty__icon"><i class="fas fa-box-open"></i></span>
-                    <span class="cp-empty__dot cp-empty__dot--1"></span>
-                    <span class="cp-empty__dot cp-empty__dot--2"></span>
-                    <span class="cp-empty__dot cp-empty__dot--3"></span>
-                </div>
-                <h2 class="cp-empty__title">{{ __('frontend.catalog.empty_title') }}</h2>
-                <p class="cp-empty__desc">{{ __('frontend.catalog.empty_desc') }}</p>
-                <div class="cp-empty__actions">
-                    <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--dark"><i class="fas fa-th-large"></i> {{ __('frontend.catalog.all') }}</a>
-                </div>
+            <div class="pl-empty">
+                <span class="pl-empty__icon" aria-hidden="true"><i class="fas fa-box-open"></i></span>
+                <h2 class="pl-empty__title">{{ __('frontend.catalog.empty_title') }}</h2>
+                <p class="pl-empty__desc">{{ __('frontend.catalog.empty_desc') }}</p>
+                <a href="{{ route('product-lists') }}" class="pl-btn pl-btn--primary">{{ __('frontend.catalog.all') }}</a>
             </div>
         @endif
 
-        {{-- Category tiles --}}
+        {{-- Browse other categories — 16:9 stills --}}
         @if($allCategories->count())
-            <div class="pl-other">
-                <h2 class="pl-other__title">{{ __('frontend.catalog.other') }}</h2>
-                <ul class="pl-tiles">
-                    @foreach($allCategories as $i => $cat)
+            <section class="pl-cats">
+                <h2 class="pl-cats__title">{{ __('frontend.catalog.other') }}</h2>
+                <ul class="pl-cats__grid">
+                    @foreach($allCategories as $cat)
                         <li>
-                            <a href="{{ route('product-lists', $cat->slug) }}" class="pl-tile pl-tile--{{ ($i % 4) + 1 }} {{ $isCat && $category->id == $cat->id ? 'is-active' : '' }}">
-                                <span class="pl-tile__icon">
+                            <a href="{{ route('product-lists', $cat->slug) }}" class="pl-cat {{ $isCat && $category->id == $cat->id ? 'is-active' : '' }}">
+                                <span class="pl-cat__media">
                                     @if($cat->photo)
-                                        <img src="{{ asset(ltrim($cat->photo, '/')) }}" alt="" loading="lazy">
+                                        <img src="{{ asset(ltrim($cat->photo, '/')) }}" alt="" loading="lazy" decoding="async">
                                     @else
-                                        <i class="fas fa-layer-group"></i>
+                                        <span class="pl-cat__placeholder" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
                                     @endif
                                 </span>
-                                <span class="pl-tile__title">{{ $cat->title }}</span>
-                                <span class="pl-tile__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                                <span class="pl-cat__name">{{ $cat->title }}</span>
                             </a>
                         </li>
                     @endforeach
                 </ul>
-            </div>
+            </section>
         @endif
 
     </div>
@@ -214,22 +208,24 @@
 
 @push('scripts')
 <script>
-    // Search + sort the courses already on this page (no server requests)
+    // Sorts the courses already on this page. There is no search field here —
+    // a ?q= term arriving from the homepage is applied as a removable filter.
     document.addEventListener('DOMContentLoaded', function () {
         var grid = document.getElementById('plGrid');
         if (!grid) return;
-        var search = document.getElementById('plSearch');
-        var sort = document.getElementById('plSort');
-        var showing = document.querySelector('#plShowing strong');
-        var noMatch = document.getElementById('plNoMatch');
-        var clear = document.getElementById('plClear');
-        var items = Array.prototype.slice.call(grid.children);
+
+        var sort       = document.getElementById('plSort');
+        var showing    = document.getElementById('plShowing');
+        var filter     = document.getElementById('plFilter');
+        var filterText = document.getElementById('plFilterText');
+        var clear      = document.getElementById('plClear');
+        var items      = Array.prototype.slice.call(grid.children);
+        var term       = '';
 
         function apply() {
-            var q = (search.value || '').trim().toLowerCase();
             var visible = 0;
             items.forEach(function (li) {
-                var show = !q || li.dataset.title.indexOf(q) !== -1;
+                var show = !term || li.dataset.title.indexOf(term) !== -1;
                 li.hidden = !show;
                 if (show) visible++;
             });
@@ -241,18 +237,25 @@
             else sorted.sort(function (a, b) { return a.dataset.index - b.dataset.index; });
             sorted.forEach(function (li) { grid.appendChild(li); });
 
-            showing.textContent = visible;
-            noMatch.hidden = visible !== 0;
-            grid.hidden = visible === 0;
+            if (showing) showing.textContent = visible;
         }
 
-        search.addEventListener('input', apply);
-        sort.addEventListener('change', apply);
-        clear.addEventListener('click', function () { search.value = ''; apply(); search.focus(); });
+        function clearTerm() {
+            term = '';
+            filter.hidden = true;
+            apply();
+        }
 
-        // Prefill from the homepage search (?q=...)
+        sort.addEventListener('change', apply);
+        if (clear) clear.addEventListener('click', clearTerm);
+
         var q = new URLSearchParams(window.location.search).get('q');
-        if (q) { search.value = q; apply(); }
+        if (q && q.trim()) {
+            term = q.trim().toLowerCase();
+            filterText.textContent = q.trim();
+            filter.hidden = false;
+            apply();
+        }
     });
 </script>
 @endpush

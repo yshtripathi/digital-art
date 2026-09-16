@@ -110,12 +110,12 @@
                         <strong>{{ $sym }}{{ number_format($total_amount, $isJPY ? 0 : 2) }}</strong>
                     </div>
 
-                    <a href="{{ route('checkout') }}" class="cp-btn cp-btn--lime">
+                    <a href="{{ route('checkout') }}" class="cp-btn cp-btn--primary">
                         {{ __('frontend.cart.checkout') }} <i class="fas fa-arrow-right"></i>
                     </a>
 
                     @if(Helper::totalCartPoints() > 0)
-                        <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--outline">
+                        <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--secondary">
                             <i class="fas fa-arrow-left"></i> {{ __('frontend.cart.browse') }}
                         </a>
                     @endif
@@ -131,20 +131,14 @@
         @else
             {{-- Empty state --}}
             <div class="cp-empty">
-                <div class="cp-empty__art" aria-hidden="true">
-                    <span class="cp-empty__ring"></span>
-                    <span class="cp-empty__icon"><i class="fas fa-shopping-basket"></i></span>
-                    <span class="cp-empty__dot cp-empty__dot--1"></span>
-                    <span class="cp-empty__dot cp-empty__dot--2"></span>
-                    <span class="cp-empty__dot cp-empty__dot--3"></span>
-                </div>
+                <span class="cp-empty__icon"><i class="fas fa-shopping-basket"></i></span>
                 <h2 class="cp-empty__title">{{ __('frontend.cart.empty_title') }}</h2>
                 <p class="cp-empty__desc">{{ __('frontend.cart.empty_desc') }}</p>
                 <div class="cp-empty__actions">
-                    <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--dark">
+                    <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--inverse">
                         <i class="fas fa-graduation-cap"></i> {{ __('frontend.cart.empty_courses') }}
                     </a>
-                    <a href="{{ route('points.topup') }}" class="cp-btn cp-btn--lime">
+                    <a href="{{ route('points.topup') }}" class="cp-btn cp-btn--primary">
                         <i class="fas fa-coins"></i> {{ __('frontend.cart.empty_credits') }}
                     </a>
                 </div>

@@ -28,7 +28,7 @@
                     <span class="cc-balance__label">{{ __('frontend.coursecart.balance') }}</span>
                     <span class="cc-balance__amt">{{ number_format($points) }} <small>{{ __('frontend.coursecart.credits') }}</small></span>
                 </div>
-                <a href="{{ route('points.topup') }}" class="cp-btn cp-btn--lime cc-balance__btn">
+                <a href="{{ route('points.topup') }}" class="cp-btn cp-btn--primary cc-balance__btn">
                     <i class="fas fa-plus"></i> {{ __('frontend.coursecart.buy') }}
                 </a>
             </div>
@@ -36,8 +36,6 @@
             @if($itemCount)
                 @php
                     $total_points = Helper::totalCartPoints();
-                    $remaining = $points - $total_points;
-                    $coverage = $points > 0 ? min(100, round($total_points / $points * 100)) : 100;
                 @endphp
 
                 <div class="cp__grid">
@@ -151,46 +149,22 @@
                             <strong>{{ number_format($total_points) }} <small class="cc-unit">{{ __('frontend.coursecart.credits') }}</small></strong>
                         </div>
 
-                        <div class="cc-coverage {{ $remaining < 0 ? 'is-low' : '' }}">
-                            <div class="cc-coverage__head">
-                                <span>{{ __('frontend.coursecart.coverage') }}</span>
-                                <span>{{ $coverage }}%</span>
-                            </div>
-                            <div class="cc-coverage__bar"><span style="width: {{ $coverage }}%"></span></div>
-                            <div class="cc-coverage__after">
-                                <span>{{ __('frontend.coursecart.after') }}</span>
-                                <strong>{{ number_format($remaining) }}</strong>
-                            </div>
-                            @if($remaining < 0)
-                                <p class="cc-coverage__warn">
-                                    <i class="fas fa-exclamation-triangle"></i> {{ __('frontend.coursecart.low') }}
-                                    <a href="{{ route('points.topup') }}">{{ __('frontend.coursecart.buy') }}</a>
-                                </p>
-                            @endif
-                        </div>
-
                         <form id="redeemPointsForm" action="{{ route('points.redeem') }}" method="POST">@csrf</form>
-                        <button type="button" class="cp-btn cp-btn--lime cc-redeem" onclick="document.getElementById('redeemPointsForm').submit();">
+                        <button type="button" class="cp-btn cp-btn--primary cc-redeem" onclick="document.getElementById('redeemPointsForm').submit();">
                             <i class="fas fa-lock"></i> {{ __('frontend.coursecart.unlock') }}
                         </button>
-                        <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--outline">
+                        <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--secondary">
                             <i class="fas fa-plus"></i> {{ __('frontend.coursecart.browse') }}
                         </a>
                     </aside>
                 </div>
             @else
                 <div class="cp-empty">
-                    <div class="cp-empty__art" aria-hidden="true">
-                        <span class="cp-empty__ring"></span>
-                        <span class="cp-empty__icon"><i class="fas fa-graduation-cap"></i></span>
-                        <span class="cp-empty__dot cp-empty__dot--1"></span>
-                        <span class="cp-empty__dot cp-empty__dot--2"></span>
-                        <span class="cp-empty__dot cp-empty__dot--3"></span>
-                    </div>
+                    <span class="cp-empty__icon"><i class="fas fa-graduation-cap"></i></span>
                     <h2 class="cp-empty__title">{{ __('frontend.coursecart.empty_title') }}</h2>
                     <p class="cp-empty__desc">{{ __('frontend.coursecart.empty_desc') }}</p>
                     <div class="cp-empty__actions">
-                        <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--dark">
+                        <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--inverse">
                             <i class="fas fa-graduation-cap"></i> {{ __('frontend.coursecart.empty_btn') }}
                         </a>
                     </div>
@@ -199,20 +173,14 @@
 
         @else
             <div class="cp-empty">
-                <div class="cp-empty__art" aria-hidden="true">
-                    <span class="cp-empty__ring"></span>
-                    <span class="cp-empty__icon cc-lock"><i class="fas fa-lock"></i></span>
-                    <span class="cp-empty__dot cp-empty__dot--1"></span>
-                    <span class="cp-empty__dot cp-empty__dot--2"></span>
-                    <span class="cp-empty__dot cp-empty__dot--3"></span>
-                </div>
+                <span class="cp-empty__icon cc-lock"><i class="fas fa-lock"></i></span>
                 <h2 class="cp-empty__title">{{ __('frontend.coursecart.auth_title') }}</h2>
                 <p class="cp-empty__desc">{{ __('frontend.coursecart.auth_desc') }}</p>
                 <div class="cp-empty__actions">
-                    <a href="{{ route('login.form') }}" class="cp-btn cp-btn--lime">
+                    <a href="{{ route('login.form') }}" class="cp-btn cp-btn--primary">
                         <i class="fas fa-sign-in-alt"></i> {{ __('frontend.coursecart.login') }}
                     </a>
-                    <a href="{{ route('register.form') }}" class="cp-btn cp-btn--dark">
+                    <a href="{{ route('register.form') }}" class="cp-btn cp-btn--inverse">
                         <i class="fas fa-user-plus"></i> {{ __('frontend.coursecart.register') }}
                     </a>
                 </div>

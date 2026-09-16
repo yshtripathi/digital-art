@@ -21,13 +21,8 @@
 
         {{-- Status hero --}}
         <div class="rs-hero">
-            <div class="rs-confetti" aria-hidden="true">
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-            </div>
-
             <div class="rs-status" aria-hidden="true">
                 <span class="rs-status__ring"></span>
-                <span class="rs-status__ring rs-status__ring--delay"></span>
                 <span class="rs-status__icon"><i class="fas fa-check"></i></span>
             </div>
 
@@ -36,12 +31,12 @@
 
             <div class="rs-actions">
                 @if($order)
-                    <a href="{{ route('user.order.show', $order->id) }}" class="rs-btn rs-btn--dark">
-                        <i class="fas fa-eye"></i> {{ __('frontend.success.view_order') }}
+                    <a href="{{ route('user.order.show', $order->id) }}" class="rs-btn rs-btn--primary">
+                        <i class="fas fa-eye" aria-hidden="true"></i> {{ __('frontend.success.view_order') }}
                     </a>
                 @endif
-                <a href="{{ route('home') }}" class="rs-btn rs-btn--outline">
-                    <i class="fas fa-home"></i> {{ __('frontend.success.home') }}
+                <a href="{{ route('home') }}" class="rs-btn rs-btn--secondary">
+                    <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.success.home') }}
                 </a>
             </div>
         </div>
@@ -82,8 +77,8 @@
                     </div>
                 </dl>
 
-                <a href="{{ route('order.pdf', $order->id) }}" class="rs-btn rs-btn--lime rs-btn--block">
-                    <i class="fas fa-download"></i> {{ __('frontend.success.invoice') }}
+                <a href="{{ route('order.pdf', $order->id) }}" class="rs-btn rs-btn--secondary rs-btn--block">
+                    <i class="fas fa-download" aria-hidden="true"></i> {{ __('frontend.success.invoice') }}
                 </a>
 
                 @if($email_status == 'inactive')

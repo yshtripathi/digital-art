@@ -13,35 +13,37 @@
 <section class="pg">
     <div class="pg__grid" id="pgGrid">
 
-        {{-- Sidebar: table of contents (built from the article's h2 headings) + help --}}
+        {{-- Content from the database --}}
+        <div class="pg-content">
+            <article class="pg-prose" id="pgProse">
+                {!! $page_data->page_desc !!}
+            </article>
+
+            <a href="#top" class="pg-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i> {{ __('frontend.page.to_top') }}
+            </a>
+        </div>
+
+        {{-- Table of contents (built from the article's h2 headings) + help --}}
         <aside class="pg-side">
             <nav class="pg-toc" id="pgToc" aria-label="{{ __('frontend.page.toc') }}" hidden>
                 <div class="pg-toc__head">
-                    <span class="pg-toc__title">{{ __('frontend.page.toc') }}</span>
-                    <span class="pg-toc__pct"><span id="pgPct">0</span>% {{ __('frontend.page.progress') }}</span>
+                    <p class="pg-toc__title">{{ __('frontend.page.toc') }}</p>
+                    <p class="pg-toc__pct"><span id="pgPct">0</span>% {{ __('frontend.page.progress') }}</p>
                 </div>
                 <div class="pg-toc__bar"><span id="pgBar"></span></div>
                 <ol class="pg-toc__list" id="pgTocList"></ol>
             </nav>
 
             <div class="pg-help">
-                <span class="pg-help__icon" aria-hidden="true"><i class="fas fa-comments"></i></span>
                 <h2 class="pg-help__title">{{ __('frontend.page.help_title') }}</h2>
                 <p class="pg-help__msg">{{ __('frontend.page.help_text') }}</p>
-                <a href="{{ route('contact') }}" class="pg-help__btn">{{ __('frontend.page.help_btn') }} <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('contact') }}" class="pg-help__btn">
+                    {{ __('frontend.page.help_btn') }}
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
             </div>
         </aside>
-
-        {{-- Content from the database --}}
-        <div class="pg-card">
-            <article class="pg-prose" id="pgProse">
-                {!! $page_data->page_desc !!}
-            </article>
-
-            <a href="#top" class="pg-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">
-                <i class="fas fa-arrow-up"></i> {{ __('frontend.page.to_top') }}
-            </a>
-        </div>
 
     </div>
 </section>
@@ -57,7 +59,27 @@
         var grid = document.getElementById('pgGrid');
         if (!prose) return;
 
-        // Wrap tables so wide ones scroll inside the card
+        // Editors save tables with inline colours, widths and legacy attributes
+        // baked in. They override the stylesheet and break in dark mode, so the
+        // presentational ones are stripped and the theme takes over. Layout
+        // hints such as text-align are left alone.
+        var DROP_STYLES = [
+            'background', 'background-color', 'background-image', 'color',
+            'border', 'border-color', 'border-style', 'border-width',
+            'font-family', 'font-size', 'width', 'height', 'padding'
+        ];
+        var DROP_ATTRS = [
+            'bgcolor', 'background', 'border', 'cellpadding',
+            'cellspacing', 'width', 'height'
+        ];
+
+        prose.querySelectorAll('table, table *').forEach(function (el) {
+            DROP_STYLES.forEach(function (prop) { el.style.removeProperty(prop); });
+            DROP_ATTRS.forEach(function (attr) { el.removeAttribute(attr); });
+            if (el.getAttribute('style') === '') el.removeAttribute('style');
+        });
+
+        // Wrap tables so wide ones scroll inside the measure
         prose.querySelectorAll('table').forEach(function (table) {
             if (table.parentElement.classList.contains('pg-table')) return;
             var wrap = document.createElement('div');

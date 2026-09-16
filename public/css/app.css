@@ -2984,6 +2984,379 @@ body.mobile-menu-visible .menu-box { transform: none; }
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
+   14j. About us
+   Two sections only: what this is, then how it works. The steps climb the way
+   the course levels do. Markup: frontend/pages/about-us.blade.php
+   -------------------------------------------------------------------------- */
+.ab {
+  padding-block: var(--section-gap);
+}
+
+.ab__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+/* ---------- 1. What this is ---------- */
+.ab-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.ab-intro__text { min-width: 0; }
+
+.ab-intro__title {
+  margin: 0 0 var(--space-6);
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+/* Body copy drops into a narrower measure than the headline above it */
+.ab-intro__cols {
+  margin-bottom: var(--space-8);
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body-lg);
+}
+.ab-intro__cols p { margin: 0 0 var(--space-4); }
+.ab-intro__cols p:last-child { margin-bottom: 0; }
+
+/* The three points as ruled rows */
+.ab-points {
+  margin: 0 0 var(--space-8);
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border-strong);
+}
+.ab-points li {
+  position: relative;
+  padding: var(--space-4) 0 var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+.ab-points li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: calc(var(--space-4) + 0.75em);
+  width: 0.375rem;
+  height: 0.375rem;
+  margin-top: -0.1875rem;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+}
+
+.ab-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.ab-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-button);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.25;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+}
+.ab-btn--primary {
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+.ab-btn--primary:hover { background: var(--color-primary-hover); }
+
+.ab-btn--secondary {
+  background: var(--color-bg-surface);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+.ab-btn--secondary:hover { background: var(--color-bg-muted); }
+
+.ab-btn--onDark {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-inverse);
+}
+.ab-btn--onDark:hover {
+  background: var(--color-text-inverse);
+  color: var(--color-text);
+}
+
+.ab-intro__media {
+  position: relative;
+  margin: 0;
+  min-width: 0;
+}
+/* Shown whole at its own 768:1376 ratio — the subjects sit centre-low with the
+   window and plants above, so any crop loses one end or the other. */
+.ab-intro__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 768 / 1376;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+}
+
+.ab-intro__badge {
+  position: absolute;
+  inset-inline-start: var(--space-4);
+  bottom: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-surface);
+  color: var(--color-text);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: var(--shadow-dropdown);
+}
+.ab-intro__badge i { color: var(--color-primary); }
+
+/* ---------- 2. The next step, set over the video ---------- */
+.ab-how { min-width: 0; }
+
+/* The video is the backdrop, so the frame is sized by its content, not by a
+   fixed 16:9 box that the copy would overflow. */
+.ab-video__frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-8);
+  min-height: clamp(34rem, 26rem + 24vw, 44rem);
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-bg-inverse);
+  isolation: isolate;
+}
+
+.ab-video {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Copy now sits at both ends, so the scrim darkens top and foot and leaves the
+   middle of the picture clear. */
+.ab-video__veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to top, var(--color-bg-inverse) 0%, var(--color-overlay) 45%, transparent 75%),
+    linear-gradient(to bottom, var(--color-overlay) 0%, transparent 42%);
+}
+
+.ab-video__toggle {
+  position: absolute;
+  inset-inline-end: var(--space-4);
+  top: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+.ab-video__toggle:hover { background: var(--color-bg-muted); }
+
+/* ---------- Points over the head of the frame ----------
+   A tinted panel so the copy holds up over whatever frame the video is on,
+   rather than depending on the scrim alone. */
+.ab-over {
+  position: relative;
+  margin: var(--space-5) var(--space-5) 0;
+  padding: var(--space-6);
+  /* Clear of the play/pause control in the corner */
+  padding-inline-end: calc(var(--touch-target) + var(--space-6));
+  border-radius: var(--radius-lg);
+  background: var(--color-overlay);
+  color: var(--color-text-inverse);
+}
+@supports (backdrop-filter: blur(2px)) {
+  .ab-over { backdrop-filter: blur(3px); }
+}
+
+.ab-over__title {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-heading-sm);
+  line-height: var(--leading-heading-sm);
+  text-wrap: balance;
+}
+
+/* One point per row, always — never side by side */
+.ab-over__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ab-over__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+  padding-inline-start: var(--space-5);
+}
+.ab-over__item::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.55em;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+}
+
+.ab-over__name {
+  color: var(--color-text-inverse);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-body);
+}
+
+/* Always a light tone: --color-border-strong is dark brown in the dark theme
+   and would vanish against the footage. */
+.ab-over__desc {
+  color: var(--color-text-inverse);
+  font-size: var(--text-small);
+  line-height: var(--leading-body);
+}
+
+/* ---------- Call to action ---------- */
+.ab-cta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  width: 100%;
+  /* No top padding — the frame gap separates it from the points above */
+  padding: 0 var(--space-6) var(--space-8);
+  color: var(--color-text-inverse);
+}
+
+.ab-cta__title {
+  margin: 0;
+  font-size: var(--text-heading-lg);
+  line-height: var(--leading-heading-lg);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.ab-cta__text {
+  margin: 0;
+  color: var(--color-text-inverse);
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body-lg);
+}
+
+.ab-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+/* The band supplies its own ring — the default is built for light surfaces */
+.ab-video__frame :focus-visible {
+  outline: 2px solid var(--color-text-inverse);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+/* ---------- About responsive ---------- */
+@media (min-width: 48rem) {
+  .ab-intro__cols {
+    columns: 2;
+    column-gap: var(--space-8);
+  }
+  .ab-intro__cols p { break-inside: avoid; }
+
+  /* Heading across the top, the three points spread beneath it — both blocks
+     run the full width of the frame rather than sitting in a left column. */
+  .ab-over {
+    margin: var(--space-6) var(--space-6) 0;
+    padding: var(--space-8);
+    padding-inline-end: calc(var(--touch-target) + var(--space-8));
+  }
+  /* Stacked top to bottom, each point spanning the frame: name in a rail, its
+     description running out across the rest of the width. */
+  .ab-over__item {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--space-6);
+  }
+  .ab-over__name { flex: 0 0 13rem; }
+  .ab-over__desc { flex: 1; }
+
+  .ab-cta {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding: 0 var(--space-8) var(--space-10);
+  }
+  .ab-cta__title   { flex: 0 1 18rem; }
+  .ab-cta__text    { flex: 1; font-size: var(--text-body); }
+  .ab-cta__actions { flex: none; margin-top: 0; }
+}
+
+@media (min-width: 64rem) {
+  /* Narrow media column keeps the tall portrait roughly level with the text */
+  .ab-intro {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    gap: var(--space-16);
+  }
+
+  .ab-over {
+    margin: var(--space-8) var(--space-8) 0;
+    padding: var(--space-10);
+    padding-inline-end: calc(var(--touch-target) + var(--space-10));
+  }
+  .ab-cta  { padding: 0 var(--space-10) var(--space-12); gap: var(--space-10); }
+  .ab-cta__title { flex: 0 1 20rem; }
+}
+
+
+/* --------------------------------------------------------------------------
    14h. Account dashboard
    Greeting, a ruled figures strip, underline tabs, then a ledger of orders.
    Markup: frontend/user/dashboard.blade.php
@@ -5409,7 +5782,7 @@ a.cp-item__title:hover { color: var(--color-primary); }
   .tu-form__label--sm { grid-area: qlabel; margin-top: var(--space-5); }
   .tu-amount  { grid-area: amount; }
   .tu-quick   { grid-area: quick; align-content: start; }
-  .tu-stats   { grid-area: stats; margin: 0; align-self: start; }
+  .tu-stats   { grid-area: stats; margin: 15px 0; align-self: start; }
   .tu-submit  { grid-area: submit; align-self: end; }
   .tu-trust   { grid-area: trust; }
 

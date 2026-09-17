@@ -108,6 +108,26 @@ return [
 
     // resources/views/frontend/index.blade.php
     'home' => [
+        'steps_label'   => 'How it works',
+        'steps_title'   => 'From browsing to your first lesson',
+        'steps_desc'    => 'Every course on the platform is reached the same way, so there is nothing new to work out when you move on to another subject.',
+        'step1_title'   => 'Choose a category',
+        'step1_desc'    => 'Browse the subject areas on offer and open the one you want to look at.',
+        'step2_title'   => 'Pick a course',
+        'step2_desc'    => 'Compare the courses inside it and read what each one covers.',
+        'step3_title'   => 'Select a level',
+        'step3_desc'    => 'Choose the level that matches what you already know.',
+        'step4_title'   => 'Review the details',
+        'step4_desc'    => 'Check what the level teaches and how many credits it costs.',
+        'step5_title'   => 'Complete checkout',
+        'step5_desc'    => 'Buy credits securely with the payment options available.',
+        'step6_title'   => 'Start learning',
+        'step6_desc'    => 'Unlock the level with your credits and open it from your account.',
+        'steps_alt1'    => 'Someone planning their study time at a desk',
+        'steps_alt2'    => 'A learner attending an online class',
+        'hero_eyebrow'  => 'Online learning platform',
+        'hero_explore'  => 'Explore Courses',
+        'hero_scroll'   => 'Scroll to see what is on the platform',
         'tab'           => 'Home',
         'meta'          => 'Browse online courses by category, compare the levels inside each course, and unlock the level you want with credits.',
         // Hero

@@ -1,9 +1,11 @@
 {{--
   ==========================================================================
   Page Banner + Breadcrumb
-  Full-bleed photographic band. On wide screens a solid inverse panel with a
-  diagonal edge carries the text, cut to echo the escalator rails in the photo.
-  Styles: public/css/app.css — section 8
+  Drawn entirely in CSS — no photo, no video. A dot-matrix sheet washed with
+  brand light, carrying floating course marks (cap, pencil, book, lesson,
+  award, idea) and a level-progress track, with a gradient rule sweeping in
+  under the page title.
+  Styles: public/css/theme.css — section 16
 
   Usage:
   @include('frontend.layouts.breadcrumb', [
@@ -13,33 +15,32 @@
           ['name' => 'Catalog', 'url' => route('product-lists')],
           ['name' => 'Current Page']
       ],
-      'image' => 'assets/images/other.webp', // optional: replaces the default photo
   ])
+
+  Note: any 'image' passed by a caller is ignored — this banner is drawn, not
+  photographed.
   ==========================================================================
 --}}
-@php
-    $bcImage   = $image ?? 'assets/images/breadcrumb-commute.webp';
-    $bcDefault = !isset($image);
-@endphp
 
+<section class="bc {{ empty($title) ? 'bc--compact' : '' }}">
 
-<section class="bc {{ empty($title) ? 'bc--compact' : '' }} {{ $bcDefault ? 'bc--default' : '' }}">
+    {{-- Decorative surface --}}
+    <span class="bc__canvas" aria-hidden="true">
+        <span class="bc__grid"></span>
+        <span class="bc__marks">
+            <span class="bc__glyph bc__glyph--1"><i class="fas fa-graduation-cap"></i></span>
+            <span class="bc__glyph bc__glyph--orchid bc__glyph--2"><i class="fas fa-pencil-alt"></i></span>
+            <span class="bc__glyph bc__glyph--bare bc__glyph--3"><i class="fas fa-book-open"></i></span>
+            <span class="bc__glyph bc__glyph--4"><i class="fas fa-play"></i></span>
+            <span class="bc__glyph bc__glyph--bare bc__glyph--5"><i class="fas fa-award"></i></span>
+            <span class="bc__glyph bc__glyph--orchid bc__glyph--6"><i class="fas fa-lightbulb"></i></span>
+        </span>
+        <span class="bc__track">
+            <span></span><span></span><span></span><span></span>
+        </span>
+    </span>
 
-    <div class="bc__media">
-        <img
-            src="{{ asset($bcImage) }}"
-            @if($bcDefault)
-                srcset="{{ asset('assets/images/breadcrumb-commute-sm.webp') }} 800w, {{ asset('assets/images/breadcrumb-commute.webp') }} 1600w"
-                sizes="100vw"
-                width="1600" height="600"
-            @endif
-            alt=""
-            fetchpriority="high"
-            decoding="async">
-        <span class="bc__veil" aria-hidden="true"></span>
-    </div>
-
-    <div class="bc__panel">
+    <div class="bc__inner">
         <div class="bc__content">
             @if(isset($links) && count($links) > 0)
                 <nav aria-label="{{ __('frontend.breadcrumb.label') }}">

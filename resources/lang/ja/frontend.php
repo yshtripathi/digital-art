@@ -59,6 +59,11 @@ return [
         'cart_total'    => '合計',
         'checkout'      => '購入手続きへ進む',
         'view_cart'     => 'カートを見る',
+        'continue'      => '買い物を続ける',
+        'balance_label' => '保有クレジット',
+        'promo_code'    => 'プロモコード',
+        'promo_ph'      => 'プロモコードを入力してください',
+        'promo_apply'   => '適用',
         'levels' => [
             'beginner'     => '初級',
             'intermediate' => '中級',

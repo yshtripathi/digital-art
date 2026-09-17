@@ -1,7 +1,8 @@
 {{-- ==========================================================================
      Site Footer
-     Inverse newsletter band + ruled directory rows (label rail / flowing links).
-     Styles: public/css/app.css — section 7
+     Centred newsletter strip above a four-column directory, closed by a rule
+     and the copyright row (see design/DESIGN.md — section 3).
+     Styles: public/css/theme.css — section 14
      JS hooks kept: .subscribe-form, input[type="email"], .suces_rinfo,
      .scroll-to-top.scroll-to-target
      ========================================================================== --}}
@@ -15,124 +16,116 @@
 
 
 <footer class="ft">
+    <div class="ft__inner">
 
-    {{-- Newsletter band --}}
-    <section class="ft-news" aria-labelledby="ft-news-title">
-        <div class="ft-news__inner">
-            <div class="ft-news__copy">
-                <h2 class="ft-news__title" id="ft-news-title">{{ __('frontend.footer.news_title') }}</h2>
-                <p class="ft-news__desc">{{ __('frontend.footer.news_desc') }}</p>
-                <ul class="ft-news__list">
-                    @foreach(__('frontend.footer.news_points') as $point)
-                        <li class="ft-news__point">{{ $point }}</li>
-                    @endforeach
-                </ul>
-                <p class="ft-news__note">{{ __('frontend.footer.news_note') }}</p>
-            </div>
+        {{-- Newsletter strip --}}
+        <section class="ft-news" aria-labelledby="ft-news-title">
+            <h2 class="ft-news__title" id="ft-news-title">{{ __('frontend.footer.news_title') }}</h2>
+            <p class="ft-news__desc">{{ __('frontend.footer.news_desc') }}</p>
 
-            <div class="ft-news__side">
-                <form class="ft-news__form subscribe-form" novalidate>
-                    <label class="ft-news__label" for="ft-news-email">{{ __('frontend.footer.news_email') }}</label>
-                    <div class="ft-news__field">
-                        <input type="email" name="email" id="ft-news-email" class="ft-news__input email" placeholder="{{ __('frontend.footer.news_ph') }}" required>
-                        <button type="submit" class="ft-news__btn">
-                            <span>{{ __('frontend.footer.news_btn') }}</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </form>
-                <p class="suces_rinfo" style="display: none;"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.footer.news_success') }}</p>
-            </div>
-        </div>
-    </section>
+            <form class="ft-news__form subscribe-form" novalidate>
+                <label class="visually-hidden" for="ft-news-email">{{ __('frontend.footer.news_email') }}</label>
+                <span class="ft-news__field">
+                    <i class="fas fa-envelope ft-news__field-icon" aria-hidden="true"></i>
+                    <input type="email" name="email" id="ft-news-email" class="ft-news__input email" placeholder="{{ __('frontend.footer.news_ph') }}" required>
+                </span>
+                <button type="submit" class="ft-news__btn">
+                    <span>{{ __('frontend.footer.news_btn') }}</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </button>
+            </form>
 
-    {{-- Directory --}}
-    <div class="ft-body">
-        <div class="ft-body__inner">
+            <p class="suces_rinfo" style="display: none;"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.footer.news_success') }}</p>
 
-            <div class="ft-intro">
-                <a href="{{ route('home') }}" class="ft-intro__logo">
+            <ul class="ft-news__list">
+                @foreach(__('frontend.footer.news_points') as $point)
+                    <li class="ft-news__point">
+                        <i class="fas fa-check" aria-hidden="true"></i>
+                        <span>{{ $point }}</span>
+                    </li>
+                @endforeach
+            </ul>
+
+            <p class="ft-news__note">{{ __('frontend.footer.news_note') }}</p>
+        </section>
+
+        {{-- Directory --}}
+        <div class="ft-cols">
+
+            <div class="ft-brand">
+                <a href="{{ route('home') }}" class="ft-brand__logo">
                     <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $ftCompany }}">
                 </a>
-                <p class="ft-intro__about">{{ __('frontend.footer.about') }}</p>
+                <p class="ft-brand__about">{{ __('frontend.footer.about') }}</p>
+
+                <ul class="ft-facts" aria-label="{{ __('frontend.footer.contact') }}">
+                    <li class="ft-fact">
+                        <i class="fas fa-building" aria-hidden="true"></i>
+                        <span>{{ $ftCompany }}</span>
+                    </li>
+                    <li>
+                        <a href="tel:{{ $ftPhone }}" class="ft-fact ft-link">
+                            <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                            <span>{{ $ftPhone }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:{{ $ftEmail }}" class="ft-fact ft-link">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <span>{{ $ftEmail }}</span>
+                        </a>
+                    </li>
+                    <li class="ft-fact">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>{{ $ftAddress }}</span>
+                    </li>
+                </ul>
             </div>
 
-            <div class="ft-rows">
+            <nav class="ft-col" aria-label="{{ __('frontend.footer.categories') }}">
+                <h2 class="ft-col__label">{{ __('frontend.footer.categories') }}</h2>
+                <ul class="ft-col__list">
+                    @forelse($footerCategories as $cat)
+                        <li><a href="{{ route('product-lists', $cat->slug) }}" class="ft-link">{{ $cat->title }}</a></li>
+                    @empty
+                        <li><span class="ft-col__empty">{{ __('frontend.footer.no_categories') }}</span></li>
+                    @endforelse
+                </ul>
+            </nav>
 
-                <nav class="ft-row" aria-label="{{ __('frontend.footer.categories') }}">
-                    <h2 class="ft-row__label">{{ __('frontend.footer.categories') }}</h2>
-                    <ul class="ft-row__list">
-                        @forelse($footerCategories as $cat)
-                            <li><a href="{{ route('product-lists', $cat->slug) }}" class="ft-link">{{ $cat->title }}</a></li>
-                        @empty
-                            <li><span class="ft-row__empty">{{ __('frontend.footer.no_categories') }}</span></li>
-                        @endforelse
-                    </ul>
-                </nav>
+            <nav class="ft-col" aria-label="{{ __('frontend.footer.company') }}">
+                <h2 class="ft-col__label">{{ __('frontend.footer.company') }}</h2>
+                <ul class="ft-col__list">
+                    <li><a href="{{ route('product-lists') }}" class="ft-link">{{ __('frontend.footer.all_courses') }}</a></li>
+                    <li><a href="{{ route('about-us') }}" class="ft-link">{{ __('frontend.footer.about_us') }}</a></li>
+                    <li><a href="{{ route('contact') }}" class="ft-link">{{ __('frontend.footer.contact_us') }}</a></li>
+                    @if(Auth::check())
+                        <li><a href="{{ route('user') }}" class="ft-link">{{ __('frontend.footer.my_account') }}</a></li>
+                        <li><a href="{{ route('user.logout') }}" class="ft-link">{{ __('frontend.footer.logout') }}</a></li>
+                    @else
+                        <li><a href="{{ route('login.form') }}" class="ft-link">{{ __('frontend.footer.login') }}</a></li>
+                        <li><a href="{{ route('register.form') }}" class="ft-link">{{ __('frontend.footer.register') }}</a></li>
+                    @endif
+                </ul>
+            </nav>
 
-                <nav class="ft-row" aria-label="{{ __('frontend.footer.company') }}">
-                    <h2 class="ft-row__label">{{ __('frontend.footer.company') }}</h2>
-                    <ul class="ft-row__list">
-                        <li><a href="{{ route('product-lists') }}" class="ft-link">{{ __('frontend.footer.all_courses') }}</a></li>
-                        <li><a href="{{ route('about-us') }}" class="ft-link">{{ __('frontend.footer.about_us') }}</a></li>
-                        <li><a href="{{ route('contact') }}" class="ft-link">{{ __('frontend.footer.contact_us') }}</a></li>
-                        @if(Auth::check())
-                            <li><a href="{{ route('user') }}" class="ft-link">{{ __('frontend.footer.my_account') }}</a></li>
-                            <li><a href="{{ route('user.logout') }}" class="ft-link">{{ __('frontend.footer.logout') }}</a></li>
-                        @else
-                            <li><a href="{{ route('login.form') }}" class="ft-link">{{ __('frontend.footer.login') }}</a></li>
-                            <li><a href="{{ route('register.form') }}" class="ft-link">{{ __('frontend.footer.register') }}</a></li>
-                        @endif
-                    </ul>
-                </nav>
+            <nav class="ft-col" aria-label="{{ __('frontend.footer.policies') }}">
+                <h2 class="ft-col__label">{{ __('frontend.footer.policies') }}</h2>
+                <ul class="ft-col__list">
+                    <li><a href="{{ route('pages','terms-conditions') }}" class="ft-link">{{ __('frontend.footer.terms') }}</a></li>
+                    <li><a href="{{ route('pages','privacy-policy') }}" class="ft-link">{{ __('frontend.footer.privacy') }}</a></li>
+                    <li><a href="{{ route('pages','refund-policy') }}" class="ft-link">{{ __('frontend.footer.refund') }}</a></li>
+                    <li><a href="{{ route('pages','delivery-policy') }}" class="ft-link">{{ __('frontend.footer.delivery') }}</a></li>
+                </ul>
+            </nav>
+        </div>
 
-                <nav class="ft-row" aria-label="{{ __('frontend.footer.policies') }}">
-                    <h2 class="ft-row__label">{{ __('frontend.footer.policies') }}</h2>
-                    <ul class="ft-row__list">
-                        <li><a href="{{ route('pages','terms-conditions') }}" class="ft-link">{{ __('frontend.footer.terms') }}</a></li>
-                        <li><a href="{{ route('pages','privacy-policy') }}" class="ft-link">{{ __('frontend.footer.privacy') }}</a></li>
-                        <li><a href="{{ route('pages','refund-policy') }}" class="ft-link">{{ __('frontend.footer.refund') }}</a></li>
-                        <li><a href="{{ route('pages','delivery-policy') }}" class="ft-link">{{ __('frontend.footer.delivery') }}</a></li>
-                    </ul>
-                </nav>
-
-                <section class="ft-row" aria-label="{{ __('frontend.footer.contact') }}">
-                    <h2 class="ft-row__label">{{ __('frontend.footer.contact') }}</h2>
-                    <ul class="ft-row__list ft-row__list--contact">
-                        <li>
-                            <span class="ft-fact">
-                                <i class="fas fa-building" aria-hidden="true"></i>
-                                <span>{{ $ftCompany }}</span>
-                            </span>
-                        </li>
-                        <li>
-                            <a href="tel:{{ $ftPhone }}" class="ft-fact ft-link">
-                                <i class="fas fa-phone-alt" aria-hidden="true"></i>
-                                <span>{{ $ftPhone }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="mailto:{{ $ftEmail }}" class="ft-fact ft-link">
-                                <i class="fas fa-envelope" aria-hidden="true"></i>
-                                <span>{{ $ftEmail }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <span class="ft-fact">
-                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                                <span>{{ $ftAddress }}</span>
-                            </span>
-                        </li>
-                    </ul>
-                </section>
-            </div>
-
-            <div class="ft-bottom">
-                <p class="ft-bottom__copy">
-                    &copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $ftCompany }}</a>. {{ __('frontend.footer.rights') }}
-                </p>
-                <img class="ft-bottom__pay" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.payments') }}" loading="lazy">
-            </div>
+        {{-- Closing row --}}
+        <div class="ft-bottom">
+            <p class="ft-bottom__copy">
+                &copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $ftCompany }}</a>. {{ __('frontend.footer.rights') }}
+            </p>
+            <img class="ft-bottom__pay" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.payments') }}" loading="lazy">
         </div>
     </div>
 </footer>

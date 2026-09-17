@@ -20,7 +20,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#d2e823">
+    <meta name="theme-color" content="#5551ff">
 
     {{-- SEO --}}
     <title>{{ $fullTitle }}</title>
@@ -52,12 +52,12 @@
     {{-- Fonts & icon libraries --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400&family=Noto+Sans+JP:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Noto+Sans+JP:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
 
     {{-- Site styles --}}
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}?v={{ filemtime(public_path('css/theme.css')) }}">
     @if(env('CONTENT_PROTECTION_ENABLED', true))
         <link rel="stylesheet" href="{{ asset('css/prevention.css') }}">
     @endif
@@ -71,9 +71,13 @@
     {{-- Preloader (faded out by assets/js/script.js) --}}
     <div id="preloader" role="status" aria-label="{{ __('frontend.head.loading') }}">
         <div class="pre">
-            <p class="pre__mark">{{ $siteName }}</p>
-            <div class="pre__track" aria-hidden="true">
-                <span class="pre__bar"></span>
-            </div>
+            <span class="pre__mark" aria-hidden="true">
+                <span class="pre__ring"></span>
+                <span class="pre__tile"><i class="fas fa-graduation-cap"></i></span>
+            </span>
+            <p class="pre__name">{{ $siteName }}</p>
+            <span class="pre__dots" aria-hidden="true">
+                <span></span><span></span><span></span>
+            </span>
         </div>
     </div>

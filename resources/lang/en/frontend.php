@@ -59,6 +59,11 @@ return [
         'cart_total'    => 'Total',
         'checkout'      => 'Proceed to Checkout',
         'view_cart'     => 'View Cart',
+        'continue'      => 'Continue Browsing',
+        'balance_label' => 'Your credit balance',
+        'promo_code'    => 'Promo code',
+        'promo_ph'      => 'Enter your promo code',
+        'promo_apply'   => 'Apply',
         'levels' => [
             'beginner'     => 'Beginner',
             'intermediate' => 'Intermediate',

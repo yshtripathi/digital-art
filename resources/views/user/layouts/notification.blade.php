@@ -1,7 +1,7 @@
 {{-- ==========================================================================
      Flash Notifications
-     Top-centre alert stack, below the sticky header, at --z-toast so nothing
-     in the page can cover it. Styles: public/css/app.css — section 12
+     Top-right toast stack that slides in from the right, above everything else
+     (see design/DESIGN.md — section 2). Styles: public/css/theme.css — section 15
      ========================================================================== --}}
 @if(session('success') || session('error'))
 
@@ -48,7 +48,7 @@
             // Only alerts carrying a countdown bar dismiss themselves; errors
             // stay until the reader closes them.
             if (alert.querySelector('.nt__bar')) {
-                setTimeout(() => hide(alert), 5000);
+                setTimeout(() => hide(alert), 4500);
             }
         });
     });

@@ -980,17 +980,20 @@ textarea.form-control {
 }
 
 .ak-logo img {
-  height: 34px;
+  /* The asset is trimmed to its artwork (≈7.9:1), so this is the height the
+     wordmark really renders at. Capped by width so a wide mark cannot crowd
+     the nav on narrow screens. */
+  height: 24px;
   width: auto;
+  max-width: 200px;
   object-fit: contain;
 }
 
-.ak-logo__dot {
-  width: 6px;
-  height: 6px;
-  margin-left: 4px;
-  border-radius: 50%;
-  background: var(--color-orchid-accent);
+@media (max-width: 991px) {
+  .ak-logo img {
+    height: 22px;
+    max-width: 175px;
+  }
 }
 
 /* --- 11.3 Desktop navigation -------------------------------------------- */
@@ -2620,8 +2623,9 @@ body.mobile-menu-visible .ak-drawer {
 }
 
 .ft-brand__logo img {
-  height: 36px;
+  height: 26px;
   width: auto;
+  max-width: 215px;
   object-fit: contain;
 }
 

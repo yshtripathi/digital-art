@@ -76,7 +76,6 @@
         {{-- Logo --}}
         <a href="{{ route('home') }}" class="ak-logo">
             <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $hdCompany }}">
-            <span class="ak-logo__dot" aria-hidden="true"></span>
         </a>
 
         {{-- Desktop navigation --}}
@@ -201,7 +200,6 @@
         <div class="ak-drawer__top">
             <a href="{{ route('home') }}" class="ak-logo">
                 <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $hdCompany }}">
-                <span class="ak-logo__dot" aria-hidden="true"></span>
             </a>
             <button type="button" class="ak-icon-btn close-btn" aria-label="{{ __('frontend.header.close') }}">
                 <i class="fas fa-times" aria-hidden="true"></i>

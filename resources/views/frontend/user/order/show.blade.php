@@ -14,14 +14,11 @@
 
 {{-- ==========================================================================
      Receipt — one order
-     A single ticket on the drawn canvas: header with stamp, items, details,
+     A single ticket: header with stamp, items, details,
      then total, statuses and actions.
      Styles: public/css/theme.css — section 26
      ========================================================================== --}}
 <section class="rc">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="rc__wrap">
         @if($order)
             @php

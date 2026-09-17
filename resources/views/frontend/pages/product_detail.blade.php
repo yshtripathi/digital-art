@@ -39,9 +39,6 @@
      .pd-level / .pd-buy__level [data-level-id], .enroll-form, .enroll-btn
      ========================================================================== --}}
 <section class="pd">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="pd__wrap">
 
         <div class="pd-top">

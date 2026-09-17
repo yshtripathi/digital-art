@@ -68,6 +68,36 @@
 <body class="antialiased">
 <div class="page-wrapper">
 
+    {{-- Backdrop: two orbits carrying course marks, plus marks drifting in the
+         gutters. Decorative only, declared once here so no page carries it.
+         Styles: theme.css — 2b --}}
+    <div class="page-fx" aria-hidden="true">
+
+        <span class="page-fx__ring page-fx__ring--outer">
+            <span class="page-fx__orb"><i class="fas fa-graduation-cap"></i></span>
+            <span class="page-fx__orb"><i class="fas fa-book-open"></i></span>
+            <span class="page-fx__orb"><i class="fas fa-chart-line"></i></span>
+            <span class="page-fx__orb"><i class="fas fa-palette"></i></span>
+            <span class="page-fx__orb"><i class="fas fa-laptop-code"></i></span>
+            <span class="page-fx__orb"><i class="fas fa-award"></i></span>
+        </span>
+
+        <span class="page-fx__ring page-fx__ring--inner">
+            <span class="page-fx__orb page-fx__orb--soft"><i class="fas fa-lightbulb"></i></span>
+            <span class="page-fx__orb page-fx__orb--soft"><i class="fas fa-music"></i></span>
+            <span class="page-fx__orb page-fx__orb--soft"><i class="fas fa-language"></i></span>
+            <span class="page-fx__orb page-fx__orb--soft"><i class="fas fa-pencil-alt"></i></span>
+            <span class="page-fx__orb page-fx__orb--soft"><i class="fas fa-play"></i></span>
+        </span>
+
+        <span class="page-fx__mark page-fx__mark--1"><i class="fas fa-graduation-cap"></i></span>
+        <span class="page-fx__mark page-fx__mark--2"><i class="fas fa-book-open"></i></span>
+        <span class="page-fx__mark page-fx__mark--3"><i class="fas fa-certificate"></i></span>
+        <span class="page-fx__mark page-fx__mark--4"><i class="fas fa-palette"></i></span>
+        <span class="page-fx__mark page-fx__mark--5"><i class="fas fa-lightbulb"></i></span>
+        <span class="page-fx__mark page-fx__mark--6"><i class="fas fa-chart-line"></i></span>
+    </div>
+
     {{-- Preloader (faded out by assets/js/script.js) --}}
     <div id="preloader" role="status" aria-label="{{ __('frontend.head.loading') }}">
         <div class="pre">

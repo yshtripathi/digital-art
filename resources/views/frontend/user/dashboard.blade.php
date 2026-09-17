@@ -27,15 +27,12 @@
 
 {{-- ==========================================================================
      Account dashboard
-     Profile bar, stat cards and pill tabs over the drawn canvas.
+     Profile bar, stat cards and pill tabs.
      Styles: public/css/theme.css — section 25
      JS hooks kept: .ds-tab[data-tab], .ds-panel[data-panel], .active,
      [data-au-toggle]
      ========================================================================== --}}
 <section class="ds">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="ds__wrap">
 
         {{-- Profile --}}

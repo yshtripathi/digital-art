@@ -11,9 +11,6 @@
 ])
 
 <section class="fm fm--register">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="fm__wrap">
 
         <div class="fm__head">

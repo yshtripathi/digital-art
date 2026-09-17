@@ -18,13 +18,10 @@
 
 {{-- ==========================================================================
      Order success
-     Centred column on the drawn canvas: status medallion, ticket receipt,
+     Centred column: status medallion, ticket receipt,
      actions. Styles: public/css/theme.css — section 19
      ========================================================================== --}}
 <section class="res res--success">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="res__wrap">
 
         <span class="res-mark" aria-hidden="true">

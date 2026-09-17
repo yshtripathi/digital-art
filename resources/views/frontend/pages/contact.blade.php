@@ -18,9 +18,6 @@
 @endphp
 
 <section class="fm fm--contact fm--wide">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="fm__wrap">
 
         {{-- Contact details, drawn from the miscs table --}}

@@ -31,14 +31,11 @@
 
 {{-- ==========================================================================
      Course catalogue
-     Category lead, then a card grid on the drawn canvas, closed by the
+     Category lead, then a card grid, closed by the
      category row (see design/DESIGN.md — section 7).
      Styles: public/css/theme.css — section 23
      ========================================================================== --}}
 <section class="pl">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="pl__wrap">
 
         {{-- Category lead: cover, count and description --}}

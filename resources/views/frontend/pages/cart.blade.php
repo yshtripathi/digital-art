@@ -12,14 +12,11 @@
 
 {{-- ==========================================================================
      Credit cart
-     Single centred column on the drawn canvas: purchase steps, ticket rows,
+     Single centred column: purchase steps, ticket rows,
      sticky summary bar.
      Styles: public/css/theme.css — section 18
      ========================================================================== --}}
 <section class="bag">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="bag__wrap">
 
         <ol class="bag-steps">

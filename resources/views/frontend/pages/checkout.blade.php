@@ -13,7 +13,7 @@
 
 {{-- ==========================================================================
      Checkout
-     Centred column on the drawn canvas: purchase steps, order summary, then
+     Centred column: purchase steps, order summary, then
      numbered form cards on the shared controls, closed by a sticky pay bar.
      Styles: public/css/theme.css — sections 17 and 22
      JS hooks kept: #frmCheckout, .au-field, .au-error, .is-invalid, .co-check,
@@ -21,9 +21,6 @@
      .cc-number, .cc-cvc, #button-confirm
      ========================================================================== --}}
 <section class="co">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="co__wrap">
 
         <ol class="bag-steps">

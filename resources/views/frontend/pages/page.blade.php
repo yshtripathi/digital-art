@@ -17,9 +17,6 @@
      Styles: public/css/theme.css — section 21
      ========================================================================== --}}
 <section class="pg">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="pg__wrap">
         <div class="pg-sheet">
             <article class="pg-prose">

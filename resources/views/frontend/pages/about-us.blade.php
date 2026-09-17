@@ -21,9 +21,6 @@
 
 {{-- ===================== 1. WHY THIS EXISTS ===================== --}}
 <section class="ab">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="ab__wrap">
         <div class="ab-intro">
 

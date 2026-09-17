@@ -12,14 +12,11 @@
 
 {{-- ==========================================================================
      Course cart
-     Single centred column on the drawn canvas: unlock steps, balance strip,
+     Single centred column: unlock steps, balance strip,
      ticket rows, sticky summary bar.
      Styles: public/css/theme.css — section 18
      ========================================================================== --}}
 <section class="bag">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="bag__wrap">
 
         <ol class="bag-steps">

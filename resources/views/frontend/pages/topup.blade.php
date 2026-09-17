@@ -55,9 +55,6 @@
      .tu-tier[data-mult], .is-current, .is-active, .tu-stats__total.is-pulse
      ========================================================================== --}}
 <section class="tu">
-
-    @include('frontend.layouts.form-canvas')
-
     <div class="tu__wrap">
 
         {{-- Intro --}}

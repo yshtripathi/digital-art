@@ -13,7 +13,6 @@
         $key = 'frontend.course.names.' . strtolower((string) $level->skill_level);
         return Lang::has($key) ? __($key) : ucfirst((string) $level->skill_level);
     };
-    $related = collect($product_detail->rel_prods ?? [])->where('id', '!=', $product_detail->id)->take(3);
 
     $bcLinks = [
         ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
@@ -30,13 +29,26 @@
     'links' => $bcLinks,
 ])
 
+{{-- ==========================================================================
+     Course detail
+     The course (image, summary and the picked level's detail) beside one
+     unlock card that both picks the level and buys it, with the course
+     description underneath (see design/DESIGN.md — section 8).
+     Styles: public/css/theme.css — section 24
+     JS hooks kept: #pdMainImg, .pd-thumb[data-src], .pd-compare__row,
+     .pd-level / .pd-buy__level [data-level-id], .enroll-form, .enroll-btn
+     ========================================================================== --}}
 <section class="pd">
+
+    @include('frontend.layouts.form-canvas')
+
     <div class="pd__wrap">
 
-        {{-- ===================== LEAD: 16:9 still + summary ===================== --}}
-        <div class="pd-lead">
-            <div class="pd-shot">
-                <div class="pd-shot__frame">
+        <div class="pd-top">
+
+            {{-- The course --}}
+            <div class="pd-lead">
+                <div class="pd-shot">
                     @if(isset($photos[0]))
                         <img id="pdMainImg" src="{{ asset(ltrim($photos[0], '/')) }}" alt="{{ $product_detail->title }}" fetchpriority="high" decoding="async">
                     @else
@@ -53,188 +65,140 @@
                         @endforeach
                     </div>
                 @endif
-            </div>
 
-            <div class="pd-intro">
-                @if($pdCategory)
-                    <a href="{{ route('product-lists', $pdCategory->slug) }}" class="pd-intro__cat">{{ $pdCategory->title }}</a>
-                @endif
+                <div class="pd-intro">
+                    @if($pdCategory)
+                        <a href="{{ route('product-lists', $pdCategory->slug) }}" class="badge">{{ $pdCategory->title }}</a>
+                    @endif
+                    @if($hasLevels)
+                        <span class="badge badge--brand">
+                            <i class="fas fa-signal" aria-hidden="true"></i>
+                            {{ trans_choice('frontend.course.levels', count($pdLevels), ['count' => count($pdLevels)]) }}
+                        </span>
+                    @endif
+                </div>
 
                 @if($product_detail->summary)
-                    <p class="pd-intro__summary">{{ $product_detail->summary }}</p>
+                    <p class="pd-summary">{{ $product_detail->summary }}</p>
                 @endif
 
-                <dl class="pd-facts">
-                    @if($hasLevels)
-                        <div class="pd-fact">
-                            <dt>{{ __('frontend.course.level') }}</dt>
-                            <dd>{{ trans_choice('frontend.course.levels', count($pdLevels), ['count' => count($pdLevels)]) }}</dd>
-                        </div>
-                        <div class="pd-fact">
-                            <dt>{{ __('frontend.course.from') }}</dt>
-                            <dd class="pd-fact__num">{{ number_format($pdLevels->min('price_in_points')) }} <small>{{ __('frontend.course.credits') }}</small></dd>
-                        </div>
-                    @endif
-                    @if($pdCategory)
-                        <div class="pd-fact">
-                            <dt>{{ __('frontend.course.category') }}</dt>
-                            <dd>{{ $pdCategory->title }}</dd>
-                        </div>
-                    @endif
-                </dl>
-            </div>
-        </div>
-
-        <div class="pd__grid {{ $hasLevels ? '' : 'pd__grid--single' }}">
-
-            {{-- ===================== MAIN COLUMN ===================== --}}
-            <div class="pd-main">
-
-                {{-- About --}}
-                <section class="pd-block">
-                    <h2 class="pd-block__title">{{ __('frontend.course.about') }}</h2>
-                    @if($product_detail->description)
-                        <div class="pd-prose">{!! nl2br(e($product_detail->description)) !!}</div>
-                    @elseif($product_detail->summary)
-                        <div class="pd-prose">{{ $product_detail->summary }}</div>
-                    @endif
-                </section>
-
+                {{-- What the level you picked covers — updates with the choice --}}
                 @if($hasLevels)
-                    {{-- Levels: one selector for the whole page --}}
-                    <section class="pd-block" id="pdLevels">
-                        <h2 class="pd-block__title">{{ __('frontend.course.choose') }}</h2>
-
-                        <ul class="pd-levels">
-                            @foreach($pdLevels as $key => $level)
-                                <li>
-                                    <button type="button" class="pd-compare__row {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}" aria-pressed="{{ $key === 0 ? 'true' : 'false' }}">
-                                        <span class="pd-levels__name">
-                                            <span class="pd-levels__dot pd-levels__dot--{{ strtolower((string) $level->skill_level) }}" aria-hidden="true"></span>
-                                            {{ $levelName($level) }}
-                                        </span>
-                                        <span class="pd-levels__price">
-                                            <strong>{{ number_format($level->price_in_points) }}</strong>
-                                            <small>{{ __('frontend.course.credits') }}</small>
-                                        </span>
-                                        <span class="pd-levels__state">{{ __('frontend.course.selected') }}</span>
-                                    </button>
-                                </li>
-                            @endforeach
-                        </ul>
+                    <div class="pd-what">
+                        <h2 class="pd-what__title">{{ __('frontend.course.about_level') }}</h2>
 
                         @foreach($pdLevels as $key => $level)
                             <div class="pd-level {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}" @if($key !== 0) hidden @endif>
-                                <dl class="pd-feats">
+                                <p class="pd-what__for">{{ $levelName($level) }}</p>
+                                <ul class="pd-feats">
                                     @if($level->learn_info)
-                                        <div class="pd-feat">
-                                            <dt class="pd-feat__label">{{ __('frontend.course.learn') }}</dt>
-                                            <dd class="pd-feat__desc">{{ $level->learn_info }}</dd>
-                                        </div>
+                                        <li class="pd-feat">
+                                            <span class="pd-feat__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
+                                            <span class="pd-feat__body">
+                                                <span class="pd-feat__label">{{ __('frontend.course.learn') }}</span>
+                                                <span class="pd-feat__desc">{{ $level->learn_info }}</span>
+                                            </span>
+                                        </li>
                                     @endif
                                     @if($level->purpose)
-                                        <div class="pd-feat">
-                                            <dt class="pd-feat__label">{{ __('frontend.course.purpose') }}</dt>
-                                            <dd class="pd-feat__desc">{{ $level->purpose }}</dd>
-                                        </div>
+                                        <li class="pd-feat">
+                                            <span class="pd-feat__icon" aria-hidden="true"><i class="fas fa-bullseye"></i></span>
+                                            <span class="pd-feat__body">
+                                                <span class="pd-feat__label">{{ __('frontend.course.purpose') }}</span>
+                                                <span class="pd-feat__desc">{{ $level->purpose }}</span>
+                                            </span>
+                                        </li>
                                     @endif
                                     @if($level->outcome)
-                                        <div class="pd-feat">
-                                            <dt class="pd-feat__label">{{ __('frontend.course.outcome') }}</dt>
-                                            <dd class="pd-feat__desc">{{ $level->outcome }}</dd>
-                                        </div>
+                                        <li class="pd-feat">
+                                            <span class="pd-feat__icon" aria-hidden="true"><i class="fas fa-award"></i></span>
+                                            <span class="pd-feat__body">
+                                                <span class="pd-feat__label">{{ __('frontend.course.outcome') }}</span>
+                                                <span class="pd-feat__desc">{{ $level->outcome }}</span>
+                                            </span>
+                                        </li>
                                     @endif
-                                </dl>
+                                </ul>
                             </div>
                         @endforeach
-                    </section>
+                    </div>
                 @endif
             </div>
 
-            {{-- ===================== BUY COLUMN ===================== --}}
+            {{-- Pick a level and unlock it — the only place either happens --}}
             @if($hasLevels)
                 <aside class="pd-buy">
-                    <div class="pd-buy__card">
-                        @foreach($pdLevels as $key => $level)
-                            <div class="pd-buy__level {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}" @if($key !== 0) hidden @endif>
-                                <p class="pd-buy__label">{{ __('frontend.course.level') }}</p>
-                                <p class="pd-buy__name">{{ $levelName($level) }}</p>
+                    <p class="pd-buy__title">{{ __('frontend.course.choose') }}</p>
 
-                                <p class="pd-buy__price">
+                    <ul class="pd-levels">
+                        @foreach($pdLevels as $key => $level)
+                            <li>
+                                <button type="button" class="pd-compare__row {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}" aria-pressed="{{ $key === 0 ? 'true' : 'false' }}">
+                                    <span class="pd-levels__tick" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                    <span class="pd-levels__name">{{ $levelName($level) }}</span>
+                                    <span class="pd-levels__price">
+                                        <strong>{{ number_format($level->price_in_points) }}</strong>
+                                        <small>{{ __('frontend.course.credits') }}</small>
+                                    </span>
+                                </button>
+                            </li>
+                        @endforeach
+                    </ul>
+
+                    @foreach($pdLevels as $key => $level)
+                        <div class="pd-buy__level {{ $key === 0 ? 'active' : '' }}" data-level-id="{{ $level->id }}" @if($key !== 0) hidden @endif>
+                            <div class="pd-buy__cost">
+                                <span class="pd-buy__label">{{ __('frontend.course.level') }}: {{ $levelName($level) }}</span>
+                                <span class="pd-buy__price">
+                                    <i class="fas fa-bolt" aria-hidden="true"></i>
                                     <strong>{{ number_format($level->price_in_points) }}</strong>
                                     <small>{{ __('frontend.course.credits') }}</small>
-                                </p>
-
-                                <form action="{{ route('single-add-to-cart') }}" method="POST" class="enroll-form">
-                                    @csrf
-                                    <input type="hidden" name="quant[1]" value="1">
-                                    <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
-                                    <input type="hidden" name="price" value="{{ $level->price }}">
-                                    <input type="hidden" name="price_jp" value="{{ $level->price_jp }}">
-                                    <input type="hidden" name="price_hk" value="{{ $level->price_hk }}">
-                                    <input type="hidden" name="level_id" value="{{ $level->id }}">
-                                    <button type="submit" class="pd-enroll enroll-btn">
-                                        <span>{{ __('frontend.course.add') }}</span>
-                                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                                    </button>
-                                </form>
+                                </span>
                             </div>
-                        @endforeach
 
-                        <ul class="pd-buy__includes">
-                            <li><i class="fas fa-signal" aria-hidden="true"></i> {{ trans_choice('frontend.course.levels', count($pdLevels), ['count' => count($pdLevels)]) }}</li>
-                            @if($pdCategory)
-                                <li><i class="fas fa-layer-group" aria-hidden="true"></i> {{ __('frontend.course.category_label') }} {{ $pdCategory->title }}</li>
-                            @endif
-                            <li><i class="fas fa-coins" aria-hidden="true"></i> {{ __('frontend.course.unlock') }}</li>
-                        </ul>
+                            <form action="{{ route('single-add-to-cart') }}" method="POST" class="enroll-form">
+                                @csrf
+                                <input type="hidden" name="quant[1]" value="1">
+                                <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
+                                <input type="hidden" name="price" value="{{ $level->price }}">
+                                <input type="hidden" name="price_jp" value="{{ $level->price_jp }}">
+                                <input type="hidden" name="price_hk" value="{{ $level->price_hk }}">
+                                <input type="hidden" name="level_id" value="{{ $level->id }}">
+                                <button type="submit" class="pd-enroll enroll-btn">
+                                    <span>{{ __('frontend.course.add') }}</span>
+                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    @endforeach
 
-                        <p class="pd-buy__trust"><i class="fas fa-shield-alt" aria-hidden="true"></i> {{ __('frontend.course.note') }}</p>
-                    </div>
+                    <ul class="pd-buy__includes">
+                        <li><i class="fas fa-signal" aria-hidden="true"></i> {{ trans_choice('frontend.course.levels', count($pdLevels), ['count' => count($pdLevels)]) }}</li>
+                        @if($pdCategory)
+                            <li><i class="fas fa-layer-group" aria-hidden="true"></i> {{ __('frontend.course.category_label') }} {{ $pdCategory->title }}</li>
+                        @endif
+                        <li><i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.course.unlock') }}</li>
+                    </ul>
+
+                    <p class="pd-buy__trust"><i class="fas fa-shield-alt" aria-hidden="true"></i> {{ __('frontend.course.note') }}</p>
                 </aside>
             @endif
         </div>
 
-        {{-- ===================== RELATED ===================== --}}
-        @if($related->count())
-            <section class="pd-related">
-                <div class="pd-related__head">
-                    <h2 class="pd-related__title">{{ __('frontend.course.related') }}</h2>
-                    @if($pdCategory)
-                        <a href="{{ route('product-lists', $pdCategory->slug) }}" class="pd-related__all">{{ __('frontend.course.view_all') }} <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+        {{-- About the course --}}
+        @if($product_detail->description || $product_detail->summary)
+            <section class="pd-block">
+                <h2 class="pd-block__title">{{ __('frontend.course.about') }}</h2>
+                <div class="pd-prose">
+                    @if($product_detail->description)
+                        {!! nl2br(e($product_detail->description)) !!}
+                    @else
+                        {{ $product_detail->summary }}
                     @endif
                 </div>
-
-                <ul class="pd-rel__grid">
-                    @foreach($related as $course)
-                        @php
-                            $rimg = $course->photo ? explode(',', $course->photo)[0] : null;
-                            $rLevels = $course->levels;
-                            $rMin = $rLevels && $rLevels->count() ? $rLevels->min('price_in_points') : null;
-                        @endphp
-                        <li>
-                            <a href="{{ route('product-detail', $course->slug) }}" class="pd-rel">
-                                <span class="pd-rel__media">
-                                    @if($rimg)
-                                        <img src="{{ asset(ltrim($rimg, '/')) }}" alt="" loading="lazy" decoding="async">
-                                    @else
-                                        <span class="pd-rel__placeholder" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
-                                    @endif
-                                </span>
-                                <span class="pd-rel__title">{{ $course->title }}</span>
-                                <span class="pd-rel__price">
-                                    @if($rMin !== null)
-                                        {{ __('frontend.course.from') }} <strong>{{ number_format($rMin) }}</strong> {{ __('frontend.course.credits') }}
-                                    @else
-                                        {{ __('frontend.course.no_levels') }}
-                                    @endif
-                                </span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
             </section>
         @endif
+
     </div>
 </section>
 @endsection

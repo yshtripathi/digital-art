@@ -10,8 +10,35 @@
     ]
 ])
 
-<section class="cp">
-    <div class="cp__wrap">
+{{-- ==========================================================================
+     Credit cart
+     Single centred column on the drawn canvas: purchase steps, ticket rows,
+     sticky summary bar.
+     Styles: public/css/theme.css — section 18
+     ========================================================================== --}}
+<section class="bag">
+
+    @include('frontend.layouts.form-canvas')
+
+    <div class="bag__wrap">
+
+        <ol class="bag-steps">
+            <li class="bag-step is-active">
+                <span class="bag-step__no">1</span>
+                <span class="bag-steps__label">{{ __('frontend.cart.step_cart') }}</span>
+            </li>
+            <li class="bag-steps__line" aria-hidden="true"></li>
+            <li class="bag-step">
+                <span class="bag-step__no">2</span>
+                <span class="bag-steps__label">{{ __('frontend.cart.step_pay') }}</span>
+            </li>
+            <li class="bag-steps__line" aria-hidden="true"></li>
+            <li class="bag-step">
+                <span class="bag-step__no">3</span>
+                <span class="bag-steps__label">{{ __('frontend.cart.step_done') }}</span>
+            </li>
+        </ol>
+
         @if(Helper::cartCount())
             @php
                 $cartItems = Helper::getAllProductFromCart();
@@ -23,123 +50,99 @@
                 $isJPY = session('currency') == 'JPY';
             @endphp
 
-            <div class="cp__grid">
-
-                {{-- Items --}}
-                <div class="cp-items">
-                    <div class="cp-items__head">
-                        <h2 class="cp-items__title">{{ __('frontend.cart.items_title') }}</h2>
-                        <span class="cp-count">{{ trans_choice('frontend.cart.items', count($cartItems), ['count' => count($cartItems)]) }}</span>
-                    </div>
-
-                    <ul class="cp-list">
-                        @foreach($cartItems as $cart)
-                            @php
-                                $item_title = __('frontend.cart.package');
-                                $item_link = '#';
-                                $item_photo = null;
-                                if($cart->product) {
-                                    $item_title = $cart->product->title;
-                                    $item_link = route('product-detail', $cart->product->slug);
-                                    $item_photo = $cart->product->photo ? explode(',', $cart->product->photo)[0] : null;
-                                }
-                            @endphp
-                            <li class="cp-item">
-                                <div class="cp-item__thumb {{ $cart->product ? '' : 'cp-item__thumb--credits' }}">
-                                    @if($item_photo)
-                                        <img src="{{ asset($item_photo) }}" alt="" loading="lazy">
-                                    @elseif($cart->product)
-                                        <i class="fas fa-book-open"></i>
-                                    @else
-                                        <i class="fas fa-coins"></i>
-                                    @endif
-                                </div>
-
-                                <div class="cp-item__body">
-                                    <span class="cp-tag {{ $cart->product ? 'cp-tag--course' : 'cp-tag--credit' }}">
-                                        {{ $cart->product ? __('frontend.cart.tag_course') : __('frontend.cart.tag_credits') }}
-                                    </span>
-                                    @if($cart->product)
-                                        <a href="{{ $item_link }}" class="cp-item__title">{{ $item_title }}</a>
-                                    @else
-                                        <span class="cp-item__title">{{ $item_title }}</span>
-                                    @endif
-
-                                    <div class="cp-item__meta">
-                                        <span class="cp-meta">
-                                            <span class="cp-meta__label">{{ __('frontend.cart.credits') }}</span>
-                                            <span class="cp-meta__value"><i class="fas fa-coins"></i> {{ number_format($cart->points) }}</span>
-                                        </span>
-                                        <span class="cp-meta">
-                                            <span class="cp-meta__label">{{ __('frontend.cart.amount') }}</span>
-                                            <span class="cp-meta__value">{{ $sym }}{{ number_format($cart['price'], $isJPY ? 0 : 2) }}</span>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <a href="{{ route('cart-delete', $cart->id) }}" class="cp-item__remove" aria-label="{{ __('frontend.cart.remove') }}: {{ $item_title }}">
-                                    <i class="fas fa-trash-alt"></i><span>{{ __('frontend.cart.remove') }}</span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
+            <div class="bag-panel">
+                <div class="bag-panel__head">
+                    <h2 class="bag-panel__title">{{ __('frontend.cart.items_title') }}</h2>
+                    <span class="bag-count">{{ trans_choice('frontend.cart.items', count($cartItems), ['count' => count($cartItems)]) }}</span>
                 </div>
 
-                {{-- Summary --}}
-                <aside class="cp-summary">
-                    <h2 class="cp-summary__title"><i class="fas fa-receipt"></i> {{ __('frontend.cart.summary') }}</h2>
+                @foreach($cartItems as $cart)
+                    @php
+                        $item_title = __('frontend.cart.package');
+                        $item_link = '#';
+                        $item_photo = null;
+                        if($cart->product) {
+                            $item_title = $cart->product->title;
+                            $item_link = route('product-detail', $cart->product->slug);
+                            $item_photo = $cart->product->photo ? explode(',', $cart->product->photo)[0] : null;
+                        }
+                    @endphp
 
-                    <div class="cp-summary__rows">
-                        <div class="cp-summary__row">
-                            <span>{{ __('frontend.cart.item_count') }}:</span>
-                            <span>{{ count($cartItems) }}</span>
+                    <div class="bag-row">
+                        <span class="bag-row__thumb {{ $cart->product ? '' : 'bag-row__thumb--credits' }}">
+                            @if($item_photo)
+                                <img src="{{ asset($item_photo) }}" alt="" loading="lazy">
+                            @elseif($cart->product)
+                                <i class="fas fa-book-open" aria-hidden="true"></i>
+                            @else
+                                <i class="fas fa-bolt" aria-hidden="true"></i>
+                            @endif
+                        </span>
+
+                        <div class="bag-row__body">
+                            <span class="badge {{ $cart->product ? '' : 'badge--brand' }}">
+                                {{ $cart->product ? __('frontend.cart.tag_course') : __('frontend.cart.tag_credits') }}
+                            </span>
+
+                            @if($cart->product)
+                                <a href="{{ $item_link }}" class="bag-row__title">{{ $item_title }}</a>
+                            @else
+                                <span class="bag-row__title">{{ $item_title }}</span>
+                            @endif
+
+                            <span class="bag-row__meta">
+                                <span><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($cart->points) }} {{ __('frontend.cart.credits') }}</span>
+                            </span>
                         </div>
 
-                        {{-- Subtotal row intentionally not shown --}}
+                        <span class="bag-row__amount">
+                            {{ $sym }}{{ number_format($cart['price'], $isJPY ? 0 : 2) }}
+                            <small>{{ __('frontend.cart.amount') }}</small>
+                        </span>
 
-                        @if($discount > 0)
-                            <div class="cp-summary__row cp-summary__row--discount">
-                                <span>{{ __('frontend.cart.discount') }}:</span>
-                                <span>&minus; {{ $sym }}{{ number_format($discount, $isJPY ? 0 : 2) }}</span>
-                            </div>
-                        @endif
+                        <a href="{{ route('cart-delete', $cart->id) }}" class="bag-row__remove" aria-label="{{ __('frontend.cart.remove') }}: {{ $item_title }}">
+                            <i class="fas fa-trash-alt" aria-hidden="true"></i><span>{{ __('frontend.cart.remove') }}</span>
+                        </a>
                     </div>
+                @endforeach
+            </div>
 
-                    <div class="cp-summary__total">
-                        <span>{{ __('frontend.cart.total') }}:</span>
-                        <strong>{{ $sym }}{{ number_format($total_amount, $isJPY ? 0 : 2) }}</strong>
-                    </div>
+            <div class="bag-bar">
+                <div class="bag-bar__figures">
+                    <span class="bag-bar__label">{{ __('frontend.cart.total') }}:</span>
+                    <span class="bag-bar__total">{{ $sym }}{{ number_format($total_amount, $isJPY ? 0 : 2) }}</span>
+                    @if($discount > 0)
+                        <span class="bag-bar__cut">&minus; {{ $sym }}{{ number_format($discount, $isJPY ? 0 : 2) }} {{ __('frontend.cart.discount') }}</span>
+                    @endif
+                </div>
 
-                    <a href="{{ route('checkout') }}" class="cp-btn cp-btn--primary">
-                        {{ __('frontend.cart.checkout') }} <i class="fas fa-arrow-right"></i>
-                    </a>
-
+                <div class="bag-bar__actions">
                     @if(Helper::totalCartPoints() > 0)
-                        <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--secondary">
-                            <i class="fas fa-arrow-left"></i> {{ __('frontend.cart.browse') }}
+                        <a href="{{ route('product-lists') }}" class="bag-btn bag-btn--ghost">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i> {{ __('frontend.cart.browse') }}
                         </a>
                     @endif
+                    <a href="{{ route('checkout') }}" class="bag-btn bag-btn--primary">
+                        {{ __('frontend.cart.checkout') }} <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
 
-                    <p class="cp-summary__trust"><i class="fas fa-shield-alt"></i> {{ __('frontend.cart.secure') }}</p>
-
-                    <div class="cp-summary__pay">
-                        <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.cart.payments') }}">
-                    </div>
-                </aside>
-
+            <div class="bag-foot">
+                <p class="bag-foot__trust"><i class="fas fa-shield-alt" aria-hidden="true"></i> {{ __('frontend.cart.secure') }}</p>
+                <img class="bag-foot__pay" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.cart.payments') }}" loading="lazy">
             </div>
         @else
-            {{-- Empty state --}}
-            <div class="cp-empty">
-                <span class="cp-empty__icon"><i class="fas fa-shopping-basket"></i></span>
-                <h2 class="cp-empty__title">{{ __('frontend.cart.empty_title') }}</h2>
-                <p class="cp-empty__desc">{{ __('frontend.cart.empty_desc') }}</p>
-                <div class="cp-empty__actions">
-                    <a href="{{ route('product-lists') }}" class="cp-btn cp-btn--inverse">
-                        <i class="fas fa-graduation-cap"></i> {{ __('frontend.cart.empty_courses') }}
+            <div class="bag-empty">
+                <span class="bag-empty__icon" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
+                <h2 class="bag-empty__title">{{ __('frontend.cart.empty_title') }}</h2>
+                <p class="bag-empty__desc">{{ __('frontend.cart.empty_desc') }}</p>
+                <div class="bag-empty__actions">
+                    <a href="{{ route('product-lists') }}" class="bag-btn bag-btn--ghost">
+                        <i class="fas fa-graduation-cap" aria-hidden="true"></i> {{ __('frontend.cart.empty_courses') }}
                     </a>
-                    <a href="{{ route('points.topup') }}" class="cp-btn cp-btn--primary">
-                        <i class="fas fa-coins"></i> {{ __('frontend.cart.empty_credits') }}
+                    <a href="{{ route('points.topup') }}" class="bag-btn bag-btn--primary">
+                        <i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.cart.empty_credits') }}
                     </a>
                 </div>
             </div>

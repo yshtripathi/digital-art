@@ -10,12 +10,20 @@
     ]
 ])
 
-<section class="au au--forgot">
-    <div class="au__grid">
+<section class="fm fm--forgot">
+
+    @include('frontend.layouts.form-canvas')
+
+    <div class="fm__wrap">
+
+        <div class="fm__head">
+            <p class="fm__kicker">{{ __('frontend.forgot.label') }}</p>
+            <h2 class="au-title">{{ __('frontend.forgot.heading') }}</h2>
+            <p class="fm__copy">{{ __('frontend.forgot.aside') }}</p>
+        </div>
 
         <div class="au-card">
             <div class="au-card__inner">
-                <h2 class="au-title">{{ __('frontend.forgot.heading') }}</h2>
 
                 @if(session('status'))
                     <div class="au-alert au-alert--success" role="status"><i class="fas fa-check-circle"></i> {{ __('frontend.forgot.sent') }}</div>
@@ -53,18 +61,13 @@
                     </button>
                 </form>
 
-                <p class="au-alt">
-                    {{ __('frontend.forgot.remember') }}
-                    <a href="{{ route('login.form') }}">{{ __('frontend.forgot.login') }}</a>
-                </p>
             </div>
         </div>
 
-        @include('frontend.layouts.auth-panel', [
-            'kicker' => __('frontend.forgot.label'),
-            'copy'   => __('frontend.forgot.aside'),
-        ])
-
+        <p class="au-alt">
+            {{ __('frontend.forgot.remember') }}
+            <a href="{{ route('login.form') }}">{{ __('frontend.forgot.login') }}</a>
+        </p>
     </div>
 </section>
 

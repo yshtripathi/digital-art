@@ -411,21 +411,9 @@
         @endphp
         <div class="ak-cart__foot">
 
-            @if($hasPoints && !$hasProducts && Auth::check())
-                <form action="{{ route('coupon-store') }}" method="POST" class="ak-cart__promo">
-                    @csrf
-                    <label for="ak-promo" class="ak-cart__promo-label">{{ __('frontend.header.promo_code') }}</label>
-                    <div class="ak-cart__promo-row">
-                        <input id="ak-promo" type="text" name="code" class="form-control"
-                               placeholder="{{ __('frontend.header.promo_ph') }}" required>
-                        <button type="submit" class="ak-btn ak-btn--ghost ak-btn--sm">{{ __('frontend.header.promo_apply') }}</button>
-                    </div>
-                </form>
-            @endif
-
             <div class="ak-cart__summary">
                 <div class="ak-cart__row">
-                    <span class="ak-cart__row-label">{{ __('frontend.header.cart_total') }}</span>
+                    <span class="ak-cart__row-label">{{ __('frontend.header.cart_total') }}:</span>
                     @if($hasPoints && !$hasProducts)
                         <span class="ak-cart__row-value ak-num">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</span>
                     @else
@@ -438,7 +426,7 @@
 
                 @if($hasProducts && Auth::check())
                     <div class="ak-cart__row ak-cart__row--muted">
-                        <span class="ak-cart__row-label">{{ __('frontend.header.balance_label') }}</span>
+                        <span class="ak-cart__row-label">{{ __('frontend.header.balance_label') }}:</span>
                         <span class="ak-cart__row-value">
                             <span class="ak-num">{{ number_format($hdBalance) }}</span>
                             <small>{{ __('frontend.header.credits') }}</small>

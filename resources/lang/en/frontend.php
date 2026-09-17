@@ -61,9 +61,6 @@ return [
         'view_cart'     => 'View Cart',
         'continue'      => 'Continue Browsing',
         'balance_label' => 'Your credit balance',
-        'promo_code'    => 'Promo code',
-        'promo_ph'      => 'Enter your promo code',
-        'promo_apply'   => 'Apply',
         'levels' => [
             'beginner'     => 'Beginner',
             'intermediate' => 'Intermediate',
@@ -389,6 +386,7 @@ return [
         'from'         => 'Starting from',
         'credits'      => 'credits',
         'about'        => 'About this course',
+        'about_level'  => 'What this level covers',
         'choose'       => 'Choose your skill level',
         'learn'        => 'What you will learn',
         'purpose'      => 'Purpose of this level',
@@ -427,6 +425,9 @@ return [
 
     // resources/views/frontend/pages/coursecart.blade.php
     'coursecart' => [
+        'step_cart'    => 'Cart',
+        'step_unlock'  => 'Unlock',
+        'step_learn'   => 'Start learning',
         'title'        => 'Course Cart',
         'balance'      => 'Your credit balance',
         'credits'      => 'credits',
@@ -462,6 +463,9 @@ return [
 
     // resources/views/frontend/pages/cart.blade.php
     'cart' => [
+        'step_cart'   => 'Cart',
+        'step_pay'    => 'Payment',
+        'step_done'   => 'Credits added',
         'title'       => 'Cart',
         'items_title' => 'Your cart',
         'items'       => ':count item|:count items',
@@ -487,34 +491,37 @@ return [
 
     // resources/views/frontend/pages/about-us.blade.php
     'about' => [
-        'meta'          => 'How this learning platform is put together: one catalogue sorted into categories, courses split into levels, and credits that unlock only the levels you choose.',
+        'meta'         => 'How this platform is organised: one catalogue sorted into categories, courses split into levels, and credits that unlock only the levels you choose.',
         'title'        => 'About Us',
-        'intro_title'  => 'Built so you can find your place in it',
-        'intro_p1'     => 'Courses sit in one catalogue, sorted into categories and split into levels. You can see what a course covers and where you would begin without signing up first.',
-        'intro_p2'     => 'Nothing is bundled. You unlock the levels you want with credits, and everything you unlock stays in your account, ready for whenever you have time to study.',
-        'point1'       => 'One catalogue, sorted into categories',
-        'point2'       => 'Levels that each state their own purpose and outcome',
-        'point3'       => 'Credits spent only on the levels you choose',
-        'courses_btn'  => 'Browse the Catalogue',
+
+        // Section 1 — why the platform exists
+        'why_label'    => 'About the platform',
+        'why_title'    => 'A place to learn at your own pace',
+        'why_p1'       => 'This platform brings every course together in one catalogue. You can look through the subjects on offer, open the one that interests you and read what it covers before you decide anything.',
+        'why_p2'       => 'Learning here is self-paced. There is no timetable to follow and no group to keep up with, so you can study in the time you have and pick up again whenever you are ready.',
+        'point1'       => 'One catalogue you can browse before you buy',
+        'point2'       => 'Courses split into levels, each with its own description',
+        'point3'       => 'Credits that unlock only the levels you choose',
+        'courses_btn'  => 'Browse Courses',
         'contact_btn'  => 'Contact Us',
-        'intro_alt'    => 'Two people looking at a lesson together on a tablet',
-        'badge'        => 'Study when it suits you',
-        'video_label'  => 'A desk with a lesson open on a computer screen',
-        'video_play'   => 'Play video',
-        'video_pause'  => 'Pause video',
-        'why_title'    => 'What is different here',
-        'why1_title'   => 'One structure throughout',
-        'why1_desc'    => 'Every course follows the same level structure, so moving to a new subject never means learning a new system first.',
-        'why2_title'   => 'Nothing to attend',
-        'why2_desc'    => 'There is no classroom and no timetable. Open a level on your own device whenever the time suits you.',
-        'why3_title'   => 'Pay level by level',
-        'why3_desc'    => 'Credits unlock single levels, so none of your money goes towards parts of a course you have no use for.',
-        'why4_title'   => 'Someone to ask',
-        'why4_desc'    => 'If something about a course, your credits or your account is unclear, send us a message from the contact page.',
-        'why5_title'   => 'Read before you unlock',
-        'why5_desc'    => 'Each level lists what it covers and what you should be able to do by the end, so you can compare levels before spending any credits.',
-        'cta_title'    => 'Have a look around',
-        'cta_text'     => 'The catalogue is open before you spend anything. Find a subject, compare the levels inside it, and unlock one when the time is right.',
+        'alt1'         => 'Two people studying together at a table',
+        'alt2'         => 'Someone taking a short break while studying at home',
+        'alt3'         => 'A learner following a lesson with headphones on',
+
+        // Section 2 — how learning is organised
+        'how_label'    => 'How it is organised',
+        'how_title'    => 'The same structure, whatever you study',
+        'how_desc'     => 'Every part of the platform follows the same order, so once you understand one course you understand them all.',
+        'step1_title'  => 'Categories',
+        'step1_desc'   => 'Every subject sits in a category, so related courses stay together and you can narrow the catalogue down to the area you care about.',
+        'step2_title'  => 'Courses',
+        'step2_desc'   => 'A course covers one subject from beginning to end and carries a summary, so you can judge whether it fits you before opening it.',
+        'step3_title'  => 'Levels',
+        'step3_desc'   => 'Each course is divided into levels. A level says what it teaches, who it suits and what you should be able to do once you finish it.',
+        'step4_title'  => 'Credits',
+        'step4_desc'   => 'You buy credits once and spend them on the levels you want. Whatever you unlock stays in your account for you to return to.',
+        'cta_title'    => 'Start where it makes sense for you',
+        'cta_text'     => 'The catalogue is open before you spend anything. Compare the levels inside a course and unlock the one that matches where you are now.',
     ],
 
     // resources/views/frontend/user/dashboard.blade.php

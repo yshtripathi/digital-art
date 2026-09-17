@@ -17,14 +17,45 @@
     $ctCompany = $misc['Company Name'] ?? __('frontend.company.name');
 @endphp
 
-<section class="au au--contact">
-    <div class="au__grid">
+<section class="fm fm--contact fm--wide">
+
+    @include('frontend.layouts.form-canvas')
+
+    <div class="fm__wrap">
+
+        {{-- Contact details, drawn from the miscs table --}}
+        <aside class="ct-info ct-info--top">
+            <p class="ct-info__kicker">{{ __('frontend.contact.info_label') }}</p>
+            <p class="ct-info__copy">{{ __('frontend.contact.info_title') }}</p>
+
+            <ul class="ct-rows">
+                <li class="ct-row">
+                    <span class="ct-row__label">{{ __('frontend.contact.phone') }}</span>
+                    <a href="tel:{{ $ctPhone }}" class="ct-row__value ct-row__value--link">{{ $ctPhone }}</a>
+                </li>
+                <li class="ct-row">
+                    <span class="ct-row__label">{{ __('frontend.contact.email') }}</span>
+                    <a href="mailto:{{ $ctEmail }}" class="ct-row__value ct-row__value--link">{{ $ctEmail }}</a>
+                </li>
+                <li class="ct-row">
+                    <span class="ct-row__label">{{ __('frontend.contact.address') }}</span>
+                    <span class="ct-row__value">{{ $ctAddress }}</span>
+                </li>
+                <li class="ct-row">
+                    <span class="ct-row__label">{{ __('frontend.contact.company') }}</span>
+                    <span class="ct-row__value">{{ $ctCompany }}</span>
+                </li>
+            </ul>
+        </aside>
+
+        <div class="fm__head">
+            <h2 class="au-title">{{ __('frontend.contact.form_title') }}</h2>
+            <p class="au-lead">{{ __('frontend.contact.form_desc') }}</p>
+        </div>
 
         {{-- Form --}}
         <div class="au-card">
             <div class="au-card__inner">
-                <h2 class="au-title">{{ __('frontend.contact.form_title') }}</h2>
-                <p class="au-lead">{{ __('frontend.contact.form_desc') }}</p>
 
                 <form method="POST" action="{{ route('contact.send') }}" id="contactform" class="au-form" onsubmit="return handleSubmit(event)" novalidate>
                 @csrf
@@ -99,31 +130,6 @@
                 </form>
             </div>
         </div>
-
-        {{-- Contact details as ruled rows, matching the footer directory --}}
-        <aside class="ct-info">
-            <p class="ct-info__kicker">{{ __('frontend.contact.info_label') }}</p>
-            <p class="ct-info__copy">{{ __('frontend.contact.info_title') }}</p>
-
-            <ul class="ct-rows">
-                <li class="ct-row">
-                    <span class="ct-row__label">{{ __('frontend.contact.phone') }}</span>
-                    <a href="tel:{{ $ctPhone }}" class="ct-row__value ct-row__value--link">{{ $ctPhone }}</a>
-                </li>
-                <li class="ct-row">
-                    <span class="ct-row__label">{{ __('frontend.contact.email') }}</span>
-                    <a href="mailto:{{ $ctEmail }}" class="ct-row__value ct-row__value--link">{{ $ctEmail }}</a>
-                </li>
-                <li class="ct-row">
-                    <span class="ct-row__label">{{ __('frontend.contact.address') }}</span>
-                    <span class="ct-row__value">{{ $ctAddress }}</span>
-                </li>
-                <li class="ct-row">
-                    <span class="ct-row__label">{{ __('frontend.contact.company') }}</span>
-                    <span class="ct-row__value">{{ $ctCompany }}</span>
-                </li>
-            </ul>
-        </aside>
 
     </div>
 </section>

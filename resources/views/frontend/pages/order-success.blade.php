@@ -16,32 +16,25 @@
     ]
 ])
 
-<section class="rs rs--success">
-    <div class="rs__grid {{ $order ? '' : 'rs__grid--single' }}">
+{{-- ==========================================================================
+     Order success
+     Centred column on the drawn canvas: status medallion, ticket receipt,
+     actions. Styles: public/css/theme.css — section 19
+     ========================================================================== --}}
+<section class="res res--success">
 
-        {{-- Status hero --}}
-        <div class="rs-hero">
-            <div class="rs-status" aria-hidden="true">
-                <span class="rs-status__ring"></span>
-                <span class="rs-status__icon"><i class="fas fa-check"></i></span>
-            </div>
+    @include('frontend.layouts.form-canvas')
 
-            <h2 class="rs-hero__title">{{ __('frontend.success.heading') }}</h2>
-            <p class="rs-hero__msg">{{ __('frontend.success.message') }}</p>
+    <div class="res__wrap">
 
-            <div class="rs-actions">
-                @if($order)
-                    <a href="{{ route('user.order.show', $order->id) }}" class="rs-btn rs-btn--primary">
-                        <i class="fas fa-eye" aria-hidden="true"></i> {{ __('frontend.success.view_order') }}
-                    </a>
-                @endif
-                <a href="{{ route('home') }}" class="rs-btn rs-btn--secondary">
-                    <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.success.home') }}
-                </a>
-            </div>
-        </div>
+        <span class="res-mark" aria-hidden="true">
+            <span class="res-mark__ring"></span>
+            <span class="res-mark__icon"><i class="fas fa-check"></i></span>
+        </span>
 
-        {{-- Receipt --}}
+        <h2 class="res-title">{{ __('frontend.success.heading') }}</h2>
+        <p class="res-msg">{{ __('frontend.success.message') }}</p>
+
         @if($order)
             @php
                 $currency = match($order->currency) {
@@ -54,44 +47,58 @@
                 $statusKey = 'frontend.success.statuses.' . strtolower((string) $order->payment_status);
                 $statusText = Lang::has($statusKey) ? __($statusKey) : ucwords((string) $order->payment_status);
             @endphp
-            <div class="rs-receipt">
-                <div class="rs-receipt__top">
-                    <span class="rs-receipt__label">{{ __('frontend.success.order_no') }}</span>
-                    <strong class="rs-receipt__number">{{ $order->order_number }}</strong>
+
+            <div class="res-ticket">
+                <div class="res-ticket__top">
+                    <span class="res-ticket__label">{{ __('frontend.success.order_no') }}</span>
+                    <strong class="res-ticket__number">{{ $order->order_number }}</strong>
                 </div>
 
-                <div class="rs-receipt__tear" aria-hidden="true"></div>
+                <div class="res-ticket__tear" aria-hidden="true"></div>
 
-                <dl class="rs-receipt__rows">
-                    <div class="rs-receipt__row rs-receipt__row--total">
+                <dl class="res-ticket__rows">
+                    <div class="res-ticket__row res-ticket__row--total">
                         <dt>{{ __('frontend.success.amount') }}</dt>
                         <dd>{!! $currency !!}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</dd>
                     </div>
-                    <div class="rs-receipt__row">
+                    <div class="res-ticket__row">
                         <dt>{{ __('frontend.success.txn') }}</dt>
-                        <dd class="rs-receipt__mono">{{ $transaction_id }}</dd>
+                        <dd class="res-mono">{{ $transaction_id }}</dd>
                     </div>
-                    <div class="rs-receipt__row">
+                    <div class="res-ticket__row">
                         <dt>{{ __('frontend.success.status') }}</dt>
-                        <dd><span class="rs-pill {{ $isPaid ? 'rs-pill--ok' : 'rs-pill--wait' }}">{{ $statusText }}</span></dd>
+                        <dd><span class="badge {{ $isPaid ? 'badge--brand' : '' }}">{{ $statusText }}</span></dd>
                     </div>
                 </dl>
 
-                <a href="{{ route('order.pdf', $order->id) }}" class="rs-btn rs-btn--secondary rs-btn--block">
-                    <i class="fas fa-download" aria-hidden="true"></i> {{ __('frontend.success.invoice') }}
-                </a>
+                <div class="res-ticket__foot">
+                    <a href="{{ route('order.pdf', $order->id) }}" class="res-btn res-btn--ghost res-btn--block">
+                        <i class="fas fa-download" aria-hidden="true"></i> {{ __('frontend.success.invoice') }}
+                    </a>
 
-                @if($email_status == 'inactive')
-                    <p class="rs-note">
-                        <i class="fas fa-info-circle"></i>
-                        <span>
-                            {{ __('frontend.success.no_email') }}
-                            <a href="{{ route('order.pdf', $order->id) }}">{{ __('frontend.success.invoice') }}</a>
-                        </span>
-                    </p>
-                @endif
+                    @if($email_status == 'inactive')
+                        <p class="res-note">
+                            <i class="fas fa-info-circle" aria-hidden="true"></i>
+                            <span>
+                                {{ __('frontend.success.no_email') }}
+                                <a href="{{ route('order.pdf', $order->id) }}">{{ __('frontend.success.invoice') }}</a>
+                            </span>
+                        </p>
+                    @endif
+                </div>
             </div>
         @endif
+
+        <div class="res-actions">
+            @if($order)
+                <a href="{{ route('user.order.show', $order->id) }}" class="res-btn res-btn--primary">
+                    <i class="fas fa-eye" aria-hidden="true"></i> {{ __('frontend.success.view_order') }}
+                </a>
+            @endif
+            <a href="{{ route('home') }}" class="res-btn res-btn--ghost">
+                <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.success.home') }}
+            </a>
+        </div>
 
     </div>
 </section>

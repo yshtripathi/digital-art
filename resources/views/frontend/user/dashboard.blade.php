@@ -25,48 +25,57 @@
     $fmtDate = fn ($date, $format) => $date->locale(app()->getLocale())->translatedFormat($format);
 @endphp
 
+{{-- ==========================================================================
+     Account dashboard
+     Profile bar, stat cards and pill tabs over the drawn canvas.
+     Styles: public/css/theme.css — section 25
+     JS hooks kept: .ds-tab[data-tab], .ds-panel[data-panel], .active,
+     [data-au-toggle]
+     ========================================================================== --}}
 <section class="ds">
+
+    @include('frontend.layouts.form-canvas')
+
     <div class="ds__wrap">
 
-        {{-- ================= OVERVIEW ================= --}}
-        <div class="ds-top">
-            <div class="ds-hello">
-                <span class="ds-hello__avatar">{{ strtoupper(mb_substr($u->name ?? 'U', 0, 1)) }}</span>
-                <div class="ds-hello__text">
-                    <span class="ds-hello__eyebrow">{{ __('frontend.dashboard.welcome') }}</span>
-                    <h2 class="ds-hello__name">{{ $u->name }}</h2>
-                    <span class="ds-hello__email"><i class="fas fa-envelope"></i> {{ $u->email }}</span>
-                </div>
-                <a href="{{ route('user.logout') }}" class="ds-hello__logout"><i class="fas fa-sign-out-alt"></i> {{ __('frontend.dashboard.logout') }}</a>
+        {{-- Profile --}}
+        <div class="ds-hello">
+            <span class="ds-hello__avatar">{{ strtoupper(mb_substr($u->name ?? 'U', 0, 1)) }}</span>
+            <div class="ds-hello__text">
+                <span class="ds-hello__eyebrow">{{ __('frontend.dashboard.welcome') }}</span>
+                <h2 class="ds-hello__name">{{ $u->name }}</h2>
+                <span class="ds-hello__email"><i class="fas fa-envelope"></i> {{ $u->email }}</span>
             </div>
+            <a href="{{ route('user.logout') }}" class="ds-hello__logout"><i class="fas fa-sign-out-alt"></i> {{ __('frontend.dashboard.logout') }}</a>
+        </div>
 
-            <div class="ds-stats">
-                <div class="ds-stat ds-stat--credits">
-                    <span class="ds-stat__icon"><i class="fas fa-coins"></i></span>
-                    <span class="ds-stat__label">{{ __('frontend.dashboard.credits') }}</span>
-                    <strong class="ds-stat__value">{{ number_format($u->points_balance ?? 0) }}</strong>
-                    <a href="{{ route('points.topup') }}" class="ds-stat__link">{{ __('frontend.dashboard.buy') }} <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="ds-stat ds-stat--courses">
-                    <span class="ds-stat__icon"><i class="fas fa-graduation-cap"></i></span>
-                    <span class="ds-stat__label">{{ __('frontend.dashboard.unlocked') }}</span>
-                    <strong class="ds-stat__value">{{ $redeemedCount }}</strong>
-                    <a href="{{ route('product-lists') }}" class="ds-stat__link">{{ __('frontend.dashboard.browse') }} <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="ds-stat ds-stat--orders">
-                    <span class="ds-stat__icon"><i class="fas fa-receipt"></i></span>
-                    <span class="ds-stat__label">{{ __('frontend.dashboard.purchases') }}</span>
-                    <strong class="ds-stat__value">{{ $purchasedCount }}</strong>
-                </div>
-                <div class="ds-stat ds-stat--member">
-                    <span class="ds-stat__icon"><i class="fas fa-calendar-alt"></i></span>
-                    <span class="ds-stat__label">{{ __('frontend.dashboard.member') }}</span>
-                    <strong class="ds-stat__value ds-stat__value--sm">{{ $fmtDate($u->created_at, __('frontend.dashboard.member_format')) }}</strong>
-                </div>
+        {{-- Figures --}}
+        <div class="ds-stats">
+            <div class="ds-stat ds-stat--credits">
+                <span class="ds-stat__icon"><i class="fas fa-bolt"></i></span>
+                <span class="ds-stat__label">{{ __('frontend.dashboard.credits') }}</span>
+                <strong class="ds-stat__value">{{ number_format($u->points_balance ?? 0) }}</strong>
+                <a href="{{ route('points.topup') }}" class="ds-stat__link">{{ __('frontend.dashboard.buy') }} <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="ds-stat ds-stat--courses">
+                <span class="ds-stat__icon"><i class="fas fa-graduation-cap"></i></span>
+                <span class="ds-stat__label">{{ __('frontend.dashboard.unlocked') }}</span>
+                <strong class="ds-stat__value">{{ $redeemedCount }}</strong>
+                <a href="{{ route('product-lists') }}" class="ds-stat__link">{{ __('frontend.dashboard.browse') }} <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="ds-stat ds-stat--orders">
+                <span class="ds-stat__icon"><i class="fas fa-receipt"></i></span>
+                <span class="ds-stat__label">{{ __('frontend.dashboard.purchases') }}</span>
+                <strong class="ds-stat__value">{{ $purchasedCount }}</strong>
+            </div>
+            <div class="ds-stat ds-stat--member">
+                <span class="ds-stat__icon"><i class="fas fa-calendar-alt"></i></span>
+                <span class="ds-stat__label">{{ __('frontend.dashboard.member') }}</span>
+                <strong class="ds-stat__value ds-stat__value--sm">{{ $fmtDate($u->created_at, __('frontend.dashboard.member_format')) }}</strong>
             </div>
         </div>
 
-        {{-- ================= TABS ================= --}}
+        {{-- Tabs --}}
         <div class="ds-tabs" role="tablist" aria-label="{{ __('frontend.dashboard.tabs') }}">
             <button type="button" role="tab" class="ds-tab active" data-tab="purchased" aria-selected="true">
                 <i class="fas fa-gift"></i> {{ __('frontend.dashboard.tab_purchases') }} <span class="ds-tab__count">{{ $purchasedCount }}</span>
@@ -85,23 +94,15 @@
                 <h2 class="ds-card__title">{{ __('frontend.dashboard.purchases_title') }}</h2>
 
                 @if($purchasedCount > 0)
-                    <div class="ds-list__head" aria-hidden="true">
-                        <span>{{ __('frontend.dashboard.order') }}</span>
-                        <span>{{ __('frontend.dashboard.amount_credits') }}</span>
-                        <span>{{ __('frontend.dashboard.price') }}</span>
-                        <span>{{ __('frontend.dashboard.status') }}</span>
-                        <span>{{ __('frontend.dashboard.date') }}</span>
-                        <span>{{ __('frontend.dashboard.action') }}</span>
-                    </div>
                     <ul class="ds-list">
                         @foreach($purchasedOrders as $order)
                             <li class="ds-row">
                                 <span class="ds-row__cell ds-row__order" data-label="{{ __('frontend.dashboard.order') }}">
-                                    <span class="ds-row__icon"><i class="fas fa-coins"></i></span>
+                                    <span class="ds-row__icon"><i class="fas fa-bolt"></i></span>
                                     {{ $order->order_number }}
                                 </span>
                                 <span class="ds-row__cell" data-label="{{ __('frontend.dashboard.amount_credits') }}">
-                                    <span class="ds-pill"><i class="fas fa-coins"></i> {{ number_format($order->cart_info->sum('points')) }}</span>
+                                    <span class="ds-pill"><i class="fas fa-bolt"></i> {{ number_format($order->cart_info->sum('points')) }}</span>
                                 </span>
                                 <span class="ds-row__cell ds-row__strong" data-label="{{ __('frontend.dashboard.price') }}">
                                     {!! $order->currency=='JPY' ? '&yen;' : Helper::getCurrencySymbol($order->currency) !!}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}
@@ -128,7 +129,7 @@
                     <div class="ds-empty">
                         <span class="ds-empty__icon"><i class="fas fa-box-open"></i></span>
                         <p>{{ __('frontend.dashboard.purchases_empty') }}</p>
-                        <a href="{{ route('points.topup') }}" class="ds-btn ds-btn--primary"><i class="fas fa-coins"></i> {{ __('frontend.dashboard.buy') }}</a>
+                        <a href="{{ route('points.topup') }}" class="ds-btn ds-btn--primary"><i class="fas fa-bolt"></i> {{ __('frontend.dashboard.buy') }}</a>
                     </div>
                 @endif
             </div>
@@ -169,11 +170,11 @@
                                 <div class="ds-course__body">
                                     <div class="ds-course__tags">
                                         @if($level)
-                                            <span class="cp-tag cc-level cc-level--{{ strtolower($level->skill_level) }}"><i class="fas fa-signal"></i> {{ $levelLabel($level) }}</span>
+                                            <span class="badge badge--brand"><i class="fas fa-signal"></i> {{ $levelLabel($level) }}</span>
                                         @else
-                                            <span class="cp-tag cc-level cc-level--na">{{ __('frontend.dashboard.no_level') }}</span>
+                                            <span class="badge">{{ __('frontend.dashboard.no_level') }}</span>
                                         @endif
-                                        <span class="ds-pill"><i class="fas fa-coins"></i> {{ number_format($order->cart_info->sum('points')) }}</span>
+                                        <span class="ds-pill"><i class="fas fa-bolt"></i> {{ number_format($order->cart_info->sum('points')) }}</span>
                                     </div>
                                     <h3 class="ds-course__title">{{ $product ? $product->title : __('frontend.dashboard.no_course') }}</h3>
                                     <div class="ds-course__meta">

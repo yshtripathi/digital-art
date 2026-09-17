@@ -10,12 +10,20 @@
     ]
 ])
 
-<section class="au au--login">
-    <div class="au__grid">
+<section class="fm fm--login">
+
+    @include('frontend.layouts.form-canvas')
+
+    <div class="fm__wrap">
+
+        <div class="fm__head">
+            <p class="fm__kicker">{{ __('frontend.login.label') }}</p>
+            <h2 class="au-title">{{ __('frontend.login.heading') }}</h2>
+            <p class="fm__copy">{{ __('frontend.login.aside') }}</p>
+        </div>
 
         <div class="au-card">
             <div class="au-card__inner">
-                <h2 class="au-title">{{ __('frontend.login.heading') }}</h2>
 
                 @if(session('loginerror'))
                     <div class="au-alert" role="alert"><i class="fas fa-exclamation-circle"></i> {{ session('loginerror') }}</div>
@@ -56,18 +64,13 @@
                     </button>
                 </form>
 
-                <p class="au-alt">
-                    {{ __('frontend.login.new') }}
-                    <a href="{{ route('register.form') }}">{{ __('frontend.login.register') }}</a>
-                </p>
             </div>
         </div>
 
-        @include('frontend.layouts.auth-panel', [
-            'kicker' => __('frontend.login.label'),
-            'copy'   => __('frontend.login.aside'),
-        ])
-
+        <p class="au-alt">
+            {{ __('frontend.login.new') }}
+            <a href="{{ route('register.form') }}">{{ __('frontend.login.register') }}</a>
+        </p>
     </div>
 </section>
 

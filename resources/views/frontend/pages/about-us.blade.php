@@ -12,125 +12,107 @@
     ]
 ])
 
+{{-- ==========================================================================
+     About us — two sections only
+     1. Why the platform exists, beside a three-photo collage
+     2. How learning is organised, as four steps closing on a call to action
+     Styles: public/css/theme.css — section 27
+     ========================================================================== --}}
+
+{{-- ===================== 1. WHY THIS EXISTS ===================== --}}
 <section class="ab">
+
+    @include('frontend.layouts.form-canvas')
+
     <div class="ab__wrap">
-
-        {{-- ================= 1. WHAT THIS IS ================= --}}
         <div class="ab-intro">
-            <div class="ab-intro__text">
-                <h2 class="ab-intro__title">{{ __('frontend.about.intro_title') }}</h2>
 
-                <div class="ab-intro__cols">
-                    <p>{{ __('frontend.about.intro_p1') }}</p>
-                    <p>{{ __('frontend.about.intro_p2') }}</p>
-                </div>
+            <div class="ab-intro__text">
+                <p class="ab-label">{{ __('frontend.about.why_label') }}</p>
+                <h2 class="ab-title">{{ __('frontend.about.why_title') }}</h2>
+
+                <p class="ab-copy">{{ __('frontend.about.why_p1') }}</p>
+                <p class="ab-copy">{{ __('frontend.about.why_p2') }}</p>
 
                 <ul class="ab-points">
-                    <li>{{ __('frontend.about.point1') }}</li>
-                    <li>{{ __('frontend.about.point2') }}</li>
-                    <li>{{ __('frontend.about.point3') }}</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.about.point1') }}</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.about.point2') }}</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.about.point3') }}</li>
                 </ul>
 
                 <div class="ab-actions">
                     <a href="{{ route('product-lists') }}" class="ab-btn ab-btn--primary">
                         {{ __('frontend.about.courses_btn') }} <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
-                    <a href="{{ route('contact') }}" class="ab-btn ab-btn--secondary">{{ __('frontend.about.contact_btn') }}</a>
+                    <a href="{{ route('contact') }}" class="ab-btn ab-btn--ghost">{{ __('frontend.about.contact_btn') }}</a>
                 </div>
             </div>
 
-            <figure class="ab-intro__media">
-                <img
-                    src="{{ asset('assets/images/about/mentor-learner.webp') }}"
-                    srcset="{{ asset('assets/images/about/mentor-learner-sm.webp') }} 440w, {{ asset('assets/images/about/mentor-learner.webp') }} 768w"
-                    sizes="(max-width: 63.99rem) 100vw, 38vw"
-                    width="768" height="1376"
-                    alt="{{ __('frontend.about.intro_alt') }}"
-                    loading="lazy" decoding="async">
-                <figcaption class="ab-intro__badge">
-                    <i class="fas fa-clock" aria-hidden="true"></i> {{ __('frontend.about.badge') }}
-                </figcaption>
-            </figure>
-        </div>
-
-        {{-- ================= 2. NEXT STEP, OVER THE VIDEO ================= --}}
-        <div class="ab-how">
-            <div class="ab-video__frame">
-                <video class="ab-video" autoplay muted loop playsinline preload="metadata" poster="{{ asset('assets/images/about/classroom-poster.webp') }}" aria-label="{{ __('frontend.about.video_label') }}">
-                    <source src="{{ asset('assets/videos/classroom.webm') }}" type="video/webm">
-                    <source src="{{ asset('assets/videos/classroom.mp4') }}" type="video/mp4">
-                </video>
-                <span class="ab-video__veil" aria-hidden="true"></span>
-
-                <button type="button" class="ab-video__toggle" data-ab-video aria-label="{{ __('frontend.about.video_pause') }}">
-                    <i class="fas fa-pause" aria-hidden="true"></i>
-                </button>
-
-                <div class="ab-over">
-                    <h2 class="ab-over__title">{{ __('frontend.about.why_title') }}</h2>
-                    <ul class="ab-over__list">
-                        <li class="ab-over__item">
-                            <span class="ab-over__name">{{ __('frontend.about.why1_title') }}</span>
-                            <span class="ab-over__desc">{{ __('frontend.about.why1_desc') }}</span>
-                        </li>
-                        <li class="ab-over__item">
-                            <span class="ab-over__name">{{ __('frontend.about.why2_title') }}</span>
-                            <span class="ab-over__desc">{{ __('frontend.about.why2_desc') }}</span>
-                        </li>
-                        <li class="ab-over__item">
-                            <span class="ab-over__name">{{ __('frontend.about.why3_title') }}</span>
-                            <span class="ab-over__desc">{{ __('frontend.about.why3_desc') }}</span>
-                        </li>
-                        <li class="ab-over__item">
-                            <span class="ab-over__name">{{ __('frontend.about.why5_title') }}</span>
-                            <span class="ab-over__desc">{{ __('frontend.about.why5_desc') }}</span>
-                        </li>
-                        <li class="ab-over__item">
-                            <span class="ab-over__name">{{ __('frontend.about.why4_title') }}</span>
-                            <span class="ab-over__desc">{{ __('frontend.about.why4_desc') }}</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="ab-cta">
-                    <h2 class="ab-cta__title">{{ __('frontend.about.cta_title') }}</h2>
-                    <p class="ab-cta__text">{{ __('frontend.about.cta_text') }}</p>
-                    <div class="ab-cta__actions">
-                        <a href="{{ route('product-lists') }}" class="ab-btn ab-btn--primary">
-                            {{ __('frontend.about.courses_btn') }} <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                        <a href="{{ route('contact') }}" class="ab-btn ab-btn--onDark">{{ __('frontend.about.contact_btn') }}</a>
-                    </div>
-                </div>
+            {{-- Three-photo collage --}}
+            <div class="ab-collage">
+                <figure class="ab-collage__item ab-collage__item--tall">
+                    <img src="{{ asset('assets/images/about-study-together.webp') }}" width="900" height="1350"
+                         alt="{{ __('frontend.about.alt1') }}" loading="lazy" decoding="async">
+                </figure>
+                <figure class="ab-collage__item ab-collage__item--top">
+                    <img src="{{ asset('assets/images/about-lesson-headphones.webp') }}" width="800" height="800"
+                         alt="{{ __('frontend.about.alt3') }}" loading="lazy" decoding="async">
+                </figure>
+                <figure class="ab-collage__item ab-collage__item--bottom">
+                    <img src="{{ asset('assets/images/about-study-at-home.webp') }}" width="800" height="1200"
+                         alt="{{ __('frontend.about.alt2') }}" loading="lazy" decoding="async">
+                </figure>
             </div>
         </div>
-
     </div>
 </section>
+
+{{-- ===================== 2. HOW IT IS ORGANISED ===================== --}}
+<section class="ab ab--how">
+    <div class="ab__wrap">
+
+        <div class="ab-how__head">
+            <p class="ab-label">{{ __('frontend.about.how_label') }}</p>
+            <h2 class="ab-title">{{ __('frontend.about.how_title') }}</h2>
+            <p class="ab-copy">{{ __('frontend.about.how_desc') }}</p>
+        </div>
+
+        <ol class="ab-steps">
+            <li class="ab-step">
+                <span class="ab-step__no">01</span>
+                <h3 class="ab-step__title">{{ __('frontend.about.step1_title') }}</h3>
+                <p class="ab-step__desc">{{ __('frontend.about.step1_desc') }}</p>
+            </li>
+            <li class="ab-step">
+                <span class="ab-step__no">02</span>
+                <h3 class="ab-step__title">{{ __('frontend.about.step2_title') }}</h3>
+                <p class="ab-step__desc">{{ __('frontend.about.step2_desc') }}</p>
+            </li>
+            <li class="ab-step">
+                <span class="ab-step__no">03</span>
+                <h3 class="ab-step__title">{{ __('frontend.about.step3_title') }}</h3>
+                <p class="ab-step__desc">{{ __('frontend.about.step3_desc') }}</p>
+            </li>
+            <li class="ab-step ab-step--brand">
+                <span class="ab-step__no">04</span>
+                <h3 class="ab-step__title">{{ __('frontend.about.step4_title') }}</h3>
+                <p class="ab-step__desc">{{ __('frontend.about.step4_desc') }}</p>
+            </li>
+        </ol>
+
+        <div class="ab-cta">
+            <div class="ab-cta__text">
+                <h2 class="ab-cta__title">{{ __('frontend.about.cta_title') }}</h2>
+                <p class="ab-cta__desc">{{ __('frontend.about.cta_text') }}</p>
+            </div>
+            <div class="ab-cta__actions">
+                <a href="{{ route('product-lists') }}" class="ab-btn ab-btn--inverse">
+                    {{ __('frontend.about.courses_btn') }} <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+                <a href="{{ route('contact') }}" class="ab-btn ab-btn--outline">{{ __('frontend.about.contact_btn') }}</a>
+            </div>
+        </div>
+    </div>
+</section>
+
 @endsection
-
-@push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        // Pause for reduced motion, then wire the play/pause button
-        document.querySelectorAll('.ab-video').forEach(function (video) {
-            if (reduce) { video.removeAttribute('autoplay'); video.pause(); }
-        });
-        document.querySelectorAll('[data-ab-video]').forEach(function (btn) {
-            var video = btn.parentElement.querySelector('video');
-            if (!video) return;
-            var sync = function () {
-                var paused = video.paused;
-                btn.querySelector('i').className = paused ? 'fas fa-play' : 'fas fa-pause';
-                btn.setAttribute('aria-label', paused ? @json(__('frontend.about.video_play')) : @json(__('frontend.about.video_pause')));
-            };
-            btn.addEventListener('click', function () { video.paused ? video.play() : video.pause(); });
-            video.addEventListener('play', sync);
-            video.addEventListener('pause', sync);
-            sync();
-        });
-    });
-</script>
-@endpush

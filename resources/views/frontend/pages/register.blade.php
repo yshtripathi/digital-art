@@ -10,12 +10,20 @@
     ]
 ])
 
-<section class="au au--register">
-    <div class="au__grid">
+<section class="fm fm--register">
+
+    @include('frontend.layouts.form-canvas')
+
+    <div class="fm__wrap">
+
+        <div class="fm__head">
+            <p class="fm__kicker">{{ __('frontend.register.label') }}</p>
+            <h2 class="au-title">{{ __('frontend.register.heading') }}</h2>
+            <p class="fm__copy">{{ __('frontend.register.aside') }}</p>
+        </div>
 
         <div class="au-card">
             <div class="au-card__inner">
-                <h2 class="au-title">{{ __('frontend.register.heading') }}</h2>
 
                 <form name="frmRegister" id="frmRegister" class="au-form" action="{{ route('register.submit') }}" method="post" novalidate>
                     @csrf
@@ -80,18 +88,13 @@
                     </button>
                 </form>
 
-                <p class="au-alt">
-                    {{ __('frontend.register.have') }}
-                    <a href="{{ route('login.form') }}">{{ __('frontend.register.login') }}</a>
-                </p>
             </div>
         </div>
 
-        @include('frontend.layouts.auth-panel', [
-            'kicker' => __('frontend.register.label'),
-            'copy'   => __('frontend.register.aside'),
-        ])
-
+        <p class="au-alt">
+            {{ __('frontend.register.have') }}
+            <a href="{{ route('login.form') }}">{{ __('frontend.register.login') }}</a>
+        </p>
     </div>
 </section>
 

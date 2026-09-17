@@ -46,100 +46,111 @@
     }
 @endphp
 
+{{-- ==========================================================================
+     Credit top-up
+     Tier cards, then one calculator panel with a live result rail, then the
+     three-step explainer. Styles: public/css/theme.css — section 20
+     JS hooks kept: #topup_amount, #base_points, #multiplier_display,
+     #total_points, .topup-form, .topup-btn, .tu-quick__btn[data-amount],
+     .tu-tier[data-mult], .is-current, .is-active, .tu-stats__total.is-pulse
+     ========================================================================== --}}
 <section class="tu">
+
+    @include('frontend.layouts.form-canvas')
+
     <div class="tu__wrap">
 
-        {{-- Intro strip --}}
+        {{-- Intro --}}
         <div class="tu-intro">
             <p class="tu-intro__desc">{{ __('frontend.topup.intro') }}</p>
             <div class="tu-intro__chips">
-                <span class="tu-chip"><i class="fas fa-exchange-alt"></i> {{ $rateNote }}</span>
-                <span class="tu-chip tu-chip--warn"><i class="fas fa-exclamation-circle"></i> <strong>{{ __('frontend.topup.note_title') }}</strong> {{ __('frontend.topup.note_text') }}</span>
+                <span class="tu-chip"><i class="fas fa-exchange-alt" aria-hidden="true"></i> {{ $rateNote }}</span>
+                <span class="tu-chip tu-chip--warn"><i class="fas fa-exclamation-circle" aria-hidden="true"></i> <strong>{{ __('frontend.topup.note_title') }}</strong> {{ __('frontend.topup.note_text') }}</span>
             </div>
         </div>
 
-        <div class="tu__grid">
-
-            {{-- Pricing tiers --}}
-            <div class="tu-tiers">
-                <div class="tu-tiers__head">
-                    <h2 class="tu-tiers__title">{{ __('frontend.topup.tiers_title') }}</h2>
-                    <span class="tu-tiers__cols">{{ __('frontend.topup.tiers_cols') }}</span>
-                </div>
-
-                <ul class="tu-tiers__grid">
-                    @foreach($tiers as $index => $t)
-                        <li class="tu-tier tu-tier--{{ $index + 1 }} {{ $t['f'] ? 'tu-tier--best' : '' }}" data-mult="{{ $t['big'] }}">
-                            <div class="tu-tier__top">
-                                <span class="tu-tier__icon"><i class="fas {{ $t['i'] }}"></i></span>
-                                @if($t['f'])
-                                    <span class="tu-tier__badge">{{ __('frontend.topup.best') }}</span>
-                                @endif
-                                <span class="tu-tier__current"><i class="fas fa-check"></i> {{ __('frontend.topup.current') }}</span>
-                            </div>
-                            <p class="tu-tier__mult">{{ $t['big'] }}</p>
-                            <div class="tu-tier__meta">
-                                <strong class="tu-tier__name">{{ $t['n'] }}</strong>
-                                <span class="tu-tier__range">{!! $t['r'] !!}</span>
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
+        {{-- Tier cards --}}
+        <div class="tu-tiers">
+            <div class="tu-tiers__head">
+                <h2 class="tu-tiers__title">{{ __('frontend.topup.tiers_title') }}</h2>
+                <span class="tu-tiers__cols">{{ __('frontend.topup.tiers_cols') }}</span>
             </div>
 
-            {{-- Calculator --}}
-            <div class="tu-calc">
+            <ul class="tu-tiers__grid">
+                @foreach($tiers as $index => $t)
+                    <li class="tu-tier {{ $t['f'] ? 'tu-tier--best' : '' }}" data-mult="{{ $t['big'] }}">
+                        <div class="tu-tier__top">
+                            <span class="tu-tier__icon"><i class="fas {{ $t['i'] }}" aria-hidden="true"></i></span>
+                            @if($t['f'])
+                                <span class="tu-tier__badge">{{ __('frontend.topup.best') }}</span>
+                            @endif
+                            <span class="tu-tier__current"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.topup.current') }}</span>
+                        </div>
+
+                        <p class="tu-tier__mult">{{ $t['big'] }}</p>
+
+                        <div class="tu-tier__meta">
+                            <strong class="tu-tier__name">{{ $t['n'] }}</strong>
+                            <span class="tu-tier__range">{!! $t['r'] !!}</span>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        {{-- Calculator --}}
+        <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form tu-calc" novalidate>
+            @csrf
+
+            <div class="tu-calc__main">
                 <div class="tu-calc__head">
-                    <span class="tu-calc__icon"><i class="fas fa-calculator"></i></span>
+                    <span class="tu-calc__icon"><i class="fas fa-calculator" aria-hidden="true"></i></span>
                     <div>
                         <h2 class="tu-calc__title">{{ __('frontend.topup.calc_title') }}</h2>
                         <p class="tu-calc__desc">{{ __('frontend.topup.calc_desc') }}</p>
                     </div>
                 </div>
 
-                <form action="{{ route('points.add-to-cart') }}" method="POST" class="topup-form tu-form" novalidate>
-                    @csrf
+                <label class="tu-form__label" for="topup_amount">{{ __('frontend.topup.amount') }}</label>
+                <div class="tu-amount">
+                    <span class="tu-amount__symbol">{!! $symbol !!}</span>
+                    <input type="number" name="amount" id="topup_amount" class="tu-amount__input" placeholder="0" min="1" required inputmode="decimal">
+                </div>
 
-                    <label class="tu-form__label" for="topup_amount">{{ __('frontend.topup.amount') }}</label>
-                    <div class="tu-amount">
-                        <span class="tu-amount__symbol">{!! $symbol !!}</span>
-                        <input type="number" name="amount" id="topup_amount" class="tu-amount__input" placeholder="0" min="1" required inputmode="decimal">
-                    </div>
-
-                    <span class="tu-form__label tu-form__label--sm">{{ __('frontend.topup.quick') }}</span>
-                    <div class="tu-quick">
-                        @foreach($quick as $q)
-                            <button type="button" class="tu-quick__btn" data-amount="{{ $q }}">{!! $symbol !!}{{ number_format($q) }}</button>
-                        @endforeach
-                    </div>
-
-                    <div class="tu-stats">
-                        <div class="tu-stats__row">
-                            <span>{{ __('frontend.topup.base') }}:</span>
-                            <span id="base_points">0</span>
-                        </div>
-                        <div class="tu-stats__row">
-                            <span>{{ __('frontend.topup.multiplier') }}:</span>
-                            <span class="tu-stats__mult" id="multiplier_display">x1</span>
-                        </div>
-                        <div class="tu-stats__total">
-                            <span class="tu-stats__total-label">{{ __('frontend.topup.total') }}:</span>
-                            <span class="tu-stats__total-value"><i class="fas fa-coins"></i> <span id="total_points">0</span></span>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="topup-btn tu-submit">
-                        <span>{{ __('frontend.topup.submit') }}</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-
-                    <p class="tu-trust">
-                        <i class="fas fa-shield-alt"></i> {{ __('frontend.topup.secure') }}
-                    </p>
-                </form>
+                <span class="tu-form__label tu-form__label--sm">{{ __('frontend.topup.quick') }}</span>
+                <div class="tu-quick">
+                    @foreach($quick as $q)
+                        <button type="button" class="tu-quick__btn" data-amount="{{ $q }}">{!! $symbol !!}{{ number_format($q) }}</button>
+                    @endforeach
+                </div>
             </div>
 
-        </div>
+            <div class="tu-calc__side">
+                <div class="tu-stats">
+                    <div class="tu-stats__row">
+                        <span>{{ __('frontend.topup.base') }}:</span>
+                        <span id="base_points">0</span>
+                    </div>
+                    <div class="tu-stats__row">
+                        <span>{{ __('frontend.topup.multiplier') }}:</span>
+                        <span class="tu-stats__mult" id="multiplier_display">x1</span>
+                    </div>
+                    <div class="tu-stats__total">
+                        <span class="tu-stats__total-label">{{ __('frontend.topup.total') }}:</span>
+                        <span class="tu-stats__total-value"><i class="fas fa-bolt" aria-hidden="true"></i> <span id="total_points">0</span></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="topup-btn tu-submit">
+                    <span>{{ __('frontend.topup.submit') }}</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </button>
+
+                <p class="tu-trust">
+                    <i class="fas fa-shield-alt" aria-hidden="true"></i> {{ __('frontend.topup.secure') }}
+                </p>
+            </div>
+        </form>
 
         {{-- How it works --}}
         <div class="tu-how">
@@ -147,19 +158,19 @@
             <ol class="tu-how__steps">
                 <li class="tu-step">
                     <span class="tu-step__num">01</span>
-                    <span class="tu-step__icon"><i class="fas fa-hand-pointer"></i></span>
+                    <span class="tu-step__icon"><i class="fas fa-hand-pointer" aria-hidden="true"></i></span>
                     <h3 class="tu-step__title">{{ __('frontend.topup.step1_title') }}</h3>
                     <p class="tu-step__desc">{{ __('frontend.topup.step1_desc') }}</p>
                 </li>
                 <li class="tu-step">
                     <span class="tu-step__num">02</span>
-                    <span class="tu-step__icon"><i class="fas fa-lock"></i></span>
+                    <span class="tu-step__icon"><i class="fas fa-lock" aria-hidden="true"></i></span>
                     <h3 class="tu-step__title">{{ __('frontend.topup.step2_title') }}</h3>
                     <p class="tu-step__desc">{{ __('frontend.topup.step2_desc') }}</p>
                 </li>
                 <li class="tu-step">
                     <span class="tu-step__num">03</span>
-                    <span class="tu-step__icon"><i class="fas fa-graduation-cap"></i></span>
+                    <span class="tu-step__icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
                     <h3 class="tu-step__title">{{ __('frontend.topup.step3_title') }}</h3>
                     <p class="tu-step__desc">{{ __('frontend.topup.step3_desc') }}</p>
                 </li>

@@ -12,47 +12,52 @@
 
 @php $supportEmail = $misc['Company Email'] ?? __('frontend.company.email'); @endphp
 
-<section class="rs rs--failed">
-    <div class="rs__grid">
+{{-- ==========================================================================
+     Order failed
+     Centred column on the drawn canvas: status medallion, recovery steps,
+     support row. Styles: public/css/theme.css — section 19
+     ========================================================================== --}}
+<section class="res res--failed">
 
-        {{-- Status hero --}}
-        <div class="rs-hero">
-            <div class="rs-status" aria-hidden="true">
-                <span class="rs-status__icon"><i class="fas fa-times"></i></span>
-            </div>
+    @include('frontend.layouts.form-canvas')
 
-            <h2 class="rs-hero__title">{{ __('frontend.failed.heading') }}</h2>
-            <p class="rs-hero__msg">{{ __('frontend.failed.message') }}</p>
+    <div class="res__wrap">
 
-            <div class="rs-actions">
-                <a href="{{ route('points.topup') }}" class="rs-btn rs-btn--primary">
-                    <i class="fas fa-coins" aria-hidden="true"></i> {{ __('frontend.failed.retry') }}
-                </a>
-                <a href="{{ route('home') }}" class="rs-btn rs-btn--secondary">
-                    <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.failed.home') }}
-                </a>
-            </div>
-        </div>
+        <span class="res-mark" aria-hidden="true">
+            <span class="res-mark__ring"></span>
+            <span class="res-mark__icon"><i class="fas fa-times"></i></span>
+        </span>
 
-        {{-- Help --}}
-        <div class="rs-help">
-            <h3 class="rs-help__title">{{ __('frontend.failed.help_title') }}</h3>
+        <h2 class="res-title">{{ __('frontend.failed.heading') }}</h2>
+        <p class="res-msg">{{ __('frontend.failed.message') }}</p>
 
-            <ol class="rs-steps">
-                <li class="rs-step"><span class="rs-step__num">1</span><span>{{ __('frontend.failed.help1') }}</span></li>
-                <li class="rs-step"><span class="rs-step__num">2</span><span>{{ __('frontend.failed.help2') }}</span></li>
-                <li class="rs-step"><span class="rs-step__num">3</span><span>{{ __('frontend.failed.help3') }}</span></li>
+        <div class="res-help">
+            <h3 class="res-help__title">{{ __('frontend.failed.help_title') }}</h3>
+
+            <ol class="res-steps">
+                <li class="res-step"><span class="res-step__num">1</span><span>{{ __('frontend.failed.help1') }}</span></li>
+                <li class="res-step"><span class="res-step__num">2</span><span>{{ __('frontend.failed.help2') }}</span></li>
+                <li class="res-step"><span class="res-step__num">3</span><span>{{ __('frontend.failed.help3') }}</span></li>
             </ol>
 
-            <div class="rs-assist">
-                <span class="rs-assist__icon" aria-hidden="true"><i class="fas fa-headset"></i></span>
+            <div class="res-assist">
+                <span class="res-assist__icon" aria-hidden="true"><i class="fas fa-headset"></i></span>
                 <div>
-                    <h3 class="rs-assist__title">{{ __('frontend.failed.assist_title') }}</h3>
-                    <p class="rs-assist__msg">
+                    <h3 class="res-assist__title">{{ __('frontend.failed.assist_title') }}</h3>
+                    <p class="res-assist__msg">
                         {!! str_replace(':email', '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>', e(__('frontend.failed.assist_text'))) !!}
                     </p>
                 </div>
             </div>
+        </div>
+
+        <div class="res-actions">
+            <a href="{{ route('points.topup') }}" class="res-btn res-btn--primary">
+                <i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.failed.retry') }}
+            </a>
+            <a href="{{ route('home') }}" class="res-btn res-btn--ghost">
+                <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.failed.home') }}
+            </a>
         </div>
 
     </div>

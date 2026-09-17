@@ -102,7 +102,7 @@
                 <div class="hm-head">
                     <div>
                         <h2 class="hm-head__title">{{ __('frontend.home.featured_title') }}</h2>
-                        <p class="hm-head__desc">{{ __('frontend.home.hero_desc') }}</p>
+                        <p class="hm-head__desc">{{ __('frontend.home.featured_desc') }}</p>
                     </div>
 
                     <div class="hp-tools">
@@ -304,7 +304,7 @@
                 <div class="hm-head">
                     <div>
                         <h2 class="hm-head__title">{{ __('frontend.home.cats_title') }}</h2>
-                        <p class="hm-head__desc">{{ __('frontend.home.cats_label') }}</p>
+                        <p class="hm-head__desc">{{ __('frontend.home.cats_desc') }}</p>
                     </div>
                     <a href="{{ route('product-lists') }}" class="hm-btn hm-btn--secondary">
                         {{ __('frontend.home.cats_all') }} <i class="fas fa-arrow-right" aria-hidden="true"></i>

@@ -1076,8 +1076,10 @@ textarea.form-control {
 .ak-dd__panel--mega {
   left: 50%;
   transform: translate(-50%, 10px);
-  width: min(880px, calc(100vw - 48px));
-  padding: var(--spacing-20);
+  width: min(320px, calc(100vw - 48px));
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+  padding: var(--spacing-8);
 }
 
 .ak-dd:hover > .ak-dd__panel--mega,
@@ -1167,104 +1169,93 @@ textarea.form-control {
   background: var(--color-mist);
 }
 
-/* --- 11.6 Categories mega panel ----------------------------------------- */
+/* --- 11.6 Categories panel ---------------------------------------------
+   A plain linear list: one category per row, title only. No thumbnails,
+   so the panel stays narrow and scans top to bottom.
+   ------------------------------------------------------------------------ */
 .ak-cats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .ak-cat {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-8);
+  margin: 0;
 }
 
 .ak-cat__main {
-  display: block;
-  color: var(--color-ink-black);
-}
-
-.ak-cat__cover {
-  position: relative;
-  display: grid;
-  place-items: center;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-radius: var(--radius-media);
-  background: var(--color-mist-light);
-  border: var(--border-hairline);
-  color: var(--color-ash);
-  font-size: 18px;
-}
-
-.ak-cat__cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 420ms var(--ease-out-soft);
-}
-
-.ak-cat__main:hover .ak-cat__cover img {
-  transform: scale(1.06);
-}
-
-.ak-cat__main:hover .ak-cat__cover {
-  border-color: var(--color-iris-brand);
-}
-
-.ak-cat__name {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-8);
-  margin-top: var(--spacing-8);
-  font-size: var(--text-body-sm);
-  font-weight: var(--font-weight-semibold);
-  color: inherit;
-  transition: color var(--transition-base);
+  gap: var(--spacing-12);
+  padding: 10px var(--spacing-12);
+  border-radius: var(--radius-sm);
+  color: var(--color-graphite);
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
-.ak-cat__main:hover .ak-cat__name,
-.ak-cat.is-active .ak-cat__name {
+.ak-cat__main:hover,
+.ak-cat__main:focus-visible,
+.ak-cat.is-active > .ak-cat__main {
+  background: var(--surface-lavender-wash);
   color: var(--color-iris-brand);
 }
 
+.ak-cat__name {
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+  color: inherit;
+}
+
+.ak-cat.is-active > .ak-cat__main .ak-cat__name {
+  font-weight: var(--font-weight-semibold);
+}
+
 .ak-cat__go {
+  flex: none;
   font-size: 10px;
   opacity: 0;
   transform: translateX(-4px);
   transition: opacity var(--transition-base), transform var(--transition-base);
 }
 
-.ak-cat__main:hover .ak-cat__go {
+.ak-cat__main:hover .ak-cat__go,
+.ak-cat__main:focus-visible .ak-cat__go {
   opacity: 1;
   transform: translateX(0);
 }
 
+/* Sub-categories: a quiet second level, still one per row */
 .ak-cat__subs {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-direction: column;
+  gap: 1px;
+  margin: 1px 0 var(--spacing-4);
+  padding: 0 0 0 var(--spacing-12);
+  list-style: none;
+  border-left: var(--border-hairline);
+  margin-left: var(--spacing-16);
 }
 
 .ak-cat__sub {
-  padding: 4px 10px;
-  border-radius: var(--radius-pill-badge);
-  background: var(--color-mist-light);
+  display: block;
+  padding: 7px var(--spacing-12);
+  border-radius: var(--radius-sm);
   color: var(--color-slate);
   font-size: var(--text-caption);
-  font-weight: var(--font-weight-medium);
   transition: background-color var(--transition-base), color var(--transition-base);
 }
 
-.ak-cat__sub:hover {
-  background: var(--surface-lavender-wash);
+.ak-cat__sub:hover,
+.ak-cat__sub:focus-visible {
+  background: var(--color-mist-light);
   color: var(--color-iris-brand);
 }
 
 .ak-cats__none {
-  grid-column: 1 / -1;
   margin: 0;
   padding: var(--spacing-12);
   font-size: var(--text-body-sm);
@@ -1276,8 +1267,8 @@ textarea.form-control {
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-16);
-  margin-top: var(--spacing-20);
-  padding-top: var(--spacing-16);
+  margin-top: var(--spacing-12);
+  padding-top: var(--spacing-12);
   border-top: var(--border-hairline);
 }
 

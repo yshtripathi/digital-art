@@ -111,7 +111,7 @@
                 <label class="tu-form__label" for="topup_amount">{{ __('frontend.topup.amount') }}</label>
                 <div class="tu-amount">
                     <span class="tu-amount__symbol">{!! $symbol !!}</span>
-                    <input type="number" name="amount" id="topup_amount" class="tu-amount__input" placeholder="0" min="1" required inputmode="decimal">
+                    <input type="number" name="amount" id="topup_amount" class="tu-amount__input" placeholder="{{ __('frontend.topup.amount_ph') }}" min="1" required inputmode="decimal">
                 </div>
 
                 <span class="tu-form__label tu-form__label--sm">{{ __('frontend.topup.quick') }}</span>

@@ -91,35 +91,25 @@
                     <i class="fas fa-chevron-down ak-dd__chev" aria-hidden="true"></i>
                 </button>
                 <div class="ak-dd__panel ak-dd__panel--mega">
-                    <div class="ak-cats">
+                    <ul class="ak-cats">
                         @forelse($headerCategories as $cat)
-                            @php $cimg = $cat->photo ? explode(',', $cat->photo)[0] : null; @endphp
-                            <div class="ak-cat {{ (isset($category->id) && $category->id == $cat->id) ? 'is-active' : '' }}">
+                            <li class="ak-cat {{ (isset($category->id) && $category->id == $cat->id) ? 'is-active' : '' }}">
                                 <a class="ak-cat__main" href="{{ route('product-lists', $cat->slug) }}">
-                                    <span class="ak-cat__cover">
-                                        @if($cimg)
-                                            <img src="{{ asset($cimg) }}" alt="" loading="lazy">
-                                        @else
-                                            <i class="fas fa-book-open" aria-hidden="true"></i>
-                                        @endif
-                                    </span>
-                                    <span class="ak-cat__name">
-                                        {{ $cat->title }}
-                                        <i class="fas fa-arrow-right ak-cat__go" aria-hidden="true"></i>
-                                    </span>
+                                    <span class="ak-cat__name">{{ $cat->title }}</span>
+                                    <i class="fas fa-arrow-right ak-cat__go" aria-hidden="true"></i>
                                 </a>
                                 @if($cat->child_cat->count())
-                                    <div class="ak-cat__subs">
-                                        @foreach($cat->child_cat->take(3) as $sub)
-                                            <a class="ak-cat__sub" href="{{ route('product-lists', $sub->slug) }}">{{ $sub->title }}</a>
+                                    <ul class="ak-cat__subs">
+                                        @foreach($cat->child_cat as $sub)
+                                            <li><a class="ak-cat__sub" href="{{ route('product-lists', $sub->slug) }}">{{ $sub->title }}</a></li>
                                         @endforeach
-                                    </div>
+                                    </ul>
                                 @endif
-                            </div>
+                            </li>
                         @empty
-                            <p class="ak-cats__none">{{ __('frontend.header.no_categories') }}</p>
+                            <li><p class="ak-cats__none">{{ __('frontend.header.no_categories') }}</p></li>
                         @endforelse
-                    </div>
+                    </ul>
 
                     <div class="ak-cats__foot">
                         <span class="ak-cats__foot-text">{{ __('frontend.header.promo_title') }}</span>

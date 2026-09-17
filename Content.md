@@ -777,16 +777,19 @@ Keep answers short and link to the full policy page where relevant. Do not copy 
 
 Every major page has its own:
 
-- Meta description
 - H1
-- Open Graph title and description
-- Twitter title and description
 - Descriptive image ALT text
+
+The meta description, Open Graph and Twitter tags are shared. One site-wide
+description covers every page, and a page only sets its own when it genuinely
+has something more specific to say, such as a category or course page that can
+use the summary from the database.
 
 Rules:
 
 - The tab title follows section 2.4 (plain page name only).
-- Descriptions are universal, specific to the page, and never copied between pages.
+- The shared description is universal, so it must not mention a subject or niche.
+- A page-specific description is optional, never required.
 - No keyword stuffing and no unsupported claims.
 
 ---
@@ -1318,7 +1321,7 @@ If a content requirement seems to need a database change, stop, explain which st
 8. **Localize JavaScript and validation messages.**
 9. **Write the Terms & Conditions and all three policy pages** with headings, paragraphs and bullet points.
 10. **Set the newsletter success message** exactly as defined.
-11. **Write SEO metadata** for each page.
+11. **Set the H1 and image ALT text** on each page, and the shared site description once.
 12. **Check that every link** points to a real route.
 13. **Delete unused translation keys** and confirm they are no longer referenced.
 
@@ -1351,7 +1354,7 @@ If a content requirement seems to need a database change, stop, explain which st
 - [ ] No fake claims
 - [ ] No broken links
 - [ ] All images have ALT text
-- [ ] Every page has SEO metadata
+- [ ] Every page has an H1 and descriptive image ALT text
 - [ ] Database structure and data are unchanged
 - [ ] Checkout, payments, authentication and course access still work
 

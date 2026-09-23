@@ -10,64 +10,89 @@
     ]
 ])
 
-<section class="fm fm--login">
-    <div class="fm__wrap">
+<section class="auth">
+    <div class="auth__split">
 
-        <div class="fm__head">
-            <p class="fm__kicker">{{ __('frontend.login.label') }}</p>
-            <h2 class="au-title">{{ __('frontend.login.heading') }}</h2>
-            <p class="fm__copy">{{ __('frontend.login.aside') }}</p>
-        </div>
-
-        <div class="au-card">
-            <div class="au-card__inner">
-
-                @if(session('loginerror'))
-                    <div class="au-alert" role="alert"><i class="fas fa-exclamation-circle"></i> {{ session('loginerror') }}</div>
-                @endif
-
-                <form name="frmLogin" id="frmLogin" class="au-form" action="{{ route('login.submit') }}" method="post" novalidate>
-                    @csrf
-
-                    <div class="au-field">
-                        <label class="au-label" for="email">{{ __('frontend.login.email') }}</label>
-                        <div class="au-input">
-                            <i class="fas fa-envelope au-input__icon" aria-hidden="true"></i>
-                            <input type="email" name="email" id="email" autocomplete="email" placeholder="{{ __('frontend.login.email_ph') }}" value="{{ old('email') }}" class="@error('email') is-invalid @enderror">
-                        </div>
-                        @error('email') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
-                    </div>
-
-                    <div class="au-field">
-                        <label class="au-label" for="password">{{ __('frontend.login.password') }}</label>
-                        <div class="au-input au-input--pass">
-                            <i class="fas fa-lock au-input__icon" aria-hidden="true"></i>
-                            <input type="password" name="password" id="password" autocomplete="current-password" placeholder="{{ __('frontend.login.password_ph') }}" class="@error('password') is-invalid @enderror">
-                            <button type="button" class="au-eye" data-au-toggle data-show="{{ __('frontend.login.show') }}" data-hide="{{ __('frontend.login.hide') }}" aria-label="{{ __('frontend.login.show') }}" aria-pressed="false"><i class="fas fa-eye"></i></button>
-                        </div>
-                        @error('password') <span class="au-error"><i class="fas fa-info-circle"></i> {{ $message }}</span> @enderror
-                    </div>
-
-                    <div class="au-extras">
-                        <label class="au-check">
-                            <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                            {{ __('frontend.login.remember') }}
-                        </label>
-                        <a href="{{ route('forgetpwd.form') }}" class="au-link">{{ __('frontend.login.forgot') }}</a>
-                    </div>
-
-                    <button type="submit" name="submit-form" class="au-submit">
-                        {{ __('frontend.login.submit') }} <i class="fas fa-arrow-right"></i>
-                    </button>
-                </form>
-
+        <div class="auth__art">
+            <a href="{{ route('home') }}" class="auth__logo">
+                <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $misc['Company Name'] ?? __('frontend.company.name') }}">
+            </a>
+            <div class="auth__art-inner">
+                <p class="auth__badge">{{ __('frontend.login.label') }}</p>
+                <p class="auth__lead">{{ __('frontend.login.aside') }}</p>
             </div>
         </div>
 
-        <p class="au-alt">
-            {{ __('frontend.login.new') }}
-            <a href="{{ route('register.form') }}">{{ __('frontend.login.register') }}</a>
-        </p>
+        <div class="auth__form">
+            <div class="auth__inner">
+
+                <a href="{{ route('home') }}" class="auth__back">
+                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                    {{ __('frontend.header.home') }}
+                </a>
+
+                <h1 class="auth__title">{{ __('frontend.login.heading') }}</h1>
+
+                @if(session('loginerror'))
+                    <p class="msg msg--error" role="alert">
+                        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                        <span>{{ session('loginerror') }}</span>
+                    </p>
+                @endif
+
+                <form name="frmLogin" id="frmLogin" action="{{ route('login.submit') }}" method="post" novalidate>
+                    @csrf
+
+                    <div class="auth__fields">
+
+                        <div class="fld">
+                            <label class="fld__label" for="email">{{ __('frontend.login.email') }}</label>
+                            <div class="fld__box">
+                                <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
+                                <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.login.email_ph') }}" value="{{ old('email') }}">
+                            </div>
+                            @error('email')
+                                <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="fld fld--pass">
+                            <label class="fld__label" for="password">{{ __('frontend.login.password') }}</label>
+                            <div class="fld__box">
+                                <i class="fas fa-lock fld__icon" aria-hidden="true"></i>
+                                <input type="password" name="password" id="password" autocomplete="current-password" class="fld__input @error('password') is-invalid @enderror" placeholder="{{ __('frontend.login.password_ph') }}">
+                                <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.login.show') }}" data-hide="{{ __('frontend.login.hide') }}" aria-label="{{ __('frontend.login.show') }}" aria-pressed="false">
+                                    <i class="fas fa-eye" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            @error('password')
+                                <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="auth__opts">
+                            <label class="auth__check">
+                                <span class="tick">
+                                    <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <i class="fas fa-check" aria-hidden="true"></i>
+                                </span>
+                                {{ __('frontend.login.remember') }}
+                            </label>
+                            <a href="{{ route('forgetpwd.form') }}" class="auth__link">{{ __('frontend.login.forgot') }}</a>
+                        </div>
+
+                        <button type="submit" name="submit-form" class="btn btn--primary auth__submit">
+                            {{ __('frontend.login.submit') }}
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <p class="auth__divider">{{ __('frontend.login.new') }}</p>
+
+                <a href="{{ route('register.form') }}" class="btn btn--ghost auth__alt">{{ __('frontend.login.register') }}</a>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -79,10 +104,10 @@
     $(document).ready(function() {
         $("#frmLogin").validate({
             errorElement: 'span',
-            errorClass: 'au-error',
+            errorClass: 'fld__err',
             errorPlacement: function(error, element) {
-                error.prepend('<i class="fas fa-info-circle"></i> ');
-                error.appendTo(element.closest('.au-field'));
+                error.prepend('<i class="fas fa-info-circle" aria-hidden="true"></i> ');
+                error.appendTo(element.closest('.fld'));
             },
             highlight: function(element) {
                 $(element).addClass('is-invalid');
@@ -108,16 +133,20 @@
 </script>
 
 <script>
-    // Show / hide password
-    document.addEventListener('click', function (e) {
-        var btn = e.target.closest('[data-au-toggle]');
-        if (!btn) return;
-        var input = btn.parentElement.querySelector('input');
-        var show = input.type === 'password';
-        input.type = show ? 'text' : 'password';
-        btn.setAttribute('aria-pressed', show ? 'true' : 'false');
-        btn.setAttribute('aria-label', show ? btn.dataset.hide : btn.dataset.show);
-        btn.querySelector('i').className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
+    document.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-pass-toggle]');
+
+        if (!button) {
+            return;
+        }
+
+        var input = button.parentElement.querySelector('input');
+        var reveal = input.type === 'password';
+
+        input.type = reveal ? 'text' : 'password';
+        button.setAttribute('aria-pressed', reveal ? 'true' : 'false');
+        button.setAttribute('aria-label', reveal ? button.dataset.hide : button.dataset.show);
+        button.querySelector('i').className = reveal ? 'fas fa-eye-slash' : 'fas fa-eye';
     });
 </script>
 @endpush

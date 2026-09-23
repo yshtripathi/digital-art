@@ -4,5 +4,3 @@
 @include('user.layouts.notification')
 @yield('main-content')
 @include('frontend.layouts.footer')
-@stack('styles')
-@stack('scripts')

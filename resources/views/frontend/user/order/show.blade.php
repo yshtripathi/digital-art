@@ -12,146 +12,192 @@
     ]
 ])
 
-{{-- ==========================================================================
-     Receipt — one order
-     A single ticket: header with stamp, items, details,
-     then total, statuses and actions.
-     Styles: public/css/theme.css — section 26
-     ========================================================================== --}}
-<section class="rc">
-    <div class="rc__wrap">
-        @if($order)
-            @php
-                $currency = match($order->currency) {
-                    'USD' => '$',
-                    'JPY' => '&yen;',
-                    'HKD' => 'HK$',
-                    default => '$',
-                };
-                $totalFmt = $currency . number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2);
-                $items = $order->cart_info ?? collect();
-                $payOk = in_array(strtolower((string) $order->payment_status), ['completed', 'paid', 'success']);
-                $orderOk = in_array(strtolower((string) $order->status), ['completed', 'delivered']);
-                $statusLabel = function ($value) {
-                    $key = 'frontend.receipt.statuses.' . strtolower(trim((string) $value));
-                    return Lang::has($key) ? __($key) : ucwords((string) $value);
-                };
-                $created = $order->created_at->locale(app()->getLocale());
-                // Orders unlocked with credits have no card payment
-                $paidWithCredits = str_starts_with((string) $order->order_number, 'ORD-PTS-');
-            @endphp
+<section class="rcpt">
+    @if($order)
+        @php
+            $currency = match($order->currency) {
+                'USD' => '$',
+                'JPY' => '&yen;',
+                'HKD' => 'HK$',
+                default => '$',
+            };
+            $totalFmt = $currency . number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2);
+            $items = $order->cart_info ?? collect();
+            $payOk = in_array(strtolower((string) $order->payment_status), ['completed', 'paid', 'success']);
+            $orderOk = in_array(strtolower((string) $order->status), ['completed', 'delivered']);
+            $statusLabel = function ($value) {
+                $key = 'frontend.receipt.statuses.' . strtolower(trim((string) $value));
+                return Lang::has($key) ? __($key) : ucwords((string) $value);
+            };
+            $created = $order->created_at->locale(app()->getLocale());
+            $paidWithCredits = str_starts_with((string) $order->order_number, 'ORD-PTS-');
+        @endphp
 
-            {{-- Receipt --}}
-            <article class="rc-ticket">
-                <header class="rc-ticket__head">
+        <div class="rcpt__grid">
+
+            <article class="ticket">
+                <header class="ticket__head">
                     <div>
-                        <span class="rc-ticket__eyebrow"><i class="fas fa-receipt"></i> {{ __('frontend.receipt.receipt') }}</span>
-                        <h2 class="rc-ticket__num">#{{ $order->order_number }}</h2>
-                        <span class="rc-ticket__date"><i class="far fa-calendar"></i> {{ $created->translatedFormat(__('frontend.receipt.head_format')) }}</span>
+                        <span class="ticket__eyebrow">
+                            <i class="fas fa-receipt" aria-hidden="true"></i>
+                            {{ __('frontend.receipt.receipt') }}
+                        </span>
+                        <h1 class="ticket__no">{{ $order->order_number }}</h1>
+                        <span class="ticket__date">
+                            <i class="far fa-calendar" aria-hidden="true"></i>
+                            {{ $created->translatedFormat(__('frontend.receipt.head_format')) }}
+                        </span>
                     </div>
-                    <div class="rc-ticket__stamp {{ $payOk ? 'is-ok' : '' }}" aria-hidden="true">
+
+                    <span class="ticket__stamp {{ $payOk ? 'is-ok' : '' }}" aria-hidden="true">
                         <i class="fas {{ $payOk ? 'fa-check' : 'fa-hourglass-half' }}"></i>
-                    </div>
+                    </span>
                 </header>
 
-                <div class="rc-tear" aria-hidden="true"></div>
+                <div class="tear" aria-hidden="true"></div>
 
-                {{-- Items --}}
                 @if(count($items))
-                    <h3 class="rc-h"><i class="fas fa-list-ul"></i> {{ __('frontend.receipt.items') }}</h3>
-                    <ul class="rc-items">
+                    <h2 class="ticket__h">
+                        <i class="fas fa-list-ul" aria-hidden="true"></i>
+                        {{ __('frontend.receipt.items') }}
+                    </h2>
+
+                    <ul class="items">
                         @foreach($items as $item)
                             @php
                                 $isCourse = $item->product && $item->product_id < 1000;
-                                $iTitle = $item->product ? $item->product->title : __('frontend.receipt.package');
+                                $itemTitle = $isCourse ? $item->product->title : __('frontend.receipt.package');
                             @endphp
-                            <li class="rc-item">
-                                <span class="rc-item__icon {{ $isCourse ? 'is-course' : '' }}"><i class="fas {{ $isCourse ? 'fa-graduation-cap' : 'fa-bolt' }}"></i></span>
-                                <span class="rc-item__title">{{ $isCourse ? $iTitle : __('frontend.receipt.package') }}</span>
-                                <span class="rc-item__pts"><i class="fas fa-bolt"></i> {{ number_format($item->points) }}</span>
+                            <li class="item">
+                                <span class="item__icon">
+                                    <i class="fas {{ $isCourse ? 'fa-graduation-cap' : 'fa-bolt' }}" aria-hidden="true"></i>
+                                </span>
+                                <span class="item__title">{{ $itemTitle }}</span>
+                                <span class="chip">
+                                    <i class="fas fa-bolt" aria-hidden="true"></i>
+                                    {{ number_format($item->points) }}
+                                </span>
                             </li>
                         @endforeach
                     </ul>
                 @endif
 
-                {{-- Details --}}
-                <h3 class="rc-h"><i class="fas fa-clipboard-list"></i> {{ __('frontend.receipt.info') }}</h3>
-                <dl class="rc-details">
-                    <div class="rc-detail">
+                <h2 class="ticket__h">
+                    <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+                    {{ __('frontend.receipt.info') }}
+                </h2>
+
+                <dl class="details">
+                    <div class="detail">
                         <dt>{{ __('frontend.receipt.order') }}</dt>
                         <dd>{{ $order->order_number }}</dd>
                     </div>
-                    <div class="rc-detail">
+                    <div class="detail">
                         <dt>{{ __('frontend.receipt.name') }}</dt>
                         <dd>{{ $order->first_name }} {{ $order->last_name }}</dd>
                     </div>
-                    <div class="rc-detail">
+                    <div class="detail">
                         <dt>{{ __('frontend.receipt.email') }}</dt>
                         <dd>{{ $order->email }}</dd>
                     </div>
-                    <div class="rc-detail">
+                    <div class="detail">
                         <dt>{{ __('frontend.receipt.qty') }}</dt>
-                        <dd>{{ $order->quantity }}</dd>
+                        <dd class="num">{{ $order->quantity }}</dd>
                     </div>
-                    <div class="rc-detail">
+                    <div class="detail">
                         <dt>{{ __('frontend.receipt.method') }}</dt>
                         <dd>
                             @if($paidWithCredits)
-                                <i class="fas fa-bolt"></i> {{ __('frontend.receipt.credits') }}
+                                <i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.receipt.credits') }}
                             @else
-                                <i class="far fa-credit-card"></i> {{ __('frontend.receipt.card') }}
+                                <i class="far fa-credit-card" aria-hidden="true"></i> {{ __('frontend.receipt.card') }}
                             @endif
                         </dd>
                     </div>
-                    <div class="rc-detail">
+                    <div class="detail">
                         <dt>{{ __('frontend.receipt.date') }}</dt>
                         <dd>{{ $created->translatedFormat(__('frontend.receipt.date_format')) }}</dd>
                     </div>
-                    <div class="rc-detail rc-detail--wide">
+                    <div class="detail detail--wide">
                         <dt>{{ __('frontend.receipt.txn') }}</dt>
-                        <dd class="rc-mono">{{ $order->trans_id ?: '—' }}</dd>
+                        <dd class="num">{{ $order->trans_id ?: '—' }}</dd>
                     </div>
                 </dl>
             </article>
 
-            {{-- Total, statuses and actions --}}
-            <div class="rc-total">
-                <span class="rc-total__label">{{ __('frontend.receipt.total') }}:</span>
-                <strong class="rc-total__value">{!! $totalFmt !!}</strong>
-            </div>
+            <aside class="rcpt__rail">
 
-            <div class="rc-statuses">
-                <div class="rc-status">
-                    <span>{{ __('frontend.receipt.status') }}</span>
-                    <span class="ds-status {{ $orderOk ? 'ds-status--ok' : 'ds-status--wait' }}">{{ $statusLabel($order->status) }}</span>
+                <div class="total">
+                    <span class="total__label">{{ __('frontend.receipt.total') }}</span>
+                    <strong class="total__value">{!! $totalFmt !!}</strong>
                 </div>
-                <div class="rc-status">
-                    <span>{{ __('frontend.receipt.payment') }}</span>
-                    <span class="ds-status {{ $payOk ? 'ds-status--ok' : 'ds-status--wait' }}">{{ $statusLabel($order->payment_status) }}</span>
-                </div>
-            </div>
 
-            <div class="rc-actions">
-                <a href="{{ route('order.pdf', $order->id) }}" class="ds-btn ds-btn--primary">
-                    <i class="fas fa-download"></i> {{ __('frontend.receipt.pdf') }}
-                </a>
-                <button type="button" class="ds-btn ds-btn--ghost" onclick="window.print();">
-                    <i class="fas fa-print"></i> {{ __('frontend.receipt.print') }}
-                </button>
-                <a href="{{ route('user') }}" class="ds-btn ds-btn--ghost">
-                    <i class="fas fa-arrow-left"></i> {{ __('frontend.receipt.back') }}
-                </a>
-            </div>
-        @else
-            <div class="bag-empty">
-                <span class="bag-empty__icon" aria-hidden="true"><i class="fas fa-file-invoice"></i></span>
-                <h2 class="bag-empty__title">{{ __('frontend.receipt.missing') }}</h2>
-                <p class="bag-empty__desc">{{ __('frontend.receipt.missing_text') }}</p>
-                <div class="bag-empty__actions">
-                    <a href="{{ route('user') }}" class="bag-btn bag-btn--primary"><i class="fas fa-arrow-left"></i> {{ __('frontend.receipt.back') }}</a>
+                <div class="stats">
+                    <div class="stats__row">
+                        <span>{{ __('frontend.receipt.status') }}</span>
+                        @if($orderOk)
+                            <span class="state state--ok"><i class="fas fa-check" aria-hidden="true"></i> {{ $statusLabel($order->status) }}</span>
+                        @else
+                            <span class="state state--wait"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel($order->status) }}</span>
+                        @endif
+                    </div>
+                    <div class="stats__row">
+                        <span>{{ __('frontend.receipt.payment') }}</span>
+                        @if($payOk)
+                            <span class="state state--ok"><i class="fas fa-check" aria-hidden="true"></i> {{ $statusLabel($order->payment_status) }}</span>
+                        @else
+                            <span class="state state--wait"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel($order->payment_status) }}</span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="rcpt__actions">
+                    <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--primary">
+                        <i class="fas fa-download" aria-hidden="true"></i>
+                        {{ __('frontend.receipt.pdf') }}
+                    </a>
+                    <button type="button" class="btn btn--ghost" data-print>
+                        <i class="fas fa-print" aria-hidden="true"></i>
+                        {{ __('frontend.receipt.print') }}
+                    </button>
+                    <a href="{{ route('user') }}" class="btn btn--quiet">
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                        {{ __('frontend.receipt.back') }}
+                    </a>
+                </div>
+            </aside>
+        </div>
+    @else
+        <div class="rcpt__grid">
+            <div class="ticket">
+                <div class="blank">
+                    <span class="blank__icon" aria-hidden="true"><i class="fas fa-file-invoice"></i></span>
+                    <h1 class="ticket__no">{{ __('frontend.receipt.missing') }}</h1>
+                    <p>{{ __('frontend.receipt.missing_text') }}</p>
+                    <a href="{{ route('user') }}" class="btn btn--primary">
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                        {{ __('frontend.receipt.back') }}
+                    </a>
                 </div>
             </div>
-        @endif
-    </div>
+        </div>
+    @endif
 </section>
+
 @endsection
+
+@push('scripts')
+<script>
+(function () {
+    'use strict';
+
+    var button = document.querySelector('[data-print]');
+
+    if (button) {
+        button.addEventListener('click', function () {
+            window.print();
+        });
+    }
+}());
+</script>
+@endpush

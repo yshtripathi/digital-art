@@ -231,5 +231,7 @@
 <script src="{{ asset('js/prevention.js') }}"></script>
 @endif
 
+@stack('scripts')
+
 </body>
 </html>

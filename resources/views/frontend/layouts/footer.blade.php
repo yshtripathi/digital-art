@@ -1,139 +1,140 @@
-{{-- ==========================================================================
-     Site Footer
-     Centred newsletter strip above a four-column directory, closed by a rule
-     and the copyright row (see design/DESIGN.md — section 3).
-     Styles: public/css/theme.css — section 14
-     JS hooks kept: .subscribe-form, input[type="email"], .suces_rinfo,
-     .scroll-to-top.scroll-to-target
-     ========================================================================== --}}
 @php
-    $footerCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
-    $ftCompany = $misc['Company Name'] ?? __('frontend.company.name');
-    $ftPhone   = $misc['Company Phone'] ?? __('frontend.company.phone');
-    $ftEmail   = $misc['Company Email'] ?? __('frontend.company.email');
-    $ftAddress = $misc['Company Address'] ?? __('frontend.company.address');
+    $footCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+    $footCompany = $misc['Company Name'] ?? __('frontend.company.name');
+    $footPhone   = $misc['Company Phone'] ?? __('frontend.company.phone');
+    $footEmail   = $misc['Company Email'] ?? __('frontend.company.email');
+    $footAddress = $misc['Company Address'] ?? __('frontend.company.address');
 @endphp
 
 
-<footer class="ft">
-    <div class="ft__inner">
+<footer class="foot">
+    <div class="foot__inner">
 
-        {{-- Newsletter strip --}}
-        <section class="ft-news" aria-labelledby="ft-news-title">
-            <h2 class="ft-news__title" id="ft-news-title">{{ __('frontend.footer.news_title') }}</h2>
-            <p class="ft-news__desc">{{ __('frontend.footer.news_desc') }}</p>
+        <div class="foot__lead">
 
-            <form class="ft-news__form subscribe-form" novalidate>
-                <label class="visually-hidden" for="ft-news-email">{{ __('frontend.footer.news_email') }}</label>
-                <span class="ft-news__field">
-                    <i class="fas fa-envelope ft-news__field-icon" aria-hidden="true"></i>
-                    <input type="email" name="email" id="ft-news-email" class="ft-news__input email" placeholder="{{ __('frontend.footer.news_ph') }}" required>
-                </span>
-                <button type="submit" class="ft-news__btn">
-                    <span>{{ __('frontend.footer.news_btn') }}</span>
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </button>
-            </form>
-
-            <p class="suces_rinfo" style="display: none;"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.footer.news_success') }}</p>
-
-            <ul class="ft-news__list">
-                @foreach(__('frontend.footer.news_points') as $point)
-                    <li class="ft-news__point">
-                        <i class="fas fa-check" aria-hidden="true"></i>
-                        <span>{{ $point }}</span>
-                    </li>
-                @endforeach
-            </ul>
-
-            <p class="ft-news__note">{{ __('frontend.footer.news_note') }}</p>
-        </section>
-
-        {{-- Directory --}}
-        <div class="ft-cols">
-
-            <div class="ft-brand">
-                <a href="{{ route('home') }}" class="ft-brand__logo">
-                    <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $ftCompany }}">
+            <div class="ident">
+                <a href="{{ route('home') }}" class="ident__logo">
+                    <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $footCompany }}">
                 </a>
-                <p class="ft-brand__about">{{ __('frontend.footer.about') }}</p>
 
-                <ul class="ft-facts" aria-label="{{ __('frontend.footer.contact') }}">
-                    <li class="ft-fact">
-                        <i class="fas fa-building" aria-hidden="true"></i>
-                        <span>{{ $ftCompany }}</span>
+                <p class="ident__about">{{ __('frontend.footer.about') }}</p>
+
+                <ul class="ident__facts" aria-label="{{ __('frontend.footer.contact') }}">
+                    <li>
+                        <span class="ident__fact">
+                            <span class="ident__tile"><i class="fas fa-building" aria-hidden="true"></i></span>
+                            <span>{{ $footCompany }}</span>
+                        </span>
                     </li>
                     <li>
-                        <a href="tel:{{ $ftPhone }}" class="ft-fact ft-link">
-                            <i class="fas fa-phone-alt" aria-hidden="true"></i>
-                            <span>{{ $ftPhone }}</span>
+                        <a href="tel:{{ $footPhone }}" class="ident__fact">
+                            <span class="ident__tile"><i class="fas fa-phone-alt" aria-hidden="true"></i></span>
+                            <span>{{ $footPhone }}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="mailto:{{ $ftEmail }}" class="ft-fact ft-link">
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
-                            <span>{{ $ftEmail }}</span>
+                        <a href="mailto:{{ $footEmail }}" class="ident__fact">
+                            <span class="ident__tile"><i class="fas fa-envelope" aria-hidden="true"></i></span>
+                            <span>{{ $footEmail }}</span>
                         </a>
                     </li>
-                    <li class="ft-fact">
-                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                        <span>{{ $ftAddress }}</span>
+                    <li>
+                        <span class="ident__fact">
+                            <span class="ident__tile"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></span>
+                            <span>{{ $footAddress }}</span>
+                        </span>
                     </li>
                 </ul>
             </div>
 
-            <nav class="ft-col" aria-label="{{ __('frontend.footer.categories') }}">
-                <h2 class="ft-col__label">{{ __('frontend.footer.categories') }}</h2>
-                <ul class="ft-col__list">
-                    @forelse($footerCategories as $cat)
-                        <li><a href="{{ route('product-lists', $cat->slug) }}" class="ft-link">{{ $cat->title }}</a></li>
+            <section class="signup" aria-labelledby="signup-title">
+                <h2 class="signup__title" id="signup-title">{{ __('frontend.footer.news_title') }}</h2>
+                <p class="signup__desc">{{ __('frontend.footer.news_desc') }}</p>
+
+                <form class="signup__form" novalidate data-signup>
+                    <label class="vh" for="signup-email">{{ __('frontend.footer.news_email') }}</label>
+                    <span class="signup__field">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <input type="email" name="email" id="signup-email" class="signup__input" placeholder="{{ __('frontend.footer.news_ph') }}" required>
+                    </span>
+                    <button type="submit" class="btn btn--primary">
+                        {{ __('frontend.footer.news_btn') }}
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+                <p class="signup__ok" role="status" hidden data-signup-ok>
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                    <span>{{ __('frontend.footer.news_success') }}</span>
+                </p>
+
+                <ul class="signup__list">
+                    @foreach(__('frontend.footer.news_points') as $point)
+                        <li class="signup__point">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>{{ $point }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+
+                <p class="signup__note">{{ __('frontend.footer.news_note') }}</p>
+            </section>
+        </div>
+
+        <div class="foot__dir">
+
+            <nav class="dir" aria-label="{{ __('frontend.footer.categories') }}">
+                <h2 class="dir__label">{{ __('frontend.footer.categories') }}</h2>
+                <ul class="dir__list">
+                    @forelse($footCategories as $cat)
+                        <li><a href="{{ route('product-lists', $cat->slug) }}" class="dir__link">{{ $cat->title }}</a></li>
                     @empty
-                        <li><span class="ft-col__empty">{{ __('frontend.footer.no_categories') }}</span></li>
+                        <li><span class="dir__empty">{{ __('frontend.footer.no_categories') }}</span></li>
                     @endforelse
                 </ul>
             </nav>
 
-            <nav class="ft-col" aria-label="{{ __('frontend.footer.company') }}">
-                <h2 class="ft-col__label">{{ __('frontend.footer.company') }}</h2>
-                <ul class="ft-col__list">
-                    <li><a href="{{ route('product-lists') }}" class="ft-link">{{ __('frontend.footer.all_courses') }}</a></li>
-                    <li><a href="{{ route('about-us') }}" class="ft-link">{{ __('frontend.footer.about_us') }}</a></li>
-                    <li><a href="{{ route('contact') }}" class="ft-link">{{ __('frontend.footer.contact_us') }}</a></li>
-                    @if(Auth::check())
-                        <li><a href="{{ route('user') }}" class="ft-link">{{ __('frontend.footer.my_account') }}</a></li>
-                        <li><a href="{{ route('user.logout') }}" class="ft-link">{{ __('frontend.footer.logout') }}</a></li>
+            <nav class="dir" aria-label="{{ __('frontend.footer.company') }}">
+                <h2 class="dir__label">{{ __('frontend.footer.company') }}</h2>
+                <ul class="dir__list">
+                    <li><a href="{{ route('product-lists') }}" class="dir__link">{{ __('frontend.footer.all_courses') }}</a></li>
+                    <li><a href="{{ route('about-us') }}" class="dir__link">{{ __('frontend.footer.about_us') }}</a></li>
+                    <li><a href="{{ route('contact') }}" class="dir__link">{{ __('frontend.footer.contact_us') }}</a></li>
+                    @auth
+                        <li><a href="{{ route('user') }}" class="dir__link">{{ __('frontend.footer.my_account') }}</a></li>
+                        <li><a href="{{ route('user.logout') }}" class="dir__link">{{ __('frontend.footer.logout') }}</a></li>
                     @else
-                        <li><a href="{{ route('login.form') }}" class="ft-link">{{ __('frontend.footer.login') }}</a></li>
-                        <li><a href="{{ route('register.form') }}" class="ft-link">{{ __('frontend.footer.register') }}</a></li>
-                    @endif
+                        <li><a href="{{ route('login.form') }}" class="dir__link">{{ __('frontend.footer.login') }}</a></li>
+                        <li><a href="{{ route('register.form') }}" class="dir__link">{{ __('frontend.footer.register') }}</a></li>
+                    @endauth
                 </ul>
             </nav>
 
-            <nav class="ft-col" aria-label="{{ __('frontend.footer.policies') }}">
-                <h2 class="ft-col__label">{{ __('frontend.footer.policies') }}</h2>
-                <ul class="ft-col__list">
-                    <li><a href="{{ route('pages','terms-conditions') }}" class="ft-link">{{ __('frontend.footer.terms') }}</a></li>
-                    <li><a href="{{ route('pages','privacy-policy') }}" class="ft-link">{{ __('frontend.footer.privacy') }}</a></li>
-                    <li><a href="{{ route('pages','refund-policy') }}" class="ft-link">{{ __('frontend.footer.refund') }}</a></li>
-                    <li><a href="{{ route('pages','delivery-policy') }}" class="ft-link">{{ __('frontend.footer.delivery') }}</a></li>
+            <nav class="dir" aria-label="{{ __('frontend.footer.policies') }}">
+                <h2 class="dir__label">{{ __('frontend.footer.policies') }}</h2>
+                <ul class="dir__list">
+                    <li><a href="{{ route('pages','terms-conditions') }}" class="dir__link">{{ __('frontend.footer.terms') }}</a></li>
+                    <li><a href="{{ route('pages','privacy-policy') }}" class="dir__link">{{ __('frontend.footer.privacy') }}</a></li>
+                    <li><a href="{{ route('pages','refund-policy') }}" class="dir__link">{{ __('frontend.footer.refund') }}</a></li>
+                    <li><a href="{{ route('pages','delivery-policy') }}" class="dir__link">{{ __('frontend.footer.delivery') }}</a></li>
                 </ul>
             </nav>
         </div>
 
-        {{-- Closing row --}}
-        <div class="ft-bottom">
-            <p class="ft-bottom__copy">
-                &copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $ftCompany }}</a>. {{ __('frontend.footer.rights') }}
+        <div class="foot__end">
+            <p class="foot__copy">
+                &copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $footCompany }}</a>. {{ __('frontend.footer.rights') }}
             </p>
-            <img class="ft-bottom__pay" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.payments') }}" loading="lazy">
+            <img class="foot__pay" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.payments') }}" loading="lazy">
         </div>
     </div>
 </footer>
 
-</div><!-- End Page Wrapper -->
+</div>
 
-<!-- Scroll To Top (JS: .scroll-to-target) -->
-<div class="scroll-to-top scroll-to-target ft-top" data-target="html" role="button" tabindex="0" aria-label="{{ __('frontend.footer.to_top') }}"><span class="fa fa-arrow-up"></span></div>
+<button type="button" class="totop" aria-label="{{ __('frontend.footer.to_top') }}" data-totop>
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+</button>
 
 <script src="{{url('assets/js/jquery.js')}}"></script>
 <script src="{{url('assets/js/popper.min.js')}}"></script>
@@ -163,56 +164,72 @@
 <script src="{{url('assets/js/script.js')}}"></script>
 
 <script>
-    // Auto-dismiss alerts after 5 seconds
     setTimeout(function() {
         $('.alert:not(.alert-dismissible)').slideUp();
         $('.modern-alert').fadeOut(function() {
             $(this).remove();
         });
     }, 5000);
-    $(".suces_rinfo").hide();
-    var subTimer;
-
-    // Clear the custom validation message while the user edits the email
-    $(".subscribe-form").on('input', 'input[type="email"]', function(){
-        this.setCustomValidity('');
-    });
-
-    $(".subscribe-form").on('submit', function(event){
-        event.preventDefault();
-
-        var $form  = $(this);
-        var $email = $form.find('input[type="email"]');
-        var value  = ($email.val() || '').trim();
-        var isValid = value !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-
-        if (!isValid) {
-            if ($email[0] && $email[0].setCustomValidity) {
-                $email[0].setCustomValidity(@json(__('frontend.footer.news_invalid')));
-                $email[0].reportValidity();
-            }
-            $email.trigger('focus');
-            return;
-        }
-
-        clearTimeout(subTimer);
-        $(".suces_rinfo").stop(true, true).fadeIn(200).css('display', 'inline-block');
-
-        var formEl = $form.is('form') ? $form[0] : $form.find('form')[0];
-        if (formEl) { formEl.reset(); }
-
-        subTimer = setTimeout(function(){
-            $(".suces_rinfo").fadeOut(400);
-        }, 4000);
-    });
 </script>
+
+<script>
+(function () {
+    'use strict';
+
+    var calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    var form = document.querySelector('[data-signup]');
+    var done = document.querySelector('[data-signup-ok]');
+    var timer;
+
+    if (form) {
+        var field = form.querySelector('input[type="email"]');
+
+        field.addEventListener('input', function () {
+            field.setCustomValidity('');
+        });
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var value = (field.value || '').trim();
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                field.setCustomValidity(@json(__('frontend.footer.news_invalid')));
+                field.reportValidity();
+                field.focus();
+                return;
+            }
+
+            form.reset();
+
+            if (done) {
+                done.hidden = false;
+                clearTimeout(timer);
+                timer = setTimeout(function () { done.hidden = true; }, 4000);
+            }
+        });
+    }
+
+    var rise = document.querySelector('[data-totop]');
+
+    if (rise) {
+        var reveal = function () {
+            rise.classList.toggle('is-shown', window.scrollY > 320);
+        };
+        window.addEventListener('scroll', reveal, { passive: true });
+        reveal();
+
+        rise.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: calm.matches ? 'auto' : 'smooth' });
+        });
+    }
+}());
+</script>
+
 @if(env('CONTENT_PROTECTION_ENABLED', true))
 <script src="{{ asset('js/prevention.js') }}"></script>
 @endif
-
-<!-- =======================================================
-     Flowing Ribbons Background Effect (Gallery Theme)
-     ======================================================= -->
 
 </body>
 </html>

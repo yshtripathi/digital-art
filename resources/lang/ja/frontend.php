@@ -20,9 +20,9 @@ return [
 
     // resources/views/frontend/layouts/breadcrumb.blade.php
     'breadcrumb' => [
-        'label' => 'パンくずリスト',
-        'home'  => 'ホーム',
-        'badge' => 'コースを探す',
+        'label'   => 'パンくずリスト',
+        'home'    => 'ホーム',
+        'eyebrow' => 'インフルエンサーのためのオンライン学習',
     ],
 
     // resources/views/frontend/layouts/header.blade.php
@@ -689,9 +689,7 @@ return [
 
     // resources/views/user/layouts/notification.blade.php
     'notify' => [
-        'success' => '完了',
-        'error'   => 'エラー',
-        'close'   => '閉じる',
+        'close' => '閉じる',
     ],
 
 ];

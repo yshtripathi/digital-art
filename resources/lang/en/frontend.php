@@ -20,9 +20,9 @@ return [
 
     // resources/views/frontend/layouts/breadcrumb.blade.php
     'breadcrumb' => [
-        'label' => 'Breadcrumb',
-        'home'  => 'Home',
-        'badge' => 'Browse Courses',
+        'label'   => 'Breadcrumb',
+        'home'    => 'Home',
+        'eyebrow' => 'Online learning for influencers',
     ],
 
     // resources/views/frontend/layouts/header.blade.php
@@ -689,9 +689,7 @@ return [
 
     // resources/views/user/layouts/notification.blade.php
     'notify' => [
-        'success' => 'Success',
-        'error'   => 'Error',
-        'close'   => 'Dismiss',
+        'close' => 'Dismiss',
     ],
 
 ];

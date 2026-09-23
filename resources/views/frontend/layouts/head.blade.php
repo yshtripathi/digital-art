@@ -48,6 +48,7 @@
     {{-- Icons --}}
     <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/favicon-64.png') }}" type="image/png" sizes="64x64">
 
     {{-- Fonts & icon libraries --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">

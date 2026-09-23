@@ -2,7 +2,15 @@
 
 @php
     $pageTitle = $page_data->page_title ?? '';
-    $rawDesc   = $page_data->page_desc ?? '';
+    $pgEmail   = e($misc['Company Email'] ?? __('frontend.company.email'));
+    $rawDesc   = strtr($page_data->page_desc ?? '', [
+        ':company'      => e($misc['Company Name'] ?? __('frontend.company.name')),
+        ':email'        => '<a href="mailto:' . $pgEmail . '">' . $pgEmail . '</a>',
+        ':address'      => e($misc['Company Address'] ?? __('frontend.company.address')),
+        ':delivery_url' => route('pages', 'delivery-policy'),
+        ':refund_url'   => route('pages', 'refund-policy'),
+        'src="/assets/' => 'src="' . asset('assets') . '/',
+    ]);
     $cleanText = trim(preg_replace('/\s+/', ' ', strip_tags($rawDesc)));
     $metaDesc  = !empty($page_data->page_meta) ? $page_data->page_meta : \Illuminate\Support\Str::limit($cleanText, 160);
     $isCjk = (bool) preg_match('/[\p{Han}\p{Hiragana}\p{Katakana}]/u', $cleanText);

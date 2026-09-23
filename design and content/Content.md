@@ -34,18 +34,19 @@ These rules apply to every page, message, label and policy.
 - Never write placeholder tokens inside sentences, such as `{keyword}`, `[subject]`, `XXX`, `{platform}` or `your-topic-here`.
 - Never write a sentence that expects someone to fill in a word later.
 - Every sentence must read as finished, natural text.
-- The **only** exception is the company name, email, address and phone (see 2.3).
+- The **only** exception is the company name, email and address (see 2.3).
 
-### 2.3 The only dynamic values: company name, email, address and phone
+### 2.3 The only dynamic values: company name, email and address
 
-A placeholder is integrated into a sentence **only** where the company name, email, address or phone appears. Nothing else may be inserted.
+A placeholder is integrated into a sentence **only** where the company name, email or address appears. Nothing else may be inserted.
+
+**No company phone number.** The company phone is not shown anywhere on the website: not in the header, footer, contact page, checkout, order pages or any policy page, in any language. There is no `:phone` placeholder and no `[Company Phone]` dummy value. Phone *input fields* on forms (contact form, checkout billing) are a separate thing and follow section 19.
 
 | Value | Placeholder in lang files | Real source | Dummy fallback |
 |---|---|---|---|
 | Company name | `:company` | `miscs` table in the database | `[Company Name]` |
 | Company email | `:email` | `miscs` table in the database | `[Company Email]` |
 | Company address | `:address` | `miscs` table in the database | `[Company Address]` |
-| Company phone | `:phone` | `miscs` table in the database | `[Company Phone]` |
 | Website name | `:site` | The `head` group of the lang file | `[Website Name]` |
 
 The website name is **not** a company value. One company can run several websites, so the name belongs to the site, not to the company record. It is stored per language in `frontend.head.site` and never read from the `miscs` table. Everything else in this table still comes from `miscs`.
@@ -63,11 +64,10 @@ return [
     'name'    => '[Company Name]',
     'email'   => '[Company Email]',
     'address' => '[Company Address]',
-    'phone'   => '[Company Phone]',
 ];
 ```
 
-The dummy values are exactly `[Company Name]`, `[Company Email]`, `[Company Address]` and `[Company Phone]`, in square brackets, so a missing database value is obvious at a glance. Use the same bracketed values in every language file.
+The dummy values are exactly `[Company Name]`, `[Company Email]` and `[Company Address]`, in square brackets, so a missing database value is obvious at a glance. Use the same bracketed values in every language file.
 
 Usage in a view:
 
@@ -77,9 +77,10 @@ Usage in a view:
 
 Rules:
 
-- Never hardcode the real company name, email, address or phone in views, lang files or copy.
+- Never hardcode the real company name, email or address in views, lang files or copy.
+- Never show a company phone number anywhere, and never add a phone row to a contact list or company table.
 - Dummy values exist only in the lang files, in the bracketed form above, and only as a fallback.
-- The `[subject]`-style brackets banned in 2.2 are allowed only for these four dummy values.
+- The `[subject]`-style brackets banned in 2.2 are allowed only for these three dummy values.
 - Use the real `miscs` column names that exist in the project.
 - Show these details only where they are genuinely needed, such as the contact page, footer, copyright line, checkout billing notice and the contact section of policy pages.
 
@@ -212,7 +213,7 @@ The existing database is the source of truth for:
 - Prices
 - Status values
 - Images linked to categories and courses
-- Company name, email, address and phone
+- Company name, email and address
 
 Rules:
 
@@ -249,7 +250,7 @@ Avoid:
 - Every customer-facing English item must have a translated equivalent.
 - **No English left on the Japanese site.** This includes stock phrases such as "All Rights Reserved.", button labels, empty messages and short labels like "Menu", "Close", "Language" and "Currency".
 - **Hidden text is translated too:** image ALT text, `aria-label` values, `title` tooltips and JavaScript validation messages.
-- The only text that may stay the same in every language is data from the database (material titles, category names, company name, email, address and phone) , the language names themselves in the language switcher (`English`, `日本語`), and the country names in the checkout country dropdown (see section 19.13).
+- The only text that may stay the same in every language is data from the database (material titles, category names, company name, email and address), the language names themselves in the language switcher (`English`, `日本語`), and the country names in the checkout country dropdown (see section 19.13).
 
 Common stock phrases:
 
@@ -290,7 +291,6 @@ return [
         'name'    => '[Company Name]',
         'email'   => '[Company Email]',
         'address' => '[Company Address]',
-        'phone'   => '[Company Phone]',
     ],
 
     // resources/views/frontend/layouts/footer.blade.php
@@ -543,7 +543,7 @@ Include:
 
 - A short, friendly introduction
 - Common reasons to get in touch, as bullet points (questions about an e-learning material, purchase or payment help, a material that has not arrived, account access, refund requests, general feedback)
-- Company email, address and phone from the `miscs` table
+- Company email and address from the `miscs` table (no company phone)
 - A contact form with helpful field labels and hints
 - A localized success message, error message and validation messages
 
@@ -652,14 +652,14 @@ The test in one line: **if it says how long, remove it; if it only says that a p
 **Every legal page must have**, whatever else it carries:
 
 - A short introduction saying what the page covers
-- A contact section with company name, email, address and phone from the `miscs` table
+- A contact section with company name, email and address from the `miscs` table, and no phone number
 - A "changes to this policy" section saying the published version is the one that applies
 
 **Refund Policy must have** a section on failing to receive access information, in which **every hour figure reads 72**.
 
 **Delivery & Access Policy must have** the delivery process section carrying all four facts from section 15.2, and an email delivery issues section in which **every hour figure reads 72**.
 
-**Terms & Conditions must have** a Credits section whose **last bullet** is the 30 day validity.
+**Terms & Conditions must have** the Company Information table at the top of section 1 (section 12.1A), and a Credits section whose **last bullet** is the 30 day validity. It must **not** carry the credit tier (multiplier) table.
 
 **No page may have** a section named for an access period or its expiry.
 
@@ -670,6 +670,9 @@ The test in one line: **if it says how long, remove it; if it only says that a p
 - [ ] Every delivery figure is 24 hours / 48 to 72 hours / 72 hours, and nothing else
 - [ ] Every "contact us after" figure is 72 hours, including in email-issues and failure-to-receive sections
 - [ ] The T&C Credits section ends with the 30 day validity bullet
+- [ ] The T&C has the Company Information table at the top of section 1: company name, DBA image, email, address, and no phone row
+- [ ] The T&C has no credit tier (multiplier) table
+- [ ] Every DBA image sits inline with its text and shows the logo clearly
 - [ ] No length of access appears anywhere, in any unit, in either language
 - [ ] No permanence claim appears anywhere, in either language
 - [ ] Duration-free "applicable access period" wording is still present where it was
@@ -690,6 +693,57 @@ Must be descriptive, with a heading for each section, a short introductory parag
 
 - What the website provides: digital e-learning materials for self-paced study, delivered by email.
 - That using the website means accepting these terms.
+
+### 12.1A Company Information Table
+
+Directly under the introduction paragraphs of section 1, the Terms & Conditions carries a small heading and a two-column table that identifies who runs the website. This table is required, and it sits **at the top** of the page, before section 2.
+
+| Row label (EN) | Row label (JA) | Value |
+|---|---|---|
+| Company Name | 会社名 | `:company` |
+| Doing Business As (DBA) | 事業名（DBA） | The DBA image `assets/images/dba.webp`, with ALT text `DBA` |
+| Email Address | メールアドレス | `:email` |
+| Company Address | 会社の住所 | `:address` |
+
+- Heading: `Company Information` / `会社情報`
+- **No phone row**, in any language
+- The label column is bold on a light grey background, the value column is plain
+- The DBA row shows the image, never typed text
+- Do not repeat the DBA image in the Contact section at the end of the page, because the table already carries it
+
+```html
+<h3>Company Information</h3>
+<table class="ag-table">
+    <tbody>
+        <tr><td>Company Name</td><td>:company</td></tr>
+        <tr><td>Doing Business As (DBA)</td><td><img src="/assets/images/dba.webp" alt="DBA" style="display: inline-block; max-height: 30px; margin: 0 0 0 6px; vertical-align: middle; box-shadow: none;"></td></tr>
+        <tr><td>Email Address</td><td>:email</td></tr>
+        <tr><td>Company Address</td><td>:address</td></tr>
+    </tbody>
+</table>
+```
+
+#### DBA image rules inside policy pages
+
+- The DBA image is always **inline with its text**: in the table cell, and in the billing sentence of the Purchases section (`When you purchase credits from our website, your billing description will be shown as` followed by the image on the same line)
+- Give the image the inline style shown above: `display: inline-block; max-height: 30px; margin: 0 0 0 6px; vertical-align: middle; box-shadow: none;`
+- **Never give the image the class `dba`.** That class belongs to the checkout billing notice box and adds padding, a violet background and a border, which squeezes the 72 × 32 logo out of sight
+- ALT text: `DBA` in the table, `Billing description` / `ご請求明細の表示` in the billing sentence
+
+#### How the placeholders are filled
+
+The policy pages are database records, so the placeholders are written into the HTML exactly as `:company`, `:email` and `:address`. The view `resources/views/frontend/pages/page.blade.php` replaces them before output:
+
+- `:company`, `:address` with the `miscs` values, or the `[Company Name]` / `[Company Address]` fallbacks
+- `:email` with a `mailto:` link to the `miscs` company email
+- `:delivery_url` and `:refund_url` with the real routes of the Delivery & Access Policy and the Refund Policy
+- `src="/assets/…` with the site's real asset URL, so images also work when the site runs in a subfolder
+
+Do not write real company values or a phone number into the page HTML.
+
+#### No credit tier table in the Terms & Conditions
+
+The credit rate (1 credit = US$1 = ¥160 = HK$8) may be stated in the Credits section, but the tier table (Standard, Premium, Elite, VIP with their bonuses) does **not** belong in the Terms & Conditions. Refer to the Buy Credits page instead, for example: "the bonus that applies to larger single purchases is shown on the Buy Credits page".
 
 ### 12.2 Eligibility and Accounts
 
@@ -770,7 +824,7 @@ Users must not:
 
 ### 12.15 Contact
 
-- Company name, email, address and phone from the `miscs` table.
+- Company name, email and address from the `miscs` table. No phone number.
 
 ---
 
@@ -851,7 +905,7 @@ Do not invent region-specific legal rights.
 
 ### 13.11 Contact
 
-- Company name, email, address and phone from the `miscs` table.
+- Company name, email and address from the `miscs` table. No phone number.
 
 ---
 
@@ -903,7 +957,7 @@ Do not mention a dashboard refund button unless one exists. Say that a learner w
 
 ### 14.7 Contact
 
-- Company name, email, address and phone from the `miscs` table.
+- Company name, email and address from the `miscs` table. No phone number.
 
 ---
 
@@ -977,7 +1031,7 @@ Where the policy page carries its own "Email Delivery Issues" section, **every h
 
 ### 15.7 Contact
 
-- Company name, email, address and phone from the `miscs` table.
+- Company name, email and address from the `miscs` table. No phone number.
 
 ---
 
@@ -1033,7 +1087,7 @@ Suggested groups (only link routes that actually exist):
 
 Also include:
 
-- Company email, address and phone from the `miscs` table
+- Company email and address from the `miscs` table (no company phone)
 - Newsletter form with the exact success message from section 2.6
 - Copyright line in the format `© 2026 Company Name. All Rights Reserved.`
 
@@ -1539,7 +1593,7 @@ This is a content and presentation update. It must not change the database or br
 
 Content changes happen only in:
 
-- Translation files (including the bracketed dummy company name, email, address and phone)
+- Translation files (including the bracketed dummy company name, email and address)
 - Views and components
 - Configuration
 
@@ -1570,9 +1624,11 @@ If a content requirement seems to need a database change, stop, explain which st
 ## 29. Final QA Checklist
 
 - [ ] Tab titles are plain page names with no website name or extra text, apart from the home page
-- [ ] No placeholders or inserted keywords, except `:company`, `:email`, `:address`, `:phone` and `:site`
-- [ ] Company name, email, address and phone come only from the `miscs` table, and the website name only from `frontend.head.site`
-- [ ] Dummy values are exactly `[Company Name]`, `[Company Email]`, `[Company Address]` and `[Company Phone]`, stored only in the lang files
+- [ ] No placeholders or inserted keywords, except `:company`, `:email`, `:address` and `:site`
+- [ ] Company name, email and address come only from the `miscs` table, and the website name only from `frontend.head.site`
+- [ ] Dummy values are exactly `[Company Name]`, `[Company Email]` and `[Company Address]`, stored only in the lang files
+- [ ] No company phone number appears anywhere on the website, in any language
+- [ ] The Terms & Conditions starts with the Company Information table (company name, DBA image, email, address) and contains no credit tier table
 - [ ] Every form field has a label, placeholder and specific validation messages
 - [ ] Server-side and client-side validation messages match and are localized
 - [ ] Credits are called "credits" everywhere, with prices and balances from the database

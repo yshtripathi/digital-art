@@ -118,8 +118,9 @@ return [
         'card_levels'    => 'Levels you choose yourself',
         'card_pace'      => 'A pace you set',
         'card_credits'   => 'Credits open each level',
-        'video_play'     => 'Play video',
-        'video_pause'    => 'Pause video',
+        'hero_alt1'      => 'A presenter recording a video lesson in a studio',
+        'hero_alt2'      => 'A learner using a phone outdoors',
+        'hero_alt3'      => 'An instructor setting up a ring light before an online session',
 
         // Course rail
         'featured_title' => 'Course highlights',
@@ -154,6 +155,15 @@ return [
         'cats_desc'      => 'Each category holds the courses for one subject area. Open one to see what it covers and how much is in it.',
         'cats_all'       => 'See All Courses',
         'cats_count'     => ':count course|:count courses',
+
+        'watch_label'    => 'Learn your way',
+        'watch_title'    => 'Study whenever it suits you',
+        'watch_desc'     => 'Once a level is unlocked, it stays in your account. Open it from any device with a browser, work through it at your own speed and return to it whenever you like.',
+        'watch_point1'   => 'Open your levels on a computer, tablet or phone',
+        'watch_point2'   => 'Come back to any unlocked level whenever you like',
+        'watch_point3'   => 'Read what each level covers before you unlock it',
+        'video_play'     => 'Play video',
+        'video_pause'    => 'Pause video',
 
     ],
 

@@ -5,7 +5,7 @@ return [
     // Dummy fallbacks, used only when the miscs table value is empty
     'company' => [
         'name'    => '[Company Name]',
-        'email'   => '[Company Email]',
+        'email'   => 'contact@skilsink.com',
         'address' => '[Company Address]',
     ],
 

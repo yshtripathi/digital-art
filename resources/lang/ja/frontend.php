@@ -5,7 +5,7 @@ return [
     // ダミー値（miscs テーブルの値が空の場合のみ使用）
     'company' => [
         'name'    => '[Company Name]',
-        'email'   => '[Company Email]',
+        'email'   => 'contact@skilsink.com',
         'address' => '[Company Address]',
     ],
 

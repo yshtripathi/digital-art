@@ -15,25 +15,25 @@
     if ($cur == 'JPY') {
         $tiers = [
             ['n' => __('frontend.topup.tier1'), 'i' => 'fa-feather', 'big' => 'x1',   'r' => '&yen;1 - &yen;79,999',        'f' => false],
-            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x1.5', 'r' => '&yen;80,000 - &yen;159,999',  'f' => false],
-            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2',   'r' => '&yen;160,000 - &yen;239,999', 'f' => false],
-            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x2.5', 'r' => '&yen;240,000+',               'f' => true],
+            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x2', 'r' => '&yen;80,000 - &yen;159,999',  'f' => false],
+            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2.5',   'r' => '&yen;160,000 - &yen;239,999', 'f' => false],
+            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x3', 'r' => '&yen;240,000+',               'f' => true],
         ];
         $rateNote = __('frontend.topup.rate_jpy');
     } elseif ($cur == 'HKD') {
         $tiers = [
             ['n' => __('frontend.topup.tier1'), 'i' => 'fa-feather', 'big' => 'x1',   'r' => 'HK$1 - HK$3,999',      'f' => false],
-            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x1.5', 'r' => 'HK$4,000 - HK$7,999',  'f' => false],
-            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2',   'r' => 'HK$8,000 - HK$11,999', 'f' => false],
-            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x2.5', 'r' => 'HK$12,000+',           'f' => true],
+            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x2', 'r' => 'HK$4,000 - HK$7,999',  'f' => false],
+            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2.5',   'r' => 'HK$8,000 - HK$11,999', 'f' => false],
+            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x3', 'r' => 'HK$12,000+',           'f' => true],
         ];
         $rateNote = __('frontend.topup.rate_hkd');
     } else {
         $tiers = [
             ['n' => __('frontend.topup.tier1'), 'i' => 'fa-feather', 'big' => 'x1',   'r' => '$1 - $499',       'f' => false],
-            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x1.5', 'r' => '$500 - $999',     'f' => false],
-            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2',   'r' => '$1,000 - $1,499', 'f' => false],
-            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x2.5', 'r' => '$1,500+',         'f' => true],
+            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x2', 'r' => '$500 - $999',     'f' => false],
+            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2.5',   'r' => '$1,000 - $1,499', 'f' => false],
+            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x3', 'r' => '$1,500+',         'f' => true],
         ];
         $rateNote = __('frontend.topup.rate_usd');
     }
@@ -47,11 +47,33 @@
 @endphp
 
 <section class="ho-hero" aria-labelledby="hoHeroTitle">
+    <span class="ho-fx" aria-hidden="true">
+        <span class="ho-fx__shoot ho-fx__shoot--1"></span>
+        <span class="ho-fx__shoot ho-fx__shoot--2"></span>
+        <span class="ho-fx__shoot ho-fx__shoot--3"></span>
+        <span class="ho-fx__spark ho-fx__spark--1"></span>
+        <span class="ho-fx__spark ho-fx__spark--2"></span>
+        <span class="ho-fx__spark ho-fx__spark--3"></span>
+        <span class="ho-fx__spark ho-fx__spark--4"></span>
+        <span class="ho-fx__icon ho-fx__icon--1"><i class="fas fa-heart"></i></span>
+        <span class="ho-fx__icon ho-fx__icon--2 ho-fx__icon--fill"><i class="fab fa-instagram"></i></span>
+        <span class="ho-fx__icon ho-fx__icon--3"><i class="fas fa-play"></i></span>
+        <span class="ho-fx__icon ho-fx__icon--4"><i class="fab fa-tiktok"></i></span>
+        <span class="ho-fx__icon ho-fx__icon--5 ho-fx__icon--fill"><i class="fas fa-camera-retro"></i></span>
+        <span class="ho-fx__icon ho-fx__icon--6"><i class="fas fa-comment-dots"></i></span>
+    </span>
+
     <div class="ho__wrap ho-hero__grid">
 
         <div class="ho-hero__text">
-            <p class="ho-eyebrow">{{ __('frontend.home.hero_eyebrow') }}</p>
-            <h1 id="hoHeroTitle" class="ho-hero__title">{{ __('frontend.home.hero_title') }}</h1>
+            <p class="ho-hero__badge">
+                <span class="ho-hero__badge-icon" aria-hidden="true"><i class="fas fa-magic"></i></span>
+                {{ __('frontend.home.hero_eyebrow') }}
+            </p>
+            <h1 id="hoHeroTitle" class="ho-hero__title">
+                <span class="ho-hero__ink">{{ __('frontend.home.hero_title') }}</span>
+                <svg class="ho-hero__squiggle" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11c28-8 52-8 76-2s50 7 76 0 52-8 76-1 40 6 66 0"/></svg>
+            </h1>
             <p class="ho-hero__desc">{{ __('frontend.home.hero_desc') }}</p>
 
             <div class="ho-hero__actions">
@@ -95,6 +117,10 @@
                 </li>
             </ul>
             <span class="ho-collage__ring" aria-hidden="true"></span>
+            <span class="ho-collage__blob" aria-hidden="true"></span>
+            <span class="ho-bubble ho-bubble--heart" aria-hidden="true"><i class="fas fa-heart"></i></span>
+            <span class="ho-bubble ho-bubble--play" aria-hidden="true"><i class="fas fa-play"></i></span>
+            <span class="ho-bubble ho-bubble--star" aria-hidden="true"><i class="fas fa-star"></i></span>
         </div>
 
     </div>

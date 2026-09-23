@@ -16,9 +16,9 @@
     if ($cur == 'JPY') {
         $tiers = [
             ['n' => __('frontend.topup.tier1'), 'i' => 'fa-feather', 'big' => 'x1',   'r' => '&yen;1 - &yen;79,999',        'f' => false],
-            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x1.5', 'r' => '&yen;80,000 - &yen;159,999',  'f' => false],
-            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2',   'r' => '&yen;160,000 - &yen;239,999', 'f' => false],
-            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x2.5', 'r' => '&yen;240,000+',               'f' => true],
+            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x2', 'r' => '&yen;80,000 - &yen;159,999',  'f' => false],
+            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2.5',   'r' => '&yen;160,000 - &yen;239,999', 'f' => false],
+            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x3', 'r' => '&yen;240,000+',               'f' => true],
         ];
         $quick = [16000, 80000, 160000, 240000];
         $symbol = '&yen;';
@@ -26,9 +26,9 @@
     } elseif ($cur == 'HKD') {
         $tiers = [
             ['n' => __('frontend.topup.tier1'), 'i' => 'fa-feather', 'big' => 'x1',   'r' => 'HK$1 - HK$3,999',      'f' => false],
-            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x1.5', 'r' => 'HK$4,000 - HK$7,999',  'f' => false],
-            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2',   'r' => 'HK$8,000 - HK$11,999', 'f' => false],
-            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x2.5', 'r' => 'HK$12,000+',           'f' => true],
+            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x2', 'r' => 'HK$4,000 - HK$7,999',  'f' => false],
+            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2.5',   'r' => 'HK$8,000 - HK$11,999', 'f' => false],
+            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x3', 'r' => 'HK$12,000+',           'f' => true],
         ];
         $quick = [800, 4000, 8000, 12000];
         $symbol = 'HK$';
@@ -36,9 +36,9 @@
     } else {
         $tiers = [
             ['n' => __('frontend.topup.tier1'), 'i' => 'fa-feather', 'big' => 'x1',   'r' => '$1 - $499',       'f' => false],
-            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x1.5', 'r' => '$500 - $999',     'f' => false],
-            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2',   'r' => '$1,000 - $1,499', 'f' => false],
-            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x2.5', 'r' => '$1,500+',         'f' => true],
+            ['n' => __('frontend.topup.tier2'), 'i' => 'fa-star',    'big' => 'x2', 'r' => '$500 - $999',     'f' => false],
+            ['n' => __('frontend.topup.tier3'), 'i' => 'fa-gem',     'big' => 'x2.5',   'r' => '$1,000 - $1,499', 'f' => false],
+            ['n' => __('frontend.topup.tier4'), 'i' => 'fa-crown',   'big' => 'x3', 'r' => '$1,500+',         'f' => true],
         ];
         $quick = [100, 500, 1000, 1500];
         $symbol = '$';
@@ -185,27 +185,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function calculate() {
         const amount = parseFloat(input.value) || 0;
+        const usd = isJPY ? amount / 160 : (isHKD ? amount / 8 : amount);
         let multiplier = 1;
-        let base = 0;
+        if (usd >= 1500) multiplier = 3;
+        else if (usd >= 1000) multiplier = 2.5;
+        else if (usd >= 500) multiplier = 2;
 
-        if (isJPY) {
-            base = Math.floor(amount / 160);
-            if (amount >= 240000) multiplier = 2.5;
-            else if (amount >= 160000) multiplier = 2;
-            else if (amount >= 80000) multiplier = 1.5;
-        } else if (isHKD) {
-            base = Math.floor(amount / 8);
-            if (amount >= 12000) multiplier = 2.5;
-            else if (amount >= 8000) multiplier = 2;
-            else if (amount >= 4000) multiplier = 1.5;
-        } else {
-            base = Math.floor(amount);
-            if (amount >= 1500) multiplier = 2.5;
-            else if (amount >= 1000) multiplier = 2;
-            else if (amount >= 500) multiplier = 1.5;
-        }
-
-        const total = Math.round(base * multiplier);
+        const base = Math.round(usd);
+        const total = Math.round(usd * multiplier);
         const mult = 'x' + multiplier;
         baseOut.textContent = base.toLocaleString();
         multOut.textContent = mult;

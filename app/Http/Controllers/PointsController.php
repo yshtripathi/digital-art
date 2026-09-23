@@ -79,26 +79,15 @@ class PointsController extends Controller
             $usd_amount = $input_amount;
         }
         
-        // Progressive multiplier logic: the more you spend, the more bonus points you receive
-        $points = match(true) {
-            $usd_amount >= 1500 => round($usd_amount * 2.5),
-            $usd_amount >= 1000 => round($usd_amount * 2),
-            $usd_amount >= 500 => round($usd_amount * 1.5),
-            default => round($usd_amount)
-        };
+        $points = self::creditsFor($usd_amount);
 
         $already_cart = Cart::where('user_id', $user_id)->where('order_id', null)->where('product_id', 1000)->first();
 
         if ($already_cart) {
             $new_usd_amount = $already_cart->price + $usd_amount;
-            
+
             // Re-calculate points based on the new total tier
-            $total_points = match(true) {
-                $new_usd_amount >= 1500 => round($new_usd_amount * 2.5),
-                $new_usd_amount >= 1000 => round($new_usd_amount * 2),
-                $new_usd_amount >= 500 => round($new_usd_amount * 1.5),
-                default => round($new_usd_amount)
-            };
+            $total_points = self::creditsFor($new_usd_amount);
 
             $already_cart->price = $new_usd_amount;
             $already_cart->price_jp = $new_usd_amount * $usd_rate_jp;
@@ -124,6 +113,21 @@ class PointsController extends Controller
         }
 
         return redirect()->route('cart')->with('success', __('common.points_added_to_cart'));
+    }
+
+    /**
+     * Credits for a purchase in USD: 1 USD (160 JPY / 8 HKD) = 1 credit, with a bonus multiplier by tier.
+     */
+    public static function creditsFor(float $usd_amount): int
+    {
+        $multiplier = match (true) {
+            $usd_amount >= 1500 => 3,
+            $usd_amount >= 1000 => 2.5,
+            $usd_amount >= 500 => 2,
+            default => 1,
+        };
+
+        return (int) round($usd_amount * $multiplier);
     }
 
     /**

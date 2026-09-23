@@ -393,6 +393,16 @@ return [
 
     // resources/views/frontend/pages/page.blade.php
     'page' => [
+        'doc_label'      => 'ご案内',
+        'read_time'      => '読了目安 :min 分',
+        'print'          => '印刷',
+        'copy_link'      => 'リンクをコピー',
+        'link_copied'    => 'コピーしました！',
+        'back_home'      => 'ホームに戻る',
+        'browse_courses' => 'コース一覧を見る',
+        'need_help'      => 'ご不明な点がありますか？',
+        'contact_us'     => 'サポートに問い合わせる',
+        'back_to_top'    => 'ページ先頭へ戻る',
     ],
 
     // resources/views/frontend/pages/coursecart.blade.php
@@ -405,6 +415,7 @@ return [
         'credits'      => 'クレジット',
         'buy'          => 'クレジットを購入',
         'items_title'  => 'カート内のコースレベル',
+        'summary'      => '解放内容の確認',
         'items'        => ':count 件',
         'package'      => 'クレジットパッケージ',
         'price'        => '必要クレジット',
@@ -438,6 +449,7 @@ return [
         'step_done'   => 'クレジット付与',
         'title'       => 'カート',
         'items_title' => 'カートの中身',
+        'summary'     => '注文内容',
         'items'       => ':count 件',
         'package'     => 'クレジットパッケージ',
         'tag_course'  => 'コース',
@@ -470,9 +482,9 @@ return [
         'point3'       => '選んだレベルだけを解放できるクレジット',
         'courses_btn'  => 'コースを探す',
         'contact_btn'  => 'お問い合わせ',
-        'alt1'         => 'テーブルで一緒に学習している2人',
-        'alt2'         => '自宅での学習中に少し休憩している様子',
-        'alt3'         => 'ヘッドホンをつけてレッスンを受けている受講者',
+        'alt1'         => 'ノートを抱えて微笑む受講者',
+        'alt2'         => '学習の合間に本とコーヒーを手にしている様子',
+        'alt3'         => 'ヘッドホンをつけてレッスンのメモを取る受講者',
         'how_label'    => '学びの構成',
         'how_title'    => '何を学んでも、構成は同じ',
         'how_desc'     => 'サイト全体が同じ順序で構成されているため、ひとつのコースの使い方が分かれば、ほかのコースも同じようにお使いいただけます。',

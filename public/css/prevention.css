@@ -11,18 +11,18 @@ img, video {
     user-select: none;
     -webkit-touch-callout: none;
 }
-a, button, .pd-thumb {
+a, button, .cd-thumb {
     pointer-events: auto;
 }
 
 /* Watermark Overlay for Categories and Products */
-.cat-card, .pl-catfig, .pl-othercat, .prod-slide__img, .pl-card__img, .pd-gallery__main, .pd-thumb {
+.cat-card, .pl-catfig, .pl-othercat, .prod-slide__img, .pl-card__img, .cd-stage, .cd-thumb {
     position: relative;
     overflow: hidden;
 }
 
 /* Translucent white overlay tint on top of every protected image */
-.cat-card::before, .pl-catfig::before, .pl-othercat::before, .prod-slide__img::before, .pl-card__img::before, .pd-gallery__main::before, .pd-thumb::before {
+.cat-card::before, .pl-catfig::before, .pl-othercat::before, .prod-slide__img::before, .pl-card__img::before, .cd-stage::before, .cd-thumb::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -31,7 +31,7 @@ a, button, .pd-thumb {
     z-index: 19;   /* sits under the watermark text (z-index 20) */
 }
 
-.cat-card::after, .pl-catfig::after, .pl-othercat::after, .prod-slide__img::after, .pl-card__img::after, .pd-gallery__main::after, .pd-thumb::after {
+.cat-card::after, .pl-catfig::after, .pl-othercat::after, .prod-slide__img::after, .pl-card__img::after, .cd-stage::after, .cd-thumb::after {
     content: "INKWAVE";
     position: absolute;
     top: 50%;
@@ -52,7 +52,7 @@ a, button, .pd-thumb {
 }
 
 /* Adjust sizes for smaller thumbnails */
-.pd-thumb::after {
+.cd-thumb::after {
     font-size: 1rem;
     letter-spacing: 0.05em;
 }

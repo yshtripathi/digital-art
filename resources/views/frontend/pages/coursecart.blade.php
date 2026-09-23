@@ -10,29 +10,21 @@
     ]
 ])
 
-{{-- ==========================================================================
-     Course cart
-     Single centred column: unlock steps, balance strip,
-     ticket rows, sticky summary bar.
-     Styles: public/css/theme.css — section 18
-     ========================================================================== --}}
-<section class="bag">
-    <div class="bag__wrap">
+<section class="cr">
+    <div class="cr__wrap">
 
-        <ol class="bag-steps">
-            <li class="bag-step is-active">
-                <span class="bag-step__no">1</span>
-                <span class="bag-steps__label">{{ __('frontend.coursecart.step_cart') }}</span>
+        <ol class="cr-steps">
+            <li class="cr-step is-current" aria-current="step">
+                <span class="cr-step__dot">1</span>
+                <span class="cr-step__label">{{ __('frontend.coursecart.step_cart') }}</span>
             </li>
-            <li class="bag-steps__line" aria-hidden="true"></li>
-            <li class="bag-step">
-                <span class="bag-step__no">2</span>
-                <span class="bag-steps__label">{{ __('frontend.coursecart.step_unlock') }}</span>
+            <li class="cr-step">
+                <span class="cr-step__dot">2</span>
+                <span class="cr-step__label">{{ __('frontend.coursecart.step_unlock') }}</span>
             </li>
-            <li class="bag-steps__line" aria-hidden="true"></li>
-            <li class="bag-step">
-                <span class="bag-step__no">3</span>
-                <span class="bag-steps__label">{{ __('frontend.coursecart.step_learn') }}</span>
+            <li class="cr-step">
+                <span class="cr-step__dot">3</span>
+                <span class="cr-step__label">{{ __('frontend.coursecart.step_learn') }}</span>
             </li>
         </ol>
 
@@ -46,162 +38,193 @@
                 $coverage = $total_points > 0 ? min(100, round(($points / $total_points) * 100)) : 100;
                 $enough = $points >= $total_points;
                 $after = $points - $total_points;
+                $sym = Helper::getCurrencySymbol(session('currency'));
+                $dec = session('currency') == 'JPY' ? 0 : 2;
             @endphp
 
-            {{-- Balance and coverage --}}
-            <div class="bag-balance">
-                <span class="bag-balance__icon" aria-hidden="true"><i class="fas fa-bolt"></i></span>
-                <div class="bag-balance__text">
-                    <span class="bag-balance__label">{{ __('frontend.coursecart.balance') }}</span>
-                    <span class="bag-balance__amt">{{ number_format($points) }} <small>{{ __('frontend.coursecart.credits') }}</small></span>
-
-                    @if($itemCount)
-                        <div class="bag-meter" role="img" aria-label="{{ __('frontend.coursecart.coverage') }}: {{ $coverage }}%">
-                            <span class="bag-meter__fill {{ $enough ? '' : 'is-short' }}" style="width: {{ $coverage }}%"></span>
-                        </div>
-                        <span class="bag-meter__note">
-                            {{ __('frontend.coursecart.coverage') }}: {{ $coverage }}%
-                        </span>
-                    @endif
-                </div>
-                <a href="{{ route('points.topup') }}" class="bag-btn bag-btn--primary bag-balance__btn">
-                    <i class="fas fa-plus" aria-hidden="true"></i> {{ __('frontend.coursecart.buy') }}
-                </a>
-            </div>
-
             @if($itemCount)
-                @if(!$enough)
-                    <p class="bag-warn"><i class="fas fa-exclamation-circle" aria-hidden="true"></i> {{ __('frontend.coursecart.low') }}</p>
-                @endif
+                <div class="cr-layout">
+                    <div class="cr-main">
+                        @if(!$enough)
+                            <p class="cr-alert" role="status">
+                                <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                                <span>{{ __('frontend.coursecart.low') }}</span>
+                            </p>
+                        @endif
 
-                <div class="bag-panel">
-                    <div class="bag-panel__head">
-                        <h2 class="bag-panel__title">{{ __('frontend.coursecart.items_title') }}</h2>
-                        <span class="bag-count">{{ trans_choice('frontend.coursecart.items', $itemCount, ['count' => $itemCount]) }}</span>
+                        <header class="cr-head">
+                            <h2 class="cr-head__title">{{ __('frontend.coursecart.items_title') }}</h2>
+                            <span class="cr-head__count">{{ trans_choice('frontend.coursecart.items', $itemCount, ['count' => $itemCount]) }}</span>
+                        </header>
+
+                        <ul class="cr-list">
+                            @foreach($cartItems as $cart)
+                                @php
+                                    $item_title = __('frontend.coursecart.package');
+                                    $item_photo = null;
+                                    $item_link = null;
+                                    $is_course = false;
+                                    $level = null;
+
+                                    if($cart->product) {
+                                        $item_title = $cart->product->title;
+                                        $item_link = route('product-detail', $cart->product->slug);
+                                        $photo_arr = explode(',', $cart->product->photo ?? '');
+                                        $item_photo = $photo_arr[0] ?: null;
+
+                                        if($cart->product_id < 1000) {
+                                            $is_course = true;
+                                            $level = \App\Models\ProductLevel::where('course_id', $cart->product_id)
+                                                         ->where('price_in_points', $cart->points)
+                                                         ->first();
+                                        }
+                                    }
+
+                                    $lvl_key = $level ? 'frontend.coursecart.levels.' . strtolower($level->skill_level) : null;
+                                    $lvl_label = $level ? (Lang::has($lvl_key) ? __($lvl_key) : ucfirst($level->skill_level)) : null;
+                                @endphp
+
+                                <li class="cr-item">
+                                    <span class="cr-item__media {{ $is_course ? '' : 'cr-item__media--credits' }}">
+                                        @if($item_photo)
+                                            <img src="{{ asset(ltrim($item_photo, '/')) }}" alt="" loading="lazy">
+                                        @elseif($is_course)
+                                            <i class="fas fa-book-open" aria-hidden="true"></i>
+                                        @else
+                                            <i class="fas fa-bolt" aria-hidden="true"></i>
+                                        @endif
+                                    </span>
+
+                                    <div class="cr-item__body">
+                                        @if($is_course)
+                                            @if($lvl_label)
+                                                <span class="cr-chip"><i class="fas fa-signal" aria-hidden="true"></i> {{ $lvl_label }}</span>
+                                            @endif
+                                        @else
+                                            <span class="cr-chip cr-chip--accent">{{ __('frontend.coursecart.package') }}</span>
+                                        @endif
+
+                                        @if($item_link)
+                                            <a href="{{ $item_link }}" class="cr-item__title">{{ $item_title }}</a>
+                                        @else
+                                            <span class="cr-item__title">{{ $item_title }}</span>
+                                        @endif
+
+                                        @if(!$is_course)
+                                            <span class="cr-item__meta">
+                                                {{ __('frontend.coursecart.amount') }}: {{ $sym }}{{ number_format($cart['price'], $dec) }}
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    <div class="cr-item__end">
+                                        <span class="cr-item__price">
+                                            <small>{{ __('frontend.coursecart.price') }}</small>
+                                            <strong><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($cart->points) }}</strong>
+                                        </span>
+                                        <a href="{{ route('cart-delete', $cart->id) }}" class="cr-remove" aria-label="{{ __('frontend.coursecart.remove') }}: {{ $item_title }}">
+                                            <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                                            <span>{{ __('frontend.coursecart.remove') }}</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+
+                        <a href="{{ route('product-lists') }}" class="cr-back">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                            <span>{{ __('frontend.coursecart.browse') }}</span>
+                        </a>
                     </div>
 
-                    @foreach($cartItems as $cart)
-                        @php
-                            $item_title = __('frontend.coursecart.package');
-                            $item_photo = null;
-                            $item_link = '#';
-                            $is_course = false;
-                            $level = null;
-
-                            if($cart->product) {
-                                $item_title = $cart->product->title;
-                                $item_link = route('product-detail', $cart->product->slug);
-                                $photo_arr = explode(',', $cart->product->photo ?? '');
-                                $item_photo = $photo_arr[0] ?? null;
-
-                                if($cart->product_id < 1000) {
-                                    $is_course = true;
-                                    $level = \App\Models\ProductLevel::where('course_id', $cart->product_id)
-                                                 ->where('price_in_points', $cart->points)
-                                                 ->first();
-                                }
-                            }
-
-                            $lvl_slug  = $level ? strtolower($level->skill_level) : '';
-                            $lvl_key   = 'frontend.coursecart.levels.' . $lvl_slug;
-                            $lvl_label = $level ? (Lang::has($lvl_key) ? __($lvl_key) : ucfirst($level->skill_level)) : null;
-                        @endphp
-
-                        <div class="bag-row">
-                            <span class="bag-row__thumb {{ $is_course ? '' : 'bag-row__thumb--credits' }}">
-                                @if($item_photo)
-                                    <img src="{{ asset($item_photo) }}" alt="" loading="lazy">
-                                @elseif($is_course)
-                                    <i class="fas fa-book-open" aria-hidden="true"></i>
-                                @else
-                                    <i class="fas fa-bolt" aria-hidden="true"></i>
-                                @endif
+                    <aside class="cr-side" aria-labelledby="crSummaryTitle">
+                        <div class="cr-wallet">
+                            <span class="cr-wallet__label">{{ __('frontend.coursecart.balance') }}</span>
+                            <span class="cr-wallet__amount">
+                                <i class="fas fa-bolt" aria-hidden="true"></i>
+                                <strong>{{ number_format($points) }}</strong>
+                                <small>{{ __('frontend.coursecart.credits') }}</small>
                             </span>
-
-                            <div class="bag-row__body">
-                                @if($is_course)
-                                    @if($lvl_label)
-                                        <span class="badge"><i class="fas fa-signal" aria-hidden="true"></i> {{ $lvl_label }}</span>
-                                    @endif
-                                @else
-                                    <span class="badge badge--brand">{{ __('frontend.coursecart.package') }}</span>
-                                @endif
-
-                                @if($cart->product)
-                                    <a href="{{ $item_link }}" class="bag-row__title">{{ $item_title }}</a>
-                                @else
-                                    <span class="bag-row__title">{{ $item_title }}</span>
-                                @endif
-
-                                <span class="bag-row__meta">
-                                    @if(!$is_course)
-                                        <span>{{ __('frontend.coursecart.amount') }}: {{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($cart['price'], session('currency')=='JPY' ? 0 : 2) }}</span>
-                                    @endif
-                                </span>
+                            <div class="cr-meter" role="img" aria-label="{{ __('frontend.coursecart.coverage') }}: {{ $coverage }}%">
+                                <span class="cr-meter__fill {{ $enough ? '' : 'is-short' }}" style="width: {{ $coverage }}%"></span>
                             </div>
-
-                            <span class="bag-row__amount">
-                                <i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($cart->points) }}
-                                <small>{{ __('frontend.coursecart.price') }}</small>
-                            </span>
-
-                            <a href="{{ route('cart-delete', $cart->id) }}" class="bag-row__remove" aria-label="{{ __('frontend.coursecart.remove') }}: {{ $item_title }}">
-                                <i class="fas fa-trash-alt" aria-hidden="true"></i><span>{{ __('frontend.coursecart.remove') }}</span>
+                            <span class="cr-wallet__note">{{ __('frontend.coursecart.coverage') }}: {{ $coverage }}%</span>
+                            <a href="{{ route('points.topup') }}" class="cr-wallet__topup">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                                <span>{{ __('frontend.coursecart.buy') }}</span>
                             </a>
                         </div>
-                    @endforeach
-                </div>
 
-                <form id="redeemPointsForm" action="{{ route('points.redeem') }}" method="POST">@csrf</form>
+                        <div class="cr-sum">
+                            <h2 id="crSummaryTitle" class="cr-sum__title">{{ __('frontend.coursecart.summary') }}</h2>
 
-                <div class="bag-bar">
-                    <div class="bag-bar__figures">
-                        <span class="bag-bar__label">{{ __('frontend.coursecart.total') }}:</span>
-                        <span class="bag-bar__total">{{ number_format($total_points) }} <small>{{ __('frontend.coursecart.credits') }}</small></span>
-                        @if($enough)
-                            <span class="bag-bar__cut">{{ __('frontend.coursecart.after') }}: {{ number_format($after) }}</span>
-                        @endif
-                    </div>
+                            <dl class="cr-sum__rows">
+                                <div class="cr-sum__row">
+                                    <dt>{{ __('frontend.coursecart.balance') }}</dt>
+                                    <dd>{{ number_format($points) }}</dd>
+                                </div>
+                                <div class="cr-sum__row cr-sum__row--total">
+                                    <dt>{{ __('frontend.coursecart.total') }}</dt>
+                                    <dd>{{ number_format($total_points) }} <small>{{ __('frontend.coursecart.credits') }}</small></dd>
+                                </div>
+                                @if($enough)
+                                    <div class="cr-sum__row cr-sum__row--after">
+                                        <dt>{{ __('frontend.coursecart.after') }}</dt>
+                                        <dd>{{ number_format($after) }}</dd>
+                                    </div>
+                                @endif
+                            </dl>
 
-                    <div class="bag-bar__actions">
-                        <a href="{{ route('product-lists') }}" class="bag-btn bag-btn--ghost">
-                            <i class="fas fa-plus" aria-hidden="true"></i> {{ __('frontend.coursecart.browse') }}
-                        </a>
-                        @if($enough)
-                            <button type="submit" form="redeemPointsForm" class="bag-btn bag-btn--primary">
-                                <i class="fas fa-lock-open" aria-hidden="true"></i> {{ __('frontend.coursecart.unlock') }}
-                            </button>
-                        @else
-                            <a href="{{ route('points.topup') }}" class="bag-btn bag-btn--primary">
-                                <i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.coursecart.buy') }}
-                            </a>
-                        @endif
-                    </div>
+                            <form id="redeemPointsForm" action="{{ route('points.redeem') }}" method="POST">@csrf</form>
+
+                            @if($enough)
+                                <button type="submit" form="redeemPointsForm" class="btn btn--primary btn--block cr-sum__cta">
+                                    <i class="fas fa-lock-open" aria-hidden="true"></i>
+                                    <span>{{ __('frontend.coursecart.unlock') }}</span>
+                                </button>
+                            @else
+                                <a href="{{ route('points.topup') }}" class="btn btn--primary btn--block cr-sum__cta">
+                                    <i class="fas fa-bolt" aria-hidden="true"></i>
+                                    <span>{{ __('frontend.coursecart.buy') }}</span>
+                                </a>
+                            @endif
+                        </div>
+                    </aside>
                 </div>
             @else
-                <div class="bag-empty">
-                    <span class="bag-empty__icon" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
-                    <h2 class="bag-empty__title">{{ __('frontend.coursecart.empty_title') }}</h2>
-                    <p class="bag-empty__desc">{{ __('frontend.coursecart.empty_desc') }}</p>
-                    <div class="bag-empty__actions">
-                        <a href="{{ route('product-lists') }}" class="bag-btn bag-btn--primary">
-                            <i class="fas fa-graduation-cap" aria-hidden="true"></i> {{ __('frontend.coursecart.empty_btn') }}
+                <div class="cr-empty">
+                    <span class="cr-empty__icon" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
+                    <h2 class="cr-empty__title">{{ __('frontend.coursecart.empty_title') }}</h2>
+                    <p class="cr-empty__desc">{{ __('frontend.coursecart.empty_desc') }}</p>
+                    <div class="cr-empty__balance">
+                        <span>{{ __('frontend.coursecart.balance') }}</span>
+                        <strong><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($points) }} {{ __('frontend.coursecart.credits') }}</strong>
+                    </div>
+                    <div class="cr-empty__actions">
+                        <a href="{{ route('product-lists') }}" class="btn btn--primary">
+                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                            <span>{{ __('frontend.coursecart.empty_btn') }}</span>
+                        </a>
+                        <a href="{{ route('points.topup') }}" class="btn btn--ghost">
+                            <i class="fas fa-plus" aria-hidden="true"></i>
+                            <span>{{ __('frontend.coursecart.buy') }}</span>
                         </a>
                     </div>
                 </div>
             @endif
-
         @else
-            <div class="bag-empty">
-                <span class="bag-empty__icon" aria-hidden="true"><i class="fas fa-lock"></i></span>
-                <h2 class="bag-empty__title">{{ __('frontend.coursecart.auth_title') }}</h2>
-                <p class="bag-empty__desc">{{ __('frontend.coursecart.auth_desc') }}</p>
-                <div class="bag-empty__actions">
-                    <a href="{{ route('login.form') }}" class="bag-btn bag-btn--primary">
-                        <i class="fas fa-sign-in-alt" aria-hidden="true"></i> {{ __('frontend.coursecart.login') }}
+            <div class="cr-empty">
+                <span class="cr-empty__icon" aria-hidden="true"><i class="fas fa-lock"></i></span>
+                <h2 class="cr-empty__title">{{ __('frontend.coursecart.auth_title') }}</h2>
+                <p class="cr-empty__desc">{{ __('frontend.coursecart.auth_desc') }}</p>
+                <div class="cr-empty__actions">
+                    <a href="{{ route('login.form') }}" class="btn btn--primary">
+                        <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                        <span>{{ __('frontend.coursecart.login') }}</span>
                     </a>
-                    <a href="{{ route('register.form') }}" class="bag-btn bag-btn--ghost">
-                        <i class="fas fa-user-plus" aria-hidden="true"></i> {{ __('frontend.coursecart.register') }}
+                    <a href="{{ route('register.form') }}" class="btn btn--ghost">
+                        <i class="fas fa-user-plus" aria-hidden="true"></i>
+                        <span>{{ __('frontend.coursecart.register') }}</span>
                     </a>
                 </div>
             </div>

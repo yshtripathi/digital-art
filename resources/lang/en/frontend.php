@@ -393,6 +393,16 @@ return [
 
     // resources/views/frontend/pages/page.blade.php
     'page' => [
+        'doc_label'      => 'Information',
+        'read_time'      => ':min min read',
+        'print'          => 'Print',
+        'copy_link'      => 'Copy link',
+        'link_copied'    => 'Link copied!',
+        'back_home'      => 'Back to Home',
+        'browse_courses' => 'Explore Courses',
+        'need_help'      => 'Have a question?',
+        'contact_us'     => 'Contact support',
+        'back_to_top'    => 'Back to top',
     ],
 
     // resources/views/frontend/pages/coursecart.blade.php
@@ -405,6 +415,7 @@ return [
         'credits'      => 'credits',
         'buy'          => 'Buy Credits',
         'items_title'  => 'Course levels in your cart',
+        'summary'      => 'Unlock summary',
         'items'        => ':count item|:count items',
         'package'      => 'Credit Package',
         'price'        => 'Credits',
@@ -438,6 +449,7 @@ return [
         'step_done'   => 'Credits added',
         'title'       => 'Cart',
         'items_title' => 'Your cart',
+        'summary'     => 'Order summary',
         'items'       => ':count item|:count items',
         'package'     => 'Credit Package',
         'tag_course'  => 'Course',
@@ -470,9 +482,9 @@ return [
         'point3'       => 'Credits that unlock only the levels you choose',
         'courses_btn'  => 'Browse Courses',
         'contact_btn'  => 'Contact Us',
-        'alt1'         => 'Two people studying together at a table',
-        'alt2'         => 'Someone taking a short break while studying at home',
-        'alt3'         => 'A learner following a lesson with headphones on',
+        'alt1'         => 'A smiling learner holding a notebook',
+        'alt2'         => 'A book and a cup of coffee held during a study break',
+        'alt3'         => 'A learner with headphones on taking notes during a lesson',
         'how_label'    => 'How it is organised',
         'how_title'    => 'The same structure, whatever you study',
         'how_desc'     => 'Every part of the platform follows the same order, so once you have found your way around one course you have found your way around all of them.',

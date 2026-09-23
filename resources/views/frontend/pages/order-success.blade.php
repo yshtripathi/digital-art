@@ -19,7 +19,7 @@
 {{-- ==========================================================================
      Order success
      Centred column: status medallion, ticket receipt,
-     actions. Styles: public/css/theme.css — section 19
+     actions. Styles: public/css/variables.css — Section 18
      ========================================================================== --}}
 <section class="res res--success">
     <div class="res__wrap">
@@ -29,7 +29,7 @@
             <span class="res-mark__icon"><i class="fas fa-check"></i></span>
         </span>
 
-        <h2 class="res-title">{{ __('frontend.success.heading') }}</h2>
+        <h1 class="res-title">{{ __('frontend.success.heading') }}</h1>
         <p class="res-msg">{{ __('frontend.success.message') }}</p>
 
         @if($order)
@@ -47,29 +47,39 @@
 
             <div class="res-ticket">
                 <div class="res-ticket__top">
-                    <span class="res-ticket__label">{{ __('frontend.success.order_no') }}</span>
-                    <strong class="res-ticket__number">{{ $order->order_number }}</strong>
+                    <div>
+                        <span class="res-ticket__label">{{ __('frontend.success.order_no') }}</span>
+                        <strong class="res-ticket__number num">{{ $order->order_number }}</strong>
+                    </div>
+                    <span class="ticket__stamp is-ok" aria-hidden="true">
+                        <i class="fas fa-check"></i>
+                    </span>
                 </div>
 
-                <div class="res-ticket__tear" aria-hidden="true"></div>
+                <div class="tear" aria-hidden="true"></div>
 
                 <dl class="res-ticket__rows">
                     <div class="res-ticket__row res-ticket__row--total">
                         <dt>{{ __('frontend.success.amount') }}</dt>
-                        <dd>{!! $currency !!}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</dd>
+                        <dd class="num">{!! $currency !!}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</dd>
                     </div>
                     <div class="res-ticket__row">
                         <dt>{{ __('frontend.success.txn') }}</dt>
-                        <dd class="res-mono">{{ $transaction_id }}</dd>
+                        <dd class="num res-mono">{{ $transaction_id }}</dd>
                     </div>
                     <div class="res-ticket__row">
                         <dt>{{ __('frontend.success.status') }}</dt>
-                        <dd><span class="badge {{ $isPaid ? 'badge--brand' : '' }}">{{ $statusText }}</span></dd>
+                        <dd>
+                            <span class="res-badge {{ $isPaid ? 'res-badge--success' : 'res-badge--warning' }}">
+                                <i class="fas {{ $isPaid ? 'fa-check-circle' : 'fa-clock' }}" aria-hidden="true"></i>
+                                {{ $statusText }}
+                            </span>
+                        </dd>
                     </div>
                 </dl>
 
                 <div class="res-ticket__foot">
-                    <a href="{{ route('order.pdf', $order->id) }}" class="res-btn res-btn--ghost res-btn--block">
+                    <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--ghost btn--block">
                         <i class="fas fa-download" aria-hidden="true"></i> {{ __('frontend.success.invoice') }}
                     </a>
 
@@ -88,11 +98,11 @@
 
         <div class="res-actions">
             @if($order)
-                <a href="{{ route('user.order.show', $order->id) }}" class="res-btn res-btn--primary">
+                <a href="{{ route('user.order.show', $order->id) }}" class="btn btn--primary">
                     <i class="fas fa-eye" aria-hidden="true"></i> {{ __('frontend.success.view_order') }}
                 </a>
             @endif
-            <a href="{{ route('home') }}" class="res-btn res-btn--ghost">
+            <a href="{{ route('home') }}" class="btn btn--ghost">
                 <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.success.home') }}
             </a>
         </div>

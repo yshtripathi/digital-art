@@ -14,8 +14,8 @@
 
 {{-- ==========================================================================
      Order failed
-     Centred column: status medallion, recovery steps,
-     support row. Styles: public/css/theme.css — section 19
+     Centred column: status medallion, recovery steps card, and action buttons.
+     Styles: public/css/variables.css — Section 18
      ========================================================================== --}}
 <section class="res res--failed">
     <div class="res__wrap">
@@ -25,11 +25,11 @@
             <span class="res-mark__icon"><i class="fas fa-times"></i></span>
         </span>
 
-        <h2 class="res-title">{{ __('frontend.failed.heading') }}</h2>
+        <h1 class="res-title">{{ __('frontend.failed.heading') }}</h1>
         <p class="res-msg">{{ __('frontend.failed.message') }}</p>
 
         <div class="res-help">
-            <h3 class="res-help__title">{{ __('frontend.failed.help_title') }}</h3>
+            <h2 class="res-help__title">{{ __('frontend.failed.help_title') }}</h2>
 
             <ol class="res-steps">
                 <li class="res-step"><span class="res-step__num">1</span><span>{{ __('frontend.failed.help1') }}</span></li>
@@ -49,10 +49,10 @@
         </div>
 
         <div class="res-actions">
-            <a href="{{ route('points.topup') }}" class="res-btn res-btn--primary">
+            <a href="{{ route('points.topup') }}" class="btn btn--primary">
                 <i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.failed.retry') }}
             </a>
-            <a href="{{ route('home') }}" class="res-btn res-btn--ghost">
+            <a href="{{ route('home') }}" class="btn btn--ghost">
                 <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.failed.home') }}
             </a>
         </div>
@@ -61,3 +61,4 @@
 </section>
 
 @endsection
+

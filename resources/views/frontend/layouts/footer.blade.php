@@ -1,7 +1,6 @@
 @php
     $footCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
     $footCompany = $misc['Company Name'] ?? __('frontend.company.name');
-    $footPhone   = $misc['Company Phone'] ?? __('frontend.company.phone');
     $footEmail   = $misc['Company Email'] ?? __('frontend.company.email');
     $footAddress = $misc['Company Address'] ?? __('frontend.company.address');
 @endphp
@@ -17,7 +16,7 @@
                     <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $footCompany }}">
                 </a>
 
-                <p class="ident__about">{{ __('frontend.footer.about') }}</p>
+                <p class="ident__about">{{ __('frontend.footer.intro') }}</p>
 
                 <ul class="ident__facts" aria-label="{{ __('frontend.footer.contact') }}">
                     <li>
@@ -25,12 +24,6 @@
                             <span class="ident__tile"><i class="fas fa-building" aria-hidden="true"></i></span>
                             <span>{{ $footCompany }}</span>
                         </span>
-                    </li>
-                    <li>
-                        <a href="tel:{{ $footPhone }}" class="ident__fact">
-                            <span class="ident__tile"><i class="fas fa-phone-alt" aria-hidden="true"></i></span>
-                            <span>{{ $footPhone }}</span>
-                        </a>
                     </li>
                     <li>
                         <a href="mailto:{{ $footEmail }}" class="ident__fact">
@@ -48,8 +41,8 @@
             </div>
 
             <section class="signup" aria-labelledby="signup-title">
-                <h2 class="signup__title" id="signup-title">{{ __('frontend.footer.news_title') }}</h2>
-                <p class="signup__desc">{{ __('frontend.footer.news_desc') }}</p>
+                <h2 class="signup__title" id="signup-title">{{ __('frontend.footer.news_head') }}</h2>
+                <p class="signup__desc">{{ __('frontend.footer.news_text') }}</p>
 
                 <form class="signup__form" novalidate data-signup>
                     <label class="vh" for="signup-email">{{ __('frontend.footer.news_email') }}</label>
@@ -69,7 +62,7 @@
                 </p>
 
                 <ul class="signup__list">
-                    @foreach(__('frontend.footer.news_points') as $point)
+                    @foreach(__('frontend.footer.news_list') as $point)
                         <li class="signup__point">
                             <i class="fas fa-check" aria-hidden="true"></i>
                             <span>{{ $point }}</span>
@@ -89,7 +82,7 @@
                     @forelse($footCategories as $cat)
                         <li><a href="{{ route('product-lists', $cat->slug) }}" class="dir__link">{{ $cat->title }}</a></li>
                     @empty
-                        <li><span class="dir__empty">{{ __('frontend.footer.no_categories') }}</span></li>
+                        <li><span class="dir__empty">{{ __('frontend.footer.no_cats') }}</span></li>
                     @endforelse
                 </ul>
             </nav>
@@ -97,7 +90,7 @@
             <nav class="dir" aria-label="{{ __('frontend.footer.company') }}">
                 <h2 class="dir__label">{{ __('frontend.footer.company') }}</h2>
                 <ul class="dir__list">
-                    <li><a href="{{ route('product-lists') }}" class="dir__link">{{ __('frontend.footer.all_courses') }}</a></li>
+                    <li><a href="{{ route('product-lists') }}" class="dir__link">{{ __('frontend.footer.all_materials') }}</a></li>
                     <li><a href="{{ route('about-us') }}" class="dir__link">{{ __('frontend.footer.about_us') }}</a></li>
                     <li><a href="{{ route('contact') }}" class="dir__link">{{ __('frontend.footer.contact_us') }}</a></li>
                     @auth
@@ -116,7 +109,7 @@
                     <li><a href="{{ route('pages','terms-conditions') }}" class="dir__link">{{ __('frontend.footer.terms') }}</a></li>
                     <li><a href="{{ route('pages','privacy-policy') }}" class="dir__link">{{ __('frontend.footer.privacy') }}</a></li>
                     <li><a href="{{ route('pages','refund-policy') }}" class="dir__link">{{ __('frontend.footer.refund') }}</a></li>
-                    <li><a href="{{ route('pages','delivery-policy') }}" class="dir__link">{{ __('frontend.footer.delivery') }}</a></li>
+                    <li><a href="{{ route('pages','delivery-policy') }}" class="dir__link">{{ __('frontend.footer.access') }}</a></li>
                 </ul>
             </nav>
         </div>

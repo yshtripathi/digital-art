@@ -56,7 +56,7 @@
 
             <p class="bn__eyebrow">
                 <span class="bn__eyebrow-icon" aria-hidden="true"><i class="fas fa-magic"></i></span>
-                {{ __('frontend.breadcrumb.eyebrow') }}
+                {{ __('frontend.breadcrumb.tag') }}
             </p>
 
             @if(!empty($title))

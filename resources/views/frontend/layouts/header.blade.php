@@ -122,14 +122,14 @@
                                 @endif
                             </li>
                         @empty
-                            <li><p class="cats__none">{{ __('frontend.header.no_categories') }}</p></li>
+                            <li><p class="cats__none">{{ __('frontend.header.no_cats') }}</p></li>
                         @endforelse
                     </ul>
                 </div>
             </div>
 
             <a href="{{ route('product-lists') }}" class="mainnav__link {{ Route::is('product-lists') ? 'is-active' : '' }}" @if(Route::is('product-lists')) aria-current="page" @endif>
-                {{ __('frontend.header.courses') }}
+                {{ __('frontend.header.materials') }}
             </a>
 
             <a href="{{ route('points.topup') }}" class="mainnav__link {{ Route::is('points.topup') ? 'is-active' : '' }}" @if(Route::is('points.topup')) aria-current="page" @endif>
@@ -178,7 +178,7 @@
                         </a>
                         <a class="pop__item" href="{{ route('user') }}">
                             <span class="pop__sym"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
-                            {{ __('frontend.header.my_courses') }}
+                            {{ __('frontend.header.my_materials') }}
                         </a>
                         <a class="pop__item" href="{{ route('points.topup') }}">
                             <span class="pop__sym"><i class="fas fa-bolt" aria-hidden="true"></i></span>
@@ -262,13 +262,13 @@
                             <i class="fas fa-chevron-right catrow__go" aria-hidden="true"></i>
                         </a>
                     @empty
-                        <p class="cats__none">{{ __('frontend.header.no_categories') }}</p>
+                        <p class="cats__none">{{ __('frontend.header.no_cats') }}</p>
                     @endforelse
                 </div>
             </details>
 
             <a href="{{ route('product-lists') }}" class="drawer__link {{ Route::is('product-lists') ? 'is-active' : '' }}" @if(Route::is('product-lists')) aria-current="page" @endif>
-                {{ __('frontend.header.courses') }}
+                {{ __('frontend.header.materials') }}
             </a>
 
             <a href="{{ route('points.topup') }}" class="drawer__link {{ Route::is('points.topup') ? 'is-active' : '' }}" @if(Route::is('points.topup')) aria-current="page" @endif>
@@ -277,7 +277,7 @@
 
             @auth
                 <a href="{{ route('user') }}" class="drawer__link {{ Route::is('user') ? 'is-active' : '' }}" @if(Route::is('user')) aria-current="page" @endif>
-                    {{ __('frontend.header.my_courses') }}
+                    {{ __('frontend.header.my_materials') }}
                 </a>
             @endauth
 
@@ -390,9 +390,9 @@
         @else
             <div class="cart__empty">
                 <span class="cart__empty-icon" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
-                <p class="cart__empty-text">{{ __('frontend.header.cart_empty') }}</p>
+                <p class="cart__empty-text">{{ __('frontend.header.cart_none') }}</p>
                 <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                    {{ __('frontend.header.promo_btn') }}
+                    {{ __('frontend.header.browse') }}
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>

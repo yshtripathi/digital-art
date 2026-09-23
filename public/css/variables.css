@@ -1,0 +1,267 @@
+/* ==========================================================================
+   Academy — E-Learning Design Tokens
+   Companion to "design and content/DESIGN.md". Light theme, magenta accent.
+   Loaded first in the stylesheet chain, before any component stylesheet.
+
+   THE ONE RULE: #f50db4 is 3.75:1 on white. It clears the 3:1 required of
+   non-text UI, and fails the 4.5:1 required of text — in both directions.
+   Use --color-magenta for fills, indicators and icons.
+   Use --color-magenta-ink for anything that is, or carries, text.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ------------------------------------------------------------------
+     Magenta ramp — the entire chromatic identity
+     ------------------------------------------------------------------ */
+  --color-magenta-wash: #fff0fa;      /* tinted surface */
+  --color-magenta-tint: #ffe4f5;      /* accent badge / chip background */
+  --color-magenta-edge: #ffc2e9;      /* decorative border on washed surfaces */
+
+  --color-magenta: #f50db4;           /* 3.75:1 — NON-TEXT fills, indicators, focus */
+  --color-magenta-ink: #c40a8f;       /* 5.54:1 — links, accent text, CTA fill */
+  --color-magenta-ink-hover: #a80a7b; /* 7.01:1 — on light, hover goes darker */
+  --color-magenta-ink-active: #8c0866;/* 8.97:1 — pressed, accent text on wash */
+
+  /* ------------------------------------------------------------------
+     Ink and neutrals — contrast measured against #ffffff
+     ------------------------------------------------------------------ */
+  --color-ink-black: #0e0f12;         /* 19.2:1 */
+  --color-obsidian: #1e1e24;          /* 16.6:1 */
+  --color-graphite: #2d2d34;          /* 13.7:1 */
+  --color-slate: #5c6068;             /*  6.3:1 */
+  --color-ash: #8e929b;               /*  3.1:1 — glyphs, control borders, placeholders */
+  --color-fog: #d2d4d7;
+  --color-mist: #e4e7ed;
+  --color-mist-light: #f3f5f8;
+  --color-pure-white: #ffffff;
+
+  /* ------------------------------------------------------------------
+     Surfaces
+     ------------------------------------------------------------------ */
+  --surface-canvas: #ffffff;
+  --surface-subtle: #f8f9fc;          /* alternating bands, dashboard ground */
+  --surface-card: #ffffff;
+  --surface-raised: #f3f5f8;          /* row hover, table headers, secondary button */
+  --surface-magenta-wash: var(--color-magenta-wash);
+  --surface-inset: #1e1e24;           /* video letterbox — dark inside a light theme */
+
+  /* ------------------------------------------------------------------
+     Borders
+     ------------------------------------------------------------------ */
+  --border-subtle: #eef0f4;
+  --border-default: #e4e7ed;          /* 1.2:1 — decorative, never a control's only edge */
+  --border-strong: #d2d4d7;
+  --border-control: #8e929b;          /* 3.1:1 — inputs, checkboxes, radios */
+
+  --border-hairline: 1px solid var(--border-subtle);
+  --border-card: 1px solid var(--border-default);
+  --border-input: 1px solid var(--border-control);
+
+  /* ------------------------------------------------------------------
+     Text
+     ------------------------------------------------------------------ */
+  --text-primary: var(--color-ink-black);
+  --text-secondary: var(--color-slate);
+  --text-muted: var(--color-graphite);
+  --text-disabled: var(--color-ash);   /* 3.1:1 — placeholders and disabled only */
+  --text-on-accent: #ffffff;           /* 5.5:1 on --color-magenta-ink */
+
+  /* ------------------------------------------------------------------
+     Semantic status — tint / border / text triplets
+     Every text value clears 4.5:1 on white AND on its own tint.
+     ------------------------------------------------------------------ */
+  --status-success-bg: #ecfdf5;
+  --status-success-border: #a7f3d0;
+  --status-success-text: #047857;     /* 5.5:1 white, 5.2:1 tint */
+
+  --status-error-bg: #fef2f2;
+  --status-error-border: #fecaca;
+  --status-error-text: #c31c1c;       /* 6.0:1 white, 5.5:1 tint */
+
+  --status-warning-bg: #fffbeb;
+  --status-warning-border: #fde68a;
+  --status-warning-text: #b45309;     /* 5.0:1 white, 4.8:1 tint */
+
+  --status-info-bg: #f5f3ff;          /* violet, not blue — stays in the magenta family */
+  --status-info-border: #ddd6fe;
+  --status-info-text: #6d28d9;        /* 7.1:1 white, 6.5:1 tint */
+
+  /* ------------------------------------------------------------------
+     Learning state — always pair with a glyph and a text label
+     ------------------------------------------------------------------ */
+  --state-completed: var(--status-success-text);
+  --state-in-progress: var(--color-magenta-ink);       /* label and title */
+  --state-in-progress-fill: var(--color-magenta);      /* bar fill and edge */
+  --state-not-started: var(--color-ash);
+  --state-locked: var(--color-ash);
+  --state-locked-bg: var(--color-mist-light);
+  --state-credit: var(--color-magenta-ink);
+  --state-credit-expiring: var(--status-warning-text);
+
+  --progress-track: var(--color-mist);
+  --progress-fill: var(--color-magenta);
+  --progress-fill-complete: var(--state-completed);
+
+  /* ------------------------------------------------------------------
+     Badges
+     ------------------------------------------------------------------ */
+  --badge-bg: var(--color-mist-light);
+  --badge-text: var(--color-graphite);
+  --badge-border: var(--border-default);
+
+  --badge-accent-bg: var(--color-magenta-tint);
+  --badge-accent-text: var(--color-magenta-ink-active);
+  --badge-accent-border: var(--color-magenta-edge);
+
+  /* ------------------------------------------------------------------
+     Typography — families
+     ------------------------------------------------------------------ */
+  --font-ui: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-prose: 'Lora', 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* ------------------------------------------------------------------
+     Typography — scale, leading, tracking
+     ------------------------------------------------------------------ */
+  --text-caption: 12px;
+  --leading-caption: 1.5;
+  --tracking-caption: 0.15px;
+
+  --text-body-sm: 13px;
+  --leading-body-sm: 1.5;
+
+  --text-body: 15px;
+  --leading-body: 1.55;
+
+  --text-prose: 17px;                 /* lesson reading size */
+  --leading-prose: 1.7;
+
+  --text-subheading: 18px;
+  --leading-subheading: 1.4;
+  --tracking-subheading: -0.2px;
+
+  --text-heading-sm: 22px;
+  --leading-heading-sm: 1.3;
+  --tracking-heading-sm: -0.4px;
+
+  --text-heading: 32px;
+  --leading-heading: 1.2;
+  --tracking-heading: -0.6px;
+
+  --text-heading-lg: 44px;
+  --leading-heading-lg: 1.15;
+  --tracking-heading-lg: -0.88px;
+
+  --text-display: 56px;
+  --leading-display: 1.05;
+  --tracking-display: -1.8px;
+
+  /* Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Reading measure */
+  --measure-prose: 68ch;
+  --measure-narrow: 52ch;
+
+  /* ------------------------------------------------------------------
+     Spacing scale (base 4px)
+     ------------------------------------------------------------------ */
+  --spacing-unit: 4px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-112: 112px;
+
+  /* ------------------------------------------------------------------
+     Layout and sizing
+     ------------------------------------------------------------------ */
+  --page-max-width: 1240px;
+  --topbar-height: 40px;
+  --header-height: 72px;
+  --section-gap: 80px;
+  --card-padding: 20px;
+  --element-gap: 16px;
+  --grid-gutter: 24px;
+  --touch-target-min: 44px;
+
+  --sidebar-curriculum-width: 320px;
+  --sidebar-filter-width: 280px;
+  --panel-purchase-width: 360px;
+
+  /* ------------------------------------------------------------------
+     Border radius
+     ------------------------------------------------------------------ */
+  --radius-sm: 8px;
+  --radius-media: 10px;
+  --radius-cards: 14px;
+  --radius-buttons: 60px;
+  --radius-inputs: 72px;
+  --radius-pill-badge: 9999px;
+
+  /* ------------------------------------------------------------------
+     Shadows — soft, tinted with ink rather than pure black
+     ------------------------------------------------------------------ */
+  --shadow-subtle: 0 2px 8px rgba(14, 15, 18, 0.04);
+  --shadow-hover: 0 12px 28px -6px rgba(14, 15, 18, 0.08);
+  --shadow-overlay: 0 16px 36px -8px rgba(14, 15, 18, 0.12);
+  --shadow-accent: 0 6px 20px -4px rgba(196, 10, 143, 0.30);
+
+  /* Focus */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--color-magenta);
+
+  /* Media */
+  --aspect-thumbnail: 16 / 9;
+  --scrim-thumbnail: rgba(14, 15, 18, 0.64);
+  --scrim-video: linear-gradient(to top, rgba(14, 15, 18, 0.85), rgba(14, 15, 18, 0));
+
+  /* ------------------------------------------------------------------
+     Motion
+     ------------------------------------------------------------------ */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 200ms ease;
+  --transition-progress: 400ms var(--ease-out-soft);
+}
+
+/* ==========================================================================
+   Responsive — largest type steps clamp down, sections tighten
+   ========================================================================== */
+@media (max-width: 900px) {
+  :root {
+    --text-display: 40px;
+    --text-heading-lg: 32px;
+    --text-heading: 26px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-gap: 48px;
+    --grid-gutter: 16px;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-base: 1ms linear;
+    --transition-progress: 1ms linear;
+  }
+}

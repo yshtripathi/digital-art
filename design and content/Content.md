@@ -2,6 +2,8 @@
 
 This guide works for any e-learning website, whatever it teaches: art, music, languages, coding, business, finance, wellness, exam preparation or anything else. Nothing in it depends on one brand, one subject or one catalogue.
 
+What the website sells is **e-learning materials**: digital study materials a learner reads and works through on their own. It is not a school, and nothing on it is attended. Section 2.7 sets the wording this requires, and it applies to every page in this guide.
+
 ---
 
 ## 1. Role
@@ -25,7 +27,7 @@ These rules apply to every page, message, label and policy.
 
 - Write content that suits any e-learning platform.
 - Do not mention a specific subject, industry or niche in shared content such as policies, the FAQ, the footer, validation messages or system messages.
-- Subject-specific wording belongs only in the category and course records that come from the database.
+- Subject-specific wording belongs only in the category and material records that come from the database.
 
 ### 2.2 No placeholders or inserted keywords
 
@@ -81,7 +83,7 @@ Rules:
 - Use the real `miscs` column names that exist in the project.
 - Show these details only where they are genuinely needed, such as the contact page, footer, copyright line, checkout billing notice and the contact section of policy pages.
 
-Other data such as course titles, category names, prices, levels, order details and user details also comes from the database. It is displayed as data, not written into content.
+Other data such as material titles, category names, prices, levels, order details and user details also comes from the database. It is displayed as data, not written into content.
 
 ### 2.4 Simple browser tab names
 
@@ -95,7 +97,7 @@ The browser tab title (`<title>`) is only the plain page name.
 
 ```php
 'site' => '[Website Name]',
-'home' => ':site — Online Learning Platform',
+'home' => ':site — E-Learning Materials',
 ```
 
 Every other page keeps its plain page name. Do not add the website name to any other title.
@@ -105,9 +107,9 @@ Every other page keeps its plain page name. Do not add the website name to any o
 | Home | The website name and a short platform description (see the exception above) |
 | About page | About Us |
 | Contact page | Contact Us |
-| Course listing | Courses |
+| Material listing | E-Learning Materials |
 | Category page | The category name from the database |
-| Course detail | The course title from the database |
+| Material detail | The material title from the database |
 | Cart | Cart |
 | Checkout | Checkout |
 | Login | Login |
@@ -115,7 +117,7 @@ Every other page keeps its plain page name. Do not add the website name to any o
 | Forgot password | Forgot Password |
 | Reset password | Reset Password |
 | Dashboard | Dashboard |
-| My courses | My Courses |
+| My materials | My Materials |
 | Orders | Orders |
 | Order details | Order Details |
 | Profile | Profile |
@@ -123,7 +125,7 @@ Every other page keeps its plain page name. Do not add the website name to any o
 | Terms & Conditions | Terms & Conditions |
 | Privacy Policy | Privacy Policy |
 | Refund Policy | Refund Policy |
-| Delivery & Course Access Policy | Delivery & Course Access Policy |
+| Delivery & Access Policy | Delivery & Access Policy |
 | Page not found | Page Not Found |
 
 Meta descriptions, Open Graph and Twitter tags are separate from the tab title (see section 17).
@@ -164,6 +166,39 @@ The success message must be exactly:
 
 - Do not add any other sentence before or after it.
 - Do not change the wording.
+
+### 2.7 Approved terminology: e-learning materials, not online courses
+
+The website sells digital study materials. Customers buy them, receive them by email and read them on their own. Nobody attends anything, nobody is taught live and there is no class to join.
+
+Customer-facing content must never suggest otherwise. Remove "Online Courses" and every word that implies attendance, a timetable or a teacher.
+
+| Do not write | Write instead |
+|---|---|
+| Online Courses, Our Courses, Course catalogue | E-Learning Materials |
+| Course, this course | E-learning material, the material, this material |
+| Course content | Study material, learning material |
+| Enroll, enrollment, sign up for a course, register for a course | Get access, unlock, buy |
+| Class, lesson, session, workshop, seminar, webinar, training, programme | Module, topic, section, study material |
+| Instructor, teacher, tutor, trainer, coach, mentor | Do not use. Nobody teaches the learner |
+| Attend, join, take part, sit in, live session, schedule, timetable, curriculum, syllabus | Read, study, work through at your own pace |
+| Students, classmates, cohort, batch | Learners, customers |
+| Classroom, campus, seat, place on the course | Do not use |
+| Certificate, graduation, completion award | Do not use unless the business really issues one (section 25) |
+
+Wording that is still fine:
+
+- "Learning", "e-learning", "study", "read", "self-paced", "at your own pace", "levels", "topics", "modules"
+- "Learner" and "customer" for the person buying
+- Section 9A wording for credits, which is unchanged: credits unlock a **level** of an e-learning material
+
+What does **not** change:
+
+- **Database values.** Category names, product titles and level names are shown exactly as stored (sections 3 and 27). If a stored title contains the word "course", that is a data question: report it and ask, never rewrite the record or paper over it in the view.
+- **Internal names.** Routes, controllers, tables, columns, variables and translation key names may keep words such as `course`. Only text the customer reads has to change.
+- **Third-party text.** Wording supplied by the payment provider stays as the provider writes it.
+
+Check the same way in every language. Japanese must not use 受講, 講座, 授業, 受講生, 講師 or similar attendance wording; use 教材, 学習教材, ご利用 and 学習者 instead.
 
 ---
 
@@ -214,7 +249,7 @@ Avoid:
 - Every customer-facing English item must have a translated equivalent.
 - **No English left on the Japanese site.** This includes stock phrases such as "All Rights Reserved.", button labels, empty messages and short labels like "Menu", "Close", "Language" and "Currency".
 - **Hidden text is translated too:** image ALT text, `aria-label` values, `title` tooltips and JavaScript validation messages.
-- The only text that may stay the same in every language is data from the database (course titles, category names, company name, email, address and phone) , the language names themselves in the language switcher (`English`, `日本語`), and the country names in the checkout country dropdown (see section 19.13).
+- The only text that may stay the same in every language is data from the database (material titles, category names, company name, email, address and phone) , the language names themselves in the language switcher (`English`, `日本語`), and the country names in the checkout country dropdown (see section 19.13).
 
 Common stock phrases:
 
@@ -260,7 +295,7 @@ return [
 
     // resources/views/frontend/layouts/footer.blade.php
     'footer' => [
-        'news_title'   => 'Stay up to date with new courses',
+        'news_title'   => 'Stay up to date with new materials',
         'news_success' => 'Thank you for subscribing',
         'rights'       => 'All Rights Reserved.',
     ],
@@ -298,9 +333,9 @@ The home page should explain, in this order where the layout allows:
 
 - What the platform is and who it is for
 - What learners can study (categories from the database)
-- How courses and skill levels are organised
-- How to find a suitable course
-- How buying and accessing a course works
+- How the e-learning materials and skill levels are organised
+- How to find a suitable material
+- How buying a material works, and how it is delivered by email
 - A clear call to action
 
 ### Hero section
@@ -308,13 +343,13 @@ The home page should explain, in this order where the layout allows:
 - One clear headline
 - One supporting paragraph
 - One primary button, with an optional secondary button
-- Button text describes the real action, for example **Explore Courses**, **Browse Categories** or **Find a Course**
+- Button text describes the real action, for example **Explore Materials**, **Browse Categories** or **Find a Material**
 
 ### Category section
 
 - Category name and image from the database
 - A short line of supporting text that works for any subject
-- Course count only when calculated from real data
+- Material count only when calculated from real data
 - A link to the real category route
 
 ### How it works section
@@ -322,35 +357,35 @@ The home page should explain, in this order where the layout allows:
 Use simple numbered steps:
 
 1. **Choose a category.** Browse the available subject areas.
-2. **Pick a course.** Compare courses and read what each one covers.
+2. **Pick a material.** Compare the e-learning materials and read what each one covers.
 3. **Select a level.** Choose the level that matches your current knowledge.
 4. **Review the details.** Check the description, what is included and the price.
 5. **Complete checkout.** Pay securely using the available payment options.
-6. **Start learning.** Open your purchased course from your account.
+6. **Start learning.** Open the access email sent to you at checkout, or find the material in your account.
 
-Only describe access methods the application really provides.
+Only describe access methods the application really provides, and keep to the delivery and access facts in section 15.
 
 ---
 
 ## 7. Category Page
 
 - **Header:** category name (from the database) and a short, universal introduction.
-- **Course list:** course cards with title, short description, available levels, image, price where shown, and a button.
-- **Empty state:** if a category has no courses, explain that and link to all courses.
+- **Material list:** cards with title, short description, available levels, image, price where shown, and a button.
+- **Empty state:** if a category has no e-learning materials, explain that and link to all materials.
 
 ---
 
-## 8. Course Page
+## 8. E-Learning Material Page
 
 Recommended sections:
 
-1. Course introduction
-2. What the course covers
+1. Material introduction
+2. What the material covers
 3. Available skill levels
 4. What to expect at each level
 5. Learning outcomes
-6. Course information (price, level, format as provided by the system)
-7. Related courses
+6. Material information (price, level, format as provided by the system)
+7. Related materials
 8. Call to action
 
 Each level must read differently. Do not make all levels sound identical.
@@ -393,13 +428,13 @@ For learners who want the deepest level available.
 - Handling difficult trade-offs
 - Bringing many concepts together
 
-Never promise certificates, accreditation, jobs or guaranteed results unless the application actually provides them.
+Never promise certificates, accreditation, jobs or guaranteed results unless the application actually provides them. Never describe a level as something the learner attends, joins or is taught (section 2.7).
 
 ---
 
 ## 9A. Credits System
 
-The website uses credits. Learners buy credits with money, then spend credits to unlock courses and levels. All content must explain this clearly and consistently.
+The website uses credits. Learners buy credits with money, then spend credits to unlock e-learning materials and levels. All content must explain this clearly and consistently.
 
 ### 9A.1 How credits work
 
@@ -407,15 +442,15 @@ Explain in simple steps:
 
 1. **Buy credits.** Choose a credit package on the top-up page and pay at checkout.
 2. **Credits are added to your account.** Your balance appears in your account once payment is confirmed.
-3. **Unlock a course level.** Each course level shows its price in credits. Spend credits to unlock it.
-4. **Start learning.** Unlocked levels appear in your account.
+3. **Unlock a level.** Each level of an e-learning material shows its price in credits. Spend credits to unlock it.
+4. **Start learning.** Access details for the unlocked level are emailed to you, and the level appears in your account (section 15).
 
 ### 9A.2 Wording rules
 
 - Use one term everywhere: **credits**. Do not mix "credits", "points", "coins" and "tokens" in customer-facing text, even if the code uses a different name internally.
 - Show credit prices and balances from the database only. Never write fixed numbers into content.
-- Always make it clear that money buys credits, and credits unlock courses.
-- Show the learner's current balance wherever credits are spent (course page, cart, checkout, dashboard).
+- Always make it clear that money buys credits, and credits unlock e-learning materials.
+- Show the learner's current balance wherever credits are spent (material page, cart, checkout, dashboard).
 
 ### 9A.3 Messages to cover
 
@@ -430,11 +465,17 @@ Every credit-related message must be clear and localized:
 | Payment failed | Your payment could not be completed. No credits were added. |
 | Balance label | Your credits |
 
-### 9A.4 No fake promises about credits
+### 9A.4 Credit validity: 30 days
+
+Credits have a defined validity period, and it must be stated:
+
+- **Credits are valid for 30 days from the date of purchase.** Use that figure and no other
+- Never write that credits never expire, and never quote a different validity period
+- State it wherever credits are explained: the Terms & Conditions, the top-up page, the FAQ and the checkout page
+- In the Terms & Conditions it is the **last bullet point of the Credits section**, worded as "Have a validity period of 30 days from date of purchase" or a close, natural rewording that keeps the same meaning in the page's language
 
 Do not claim any of the following unless the business rules define it:
 
-- Credits never expire, or credits expire after a set time
 - Credits can be refunded, transferred or exchanged for cash
 - Bonus or free credits
 - Discounts for larger packages
@@ -443,10 +484,10 @@ If a rule is not defined, do not mention it.
 
 ### 9A.5 Credits in policies and FAQ
 
-- **Terms & Conditions:** a "Credits" section explaining how credits are bought, used, and that they have no cash value outside the website (only if true for the business).
-- **Refund Policy:** explain how refund requests for credit purchases are handled, including what happens to credits already spent.
-- **Delivery & Course Access Policy:** explain that credits are added to the account after payment is confirmed, and courses unlock after credits are spent.
-- **FAQ:** What are credits? How do I buy credits? How do I use credits? Where can I see my balance? What if my credits do not appear?
+- **Terms & Conditions:** a "Credits" section explaining how credits are bought, used, and that they have no cash value outside the website (only if true for the business). Its final bullet states the validity period: **credits have a validity period of 30 days from the date of purchase**.
+- **Refund Policy:** explain how refund requests for credit purchases are handled, including what happens to credits already spent and to credits that have passed their 30 day validity.
+- **Delivery & Access Policy:** explain that credits are added to the account after payment is confirmed, that e-learning materials unlock after credits are spent, and repeat the delivery timing and the 72 hour limit from section 15.
+- **FAQ:** What are credits? How do I buy credits? How long are they valid? How do I use credits? Where can I see my balance? What if my credits do not appear?
 
 ---
 
@@ -501,20 +542,153 @@ Do not invent founders, instructors, company history, awards, partnerships, accr
 Include:
 
 - A short, friendly introduction
-- Common reasons to get in touch, as bullet points (course questions, purchase or payment help, account access, refund requests, general feedback)
+- Common reasons to get in touch, as bullet points (questions about an e-learning material, purchase or payment help, a material that has not arrived, account access, refund requests, general feedback)
 - Company email, address and phone from the `miscs` table
 - A contact form with helpful field labels and hints
 - A localized success message, error message and validation messages
 
 ---
 
+## 11A. Legal Pages — Master Reference
+
+This section is the single source of truth for the four legal pages: **Terms & Conditions, Privacy Policy, Refund Policy and Delivery & Access Policy**. Sections 12 to 15 describe what each page contains. This section carries the facts, figures and exact wording that all four must agree on, so they can be checked in one place instead of four.
+
+Read this before touching any of the four pages. If anything below disagrees with a page, the page is wrong.
+
+### 11A.1 Where this content actually lives
+
+**The four legal pages are database records, not lang files.** This is the most common reason a sweep misses them.
+
+| Content | Location |
+|---|---|
+| Terms, Privacy, Refund, Delivery page bodies | `pages` table — `page_desc` (English) and `page_desc_ja` (Japanese) |
+| Page titles | `pages` table — `page_title`, `page_title_ja` |
+| Everything else (FAQ, checkout, cart, order confirmation, badges) | `resources/lang/en/frontend.php` and `resources/lang/ja/frontend.php` |
+
+Consequences:
+
+- A grep of the lang files alone will **not** find policy wording. Search the database dump as well
+- The page bodies are HTML stored inside a SQL string. Quotes appear as `\"` and line breaks as `\r\n`. Match on the escaped form when editing the dump directly
+- English and Japanese are two separate columns on the same row. Every change is made twice, and the two must stay structurally identical — same sections, same numbering, same bullet counts
+- Section numbering is written into the headings by hand. Deleting a section means renumbering every heading after it, in both languages
+
+### 11A.2 The three figures, and nothing else
+
+Only three numbers may appear anywhere on the website in connection with delivery, access or credits. Every one of them is a fixed business rule, written as plain text. None of them is read from the database.
+
+| Figure | Value | What it measures |
+|---|---|---|
+| **Delivery, normal** | within **24 hours** of confirmed payment | how long until the access email arrives |
+| **Delivery, delayed** | up to **48 to 72 hours** | the outside case when the system is slow |
+| **Report a problem** | after **72 hours** | when the learner should contact support |
+| **Credit validity** | **30 days** from date of purchase | when unspent credits expire |
+
+**There is no fourth figure.** In particular there is no access period: credits expire, e-learning materials do not.
+
+Two mistakes to guard against, because both have happened:
+
+- **Never write 24 hours where the text means the reporting limit.** The learner contacts support after **72** hours, not 24. This applies in every section, including any "Email Delivery Issues" or "Failure to Receive Access Information" section
+- **Never confuse the 72 hour delivery limit with an access limit.** 72 hours is a deadline for chasing a missing email. It is not how long the material can be used, and rewriting an access period to "72 hours" would tell learners their purchase expires in three days
+
+### 11A.3 Canonical wording
+
+Reword naturally for each page and language, but never contradict.
+
+**Delivery timing** — the full statement, used in the Delivery & Access Policy and echoed everywhere delivery is described:
+
+> E-Learning Materials and applicable access information are typically made available within 24 hours after successful payment confirmation. Delivery may occasionally be delayed because of system processing, payment verification, technical issues, email service interruptions, or circumstances beyond our reasonable control. Please allow up to 48 to 72 hours for delivery. If you have not received or cannot access your purchased Materials after 72 hours, please contact us at :email.
+
+**Credit validity** — the last bullet of the Terms & Conditions Credits section:
+
+> Have a validity period of 30 days from date of purchase
+
+**Reporting limit** — wherever a section tells the learner when to get in touch:
+
+> If the relevant email or access information is still unavailable after 72 hours, please contact us at :email
+
+The contact address is always the `:email` placeholder filled from the `miscs` table, never a hardcoded address (section 2.3).
+
+### 11A.4 Where each fact must appear
+
+| Fact | T&C | Privacy | Refund | Delivery | FAQ | Checkout | Order confirmation |
+|---|---|---|---|---|---|---|---|
+| Delivery within 24 hours | yes | — | yes | yes | yes | yes | yes |
+| Up to 48 to 72 hours | summary | — | yes | yes | yes | — | yes |
+| Contact after 72 hours | — | — | yes | yes | yes | — | yes |
+| Credits valid 30 days | **last bullet of Credits section** | — | yes | yes | yes | yes | — |
+
+A page that describes delivery or credits and omits the matching figure is incomplete. A page that states a different figure is wrong.
+
+### 11A.5 Access: what may and may not be said
+
+This is the distinction that is easiest to get wrong, and getting it wrong in either direction causes a real problem.
+
+**Never allowed — a length of access.** Any wording that tells the learner how long access lasts, in any unit:
+
+- "Access lasts 2 weeks", "14 days", "the 14-day access period", "2週間", "14日間のアクセス期間"
+- A section headed "Access Period", "14-Day Access Period" or "Expiration of Access"
+- A bullet under User Responsibility telling the learner to use the material within some named period
+
+These are promises to the customer. If one is found, remove the length. If a whole section exists only to define it, delete the section and renumber the page.
+
+**Never allowed — a promise of permanence.** The opposite error, and banned just as firmly:
+
+- "lifetime access", "unlimited access", "indefinitely", "forever", "permanent", "access any time"
+- 無期限, 永久
+
+**Allowed, and worth keeping — duration-free wording.** Phrases that name the mechanism without committing to a length:
+
+- "within an applicable access period"
+- "extending the applicable access period"
+- "during the applicable access period"
+- 適用されるアクセス期間
+
+These are not promises to the customer. They are company protections: a ground for declining a refund, a remedy that can be offered short of refunding, a records-keeping responsibility placed on the user. Removing them quietly weakens the company's position, so leave them where they appear. Never attach a number to one.
+
+The test in one line: **if it says how long, remove it; if it only says that a period may apply, keep it.**
+
+### 11A.6 Required and forbidden sections
+
+**Every legal page must have**, whatever else it carries:
+
+- A short introduction saying what the page covers
+- A contact section with company name, email, address and phone from the `miscs` table
+- A "changes to this policy" section saying the published version is the one that applies
+
+**Refund Policy must have** a section on failing to receive access information, in which **every hour figure reads 72**.
+
+**Delivery & Access Policy must have** the delivery process section carrying all four facts from section 15.2, and an email delivery issues section in which **every hour figure reads 72**.
+
+**Terms & Conditions must have** a Credits section whose **last bullet** is the 30 day validity.
+
+**No page may have** a section named for an access period or its expiry.
+
+### 11A.7 Before calling a legal page done
+
+- [ ] English and Japanese have the same sections, in the same order, with the same numbers
+- [ ] Section numbering runs 1, 2, 3 … with no gap left by a deleted section
+- [ ] Every delivery figure is 24 hours / 48 to 72 hours / 72 hours, and nothing else
+- [ ] Every "contact us after" figure is 72 hours, including in email-issues and failure-to-receive sections
+- [ ] The T&C Credits section ends with the 30 day validity bullet
+- [ ] No length of access appears anywhere, in any unit, in either language
+- [ ] No permanence claim appears anywhere, in either language
+- [ ] Duration-free "applicable access period" wording is still present where it was
+- [ ] No bullet ends with a full stop, including the Japanese `。` (section 2.5)
+- [ ] Company details are placeholders filled from `miscs`, never hardcoded (section 2.3)
+- [ ] No "course", "class", "lesson", "enroll" or "instructor" wording, and no 講座 / 受講 / 授業 / 講師 (section 2.7)
+- [ ] The page still parses: the SQL dump has the same row count, and quotes and line breaks are still escaped as `\"` and `\r\n`
+
+---
+
 ## 12. Terms & Conditions
 
-Must be descriptive, with a heading for each section, a short introductory paragraph, and bullet points for details. Show a "Last updated" date.
+> Figures, exact wording and the access rules for this page are in **section 11A**. This section describes what the page contains; 11A governs what it must say.
+
+Must be descriptive, with a heading for each section, a short introductory paragraph, and bullet points for details.
 
 ### 12.1 Introduction
 
-- What the website provides: online courses and learning materials.
+- What the website provides: digital e-learning materials for self-paced study, delivered by email.
 - That using the website means accepting these terms.
 
 ### 12.2 Eligibility and Accounts
@@ -524,10 +698,10 @@ Must be descriptive, with a heading for each section, a short introductory parag
 - Accounts are personal and must not be shared or sold.
 - Users must tell the company if they suspect unauthorized access.
 
-### 12.3 Courses and Pricing
+### 12.3 E-Learning Materials and Pricing
 
-- Course details and prices are shown on the website before purchase.
-- Prices and course information may be updated from time to time.
+- Material details and prices are shown on the website before purchase.
+- Prices and material information may be updated from time to time.
 - The price shown at checkout is the price that applies to that order.
 
 ### 12.4 Purchases and Payment
@@ -535,15 +709,18 @@ Must be descriptive, with a heading for each section, a short introductory parag
 - How a purchase is completed through checkout.
 - Payment is handled through the payment methods the website actually offers.
 - An order is confirmed only after successful payment.
+- Money buys credits, and credits unlock a level. The Credits section ends with the validity period: **credits are valid for 30 days from the date of purchase** (section 9A.4).
 
-### 12.5 Course Access
+### 12.5 Access to E-Learning Materials
 
-- Access is provided through the learner's account after successful payment.
-- Only describe the access method, duration and format the system actually supports.
+- The download link and access details are sent by email to the address given at checkout after payment is confirmed, and the material is also reachable through the platform.
+- Delivery is typically within 24 hours, and within 72 hours at the outside if the system is delayed.
+- Summarise the process in a few lines and link to the Delivery & Access Policy for the full detail (section 15). Do not contradict it.
+- Materials are for self-paced reading. There is nothing to attend and no live teaching.
 
 ### 12.6 Intellectual Property
 
-- Course materials, videos, text, graphics and branding belong to the company or their rightful owners.
+- E-learning materials, videos, text, graphics and branding belong to the company or their rightful owners.
 - Learners receive a personal, non-transferable right to use purchased materials for their own learning.
 
 ### 12.7 Acceptable Use
@@ -552,13 +729,13 @@ Users agree to:
 
 - Use the website and materials lawfully and respectfully
 - Use purchased content for personal learning only
-- Follow any instructions provided with the courses
+- Follow any instructions provided with the materials
 
 ### 12.8 Prohibited Activities
 
 Users must not:
 
-- Copy, download (unless allowed), share, resell or redistribute course content
+- Copy, download (unless allowed), share, resell or redistribute the e-learning materials
 - Share account access with others
 - Try to bypass payment or access controls
 - Interfere with the website's security or operation
@@ -570,12 +747,12 @@ Users must not:
 
 ### 12.10 Changes to the Website and Terms
 
-- Features, content and course information may be updated.
-- The terms may change, and the "Last updated" date will reflect this.
+- Features, content and material information may be updated.
+- The terms may change, and the version published on the page is always the one that applies.
 
 ### 12.11 Disclaimer
 
-- Courses are for educational purposes.
+- The e-learning materials are for educational purposes.
 - No guarantee of specific personal, professional, academic or financial results.
 
 ### 12.12 Limitation of Liability
@@ -599,7 +776,9 @@ Users must not:
 
 ## 13. Privacy Policy
 
-Descriptive, with headings, short paragraphs and bullet points. Show a "Last updated" date.
+> Figures, exact wording and the access rules for this page are in **section 11A**. This section describes what the page contains; 11A governs what it must say.
+
+Descriptive, with headings, short paragraphs and bullet points.
 
 ### 13.1 Introduction
 
@@ -620,7 +799,7 @@ Only list what the application really collects, for example:
 ### 13.3 How We Use Information
 
 - Creating and managing accounts
-- Processing orders and providing course access
+- Processing orders and sending access details and e-learning materials by email
 - Answering support requests
 - Sending newsletters to subscribers who opted in
 - Keeping the website secure and preventing fraud
@@ -668,7 +847,7 @@ Do not invent region-specific legal rights.
 
 ### 13.10 Changes to This Policy
 
-- Updates are shown with a new "Last updated" date.
+- The version published on the page is always the current one.
 
 ### 13.11 Contact
 
@@ -678,15 +857,17 @@ Do not invent region-specific legal rights.
 
 ## 14. Refund Policy
 
-Descriptive, with headings, short paragraphs and bullet points. Show a "Last updated" date.
+> Figures, exact wording and the access rules for this page are in **section 11A**. This section describes what the page contains; 11A governs what it must say.
+
+Descriptive, with headings, short paragraphs and bullet points.
 
 ### 14.1 Overview
 
-- The policy covers digital course purchases.
+- The policy covers purchases of digital e-learning materials and credits.
 
 ### 14.2 Eligibility
 
-- Explain when a refund may be considered, for example duplicate payments, technical problems that stop access, or a course not matching its description.
+- Explain when a refund may be considered, for example duplicate payments, technical problems that stop access, or material not matching its description.
 - Do not invent a refund period such as 7, 14 or 30 days unless the business has defined one.
 - Do not promise a guaranteed refund.
 
@@ -694,63 +875,105 @@ Descriptive, with headings, short paragraphs and bullet points. Show a "Last upd
 
 For example:
 
-- Courses that have been substantially accessed or completed
-- Requests based on a change of mind after access (unless business rules allow it)
+- Materials that have been substantially accessed or read
+- Requests based on a change of mind after the access email has been sent (unless business rules allow it)
 - Accounts suspended for breaking the Terms & Conditions
 
-### 14.4 How to Request a Refund
+### 14.4 Failure to Receive Access Information
+
+This section must exist on the Refund Policy page, and **every hour figure in it is 72 hours**. It is the one the learner reads when nothing arrived, so a shorter figure here would contradict the delivery rules in section 15.2.
+
+- If a learner has not received the access information for a purchased e-learning material within 72 hours of confirmed payment, they should contact support
+- If support cannot restore access, and the learner has not been able to use the material, a refund may be considered
+- Every occurrence of a waiting time in this section reads **72 hours**. Never write 24 hours here, in any language, even where an older version of the page did
+
+### 14.5 How to Request a Refund
 
 1. Contact support using the company email from the database.
 2. Include the order number, the email used for the purchase and the reason for the request.
 3. Wait for the request to be reviewed.
 
-Do not mention a dashboard refund button unless one exists.
+Do not mention a dashboard refund button unless one exists. Say that a learner who has not received, or cannot access, a purchased material should contact support after 72 hours, and use that same 72 hour figure everywhere it appears in this policy.
 
-### 14.5 Review and Processing
+### 14.6 Review and Processing
 
 - Every request is reviewed individually.
 - Approved refunds go back to the original payment method.
 - Processing time depends on the payment provider or bank.
 
-### 14.6 Contact
+### 14.7 Contact
 
 - Company name, email, address and phone from the `miscs` table.
 
 ---
 
-## 15. Delivery & Course Access Policy
+## 15. Delivery & Access Policy
 
-Descriptive, with headings, short paragraphs and bullet points. Show a "Last updated" date.
+> Figures, exact wording and the access rules for this page are in **section 11A**. This section describes what the page contains; 11A governs what it must say.
+
+Descriptive, with headings, short paragraphs and bullet points.
+
+The page is called **Delivery & Access Policy**. Do not use the old name "Delivery & Course Access Policy" in the title, the footer link, the breadcrumb or any link to it.
 
 ### 15.1 Digital Delivery
 
-- All courses are digital. Nothing is shipped physically.
+- All e-learning materials are digital. Nothing is shipped physically
+- Materials are read and studied at the learner's own pace. There is nothing to attend and no live teaching
 
-### 15.2 When Access Is Provided
+### 15.2 E-Learning Material Access & Delivery Process
 
-- Access is provided after payment is successfully confirmed.
-- Do not promise a specific delivery time unless the system defines one.
+These are the business rules for delivery and access. Every one of them must appear on this page, under this heading, in these words or a close and natural rewording in the page's language. Do not drop a point, soften it or add a promise that is not here.
 
-### 15.3 Where to Find Your Courses
+- **Delivery method:** once payment is confirmed, the download link and the access details are sent to the email address provided at checkout, and the material is also available through the platform, so the learner can download it and use it whenever they like
+- **Delivery timing:** e-learning materials and the applicable access information are typically made available within 24 hours of successful payment confirmation
+- **Possible delay:** delivery may occasionally be delayed by system processing, payment verification, technical issues, email service interruptions or circumstances beyond our reasonable control. Learners should allow up to 48 to 72 hours
+- **72 hour limit:** if a learner has not received, or cannot access, the purchased materials after 72 hours, they should contact support
 
-- Explain the real location, for example the account dashboard or "My Courses" page.
+The canonical wording for the delivery timing point, to be reworded naturally per page but never contradicted:
+
+> **Delivery Timing:** E-Learning Materials and applicable access information are typically made available within 24 hours after successful payment confirmation. Delivery may occasionally be delayed because of system processing, payment verification, technical issues, email service interruptions, or circumstances beyond our reasonable control. Please allow up to 48 to 72 hours for delivery. If you have not received or cannot access your purchased Materials after 72 hours, please contact us.
+
+Rules for these facts:
+
+- They are fixed business rules, so they are written as plain sentences in the lang files, not read from the database
+- The same facts are repeated wherever delivery or access is described: this page, the Terms & Conditions, the Refund Policy, the FAQ, the checkout page and the order confirmation screen and email
+- Never state a different figure anywhere. It is always "within 24 hours", "up to 48 to 72 hours" and "after 72 hours"
+- **72 hours is the outer limit quoted to learners.** Never write 24 hours where the text means the limit for reporting a problem, and never quote a shorter figure such as "a few minutes", "instant", "immediate" or "straight away" to make delivery sound faster
+- Never write "lifetime access", "unlimited access", "indefinitely", "forever" or "access any time". The material is downloadable and the learner keeps what they download; that is not the same as a promise of permanent access to the platform, so do not word it as one
+- Do not promise offline or downloadable access for a material that is not actually downloadable
+- **Never state how long access lasts.** No page gives a duration for access in hours, days or weeks. There is no access period to quote: credits expire, e-learning materials do not. The only figures quoted anywhere are the delivery times above and the 30 day credit validity in section 9A.4
+- **Duration-free wording such as "the applicable access period" is allowed, and should be kept.** It names the mechanism without promising a length, and it protects the business rather than binding it. Keep it where it already appears, for example a non-refundable ground ("failed to access the Materials within an applicable access period"), a remedy short of a refund ("extending the applicable access period") or a records-keeping responsibility. Never attach a number to it
+- **No page carries a section named for the access period.** Headings such as "Access Period", "14-Day Access Period" or "Expiration of Access" do not exist. If one is found, delete the whole section and renumber the rest of the page
+
+### 15.3 Where to Find Your E-Learning Materials
+
+- The access email sent to the address given at checkout is the main delivery. Tell the learner to check the inbox, and the spam or junk folder
+- Also name the real place in the account, for example the dashboard or "My Materials" page, only if the application really shows it there
 
 ### 15.4 Access Requirements
 
 - A registered account
+- Access to the email address used at checkout
 - A stable internet connection
 - A supported, up-to-date browser or device
 
-### 15.5 If Access Does Not Appear
+### 15.5 If the Email or Access Does Not Arrive
 
 1. Check the payment was completed.
-2. Log out and log back in.
-3. Check the email used for the purchase.
-4. Contact support with the order number if the problem continues.
+2. Check the spam or junk folder of the email address used at checkout.
+3. Check that the email address entered at checkout was correct.
+4. Allow up to 48 to 72 hours from payment, as explained above.
+5. Contact support with the order number if the material has still not arrived after 72 hours.
 
-### 15.6 Access Duration
+Where the policy page carries its own "Email Delivery Issues" section, **every hour figure in it reads 72 hours**. This is the section a learner reads when nothing arrived, so a shorter figure here contradicts section 15.2. Never write 24 hours in it, in any language, even where an earlier version of the page did.
 
-- Describe only what the system supports. Do not claim lifetime, offline or downloadable access unless it exists.
+### 15.6 Downloads and Keeping Your Materials
+
+- The download link and access details reach the learner within the delivery times set out in section 15.2
+- Once a material has been downloaded, the learner keeps the downloaded file and may use it whenever they like
+- Say nothing about how long a downloaded file remains usable, and never describe it as permanent, unlimited or indefinite
+- Do not say access to the platform renews, extends or can be restored unless the business has defined that. If a learner wants a level again, say only what the business allows, for example unlocking it again with credits
+- The delivery timing and the 72 hour limit are stated before purchase as well, on the material page and at checkout, so nobody is surprised by them
 
 ### 15.7 Contact
 
@@ -762,14 +985,19 @@ Descriptive, with headings, short paragraphs and bullet points. Show a "Last upd
 
 Group questions under headings. Answers must match how the website really works.
 
-- **Getting started:** What is this platform? Who are the courses for? Do I need an account?
-- **Courses and levels:** How are courses organised? How do I choose the right level? Can I buy more than one level?
-- **Payments:** How do I buy a course? Which payment methods are accepted? Is payment secure?
-- **Access:** How do I access my course? What if my course does not appear?
+- **Getting started:** What is this platform? Who are the e-learning materials for? Do I need an account?
+- **Materials and levels:** How are the materials organised? How do I choose the right level? Can I buy more than one level?
+- **Payments:** How do I buy an e-learning material? Which payment methods are accepted? Is payment secure?
+- **Access:** How do I receive my materials? How long does the email take to arrive? What if the email does not arrive?
+- **Credits:** How long are my credits valid? (30 days from the date of purchase, section 9A.4)
 - **Refunds and support:** How do refunds work? How do I contact support?
 - **Account and privacy:** How do I reset my password? How is my information handled?
 
 Keep answers short and link to the full policy page where relevant. Do not copy policy text word for word.
+
+The access answers must repeat the same facts as section 15: the download link and access details are emailed to the checkout address and are also available through the platform, delivery is typically within 24 hours, a system delay can stretch that to 48 to 72 hours, and support should be contacted if nothing has arrived after 72 hours. The credits answer states the 30 day validity from section 9A.4.
+
+The FAQ carries **no question asking how long access lasts**, because there is no answer to give. A "How long do I have access?" entry left over from an earlier version is replaced by the credits validity question, not answered with a duration.
 
 ---
 
@@ -782,7 +1010,7 @@ Every major page has its own:
 
 The meta description, Open Graph and Twitter tags are shared. One site-wide
 description covers every page, and a page only sets its own when it genuinely
-has something more specific to say, such as a category or course page that can
+has something more specific to say, such as a category or material page that can
 use the summary from the database.
 
 Rules:
@@ -798,9 +1026,9 @@ Rules:
 
 Suggested groups (only link routes that actually exist):
 
-- **Learning:** All Courses, Categories
+- **Learning:** All E-Learning Materials, Categories
 - **Company:** About Us, Contact Us, FAQ
-- **Policies:** Terms & Conditions, Privacy Policy, Refund Policy, Delivery & Course Access Policy
+- **Policies:** Terms & Conditions, Privacy Policy, Refund Policy, Delivery & Access Policy
 - **Account:** Login, Register, Dashboard
 
 Also include:
@@ -837,7 +1065,7 @@ Use the real `miscs` keys and home route name that exist in the project.
 
 ### Other footer text
 
-- Newsletter: a short label, a clear title and a description explaining what subscribers receive.
+- Newsletter: a short label, a clear title and a description explaining what subscribers receive. Describe new e-learning materials, never new classes or sessions.
 - The newsletter email error is translated. Add `novalidate` to the form so the browser's own English message is never shown, and show the translated message from JavaScript instead.
 - The payment methods image has translated ALT text.
 - The back-to-top button has a translated `aria-label`.
@@ -1013,7 +1241,7 @@ The success message follows section 2.6 exactly.
 
 | Field | Placeholder |
 |---|---|
-| Course search | Search courses |
+| Material search | Search e-learning materials |
 | Category filter | Choose a category |
 | Level filter | Choose a level |
 | Sort | Sort by |
@@ -1021,7 +1249,7 @@ The success message follows section 2.6 exactly.
 | Situation | Message |
 |---|---|
 | Search empty | Please enter a word to search. |
-| No results | No courses match your search. Try different words or browse all courses. |
+| No results | No materials match your search. Try different words or browse all e-learning materials. |
 
 ### 19.11 Credits Top-Up
 
@@ -1039,7 +1267,7 @@ The success message follows section 2.6 exactly.
 | Amount too high | The maximum is :max credits. |
 | Added to cart | Credits have been added to your cart. |
 
-### 19.12 Unlocking a Course Level
+### 19.12 Unlocking a Level
 
 | Situation | Message |
 |---|---|
@@ -1095,18 +1323,18 @@ Card number, expiry and security code fields provided by the payment provider ke
 </select>
 ```
 
-### 19.14 Course Reviews (if supported)
+### 19.14 Reviews (if supported)
 
 | Field | Placeholder |
 |---|---|
 | Rating | Choose a rating |
-| Review | Share your experience with this course |
+| Review | Share your experience with this material |
 
 | Situation | Message |
 |---|---|
 | Rating not chosen | Please choose a rating. |
 | Review empty | Please write your review. |
-| Not purchased | You can review this course after unlocking it. |
+| Not purchased | You can review this material after unlocking it. |
 | Success | Thank you for your review. |
 
 ### 19.15 General System Messages
@@ -1135,7 +1363,7 @@ Review and localize every customer-facing message in:
 - Login, registration and password reset
 - Contact form and newsletter
 - Cart, checkout and payment
-- Course access and account actions
+- Material delivery, access and account actions
 - Profile updates
 - AJAX responses, JavaScript alerts, modals and toast notifications
 
@@ -1147,9 +1375,9 @@ Messages should say clearly what happened and, for errors, what to do next.
 
 Explain what happened and offer a helpful next step.
 
-- **No courses found:** "No courses match your search right now." with a button to view all courses.
-- **No purchases yet:** "You have not purchased any courses yet." with a button to browse courses.
-- **No orders:** "You have no orders to show." with a button to explore courses.
+- **No materials found:** "No e-learning materials match your search right now." with a button to view all materials.
+- **No purchases yet:** "You have not purchased any e-learning materials yet." with a button to browse materials.
+- **No orders:** "You have no orders to show." with a button to explore e-learning materials.
 
 Never use messages such as `No data`.
 
@@ -1157,9 +1385,9 @@ Never use messages such as `No data`.
 
 ## 22. Breadcrumbs, Search and Filters
 
-- Breadcrumbs follow the real hierarchy, for example: Home → Category → Course → Level.
-- Breadcrumb labels are translated. Category and course names come from the database.
-- Search uses the real catalogue only. Placeholder, result and no-result messages are localized.
+- Breadcrumbs follow the real hierarchy, for example: Home → Category → Material → Level.
+- Breadcrumb labels are translated. Category and material names come from the database.
+- Search covers the real catalogue of e-learning materials only. Placeholder, result and no-result messages are localized.
 - Filters only use dimensions the backend supports, such as category and level.
 
 ---
@@ -1168,7 +1396,7 @@ Never use messages such as `No data`.
 
 - Use Font Awesome icons that clearly relate to the content (envelope for contact, book for learning, shield for privacy, and so on).
 - Do not use emoji as icons.
-- Use category and course images from the database.
+- Use category and material images from the database.
 - ALT text must be descriptive, localized where supported, and free of keyword stuffing.
 
 ---
@@ -1184,7 +1412,9 @@ Never use messages such as `No data`.
 
 ## 25. No False Claims or Fake Promises
 
-Only promise what the website really does. Avoid phrases such as "instant access", "lifetime access", "guaranteed results", "certified", "job-ready", "learn in 7 days", "100% satisfaction" or "the best platform" unless the application or business actually supports them.
+Only promise what the website really does. Avoid phrases such as "instant access", "lifetime access", "indefinitely", "guaranteed results", "certified", "job-ready", "learn in 7 days", "100% satisfaction" or "the best platform" unless the application or business actually supports them. "Lifetime access" and "indefinitely" are banned outright: they must not appear anywhere on the website, in any language, whatever the context.
+
+Delivery, access and credits are where exact figures are defined: delivery typically within 24 hours of confirmed payment, up to 48 to 72 hours if the system is delayed, support contacted after 72 hours (section 15.2), and credits valid for 30 days from the date of purchase (section 9A.4). Use those figures exactly, and do not improve on them.
 
 Never invent:
 
@@ -1192,7 +1422,11 @@ Never invent:
 - Instructor names or credentials
 - Certificates, accreditation, partnerships or awards
 - Success, employment or income results
-- Guaranteed refunds or guaranteed access periods
+- Guaranteed refunds
+- Any delivery time other than the figures defined in section 15.2, and any length of access at all
+- Any credit validity period other than the 30 days defined in section 9A.4
+- Permanent, unlimited or indefinite access, in any wording
+- Classes, lessons, live sessions, timetables, instructors or anything else the learner would attend (section 2.7)
 - Company registration numbers, legal entity names or jurisdictions
 
 If the data does not support a claim, do not write it.
@@ -1207,9 +1441,13 @@ Real mistakes this rule prevents:
 |---|---|---|
 | "Your cart has been kept" after a failed payment | Cart items are attached to the order before payment, so the cart is empty | "No credits were added. Please try buying your credits again." |
 | Payment method "Card" on every receipt | Orders unlocked with credits have no card payment | Show "Credits" for credit orders and "Card" for card payments |
-| "Free" on courses with no levels | No levels means nothing can be unlocked yet, not that it is free | "Levels coming soon" |
+| "Free" on materials with no levels | No levels means nothing can be unlocked yet, not that it is free | "Levels coming soon" |
 | "24/7 access" | Nothing in the system guarantees round-the-clock access | "Online · Self-paced learning" |
-| "Popular Courses" | There is no popularity data | "Featured Courses" |
+| "Popular Courses" | There is no popularity data, and "courses" implies attendance | "Featured Materials" |
+| "Instant access after payment" | The download link is emailed and is also available on the platform, typically within 24 hours of confirmed payment | "Your download link is emailed to you, normally within 24 hours of payment" |
+| "Lifetime access" or "access indefinitely" | Nothing in the system promises permanent access; the learner downloads the material and keeps the file | "Download your material and keep it to use whenever you like" |
+| "Your credits never expire" | Credits carry a 30 day validity from the date of purchase | "Credits are valid for 30 days from the date of purchase" |
+| "Enroll now" or "Join the class" | Nothing is attended or taught; the learner buys study material | "Get access" or "Unlock this level" |
 
 ---
 
@@ -1219,7 +1457,7 @@ Database values are for the system, not for customers. Always convert them into 
 
 - **Statuses:** map values such as `Completed`, `Pending`, `Failed` and `Payment Failed` to translated labels. Never output `ucwords($order->status)` directly.
 - **Level names:** map `Beginner`, `Intermediate`, `Advanced` and `Expert` to translated labels.
-- **Missing data:** never show `N/A`. Use a clear message such as "Level not found" or "Course no longer available".
+- **Missing data:** never show `N/A`. Use a clear message such as "Level not found" or "This material is no longer available".
 - **Dates:** use the language's own format with `translatedFormat()`, and store the format in the lang file.
 - **Counts:** use `trans_choice` so singular and plural are correct.
 
@@ -1270,7 +1508,7 @@ Text created or changed by JavaScript must be translated like any other text.
 
 ## 26. No Repetition
 
-Each page has its own purpose. Do not repeat the same paragraphs across the home page, category pages, course pages, About Us, FAQ, footer and policy pages. A short reference with a link is fine.
+Each page has its own purpose. Do not repeat the same paragraphs across the home page, category pages, material pages, About Us, FAQ, footer and policy pages. A short reference with a link is fine.
 
 ---
 
@@ -1295,7 +1533,7 @@ This is a content and presentation update. It must not change the database or br
 
 - Routes, controllers, models and services
 - Authentication, cart, checkout and payment integrations
-- Course access mechanisms, APIs and JavaScript functionality
+- Material delivery and access mechanisms, APIs and JavaScript functionality
 
 ### Where changes belong
 
@@ -1319,11 +1557,13 @@ If a content requirement seems to need a database change, stop, explain which st
 6. **Update views** to use the new keys.
 7. **Set tab titles** to plain page names only.
 8. **Localize JavaScript and validation messages.**
-9. **Write the Terms & Conditions and all three policy pages** with headings, paragraphs and bullet points.
+9. **Write the Terms & Conditions and all three policy pages** with headings, paragraphs and bullet points, including the delivery and access process in section 15.2 word for word in meaning.
 10. **Set the newsletter success message** exactly as defined.
 11. **Set the H1 and image ALT text** on each page, and the shared site description once.
 12. **Check that every link** points to a real route.
-13. **Delete unused translation keys** and confirm they are no longer referenced.
+13. **Sweep for old wording.** Search the views, lang files and JavaScript for "course", "class", "lesson", "enroll", "instructor", "attend", "session", and for 講座, 受講, 授業 and 講師 in Japanese. Replace every customer-facing hit with the approved terminology in section 2.7, and leave internal names alone.
+13a. **Sweep for durations and permanence claims.** Search the views, lang files, JavaScript and the policy page records for "lifetime", "indefinitely", "unlimited", "forever", "permanent", "2 weeks", "14 day", "14-day", "access period", "access lasts", and for 無期限, 永久, 2週間, 14日 and アクセス期間 in Japanese. Delete every promise of permanence outright. For a hit that names a length of access, remove the length; keep a duration-free phrase such as "the applicable access period" (section 15.2). Check the database-backed policy pages as well as the lang files, since the policy text lives in the `pages` table.
+14. **Delete unused translation keys** and confirm they are no longer referenced.
 
 ---
 
@@ -1338,13 +1578,23 @@ If a content requirement seems to need a database change, stop, explain which st
 - [ ] Credits are called "credits" everywhere, with prices and balances from the database
 - [ ] Checkout shows the billing descriptor text followed by the DBA image
 - [ ] Content is universal and fits any e-learning subject
-- [ ] Terms & Conditions, Privacy, Refund and Delivery pages are descriptive, with headings and bullet points
+- [ ] No customer-facing text calls the products "courses" or implies attending, enrolling, classes, lessons, sessions or instructors (section 2.7)
+- [ ] The Delivery & Access Policy states the delivery method, the "typically within 24 hours" timing, the "up to 48 to 72 hours" delay and the 72 hour contact point exactly as set out in section 15.2
+- [ ] The same delivery and access facts appear, unchanged, in the Terms & Conditions, the Refund Policy, the FAQ, at checkout and in the order confirmation
+- [ ] The 30 day credit validity appears in the Terms & Conditions credits section, on the top-up page and in the FAQ
+- [ ] The words "lifetime access" and "indefinitely" appear nowhere on the website, in any language
+- [ ] No page states how long access lasts, in any unit, in any language, and no page has a section named for an access period
+- [ ] Duration-free wording such as "the applicable access period" is left in place where it already appears, with no number attached
+- [ ] Every "contact us after X" figure reads 72 hours, including in any "Email Delivery Issues" and "Failure to Receive Access Information" section
+- [ ] The Terms & Conditions Credits section ends with the 30 day validity as its last bullet
+- [ ] The policy page, its footer link and its tab title all read "Delivery & Access Policy"
+- [ ] Terms & Conditions, Privacy, Refund and Delivery & Access pages are descriptive, with headings and bullet points
 - [ ] No bullet point ends with a full stop, in any language
 - [ ] Newsletter success message is exactly `Thank you for subscribing`
 - [ ] Copyright company name comes from the `miscs` table and links to the home page
 - [ ] Translation keys are short and simple (`file.key`)
 - [ ] No fake promises anywhere
-- [ ] Every claim about payments, cart, credits, access and emails matches what the code actually does
+- [ ] Every claim about payments, cart, credits, access and emails matches what the code actually does, and no delivery time or credit validity other than the figures in sections 15.2 and 9A.4 is promised
 - [ ] Page validation rules match the server validation rules
 - [ ] No raw database values (statuses, level names, `N/A`) are shown; dates and counts are translated
 - [ ] No English text inside JavaScript; all forms use `novalidate`
@@ -1356,7 +1606,7 @@ If a content requirement seems to need a database change, stop, explain which st
 - [ ] All images have ALT text
 - [ ] Every page has an H1 and descriptive image ALT text
 - [ ] Database structure and data are unchanged
-- [ ] Checkout, payments, authentication and course access still work
+- [ ] Checkout, payments, authentication and material access still work
 
 ---
 
@@ -1364,11 +1614,11 @@ If a content requirement seems to need a database change, stop, explain which st
 
 A visitor should quickly understand:
 
-1. What the platform offers
-2. What subjects and courses are available
+1. What the platform offers, and that it is self-paced study material rather than a class to attend
+2. What subjects and e-learning materials are available
 3. How skill levels differ
-4. How to choose and buy a course
-5. How to access purchased courses
+4. How to choose and buy an e-learning material
+5. How purchased materials arrive by email and how long that takes
 6. How refunds work
 7. How personal information is handled
 8. Where to get help

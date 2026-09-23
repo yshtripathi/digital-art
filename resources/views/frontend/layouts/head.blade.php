@@ -20,7 +20,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#5551ff">
+    <meta name="theme-color" content="#f50db4">
 
     {{-- SEO --}}
     <title>{{ $fullTitle }}</title>
@@ -52,12 +52,12 @@
     {{-- Fonts & icon libraries --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Noto+Sans+JP:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
 
-    {{-- Site styles --}}
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}?v={{ filemtime(public_path('css/theme.css')) }}">
+    {{-- Site styles: design tokens first, then component styles --}}
+    <link rel="stylesheet" href="{{ asset('css/variables.css') }}?v={{ filemtime(public_path('css/variables.css')) }}">
     @if(env('CONTENT_PROTECTION_ENABLED', true))
         <link rel="stylesheet" href="{{ asset('css/prevention.css') }}">
     @endif

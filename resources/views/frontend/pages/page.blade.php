@@ -5,8 +5,9 @@
     $rawDesc   = $page_data->page_desc ?? '';
     $cleanText = trim(preg_replace('/\s+/', ' ', strip_tags($rawDesc)));
     $metaDesc  = !empty($page_data->page_meta) ? $page_data->page_meta : \Illuminate\Support\Str::limit($cleanText, 160);
-    $wordCount = str_word_count($cleanText);
-    $readMinutes = max(1, (int) ceil($wordCount / 180));
+    $isCjk = (bool) preg_match('/[\p{Han}\p{Hiragana}\p{Katakana}]/u', $cleanText);
+    $wordCount = $isCjk ? mb_strlen(preg_replace('/\s+/u', '', $cleanText)) : str_word_count($cleanText);
+    $readMinutes = max(1, (int) ceil($wordCount / ($isCjk ? 500 : 200)));
 @endphp
 
 @section('title', $pageTitle)
@@ -74,7 +75,7 @@
                     </a>
                     <a href="{{ route('product-lists') }}" class="pg-footer__btn pg-footer__btn--primary">
                         <i class="fas fa-th-large" aria-hidden="true"></i>
-                        <span>{{ __('frontend.page.browse_courses') }}</span>
+                        <span>{{ __('frontend.page.browse') }}</span>
                     </a>
                 </div>
 
@@ -103,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
         copyBtn.addEventListener('click', function () {
             var label = copyBtn.querySelector('.js-copy-label');
             var origText = label ? label.textContent : '';
-            var copiedText = copyBtn.getAttribute('data-copied') || 'Copied!';
+            var copiedText = copyBtn.getAttribute('data-copied');
 
             navigator.clipboard.writeText(window.location.href).then(function () {
                 if (label) label.textContent = copiedText;

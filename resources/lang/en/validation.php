@@ -131,8 +131,35 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'name' => [
+            'required' => 'Please enter your full name.',
+            'string'   => 'Please enter your full name.',
+            'min'      => 'Your name must be at least :min characters long.',
+        ],
+        'email' => [
+            'required' => 'Please enter your email address.',
+            'string'   => 'Please enter a valid email address.',
+            'email'    => 'Please enter a valid email address.',
+            'unique'   => 'This email address is already registered. Please log in instead.',
+        ],
+        'password' => [
+            'required'  => 'Please enter your password.',
+            'min'       => 'Your password must be at least :min characters long.',
+            'confirmed' => 'The passwords you entered do not match.',
+        ],
+        'current_password' => [
+            'required' => 'Please enter your current password.',
+        ],
+        'new_password' => [
+            'required' => 'Please enter a new password.',
+            'min'      => 'Your new password must be at least :min characters long.',
+        ],
+        'new_confirm_password' => [
+            'same' => 'The passwords you entered do not match.',
+        ],
+        'captcha' => [
+            'required' => 'Please enter the security code shown in the image.',
+            'captcha'  => 'The security code is incorrect. Please try again with the new code.',
         ],
     ],
 

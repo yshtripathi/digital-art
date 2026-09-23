@@ -62,7 +62,7 @@
                                     <label class="fld__label" for="first_name">{{ __('frontend.checkout.first_name') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="fld__box">
                                         <i class="fas fa-user fld__icon" aria-hidden="true"></i>
-                                        <input type="text" name="first_name" id="first_name" autocomplete="given-name" class="fld__input" placeholder="{{ __('frontend.checkout.first_name_ph') }}" value="">
+                                        <input type="text" name="first_name" id="first_name" autocomplete="given-name" class="fld__input" placeholder="{{ __('frontend.checkout.first_name_ph') }}" value="{{ old('first_name') }}">
                                     </div>
                                     @error('first_name')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
@@ -71,7 +71,7 @@
                                     <label class="fld__label" for="last_name">{{ __('frontend.checkout.last_name') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="fld__box">
                                         <i class="fas fa-user fld__icon" aria-hidden="true"></i>
-                                        <input type="text" name="last_name" id="last_name" autocomplete="family-name" class="fld__input" placeholder="{{ __('frontend.checkout.last_name_ph') }}" value="">
+                                        <input type="text" name="last_name" id="last_name" autocomplete="family-name" class="fld__input" placeholder="{{ __('frontend.checkout.last_name_ph') }}" value="{{ old('last_name') }}">
                                     </div>
                                     @error('last_name')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
@@ -80,7 +80,7 @@
                                     <label class="fld__label" for="email">{{ __('frontend.checkout.email') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="fld__box">
                                         <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
-                                        <input type="email" name="email" id="email" autocomplete="email" class="fld__input" placeholder="{{ __('frontend.checkout.email_ph') }}" value="{{ auth()->user()->email ?? '' }}">
+                                        <input type="email" name="email" id="email" autocomplete="email" class="fld__input" placeholder="{{ __('frontend.checkout.email_ph') }}" value="{{ old('email', auth()->user()->email ?? '') }}">
                                     </div>
                                     @error('email')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
@@ -89,7 +89,7 @@
                                     <label class="fld__label" for="phone">{{ __('frontend.checkout.phone') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="fld__box">
                                         <i class="fas fa-phone-alt fld__icon" aria-hidden="true"></i>
-                                        <input type="tel" name="phone" id="phone" autocomplete="tel" inputmode="tel" class="fld__input" placeholder="{{ __('frontend.checkout.phone_ph') }}" value="{{ auth()->user()->phone ?? '' }}" pattern="[\d\+\-\(\)\s]{7,}" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')">
+                                        <input type="tel" name="phone" id="phone" autocomplete="tel" inputmode="numeric" class="fld__input" placeholder="{{ __('frontend.checkout.phone_ph') }}" value="{{ old('phone', auth()->user()->phone ?? '') }}" oninput="this.value = this.value.replace(/\D/g, '')">
                                     </div>
                                     @error('phone')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
@@ -98,7 +98,7 @@
                                     <label class="fld__label" for="address">{{ __('frontend.checkout.address') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="fld__box">
                                         <i class="fas fa-map-marker-alt fld__icon" aria-hidden="true"></i>
-                                        <input type="text" name="address1" id="address" autocomplete="street-address" class="fld__input" placeholder="{{ __('frontend.checkout.address_ph') }}" value="{{ auth()->user()->address ?? '' }}">
+                                        <input type="text" name="address1" id="address" autocomplete="street-address" class="fld__input" placeholder="{{ __('frontend.checkout.address_ph') }}" value="{{ old('address1', auth()->user()->address ?? '') }}">
                                     </div>
                                     @error('address1')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
@@ -107,7 +107,7 @@
                                     <label class="fld__label" for="city">{{ __('frontend.checkout.city') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="fld__box">
                                         <i class="fas fa-city fld__icon" aria-hidden="true"></i>
-                                        <input type="text" name="city" id="city" autocomplete="address-level2" class="fld__input" placeholder="{{ __('frontend.checkout.city_ph') }}" value="{{ auth()->user()->city ?? '' }}">
+                                        <input type="text" name="city" id="city" autocomplete="address-level2" class="fld__input" placeholder="{{ __('frontend.checkout.city_ph') }}" value="{{ old('city', auth()->user()->city ?? '') }}">
                                     </div>
                                     @error('city')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
@@ -116,7 +116,7 @@
                                     <label class="fld__label" for="post_code">{{ __('frontend.checkout.postcode') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="fld__box">
                                         <i class="fas fa-mail-bulk fld__icon" aria-hidden="true"></i>
-                                        <input type="text" name="post_code" id="post_code" autocomplete="postal-code" inputmode="numeric" class="fld__input" placeholder="{{ __('frontend.checkout.postcode_ph') }}" value="{{ auth()->user()->zip ?? '' }}">
+                                        <input type="text" name="post_code" id="post_code" autocomplete="postal-code" inputmode="numeric" class="fld__input" placeholder="{{ __('frontend.checkout.postcode_ph') }}" value="{{ old('post_code', auth()->user()->zip ?? '') }}">
                                     </div>
                                     @error('post_code')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
@@ -125,7 +125,7 @@
                                     <label class="fld__label" for="state">{{ __('frontend.checkout.state') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="fld__box">
                                         <i class="fas fa-map fld__icon" aria-hidden="true"></i>
-                                        <input type="text" name="state" id="state" autocomplete="address-level1" class="fld__input" placeholder="{{ __('frontend.checkout.state_ph') }}" value="{{ auth()->user()->state ?? '' }}">
+                                        <input type="text" name="state" id="state" autocomplete="address-level1" class="fld__input" placeholder="{{ __('frontend.checkout.state_ph') }}" value="{{ old('state', auth()->user()->state ?? '') }}">
                                     </div>
                                     @error('state')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
@@ -453,7 +453,7 @@
                                         <label class="fld__label" for="name_on_card">{{ __('frontend.checkout.card_name') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                         <div class="fld__box">
                                             <i class="fas fa-user fld__icon" aria-hidden="true"></i>
-                                            <input type="text" name="name" id="name_on_card" autocomplete="cc-name" class="fld__input" placeholder="{{ __('frontend.checkout.card_name_ph') }}">
+                                            <input type="text" name="name" id="name_on_card" autocomplete="cc-name" class="fld__input" placeholder="{{ __('frontend.checkout.card_name_ph') }}" value="{{ old('name') }}">
                                         </div>
                                         @error('name')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                     </div>
@@ -502,7 +502,7 @@
                                 <div>
                                     <label class="agree__row">
                                         <span class="tick">
-                                            <input type="checkbox" id="terms" name="terms" value="1">
+                                            <input type="checkbox" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : '' }}>
                                             <i class="fas fa-check" aria-hidden="true"></i>
                                         </span>
                                         <span class="agree__text">{{ __('frontend.checkout.agree_terms') }} <a href="{{ route('pages', 'terms-conditions') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.read_terms') }}</a></span>
@@ -513,7 +513,7 @@
                                 <div>
                                     <label class="agree__row">
                                         <span class="tick">
-                                            <input type="checkbox" id="privacy" name="privacy" value="1">
+                                            <input type="checkbox" id="privacy" name="privacy" value="1" {{ old('privacy') ? 'checked' : '' }}>
                                             <i class="fas fa-check" aria-hidden="true"></i>
                                         </span>
                                         <span class="agree__text">{{ __('frontend.checkout.agree_privacy') }} <a href="{{ route('pages', 'privacy-policy') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.read_privacy') }}</a></span>
@@ -524,10 +524,10 @@
                                 <div>
                                     <label class="agree__row">
                                         <span class="tick">
-                                            <input type="checkbox" id="delivery" name="delivery" value="1">
+                                            <input type="checkbox" id="delivery" name="delivery" value="1" {{ old('delivery') ? 'checked' : '' }}>
                                             <i class="fas fa-check" aria-hidden="true"></i>
                                         </span>
-                                        <span class="agree__text">{{ __('frontend.checkout.agree_delivery') }} <a href="{{ route('pages', 'delivery-policy') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.read_delivery') }}</a></span>
+                                        <span class="agree__text">{{ __('frontend.checkout.agree_access') }} <a href="{{ route('pages', 'delivery-policy') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.read_access') }}</a></span>
                                     </label>
                                     @error('delivery')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
@@ -535,13 +535,21 @@
                                 <div>
                                     <label class="agree__row">
                                         <span class="tick">
-                                            <input type="checkbox" id="refund" name="refund" value="1">
+                                            <input type="checkbox" id="refund" name="refund" value="1" {{ old('refund') ? 'checked' : '' }}>
                                             <i class="fas fa-check" aria-hidden="true"></i>
                                         </span>
                                         <span class="agree__text">{{ __('frontend.checkout.agree_refund') }} <a href="{{ route('pages', 'refund-policy') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.read_refund') }}</a></span>
                                     </label>
                                     @error('refund')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
+                            </div>
+
+                            <div class="co__facts">
+                                <p class="co__facts-title">{{ __('frontend.checkout.before_pay') }}</p>
+                                <ul class="co__facts-list">
+                                    <li><i class="fas fa-clock" aria-hidden="true"></i><span>{{ __('frontend.checkout.delivery_time') }}</span></li>
+                                    <li><i class="fas fa-bolt" aria-hidden="true"></i><span>{{ __('frontend.checkout.credit_valid') }}</span></li>
+                                </ul>
                             </div>
 
                             <div class="dba">
@@ -657,7 +665,7 @@
                 first_name: "required",
                 last_name: "required",
                 email: { required: true, email: true },
-                phone: { required: true, minlength: 10 },
+                phone: { required: true, digits: true },
                 address1: "required",
                 post_code: "required",
                 city: "required",
@@ -685,7 +693,7 @@
                 },
                 phone: {
                     required: @json(__('frontend.checkout.phone_req')),
-                    minlength: @json(__('frontend.checkout.phone_min', ['min' => 10]))
+                    digits: @json(__('frontend.checkout.phone_num'))
                 },
                 address1: @json(__('frontend.checkout.address_req')),
                 post_code: @json(__('frontend.checkout.postcode_req')),
@@ -699,7 +707,7 @@
                 cvv: @json(__('frontend.checkout.cvv_req')),
                 terms: @json(__('frontend.checkout.terms_req')),
                 privacy: @json(__('frontend.checkout.privacy_req')),
-                delivery: @json(__('frontend.checkout.delivery_req')),
+                delivery: @json(__('frontend.checkout.access_req')),
                 refund: @json(__('frontend.checkout.refund_req')),
                 captcha: @json(__('frontend.checkout.captcha_req'))
             }
@@ -721,6 +729,11 @@
     var year   = byId('expiry_year');
     var cvv    = byId('cvv');
     var preview = byId('coCard');
+    var country = byId('country');
+
+    if (country && @json(old('country', ''))) {
+        country.value = @json(old('country', ''));
+    }
 
     function digitsOnly(field, max) {
         if (!field) { return; }

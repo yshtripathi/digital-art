@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('description', __('frontend.home.meta'))
+@section('description', __('frontend.home.desc'))
 
 @section('main-content')
 @php
@@ -39,10 +39,10 @@
     }
 
     $hoSteps = [
-        ['n' => 1, 'i' => 'fa-layer-group'],
-        ['n' => 2, 'i' => 'fa-book-open'],
-        ['n' => 3, 'i' => 'fa-signal'],
-        ['n' => 6, 'i' => 'fa-lock-open'],
+        ['t' => 'step1_title', 'd' => 'step1_desc', 'i' => 'fa-layer-group'],
+        ['t' => 'pick_title', 'd' => 'pick_text', 'i' => 'fa-book-open'],
+        ['t' => 'step3_title', 'd' => 'step3_desc', 'i' => 'fa-signal'],
+        ['t' => 'step6_title', 'd' => 'start_text', 'i' => 'fa-lock-open'],
     ];
 @endphp
 
@@ -74,11 +74,11 @@
                 <span class="ho-hero__ink">{{ __('frontend.home.hero_title') }}</span>
                 <svg class="ho-hero__squiggle" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11c28-8 52-8 76-2s50 7 76 0 52-8 76-1 40 6 66 0"/></svg>
             </h1>
-            <p class="ho-hero__desc">{{ __('frontend.home.hero_desc') }}</p>
+            <p class="ho-hero__desc">{{ __('frontend.home.hero_text') }}</p>
 
             <div class="ho-hero__actions">
                 <a href="{{ route('product-lists') }}" class="btn btn--primary ho-hero__cta">
-                    <span>{{ __('frontend.home.hero_explore') }}</span>
+                    <span>{{ __('frontend.home.hero_browse') }}</span>
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
                 <a href="{{ route('points.topup') }}" class="btn btn--ghost">
@@ -91,15 +91,15 @@
         <div class="ho-collage">
             <figure class="ho-collage__item ho-collage__item--tall">
                 <img src="{{ asset('assets/images/home-hero-mobile.webp') }}" width="800" height="1200"
-                     alt="{{ __('frontend.home.hero_alt2') }}" fetchpriority="high" decoding="async">
+                     alt="{{ __('frontend.home.alt_phone') }}" fetchpriority="high" decoding="async">
             </figure>
             <figure class="ho-collage__item ho-collage__item--wide">
                 <img src="{{ asset('assets/images/home-hero-studio.webp') }}" width="1200" height="800"
-                     alt="{{ __('frontend.home.hero_alt1') }}" fetchpriority="high" decoding="async">
+                     alt="{{ __('frontend.home.alt_studio') }}" fetchpriority="high" decoding="async">
             </figure>
             <figure class="ho-collage__item ho-collage__item--small">
                 <img src="{{ asset('assets/images/home-hero-workshop.webp') }}" width="1000" height="665"
-                     alt="{{ __('frontend.home.hero_alt3') }}" decoding="async">
+                     alt="{{ __('frontend.home.alt_light') }}" decoding="async">
             </figure>
 
             <ul class="ho-floats">
@@ -132,10 +132,9 @@
             <header class="ho-head">
                 <div>
                     <h2 id="hoCatsTitle" class="ho-head__title">{{ __('frontend.home.cats_title') }}</h2>
-                    <p class="ho-head__desc">{{ __('frontend.home.cats_desc') }}</p>
                 </div>
                 <a href="{{ route('product-lists') }}" class="ho-link">
-                    <span>{{ __('frontend.home.cats_all') }}</span>
+                    <span>{{ __('frontend.home.cats_browse') }}</span>
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </header>
@@ -144,16 +143,12 @@
                 @foreach($hoCategories as $cat)
                     <li>
                         <a href="{{ route('product-lists', $cat->slug) }}" class="ho-cat">
-                            <span class="ho-cat__media">
-                                @if($cat->photo)
-                                    <img src="{{ asset(ltrim($cat->photo, '/')) }}" alt="" loading="lazy" decoding="async">
-                                @else
-                                    <span class="ho-cat__empty" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
-                                @endif
+                            <span class="ho-cat__media" aria-hidden="true">
+                                <i class="fas fa-layer-group"></i>
                             </span>
                             <span class="ho-cat__body">
                                 <span class="ho-cat__name">{{ $cat->title }}</span>
-                                <span class="ho-cat__count">{{ trans_choice('frontend.home.cats_count', $cat->products_count ?? 0, ['count' => $cat->products_count ?? 0]) }}</span>
+                                <span class="ho-cat__count">{{ trans_choice('frontend.home.cats_total', $cat->products_count ?? 0, ['count' => $cat->products_count ?? 0]) }}</span>
                             </span>
                             <span class="ho-cat__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
                         </a>
@@ -169,14 +164,14 @@
         <div class="ho__wrap">
             <header class="ho-head">
                 <div>
-                    <h2 id="hoCoursesTitle" class="ho-head__title">{{ __('frontend.home.featured_title') }}</h2>
-                    <p class="ho-head__desc">{{ __('frontend.home.featured_desc') }}</p>
+                    <h2 id="hoCoursesTitle" class="ho-head__title">{{ __('frontend.home.featured_head') }}</h2>
+                    <p class="ho-head__desc">{{ __('frontend.home.featured_text') }}</p>
                 </div>
                 <div class="ho-arrows">
-                    <button type="button" class="ho-arrow" data-slider-prev aria-label="{{ __('frontend.home.prev') }}">
+                    <button type="button" class="ho-arrow" data-slider-prev aria-label="{{ __('frontend.home.prev_item') }}">
                         <i class="fas fa-arrow-left" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="ho-arrow" data-slider-next aria-label="{{ __('frontend.home.next') }}">
+                    <button type="button" class="ho-arrow" data-slider-next aria-label="{{ __('frontend.home.next_item') }}">
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -226,7 +221,7 @@
 
             <div class="ho-foot">
                 <a href="{{ route('product-lists') }}" class="btn btn--ghost">
-                    <span>{{ __('frontend.home.cats_all') }}</span>
+                    <span>{{ __('frontend.home.cats_browse') }}</span>
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
@@ -239,8 +234,8 @@
         <header class="ho-head ho-head--center">
             <div>
                 <p class="ho-eyebrow">{{ __('frontend.home.steps_label') }}</p>
-                <h2 id="hoStepsTitle" class="ho-head__title">{{ __('frontend.home.steps_title') }}</h2>
-                <p class="ho-head__desc">{{ __('frontend.home.steps_desc') }}</p>
+                <h2 id="hoStepsTitle" class="ho-head__title">{{ __('frontend.home.steps_head') }}</h2>
+                <p class="ho-head__desc">{{ __('frontend.home.steps_text') }}</p>
             </div>
         </header>
 
@@ -251,8 +246,8 @@
                         <span class="ho-step__icon" aria-hidden="true"><i class="fas {{ $s['i'] }}"></i></span>
                         <span class="ho-step__num" aria-hidden="true">{{ sprintf('%02d', $i + 1) }}</span>
                     </span>
-                    <h3 class="ho-step__title">{{ __('frontend.home.step' . $s['n'] . '_title') }}</h3>
-                    <p class="ho-step__desc">{{ __('frontend.home.step' . $s['n'] . '_desc') }}</p>
+                    <h3 class="ho-step__title">{{ __('frontend.home.' . $s['t']) }}</h3>
+                    <p class="ho-step__desc">{{ __('frontend.home.' . $s['d']) }}</p>
                 </li>
             @endforeach
         </ol>
@@ -278,7 +273,7 @@
         <div class="ho-watch__text">
             <p class="ho-eyebrow">{{ __('frontend.home.watch_label') }}</p>
             <h2 id="hoWatchTitle" class="ho-head__title">{{ __('frontend.home.watch_title') }}</h2>
-            <p class="ho-head__desc">{{ __('frontend.home.watch_desc') }}</p>
+            <p class="ho-head__desc">{{ __('frontend.home.watch_text') }}</p>
 
             <ul class="ho-watch__list">
                 <li class="ho-watch__item">
@@ -287,7 +282,7 @@
                 </li>
                 <li class="ho-watch__item">
                     <span class="ho-watch__icon" aria-hidden="true"><i class="fas fa-redo-alt"></i></span>
-                    <span>{{ __('frontend.home.watch_point2') }}</span>
+                    <span>{{ __('frontend.home.watch_pace') }}</span>
                 </li>
                 <li class="ho-watch__item">
                     <span class="ho-watch__icon" aria-hidden="true"><i class="fas fa-list-ul"></i></span>
@@ -296,7 +291,7 @@
             </ul>
 
             <a href="{{ route('product-lists') }}" class="btn btn--primary ho-watch__cta">
-                <span>{{ __('frontend.home.hero_explore') }}</span>
+                <span>{{ __('frontend.home.hero_browse') }}</span>
                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
             </a>
         </div>
@@ -308,7 +303,7 @@
         <div class="ho-credits__text">
             <p class="ho-eyebrow ho-eyebrow--light">{{ $rateNote }}</p>
             <h2 id="hoCreditsTitle" class="ho-credits__title">{{ __('frontend.topup.tiers_title') }}</h2>
-            <p class="ho-credits__desc">{{ __('frontend.topup.intro') }}</p>
+            <p class="ho-credits__desc">{{ __('frontend.topup.lead') }}</p>
             <a href="{{ route('points.topup') }}" class="ho-credits__cta">
                 <i class="fas fa-bolt" aria-hidden="true"></i>
                 <span>{{ __('frontend.home.credits_btn') }}</span>

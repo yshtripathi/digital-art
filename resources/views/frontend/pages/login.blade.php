@@ -19,7 +19,7 @@
             </a>
             <div class="auth__art-inner">
                 <p class="auth__badge">{{ __('frontend.login.label') }}</p>
-                <p class="auth__lead">{{ __('frontend.login.aside') }}</p>
+                <p class="auth__lead">{{ __('frontend.login.lead') }}</p>
             </div>
         </div>
 
@@ -125,7 +125,7 @@
                 },
                 email: {
                     required: @json(__('frontend.login.email_req')),
-                    email: @json(__('frontend.login.email_valid'))
+                    email: @json(__('frontend.login.email_bad'))
                 }
             }
         });

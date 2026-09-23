@@ -18,7 +18,7 @@
 
     $bcLinks = [
         ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
-        ['name' => __('frontend.course.courses'), 'url' => route('product-lists')],
+        ['name' => __('frontend.course.materials'), 'url' => route('product-lists')],
     ];
     if ($cdCategory) {
         $bcLinks[] = ['name' => $cdCategory->title, 'url' => route('product-lists', $cdCategory->slug)];
@@ -104,6 +104,20 @@
                             <i class="fas fa-bolt" aria-hidden="true"></i>
                             <span>{{ __('frontend.course.unlock') }}</span>
                         </li>
+                        @auth
+                            <li class="cd-fact">
+                                <i class="fas fa-wallet" aria-hidden="true"></i>
+                                <span>{{ __('frontend.course.balance', ['count' => number_format(auth()->user()->points_balance ?? 0)]) }}</span>
+                            </li>
+                        @endauth
+                        <li class="cd-fact">
+                            <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
+                            <span>{{ __('frontend.course.deliver') }}</span>
+                        </li>
+                        <li class="cd-fact">
+                            <i class="fas fa-headset" aria-hidden="true"></i>
+                            <span>{{ __('frontend.course.deliver_help') }}<a href="{{ route('contact') }}">{{ __('frontend.course.contact') }}</a></span>
+                        </li>
                     </ul>
 
                     <p class="cd-note">
@@ -115,7 +129,7 @@
 
             @if($product_detail->description || $product_detail->summary)
                 <section class="cd-about" aria-labelledby="cdAboutTitle">
-                    <h2 id="cdAboutTitle" class="cd-section-title">{{ __('frontend.course.about') }}</h2>
+                    <h2 id="cdAboutTitle" class="cd-section-title">{{ __('frontend.course.about_material') }}</h2>
                     <div class="cd-prose">
                         @if($product_detail->description)
                             {!! nl2br(e($product_detail->description)) !!}

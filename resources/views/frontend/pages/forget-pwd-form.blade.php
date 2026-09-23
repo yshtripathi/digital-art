@@ -19,7 +19,7 @@
             </a>
             <div class="auth__art-inner">
                 <p class="auth__badge">{{ __('frontend.forgot.label') }}</p>
-                <p class="auth__lead">{{ __('frontend.forgot.aside') }}</p>
+                <p class="auth__lead">{{ __('frontend.forgot.lead') }}</p>
             </div>
         </div>
 
@@ -76,7 +76,7 @@
                         @endif
 
                         <button type="submit" name="submit-form" class="btn btn--primary auth__submit">
-                            {{ __('frontend.forgot.submit') }}
+                            {{ __('frontend.forgot.send') }}
                             <i class="fas fa-paper-plane" aria-hidden="true"></i>
                         </button>
                     </div>

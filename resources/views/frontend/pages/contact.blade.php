@@ -11,7 +11,6 @@
 ])
 
 @php
-    $ctPhone   = $misc['Company Phone'] ?? __('frontend.company.phone');
     $ctEmail   = $misc['Company Email'] ?? __('frontend.company.email');
     $ctAddress = $misc['Company Address'] ?? __('frontend.company.address');
     $ctCompany = $misc['Company Name'] ?? __('frontend.company.name');
@@ -23,18 +22,11 @@
         <aside class="contact__aside">
             <div>
                 <p class="contact__kicker">{{ __('frontend.contact.info_label') }}</p>
-                <p class="contact__lead">{{ __('frontend.contact.info_title') }}</p>
+                <p class="contact__lead">{{ __('frontend.contact.info_lead') }}</p>
             </div>
 
             <div class="contact__card">
                 <ul class="contact__rows">
-                    <li class="contact__row">
-                        <span class="contact__tile"><i class="fas fa-phone-alt" aria-hidden="true"></i></span>
-                        <span>
-                            <span class="contact__label">{{ __('frontend.contact.phone') }}</span>
-                            <a href="tel:{{ $ctPhone }}" class="contact__value">{{ $ctPhone }}</a>
-                        </span>
-                    </li>
                     <li class="contact__row">
                         <span class="contact__tile"><i class="fas fa-envelope" aria-hidden="true"></i></span>
                         <span>
@@ -62,7 +54,16 @@
 
         <div class="contact__form">
             <h2 class="contact__title">{{ __('frontend.contact.form_title') }}</h2>
-            <p class="contact__desc">{{ __('frontend.contact.form_desc') }}</p>
+            <p class="contact__desc">{{ __('frontend.contact.form_text') }}</p>
+
+            <div class="contact__reasons">
+                <p class="contact__reasons-title">{{ __('frontend.contact.reasons_title') }}</p>
+                <ul class="contact__reasons-list">
+                    @foreach(__('frontend.contact.reasons') as $reason)
+                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{{ $reason }}</span></li>
+                    @endforeach
+                </ul>
+            </div>
 
             <form method="POST" action="{{ route('contact.send') }}" id="contactform" novalidate>
                 @csrf

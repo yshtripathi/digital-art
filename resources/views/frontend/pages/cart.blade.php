@@ -76,7 +76,7 @@
 
                                 <div class="cr-item__body">
                                     <span class="cr-chip {{ $cart->product ? '' : 'cr-chip--accent' }}">
-                                        {{ $cart->product ? __('frontend.cart.tag_course') : __('frontend.cart.tag_credits') }}
+                                        {{ $cart->product ? __('frontend.cart.tag_material') : __('frontend.cart.tag_credits') }}
                                     </span>
 
                                     @if($item_link)
@@ -108,7 +108,7 @@
                     @if(Helper::totalCartPoints() > 0)
                         <a href="{{ route('product-lists') }}" class="cr-back">
                             <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                            <span>{{ __('frontend.cart.browse') }}</span>
+                            <span>{{ __('frontend.cart.browse_all') }}</span>
                         </a>
                     @endif
                 </div>
@@ -152,7 +152,7 @@
             <div class="cr-empty">
                 <span class="cr-empty__icon" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
                 <h2 class="cr-empty__title">{{ __('frontend.cart.empty_title') }}</h2>
-                <p class="cr-empty__desc">{{ __('frontend.cart.empty_desc') }}</p>
+                <p class="cr-empty__desc">{{ __('frontend.cart.empty_text') }}</p>
                 <div class="cr-empty__actions">
                     <a href="{{ route('points.topup') }}" class="btn btn--primary">
                         <i class="fas fa-bolt" aria-hidden="true"></i>
@@ -160,7 +160,7 @@
                     </a>
                     <a href="{{ route('product-lists') }}" class="btn btn--ghost">
                         <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                        <span>{{ __('frontend.cart.empty_courses') }}</span>
+                        <span>{{ __('frontend.cart.empty_materials') }}</span>
                     </a>
                 </div>
             </div>

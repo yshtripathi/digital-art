@@ -175,7 +175,7 @@
                 },
                 email: {
                     required: @json(__('frontend.register.email_req')),
-                    email: @json(__('frontend.register.email_valid'))
+                    email: @json(__('frontend.register.email_bad'))
                 },
                 @if(env('CAPTCHA_ENABLED', true))
                 captcha: @json(__('frontend.register.captcha_req'))

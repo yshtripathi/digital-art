@@ -48,7 +48,7 @@
                 </button>
                 <button type="button" role="tab" class="dnav__item" data-tab="redeemed" aria-selected="false" aria-controls="panel-redeemed">
                     <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                    <span>{{ __('frontend.dashboard.tab_courses') }}</span>
+                    <span>{{ __('frontend.dashboard.tab_materials') }}</span>
                     <span class="dnav__count">{{ $redeemedCount }}</span>
                 </button>
                 <button type="button" role="tab" class="dnav__item" data-tab="password" aria-selected="false" aria-controls="panel-password">
@@ -84,10 +84,10 @@
 
                 <div class="fig">
                     <span class="fig__icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
-                    <span class="fig__label">{{ __('frontend.dashboard.unlocked') }}</span>
+                    <span class="fig__label">{{ __('frontend.dashboard.unlocked_levels') }}</span>
                     <span class="fig__value">{{ $redeemedCount }}</span>
                     <a href="{{ route('product-lists') }}" class="fig__link">
-                        {{ __('frontend.dashboard.browse') }}
+                        {{ __('frontend.dashboard.browse_all') }}
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -143,7 +143,7 @@
                     @else
                         <div class="blank">
                             <span class="blank__icon" aria-hidden="true"><i class="fas fa-box-open"></i></span>
-                            <p>{{ __('frontend.dashboard.purchases_empty') }}</p>
+                            <p>{{ __('frontend.dashboard.purchases_none') }}</p>
                             <a href="{{ route('points.topup') }}" class="btn btn--primary">
                                 <i class="fas fa-bolt" aria-hidden="true"></i>
                                 {{ __('frontend.dashboard.buy') }}
@@ -156,7 +156,7 @@
             <div class="panel" id="panel-redeemed" role="tabpanel" data-panel="redeemed" hidden>
                 <div class="panel__head">
                     <span class="panel__num"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
-                    <h2 class="panel__title">{{ __('frontend.dashboard.courses_title') }}</h2>
+                    <h2 class="panel__title">{{ __('frontend.dashboard.materials_title') }}</h2>
                 </div>
                 <div class="panel__body">
                     @if($redeemedCount > 0)
@@ -199,7 +199,7 @@
                                             </span>
                                         </div>
 
-                                        <h3 class="course__title">{{ $product ? $product->title : __('frontend.dashboard.no_course') }}</h3>
+                                        <h3 class="course__title">{{ $product ? $product->title : __('frontend.dashboard.no_material') }}</h3>
 
                                         <div class="course__meta">
                                             <span><i class="fas fa-hashtag" aria-hidden="true"></i> {{ $order->order_number }}</span>
@@ -208,7 +208,7 @@
 
                                         @if($product)
                                             <a href="{{ route('product-detail', $product->slug) }}" class="btn btn--ghost btn--sm course__btn">
-                                                {{ __('frontend.dashboard.view_course') }}
+                                                {{ __('frontend.dashboard.view_material') }}
                                                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                             </a>
                                         @endif
@@ -219,10 +219,10 @@
                     @else
                         <div class="blank">
                             <span class="blank__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
-                            <p>{{ __('frontend.dashboard.courses_empty') }}</p>
+                            <p>{{ __('frontend.dashboard.materials_empty') }}</p>
                             <a href="{{ route('product-lists') }}" class="btn btn--primary">
                                 <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                                {{ __('frontend.dashboard.browse') }}
+                                {{ __('frontend.dashboard.browse_all') }}
                             </a>
                         </div>
                     @endif
@@ -236,7 +236,7 @@
                 </div>
                 <div class="panel__body">
                     <div class="pwd">
-                        <form action="{{ route('change.password') }}" method="POST">
+                        <form action="{{ route('change.password') }}" method="POST" id="pwdForm" novalidate>
                             @csrf
 
                             <div class="pwd__fields">
@@ -332,6 +332,57 @@
     @if($errors->any())
         open('password');
     @endif
+
+    var pwdForm = document.getElementById('pwdForm');
+
+    if (pwdForm) {
+        var pwdText = {
+            current: @json(__('frontend.dashboard.current_req')),
+            fresh: @json(__('frontend.dashboard.new_req')),
+            short: @json(__('frontend.dashboard.new_min', ['min' => 8])),
+            match: @json(__('frontend.dashboard.match'))
+        };
+
+        var clearNote = function (field) {
+            field.classList.remove('is-invalid');
+            var note = field.closest('.fld').querySelector('[data-live-error]');
+            if (note) { note.remove(); }
+        };
+
+        var addNote = function (field, text) {
+            field.classList.add('is-invalid');
+            var note = document.createElement('span');
+            note.className = 'fld__err';
+            note.setAttribute('data-live-error', '');
+            note.innerHTML = '<i class="fas fa-info-circle" aria-hidden="true"></i> ';
+            note.appendChild(document.createTextNode(text));
+            field.closest('.fld').appendChild(note);
+        };
+
+        pwdForm.addEventListener('submit', function (event) {
+            var current = document.getElementById('current_password');
+            var fresh = document.getElementById('new_password');
+            var again = document.getElementById('new_confirm_password');
+            var first = null;
+
+            [current, fresh, again].forEach(clearNote);
+
+            var fail = function (field, text) {
+                addNote(field, text);
+                first = first || field;
+            };
+
+            if (!current.value) { fail(current, pwdText.current); }
+            if (!fresh.value) { fail(fresh, pwdText.fresh); }
+            else if (fresh.value.length < 8) { fail(fresh, pwdText.short); }
+            if (again.value !== fresh.value) { fail(again, pwdText.match); }
+
+            if (first) {
+                event.preventDefault();
+                first.focus();
+            }
+        });
+    }
 
     document.addEventListener('click', function (event) {
         var button = event.target.closest('[data-pass-toggle]');

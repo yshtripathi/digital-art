@@ -1,6 +1,6 @@
 @extends('frontend.layouts.main')
 @section('title', __('frontend.topup.title'))
-@section('description', __('frontend.topup.meta'))
+@section('description', __('frontend.topup.desc'))
 
 @section('main-content')
 @include('frontend.layouts.breadcrumb', [
@@ -50,7 +50,7 @@
     <div class="tp__wrap">
 
         <header class="tp-intro">
-            <p class="tp-intro__text">{{ __('frontend.topup.intro') }}</p>
+            <p class="tp-intro__text">{{ __('frontend.topup.lead') }}</p>
             <div class="tp-intro__facts">
                 <span class="tp-rate">
                     <i class="fas fa-exchange-alt" aria-hidden="true"></i>
@@ -58,7 +58,11 @@
                 </span>
                 <p class="tp-notice">
                     <i class="fas fa-info-circle" aria-hidden="true"></i>
-                    <span><strong>{{ __('frontend.topup.note_title') }}</strong> {{ __('frontend.topup.note_text') }}</span>
+                    <span><strong>{{ __('frontend.topup.note_title') }}</strong> {{ __('frontend.topup.note_body') }}</span>
+                </p>
+                <p class="tp-notice tp-notice--valid">
+                    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                    <span>{{ __('frontend.topup.validity') }}</span>
                 </p>
             </div>
         </header>
@@ -134,6 +138,11 @@
                     </button>
 
                     <p class="tp-secure">
+                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                        <span>{{ __('frontend.topup.validity') }}</span>
+                    </p>
+
+                    <p class="tp-secure">
                         <i class="fas fa-lock" aria-hidden="true"></i>
                         <span>{{ __('frontend.topup.secure') }}</span>
                     </p>
@@ -160,7 +169,7 @@
                     <span class="tp-step__icon" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
                     <span class="tp-step__num" aria-hidden="true">03</span>
                     <h3 class="tp-step__title">{{ __('frontend.topup.step3_title') }}</h3>
-                    <p class="tp-step__desc">{{ __('frontend.topup.step3_desc') }}</p>
+                    <p class="tp-step__desc">{{ __('frontend.topup.step3_text') }}</p>
                 </li>
             </ol>
         </section>

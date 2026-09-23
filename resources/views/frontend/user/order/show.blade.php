@@ -31,6 +31,7 @@
             };
             $created = $order->created_at->locale(app()->getLocale());
             $paidWithCredits = str_starts_with((string) $order->order_number, 'ORD-PTS-');
+            $creditsUsed = $items->sum('points');
         @endphp
 
         <div class="rcpt__grid">
@@ -42,7 +43,7 @@
                             <i class="fas fa-receipt" aria-hidden="true"></i>
                             {{ __('frontend.receipt.receipt') }}
                         </span>
-                        <h1 class="ticket__no">{{ $order->order_number }}</h1>
+                        <p class="ticket__no">{{ $order->order_number }}</p>
                         <span class="ticket__date">
                             <i class="far fa-calendar" aria-hidden="true"></i>
                             {{ $created->translatedFormat(__('frontend.receipt.head_format')) }}
@@ -67,15 +68,28 @@
                             @php
                                 $isCourse = $item->product && $item->product_id < 1000;
                                 $itemTitle = $isCourse ? $item->product->title : __('frontend.receipt.package');
+                                $itemLevel = null;
+                                if ($isCourse) {
+                                    $lvl = \App\Models\ProductLevel::where('course_id', $item->product_id)->where('price_in_points', $item->points)->first();
+                                    if ($lvl) {
+                                        $lvlKey = 'frontend.receipt.levels.' . strtolower($lvl->skill_level);
+                                        $itemLevel = Lang::has($lvlKey) ? __($lvlKey) : ucfirst($lvl->skill_level);
+                                    }
+                                }
                             @endphp
                             <li class="item">
                                 <span class="item__icon">
                                     <i class="fas {{ $isCourse ? 'fa-graduation-cap' : 'fa-bolt' }}" aria-hidden="true"></i>
                                 </span>
-                                <span class="item__title">{{ $itemTitle }}</span>
+                                <span class="item__title">
+                                    {{ $itemTitle }}
+                                    @if($itemLevel)
+                                        <span class="item__level">{{ $itemLevel }}</span>
+                                    @endif
+                                </span>
                                 <span class="chip">
                                     <i class="fas fa-bolt" aria-hidden="true"></i>
-                                    {{ number_format($item->points) }}
+                                    {{ number_format($item->points) }} {{ __('frontend.receipt.unit') }}
                                 </span>
                             </li>
                         @endforeach
@@ -128,8 +142,13 @@
             <aside class="rcpt__rail">
 
                 <div class="total">
-                    <span class="total__label">{{ __('frontend.receipt.total') }}</span>
-                    <strong class="total__value">{!! $totalFmt !!}</strong>
+                    @if($paidWithCredits)
+                        <span class="total__label">{{ __('frontend.receipt.used') }}</span>
+                        <strong class="total__value"><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($creditsUsed) }} {{ __('frontend.receipt.unit') }}</strong>
+                    @else
+                        <span class="total__label">{{ __('frontend.receipt.total') }}</span>
+                        <strong class="total__value">{!! $totalFmt !!}</strong>
+                    @endif
                 </div>
 
                 <div class="stats">
@@ -172,7 +191,7 @@
             <div class="ticket">
                 <div class="blank">
                     <span class="blank__icon" aria-hidden="true"><i class="fas fa-file-invoice"></i></span>
-                    <h1 class="ticket__no">{{ __('frontend.receipt.missing') }}</h1>
+                    <h2 class="ticket__no">{{ __('frontend.receipt.missing') }}</h2>
                     <p>{{ __('frontend.receipt.missing_text') }}</p>
                     <a href="{{ route('user') }}" class="btn btn--primary">
                         <i class="fas fa-arrow-left" aria-hidden="true"></i>

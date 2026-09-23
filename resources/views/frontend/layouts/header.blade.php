@@ -249,14 +249,9 @@
                 </summary>
                 <div class="acc__body">
                     @forelse($navCategories as $cat)
-                        @php $catPhoto = $cat->photo ? explode(',', $cat->photo)[0] : null; @endphp
                         <a class="catrow" href="{{ route('product-lists', $cat->slug) }}">
-                            <span class="catrow__thumb">
-                                @if($catPhoto)
-                                    <img src="{{ asset($catPhoto) }}" alt="" loading="lazy">
-                                @else
-                                    <i class="fas fa-book-open" aria-hidden="true"></i>
-                                @endif
+                            <span class="catrow__thumb" aria-hidden="true">
+                                <i class="fas fa-layer-group"></i>
                             </span>
                             <span>{{ $cat->title }}</span>
                             <i class="fas fa-chevron-right catrow__go" aria-hidden="true"></i>

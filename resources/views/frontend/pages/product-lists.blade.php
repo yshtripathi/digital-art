@@ -2,16 +2,16 @@
 
 @if(isset($category->title) && $category->title)
     @section('title', $category->title)
-    @section('description', $category->summary)
+    @section('description', __('frontend.catalog.desc'))
 @else
-    @section('title', __('frontend.catalog.title'))
-    @section('description', __('frontend.catalog.description'))
+    @section('title', __('frontend.catalog.name'))
+    @section('description', __('frontend.catalog.desc'))
 @endif
 
 @section('main-content')
 @php
     $isCat = isset($category->title) && $category->title;
-    $bcTitle = $isCat ? $category->title : __('frontend.catalog.title');
+    $bcTitle = $isCat ? $category->title : __('frontend.catalog.name');
     $allCategories = \App\Models\Category::where('status', 'active')
         ->where('is_parent', 1)
         ->orderBy('title', 'ASC')
@@ -25,7 +25,7 @@
     'title' => $bcTitle,
     'links' => [
         ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
-        ['name' => __('frontend.catalog.title'), 'url' => route('product-lists')],
+        ['name' => __('frontend.catalog.name'), 'url' => route('product-lists')],
         ['name' => $bcTitle]
     ],
 ])
@@ -41,7 +41,7 @@
                         <li>
                             <a href="{{ route('product-lists') }}" class="cg-menu__link {{ !$isCat ? 'is-active' : '' }}" @if(!$isCat) aria-current="page" @endif>
                                 <span class="cg-menu__thumb cg-menu__thumb--all" aria-hidden="true"><i class="fas fa-th-large"></i></span>
-                                <span class="cg-menu__name">{{ __('frontend.catalog.all') }}</span>
+                                <span class="cg-menu__name">{{ __('frontend.catalog.all_materials') }}</span>
                             </a>
                         </li>
                         @foreach($allCategories as $c)
@@ -49,11 +49,7 @@
                             <li>
                                 <a href="{{ route('product-lists', $c->slug) }}" class="cg-menu__link {{ $on ? 'is-active' : '' }}" @if($on) aria-current="page" @endif>
                                     <span class="cg-menu__thumb" aria-hidden="true">
-                                        @if($c->photo)
-                                            <img src="{{ asset(ltrim($c->photo, '/')) }}" alt="" loading="lazy" decoding="async">
-                                        @else
-                                            <i class="fas fa-layer-group"></i>
-                                        @endif
+                                        <i class="fas fa-layer-group"></i>
                                     </span>
                                     <span class="cg-menu__name">{{ $c->title }}</span>
                                     <span class="cg-menu__count">{{ $c->products_count }}</span>
@@ -66,28 +62,17 @@
         @endif
 
         <div class="cg-main">
-            @php $catImg = $isCat && !empty($category->photo) ? ltrim($category->photo, '/') : null; @endphp
-            <header class="cg-bar {{ $catImg ? 'cg-bar--cat' : '' }}">
+            <header class="cg-bar">
                 <div class="cg-bar__text">
                     <h2 class="cg-bar__title">{{ $bcTitle }}</h2>
-                    <p class="cg-bar__desc">{{ $isCat && $category->summary ? $category->summary : __('frontend.catalog.intro') }}</p>
-                    @if($catImg)
-                        <span class="cg-bar__count">
-                            <strong>{{ $totalCourses }}</strong>
-                            <span>{{ trans_choice('frontend.catalog.count', $totalCourses) }}</span>
-                        </span>
+                    @if(!$isCat)
+                        <p class="cg-bar__desc">{{ __('frontend.catalog.lead') }}</p>
                     @endif
                 </div>
-                @if($catImg)
-                    <figure class="cg-bar__media">
-                        <img src="{{ asset($catImg) }}" alt="" width="1200" height="896" fetchpriority="high" decoding="async">
-                    </figure>
-                @else
-                    <span class="cg-bar__count">
-                        <strong>{{ $totalCourses }}</strong>
-                        <span>{{ trans_choice('frontend.catalog.count', $totalCourses) }}</span>
-                    </span>
-                @endif
+                <span class="cg-bar__count">
+                    <strong>{{ $totalCourses }}</strong>
+                    <span>{{ trans_choice('frontend.catalog.unit', $totalCourses) }}</span>
+                </span>
             </header>
 
             @if($products->count())
@@ -139,7 +124,7 @@
                                             <span class="cg-card__price"><small>{{ __('frontend.catalog.no_levels') }}</small></span>
                                         @endif
                                         <span class="cg-card__go">
-                                            <span class="cg-card__go-text">{{ __('frontend.catalog.view') }}</span>
+                                            <span class="cg-card__go-text">{{ __('frontend.catalog.open') }}</span>
                                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                         </span>
                                     </span>
@@ -150,7 +135,7 @@
                 </ul>
 
                 @if($isPaginator && $products->hasPages())
-                    <nav class="cg-pages" aria-label="{{ __('frontend.catalog.pagination') }}">
+                    <nav class="cg-pages" aria-label="{{ __('frontend.catalog.pages') }}">
                         @if($products->onFirstPage())
                             <span class="cg-pages__btn is-disabled"><i class="fas fa-arrow-left" aria-hidden="true"></i> {{ __('frontend.catalog.prev') }}</span>
                         @else
@@ -179,9 +164,9 @@
             @else
                 <div class="cg-empty">
                     <span class="cg-empty__icon" aria-hidden="true"><i class="fas fa-box-open"></i></span>
-                    <h2 class="cg-empty__title">{{ __('frontend.catalog.empty_title') }}</h2>
-                    <p class="cg-empty__desc">{{ __('frontend.catalog.empty_desc') }}</p>
-                    <a href="{{ route('product-lists') }}" class="btn btn--primary">{{ __('frontend.catalog.all') }}</a>
+                    <h2 class="cg-empty__title">{{ __('frontend.catalog.empty_head') }}</h2>
+                    <p class="cg-empty__desc">{{ __('frontend.catalog.empty_text') }}</p>
+                    <a href="{{ route('product-lists') }}" class="btn btn--primary">{{ __('frontend.catalog.all_materials') }}</a>
                 </div>
             @endif
         </div>

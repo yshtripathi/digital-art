@@ -32,9 +32,9 @@
             <h2 class="res-help__title">{{ __('frontend.failed.help_title') }}</h2>
 
             <ol class="res-steps">
-                <li class="res-step"><span class="res-step__num">1</span><span>{{ __('frontend.failed.help1') }}</span></li>
-                <li class="res-step"><span class="res-step__num">2</span><span>{{ __('frontend.failed.help2') }}</span></li>
-                <li class="res-step"><span class="res-step__num">3</span><span>{{ __('frontend.failed.help3') }}</span></li>
+                <li class="res-step"><span class="res-step__num">1</span><span>{{ __('frontend.failed.try1') }}</span></li>
+                <li class="res-step"><span class="res-step__num">2</span><span>{{ __('frontend.failed.try2') }}</span></li>
+                <li class="res-step"><span class="res-step__num">3</span><span>{{ __('frontend.failed.try3') }}</span></li>
             </ol>
 
             <div class="res-assist">

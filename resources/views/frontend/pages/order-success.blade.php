@@ -5,6 +5,7 @@
     $transaction_id = $transaction_id ?? null;
     $email_status   = $email_status ?? null;
     $order = $transaction_id ? Order::where('trans_id', $transaction_id)->first() : null;
+    $supportEmail = $misc['Company Email'] ?? __('frontend.company.email');
 @endphp
 @section('main-content')
 
@@ -30,7 +31,7 @@
         </span>
 
         <h1 class="res-title">{{ __('frontend.success.heading') }}</h1>
-        <p class="res-msg">{{ __('frontend.success.message') }}</p>
+        <p class="res-msg">{{ __('frontend.success.msg') }}</p>
 
         @if($order)
             @php
@@ -95,6 +96,15 @@
                 </div>
             </div>
         @endif
+
+        <div class="res-help res-next">
+            <h2 class="res-help__title">{{ __('frontend.success.next_title') }}</h2>
+            <ul class="res-next__list">
+                <li><i class="fas fa-clock" aria-hidden="true"></i><span>{{ __('frontend.success.next_time') }}</span></li>
+                <li><i class="fas fa-hourglass-half" aria-hidden="true"></i><span>{{ __('frontend.success.next_delay') }}</span></li>
+                <li><i class="fas fa-envelope" aria-hidden="true"></i><span>{!! str_replace(':email', '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>', e(__('frontend.success.next_help'))) !!}</span></li>
+            </ul>
+        </div>
 
         <div class="res-actions">
             @if($order)

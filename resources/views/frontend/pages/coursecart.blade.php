@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.coursecart.title'))
+@section('title', __('frontend.coursecart.name'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.coursecart.title'),
+    'title' => __('frontend.coursecart.name'),
     'links' => [
         ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
-        ['name' => __('frontend.coursecart.title')]
+        ['name' => __('frontend.coursecart.name')]
     ]
 ])
 
@@ -53,7 +53,7 @@
                         @endif
 
                         <header class="cr-head">
-                            <h2 class="cr-head__title">{{ __('frontend.coursecart.items_title') }}</h2>
+                            <h2 class="cr-head__title">{{ __('frontend.coursecart.items_head') }}</h2>
                             <span class="cr-head__count">{{ trans_choice('frontend.coursecart.items', $itemCount, ['count' => $itemCount]) }}</span>
                         </header>
 
@@ -133,7 +133,7 @@
 
                         <a href="{{ route('product-lists') }}" class="cr-back">
                             <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                            <span>{{ __('frontend.coursecart.browse') }}</span>
+                            <span>{{ __('frontend.coursecart.browse_more') }}</span>
                         </a>
                     </div>
 
@@ -194,8 +194,8 @@
             @else
                 <div class="cr-empty">
                     <span class="cr-empty__icon" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
-                    <h2 class="cr-empty__title">{{ __('frontend.coursecart.empty_title') }}</h2>
-                    <p class="cr-empty__desc">{{ __('frontend.coursecart.empty_desc') }}</p>
+                    <h2 class="cr-empty__title">{{ __('frontend.coursecart.empty_head') }}</h2>
+                    <p class="cr-empty__desc">{{ __('frontend.coursecart.empty_text') }}</p>
                     <div class="cr-empty__balance">
                         <span>{{ __('frontend.coursecart.balance') }}</span>
                         <strong><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($points) }} {{ __('frontend.coursecart.credits') }}</strong>
@@ -203,7 +203,7 @@
                     <div class="cr-empty__actions">
                         <a href="{{ route('product-lists') }}" class="btn btn--primary">
                             <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                            <span>{{ __('frontend.coursecart.empty_btn') }}</span>
+                            <span>{{ __('frontend.coursecart.empty_link') }}</span>
                         </a>
                         <a href="{{ route('points.topup') }}" class="btn btn--ghost">
                             <i class="fas fa-plus" aria-hidden="true"></i>
@@ -215,8 +215,8 @@
         @else
             <div class="cr-empty">
                 <span class="cr-empty__icon" aria-hidden="true"><i class="fas fa-lock"></i></span>
-                <h2 class="cr-empty__title">{{ __('frontend.coursecart.auth_title') }}</h2>
-                <p class="cr-empty__desc">{{ __('frontend.coursecart.auth_desc') }}</p>
+                <h2 class="cr-empty__title">{{ __('frontend.coursecart.auth_head') }}</h2>
+                <p class="cr-empty__desc">{{ __('frontend.coursecart.auth_text') }}</p>
                 <div class="cr-empty__actions">
                     <a href="{{ route('login.form') }}" class="btn btn--primary">
                         <i class="fas fa-sign-in-alt" aria-hidden="true"></i>

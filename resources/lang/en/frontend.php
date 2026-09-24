@@ -329,7 +329,7 @@ return [
         'rate_hkd'     => '1 credit = HK$8',
         'note_title'   => 'Worth knowing:',
         'note_body'     => 'Credits are spent on this website to unlock levels of e-learning materials, and have no use anywhere else.',
-        'validity'      => 'Credits are valid for 30 days from the date of purchase.',
+        'validity'      => 'Credits are valid for 90 days from the date of purchase.',
         'tiers_title'  => 'Multipliers by purchase amount',
         'tier1'        => 'Standard',
         'tier2'        => 'Premium',
@@ -681,7 +681,7 @@ return [
         'billing_alt'   => 'Billing description',
         'before_pay'    => 'Before you pay',
         'delivery_time' => 'Your credits and access information are typically made available within 24 hours of successful payment confirmation',
-        'credit_valid'  => 'Credits are valid for 30 days from the date of purchase',
+        'credit_valid'  => 'Credits are valid for 90 days from the date of purchase',
 
         // Order summary
         'order'        => 'Your Order',

@@ -10,58 +10,54 @@
 --}}
 
 <section class="bn {{ empty($title) ? 'bn--compact' : '' }}">
-    <span class="bn__media" aria-hidden="true"></span>
-
-    <span class="bn__fx" aria-hidden="true">
-        <span class="bn-shoot bn-shoot--1"></span>
-        <span class="bn-shoot bn-shoot--2"></span>
-        <span class="bn-shoot bn-shoot--3"></span>
-        <span class="bn-shoot bn-shoot--4"></span>
-
-        <span class="bn-spark bn-spark--1"><i class="fas fa-star"></i></span>
-        <span class="bn-spark bn-spark--2"><i class="fas fa-star"></i></span>
-        <span class="bn-spark bn-spark--3"><i class="fas fa-star"></i></span>
-
-        <span class="bn-icon bn-icon--1"><i class="fas fa-heart"></i></span>
-        <span class="bn-icon bn-icon--2 bn-icon--fill"><i class="fab fa-instagram"></i></span>
-        <span class="bn-icon bn-icon--3"><i class="fas fa-play"></i></span>
-        <span class="bn-icon bn-icon--4"><i class="fab fa-tiktok"></i></span>
-        <span class="bn-icon bn-icon--5 bn-icon--fill"><i class="fas fa-thumbs-up"></i></span>
-        <span class="bn-icon bn-icon--6"><i class="fas fa-comment-dots"></i></span>
-        <span class="bn-icon bn-icon--7"><i class="fab fa-youtube"></i></span>
-        <span class="bn-icon bn-icon--8 bn-icon--fill"><i class="fas fa-camera-retro"></i></span>
-    </span>
+    <div class="bn__art" aria-hidden="true">
+        <svg viewBox="0 0 400 400" focusable="false">
+            <g class="bn__spin">
+                <circle class="bn__dash" cx="200" cy="200" r="192"/>
+                <circle class="bn__draw" cx="200" cy="200" r="160" pathLength="1"/>
+                <g class="bn__dots">
+                    @foreach (range(0, 350, 10) as $angle)
+                        <circle cx="200" cy="24" r="2.4" transform="rotate({{ $angle }} 200 200)"/>
+                    @endforeach
+                </g>
+                <g class="bn__petals">
+                    @foreach (range(0, 345, 15) as $angle)
+                        <ellipse class="bn__draw" cx="200" cy="72" rx="13" ry="34" pathLength="1" transform="rotate({{ $angle }} 200 200)"/>
+                    @endforeach
+                </g>
+                <g class="bn__flames">
+                    @foreach (range(0, 330, 30) as $angle)
+                        <path class="bn__draw" d="M200 104 Q224 140 200 166 Q176 140 200 104 Z" pathLength="1" transform="rotate({{ $angle }} 200 200)"/>
+                    @endforeach
+                </g>
+                <circle class="bn__draw" cx="200" cy="200" r="30" pathLength="1"/>
+                <circle class="bn__sun" cx="200" cy="200" r="14"/>
+            </g>
+        </svg>
+    </div>
 
     <div class="bn__inner">
-        <div class="bn__panel">
-            @if(isset($links) && count($links) > 0)
-                <nav aria-label="{{ __('frontend.breadcrumb.label') }}">
-                    <ol class="bn__crumbs">
-                        @foreach($links as $index => $link)
-                            <li class="bn__crumb">
-                                @if(isset($link['url']) && $index < count($links) - 1)
-                                    @if($index === 0)
-                                        <i class="fas fa-home bn__home" aria-hidden="true"></i>
-                                    @endif
-                                    <a href="{{ $link['url'] }}" class="bn__link">{{ $link['name'] }}</a>
-                                    <i class="fas fa-chevron-right bn__sep" aria-hidden="true"></i>
-                                @else
-                                    <span class="bn__current" aria-current="page">{{ $link['name'] }}</span>
-                                @endif
-                            </li>
-                        @endforeach
-                    </ol>
-                </nav>
-            @endif
+        @if(isset($links) && count($links) > 0)
+            <nav class="bn__nav" aria-label="{{ __('frontend.breadcrumb.label') }}">
+                <ol class="bn__crumbs">
+                    @foreach($links as $index => $link)
+                        <li class="bn__crumb">
+                            @if(isset($link['url']) && $index < count($links) - 1)
+                                <a href="{{ $link['url'] }}" class="bn__link">{{ $link['name'] }}</a>
+                                <span class="bn__sep" aria-hidden="true"></span>
+                            @else
+                                <span class="bn__current" aria-current="page">{{ $link['name'] }}</span>
+                            @endif
+                        </li>
+                    @endforeach
+                </ol>
+            </nav>
+        @endif
 
-            <p class="bn__eyebrow">
-                <span class="bn__eyebrow-icon" aria-hidden="true"><i class="fas fa-magic"></i></span>
-                {{ __('frontend.breadcrumb.tag') }}
-            </p>
-
-            @if(!empty($title))
-                <h1 class="bn__title"><span class="bn__mark">{{ $title }}</span></h1>
-            @endif
-        </div>
+        @if(!empty($title))
+            <h1 class="bn__title">
+                <span class="bn__bloom" aria-hidden="true"></span><span>{{ $title }}</span>
+            </h1>
+        @endif
     </div>
 </section>

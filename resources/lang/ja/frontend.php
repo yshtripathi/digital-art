@@ -21,7 +21,6 @@ return [
     'breadcrumb' => [
         'label' => 'パンくずリスト',
         'home'  => 'ホーム',
-        'tag'   => '自分のペースで学べるeラーニング教材',
     ],
 
     // resources/views/frontend/layouts/header.blade.php
@@ -46,6 +45,12 @@ return [
         'language'      => '言語',
         'currency'      => '通貨',
         'credits'       => 'クレジット',
+        'about'         => '私たちについて',
+        'menu_title'    => 'メニュー',
+        'prefs'         => '言語と通貨',
+        'all_materials' => 'すべてのeラーニング教材',
+        'signed_in'     => 'ログイン中',
+        'cart_short'    => 'カート',
 
         // カート
         'cart'          => 'カート',
@@ -69,15 +74,10 @@ return [
 
     // resources/views/frontend/layouts/footer.blade.php
     'footer' => [
+        'news_label'    => 'ニュースレター',
         'news_email'    => 'メールアドレス',
         'news_head'     => '新しいeラーニング教材をいち早くお知らせします',
         'news_text'     => 'メールアドレスをご登録いただくと、新しいeラーニング教材やレベルが公開されたときにお知らせします。どのメールも短く、すぐに読める内容です。',
-        'news_list'     => [
-            'new'     => '公開されたばかりのeラーニング教材とレベル',
-            'updates' => '公開中のeラーニング教材の更新情報',
-            'tips'    => '次に学ぶ内容を決めるためのヒント',
-        ],
-        'news_note'     => 'お知らせする内容があるときだけ配信しています。すべてのメールに配信停止用のリンクを記載しています。',
         'news_ph'       => 'メールアドレスを入力してください',
         'news_btn'      => '登録する',
         'news_invalid'  => '有効なメールアドレスを入力してください。',
@@ -722,6 +722,8 @@ return [
 
     // resources/views/user/layouts/notification.blade.php
     'notify' => [
+        'success' => '完了',
+        'error'   => 'エラー',
         'close' => '閉じる',
     ],
 

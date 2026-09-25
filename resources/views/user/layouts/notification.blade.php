@@ -1,22 +1,27 @@
 @if(session('success') || session('error'))
 
-<div class="toasts">
+<div class="notes">
     @if(session('success'))
-        <div class="toast toast--success" role="status" data-toast data-toast-auto>
-            <span class="toast__icon" aria-hidden="true"><i class="fas fa-check"></i></span>
-            <p class="toast__msg">{{ session('success') }}</p>
-            <button type="button" class="toast__close" aria-label="{{ __('frontend.notify.close') }}" data-toast-close>
+        <div class="note note--success" role="status" data-note data-note-auto>
+            <span class="note__badge" aria-hidden="true"><span class="rosette"></span></span>
+            <div class="note__body">
+                <p class="note__label">{{ __('frontend.notify.success') }}</p>
+                <p class="note__msg">{{ session('success') }}</p>
+            </div>
+            <button type="button" class="note__close" aria-label="{{ __('frontend.notify.close') }}" data-note-close>
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
-            <span class="toast__bar" aria-hidden="true"></span>
         </div>
     @endif
 
     @if(session('error'))
-        <div class="toast toast--error" role="alert" data-toast>
-            <span class="toast__icon" aria-hidden="true"><i class="fas fa-exclamation"></i></span>
-            <p class="toast__msg">{{ session('error') }}</p>
-            <button type="button" class="toast__close" aria-label="{{ __('frontend.notify.close') }}" data-toast-close>
+        <div class="note note--error" role="alert" data-note>
+            <span class="note__badge" aria-hidden="true">!</span>
+            <div class="note__body">
+                <p class="note__label">{{ __('frontend.notify.error') }}</p>
+                <p class="note__msg">{{ session('error') }}</p>
+            </div>
+            <button type="button" class="note__close" aria-label="{{ __('frontend.notify.close') }}" data-note-close>
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
@@ -27,24 +32,50 @@
 (function () {
     'use strict';
 
-    document.querySelectorAll('[data-toast]').forEach(function (toast) {
+    var stack = document.querySelector('.notes');
+    var bars = document.querySelectorAll('[data-hd], [data-nav]');
+
+    function place() {
+        if (!stack) { return; }
+        var edge = 0;
+        bars.forEach(function (bar) {
+            var box = bar.getBoundingClientRect();
+            if (box.height) { edge = Math.max(edge, box.bottom); }
+        });
+        stack.style.setProperty('--notes-top', Math.round(Math.max(edge, 0) + 12) + 'px');
+    }
+
+    place();
+    window.addEventListener('scroll', place, { passive: true });
+    window.addEventListener('resize', place);
+
+    document.querySelectorAll('[data-note]').forEach(function (note) {
         var timer;
 
         var hide = function () {
-            if (toast.classList.contains('is-hiding')) { return; }
+            if (note.classList.contains('is-hiding')) { return; }
             clearTimeout(timer);
-            toast.classList.add('is-hiding');
-            setTimeout(function () { toast.remove(); }, 240);
+            note.classList.add('is-hiding');
+            setTimeout(function () { note.remove(); }, 320);
         };
 
-        var close = toast.querySelector('[data-toast-close]');
+        var start = function () {
+            clearTimeout(timer);
+            timer = setTimeout(hide, 5000);
+        };
+
+        var close = note.querySelector('[data-note-close]');
 
         if (close) {
             close.addEventListener('click', hide);
         }
 
-        if (toast.hasAttribute('data-toast-auto')) {
-            timer = setTimeout(hide, 4500);
+        if (note.hasAttribute('data-note-auto')) {
+            start();
+            note.addEventListener('mouseenter', function () { clearTimeout(timer); });
+            note.addEventListener('mouseleave', start);
+            note.addEventListener('focusin', function () { clearTimeout(timer); });
+            note.addEventListener('focusout', start);
         }
     });
 }());

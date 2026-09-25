@@ -21,7 +21,6 @@ return [
     'breadcrumb' => [
         'label' => 'Breadcrumb',
         'home'  => 'Home',
-        'tag'   => 'Self-paced e-learning materials',
     ],
 
     // resources/views/frontend/layouts/header.blade.php
@@ -46,6 +45,12 @@ return [
         'language'      => 'Language',
         'currency'      => 'Currency',
         'credits'       => 'credits',
+        'about'         => 'About Us',
+        'menu_title'    => 'Menu',
+        'prefs'         => 'Language and currency',
+        'all_materials' => 'All E-Learning Materials',
+        'signed_in'     => 'Signed in as',
+        'cart_short'    => 'Cart',
 
         // Cart drawer
         'cart'          => 'Your Cart',
@@ -69,15 +74,10 @@ return [
 
     // resources/views/frontend/layouts/footer.blade.php
     'footer' => [
+        'news_label'    => 'Newsletter',
         'news_email'    => 'Email address',
         'news_head'     => 'Hear about new e-learning materials first',
         'news_text'     => 'Add your email address and we will let you know when new e-learning materials and levels are published. Every message is short and quick to read.',
-        'news_list'     => [
-            'new'     => 'New e-learning materials and levels as soon as they are published',
-            'updates' => 'Updates to the e-learning materials already on the website',
-            'tips'    => 'Simple ideas for deciding what to study next',
-        ],
-        'news_note'     => 'We write only when there is something worth reading, and every email carries a link to unsubscribe.',
         'news_ph'       => 'Enter your email address',
         'news_btn'      => 'Subscribe',
         'news_invalid'  => 'Please enter a valid email address.',
@@ -722,6 +722,8 @@ return [
 
     // resources/views/user/layouts/notification.blade.php
     'notify' => [
+        'success' => 'Success',
+        'error'   => 'Error',
         'close' => 'Dismiss',
     ],
 

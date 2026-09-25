@@ -8,7 +8,7 @@
     $hoCourses = collect($product_lists ?? [])->filter(fn ($c) => !empty($c->photo))->values();
     $hoCourses = $hoCourses->where('is_featured', 1)
         ->concat($hoCourses->where('is_featured', '!=', 1))
-        ->take(12)
+        ->take(5)
         ->values();
 
     $cur = session('currency');
@@ -46,346 +46,270 @@
     ];
 @endphp
 
-<section class="ho-hero" aria-labelledby="hoHeroTitle">
-    <span class="ho-fx" aria-hidden="true">
-        <span class="ho-fx__shoot ho-fx__shoot--1"></span>
-        <span class="ho-fx__shoot ho-fx__shoot--2"></span>
-        <span class="ho-fx__shoot ho-fx__shoot--3"></span>
-        <span class="ho-fx__spark ho-fx__spark--1"></span>
-        <span class="ho-fx__spark ho-fx__spark--2"></span>
-        <span class="ho-fx__spark ho-fx__spark--3"></span>
-        <span class="ho-fx__spark ho-fx__spark--4"></span>
-        <span class="ho-fx__icon ho-fx__icon--1"><i class="fas fa-heart"></i></span>
-        <span class="ho-fx__icon ho-fx__icon--2 ho-fx__icon--fill"><i class="fab fa-instagram"></i></span>
-        <span class="ho-fx__icon ho-fx__icon--3"><i class="fas fa-play"></i></span>
-        <span class="ho-fx__icon ho-fx__icon--4"><i class="fab fa-tiktok"></i></span>
-        <span class="ho-fx__icon ho-fx__icon--5 ho-fx__icon--fill"><i class="fas fa-camera-retro"></i></span>
-        <span class="ho-fx__icon ho-fx__icon--6"><i class="fas fa-comment-dots"></i></span>
-    </span>
+@php
+    $hoMaterials = \App\Models\Product::where('status', 'active')->count();
+    $hoFeature = $hoCourses->first();
+    $hoMore = $hoCourses->slice(1, 4);
+@endphp
 
-    <div class="ho__wrap ho-hero__grid">
+<section class="hm">
+    <div class="hm__wrap hm-bento">
 
-        <div class="ho-hero__text">
-            <p class="ho-hero__badge">
-                <span class="ho-hero__badge-icon" aria-hidden="true"><i class="fas fa-magic"></i></span>
-                {{ __('frontend.home.hero_eyebrow') }}
-            </p>
-            <h1 id="hoHeroTitle" class="ho-hero__title">
-                <span class="ho-hero__ink">{{ __('frontend.home.hero_title') }}</span>
-                <svg class="ho-hero__squiggle" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11c28-8 52-8 76-2s50 7 76 0 52-8 76-1 40 6 66 0"/></svg>
-            </h1>
-            <p class="ho-hero__desc">{{ __('frontend.home.hero_text') }}</p>
+        <div class="hm-tile hm-tile--hero band--coffee">
+            <video class="hm-video" autoplay muted loop playsinline preload="metadata" poster="{{ asset('assets/images/home-pattern.webp') }}" aria-hidden="true" data-hm-video>
+                <source src="{{ asset('assets/videos/home-pattern.mp4') }}" type="video/mp4">
+            </video>
+            <span class="hm-video__veil" aria-hidden="true"></span>
+            <div class="hm-hero__body">
+                <p class="hm-badge">{{ __('frontend.home.hero_eyebrow') }}</p>
+                <h1 class="hm-title">{{ __('frontend.home.hero_title') }}</h1>
+                <p class="hm-lead">{{ __('frontend.home.hero_text') }}</p>
+                <div class="hm-actions">
+                    <a href="{{ route('product-lists') }}" class="btn btn--primary">
+                        <span>{{ __('frontend.home.hero_browse') }}</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <a href="{{ route('points.topup') }}" class="btn btn--ghost">
+                        <i class="fas fa-bolt" aria-hidden="true"></i>
+                        <span>{{ __('frontend.home.credits_btn') }}</span>
+                    </a>
+                </div>
+            </div>
+            <button type="button" class="hm-video__toggle" data-hm-toggle aria-label="{{ __('frontend.home.video_pause') }}">
+                <i class="fas fa-pause" aria-hidden="true"></i>
+            </button>
+        </div>
 
-            <div class="ho-hero__actions">
-                <a href="{{ route('product-lists') }}" class="btn btn--primary ho-hero__cta">
-                    <span>{{ __('frontend.home.hero_browse') }}</span>
+        <figure class="hm-tile hm-tile--photo hm-tile--look">
+            <img src="{{ asset('assets/images/home-look.webp') }}" width="1067" height="1600" alt="{{ __('frontend.home.alt_look') }}" fetchpriority="high" decoding="async">
+            <figcaption class="hm-cap">{{ __('frontend.home.card_levels') }}</figcaption>
+        </figure>
+
+        <a href="{{ route('product-lists') }}" class="hm-tile hm-tile--stat band--coffee">
+            <span class="hm-stat__num">{{ number_format($hoMaterials) }}</span>
+            <span class="hm-stat__label">{{ __('frontend.catalog.name') }}</span>
+            <i class="fas fa-arrow-right hm-stat__go" aria-hidden="true"></i>
+        </a>
+
+        <a href="{{ route('product-lists') }}" class="hm-tile hm-tile--stat hm-tile--sand">
+            <span class="hm-stat__num">{{ number_format($hoCategories->count()) }}</span>
+            <span class="hm-stat__label">{{ __('frontend.header.categories') }}</span>
+            <i class="fas fa-arrow-right hm-stat__go" aria-hidden="true"></i>
+        </a>
+
+        <figure class="hm-tile hm-tile--photo hm-tile--walk">
+            <img src="{{ asset('assets/images/home-walk.webp') }}" width="1067" height="1600" alt="{{ __('frontend.home.alt_walk') }}" decoding="async">
+            <figcaption class="hm-cap">{{ __('frontend.home.card_pace') }}</figcaption>
+        </figure>
+
+    </div>
+</section>
+
+@if($hoCategories->count())
+    <section class="hm-ticker band--indigo" aria-label="{{ __('frontend.home.cats_title') }}">
+        <div class="hm-ticker__track">
+            @foreach([false, true] as $copy)
+                <ul class="hm-ticker__list" @if($copy) aria-hidden="true" @endif>
+                    @foreach($hoCategories as $cat)
+                        <li>
+                            <a href="{{ route('product-lists', $cat->slug) }}" class="hm-ticker__pill" @if($copy) tabindex="-1" @endif>
+                                <span class="rosette" aria-hidden="true"></span>
+                                {{ $cat->title }}
+                                <span class="hm-ticker__count">{{ $cat->products_count ?? 0 }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @endforeach
+        </div>
+    </section>
+@endif
+
+@if($hoFeature)
+    <section class="hm-sec hm-sec--band band--indigo" aria-labelledby="hmFeaturedTitle">
+        <div class="hm__wrap">
+            <header class="hm-head">
+                <div>
+                    <h2 id="hmFeaturedTitle" class="hm-head__title">{{ __('frontend.home.featured_head') }}</h2>
+                    <p class="hm-head__desc">{{ __('frontend.home.featured_text') }}</p>
+                </div>
+                <a href="{{ route('product-lists') }}" class="btn btn--ghost">
+                    <span>{{ __('frontend.home.cats_browse') }}</span>
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
-                <a href="{{ route('points.topup') }}" class="btn btn--ghost">
+            </header>
+
+            <div class="hm-mag">
+                @foreach(collect([$hoFeature])->concat($hoMore) as $course)
+                    @php
+                        $img = explode(',', $course->photo)[0];
+                        $lvCount = $course->levels ? $course->levels->count() : 0;
+                        $minPts = $lvCount ? $course->levels->min('price_in_points') : null;
+                        $catName = optional($course->cat_info)->title;
+                        $isLead = $loop->first;
+                    @endphp
+                    <a href="{{ route('product-detail', $course->slug) }}" class="hm-card {{ $isLead ? 'hm-card--lead' : '' }}">
+                        <span class="hm-card__media">
+                            <img src="{{ asset(ltrim($img, '/')) }}" alt="" loading="lazy" decoding="async">
+                            @if($catName)
+                                <span class="hm-card__cat">{{ $catName }}</span>
+                            @endif
+                        </span>
+                        <span class="hm-card__body">
+                            @if($lvCount)
+                                <span class="hm-card__levels">{{ trans_choice('frontend.catalog.levels', $lvCount, ['count' => $lvCount]) }}</span>
+                            @endif
+                            <span class="hm-card__title">{{ $course->title }}</span>
+                            @if($isLead && $course->summary)
+                                <span class="hm-card__desc">{{ \Illuminate\Support\Str::limit(strip_tags($course->summary), 170) }}</span>
+                            @endif
+                            <span class="hm-card__foot">
+                                @if($lvCount)
+                                    <span class="hm-card__price">
+                                        <small>{{ __('frontend.home.from') }}</small>
+                                        <strong><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($minPts) }}</strong>
+                                        <small>{{ __('frontend.home.credits') }}</small>
+                                    </span>
+                                @else
+                                    <span class="hm-card__price"><small>{{ __('frontend.catalog.no_levels') }}</small></span>
+                                @endif
+                                <span class="hm-card__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                            </span>
+                        </span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </section>
+@endif
+
+<section class="hm-sec" aria-labelledby="hmDuoTitle">
+    <div class="hm__wrap">
+        <header class="hm-head">
+            <div>
+                <p class="hm-badge hm-badge--dark">{{ __('frontend.home.duo_label') }}</p>
+                <h2 id="hmDuoTitle" class="hm-head__title">{{ __('frontend.home.duo_title') }}</h2>
+            </div>
+        </header>
+
+        <div class="hm-duo">
+            <figure class="hm-duo__photo">
+                <img src="{{ asset('assets/images/home-credits.webp') }}" width="1063" height="1600" alt="{{ __('frontend.home.alt_credits') }}" loading="lazy" decoding="async">
+            </figure>
+
+            <div class="hm-duo__cards">
+                <article class="hm-duo__card band--coffee">
+                    <span class="hm-duo__icon" aria-hidden="true"><i class="fas fa-bolt"></i></span>
+                    <h3 class="hm-duo__title">{{ __('frontend.home.duo1_title') }}</h3>
+                    <p class="hm-duo__text">{{ __('frontend.home.duo1_text') }}</p>
+                    <a href="{{ route('points.topup') }}" class="btn btn--primary">
+                        <span>{{ __('frontend.home.credits_btn') }}</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+                <article class="hm-duo__card">
+                    <span class="hm-duo__icon" aria-hidden="true"><i class="fas fa-laptop"></i></span>
+                    <h3 class="hm-duo__title">{{ __('frontend.home.duo2_title') }}</h3>
+                    <p class="hm-duo__text">{{ __('frontend.home.duo2_text') }}</p>
+                    <a href="{{ route('product-lists') }}" class="btn btn--primary">
+                        <span>{{ __('frontend.home.hero_browse') }}</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </article>
+            </div>
+
+            <figure class="hm-duo__photo hm-duo__photo--low">
+                <img src="{{ asset('assets/images/home-anywhere.webp') }}" width="1067" height="1600" alt="{{ __('frontend.home.alt_anywhere') }}" loading="lazy" decoding="async">
+            </figure>
+        </div>
+    </div>
+</section>
+
+<section class="hm-sec hm-sec--last" aria-labelledby="hmStepsTitle">
+    <div class="hm__wrap hm-trio">
+
+        <div class="hm-tile hm-tile--steps">
+            <p class="hm-badge hm-badge--dark">{{ __('frontend.home.steps_label') }}</p>
+            <h2 id="hmStepsTitle" class="hm-head__title">{{ __('frontend.home.steps_head') }}</h2>
+            <ol class="hm-path">
+                @foreach($hoSteps as $i => $s)
+                    <li class="hm-path__step">
+                        <span class="hm-path__num" aria-hidden="true">{{ sprintf('%02d', $i + 1) }}</span>
+                        <span class="hm-path__text">
+                            <span class="hm-path__title">{{ __('frontend.home.' . $s['t']) }}</span>
+                            <span class="hm-path__desc">{{ __('frontend.home.' . $s['d']) }}</span>
+                        </span>
+                    </li>
+                @endforeach
+            </ol>
+        </div>
+
+        <figure class="hm-tile hm-tile--photo hm-tile--pause">
+            <img src="{{ asset('assets/images/home-pause.webp') }}" width="1067" height="1600" alt="{{ __('frontend.home.alt_pause') }}" loading="lazy" decoding="async">
+            <figcaption class="hm-cap">{{ __('frontend.home.watch_pace') }}</figcaption>
+        </figure>
+
+        <div class="hm-tile hm-tile--credits band--indigo">
+            <div class="hm-credits">
+                <p class="hm-badge">{{ $rateNote }}</p>
+                <h2 class="hm-credits__title">{{ __('frontend.topup.tiers_title') }}</h2>
+                <ul class="hm-tiers">
+                    @foreach($tiers as $t)
+                        <li class="hm-tier {{ $t['f'] ? 'hm-tier--best' : '' }}">
+                            <span class="hm-tier__name">{{ $t['n'] }}</span>
+                            <span class="hm-tier__range">{!! $t['r'] !!}</span>
+                            <span class="hm-tier__mult">{{ $t['big'] }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+                <a href="{{ route('points.topup') }}" class="btn btn--primary btn--block">
                     <i class="fas fa-bolt" aria-hidden="true"></i>
                     <span>{{ __('frontend.home.credits_btn') }}</span>
                 </a>
             </div>
         </div>
 
-        <div class="ho-collage">
-            <figure class="ho-collage__item ho-collage__item--tall">
-                <img src="{{ asset('assets/images/home-hero-mobile.webp') }}" width="800" height="1200"
-                     alt="{{ __('frontend.home.alt_phone') }}" fetchpriority="high" decoding="async">
-            </figure>
-            <figure class="ho-collage__item ho-collage__item--wide">
-                <img src="{{ asset('assets/images/home-hero-studio.webp') }}" width="1200" height="800"
-                     alt="{{ __('frontend.home.alt_studio') }}" fetchpriority="high" decoding="async">
-            </figure>
-            <figure class="ho-collage__item ho-collage__item--small">
-                <img src="{{ asset('assets/images/home-hero-workshop.webp') }}" width="1000" height="665"
-                     alt="{{ __('frontend.home.alt_light') }}" decoding="async">
-            </figure>
-
-            <ul class="ho-floats">
-                <li class="ho-float ho-float--levels">
-                    <span class="ho-float__icon" aria-hidden="true"><i class="fas fa-signal"></i></span>
-                    <span>{{ __('frontend.home.card_levels') }}</span>
-                </li>
-                <li class="ho-float ho-float--pace">
-                    <span class="ho-float__icon" aria-hidden="true"><i class="fas fa-clock"></i></span>
-                    <span>{{ __('frontend.home.card_pace') }}</span>
-                </li>
-                <li class="ho-float ho-float--credits">
-                    <span class="ho-float__icon ho-float__icon--accent" aria-hidden="true"><i class="fas fa-bolt"></i></span>
-                    <span>{{ __('frontend.home.card_credits') }}</span>
-                </li>
-            </ul>
-            <span class="ho-collage__ring" aria-hidden="true"></span>
-            <span class="ho-collage__blob" aria-hidden="true"></span>
-            <span class="ho-bubble ho-bubble--heart" aria-hidden="true"><i class="fas fa-heart"></i></span>
-            <span class="ho-bubble ho-bubble--play" aria-hidden="true"><i class="fas fa-play"></i></span>
-            <span class="ho-bubble ho-bubble--star" aria-hidden="true"><i class="fas fa-star"></i></span>
-        </div>
-
-    </div>
-</section>
-
-@if($hoCategories->count())
-    <section class="ho-sec" aria-labelledby="hoCatsTitle">
-        <div class="ho__wrap">
-            <header class="ho-head">
-                <div>
-                    <h2 id="hoCatsTitle" class="ho-head__title">{{ __('frontend.home.cats_title') }}</h2>
-                </div>
-                <a href="{{ route('product-lists') }}" class="ho-link">
-                    <span>{{ __('frontend.home.cats_browse') }}</span>
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-            </header>
-
-            <ul class="ho-cats">
-                @foreach($hoCategories as $cat)
-                    <li>
-                        <a href="{{ route('product-lists', $cat->slug) }}" class="ho-cat">
-                            <span class="ho-cat__media" aria-hidden="true">
-                                <i class="fas fa-layer-group"></i>
-                            </span>
-                            <span class="ho-cat__body">
-                                <span class="ho-cat__name">{{ $cat->title }}</span>
-                                <span class="ho-cat__count">{{ trans_choice('frontend.home.cats_total', $cat->products_count ?? 0, ['count' => $cat->products_count ?? 0]) }}</span>
-                            </span>
-                            <span class="ho-cat__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-    </section>
-@endif
-
-@if($hoCourses->count())
-    <section class="ho-sec ho-sec--tint" aria-labelledby="hoCoursesTitle" data-slider>
-        <div class="ho__wrap">
-            <header class="ho-head">
-                <div>
-                    <h2 id="hoCoursesTitle" class="ho-head__title">{{ __('frontend.home.featured_head') }}</h2>
-                    <p class="ho-head__desc">{{ __('frontend.home.featured_text') }}</p>
-                </div>
-                <div class="ho-arrows">
-                    <button type="button" class="ho-arrow" data-slider-prev aria-label="{{ __('frontend.home.prev_item') }}">
-                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                    </button>
-                    <button type="button" class="ho-arrow" data-slider-next aria-label="{{ __('frontend.home.next_item') }}">
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </header>
-
-            <ul class="ho-track" data-slider-track>
-                @foreach($hoCourses as $course)
-                    @php
-                        $img = explode(',', $course->photo)[0];
-                        $lvCount = $course->levels ? $course->levels->count() : 0;
-                        $minPts = $lvCount ? $course->levels->min('price_in_points') : null;
-                        $catName = optional($course->cat_info)->title;
-                    @endphp
-                    <li class="ho-slide" data-slide>
-                        <a href="{{ route('product-detail', $course->slug) }}" class="ho-course">
-                            <span class="ho-course__media">
-                                <img src="{{ asset(ltrim($img, '/')) }}" alt="" loading="lazy" decoding="async">
-                                @if($catName)
-                                    <span class="ho-course__cat">{{ $catName }}</span>
-                                @endif
-                            </span>
-                            <span class="ho-course__body">
-                                @if($lvCount)
-                                    <span class="ho-course__levels">
-                                        <i class="fas fa-signal" aria-hidden="true"></i>
-                                        {{ trans_choice('frontend.catalog.levels', $lvCount, ['count' => $lvCount]) }}
-                                    </span>
-                                @endif
-                                <span class="ho-course__title">{{ $course->title }}</span>
-                                <span class="ho-course__foot">
-                                    @if($lvCount)
-                                        <span class="ho-course__price">
-                                            <small>{{ __('frontend.home.from') }}</small>
-                                            <strong><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($minPts) }}</strong>
-                                            <small>{{ __('frontend.home.credits') }}</small>
-                                        </span>
-                                    @else
-                                        <span class="ho-course__price"><small>{{ __('frontend.catalog.no_levels') }}</small></span>
-                                    @endif
-                                    <span class="ho-course__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
-                                </span>
-                            </span>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-
-            <div class="ho-foot">
-                <a href="{{ route('product-lists') }}" class="btn btn--ghost">
-                    <span>{{ __('frontend.home.cats_browse') }}</span>
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-@endif
-
-<section class="ho-sec" aria-labelledby="hoStepsTitle">
-    <div class="ho__wrap">
-        <header class="ho-head ho-head--center">
-            <div>
-                <p class="ho-eyebrow">{{ __('frontend.home.steps_label') }}</p>
-                <h2 id="hoStepsTitle" class="ho-head__title">{{ __('frontend.home.steps_head') }}</h2>
-                <p class="ho-head__desc">{{ __('frontend.home.steps_text') }}</p>
-            </div>
-        </header>
-
-        <ol class="ho-steps">
-            @foreach($hoSteps as $i => $s)
-                <li class="ho-step {{ $loop->last ? 'ho-step--accent' : '' }}">
-                    <span class="ho-step__top">
-                        <span class="ho-step__icon" aria-hidden="true"><i class="fas {{ $s['i'] }}"></i></span>
-                        <span class="ho-step__num" aria-hidden="true">{{ sprintf('%02d', $i + 1) }}</span>
-                    </span>
-                    <h3 class="ho-step__title">{{ __('frontend.home.' . $s['t']) }}</h3>
-                    <p class="ho-step__desc">{{ __('frontend.home.' . $s['d']) }}</p>
-                </li>
-            @endforeach
-        </ol>
-    </div>
-</section>
-
-<section class="ho-sec ho-sec--tint ho-watch" aria-labelledby="hoWatchTitle">
-    <div class="ho__wrap ho-watch__grid">
-        <div class="ho-watch__media">
-            <div class="ho-reel">
-                <video class="ho-reel__video" autoplay muted loop playsinline preload="metadata"
-                       poster="{{ asset('assets/images/home-study-poster.webp') }}" aria-hidden="true">
-                    <source src="{{ asset('assets/videos/home-study.mp4') }}" type="video/mp4">
-                </video>
-                <button type="button" class="ho-reel__toggle" data-video-toggle aria-label="{{ __('frontend.home.video_pause') }}">
-                    <i class="fas fa-pause" aria-hidden="true"></i>
-                </button>
-            </div>
-            <span class="ho-watch__blob" aria-hidden="true"></span>
-            <span class="ho-watch__dots" aria-hidden="true"></span>
-        </div>
-
-        <div class="ho-watch__text">
-            <p class="ho-eyebrow">{{ __('frontend.home.watch_label') }}</p>
-            <h2 id="hoWatchTitle" class="ho-head__title">{{ __('frontend.home.watch_title') }}</h2>
-            <p class="ho-head__desc">{{ __('frontend.home.watch_text') }}</p>
-
-            <ul class="ho-watch__list">
-                <li class="ho-watch__item">
-                    <span class="ho-watch__icon" aria-hidden="true"><i class="fas fa-laptop"></i></span>
-                    <span>{{ __('frontend.home.watch_point1') }}</span>
-                </li>
-                <li class="ho-watch__item">
-                    <span class="ho-watch__icon" aria-hidden="true"><i class="fas fa-redo-alt"></i></span>
-                    <span>{{ __('frontend.home.watch_pace') }}</span>
-                </li>
-                <li class="ho-watch__item">
-                    <span class="ho-watch__icon" aria-hidden="true"><i class="fas fa-list-ul"></i></span>
-                    <span>{{ __('frontend.home.watch_point3') }}</span>
-                </li>
-            </ul>
-
-            <a href="{{ route('product-lists') }}" class="btn btn--primary ho-watch__cta">
-                <span>{{ __('frontend.home.hero_browse') }}</span>
-                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-            </a>
-        </div>
-    </div>
-</section>
-
-<section class="ho-credits" aria-labelledby="hoCreditsTitle">
-    <div class="ho__wrap ho-credits__grid">
-        <div class="ho-credits__text">
-            <p class="ho-eyebrow ho-eyebrow--light">{{ $rateNote }}</p>
-            <h2 id="hoCreditsTitle" class="ho-credits__title">{{ __('frontend.topup.tiers_title') }}</h2>
-            <p class="ho-credits__desc">{{ __('frontend.topup.lead') }}</p>
-            <a href="{{ route('points.topup') }}" class="ho-credits__cta">
-                <i class="fas fa-bolt" aria-hidden="true"></i>
-                <span>{{ __('frontend.home.credits_btn') }}</span>
-                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-            </a>
-        </div>
-
-        <ol class="ho-tiers">
-            @foreach($tiers as $t)
-                <li class="ho-tier {{ $t['f'] ? 'ho-tier--best' : '' }}">
-                    <span class="ho-tier__icon" aria-hidden="true"><i class="fas {{ $t['i'] }}"></i></span>
-                    <span class="ho-tier__mult">{{ $t['big'] }}</span>
-                    <span class="ho-tier__name">{{ $t['n'] }}</span>
-                    <span class="ho-tier__range">{!! $t['r'] !!}</span>
-                    @if($t['f'])
-                        <span class="ho-tier__badge">{{ __('frontend.topup.best') }}</span>
-                    @endif
-                </li>
-            @endforeach
-        </ol>
     </div>
 </section>
 @endsection
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('[data-slider]').forEach(function (slider) {
-        const track = slider.querySelector('[data-slider-track]');
-        const slides = track ? track.querySelectorAll('[data-slide]') : [];
-        const prev = slider.querySelector('[data-slider-prev]');
-        const next = slider.querySelector('[data-slider-next]');
-        if (!slides.length || !prev || !next) return;
+(function () {
+    'use strict';
 
-        function step() {
-            const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-            return slides[0].getBoundingClientRect().width + gap;
-        }
+    var videos = Array.prototype.slice.call(document.querySelectorAll('[data-hm-video]'));
+    var toggle = document.querySelector('[data-hm-toggle]');
 
-        function update() {
-            const max = track.scrollWidth - track.clientWidth;
-            slider.classList.toggle('is-static', max <= 1);
-            prev.disabled = track.scrollLeft <= 1;
-            next.disabled = track.scrollLeft >= max - 1;
-        }
+    if (!videos.length || !toggle) {
+        return;
+    }
 
-        prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
-        next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+    var icon = toggle.querySelector('i');
+    var labels = { play: @json(__('frontend.home.video_play')), pause: @json(__('frontend.home.video_pause')) };
+    var paused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        let ticking = false;
-        track.addEventListener('scroll', function () {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(function () { update(); ticking = false; });
-        }, { passive: true });
-        window.addEventListener('resize', update);
-        update();
-    });
-
-    document.querySelectorAll('[data-video-toggle]').forEach(function (btn) {
-        const video = btn.parentElement.querySelector('video');
-        if (!video) return;
-        const icon = btn.querySelector('i');
-        const labels = { play: @json(__('frontend.home.video_play')), pause: @json(__('frontend.home.video_pause')) };
-
-        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            video.removeAttribute('autoplay');
-            video.pause();
-        }
-
-        function sync() {
-            icon.className = video.paused ? 'fas fa-play' : 'fas fa-pause';
-            btn.setAttribute('aria-label', video.paused ? labels.play : labels.pause);
-        }
-
-        btn.addEventListener('click', function () {
-            if (video.paused) video.play(); else video.pause();
+    function apply() {
+        videos.forEach(function (video) {
+            if (paused) {
+                video.removeAttribute('autoplay');
+                video.pause();
+            } else {
+                var run = video.play();
+                if (run && run.catch) { run.catch(function () {}); }
+            }
         });
-        video.addEventListener('play', sync);
-        video.addEventListener('pause', sync);
-        sync();
+        icon.className = paused ? 'fas fa-play' : 'fas fa-pause';
+        toggle.setAttribute('aria-label', paused ? labels.play : labels.pause);
+    }
+
+    toggle.addEventListener('click', function () {
+        paused = !paused;
+        apply();
     });
-});
+
+    if (paused) { apply(); }
+}());
 </script>
 @endpush

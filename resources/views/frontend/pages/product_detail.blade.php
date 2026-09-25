@@ -56,6 +56,8 @@
             </div>
 
             <div class="cd-info">
+                <h2 class="cd-title">{{ $product_detail->title }}</h2>
+
                 <div class="cd-tags">
                     @if($cdCategory)
                         <a href="{{ route('product-lists', $cdCategory->slug) }}" class="cd-tag cd-tag--link">
@@ -89,78 +91,37 @@
                         </a>
                     </div>
 
-                    <ul class="cd-facts">
-                        <li class="cd-fact">
-                            <i class="fas fa-signal" aria-hidden="true"></i>
-                            <span>{{ trans_choice('frontend.course.levels', $levelCount, ['count' => $levelCount]) }}</span>
-                        </li>
-                        @if($cdCategory)
-                            <li class="cd-fact">
-                                <i class="fas fa-layer-group" aria-hidden="true"></i>
-                                <span>{{ __('frontend.course.category_label') }} {{ $cdCategory->title }}</span>
-                            </li>
-                        @endif
-                        <li class="cd-fact">
-                            <i class="fas fa-bolt" aria-hidden="true"></i>
-                            <span>{{ __('frontend.course.unlock') }}</span>
-                        </li>
-                        @auth
-                            <li class="cd-fact">
-                                <i class="fas fa-wallet" aria-hidden="true"></i>
-                                <span>{{ __('frontend.course.balance', ['count' => number_format(auth()->user()->points_balance ?? 0)]) }}</span>
-                            </li>
-                        @endauth
-                        <li class="cd-fact">
-                            <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
-                            <span>{{ __('frontend.course.deliver') }}</span>
-                        </li>
-                        <li class="cd-fact">
-                            <i class="fas fa-headset" aria-hidden="true"></i>
-                            <span>{{ __('frontend.course.deliver_help') }}<a href="{{ route('contact') }}">{{ __('frontend.course.contact') }}</a></span>
-                        </li>
-                    </ul>
-
                     <p class="cd-note">
                         <i class="fas fa-shield-alt" aria-hidden="true"></i>
                         <span>{{ __('frontend.course.note') }}</span>
                     </p>
                 @endif
             </div>
-
-            @if($product_detail->description || $product_detail->summary)
-                <section class="cd-about" aria-labelledby="cdAboutTitle">
-                    <h2 id="cdAboutTitle" class="cd-section-title">{{ __('frontend.course.about_material') }}</h2>
-                    <div class="cd-prose">
-                        @if($product_detail->description)
-                            {!! nl2br(e($product_detail->description)) !!}
-                        @else
-                            {{ $product_detail->summary }}
-                        @endif
-                    </div>
-                </section>
-            @endif
         </div>
 
+        @if($product_detail->description || $product_detail->summary)
+            <section class="cd-about" aria-labelledby="cdAboutTitle">
+                <h2 id="cdAboutTitle" class="cd-section-title">{{ __('frontend.course.about_material') }}</h2>
+                <div class="cd-prose">
+                    @if($product_detail->description)
+                        {!! nl2br(e($product_detail->description)) !!}
+                    @else
+                        {{ $product_detail->summary }}
+                    @endif
+                </div>
+            </section>
+        @endif
+
         @if($hasLevels)
-            <section id="cdLevels" class="cd-levels" aria-labelledby="cdLevelsTitle" data-slider>
+            <section id="cdLevels" class="cd-levels" aria-labelledby="cdLevelsTitle">
                 <header class="cd-levels__head">
-                    <div>
-                        <h2 id="cdLevelsTitle" class="cd-section-title">{{ __('frontend.course.choose') }}</h2>
-                        <p class="cd-levels__sub">{{ __('frontend.course.unlock') }}</p>
-                    </div>
-                    <div class="cd-arrows">
-                        <button type="button" class="cd-arrow" data-slider-prev aria-label="{{ __('frontend.catalog.prev') }}">
-                            <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                        </button>
-                        <button type="button" class="cd-arrow" data-slider-next aria-label="{{ __('frontend.catalog.next') }}">
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </button>
-                    </div>
+                    <h2 id="cdLevelsTitle" class="cd-section-title">{{ __('frontend.course.choose') }}</h2>
+                    <p class="cd-levels__sub">{{ __('frontend.course.unlock') }}</p>
                 </header>
 
-                <ul class="cd-track" data-slider-track>
+                <ul class="cd-track">
                     @foreach($cdLevels as $key => $level)
-                        <li class="cd-slide" data-slide>
+                        <li class="cd-slide">
                             <article class="cd-level" aria-labelledby="cdLevel{{ $level->id }}">
                                 <header class="cd-level__head">
                                     <div class="cd-level__top">
@@ -226,12 +187,6 @@
                         </li>
                     @endforeach
                 </ul>
-
-                <div class="cd-dots" data-slider-dots>
-                    @foreach($cdLevels as $key => $level)
-                        <button type="button" class="cd-dot {{ $key === 0 ? 'is-active' : '' }}" data-slider-dot="{{ $key }}" aria-label="{{ $levelName($level) }}"></button>
-                    @endforeach
-                </div>
             </section>
         @endif
 
@@ -254,53 +209,6 @@ document.addEventListener('DOMContentLoaded', function () {
             this.classList.add('is-active');
             this.setAttribute('aria-pressed', 'true');
         });
-    });
-
-    document.querySelectorAll('[data-slider]').forEach(function (slider) {
-        const track = slider.querySelector('[data-slider-track]');
-        const slides = Array.from(track.querySelectorAll('[data-slide]'));
-        const prev = slider.querySelector('[data-slider-prev]');
-        const next = slider.querySelector('[data-slider-next]');
-        const dots = Array.from(slider.querySelectorAll('[data-slider-dot]'));
-
-        function step() {
-            const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-            return slides[0].getBoundingClientRect().width + gap;
-        }
-
-        function goTo(i) {
-            track.scrollTo({ left: i * step(), behavior: 'smooth' });
-        }
-
-        function update() {
-            const max = track.scrollWidth - track.clientWidth;
-            const fits = max <= 1;
-            slider.classList.toggle('is-static', fits);
-            prev.disabled = track.scrollLeft <= 1;
-            next.disabled = track.scrollLeft >= max - 1;
-            let current = Math.round(track.scrollLeft / step());
-            if (track.scrollLeft >= max - 1) current = slides.length - 1;
-            dots.forEach(function (d, i) {
-                const on = i === current;
-                d.classList.toggle('is-active', on);
-                d.setAttribute('aria-current', on ? 'true' : 'false');
-            });
-        }
-
-        prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
-        next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
-        dots.forEach(function (d) {
-            d.addEventListener('click', function () { goTo(parseInt(this.dataset.sliderDot, 10)); });
-        });
-
-        let ticking = false;
-        track.addEventListener('scroll', function () {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(function () { update(); ticking = false; });
-        }, { passive: true });
-        window.addEventListener('resize', update);
-        update();
     });
 
     document.querySelectorAll('.cd-form').forEach(function (form) {

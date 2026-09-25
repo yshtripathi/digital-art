@@ -139,7 +139,7 @@
                 </dl>
             </article>
 
-            <aside class="rcpt__rail">
+            <aside class="rcpt__rail band--coffee">
 
                 <div class="total">
                     @if($paidWithCredits)
@@ -171,15 +171,15 @@
                 </div>
 
                 <div class="rcpt__actions">
-                    <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--primary">
+                    <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--primary btn--block">
                         <i class="fas fa-download" aria-hidden="true"></i>
                         {{ __('frontend.receipt.pdf') }}
                     </a>
-                    <button type="button" class="btn btn--ghost" data-print>
+                    <button type="button" class="btn btn--ghost btn--block" data-print>
                         <i class="fas fa-print" aria-hidden="true"></i>
                         {{ __('frontend.receipt.print') }}
                     </button>
-                    <a href="{{ route('user') }}" class="btn btn--quiet">
+                    <a href="{{ route('user') }}" class="btn btn--quiet btn--block">
                         <i class="fas fa-arrow-left" aria-hidden="true"></i>
                         {{ __('frontend.receipt.back') }}
                     </a>

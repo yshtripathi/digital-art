@@ -33,34 +33,6 @@
 <section class="cg">
     <div class="cg__wrap">
 
-        @if($allCategories->count())
-            <aside class="cg-side">
-                <nav class="cg-menu" aria-labelledby="cgMenuTitle">
-                    <h2 id="cgMenuTitle" class="cg-menu__title">{{ __('frontend.catalog.other') }}</h2>
-                    <ul class="cg-menu__list">
-                        <li>
-                            <a href="{{ route('product-lists') }}" class="cg-menu__link {{ !$isCat ? 'is-active' : '' }}" @if(!$isCat) aria-current="page" @endif>
-                                <span class="cg-menu__thumb cg-menu__thumb--all" aria-hidden="true"><i class="fas fa-th-large"></i></span>
-                                <span class="cg-menu__name">{{ __('frontend.catalog.all_materials') }}</span>
-                            </a>
-                        </li>
-                        @foreach($allCategories as $c)
-                            @php $on = $isCat && $category->id == $c->id; @endphp
-                            <li>
-                                <a href="{{ route('product-lists', $c->slug) }}" class="cg-menu__link {{ $on ? 'is-active' : '' }}" @if($on) aria-current="page" @endif>
-                                    <span class="cg-menu__thumb" aria-hidden="true">
-                                        <i class="fas fa-layer-group"></i>
-                                    </span>
-                                    <span class="cg-menu__name">{{ $c->title }}</span>
-                                    <span class="cg-menu__count">{{ $c->products_count }}</span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </nav>
-            </aside>
-        @endif
-
         <div class="cg-main">
             <header class="cg-bar">
                 <div class="cg-bar__text">
@@ -74,6 +46,21 @@
                     <span>{{ trans_choice('frontend.catalog.unit', $totalCourses) }}</span>
                 </span>
             </header>
+
+            @if($allCategories->count())
+                <nav class="cg-pills" aria-label="{{ __('frontend.catalog.other') }}">
+                    <a href="{{ route('product-lists') }}" class="cg-pill {{ !$isCat ? 'is-active' : '' }}" @if(!$isCat) aria-current="page" @endif>
+                        {{ __('frontend.catalog.all_materials') }}
+                    </a>
+                    @foreach($allCategories as $c)
+                        @php $on = $isCat && $category->id == $c->id; @endphp
+                        <a href="{{ route('product-lists', $c->slug) }}" class="cg-pill {{ $on ? 'is-active' : '' }}" @if($on) aria-current="page" @endif>
+                            {{ $c->title }}
+                            <span class="cg-pill__count">{{ $c->products_count }}</span>
+                        </a>
+                    @endforeach
+                </nav>
+            @endif
 
             @if($products->count())
                 <ul class="cg-grid">

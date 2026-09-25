@@ -12,46 +12,44 @@
     ]
 ])
 
-<section class="au au--story" aria-labelledby="auStoryTitle">
-    <div class="au__wrap au-story">
+<section class="au" aria-labelledby="auTitle">
+    <div class="au__wrap">
 
-        <div class="au-mosaic">
-            <figure class="au-mosaic__item au-mosaic__item--main">
-                <img src="{{ asset('assets/images/about-learner.webp') }}" width="1000" height="1500"
-                     alt="{{ __('frontend.about.alt_learner') }}" loading="lazy" decoding="async">
+        <div class="au-photos">
+            <figure class="au-photo">
+                <img src="{{ asset('assets/images/about-study.webp') }}" width="1067" height="1600" alt="{{ __('frontend.about.alt_study') }}" decoding="async">
             </figure>
-            <figure class="au-mosaic__item au-mosaic__item--top">
-                <img src="{{ asset('assets/images/about-lesson.webp') }}" width="800" height="1120"
-                     alt="{{ __('frontend.about.alt_notes') }}" loading="lazy" decoding="async">
+            <figure class="au-photo">
+                <img src="{{ asset('assets/images/about-calm.webp') }}" width="1067" height="1600" alt="{{ __('frontend.about.alt_calm') }}" loading="lazy" decoding="async">
             </figure>
-            <figure class="au-mosaic__item au-mosaic__item--bottom">
-                <img src="{{ asset('assets/images/about-reading.webp') }}" width="800" height="1200"
-                     alt="{{ __('frontend.about.alt2') }}" loading="lazy" decoding="async">
+            <figure class="au-photo">
+                <img src="{{ asset('assets/images/about-time.webp') }}" width="1067" height="1600" alt="{{ __('frontend.about.alt_time') }}" loading="lazy" decoding="async">
             </figure>
-            <span class="au-mosaic__glow" aria-hidden="true"></span>
+            <figure class="au-photo">
+                <img src="{{ asset('assets/images/about-plan.webp') }}" width="1067" height="1600" alt="{{ __('frontend.about.alt_plan') }}" loading="lazy" decoding="async">
+            </figure>
         </div>
 
-        <div class="au-story__text">
+        <div class="au-text">
             <p class="au-eyebrow">{{ __('frontend.about.why_label') }}</p>
-            <h2 id="auStoryTitle" class="au-title">{{ __('frontend.about.why_title') }}</h2>
+            <h2 id="auTitle" class="au-title">{{ __('frontend.about.why_title') }}</h2>
 
             <p class="au-copy">{{ __('frontend.about.why_text1') }}</p>
             <p class="au-copy">{{ __('frontend.about.why_p2') }}</p>
 
-            <ul class="au-checks">
-                <li class="au-check">
-                    <span class="au-check__icon" aria-hidden="true"><i class="fas fa-check"></i></span>
-                    <span>{{ __('frontend.about.point1') }}</span>
-                </li>
-                <li class="au-check">
-                    <span class="au-check__icon" aria-hidden="true"><i class="fas fa-check"></i></span>
-                    <span>{{ __('frontend.about.point_levels') }}</span>
-                </li>
-                <li class="au-check">
-                    <span class="au-check__icon" aria-hidden="true"><i class="fas fa-check"></i></span>
-                    <span>{{ __('frontend.about.point3') }}</span>
-                </li>
+            <ul class="au-points">
+                <li>{{ __('frontend.about.point1') }}</li>
+                <li>{{ __('frontend.about.point_levels') }}</li>
+                <li>{{ __('frontend.about.point3') }}</li>
             </ul>
+
+            <p class="au-steps__title">{{ __('frontend.about.how_title') }}</p>
+            <ol class="au-steps">
+                <li class="au-step"><span class="au-step__num">01</span><span>{{ __('frontend.about.step1_title') }}</span></li>
+                <li class="au-step"><span class="au-step__num">02</span><span>{{ __('frontend.about.step2_name') }}</span></li>
+                <li class="au-step"><span class="au-step__num">03</span><span>{{ __('frontend.about.step3_title') }}</span></li>
+                <li class="au-step"><span class="au-step__num">04</span><span>{{ __('frontend.about.step4_title') }}</span></li>
+            </ol>
 
             <div class="au-actions">
                 <a href="{{ route('product-lists') }}" class="btn btn--primary">
@@ -59,59 +57,6 @@
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
                 <a href="{{ route('contact') }}" class="btn btn--ghost">{{ __('frontend.about.contact_btn') }}</a>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="au au--flow" aria-labelledby="auFlowTitle">
-    <div class="au__wrap">
-
-        <header class="au-flow__head">
-            <p class="au-eyebrow au-eyebrow--light">{{ __('frontend.about.how_label') }}</p>
-            <h2 id="auFlowTitle" class="au-title au-title--light">{{ __('frontend.about.how_title') }}</h2>
-            <p class="au-copy au-copy--light">{{ __('frontend.about.how_text') }}</p>
-        </header>
-
-        <ol class="au-path">
-            <li class="au-node">
-                <span class="au-node__icon" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
-                <span class="au-node__num" aria-hidden="true">01</span>
-                <h3 class="au-node__title">{{ __('frontend.about.step1_title') }}</h3>
-                <p class="au-node__desc">{{ __('frontend.about.step1_text') }}</p>
-            </li>
-            <li class="au-node">
-                <span class="au-node__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
-                <span class="au-node__num" aria-hidden="true">02</span>
-                <h3 class="au-node__title">{{ __('frontend.about.step2_name') }}</h3>
-                <p class="au-node__desc">{{ __('frontend.about.step2_text') }}</p>
-            </li>
-            <li class="au-node">
-                <span class="au-node__icon" aria-hidden="true"><i class="fas fa-signal"></i></span>
-                <span class="au-node__num" aria-hidden="true">03</span>
-                <h3 class="au-node__title">{{ __('frontend.about.step3_title') }}</h3>
-                <p class="au-node__desc">{{ __('frontend.about.step3_text') }}</p>
-            </li>
-            <li class="au-node au-node--accent">
-                <span class="au-node__icon" aria-hidden="true"><i class="fas fa-bolt"></i></span>
-                <span class="au-node__num" aria-hidden="true">04</span>
-                <h3 class="au-node__title">{{ __('frontend.about.step4_title') }}</h3>
-                <p class="au-node__desc">{{ __('frontend.about.step4_text') }}</p>
-            </li>
-        </ol>
-
-        <div class="au-cta">
-            <div class="au-cta__text">
-                <h3 class="au-cta__title">{{ __('frontend.about.cta_title') }}</h3>
-                <p class="au-cta__desc">{{ __('frontend.about.cta_body') }}</p>
-            </div>
-            <div class="au-cta__actions">
-                <a href="{{ route('product-lists') }}" class="au-cta__btn au-cta__btn--solid">
-                    <span>{{ __('frontend.about.browse_btn') }}</span>
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-                <a href="{{ route('contact') }}" class="au-cta__btn au-cta__btn--line">{{ __('frontend.about.contact_btn') }}</a>
             </div>
         </div>
 

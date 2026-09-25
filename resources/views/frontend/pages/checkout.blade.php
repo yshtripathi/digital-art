@@ -48,7 +48,7 @@
             <form name="frmCheckout" id="frmCheckout" method="POST" action="{{ route('cart.order') }}" novalidate>
                 @csrf
 
-                <div class="co__main">
+                <div class="co__panels">
 
                     <div class="panel">
                         <div class="panel__head">
@@ -94,7 +94,7 @@
                                     @error('phone')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
 
-                                <div class="fld co__full">
+                                <div class="fld">
                                     <label class="fld__label" for="address">{{ __('frontend.checkout.address') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="fld__box">
                                         <i class="fas fa-map-marker-alt fld__icon" aria-hidden="true"></i>
@@ -130,7 +130,7 @@
                                     @error('state')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                 </div>
 
-                                <div class="fld co__full">
+                                <div class="fld">
                                     <label class="fld__label" for="country">{{ __('frontend.checkout.country') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                     <div class="fld__box">
                                         <i class="fas fa-globe fld__icon" aria-hidden="true"></i>
@@ -418,38 +418,8 @@
                         </div>
                         <div class="panel__body">
                             <div class="co__pay">
-
-                                <div class="ccard" id="coCard" aria-hidden="true">
-                                    <div class="ccard__inner">
-                                        <div class="ccard__face ccard__front">
-                                            <div class="ccard__row">
-                                                <span class="ccard__chip"></span>
-                                                <i class="fab fa-cc-visa ccard__brand" id="coCardBrand" style="opacity:0"></i>
-                                            </div>
-                                            <div class="ccard__number" id="coCardNumber">•••• •••• •••• ••••</div>
-                                            <div class="ccard__row">
-                                                <div>
-                                                    <span class="ccard__label">{{ __('frontend.checkout.card_name') }}</span>
-                                                    <span class="ccard__value" id="coCardName">—</span>
-                                                </div>
-                                                <div class="ccard__right">
-                                                    <span class="ccard__label">{{ __('frontend.checkout.expiry_short') }}</span>
-                                                    <span class="ccard__value" id="coCardExp">••/••</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ccard__face ccard__back">
-                                            <span class="ccard__stripe"></span>
-                                            <div class="ccard__sign">
-                                                <span class="ccard__label">{{ __('frontend.checkout.cvv') }}</span>
-                                                <span class="ccard__cvv" id="coCardCvv">•••</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="co__fields">
-                                    <div class="fld co__full">
+                                    <div class="fld">
                                         <label class="fld__label" for="name_on_card">{{ __('frontend.checkout.card_name') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                         <div class="fld__box">
                                             <i class="fas fa-user fld__icon" aria-hidden="true"></i>
@@ -458,7 +428,7 @@
                                         @error('name')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                                     </div>
 
-                                    <div class="fld co__full">
+                                    <div class="fld">
                                         <label class="fld__label" for="card_number">{{ __('frontend.checkout.card_number') }} <span class="co__req" aria-label="{{ __('frontend.checkout.required') }}">*</span></label>
                                         <div class="fld__box">
                                             <i class="fas fa-credit-card fld__icon" aria-hidden="true"></i>
@@ -566,9 +536,6 @@
                                             <input type="text" id="captcha" name="captcha" autocomplete="off" class="fld__input" placeholder="{{ __('frontend.checkout.captcha_ph') }}">
                                         </div>
                                         <div class="cap__img">@captcha</div>
-                                        <button type="button" class="cap__refresh" data-captcha-refresh aria-label="{{ __('frontend.checkout.refresh') }}">
-                                            <i class="fas fa-sync-alt" aria-hidden="true"></i>
-                                        </button>
                                     </div>
                                     @error('captcha')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ __('frontend.checkout.captcha_bad') }}</span>@enderror
                                 </div>
@@ -580,7 +547,7 @@
         </div>
 
         <aside class="co__rail">
-            <div class="sum">
+            <div class="sum band--coffee">
                 <div class="sum__head">
                     <span class="panel__num"><i class="fas fa-shopping-bag" aria-hidden="true"></i></span>
                     <h2 class="sum__title">{{ __('frontend.checkout.order') }}</h2>
@@ -608,12 +575,12 @@
                 </div>
 
                 <div class="sum__foot">
-                    <button type="submit" form="frmCheckout" class="btn btn--primary sum__pay" id="button-confirm">
+                    <button type="submit" form="frmCheckout" class="btn btn--primary btn--block sum__pay" id="button-confirm">
                         <i class="fas fa-lock" aria-hidden="true"></i>
                         {{ __('frontend.checkout.pay') }}
                     </button>
 
-                    <a href="{{ route('home') }}" class="btn btn--ghost">{{ __('frontend.checkout.continue') }}</a>
+                    <a href="{{ route('home') }}" class="btn btn--ghost btn--block">{{ __('frontend.checkout.continue') }}</a>
 
                     <p class="sum__trust">
                         <i class="fas fa-shield-alt" aria-hidden="true"></i>
@@ -724,11 +691,9 @@
     var byId = function (id) { return document.getElementById(id); };
 
     var number = byId('card_number');
-    var holder = byId('name_on_card');
     var month  = byId('expiry_month');
     var year   = byId('expiry_year');
     var cvv    = byId('cvv');
-    var preview = byId('coCard');
     var country = byId('country');
 
     if (country && @json(old('country', ''))) {
@@ -768,46 +733,6 @@
 
     digitsOnly(year, 4);
     digitsOnly(cvv, 4);
-
-    if (preview) {
-        var brands = { '4': 'fa-cc-visa', '5': 'fa-cc-mastercard', '2': 'fa-cc-mastercard', '3': 'fa-cc-amex', '6': 'fa-cc-discover' };
-
-        var render = function () {
-            var digits = (number.value || '').replace(/\D/g, '');
-            var masked = (digits + '•'.repeat(Math.max(0, 16 - digits.length))).substring(0, 16).replace(/(.{4})/g, '$1 ').trim();
-
-            byId('coCardNumber').textContent = masked;
-            byId('coCardName').textContent = (holder.value || '').trim() || '—';
-            byId('coCardExp').textContent = (month.value || '••').padEnd(2, '•') + '/' + ((year.value || '').slice(-2) || '••').padEnd(2, '•');
-            byId('coCardCvv').textContent = (cvv.value || '').replace(/./g, '•') || '•••';
-
-            var brand = byId('coCardBrand');
-            var glyph = brands[digits.charAt(0)];
-            brand.className = 'fab ccard__brand ' + (glyph || 'fa-cc-visa');
-            brand.style.opacity = glyph ? '1' : '0';
-        };
-
-        [number, holder, month, year, cvv].forEach(function (field) {
-            if (field) { field.addEventListener('input', function () { setTimeout(render, 0); }); }
-        });
-
-        if (cvv) {
-            cvv.addEventListener('focus', function () { preview.classList.add('is-flipped'); });
-            cvv.addEventListener('blur', function () { preview.classList.remove('is-flipped'); });
-        }
-
-        render();
-    }
-
-    document.addEventListener('click', function (event) {
-        var refresh = event.target.closest('[data-captcha-refresh]');
-
-        if (!refresh) { return; }
-
-        var image = refresh.parentElement.querySelector('.cap__img img');
-
-        if (image) { image.click(); }
-    });
 }());
 </script>
 @endpush

@@ -11,88 +11,68 @@
 ])
 
 <section class="auth">
-    <div class="auth__split">
+    <div class="auth__card">
+        <p class="auth__badge">{{ __('frontend.login.label') }}</p>
+        <h2 class="auth__title">{{ __('frontend.login.heading') }}</h2>
+        <p class="auth__lead">{{ __('frontend.login.lead') }}</p>
 
-        <div class="auth__art">
-            <a href="{{ route('home') }}" class="auth__logo">
-                <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $misc['Company Name'] ?? __('frontend.company.name') }}">
-            </a>
-            <div class="auth__art-inner">
-                <p class="auth__badge">{{ __('frontend.login.label') }}</p>
-                <p class="auth__lead">{{ __('frontend.login.lead') }}</p>
-            </div>
-        </div>
+        @if(session('loginerror'))
+            <p class="msg msg--error" role="alert">
+                <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                <span>{{ session('loginerror') }}</span>
+            </p>
+        @endif
 
-        <div class="auth__form">
-            <div class="auth__inner">
+        <form name="frmLogin" id="frmLogin" action="{{ route('login.submit') }}" method="post" novalidate>
+            @csrf
 
-                <a href="{{ route('home') }}" class="auth__back">
-                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                    {{ __('frontend.header.home') }}
-                </a>
+            <div class="auth__fields">
 
-                <h1 class="auth__title">{{ __('frontend.login.heading') }}</h1>
+                <div class="fld">
+                    <label class="fld__label" for="email">{{ __('frontend.login.email') }}</label>
+                    <div class="fld__box">
+                        <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
+                        <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.login.email_ph') }}" value="{{ old('email') }}">
+                    </div>
+                    @error('email')
+                        <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
+                    @enderror
+                </div>
 
-                @if(session('loginerror'))
-                    <p class="msg msg--error" role="alert">
-                        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-                        <span>{{ session('loginerror') }}</span>
-                    </p>
-                @endif
-
-                <form name="frmLogin" id="frmLogin" action="{{ route('login.submit') }}" method="post" novalidate>
-                    @csrf
-
-                    <div class="auth__fields">
-
-                        <div class="fld">
-                            <label class="fld__label" for="email">{{ __('frontend.login.email') }}</label>
-                            <div class="fld__box">
-                                <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
-                                <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.login.email_ph') }}" value="{{ old('email') }}">
-                            </div>
-                            @error('email')
-                                <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="fld fld--pass">
-                            <label class="fld__label" for="password">{{ __('frontend.login.password') }}</label>
-                            <div class="fld__box">
-                                <i class="fas fa-lock fld__icon" aria-hidden="true"></i>
-                                <input type="password" name="password" id="password" autocomplete="current-password" class="fld__input @error('password') is-invalid @enderror" placeholder="{{ __('frontend.login.password_ph') }}">
-                                <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.login.show') }}" data-hide="{{ __('frontend.login.hide') }}" aria-label="{{ __('frontend.login.show') }}" aria-pressed="false">
-                                    <i class="fas fa-eye" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            @error('password')
-                                <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="auth__opts">
-                            <label class="auth__check">
-                                <span class="tick">
-                                    <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <i class="fas fa-check" aria-hidden="true"></i>
-                                </span>
-                                {{ __('frontend.login.remember') }}
-                            </label>
-                            <a href="{{ route('forgetpwd.form') }}" class="auth__link">{{ __('frontend.login.forgot') }}</a>
-                        </div>
-
-                        <button type="submit" name="submit-form" class="btn btn--primary auth__submit">
-                            {{ __('frontend.login.submit') }}
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                <div class="fld fld--pass">
+                    <label class="fld__label" for="password">{{ __('frontend.login.password') }}</label>
+                    <div class="fld__box">
+                        <i class="fas fa-lock fld__icon" aria-hidden="true"></i>
+                        <input type="password" name="password" id="password" autocomplete="current-password" class="fld__input @error('password') is-invalid @enderror" placeholder="{{ __('frontend.login.password_ph') }}">
+                        <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.login.show') }}" data-hide="{{ __('frontend.login.hide') }}" aria-label="{{ __('frontend.login.show') }}" aria-pressed="false">
+                            <i class="fas fa-eye" aria-hidden="true"></i>
                         </button>
                     </div>
-                </form>
+                    @error('password')
+                        <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
+                    @enderror
+                </div>
 
-                <p class="auth__divider">{{ __('frontend.login.new') }}</p>
+                <div class="auth__opts">
+                    <label class="auth__check">
+                        <span class="tick">
+                            <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                        </span>
+                        {{ __('frontend.login.remember') }}
+                    </label>
+                    <a href="{{ route('forgetpwd.form') }}" class="auth__link">{{ __('frontend.login.forgot') }}</a>
+                </div>
 
-                <a href="{{ route('register.form') }}" class="btn btn--ghost auth__alt">{{ __('frontend.login.register') }}</a>
+                <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit">
+                    {{ __('frontend.login.submit') }}
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </button>
             </div>
-        </div>
+        </form>
+
+        <p class="auth__divider"><span>{{ __('frontend.login.new') }}</span></p>
+        <a href="{{ route('register.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.login.register') }}</a>
     </div>
 </section>
 

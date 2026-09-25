@@ -26,275 +26,280 @@
 @endphp
 
 <section class="dash">
-    <div class="dash__grid">
+    <div class="dash__wrap">
 
-        <aside class="dash__rail">
-
+        <div class="dash__hero band--indigo">
             <div class="who">
-                <span class="who__avatar" aria-hidden="true">{{ mb_substr($u->name ?? 'U', 0, 1) }}</span>
-                <p class="who__name">{{ $u->name }}</p>
-                <p class="who__email">{{ $u->email }}</p>
-                <span class="who__since">
-                    <i class="far fa-calendar" aria-hidden="true"></i>
-                    {{ __('frontend.dashboard.member') }} {{ $fmtDate($u->created_at, __('frontend.dashboard.member_format')) }}
-                </span>
+                <span class="who__avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr($u->name ?? 'U', 0, 1)) }}</span>
+                <div>
+                    <p class="who__name">{{ $u->name }}</p>
+                    <p class="who__email">{{ $u->email }}</p>
+                    <span class="who__since">
+                        <i class="far fa-calendar" aria-hidden="true"></i>
+                        {{ __('frontend.dashboard.member') }} {{ $fmtDate($u->created_at, __('frontend.dashboard.member_format')) }}
+                    </span>
+                </div>
             </div>
 
-            <nav class="dnav" role="tablist" aria-label="{{ __('frontend.dashboard.tabs') }}">
-                <button type="button" role="tab" class="dnav__item is-active" data-tab="purchased" aria-selected="true" aria-controls="panel-purchased">
-                    <i class="fas fa-receipt" aria-hidden="true"></i>
-                    <span>{{ __('frontend.dashboard.tab_purchases') }}</span>
-                    <span class="dnav__count">{{ $purchasedCount }}</span>
-                </button>
-                <button type="button" role="tab" class="dnav__item" data-tab="redeemed" aria-selected="false" aria-controls="panel-redeemed">
-                    <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                    <span>{{ __('frontend.dashboard.tab_materials') }}</span>
-                    <span class="dnav__count">{{ $redeemedCount }}</span>
-                </button>
-                <button type="button" role="tab" class="dnav__item" data-tab="password" aria-selected="false" aria-controls="panel-password">
-                    <i class="fas fa-lock" aria-hidden="true"></i>
-                    <span>{{ __('frontend.dashboard.tab_password') }}</span>
-                </button>
-            </nav>
-
-            <div class="dash__actions">
-                <a href="{{ route('points.topup') }}" class="btn btn--primary">
+            <div class="wallet">
+                <span class="wallet__label">{{ __('frontend.dashboard.credits') }}</span>
+                <span class="wallet__value">
                     <i class="fas fa-bolt" aria-hidden="true"></i>
-                    {{ __('frontend.dashboard.buy') }}
-                </a>
-                <a href="{{ route('user.logout') }}" class="btn btn--ghost">
-                    <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
-                    {{ __('frontend.dashboard.logout') }}
-                </a>
-            </div>
-        </aside>
-
-        <div class="dash__main">
-
-            <div class="figs">
-                <div class="fig fig--credits">
-                    <span class="fig__icon"><i class="fas fa-bolt" aria-hidden="true"></i></span>
-                    <span class="fig__label">{{ __('frontend.dashboard.credits') }}</span>
-                    <span class="fig__value">{{ number_format($u->points_balance ?? 0) }}</span>
-                    <a href="{{ route('points.topup') }}" class="fig__link">
+                    {{ number_format($u->points_balance ?? 0) }}
+                </span>
+                <div class="wallet__actions">
+                    <a href="{{ route('points.topup') }}" class="btn btn--primary">
+                        <i class="fas fa-bolt" aria-hidden="true"></i>
                         {{ __('frontend.dashboard.buy') }}
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <a href="{{ route('user.logout') }}" class="btn btn--ghost">
+                        <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                        {{ __('frontend.dashboard.logout') }}
                     </a>
                 </div>
+            </div>
+        </div>
 
-                <div class="fig">
-                    <span class="fig__icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
+        <div class="figs">
+            <div class="fig">
+                <span class="fig__icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
+                <span class="fig__text">
                     <span class="fig__label">{{ __('frontend.dashboard.unlocked_levels') }}</span>
                     <span class="fig__value">{{ $redeemedCount }}</span>
-                    <a href="{{ route('product-lists') }}" class="fig__link">
-                        {{ __('frontend.dashboard.browse_all') }}
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-
-                <div class="fig">
-                    <span class="fig__icon"><i class="fas fa-receipt" aria-hidden="true"></i></span>
-                    <span class="fig__label">{{ __('frontend.dashboard.purchases') }}</span>
-                    <span class="fig__value">{{ $purchasedCount }}</span>
-                </div>
+                </span>
+                <a href="{{ route('product-lists') }}" class="fig__link">
+                    {{ __('frontend.dashboard.browse_all') }}
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
             </div>
 
-            <div class="panel" id="panel-purchased" role="tabpanel" data-panel="purchased">
-                <div class="panel__head">
-                    <span class="panel__num"><i class="fas fa-receipt" aria-hidden="true"></i></span>
-                    <h2 class="panel__title">{{ __('frontend.dashboard.purchases_title') }}</h2>
-                </div>
-                <div class="panel__body">
-                    @if($purchasedCount > 0)
-                        <ul class="orders">
-                            @foreach($purchasedOrders as $order)
-                                <li class="order">
-                                    <span class="order__icon"><i class="fas fa-bolt" aria-hidden="true"></i></span>
+            <div class="fig">
+                <span class="fig__icon"><i class="fas fa-receipt" aria-hidden="true"></i></span>
+                <span class="fig__text">
+                    <span class="fig__label">{{ __('frontend.dashboard.purchases') }}</span>
+                    <span class="fig__value">{{ $purchasedCount }}</span>
+                </span>
+            </div>
+        </div>
 
-                                    <span>
-                                        <span class="order__no">{{ $order->order_number }}</span>
-                                        <span class="order__date">{{ $fmtDate($order->created_at, __('frontend.dashboard.date_format')) }}</span>
-                                    </span>
+        <nav class="dnav" role="tablist" aria-label="{{ __('frontend.dashboard.tabs') }}">
+            <button type="button" role="tab" class="dnav__item is-active" data-tab="purchased" aria-selected="true" aria-controls="panel-purchased">
+                <i class="fas fa-receipt" aria-hidden="true"></i>
+                <span>{{ __('frontend.dashboard.tab_purchases') }}</span>
+                <span class="dnav__count">{{ $purchasedCount }}</span>
+            </button>
+            <button type="button" role="tab" class="dnav__item" data-tab="redeemed" aria-selected="false" aria-controls="panel-redeemed">
+                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                <span>{{ __('frontend.dashboard.tab_materials') }}</span>
+                <span class="dnav__count">{{ $redeemedCount }}</span>
+            </button>
+            <button type="button" role="tab" class="dnav__item" data-tab="password" aria-selected="false" aria-controls="panel-password">
+                <i class="fas fa-lock" aria-hidden="true"></i>
+                <span>{{ __('frontend.dashboard.tab_password') }}</span>
+            </button>
+        </nav>
 
-                                    <span class="order__facts">
+        <div class="panel" id="panel-purchased" role="tabpanel" data-panel="purchased">
+            <div class="panel__head">
+                <span class="panel__num"><i class="fas fa-receipt" aria-hidden="true"></i></span>
+                <h2 class="panel__title">{{ __('frontend.dashboard.purchases_title') }}</h2>
+            </div>
+            <div class="panel__body">
+                @if($purchasedCount > 0)
+                    <div class="otable">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">{{ __('frontend.dashboard.col_order') }}</th>
+                                    <th scope="col">{{ __('frontend.dashboard.col_date') }}</th>
+                                    <th scope="col">{{ __('frontend.dashboard.col_credits') }}</th>
+                                    <th scope="col">{{ __('frontend.dashboard.col_amount') }}</th>
+                                    <th scope="col">{{ __('frontend.dashboard.col_status') }}</th>
+                                    <th scope="col"><span class="vh">{{ __('frontend.dashboard.col_receipt') }}</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($purchasedOrders as $order)
+                                    <tr>
+                                        <td class="otable__no">{{ $order->order_number }}</td>
+                                        <td>{{ $fmtDate($order->created_at, __('frontend.dashboard.date_format')) }}</td>
+                                        <td class="num">
+                                            <i class="fas fa-bolt otable__bolt" aria-hidden="true"></i>
+                                            {{ number_format($order->cart_info->sum('points')) }}
+                                        </td>
+                                        <td class="num otable__amount">{!! $order->currency=='JPY' ? '&yen;' : Helper::getCurrencySymbol($order->currency) !!}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}</td>
+                                        <td>
+                                            @if($order->payment_status === 'Completed')
+                                                <span class="state state--ok"><i class="fas fa-check" aria-hidden="true"></i> {{ $statusLabel('Completed') }}</span>
+                                            @elseif($order->payment_status === 'Failed')
+                                                <span class="state state--err"><i class="fas fa-times" aria-hidden="true"></i> {{ $statusLabel('Failed') }}</span>
+                                            @else
+                                                <span class="state state--wait"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel('Pending') }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="otable__act">
+                                            <a href="{{ route('user.order.show', $order->id) }}" class="btn btn--ghost btn--sm">
+                                                <i class="fas fa-eye" aria-hidden="true"></i>
+                                                {{ __('frontend.dashboard.view') }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="blank">
+                        <span class="blank__icon" aria-hidden="true"><i class="fas fa-box-open"></i></span>
+                        <p>{{ __('frontend.dashboard.purchases_none') }}</p>
+                        <a href="{{ route('points.topup') }}" class="btn btn--primary">
+                            <i class="fas fa-bolt" aria-hidden="true"></i>
+                            {{ __('frontend.dashboard.buy') }}
+                        </a>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <div class="panel" id="panel-redeemed" role="tabpanel" data-panel="redeemed" hidden>
+            <div class="panel__head">
+                <span class="panel__num"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
+                <h2 class="panel__title">{{ __('frontend.dashboard.materials_title') }}</h2>
+            </div>
+            <div class="panel__body">
+                @if($redeemedCount > 0)
+                    <ul class="courses">
+                        @foreach($redeemedOrders as $order)
+                            @php
+                                $cartItem = $order->cart_info->first();
+                                $level = null;
+                                if($cartItem) {
+                                    $level = \App\Models\ProductLevel::where('course_id', $cartItem->product_id)
+                                                                     ->where('price_in_points', $cartItem->points)
+                                                                     ->first();
+                                }
+                                $product = $cartItem ? $cartItem->product : null;
+                                $cimg = $product && $product->photo ? explode(',', $product->photo)[0] : null;
+                            @endphp
+                            <li class="course">
+                                <div class="course__media">
+                                    @if($cimg)
+                                        <img src="{{ asset(ltrim($cimg, '/')) }}" alt="" loading="lazy">
+                                    @else
+                                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                                    @endif
+
+                                    @if(strtolower($order->status) === 'completed')
+                                        <span class="state state--ok course__status"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.dashboard.badge') }}</span>
+                                    @else
+                                        <span class="state state--wait course__status"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel($order->status) }}</span>
+                                    @endif
+                                </div>
+
+                                <div class="course__body">
+                                    <div class="course__tags">
+                                        @if($level)
+                                            <span class="chip chip--text"><i class="fas fa-signal" aria-hidden="true"></i> {{ $levelLabel($level) }}</span>
+                                        @endif
                                         <span class="chip">
                                             <i class="fas fa-bolt" aria-hidden="true"></i>
                                             {{ number_format($order->cart_info->sum('points')) }}
                                         </span>
-
-                                        <span class="order__price">{!! $order->currency=='JPY' ? '&yen;' : Helper::getCurrencySymbol($order->currency) !!}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}</span>
-
-                                        @if($order->payment_status === 'Completed')
-                                            <span class="state state--ok"><i class="fas fa-check" aria-hidden="true"></i> {{ $statusLabel('Completed') }}</span>
-                                        @elseif($order->payment_status === 'Failed')
-                                            <span class="state state--err"><i class="fas fa-times" aria-hidden="true"></i> {{ $statusLabel('Failed') }}</span>
-                                        @else
-                                            <span class="state state--wait"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel('Pending') }}</span>
-                                        @endif
-                                    </span>
-
-                                    <a href="{{ route('user.order.show', $order->id) }}" class="btn btn--ghost btn--sm">
-                                        <i class="fas fa-eye" aria-hidden="true"></i>
-                                        {{ __('frontend.dashboard.view') }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <div class="blank">
-                            <span class="blank__icon" aria-hidden="true"><i class="fas fa-box-open"></i></span>
-                            <p>{{ __('frontend.dashboard.purchases_none') }}</p>
-                            <a href="{{ route('points.topup') }}" class="btn btn--primary">
-                                <i class="fas fa-bolt" aria-hidden="true"></i>
-                                {{ __('frontend.dashboard.buy') }}
-                            </a>
-                        </div>
-                    @endif
-                </div>
-            </div>
-
-            <div class="panel" id="panel-redeemed" role="tabpanel" data-panel="redeemed" hidden>
-                <div class="panel__head">
-                    <span class="panel__num"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
-                    <h2 class="panel__title">{{ __('frontend.dashboard.materials_title') }}</h2>
-                </div>
-                <div class="panel__body">
-                    @if($redeemedCount > 0)
-                        <ul class="courses">
-                            @foreach($redeemedOrders as $order)
-                                @php
-                                    $cartItem = $order->cart_info->first();
-                                    $level = null;
-                                    if($cartItem) {
-                                        $level = \App\Models\ProductLevel::where('course_id', $cartItem->product_id)
-                                                                         ->where('price_in_points', $cartItem->points)
-                                                                         ->first();
-                                    }
-                                    $product = $cartItem ? $cartItem->product : null;
-                                    $cimg = $product && $product->photo ? explode(',', $product->photo)[0] : null;
-                                @endphp
-                                <li class="course">
-                                    <div class="course__media">
-                                        @if($cimg)
-                                            <img src="{{ asset(ltrim($cimg, '/')) }}" alt="" loading="lazy">
-                                        @else
-                                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                                        @endif
-
-                                        @if(strtolower($order->status) === 'completed')
-                                            <span class="state state--ok course__status"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.dashboard.badge') }}</span>
-                                        @else
-                                            <span class="state state--wait course__status"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel($order->status) }}</span>
-                                        @endif
                                     </div>
 
-                                    <div class="course__body">
-                                        <div class="course__tags">
-                                            @if($level)
-                                                <span class="chip chip--text"><i class="fas fa-signal" aria-hidden="true"></i> {{ $levelLabel($level) }}</span>
-                                            @endif
-                                            <span class="chip">
-                                                <i class="fas fa-bolt" aria-hidden="true"></i>
-                                                {{ number_format($order->cart_info->sum('points')) }}
-                                            </span>
-                                        </div>
+                                    <h3 class="course__title">{{ $product ? $product->title : __('frontend.dashboard.no_material') }}</h3>
 
-                                        <h3 class="course__title">{{ $product ? $product->title : __('frontend.dashboard.no_material') }}</h3>
-
-                                        <div class="course__meta">
-                                            <span><i class="fas fa-hashtag" aria-hidden="true"></i> {{ $order->order_number }}</span>
-                                            <span><i class="far fa-calendar" aria-hidden="true"></i> {{ $fmtDate($order->created_at, __('frontend.dashboard.date_format')) }}</span>
-                                        </div>
-
-                                        @if($product)
-                                            <a href="{{ route('product-detail', $product->slug) }}" class="btn btn--ghost btn--sm course__btn">
-                                                {{ __('frontend.dashboard.view_material') }}
-                                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                                            </a>
-                                        @endif
+                                    <div class="course__meta">
+                                        <span><i class="fas fa-hashtag" aria-hidden="true"></i> {{ $order->order_number }}</span>
+                                        <span><i class="far fa-calendar" aria-hidden="true"></i> {{ $fmtDate($order->created_at, __('frontend.dashboard.date_format')) }}</span>
                                     </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <div class="blank">
-                            <span class="blank__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
-                            <p>{{ __('frontend.dashboard.materials_empty') }}</p>
-                            <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                                {{ __('frontend.dashboard.browse_all') }}
-                            </a>
-                        </div>
-                    @endif
-                </div>
-            </div>
 
-            <div class="panel" id="panel-password" role="tabpanel" data-panel="password" hidden>
-                <div class="panel__head">
-                    <span class="panel__num"><i class="fas fa-lock" aria-hidden="true"></i></span>
-                    <h2 class="panel__title">{{ __('frontend.dashboard.password_title') }}</h2>
-                </div>
-                <div class="panel__body">
-                    <div class="pwd">
-                        <form action="{{ route('change.password') }}" method="POST" id="pwdForm" novalidate>
-                            @csrf
-
-                            <div class="pwd__fields">
-                                <div class="fld fld--pass">
-                                    <label class="fld__label" for="current_password">{{ __('frontend.dashboard.current') }}</label>
-                                    <div class="fld__box">
-                                        <i class="fas fa-lock fld__icon" aria-hidden="true"></i>
-                                        <input type="password" id="current_password" name="current_password" autocomplete="current-password" class="fld__input @error('current_password') is-invalid @enderror" placeholder="{{ __('frontend.dashboard.current_ph') }}">
-                                        <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false">
-                                            <i class="fas fa-eye" aria-hidden="true"></i>
-                                        </button>
-                                    </div>
-                                    @error('current_password')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                                    @if($product)
+                                        <a href="{{ route('product-detail', $product->slug) }}" class="btn btn--ghost btn--sm course__btn">
+                                            {{ __('frontend.dashboard.view_material') }}
+                                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                        </a>
+                                    @endif
                                 </div>
-
-                                <div class="pwd__pair">
-                                    <div class="fld fld--pass">
-                                        <label class="fld__label" for="new_password">{{ __('frontend.dashboard.new') }}</label>
-                                        <div class="fld__box">
-                                            <i class="fas fa-key fld__icon" aria-hidden="true"></i>
-                                            <input type="password" id="new_password" name="new_password" autocomplete="new-password" class="fld__input @error('new_password') is-invalid @enderror" placeholder="{{ __('frontend.dashboard.new_ph') }}">
-                                            <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false">
-                                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                        @error('new_password')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
-                                    </div>
-
-                                    <div class="fld fld--pass">
-                                        <label class="fld__label" for="new_confirm_password">{{ __('frontend.dashboard.confirm') }}</label>
-                                        <div class="fld__box">
-                                            <i class="fas fa-key fld__icon" aria-hidden="true"></i>
-                                            <input type="password" id="new_confirm_password" name="new_confirm_password" autocomplete="new-password" class="fld__input @error('new_confirm_password') is-invalid @enderror" placeholder="{{ __('frontend.dashboard.confirm_ph') }}">
-                                            <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false">
-                                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                        @error('new_confirm_password')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn--primary">
-                                    <i class="fas fa-check" aria-hidden="true"></i>
-                                    {{ __('frontend.dashboard.save') }}
-                                </button>
-                            </div>
-                        </form>
-
-                        <aside class="tips">
-                            <span class="tips__icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
-                            <h3 class="tips__title">{{ __('frontend.dashboard.tip_title') }}</h3>
-                            <ul class="tips__list">
-                                <li><i class="fas fa-check" aria-hidden="true"></i> <span>{{ __('frontend.dashboard.tip1') }}</span></li>
-                                <li><i class="fas fa-check" aria-hidden="true"></i> <span>{{ __('frontend.dashboard.tip2') }}</span></li>
-                                <li><i class="fas fa-check" aria-hidden="true"></i> <span>{{ __('frontend.dashboard.tip3') }}</span></li>
-                            </ul>
-                        </aside>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <div class="blank">
+                        <span class="blank__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
+                        <p>{{ __('frontend.dashboard.materials_empty') }}</p>
+                        <a href="{{ route('product-lists') }}" class="btn btn--primary">
+                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                            {{ __('frontend.dashboard.browse_all') }}
+                        </a>
                     </div>
+                @endif
+            </div>
+        </div>
+
+        <div class="panel" id="panel-password" role="tabpanel" data-panel="password" hidden>
+            <div class="panel__head">
+                <span class="panel__num"><i class="fas fa-lock" aria-hidden="true"></i></span>
+                <h2 class="panel__title">{{ __('frontend.dashboard.password_title') }}</h2>
+            </div>
+            <div class="panel__body">
+                <div class="pwd">
+                    <form action="{{ route('change.password') }}" method="POST" id="pwdForm" novalidate>
+                        @csrf
+
+                        <div class="pwd__fields">
+                            <div class="fld fld--pass">
+                                <label class="fld__label" for="current_password">{{ __('frontend.dashboard.current') }}</label>
+                                <div class="fld__box">
+                                    <i class="fas fa-lock fld__icon" aria-hidden="true"></i>
+                                    <input type="password" id="current_password" name="current_password" autocomplete="current-password" class="fld__input @error('current_password') is-invalid @enderror" placeholder="{{ __('frontend.dashboard.current_ph') }}">
+                                    <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                @error('current_password')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            </div>
+
+                            <div class="fld fld--pass">
+                                <label class="fld__label" for="new_password">{{ __('frontend.dashboard.new') }}</label>
+                                <div class="fld__box">
+                                    <i class="fas fa-key fld__icon" aria-hidden="true"></i>
+                                    <input type="password" id="new_password" name="new_password" autocomplete="new-password" class="fld__input @error('new_password') is-invalid @enderror" placeholder="{{ __('frontend.dashboard.new_ph') }}">
+                                    <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                @error('new_password')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            </div>
+
+                            <div class="fld fld--pass">
+                                <label class="fld__label" for="new_confirm_password">{{ __('frontend.dashboard.confirm') }}</label>
+                                <div class="fld__box">
+                                    <i class="fas fa-key fld__icon" aria-hidden="true"></i>
+                                    <input type="password" id="new_confirm_password" name="new_confirm_password" autocomplete="new-password" class="fld__input @error('new_confirm_password') is-invalid @enderror" placeholder="{{ __('frontend.dashboard.confirm_ph') }}">
+                                    <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                @error('new_confirm_password')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            </div>
+
+                            <button type="submit" class="btn btn--primary">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                {{ __('frontend.dashboard.save') }}
+                            </button>
+                        </div>
+                    </form>
+
+                    <aside class="tips band--coffee">
+                        <span class="tips__icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
+                        <h3 class="tips__title">{{ __('frontend.dashboard.tip_title') }}</h3>
+                        <ul class="tips__list">
+                            <li><i class="fas fa-check" aria-hidden="true"></i> <span>{{ __('frontend.dashboard.tip1') }}</span></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> <span>{{ __('frontend.dashboard.tip2') }}</span></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> <span>{{ __('frontend.dashboard.tip3') }}</span></li>
+                        </ul>
+                    </aside>
                 </div>
             </div>
         </div>

@@ -13,18 +13,20 @@
 <section class="cr">
     <div class="cr__wrap">
 
-        <ol class="cr-steps">
-            <li class="cr-step is-current" aria-current="step">
-                <span class="cr-step__dot">1</span>
-                <span class="cr-step__label">{{ __('frontend.coursecart.step_cart') }}</span>
+        <ol class="steps">
+            <li class="steps__item is-active" aria-current="step">
+                <span class="steps__no">1</span>
+                <span class="steps__label">{{ __('frontend.coursecart.step_cart') }}</span>
             </li>
-            <li class="cr-step">
-                <span class="cr-step__dot">2</span>
-                <span class="cr-step__label">{{ __('frontend.coursecart.step_unlock') }}</span>
+            <li class="steps__line" aria-hidden="true"></li>
+            <li class="steps__item">
+                <span class="steps__no">2</span>
+                <span class="steps__label">{{ __('frontend.coursecart.step_unlock') }}</span>
             </li>
-            <li class="cr-step">
-                <span class="cr-step__dot">3</span>
-                <span class="cr-step__label">{{ __('frontend.coursecart.step_learn') }}</span>
+            <li class="steps__line" aria-hidden="true"></li>
+            <li class="steps__item">
+                <span class="steps__no">3</span>
+                <span class="steps__label">{{ __('frontend.coursecart.step_learn') }}</span>
             </li>
         </ol>
 
@@ -138,7 +140,7 @@
                     </div>
 
                     <aside class="cr-side" aria-labelledby="crSummaryTitle">
-                        <div class="cr-wallet">
+                        <div class="cr-wallet band--indigo">
                             <span class="cr-wallet__label">{{ __('frontend.coursecart.balance') }}</span>
                             <span class="cr-wallet__amount">
                                 <i class="fas fa-bolt" aria-hidden="true"></i>
@@ -155,7 +157,7 @@
                             </a>
                         </div>
 
-                        <div class="cr-sum">
+                        <div class="cr-sum band--coffee">
                             <h2 id="crSummaryTitle" class="cr-sum__title">{{ __('frontend.coursecart.summary') }}</h2>
 
                             <dl class="cr-sum__rows">

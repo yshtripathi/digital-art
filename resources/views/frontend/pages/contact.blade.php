@@ -17,105 +17,85 @@
 @endphp
 
 <section class="contact">
-    <div class="contact__split">
+    <div class="contact__wrap">
+        <aside class="contact__info band--coffee">
+            <p class="auth__badge">{{ __('frontend.contact.info_label') }}</p>
+            <h2 class="auth__title">{{ __('frontend.contact.form_title') }}</h2>
+            <p class="auth__lead">{{ __('frontend.contact.form_text') }}</p>
 
-        <aside class="contact__aside">
-            <div>
-                <p class="contact__kicker">{{ __('frontend.contact.info_label') }}</p>
-                <p class="contact__lead">{{ __('frontend.contact.info_lead') }}</p>
-            </div>
-
-            <div class="contact__card">
-                <ul class="contact__rows">
-                    <li class="contact__row">
-                        <span class="contact__tile"><i class="fas fa-envelope" aria-hidden="true"></i></span>
-                        <span>
-                            <span class="contact__label">{{ __('frontend.contact.email') }}</span>
-                            <a href="mailto:{{ $ctEmail }}" class="contact__value">{{ $ctEmail }}</a>
-                        </span>
-                    </li>
-                    <li class="contact__row">
-                        <span class="contact__tile"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></span>
-                        <span>
-                            <span class="contact__label">{{ __('frontend.contact.address') }}</span>
-                            <span class="contact__value">{{ $ctAddress }}</span>
-                        </span>
-                    </li>
-                    <li class="contact__row">
-                        <span class="contact__tile"><i class="fas fa-building" aria-hidden="true"></i></span>
-                        <span>
-                            <span class="contact__label">{{ __('frontend.contact.company') }}</span>
-                            <span class="contact__value">{{ $ctCompany }}</span>
-                        </span>
-                    </li>
-                </ul>
-            </div>
+            <ul class="contact__rows">
+                <li class="contact__row">
+                    <span class="contact__icon" aria-hidden="true"><i class="fas fa-envelope"></i></span>
+                    <span class="contact__text">
+                        <span class="contact__label">{{ __('frontend.contact.email') }}</span>
+                        <a href="mailto:{{ $ctEmail }}" class="contact__value">{{ $ctEmail }}</a>
+                    </span>
+                </li>
+                <li class="contact__row">
+                    <span class="contact__icon" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
+                    <span class="contact__text">
+                        <span class="contact__label">{{ __('frontend.contact.address') }}</span>
+                        <span class="contact__value">{{ $ctAddress }}</span>
+                    </span>
+                </li>
+                <li class="contact__row">
+                    <span class="contact__icon" aria-hidden="true"><i class="fas fa-building"></i></span>
+                    <span class="contact__text">
+                        <span class="contact__label">{{ __('frontend.contact.company') }}</span>
+                        <span class="contact__value">{{ $ctCompany }}</span>
+                    </span>
+                </li>
+            </ul>
         </aside>
 
         <div class="contact__form">
-            <h2 class="contact__title">{{ __('frontend.contact.form_title') }}</h2>
-            <p class="contact__desc">{{ __('frontend.contact.form_text') }}</p>
-
-            <div class="contact__reasons">
-                <p class="contact__reasons-title">{{ __('frontend.contact.reasons_title') }}</p>
-                <ul class="contact__reasons-list">
-                    @foreach(__('frontend.contact.reasons') as $reason)
-                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{{ $reason }}</span></li>
-                    @endforeach
-                </ul>
-            </div>
-
             <form method="POST" action="{{ route('contact.send') }}" id="contactform" novalidate>
                 @csrf
 
-                <div class="contact__fields">
+                <div class="auth__fields">
 
-                    <div class="contact__pair">
-                        <div class="fld">
-                            <label class="fld__label" for="name">{{ __('frontend.contact.name') }}</label>
-                            <div class="fld__box">
-                                <i class="fas fa-user fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="name" id="name" autocomplete="name" class="fld__input @error('name') is-invalid @enderror" placeholder="{{ __('frontend.contact.name_ph') }}" value="{{ old('name') }}">
-                            </div>
-                            @error('name')
-                                <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                            @enderror
+                    <div class="fld">
+                        <label class="fld__label" for="name">{{ __('frontend.contact.name') }}</label>
+                        <div class="fld__box">
+                            <i class="fas fa-user fld__icon" aria-hidden="true"></i>
+                            <input type="text" name="name" id="name" autocomplete="name" class="fld__input @error('name') is-invalid @enderror" placeholder="{{ __('frontend.contact.name_ph') }}" value="{{ old('name') }}">
                         </div>
-
-                        <div class="fld">
-                            <label class="fld__label" for="email">{{ __('frontend.contact.email_label') }}</label>
-                            <div class="fld__box">
-                                <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
-                                <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.contact.email_ph') }}" value="{{ old('email') }}">
-                            </div>
-                            @error('email')
-                                <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                            @enderror
-                        </div>
+                        @error('name')
+                            <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
+                        @enderror
                     </div>
 
-                    <div class="contact__pair">
-                        <div class="fld">
-                            <label class="fld__label" for="phone">{{ __('frontend.contact.phone_label') }}</label>
-                            <div class="fld__box">
-                                <i class="fas fa-phone-alt fld__icon" aria-hidden="true"></i>
-                                <input type="tel" name="phone" id="phone" autocomplete="tel" class="fld__input @error('phone') is-invalid @enderror" placeholder="{{ __('frontend.contact.phone_ph') }}" value="{{ old('phone') }}" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')">
-                            </div>
-                            @error('phone')
-                                <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                            @enderror
+                    <div class="fld">
+                        <label class="fld__label" for="email">{{ __('frontend.contact.email_label') }}</label>
+                        <div class="fld__box">
+                            <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
+                            <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.contact.email_ph') }}" value="{{ old('email') }}">
                         </div>
+                        @error('email')
+                            <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
+                        @enderror
+                    </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="subject">{{ __('frontend.contact.subject') }}</label>
-                            <div class="fld__box">
-                                <i class="fas fa-tag fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="subject" id="subject" class="fld__input @error('subject') is-invalid @enderror" placeholder="{{ __('frontend.contact.subject_ph') }}" value="{{ old('subject') }}">
-                            </div>
-                            @error('subject')
-                                <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                            @enderror
+                    <div class="fld">
+                        <label class="fld__label" for="phone">{{ __('frontend.contact.phone_label') }}</label>
+                        <div class="fld__box">
+                            <i class="fas fa-phone-alt fld__icon" aria-hidden="true"></i>
+                            <input type="tel" name="phone" id="phone" autocomplete="tel" class="fld__input @error('phone') is-invalid @enderror" placeholder="{{ __('frontend.contact.phone_ph') }}" value="{{ old('phone') }}" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')">
                         </div>
+                        @error('phone')
+                            <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="fld">
+                        <label class="fld__label" for="subject">{{ __('frontend.contact.subject') }}</label>
+                        <div class="fld__box">
+                            <i class="fas fa-tag fld__icon" aria-hidden="true"></i>
+                            <input type="text" name="subject" id="subject" class="fld__input @error('subject') is-invalid @enderror" placeholder="{{ __('frontend.contact.subject_ph') }}" value="{{ old('subject') }}">
+                        </div>
+                        @error('subject')
+                            <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="fld">
@@ -138,9 +118,6 @@
                                     <input type="text" id="captcha" name="captcha" autocomplete="off" class="fld__input" placeholder="{{ __('frontend.contact.captcha_ph') }}">
                                 </div>
                                 <div class="cap__img">@captcha</div>
-                                <button type="button" class="cap__refresh" data-captcha-refresh aria-label="{{ __('frontend.contact.refresh') }}">
-                                    <i class="fas fa-sync-alt" aria-hidden="true"></i>
-                                </button>
                             </div>
                             @error('captcha')
                                 <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ __('frontend.contact.captcha_bad') }}</span>
@@ -148,7 +125,7 @@
                         </div>
                     @endif
 
-                    <button type="submit" class="btn btn--primary contact__submit">
+                    <button type="submit" class="btn btn--primary btn--block">
                         {{ __('frontend.contact.submit') }}
                         <i class="fas fa-paper-plane" aria-hidden="true"></i>
                     </button>
@@ -267,20 +244,6 @@
         if (failed) {
             event.preventDefault();
             failed.focus();
-        }
-    });
-
-    document.addEventListener('click', function (event) {
-        var refresh = event.target.closest('[data-captcha-refresh]');
-
-        if (!refresh) {
-            return;
-        }
-
-        var image = refresh.parentElement.querySelector('.cap__img img');
-
-        if (image) {
-            image.click();
         }
     });
 }());

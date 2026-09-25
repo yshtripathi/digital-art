@@ -5,7 +5,7 @@ return [
     // Dummy fallbacks, used only when the miscs table value is empty
     'company' => [
         'name'    => '[Company Name]',
-        'email'   => '[Company Email]',
+        'email'   => ' support@mandala-learning.com',
         'address' => '[Company Address]',
     ],
 

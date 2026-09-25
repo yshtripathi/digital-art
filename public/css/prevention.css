@@ -11,7 +11,7 @@ img, video {
     user-select: none;
     -webkit-touch-callout: none;
 }
-a, button, .cd-thumb {
+a, button, .cd-thumb, .cap__img img {
     pointer-events: auto;
 }
 
@@ -32,17 +32,18 @@ a, button, .cd-thumb {
 }
 
 .cat-card::after, .pl-catfig::after, .pl-othercat::after, .prod-slide__img::after, .cg-card__media::after, .cd-stage::after, .cd-thumb::after {
-    content: "INKWAVE";
+    content: "MANDALA";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-30deg);
-    font-size: max(2rem, 3.5vw);
+    font-size: max(1.25rem, 2.2vw);
     font-weight: 900;
     color: rgba(255, 255, 255, 0.9);
     pointer-events: none;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
     z-index: 20;
     text-shadow: 
         2px 2px 15px rgba(0,0,0,0.9), 

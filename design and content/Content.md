@@ -465,14 +465,14 @@ Every credit-related message must be clear and localized:
 | Payment failed | Your payment could not be completed. No credits were added. |
 | Balance label | Your credits |
 
-### 9A.4 Credit validity: 30 days
+### 9A.4 Credit validity: 90 days
 
 Credits have a defined validity period, and it must be stated:
 
-- **Credits are valid for 30 days from the date of purchase.** Use that figure and no other
+- **Credits are valid for 90 days from the date of purchase.** Use that figure and no other
 - Never write that credits never expire, and never quote a different validity period
 - State it wherever credits are explained: the Terms & Conditions, the top-up page, the FAQ and the checkout page
-- In the Terms & Conditions it is the **last bullet point of the Credits section**, worded as "Have a validity period of 30 days from date of purchase" or a close, natural rewording that keeps the same meaning in the page's language
+- In the Terms & Conditions it is the **last bullet point of the Credits section**, worded as "Have a validity period of 90 days from date of purchase" or a close, natural rewording that keeps the same meaning in the page's language
 
 Do not claim any of the following unless the business rules define it:
 
@@ -484,8 +484,8 @@ If a rule is not defined, do not mention it.
 
 ### 9A.5 Credits in policies and FAQ
 
-- **Terms & Conditions:** a "Credits" section explaining how credits are bought, used, and that they have no cash value outside the website (only if true for the business). Its final bullet states the validity period: **credits have a validity period of 30 days from the date of purchase**.
-- **Refund Policy:** explain how refund requests for credit purchases are handled, including what happens to credits already spent and to credits that have passed their 30 day validity.
+- **Terms & Conditions:** a "Credits" section explaining how credits are bought, used, and that they have no cash value outside the website (only if true for the business). Its final bullet states the validity period: **credits have a validity period of 90 days from the date of purchase**.
+- **Refund Policy:** explain how refund requests for credit purchases are handled, including what happens to credits already spent and to credits that have passed their 90 day validity.
 - **Delivery & Access Policy:** explain that credits are added to the account after payment is confirmed, that e-learning materials unlock after credits are spent, and repeat the delivery timing and the 72 hour limit from section 15.
 - **FAQ:** What are credits? How do I buy credits? How long are they valid? How do I use credits? Where can I see my balance? What if my credits do not appear?
 
@@ -581,7 +581,7 @@ Only three numbers may appear anywhere on the website in connection with deliver
 | **Delivery, normal** | within **24 hours** of confirmed payment | how long until the access email arrives |
 | **Delivery, delayed** | up to **48 to 72 hours** | the outside case when the system is slow |
 | **Report a problem** | after **72 hours** | when the learner should contact support |
-| **Credit validity** | **30 days** from date of purchase | when unspent credits expire |
+| **Credit validity** | **90 days** from date of purchase | when unspent credits expire |
 
 **There is no fourth figure.** In particular there is no access period: credits expire, e-learning materials do not.
 
@@ -600,7 +600,7 @@ Reword naturally for each page and language, but never contradict.
 
 **Credit validity** — the last bullet of the Terms & Conditions Credits section:
 
-> Have a validity period of 30 days from date of purchase
+> Have a validity period of 90 days from date of purchase
 
 **Reporting limit** — wherever a section tells the learner when to get in touch:
 
@@ -615,7 +615,7 @@ The contact address is always the `:email` placeholder filled from the `miscs` t
 | Delivery within 24 hours | yes | — | yes | yes | yes | yes | yes |
 | Up to 48 to 72 hours | summary | — | yes | yes | yes | — | yes |
 | Contact after 72 hours | — | — | yes | yes | yes | — | yes |
-| Credits valid 30 days | **last bullet of Credits section** | — | yes | yes | yes | yes | — |
+| Credits valid 90 days | **last bullet of Credits section** | — | yes | yes | yes | yes | — |
 
 A page that describes delivery or credits and omits the matching figure is incomplete. A page that states a different figure is wrong.
 
@@ -659,7 +659,7 @@ The test in one line: **if it says how long, remove it; if it only says that a p
 
 **Delivery & Access Policy must have** the delivery process section carrying all four facts from section 15.2, and an email delivery issues section in which **every hour figure reads 72**.
 
-**Terms & Conditions must have** the Company Information table at the top of section 1 (section 12.1A), and a Credits section whose **last bullet** is the 30 day validity. It must **not** carry the credit tier (multiplier) table.
+**Terms & Conditions must have** the Company Information table at the top of section 1 (section 12.1A), and a Credits section whose **last bullet** is the 90 day validity. It must **not** carry the credit tier (multiplier) table.
 
 **No page may have** a section named for an access period or its expiry.
 
@@ -669,7 +669,7 @@ The test in one line: **if it says how long, remove it; if it only says that a p
 - [ ] Section numbering runs 1, 2, 3 … with no gap left by a deleted section
 - [ ] Every delivery figure is 24 hours / 48 to 72 hours / 72 hours, and nothing else
 - [ ] Every "contact us after" figure is 72 hours, including in email-issues and failure-to-receive sections
-- [ ] The T&C Credits section ends with the 30 day validity bullet
+- [ ] The T&C Credits section ends with the 90 day validity bullet
 - [ ] The T&C has the Company Information table at the top of section 1: company name, DBA image, email, address, and no phone row
 - [ ] The T&C has no credit tier (multiplier) table
 - [ ] Every DBA image sits inline with its text and shows the logo clearly
@@ -763,7 +763,7 @@ The credit rate (1 credit = US$1 = ¥160 = HK$8) may be stated in the Credits se
 - How a purchase is completed through checkout.
 - Payment is handled through the payment methods the website actually offers.
 - An order is confirmed only after successful payment.
-- Money buys credits, and credits unlock a level. The Credits section ends with the validity period: **credits are valid for 30 days from the date of purchase** (section 9A.4).
+- Money buys credits, and credits unlock a level. The Credits section ends with the validity period: **credits are valid for 90 days from the date of purchase** (section 9A.4).
 
 ### 12.5 Access to E-Learning Materials
 
@@ -995,7 +995,7 @@ Rules for these facts:
 - **72 hours is the outer limit quoted to learners.** Never write 24 hours where the text means the limit for reporting a problem, and never quote a shorter figure such as "a few minutes", "instant", "immediate" or "straight away" to make delivery sound faster
 - Never write "lifetime access", "unlimited access", "indefinitely", "forever" or "access any time". The material is downloadable and the learner keeps what they download; that is not the same as a promise of permanent access to the platform, so do not word it as one
 - Do not promise offline or downloadable access for a material that is not actually downloadable
-- **Never state how long access lasts.** No page gives a duration for access in hours, days or weeks. There is no access period to quote: credits expire, e-learning materials do not. The only figures quoted anywhere are the delivery times above and the 30 day credit validity in section 9A.4
+- **Never state how long access lasts.** No page gives a duration for access in hours, days or weeks. There is no access period to quote: credits expire, e-learning materials do not. The only figures quoted anywhere are the delivery times above and the 90 day credit validity in section 9A.4
 - **Duration-free wording such as "the applicable access period" is allowed, and should be kept.** It names the mechanism without promising a length, and it protects the business rather than binding it. Keep it where it already appears, for example a non-refundable ground ("failed to access the Materials within an applicable access period"), a remedy short of a refund ("extending the applicable access period") or a records-keeping responsibility. Never attach a number to it
 - **No page carries a section named for the access period.** Headings such as "Access Period", "14-Day Access Period" or "Expiration of Access" do not exist. If one is found, delete the whole section and renumber the rest of the page
 
@@ -1043,13 +1043,13 @@ Group questions under headings. Answers must match how the website really works.
 - **Materials and levels:** How are the materials organised? How do I choose the right level? Can I buy more than one level?
 - **Payments:** How do I buy an e-learning material? Which payment methods are accepted? Is payment secure?
 - **Access:** How do I receive my materials? How long does the email take to arrive? What if the email does not arrive?
-- **Credits:** How long are my credits valid? (30 days from the date of purchase, section 9A.4)
+- **Credits:** How long are my credits valid? (90 days from the date of purchase, section 9A.4)
 - **Refunds and support:** How do refunds work? How do I contact support?
 - **Account and privacy:** How do I reset my password? How is my information handled?
 
 Keep answers short and link to the full policy page where relevant. Do not copy policy text word for word.
 
-The access answers must repeat the same facts as section 15: the download link and access details are emailed to the checkout address and are also available through the platform, delivery is typically within 24 hours, a system delay can stretch that to 48 to 72 hours, and support should be contacted if nothing has arrived after 72 hours. The credits answer states the 30 day validity from section 9A.4.
+The access answers must repeat the same facts as section 15: the download link and access details are emailed to the checkout address and are also available through the platform, delivery is typically within 24 hours, a system delay can stretch that to 48 to 72 hours, and support should be contacted if nothing has arrived after 72 hours. The credits answer states the 90 day validity from section 9A.4.
 
 The FAQ carries **no question asking how long access lasts**, because there is no answer to give. A "How long do I have access?" entry left over from an earlier version is replaced by the credits validity question, not answered with a duration.
 
@@ -1468,7 +1468,7 @@ Never use messages such as `No data`.
 
 Only promise what the website really does. Avoid phrases such as "instant access", "lifetime access", "indefinitely", "guaranteed results", "certified", "job-ready", "learn in 7 days", "100% satisfaction" or "the best platform" unless the application or business actually supports them. "Lifetime access" and "indefinitely" are banned outright: they must not appear anywhere on the website, in any language, whatever the context.
 
-Delivery, access and credits are where exact figures are defined: delivery typically within 24 hours of confirmed payment, up to 48 to 72 hours if the system is delayed, support contacted after 72 hours (section 15.2), and credits valid for 30 days from the date of purchase (section 9A.4). Use those figures exactly, and do not improve on them.
+Delivery, access and credits are where exact figures are defined: delivery typically within 24 hours of confirmed payment, up to 48 to 72 hours if the system is delayed, support contacted after 72 hours (section 15.2), and credits valid for 90 days from the date of purchase (section 9A.4). Use those figures exactly, and do not improve on them.
 
 Never invent:
 
@@ -1478,7 +1478,7 @@ Never invent:
 - Success, employment or income results
 - Guaranteed refunds
 - Any delivery time other than the figures defined in section 15.2, and any length of access at all
-- Any credit validity period other than the 30 days defined in section 9A.4
+- Any credit validity period other than the 90 days defined in section 9A.4
 - Permanent, unlimited or indefinite access, in any wording
 - Classes, lessons, live sessions, timetables, instructors or anything else the learner would attend (section 2.7)
 - Company registration numbers, legal entity names or jurisdictions
@@ -1500,7 +1500,7 @@ Real mistakes this rule prevents:
 | "Popular Courses" | There is no popularity data, and "courses" implies attendance | "Featured Materials" |
 | "Instant access after payment" | The download link is emailed and is also available on the platform, typically within 24 hours of confirmed payment | "Your download link is emailed to you, normally within 24 hours of payment" |
 | "Lifetime access" or "access indefinitely" | Nothing in the system promises permanent access; the learner downloads the material and keeps the file | "Download your material and keep it to use whenever you like" |
-| "Your credits never expire" | Credits carry a 30 day validity from the date of purchase | "Credits are valid for 30 days from the date of purchase" |
+| "Your credits never expire" | Credits carry a 90 day validity from the date of purchase | "Credits are valid for 90 days from the date of purchase" |
 | "Enroll now" or "Join the class" | Nothing is attended or taught; the learner buys study material | "Get access" or "Unlock this level" |
 
 ---
@@ -1637,12 +1637,12 @@ If a content requirement seems to need a database change, stop, explain which st
 - [ ] No customer-facing text calls the products "courses" or implies attending, enrolling, classes, lessons, sessions or instructors (section 2.7)
 - [ ] The Delivery & Access Policy states the delivery method, the "typically within 24 hours" timing, the "up to 48 to 72 hours" delay and the 72 hour contact point exactly as set out in section 15.2
 - [ ] The same delivery and access facts appear, unchanged, in the Terms & Conditions, the Refund Policy, the FAQ, at checkout and in the order confirmation
-- [ ] The 30 day credit validity appears in the Terms & Conditions credits section, on the top-up page and in the FAQ
+- [ ] The 90 day credit validity appears in the Terms & Conditions credits section, on the top-up page and in the FAQ
 - [ ] The words "lifetime access" and "indefinitely" appear nowhere on the website, in any language
 - [ ] No page states how long access lasts, in any unit, in any language, and no page has a section named for an access period
 - [ ] Duration-free wording such as "the applicable access period" is left in place where it already appears, with no number attached
 - [ ] Every "contact us after X" figure reads 72 hours, including in any "Email Delivery Issues" and "Failure to Receive Access Information" section
-- [ ] The Terms & Conditions Credits section ends with the 30 day validity as its last bullet
+- [ ] The Terms & Conditions Credits section ends with the 90 day validity as its last bullet
 - [ ] The policy page, its footer link and its tab title all read "Delivery & Access Policy"
 - [ ] Terms & Conditions, Privacy, Refund and Delivery & Access pages are descriptive, with headings and bullet points
 - [ ] No bullet point ends with a full stop, in any language

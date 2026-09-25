@@ -89,6 +89,7 @@
   --transition-base: 180ms ease;
   --z-preloader: 9999;
 
+  --mandala-line: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%23604106' stroke-width='1.2'%3E%3Ccircle cx='200' cy='200' r='194' stroke-dasharray='2 7'/%3E%3Ccircle cx='200' cy='200' r='176'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%280 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%2815 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%2830 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%2845 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%2860 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%2875 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%2890 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28105 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28120 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28135 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28150 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28165 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28180 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28195 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28210 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28225 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28240 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28255 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28270 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28285 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28300 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28315 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28330 200 200%29'/%3E%3Cellipse cx='200' cy='48' rx='13' ry='30' transform='rotate%28345 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%280.0 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%2822.5 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%2845.0 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%2867.5 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%2890.0 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28112.5 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28135.0 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28157.5 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28180.0 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28202.5 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28225.0 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28247.5 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28270.0 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28292.5 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28315.0 200 200%29'/%3E%3Cellipse cx='200' cy='96' rx='22' ry='48' transform='rotate%28337.5 200 200%29'/%3E%3Cpath d='M200 118 Q222 150 200 172 Q178 150 200 118 Z' transform='rotate%280 200 200%29'/%3E%3Cpath d='M200 118 Q222 150 200 172 Q178 150 200 118 Z' transform='rotate%2845 200 200%29'/%3E%3Cpath d='M200 118 Q222 150 200 172 Q178 150 200 118 Z' transform='rotate%2890 200 200%29'/%3E%3Cpath d='M200 118 Q222 150 200 172 Q178 150 200 118 Z' transform='rotate%28135 200 200%29'/%3E%3Cpath d='M200 118 Q222 150 200 172 Q178 150 200 118 Z' transform='rotate%28180 200 200%29'/%3E%3Cpath d='M200 118 Q222 150 200 172 Q178 150 200 118 Z' transform='rotate%28225 200 200%29'/%3E%3Cpath d='M200 118 Q222 150 200 172 Q178 150 200 118 Z' transform='rotate%28270 200 200%29'/%3E%3Cpath d='M200 118 Q222 150 200 172 Q178 150 200 118 Z' transform='rotate%28315 200 200%29'/%3E%3Ccircle cx='200' cy='200' r='44'/%3E%3Ccircle cx='200' cy='200' r='30'/%3E%3Ccircle cx='200' cy='200' r='12'/%3E%3C/g%3E%3Cg fill='%23604106'%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%280 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%2810 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%2820 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%2830 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%2840 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%2850 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%2860 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%2870 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%2880 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%2890 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28100 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28110 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28120 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28130 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28140 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28150 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28160 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28170 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28180 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28190 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28200 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28210 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28220 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28230 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28240 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28250 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28260 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28270 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28280 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28290 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28300 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28310 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28320 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28330 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28340 200 200%29'/%3E%3Ccircle cx='200' cy='15' r='2.2' transform='rotate%28350 200 200%29'/%3E%3C/g%3E%3C/svg%3E");
   --rosette: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%23f29e0c'%3E%3Cellipse cx='12' cy='12' rx='3.2' ry='11'/%3E%3Cellipse cx='12' cy='12' rx='3.2' ry='11' transform='rotate(45 12 12)'/%3E%3Cellipse cx='12' cy='12' rx='3.2' ry='11' transform='rotate(90 12 12)'/%3E%3Cellipse cx='12' cy='12' rx='3.2' ry='11' transform='rotate(135 12 12)'/%3E%3C/g%3E%3Ccircle cx='12' cy='12' r='2.6' fill='%23fbf5e7'/%3E%3C/svg%3E");
 }
 
@@ -134,6 +135,47 @@ body {
 
 body.is-locked {
   overflow: hidden;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  width: 640px;
+  height: 640px;
+  background: var(--mandala-line) center / contain no-repeat;
+  opacity: 0.14;
+  pointer-events: none;
+}
+
+body::before {
+  top: 12vh;
+  left: -320px;
+  animation: pre-turn 240s linear infinite;
+}
+
+body::after {
+  right: -320px;
+  bottom: -120px;
+  animation: pre-turn 300s linear infinite reverse;
+}
+
+@media (max-width: 767.98px) {
+  body::before,
+  body::after {
+    width: 380px;
+    height: 380px;
+    opacity: 0.1;
+  }
+
+  body::before {
+    left: -190px;
+  }
+
+  body::after {
+    right: -190px;
+  }
 }
 
 ::selection {

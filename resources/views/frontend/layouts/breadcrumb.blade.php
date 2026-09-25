@@ -38,7 +38,7 @@
 
     <div class="bn__inner">
         @if(isset($links) && count($links) > 0)
-            <nav class="bn__nav" aria-label="{{ __('frontend.breadcrumb.label') }}">
+            <nav class="bn__nav" aria-label="{{ __('frontend.breadcrumb.trail') }}">
                 <ol class="bn__crumbs">
                     @foreach($links as $index => $link)
                         <li class="bn__crumb">

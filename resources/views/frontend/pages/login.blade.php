@@ -1,20 +1,20 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.login.title'))
+@section('title', __('frontend.login.page_name'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.login.title'),
+    'title' => __('frontend.login.page_name'),
     'links' => [
-        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
-        ['name' => __('frontend.login.title')]
+        ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
+        ['name' => __('frontend.login.page_name')]
     ]
 ])
 
 <section class="auth">
     <div class="auth__card">
-        <p class="auth__badge">{{ __('frontend.login.label') }}</p>
-        <h2 class="auth__title">{{ __('frontend.login.heading') }}</h2>
-        <p class="auth__lead">{{ __('frontend.login.lead') }}</p>
+        <p class="auth__badge">{{ __('frontend.login.tag') }}</p>
+        <h2 class="auth__title">{{ __('frontend.login.form_title') }}</h2>
+        <p class="auth__lead">{{ __('frontend.login.intro') }}</p>
 
         @if(session('loginerror'))
             <p class="msg msg--error" role="alert">
@@ -29,10 +29,10 @@
             <div class="auth__fields">
 
                 <div class="fld">
-                    <label class="fld__label" for="email">{{ __('frontend.login.email') }}</label>
+                    <label class="fld__label" for="email">{{ __('frontend.login.mail_label') }}</label>
                     <div class="fld__box">
                         <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
-                        <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.login.email_ph') }}" value="{{ old('email') }}">
+                        <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.login.mail_hint') }}" value="{{ old('email') }}">
                     </div>
                     @error('email')
                         <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
@@ -40,11 +40,11 @@
                 </div>
 
                 <div class="fld fld--pass">
-                    <label class="fld__label" for="password">{{ __('frontend.login.password') }}</label>
+                    <label class="fld__label" for="password">{{ __('frontend.login.pass_label') }}</label>
                     <div class="fld__box">
                         <i class="fas fa-lock fld__icon" aria-hidden="true"></i>
-                        <input type="password" name="password" id="password" autocomplete="current-password" class="fld__input @error('password') is-invalid @enderror" placeholder="{{ __('frontend.login.password_ph') }}">
-                        <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.login.show') }}" data-hide="{{ __('frontend.login.hide') }}" aria-label="{{ __('frontend.login.show') }}" aria-pressed="false">
+                        <input type="password" name="password" id="password" autocomplete="current-password" class="fld__input @error('password') is-invalid @enderror" placeholder="{{ __('frontend.login.pass_hint') }}">
+                        <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.login.pass_show') }}" data-hide="{{ __('frontend.login.pass_hide') }}" aria-label="{{ __('frontend.login.pass_show') }}" aria-pressed="false">
                             <i class="fas fa-eye" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -59,20 +59,20 @@
                             <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                             <i class="fas fa-check" aria-hidden="true"></i>
                         </span>
-                        {{ __('frontend.login.remember') }}
+                        {{ __('frontend.login.stay') }}
                     </label>
-                    <a href="{{ route('forgetpwd.form') }}" class="auth__link">{{ __('frontend.login.forgot') }}</a>
+                    <a href="{{ route('forgetpwd.form') }}" class="auth__link">{{ __('frontend.login.lost_link') }}</a>
                 </div>
 
                 <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit">
-                    {{ __('frontend.login.submit') }}
+                    {{ __('frontend.login.send') }}
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </button>
             </div>
         </form>
 
-        <p class="auth__divider"><span>{{ __('frontend.login.new') }}</span></p>
-        <a href="{{ route('register.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.login.register') }}</a>
+        <p class="auth__divider"><span>{{ __('frontend.login.join_prompt') }}</span></p>
+        <a href="{{ route('register.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.login.join_link') }}</a>
     </div>
 </section>
 
@@ -101,11 +101,11 @@
             },
             messages: {
                 password: {
-                    required: @json(__('frontend.login.password_req'))
+                    required: @json(__('frontend.login.pass_empty'))
                 },
                 email: {
-                    required: @json(__('frontend.login.email_req')),
-                    email: @json(__('frontend.login.email_bad'))
+                    required: @json(__('frontend.login.mail_empty')),
+                    email: @json(__('frontend.login.mail_wrong'))
                 }
             }
         });

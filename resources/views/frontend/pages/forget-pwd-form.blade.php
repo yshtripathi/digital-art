@@ -1,25 +1,25 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.forgot.title'))
+@section('title', __('frontend.forgot.page_name'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.forgot.title'),
+    'title' => __('frontend.forgot.page_name'),
     'links' => [
-        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
-        ['name' => __('frontend.forgot.title')]
+        ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
+        ['name' => __('frontend.forgot.page_name')]
     ]
 ])
 
 <section class="auth">
     <div class="auth__card">
-        <p class="auth__badge">{{ __('frontend.forgot.label') }}</p>
-        <h2 class="auth__title">{{ __('frontend.forgot.heading') }}</h2>
-        <p class="auth__lead">{{ __('frontend.forgot.lead') }}</p>
+        <p class="auth__badge">{{ __('frontend.forgot.tag') }}</p>
+        <h2 class="auth__title">{{ __('frontend.forgot.form_title') }}</h2>
+        <p class="auth__lead">{{ __('frontend.forgot.intro') }}</p>
 
         @if(session('status'))
             <p class="msg msg--ok" role="status">
                 <i class="fas fa-check-circle" aria-hidden="true"></i>
-                <span>{{ __('frontend.forgot.sent') }}</span>
+                <span>{{ __('frontend.forgot.sent_note') }}</span>
             </p>
         @endif
 
@@ -29,10 +29,10 @@
             <div class="auth__fields">
 
                 <div class="fld">
-                    <label class="fld__label" for="email">{{ __('frontend.forgot.email') }}</label>
+                    <label class="fld__label" for="email">{{ __('frontend.forgot.mail_label') }}</label>
                     <div class="fld__box">
                         <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
-                        <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.forgot.email_ph') }}" value="{{ old('email') }}">
+                        <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.forgot.mail_hint') }}" value="{{ old('email') }}">
                     </div>
                     @error('email')
                         <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
@@ -41,29 +41,29 @@
 
                 @if(env('CAPTCHA_ENABLED', true))
                     <div class="fld">
-                        <label class="fld__label" for="captcha">{{ __('frontend.forgot.captcha') }}</label>
+                        <label class="fld__label" for="captcha">{{ __('frontend.forgot.code_label') }}</label>
                         <div class="cap @error('captcha') is-invalid @enderror">
                             <div class="fld__box">
                                 <i class="fas fa-shield-alt fld__icon" aria-hidden="true"></i>
-                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="fld__input" placeholder="{{ __('frontend.forgot.captcha_ph') }}">
+                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="fld__input" placeholder="{{ __('frontend.forgot.code_hint') }}">
                             </div>
                             <div class="cap__img">@captcha</div>
                         </div>
                         @error('captcha')
-                            <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ __('frontend.forgot.captcha_bad') }}</span>
+                            <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ __('frontend.forgot.code_wrong') }}</span>
                         @enderror
                     </div>
                 @endif
 
                 <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit">
-                    {{ __('frontend.forgot.send') }}
+                    {{ __('frontend.forgot.submit') }}
                     <i class="fas fa-paper-plane" aria-hidden="true"></i>
                 </button>
             </div>
         </form>
 
-        <p class="auth__divider"><span>{{ __('frontend.forgot.remember') }}</span></p>
-        <a href="{{ route('login.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.forgot.login') }}</a>
+        <p class="auth__divider"><span>{{ __('frontend.forgot.back_prompt') }}</span></p>
+        <a href="{{ route('login.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.forgot.back_link') }}</a>
     </div>
 </section>
 
@@ -102,11 +102,11 @@
             },
             messages: {
                 email: {
-                    required: @json(__('frontend.forgot.email_req')),
-                    email: @json(__('frontend.forgot.email_valid'))
+                    required: @json(__('frontend.forgot.mail_empty')),
+                    email: @json(__('frontend.forgot.mail_wrong'))
                 },
                 @if(env('CAPTCHA_ENABLED', true))
-                captcha: @json(__('frontend.forgot.captcha_req'))
+                captcha: @json(__('frontend.forgot.code_empty'))
                 @endif
             }
         });

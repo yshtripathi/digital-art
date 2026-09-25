@@ -26,7 +26,7 @@
 @include('frontend.layouts.breadcrumb', [
     'title' => $pageTitle,
     'links' => [
-        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
+        ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
         ['name' => $pageTitle]
     ]
 ])
@@ -35,18 +35,18 @@
     <div class="pg__wrap">
 
         <div class="pg__meta">
-            <span class="pg__tag">{{ __('frontend.page.doc_label') }}</span>
+            <span class="pg__tag">{{ __('frontend.page.tag') }}</span>
             @if($wordCount > 0)
                 <span class="pg__time">
                     <i class="far fa-clock" aria-hidden="true"></i>
-                    {{ __('frontend.page.read_time', ['min' => $readMinutes]) }}
+                    {{ __('frontend.page.read_min', ['min' => $readMinutes]) }}
                 </span>
             @endif
             <span class="pg__tools">
-                <button type="button" class="pg__tool" onclick="window.print()" aria-label="{{ __('frontend.page.print') }}" title="{{ __('frontend.page.print') }}">
+                <button type="button" class="pg__tool" onclick="window.print()" aria-label="{{ __('frontend.page.tool_print') }}" title="{{ __('frontend.page.tool_print') }}">
                     <i class="fas fa-print" aria-hidden="true"></i>
                 </button>
-                <button type="button" class="pg__tool" data-copy-link data-copied="{{ __('frontend.page.link_copied') }}" aria-label="{{ __('frontend.page.copy_link') }}" title="{{ __('frontend.page.copy_link') }}">
+                <button type="button" class="pg__tool" data-copy-link data-copied="{{ __('frontend.page.tool_copied') }}" aria-label="{{ __('frontend.page.tool_copy') }}" title="{{ __('frontend.page.tool_copy') }}">
                     <i class="fas fa-link" aria-hidden="true"></i>
                 </button>
                 <span class="pg__copied" role="status" data-copy-note></span>
@@ -58,10 +58,10 @@
         </article>
 
         <div class="pg__help band--coffee">
-            <p class="pg__help-text">{{ __('frontend.page.need_help') }}</p>
+            <p class="pg__help-text">{{ __('frontend.page.help_title') }}</p>
             <div class="pg__help-actions">
-                <a href="{{ route('contact') }}" class="btn btn--primary">{{ __('frontend.footer.contact_us') }}</a>
-                <a href="{{ route('product-lists') }}" class="btn btn--ghost">{{ __('frontend.page.browse') }}</a>
+                <a href="{{ route('contact') }}" class="btn btn--primary">{{ __('frontend.footer.link_contact') }}</a>
+                <a href="{{ route('product-lists') }}" class="btn btn--ghost">{{ __('frontend.page.help_browse') }}</a>
             </div>
         </div>
 

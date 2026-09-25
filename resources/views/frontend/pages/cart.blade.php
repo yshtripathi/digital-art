@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.cart.title'))
+@section('title', __('frontend.cart.page_name'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.cart.title'),
+    'title' => __('frontend.cart.page_name'),
     'links' => [
-        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
-        ['name' => __('frontend.cart.title')]
+        ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
+        ['name' => __('frontend.cart.page_name')]
     ]
 ])
 
@@ -16,17 +16,17 @@
         <ol class="steps">
             <li class="steps__item is-active" aria-current="step">
                 <span class="steps__no">1</span>
-                <span class="steps__label">{{ __('frontend.cart.step_cart') }}</span>
+                <span class="steps__label">{{ __('frontend.cart.st_cart') }}</span>
             </li>
             <li class="steps__line" aria-hidden="true"></li>
             <li class="steps__item">
                 <span class="steps__no">2</span>
-                <span class="steps__label">{{ __('frontend.cart.step_pay') }}</span>
+                <span class="steps__label">{{ __('frontend.cart.st_pay') }}</span>
             </li>
             <li class="steps__line" aria-hidden="true"></li>
             <li class="steps__item">
                 <span class="steps__no">3</span>
-                <span class="steps__label">{{ __('frontend.cart.step_done') }}</span>
+                <span class="steps__label">{{ __('frontend.cart.st_done') }}</span>
             </li>
         </ol>
 
@@ -48,14 +48,14 @@
             <div class="cr-layout">
                 <div class="cr-main">
                     <header class="cr-head">
-                        <h2 class="cr-head__title">{{ __('frontend.cart.items_title') }}</h2>
-                        <span class="cr-head__count">{{ trans_choice('frontend.cart.items', count($cartItems), ['count' => count($cartItems)]) }}</span>
+                        <h2 class="cr-head__title">{{ __('frontend.cart.list_title') }}</h2>
+                        <span class="cr-head__count">{{ trans_choice('frontend.cart.item_count', count($cartItems), ['count' => count($cartItems)]) }}</span>
                     </header>
 
                     <ul class="cr-list">
                         @foreach($cartItems as $cart)
                             @php
-                                $item_title = __('frontend.cart.package');
+                                $item_title = __('frontend.cart.pack');
                                 $item_link = null;
                                 $item_photo = null;
                                 if($cart->product) {
@@ -78,7 +78,7 @@
 
                                 <div class="cr-item__body">
                                     <span class="cr-chip {{ $cart->product ? '' : 'cr-chip--accent' }}">
-                                        {{ $cart->product ? __('frontend.cart.tag_material') : __('frontend.cart.tag_credits') }}
+                                        {{ $cart->product ? __('frontend.cart.chip_material') : __('frontend.cart.chip_credits') }}
                                     </span>
 
                                     @if($item_link)
@@ -89,18 +89,18 @@
 
                                     <span class="cr-item__meta">
                                         <i class="fas fa-bolt" aria-hidden="true"></i>
-                                        {{ number_format($cart->points) }} {{ __('frontend.cart.credits') }}
+                                        {{ number_format($cart->points) }} {{ __('frontend.cart.col_credits') }}
                                     </span>
                                 </div>
 
                                 <div class="cr-item__end">
                                     <span class="cr-item__price">
-                                        <small>{{ __('frontend.cart.amount') }}</small>
+                                        <small>{{ __('frontend.cart.col_amount') }}</small>
                                         <strong>{{ $sym }}{{ number_format($cart['price'], $dec) }}</strong>
                                     </span>
-                                    <a href="{{ route('cart-delete', $cart->id) }}" class="cr-remove" aria-label="{{ __('frontend.cart.remove') }}: {{ $item_title }}">
+                                    <a href="{{ route('cart-delete', $cart->id) }}" class="cr-remove" aria-label="{{ __('frontend.cart.drop') }}: {{ $item_title }}">
                                         <i class="fas fa-trash-alt" aria-hidden="true"></i>
-                                        <span>{{ __('frontend.cart.remove') }}</span>
+                                        <span>{{ __('frontend.cart.drop') }}</span>
                                     </a>
                                 </div>
                             </li>
@@ -110,59 +110,59 @@
                     @if(Helper::totalCartPoints() > 0)
                         <a href="{{ route('product-lists') }}" class="cr-back">
                             <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                            <span>{{ __('frontend.cart.browse_all') }}</span>
+                            <span>{{ __('frontend.cart.browse') }}</span>
                         </a>
                     @endif
                 </div>
 
                 <aside class="cr-side" aria-labelledby="crSummaryTitle">
                     <div class="cr-sum band--coffee">
-                        <h2 id="crSummaryTitle" class="cr-sum__title">{{ __('frontend.cart.summary') }}</h2>
+                        <h2 id="crSummaryTitle" class="cr-sum__title">{{ __('frontend.cart.sum_title') }}</h2>
 
                         <dl class="cr-sum__rows">
                             <div class="cr-sum__row">
-                                <dt>{{ __('frontend.cart.credits') }}</dt>
+                                <dt>{{ __('frontend.cart.col_credits') }}</dt>
                                 <dd>{{ number_format($totalCredits) }}</dd>
                             </div>
                             @if($discount > 0)
                                 <div class="cr-sum__row cr-sum__row--cut">
-                                    <dt>{{ __('frontend.cart.discount') }}</dt>
+                                    <dt>{{ __('frontend.cart.sum_discount') }}</dt>
                                     <dd>&minus; {{ $sym }}{{ number_format($discount, $dec) }}</dd>
                                 </div>
                             @endif
                             <div class="cr-sum__row cr-sum__row--total">
-                                <dt>{{ __('frontend.cart.total') }}</dt>
+                                <dt>{{ __('frontend.cart.sum_total') }}</dt>
                                 <dd>{{ $sym }}{{ number_format($total_amount, $dec) }}</dd>
                             </div>
                         </dl>
 
                         <a href="{{ route('checkout') }}" class="btn btn--primary btn--block cr-sum__cta">
-                            <span>{{ __('frontend.cart.checkout') }}</span>
+                            <span>{{ __('frontend.cart.go_pay') }}</span>
                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
                         </a>
 
                         <p class="cr-secure">
                             <i class="fas fa-lock" aria-hidden="true"></i>
-                            <span>{{ __('frontend.cart.secure') }}</span>
+                            <span>{{ __('frontend.cart.secure_note') }}</span>
                         </p>
 
-                        <img class="cr-pay" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.cart.payments') }}" loading="lazy">
+                        <img class="cr-pay" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.cart.pay_alt') }}" loading="lazy">
                     </div>
                 </aside>
             </div>
         @else
             <div class="cr-empty">
                 <span class="cr-empty__icon" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
-                <h2 class="cr-empty__title">{{ __('frontend.cart.empty_title') }}</h2>
-                <p class="cr-empty__desc">{{ __('frontend.cart.empty_text') }}</p>
+                <h2 class="cr-empty__title">{{ __('frontend.cart.none_title') }}</h2>
+                <p class="cr-empty__desc">{{ __('frontend.cart.none_text') }}</p>
                 <div class="cr-empty__actions">
                     <a href="{{ route('points.topup') }}" class="btn btn--primary">
                         <i class="fas fa-bolt" aria-hidden="true"></i>
-                        <span>{{ __('frontend.cart.empty_credits') }}</span>
+                        <span>{{ __('frontend.cart.none_buy') }}</span>
                     </a>
                     <a href="{{ route('product-lists') }}" class="btn btn--ghost">
                         <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                        <span>{{ __('frontend.cart.empty_materials') }}</span>
+                        <span>{{ __('frontend.cart.none_browse') }}</span>
                     </a>
                 </div>
             </div>

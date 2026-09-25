@@ -2,16 +2,16 @@
 
 @if(isset($category->title) && $category->title)
     @section('title', $category->title)
-    @section('description', __('frontend.catalog.desc'))
+    @section('description', __('frontend.catalog.summary'))
 @else
-    @section('title', __('frontend.catalog.name'))
-    @section('description', __('frontend.catalog.desc'))
+    @section('title', __('frontend.catalog.page_name'))
+    @section('description', __('frontend.catalog.summary'))
 @endif
 
 @section('main-content')
 @php
     $isCat = isset($category->title) && $category->title;
-    $bcTitle = $isCat ? $category->title : __('frontend.catalog.name');
+    $bcTitle = $isCat ? $category->title : __('frontend.catalog.page_name');
     $allCategories = \App\Models\Category::where('status', 'active')
         ->where('is_parent', 1)
         ->orderBy('title', 'ASC')
@@ -24,8 +24,8 @@
 @include('frontend.layouts.breadcrumb', [
     'title' => $bcTitle,
     'links' => [
-        ['name' => __('frontend.breadcrumb.home'), 'url' => route('home')],
-        ['name' => __('frontend.catalog.name'), 'url' => route('product-lists')],
+        ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
+        ['name' => __('frontend.catalog.page_name'), 'url' => route('product-lists')],
         ['name' => $bcTitle]
     ],
 ])
@@ -38,19 +38,19 @@
                 <div class="cg-bar__text">
                     <h2 class="cg-bar__title">{{ $bcTitle }}</h2>
                     @if(!$isCat)
-                        <p class="cg-bar__desc">{{ __('frontend.catalog.lead') }}</p>
+                        <p class="cg-bar__desc">{{ __('frontend.catalog.intro') }}</p>
                     @endif
                 </div>
                 <span class="cg-bar__count">
                     <strong>{{ $totalCourses }}</strong>
-                    <span>{{ trans_choice('frontend.catalog.unit', $totalCourses) }}</span>
+                    <span>{{ trans_choice('frontend.catalog.count_unit', $totalCourses) }}</span>
                 </span>
             </header>
 
             @if($allCategories->count())
-                <nav class="cg-pills" aria-label="{{ __('frontend.catalog.other') }}">
+                <nav class="cg-pills" aria-label="{{ __('frontend.catalog.filter_label') }}">
                     <a href="{{ route('product-lists') }}" class="cg-pill {{ !$isCat ? 'is-active' : '' }}" @if(!$isCat) aria-current="page" @endif>
-                        {{ __('frontend.catalog.all_materials') }}
+                        {{ __('frontend.catalog.filter_all') }}
                     </a>
                     @foreach($allCategories as $c)
                         @php $on = $isCat && $category->id == $c->id; @endphp
@@ -89,7 +89,7 @@
                                         @if($lvCount)
                                             <span class="cg-card__levels">
                                                 <i class="fas fa-signal" aria-hidden="true"></i>
-                                                {{ trans_choice('frontend.catalog.levels', $lvCount, ['count' => $lvCount]) }}
+                                                {{ trans_choice('frontend.catalog.level_count', $lvCount, ['count' => $lvCount]) }}
                                             </span>
                                         @endif
                                     </span>
@@ -103,15 +103,15 @@
                                     <span class="cg-card__foot">
                                         @if($minPoints)
                                             <span class="cg-card__price">
-                                                <small>{{ __('frontend.catalog.from') }}</small>
+                                                <small>{{ __('frontend.catalog.price_from') }}</small>
                                                 <strong><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($minPoints) }}</strong>
-                                                <small>{{ __('frontend.catalog.credits') }}</small>
+                                                <small>{{ __('frontend.catalog.price_unit') }}</small>
                                             </span>
                                         @else
-                                            <span class="cg-card__price"><small>{{ __('frontend.catalog.no_levels') }}</small></span>
+                                            <span class="cg-card__price"><small>{{ __('frontend.catalog.levels_soon') }}</small></span>
                                         @endif
                                         <span class="cg-card__go">
-                                            <span class="cg-card__go-text">{{ __('frontend.catalog.open') }}</span>
+                                            <span class="cg-card__go-text">{{ __('frontend.catalog.card_open') }}</span>
                                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                         </span>
                                     </span>
@@ -122,11 +122,11 @@
                 </ul>
 
                 @if($isPaginator && $products->hasPages())
-                    <nav class="cg-pages" aria-label="{{ __('frontend.catalog.pages') }}">
+                    <nav class="cg-pages" aria-label="{{ __('frontend.catalog.pager_label') }}">
                         @if($products->onFirstPage())
-                            <span class="cg-pages__btn is-disabled"><i class="fas fa-arrow-left" aria-hidden="true"></i> {{ __('frontend.catalog.prev') }}</span>
+                            <span class="cg-pages__btn is-disabled"><i class="fas fa-arrow-left" aria-hidden="true"></i> {{ __('frontend.catalog.pager_prev') }}</span>
                         @else
-                            <a href="{{ $products->previousPageUrl() }}" class="cg-pages__btn"><i class="fas fa-arrow-left" aria-hidden="true"></i> {{ __('frontend.catalog.prev') }}</a>
+                            <a href="{{ $products->previousPageUrl() }}" class="cg-pages__btn"><i class="fas fa-arrow-left" aria-hidden="true"></i> {{ __('frontend.catalog.pager_prev') }}</a>
                         @endif
 
                         @if(method_exists($products, 'lastPage'))
@@ -142,18 +142,18 @@
                         @endif
 
                         @if($products->hasMorePages())
-                            <a href="{{ $products->nextPageUrl() }}" class="cg-pages__btn">{{ __('frontend.catalog.next') }} <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                            <a href="{{ $products->nextPageUrl() }}" class="cg-pages__btn">{{ __('frontend.catalog.pager_next') }} <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                         @else
-                            <span class="cg-pages__btn is-disabled">{{ __('frontend.catalog.next') }} <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                            <span class="cg-pages__btn is-disabled">{{ __('frontend.catalog.pager_next') }} <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
                         @endif
                     </nav>
                 @endif
             @else
                 <div class="cg-empty">
                     <span class="cg-empty__icon" aria-hidden="true"><i class="fas fa-box-open"></i></span>
-                    <h2 class="cg-empty__title">{{ __('frontend.catalog.empty_head') }}</h2>
-                    <p class="cg-empty__desc">{{ __('frontend.catalog.empty_text') }}</p>
-                    <a href="{{ route('product-lists') }}" class="btn btn--primary">{{ __('frontend.catalog.all_materials') }}</a>
+                    <h2 class="cg-empty__title">{{ __('frontend.catalog.none_title') }}</h2>
+                    <p class="cg-empty__desc">{{ __('frontend.catalog.none_text') }}</p>
+                    <a href="{{ route('product-lists') }}" class="btn btn--primary">{{ __('frontend.catalog.filter_all') }}</a>
                 </div>
             @endif
         </div>

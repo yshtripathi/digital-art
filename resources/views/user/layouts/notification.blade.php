@@ -5,10 +5,10 @@
         <div class="note note--success" role="status" data-note data-note-auto>
             <span class="note__badge" aria-hidden="true"><span class="rosette"></span></span>
             <div class="note__body">
-                <p class="note__label">{{ __('frontend.notify.success') }}</p>
+                <p class="note__label">{{ __('frontend.notify.ok_label') }}</p>
                 <p class="note__msg">{{ session('success') }}</p>
             </div>
-            <button type="button" class="note__close" aria-label="{{ __('frontend.notify.close') }}" data-note-close>
+            <button type="button" class="note__close" aria-label="{{ __('frontend.notify.dismiss') }}" data-note-close>
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
@@ -18,10 +18,10 @@
         <div class="note note--error" role="alert" data-note>
             <span class="note__badge" aria-hidden="true">!</span>
             <div class="note__body">
-                <p class="note__label">{{ __('frontend.notify.error') }}</p>
+                <p class="note__label">{{ __('frontend.notify.err_label') }}</p>
                 <p class="note__msg">{{ session('error') }}</p>
             </div>
-            <button type="button" class="note__close" aria-label="{{ __('frontend.notify.close') }}" data-note-close>
+            <button type="button" class="note__close" aria-label="{{ __('frontend.notify.dismiss') }}" data-note-close>
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>

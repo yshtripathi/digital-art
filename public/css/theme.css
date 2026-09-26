@@ -178,6 +178,15 @@ body::after {
   }
 }
 
+button {
+  font-family: inherit;
+}
+
+b,
+strong {
+  font-weight: var(--font-weight-medium);
+}
+
 ::selection {
   background-color: var(--color-saffron);
   color: var(--color-ink-black);
@@ -5540,7 +5549,7 @@ a.cr-item__title:hover {
 
 .pg__prose strong,
 .pg__prose b {
-  font-weight: 600;
+  font-weight: var(--font-weight-medium);
   color: var(--color-coffee-bean);
 }
 

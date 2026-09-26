@@ -46,9 +46,10 @@
     <meta name="twitter:image" content="{{ $shareImage }}">
 
     {{-- Icons --}}
-    <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ asset('assets/images/favicon-64.png') }}" type="image/png" sizes="64x64">
+    <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}?v={{ filemtime(public_path('assets/images/favicon.ico')) }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}?v={{ filemtime(public_path('assets/images/favicon.ico')) }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/favicon-64.png') }}?v={{ filemtime(public_path('assets/images/favicon-64.png')) }}" type="image/png" sizes="64x64">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon-64.png') }}?v={{ filemtime(public_path('assets/images/favicon-64.png')) }}">
 
     {{-- Fonts & icon libraries --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">

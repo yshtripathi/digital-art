@@ -26,6 +26,8 @@ The mood is confident, warm and intellectual: business education without corpora
 | Lime Hover | `#b4e04a` | `--color-lime-hover` | Primary button hover |
 | Lime Pressed | `#9fcc35` | `--color-lime-pressed` | Primary button active and pressed |
 | Soft Line | `#cfd8c4` | `--color-soft-line` | Card borders, dividers, table rules, input borders at rest |
+| Deep Sage | `#e4ead6` | `--surface-sage-deep` | Alternate section band (deeper than the canvas) |
+| Mint | `#f5f8ee` | `--surface-mint` | Alternate section band (lighter than the canvas) |
 
 ### Status
 
@@ -182,7 +184,7 @@ Transparent, 1px Deep Forest border, Deep Forest text, same size and radius as t
 Deep Forest, underline 1px with 3px offset. Hover: Forest Mid.
 
 ### Logo
-The logo image (`assets/images/logo.webp`) sits at the left of the header at 44px tall (34px on small phones).
+The BizAcademys logo (`assets/images/logo.webp`, 1146×240, transparent) sits at the left of the header at 38px tall (30px on small phones), and on a Paper White tile in the footer at 36px. The favicon is the book-and-arrow mark alone (`favicon.ico` with 16, 32, 48 and 64px sizes, plus `favicon-64.png`).
 
 ### Navigation
 Sticky single-row header, 72px tall (64px below 1200px). At the top of the page it is a full-width Paper White bar with a Soft Line bottom border. Once the page scrolls it turns into a floating bar: centered, page width (1200px max, 16px side gutters), 60px tall, 24px from the top, with a Soft Line border, 16px radius and a soft forest shadow. Its dropdowns then open 8px below it with all corners rounded. Logo left, links centered (Categories, About Us, Contact Us), account area right. The language control shows the flag of the current language. Links are Inter 500 15px in Deep Forest, never wrapping, with a faint forest tint on hover; the active link goes to weight 600 with a 3px Strategy Lime underline. Categories open a two-column dropdown panel ending in a Deep Forest "see all" bar. The right side holds a language and currency control, then Log In and Create Account for guests, or a Strategy Lime credits control and an avatar menu for members, then a cart button with a lime count badge. Every header control uses the 12px radius; only the count badge is a pill. Below 1200px the links move into a right-side menu sheet.
@@ -330,6 +332,25 @@ An invoice layout, 1000px wide.
 - **Top bar:** Deep Forest with a lime glow and a dot texture. On the left: a lime "receipt" pill, the order number in Fraunces, the date, and the order and payment status pills with captions. On the right: "total paid" (or "credits used") in large lime Fraunces, with the lime PDF download button and a white-outlined print button.
 - **Cards below:** two Paper White cards side by side, each titled over a dashed rule. "Items in this order" lists each item on a Pale Sage row (course icon, or a Deep Forest tile with lime coins for credit packs), with its title, level and credits. "Order information" is a two-column grid of caption labels and values, with the transaction ID spanning the full width.
 - **Footer:** a "back to my account" link. Printing turns the top bar light and hides the buttons.
+
+### Homepage
+Seven sections, all using live database figures (materials, skill areas and levels). Each section sits on its own full-width band so the page reads as distinct steps: the hero on Pale Sage fading to Mint with a lime glow, skills on Paper White, featured materials on Deep Sage, how it works on Mint, credits as a full-bleed Deep Forest band, why learn here on Paper White, and the closing call to action on Deep Sage with a lime glow and a dot texture. Cards flip colour to stand out from their band (Pale Sage cards on white bands, Paper White cards on sage bands).
+
+Optional media slots appear only when their file exists, so the page never shows an empty frame:
+- `assets/videos/home-hero.mp4` (horizontal 16:9) replaces the hero chart
+- `assets/videos/home-flow.mp4` (horizontal, shown 21:9) adds a wide reel above the how-it-works timeline
+- `assets/images/home-skills.webp` (vertical 3:4) adds a tall photo tile at the start of the skills grid, with a caption over a forest gradient
+- `assets/images/home-why.webp` (vertical 4:5) replaces the why-learn-here pattern panel
+- `assets/images/home-start.webp` (horizontal 3:2) turns the closing card into a photo and text split
+
+Both videos have pause buttons, and their optional posters are `home-hero.webp` and `home-flow.webp`.
+1. **Hero:** two columns. On the left: a pill tag with a lime dot, a Fraunces 44–80px headline, the lead at reading size, and a 54px primary button plus a secondary button. On the right: a 16:11 frame with a lime offset shadow. It plays `assets/videos/home-hero.mp4` (with a pause button and the optional `home-hero.webp` poster) when that file exists, and otherwise shows an animated growth chart on Deep Forest. Three floating stat chips (the third in lime) drift gently over the frame's edges.
+2. **Browse by skill:** category tiles in an auto-fill grid. Each tile has a Deep Forest icon tile picked from keywords in the category name (for example a megaphone for marketing, a handshake for sales, a cart for e-commerce and a chart for analytics), the name, a material count and a corner arrow that tilts on hover. Tiles lift with a lime offset shadow.
+3. **Featured materials:** on a Paper White band. One lead card spans two columns and two rows (16:10 image, Fraunces title, summary), and four smaller cards sit beside it (4:3 images). An outlined "all materials" pill sits in the heading row.
+4. **How it works:** a four-step horizontal timeline. Deep Forest round icons ringed in canvas sit on a line that draws in on load. The icons turn lime on hover, and each step has a Forest Mid number, a title and a one-line explanation.
+5. **Credits:** a Deep Forest band with a dot texture. On the left: the explanation, the 90-day validity note and a primary button. On the right: the x1 / x2 / x2.5 / x3 multipliers as a bar chart that grows on load, with the top bar in lime.
+6. **Why learn here:** a 4:5 visual with a lime offset shadow on the left. It shows `assets/images/home-why.webp` when that file exists, and otherwise a Deep Forest pattern panel with a large lime chart mark. On the right: four value cards with lime icon tiles in a 2×2 grid.
+7. **Closing call to action:** a centered Paper White card with a lime top border and a lime offset shadow, a Fraunces title and two buttons (create account for guests, buy credits for members).
 
 ### Notification toast
 Stacked at the top right, 12px below the header (400px wide, full width on phones), sliding in from the right. Paper White card, 1px Soft Line border, 16px radius and a soft forest shadow. A 40px status tile (12px radius) holds the icon on the status surface color: a check for success, an exclamation mark for errors. Beside it sit an uppercase caption label in the status color, the message in Inter 15px Deep Forest, and a close button. Success toasts close by themselves after 5 seconds, with a lime timer bar shrinking along the bottom; hovering or focusing pauses it. Error toasts carry a 4px Error left border and stay until closed. Styles live in `public/css/style.css`.

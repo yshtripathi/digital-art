@@ -45,7 +45,7 @@
         <div class="ft__grid-wrap">
             <div class="ft__brand" data-reveal>
                 <a href="{{ route('home') }}" class="ft__logo">
-                    <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $footCompany }}" loading="lazy">
+                    <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footCompany }}" width="1146" height="240" loading="lazy">
                 </a>
 
                 <div class="ft__facts">

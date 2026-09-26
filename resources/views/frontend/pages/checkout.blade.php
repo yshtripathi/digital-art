@@ -29,11 +29,11 @@
         <div class="co__main">
 
             <ol class="steps">
-                <li class="steps__item">
-                    <span class="steps__no">1</span>
+                <li class="steps__item is-done">
+                    <span class="steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>
                     <span class="steps__label">{{ __('frontend.cart.st_cart') }}</span>
                 </li>
-                <li class="steps__line" aria-hidden="true"></li>
+                <li class="steps__line is-done" aria-hidden="true"></li>
                 <li class="steps__item is-active" aria-current="step">
                     <span class="steps__no">2</span>
                     <span class="steps__label">{{ __('frontend.cart.st_pay') }}</span>
@@ -524,7 +524,7 @@
 
                             <div class="dba">
                                 <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                <p>{{ __('frontend.checkout.dba_text') }} <img src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('frontend.checkout.dba_alt') }}"></p>
+                                <p>{{ __('frontend.checkout.dba_text') }} <img class="dba__img" src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('frontend.checkout.dba_alt') }}" width="83" height="33"></p>
                             </div>
 
                             @if(env('CAPTCHA_ENABLED', true))
@@ -547,7 +547,7 @@
         </div>
 
         <aside class="co__rail">
-            <div class="sum band--coffee">
+            <div class="sum">
                 <div class="sum__head">
                     <span class="panel__num"><i class="fas fa-shopping-bag" aria-hidden="true"></i></span>
                     <h2 class="sum__title">{{ __('frontend.checkout.sum_title') }}</h2>

@@ -18,7 +18,7 @@
 
 <section class="contact">
     <div class="contact__wrap">
-        <aside class="contact__info band--coffee">
+        <aside class="contact__info">
             <p class="auth__badge">{{ __('frontend.contact.tag') }}</p>
             <h2 class="auth__title">{{ __('frontend.contact.title_main') }}</h2>
             <p class="auth__lead">{{ __('frontend.contact.intro') }}</p>

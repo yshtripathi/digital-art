@@ -17,6 +17,7 @@
         ->orderBy('title', 'ASC')
         ->withCount('products')
         ->get();
+    $allTotal = $allCategories->sum('products_count');
     $isPaginator = $products instanceof \Illuminate\Pagination\AbstractPaginator;
     $totalCourses = $isPaginator && method_exists($products, 'total') ? $products->total() : $products->count();
 @endphp
@@ -33,34 +34,53 @@
 <section class="cg">
     <div class="cg__wrap">
 
-        <div class="cg-main">
-            <header class="cg-bar">
-                <div class="cg-bar__text">
-                    <h2 class="cg-bar__title">{{ $bcTitle }}</h2>
-                    @if(!$isCat)
-                        <p class="cg-bar__desc">{{ __('frontend.catalog.intro') }}</p>
-                    @endif
-                </div>
-                <span class="cg-bar__count">
-                    <strong>{{ $totalCourses }}</strong>
-                    <span>{{ trans_choice('frontend.catalog.count_unit', $totalCourses) }}</span>
-                </span>
-            </header>
-
+        <aside class="cg-side">
             @if($allCategories->count())
-                <nav class="cg-pills" aria-label="{{ __('frontend.catalog.filter_label') }}">
-                    <a href="{{ route('product-lists') }}" class="cg-pill {{ !$isCat ? 'is-active' : '' }}" @if(!$isCat) aria-current="page" @endif>
-                        {{ __('frontend.catalog.filter_all') }}
-                    </a>
-                    @foreach($allCategories as $c)
-                        @php $on = $isCat && $category->id == $c->id; @endphp
-                        <a href="{{ route('product-lists', $c->slug) }}" class="cg-pill {{ $on ? 'is-active' : '' }}" @if($on) aria-current="page" @endif>
-                            {{ $c->title }}
-                            <span class="cg-pill__count">{{ $c->products_count }}</span>
-                        </a>
-                    @endforeach
+                <nav class="cg-cats" aria-labelledby="cgCatsTitle">
+                    <p class="cg-cats__title" id="cgCatsTitle">{{ __('frontend.catalog.side_title') }}</p>
+                    <ul class="cg-cats__list">
+                        <li>
+                            <a href="{{ route('product-lists') }}" class="cg-cat {{ !$isCat ? 'is-active' : '' }}" @if(!$isCat) aria-current="page" @endif>
+                                <span class="cg-cat__name">{{ __('frontend.catalog.filter_all') }}</span>
+                                <span class="cg-cat__count num">{{ $allTotal }}</span>
+                            </a>
+                        </li>
+                        @foreach($allCategories as $c)
+                            @php $on = $isCat && $category->id == $c->id; @endphp
+                            <li>
+                                <a href="{{ route('product-lists', $c->slug) }}" class="cg-cat {{ $on ? 'is-active' : '' }}" @if($on) aria-current="page" @endif>
+                                    <span class="cg-cat__name">{{ $c->title }}</span>
+                                    <span class="cg-cat__count num">{{ $c->products_count }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </nav>
             @endif
+
+            <div class="cg-promo">
+                <span class="cg-promo__icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
+                <p class="cg-promo__title">{{ __('frontend.catalog.promo_title') }}</p>
+                <p class="cg-promo__text">{{ __('frontend.catalog.promo_text') }}</p>
+                <a href="{{ route('points.topup') }}" class="btn btn--primary btn--block">
+                    <span>{{ __('frontend.catalog.promo_go') }}</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </aside>
+
+        <div class="cg-main">
+            <header class="cg-bar">
+                <div>
+                    <p class="eyebrow">
+                        <span class="num">{{ $totalCourses }}</span> {{ trans_choice('frontend.catalog.count_unit', $totalCourses) }}
+                    </p>
+                    <h2 class="cg-bar__title">{{ $bcTitle }}</h2>
+                </div>
+                @if(!$isCat)
+                    <p class="cg-bar__desc">{{ __('frontend.catalog.intro') }}</p>
+                @endif
+            </header>
 
             @if($products->count())
                 <ul class="cg-grid">
@@ -87,8 +107,12 @@
                                             <span class="cg-card__cat">{{ $catTitle }}</span>
                                         @endif
                                         @if($lvCount)
-                                            <span class="cg-card__levels">
-                                                <i class="fas fa-signal" aria-hidden="true"></i>
+                                            <span class="cg-card__levels" aria-label="{{ trans_choice('frontend.catalog.level_count', $lvCount, ['count' => $lvCount]) }}">
+                                                <span class="cg-card__bars" aria-hidden="true">
+                                                    @for($b = 1; $b <= 4; $b++)
+                                                        <span class="{{ $b <= min($lvCount, 4) ? 'is-on' : '' }}"></span>
+                                                    @endfor
+                                                </span>
                                                 {{ trans_choice('frontend.catalog.level_count', $lvCount, ['count' => $lvCount]) }}
                                             </span>
                                         @endif
@@ -104,16 +128,13 @@
                                         @if($minPoints)
                                             <span class="cg-card__price">
                                                 <small>{{ __('frontend.catalog.price_from') }}</small>
-                                                <strong><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($minPoints) }}</strong>
-                                                <small>{{ __('frontend.catalog.price_unit') }}</small>
+                                                <strong class="num">{{ number_format($minPoints) }} <em>{{ __('frontend.catalog.price_unit') }}</em></strong>
                                             </span>
                                         @else
                                             <span class="cg-card__price"><small>{{ __('frontend.catalog.levels_soon') }}</small></span>
                                         @endif
-                                        <span class="cg-card__go">
-                                            <span class="cg-card__go-text">{{ __('frontend.catalog.card_open') }}</span>
-                                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                                        </span>
+                                        <span class="cg-card__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                                        <span class="vh">{{ __('frontend.catalog.card_open') }}</span>
                                     </span>
                                 </span>
                             </a>

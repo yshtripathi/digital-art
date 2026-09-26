@@ -10,12 +10,12 @@
     ]
 ])
 
-@php $supportEmail = $misc['Company Email'] ?? __('frontend.company.email'); @endphp
+@php $supportEmail = trim($misc['Company Email'] ?? __('frontend.company.email')); @endphp
 
 <section class="rs rs--failed">
     <div class="rs__wrap">
 
-        <div class="rs__status band--coffee">
+        <div class="rs__status">
             <span class="rs__badge" aria-hidden="true"><i class="fas fa-times"></i></span>
             <h2 class="rs__title">{{ __('frontend.failed.head') }}</h2>
             <p class="rs__msg">{{ __('frontend.failed.text') }}</p>

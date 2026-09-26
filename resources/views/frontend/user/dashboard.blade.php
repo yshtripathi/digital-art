@@ -25,150 +25,128 @@
     $fmtDate = fn ($date, $format) => $date->locale(app()->getLocale())->translatedFormat($format);
 @endphp
 
-<section class="dash">
-    <div class="dash__wrap">
+<section class="acct">
+    <div class="acct__wrap">
 
-        <div class="dash__hero band--indigo">
-            <div class="who">
-                <span class="who__avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr($u->name ?? 'U', 0, 1)) }}</span>
-                <div>
-                    <p class="who__name">{{ $u->name }}</p>
-                    <p class="who__email">{{ $u->email }}</p>
-                    <span class="who__since">
-                        <i class="far fa-calendar" aria-hidden="true"></i>
-                        {{ __('frontend.dashboard.since') }} {{ $fmtDate($u->created_at, __('frontend.dashboard.fmt_month')) }}
-                    </span>
-                </div>
-            </div>
-
-            <div class="wallet">
-                <span class="wallet__label">{{ __('frontend.dashboard.wallet_label') }}</span>
-                <span class="wallet__value">
-                    <i class="fas fa-bolt" aria-hidden="true"></i>
-                    {{ number_format($u->points_balance ?? 0) }}
+        <aside class="acct-side">
+            <div class="acct-me">
+                <span class="acct-me__avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr($u->name ?? 'U', 0, 1)) }}</span>
+                <p class="acct-me__hello">{{ __('frontend.dashboard.hello') }}</p>
+                <p class="acct-me__name">{{ $u->name }}</p>
+                <p class="acct-me__email">{{ $u->email }}</p>
+                <span class="acct-me__since">
+                    <i class="far fa-calendar" aria-hidden="true"></i>
+                    {{ __('frontend.dashboard.since') }} {{ $fmtDate($u->created_at, __('frontend.dashboard.fmt_month')) }}
                 </span>
-                <div class="wallet__actions">
-                    <a href="{{ route('points.topup') }}" class="btn btn--primary">
-                        <i class="fas fa-bolt" aria-hidden="true"></i>
+
+                <div class="acct-wallet">
+                    <span class="acct-wallet__label">{{ __('frontend.dashboard.wallet_label') }}</span>
+                    <span class="acct-wallet__value num">{{ number_format($u->points_balance ?? 0) }}</span>
+                    <a href="{{ route('points.topup') }}" class="btn btn--primary btn--block">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
                         {{ __('frontend.dashboard.go_buy') }}
                     </a>
-                    <a href="{{ route('user.logout') }}" class="btn btn--ghost">
-                        <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
-                        {{ __('frontend.dashboard.sign_out') }}
-                    </a>
                 </div>
             </div>
-        </div>
 
-        <div class="figs">
-            <div class="fig">
-                <span class="fig__icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
-                <span class="fig__text">
-                    <span class="fig__label">{{ __('frontend.dashboard.stat_levels') }}</span>
-                    <span class="fig__value">{{ $redeemedCount }}</span>
-                </span>
-                <a href="{{ route('product-lists') }}" class="fig__link">
-                    {{ __('frontend.dashboard.go_browse') }}
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            <nav class="acct-nav" role="tablist" aria-label="{{ __('frontend.dashboard.tabs_label') }}" aria-orientation="vertical">
+                <button type="button" role="tab" class="acct-nav__item is-active" data-tab="purchased" aria-selected="true" aria-controls="panel-purchased">
+                    <i class="fas fa-receipt" aria-hidden="true"></i>
+                    <span>{{ __('frontend.dashboard.tab_orders') }}</span>
+                    <span class="acct-nav__count num">{{ $purchasedCount }}</span>
+                </button>
+                <button type="button" role="tab" class="acct-nav__item" data-tab="redeemed" aria-selected="false" aria-controls="panel-redeemed">
+                    <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                    <span>{{ __('frontend.dashboard.tab_library') }}</span>
+                    <span class="acct-nav__count num">{{ $redeemedCount }}</span>
+                </button>
+                <button type="button" role="tab" class="acct-nav__item" data-tab="password" aria-selected="false" aria-controls="panel-password">
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                    <span>{{ __('frontend.dashboard.tab_security') }}</span>
+                </button>
+                <a href="{{ route('user.logout') }}" class="acct-nav__item acct-nav__item--out">
+                    <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                    <span>{{ __('frontend.dashboard.sign_out') }}</span>
                 </a>
-            </div>
+            </nav>
+        </aside>
 
-            <div class="fig">
-                <span class="fig__icon"><i class="fas fa-receipt" aria-hidden="true"></i></span>
-                <span class="fig__text">
-                    <span class="fig__label">{{ __('frontend.dashboard.stat_orders') }}</span>
-                    <span class="fig__value">{{ $purchasedCount }}</span>
-                </span>
-            </div>
-        </div>
+        <div class="acct-main">
+            <ul class="acct-stats">
+                <li class="acct-stat">
+                    <span class="acct-stat__icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
+                    <span class="acct-stat__label">{{ __('frontend.dashboard.wallet_label') }}</span>
+                    <span class="acct-stat__value num">{{ number_format($u->points_balance ?? 0) }}</span>
+                </li>
+                <li class="acct-stat">
+                    <span class="acct-stat__icon" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
+                    <span class="acct-stat__label">{{ __('frontend.dashboard.stat_levels') }}</span>
+                    <span class="acct-stat__value num">{{ $redeemedCount }}</span>
+                </li>
+                <li class="acct-stat">
+                    <span class="acct-stat__icon" aria-hidden="true"><i class="fas fa-receipt"></i></span>
+                    <span class="acct-stat__label">{{ __('frontend.dashboard.stat_orders') }}</span>
+                    <span class="acct-stat__value num">{{ $purchasedCount }}</span>
+                </li>
+            </ul>
 
-        <nav class="dnav" role="tablist" aria-label="{{ __('frontend.dashboard.tabs_label') }}">
-            <button type="button" role="tab" class="dnav__item is-active" data-tab="purchased" aria-selected="true" aria-controls="panel-purchased">
-                <i class="fas fa-receipt" aria-hidden="true"></i>
-                <span>{{ __('frontend.dashboard.tab_orders') }}</span>
-                <span class="dnav__count">{{ $purchasedCount }}</span>
-            </button>
-            <button type="button" role="tab" class="dnav__item" data-tab="redeemed" aria-selected="false" aria-controls="panel-redeemed">
-                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                <span>{{ __('frontend.dashboard.tab_library') }}</span>
-                <span class="dnav__count">{{ $redeemedCount }}</span>
-            </button>
-            <button type="button" role="tab" class="dnav__item" data-tab="password" aria-selected="false" aria-controls="panel-password">
-                <i class="fas fa-lock" aria-hidden="true"></i>
-                <span>{{ __('frontend.dashboard.tab_security') }}</span>
-            </button>
-        </nav>
+            <div class="acct-panel" id="panel-purchased" role="tabpanel" data-panel="purchased">
+                <h2 class="acct-panel__title">{{ __('frontend.dashboard.orders_title') }}</h2>
 
-        <div class="panel" id="panel-purchased" role="tabpanel" data-panel="purchased">
-            <div class="panel__head">
-                <span class="panel__num"><i class="fas fa-receipt" aria-hidden="true"></i></span>
-                <h2 class="panel__title">{{ __('frontend.dashboard.orders_title') }}</h2>
-            </div>
-            <div class="panel__body">
                 @if($purchasedCount > 0)
-                    <div class="otable">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th scope="col">{{ __('frontend.dashboard.th_order') }}</th>
-                                    <th scope="col">{{ __('frontend.dashboard.th_date') }}</th>
-                                    <th scope="col">{{ __('frontend.dashboard.th_credits') }}</th>
-                                    <th scope="col">{{ __('frontend.dashboard.th_amount') }}</th>
-                                    <th scope="col">{{ __('frontend.dashboard.th_status') }}</th>
-                                    <th scope="col"><span class="vh">{{ __('frontend.dashboard.th_receipt') }}</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($purchasedOrders as $order)
-                                    <tr>
-                                        <td class="otable__no">{{ $order->order_number }}</td>
-                                        <td>{{ $fmtDate($order->created_at, __('frontend.dashboard.fmt_date')) }}</td>
-                                        <td class="num">
-                                            <i class="fas fa-bolt otable__bolt" aria-hidden="true"></i>
-                                            {{ number_format($order->cart_info->sum('points')) }}
-                                        </td>
-                                        <td class="num otable__amount">{!! $order->currency=='JPY' ? '&yen;' : Helper::getCurrencySymbol($order->currency) !!}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}</td>
-                                        <td>
-                                            @if($order->payment_status === 'Completed')
-                                                <span class="state state--ok"><i class="fas fa-check" aria-hidden="true"></i> {{ $statusLabel('Completed') }}</span>
-                                            @elseif($order->payment_status === 'Failed')
-                                                <span class="state state--err"><i class="fas fa-times" aria-hidden="true"></i> {{ $statusLabel('Failed') }}</span>
-                                            @else
-                                                <span class="state state--wait"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel('Pending') }}</span>
-                                            @endif
-                                        </td>
-                                        <td class="otable__act">
-                                            <a href="{{ route('user.order.show', $order->id) }}" class="btn btn--ghost btn--sm">
-                                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                                {{ __('frontend.dashboard.go_receipt') }}
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                    <ul class="acct-orders">
+                        @foreach($purchasedOrders as $order)
+                            <li class="acct-order">
+                                <span class="acct-order__icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
+                                <div class="acct-order__main">
+                                    <p class="acct-order__no">{{ $order->order_number }}</p>
+                                    <p class="acct-order__date">
+                                        <span class="vh">{{ __('frontend.dashboard.th_date') }}:</span>
+                                        {{ $fmtDate($order->created_at, __('frontend.dashboard.fmt_date')) }}
+                                    </p>
+                                </div>
+                                <div class="acct-order__fig">
+                                    <small>{{ __('frontend.dashboard.th_credits') }}</small>
+                                    <strong class="num">{{ number_format($order->cart_info->sum('points')) }}</strong>
+                                </div>
+                                <div class="acct-order__fig">
+                                    <small>{{ __('frontend.dashboard.th_amount') }}</small>
+                                    <strong class="num">{!! $order->currency=='JPY' ? '&yen;' : Helper::getCurrencySymbol($order->currency) !!}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}</strong>
+                                </div>
+                                <div class="acct-order__state">
+                                    <span class="vh">{{ __('frontend.dashboard.th_status') }}:</span>
+                                    @if($order->payment_status === 'Completed')
+                                        <span class="pill pill--ok"><i class="fas fa-check" aria-hidden="true"></i> {{ $statusLabel('Completed') }}</span>
+                                    @elseif($order->payment_status === 'Failed')
+                                        <span class="pill pill--err"><i class="fas fa-times" aria-hidden="true"></i> {{ $statusLabel('Failed') }}</span>
+                                    @else
+                                        <span class="pill pill--wait"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel('Pending') }}</span>
+                                    @endif
+                                </div>
+                                <a href="{{ route('user.order.show', $order->id) }}" class="acct-order__go">
+                                    <span>{{ __('frontend.dashboard.go_receipt') }}</span>
+                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 @else
-                    <div class="blank">
-                        <span class="blank__icon" aria-hidden="true"><i class="fas fa-box-open"></i></span>
+                    <div class="acct-blank">
+                        <span class="acct-blank__icon" aria-hidden="true"><i class="fas fa-receipt"></i></span>
                         <p>{{ __('frontend.dashboard.orders_none') }}</p>
                         <a href="{{ route('points.topup') }}" class="btn btn--primary">
-                            <i class="fas fa-bolt" aria-hidden="true"></i>
+                            <i class="fas fa-plus" aria-hidden="true"></i>
                             {{ __('frontend.dashboard.go_buy') }}
                         </a>
                     </div>
                 @endif
             </div>
-        </div>
 
-        <div class="panel" id="panel-redeemed" role="tabpanel" data-panel="redeemed" hidden>
-            <div class="panel__head">
-                <span class="panel__num"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
-                <h2 class="panel__title">{{ __('frontend.dashboard.library_title') }}</h2>
-            </div>
-            <div class="panel__body">
+            <div class="acct-panel" id="panel-redeemed" role="tabpanel" data-panel="redeemed" hidden>
+                <h2 class="acct-panel__title">{{ __('frontend.dashboard.library_title') }}</h2>
+
                 @if($redeemedCount > 0)
-                    <ul class="courses">
+                    <ul class="acct-lib">
                         @foreach($redeemedOrders as $order)
                             @php
                                 $cartItem = $order->cart_info->first();
@@ -181,8 +159,8 @@
                                 $product = $cartItem ? $cartItem->product : null;
                                 $cimg = $product && $product->photo ? explode(',', $product->photo)[0] : null;
                             @endphp
-                            <li class="course">
-                                <div class="course__media">
+                            <li class="acct-mat">
+                                <div class="acct-mat__media">
                                     @if($cimg)
                                         <img src="{{ asset(ltrim($cimg, '/')) }}" alt="" loading="lazy">
                                     @else
@@ -190,32 +168,29 @@
                                     @endif
 
                                     @if(strtolower($order->status) === 'completed')
-                                        <span class="state state--ok course__status"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.dashboard.unlocked') }}</span>
+                                        <span class="pill pill--ok acct-mat__state"><i class="fas fa-lock-open" aria-hidden="true"></i> {{ __('frontend.dashboard.unlocked') }}</span>
                                     @else
-                                        <span class="state state--wait course__status"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel($order->status) }}</span>
+                                        <span class="pill pill--wait acct-mat__state"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel($order->status) }}</span>
                                     @endif
                                 </div>
 
-                                <div class="course__body">
-                                    <div class="course__tags">
+                                <div class="acct-mat__body">
+                                    <div class="acct-mat__tags">
                                         @if($level)
-                                            <span class="chip chip--text"><i class="fas fa-signal" aria-hidden="true"></i> {{ $levelLabel($level) }}</span>
+                                            <span class="acct-mat__chip"><i class="fas fa-signal" aria-hidden="true"></i> {{ $levelLabel($level) }}</span>
                                         @endif
-                                        <span class="chip">
-                                            <i class="fas fa-bolt" aria-hidden="true"></i>
-                                            {{ number_format($order->cart_info->sum('points')) }}
-                                        </span>
+                                        <span class="acct-mat__chip"><i class="fas fa-coins" aria-hidden="true"></i> <span class="num">{{ number_format($order->cart_info->sum('points')) }}</span></span>
                                     </div>
 
-                                    <h3 class="course__title">{{ $product ? $product->title : __('frontend.dashboard.gone') }}</h3>
+                                    <h3 class="acct-mat__title">{{ $product ? $product->title : __('frontend.dashboard.gone') }}</h3>
 
-                                    <div class="course__meta">
-                                        <span><i class="fas fa-hashtag" aria-hidden="true"></i> {{ $order->order_number }}</span>
-                                        <span><i class="far fa-calendar" aria-hidden="true"></i> {{ $fmtDate($order->created_at, __('frontend.dashboard.fmt_date')) }}</span>
-                                    </div>
+                                    <p class="acct-mat__meta">
+                                        <span>{{ $order->order_number }}</span>
+                                        <span>{{ $fmtDate($order->created_at, __('frontend.dashboard.fmt_date')) }}</span>
+                                    </p>
 
                                     @if($product)
-                                        <a href="{{ route('product-detail', $product->slug) }}" class="btn btn--ghost btn--sm course__btn">
+                                        <a href="{{ route('product-detail', $product->slug) }}" class="acct-mat__go">
                                             {{ __('frontend.dashboard.go_material') }}
                                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                         </a>
@@ -225,8 +200,8 @@
                         @endforeach
                     </ul>
                 @else
-                    <div class="blank">
-                        <span class="blank__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
+                    <div class="acct-blank">
+                        <span class="acct-blank__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
                         <p>{{ __('frontend.dashboard.library_none') }}</p>
                         <a href="{{ route('product-lists') }}" class="btn btn--primary">
                             <i class="fas fa-graduation-cap" aria-hidden="true"></i>
@@ -235,19 +210,15 @@
                     </div>
                 @endif
             </div>
-        </div>
 
-        <div class="panel" id="panel-password" role="tabpanel" data-panel="password" hidden>
-            <div class="panel__head">
-                <span class="panel__num"><i class="fas fa-lock" aria-hidden="true"></i></span>
-                <h2 class="panel__title">{{ __('frontend.dashboard.pw_title') }}</h2>
-            </div>
-            <div class="panel__body">
-                <div class="pwd">
-                    <form action="{{ route('change.password') }}" method="POST" id="pwdForm" novalidate>
+            <div class="acct-panel" id="panel-password" role="tabpanel" data-panel="password" hidden>
+                <h2 class="acct-panel__title">{{ __('frontend.dashboard.pw_title') }}</h2>
+
+                <div class="acct-pwd">
+                    <form action="{{ route('change.password') }}" method="POST" id="pwdForm" class="acct-pwd__form" novalidate>
                         @csrf
 
-                        <div class="pwd__fields">
+                        <div class="auth__fields">
                             <div class="fld fld--pass">
                                 <label class="fld__label" for="current_password">{{ __('frontend.dashboard.pw_now') }}</label>
                                 <div class="fld__box">
@@ -284,25 +255,26 @@
                                 @error('new_confirm_password')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                             </div>
 
-                            <button type="submit" class="btn btn--primary">
+                            <button type="submit" class="btn btn--primary auth__submit">
                                 <i class="fas fa-check" aria-hidden="true"></i>
                                 {{ __('frontend.dashboard.pw_save') }}
                             </button>
                         </div>
                     </form>
 
-                    <aside class="tips band--coffee">
-                        <span class="tips__icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
-                        <h3 class="tips__title">{{ __('frontend.dashboard.tips_head') }}</h3>
-                        <ul class="tips__list">
-                            <li><i class="fas fa-check" aria-hidden="true"></i> <span>{{ __('frontend.dashboard.tip_length') }}</span></li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> <span>{{ __('frontend.dashboard.tip_mix') }}</span></li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> <span>{{ __('frontend.dashboard.tip_unique') }}</span></li>
+                    <aside class="acct-tips">
+                        <span class="acct-tips__icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
+                        <h3 class="acct-tips__title">{{ __('frontend.dashboard.tips_head') }}</h3>
+                        <ul class="acct-tips__list">
+                            <li>{{ __('frontend.dashboard.tip_length') }}</li>
+                            <li>{{ __('frontend.dashboard.tip_mix') }}</li>
+                            <li>{{ __('frontend.dashboard.tip_unique') }}</li>
                         </ul>
                     </aside>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 
@@ -313,8 +285,8 @@
 (function () {
     'use strict';
 
-    var tabs = document.querySelectorAll('.dnav__item[data-tab]');
-    var panels = document.querySelectorAll('.panel[data-panel]');
+    var tabs = document.querySelectorAll('.acct-nav__item[data-tab]');
+    var panels = document.querySelectorAll('[data-panel]');
 
     function open(name) {
         tabs.forEach(function (tab) {

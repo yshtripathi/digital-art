@@ -5,7 +5,7 @@
     $transaction_id = $transaction_id ?? null;
     $email_status   = $email_status ?? null;
     $order = $transaction_id ? Order::where('trans_id', $transaction_id)->first() : null;
-    $supportEmail = $misc['Company Email'] ?? __('frontend.company.email');
+    $supportEmail = trim($misc['Company Email'] ?? __('frontend.company.email'));
 @endphp
 @section('main-content')
 
@@ -34,7 +34,7 @@
 <section class="rs rs--success">
     <div class="rs__wrap">
 
-        <div class="rs__status band--indigo">
+        <div class="rs__status">
             <span class="rs__badge" aria-hidden="true"><i class="fas fa-check"></i></span>
             <h2 class="rs__title">{{ __('frontend.success.head') }}</h2>
             <p class="rs__msg">{{ __('frontend.success.text') }}</p>

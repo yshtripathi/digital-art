@@ -206,7 +206,7 @@ Deep Forest background, 16px radius, Paper White figure in Fraunces 400 at headi
 8px tall, pill radius, Soft Line track, Deep Forest fill. The percentage appears as text next to it in body-sm.
 
 ### Form field
-Full width inside a centered form of at most 480px, strictly one field per row. Label above in Inter 500 14px, Deep Forest. Input: Paper White, 1px Soft Line border, 12px radius, 12px 16px padding, Inter 16px. Focus: Deep Forest border plus focus ring. Error: Error border, message below in Error color with an icon.
+Full width inside a centered form of at most 480px, strictly one field per row. Label above in Inter 500 14px, Deep Forest. Input: 50px tall, Paper White, 1px Soft Line border, 12px radius, a Muted Moss icon inside on the left, Inter 16px. Focus: Deep Forest border plus a soft lime glow. Error: Error border, message below in Error color with an icon.
 
 ### Alert
 Status surface color, 4px left border in the matching status color, 16px padding, 12px radius, icon + text. Text stays Deep Forest for readability; only the icon and border take the status color.
@@ -229,6 +229,107 @@ Column labels are uppercase lime caption text. Links are Paper White at 82% opac
 
 ### Page banner (breadcrumb)
 Every inner page opens with a Deep Forest panel set 16px below the header, page width, 16px radius, at least 280px tall. No photo or video: depth comes from a soft lime glow top right, a Forest Mid glow bottom left and a faint drifting dot grid top left. The breadcrumb trail sits on a translucent glass strip (12px radius), with a home icon on the first link, small chevrons between links and the current page in Strategy Lime. The page title below it is Fraunces heading-lg in Paper White. On the right, a large faint growth chart animates on load: bars rise, a lime trend line draws in, and a lime goal dot pops, then pulses slowly. Pages without a title use a compact version with only the trail and no chart. On phones the chart shrinks behind the text.
+
+### Form pages (log in, create account, forgot password, contact)
+No photos or video. The form sits in a centered Paper White card (480px max for account forms) with a 3px lime top border, 16px radius, a solid Strategy Lime offset shadow (14px right, 16px down) plus a soft forest shadow, and a drifting Deep Forest dot grid behind its top-left corner. The card fades up on load. Inside: a pill eyebrow with a small dot, an Inter 500 22px title, a short lead, then one field per row. Fields are 50px tall with a Muted Moss icon inside on the left that turns Deep Forest on focus. Focus shows a Deep Forest border and a soft lime glow; errors turn the border Error red and show the message below with an icon. Password fields have an eye button on the right, and the captcha image sits in a Pale Sage tile beside its field. The "remember me" box is a round check that fills Deep Forest with a lime tick. A line with centered text separates the primary action from the secondary one.
+
+The contact page pairs the form card (right) with a sticky Deep Forest info panel (left). The panel holds a lime eyebrow, title and lead, company detail rows with lime icon tiles on faint glass rows, and the common reasons list with lime dots. On tablets and phones the panel stacks above the form.
+
+### Payment result pages (order success, order failed)
+Two columns (5:7), stacking on tablets and phones. On the left is a sticky status card, centered text, with an 88px round badge that pops in:
+- Success: a Deep Forest card with lime glows. The badge is Strategy Lime with a black check and two lime rings pulsing outward. The title and message are in Paper White, the primary button is lime and the secondary is outlined in white.
+- Failed: a Paper White card with a 3px Error top border and a soft shadow. The badge is a red cross on the Error surface, and it shakes once.
+
+On the right, the success page shows a receipt card (lime top border, lime offset shadow). It has the order number under a caption label, then a dashed tear line, the total on a Pale Sage row in large figures, the transaction ID, a status pill (Success colors when paid, Warning colors when pending), and the invoice download. Below it, a "what happens next" card lists each point beside a Pale Sage icon tile. The failed page shows a card with numbered steps (Deep Forest circles with lime numbers joined by a thin timeline line) and a Pale Sage help box with a Deep Forest headset tile. Cards fade up one after another.
+
+### Checkout
+Two columns: the form on the left and a sticky 380px order summary on the right, stacking below 992px. A Paper White stepper card on top: completed steps are Deep Forest circles with a lime check joined by a Deep Forest line, the current step is a lime circle with a soft lime halo, and upcoming steps are Pale Sage. On phones only the current step keeps its label.
+
+The form is split into numbered Paper White section cards (a Deep Forest 40px tile with a lime number, an Inter 500 18px title, and a Soft Line rule under the head). Each card fades up in turn, and its border darkens while a field inside has focus. Fields follow the form field rules, one per row; the card expiry is a month / year pair centered inside one field. Required marks are Error red. Each policy agreement is a selectable row that turns Pale Sage with a Deep Forest border once ticked. "Before you pay" facts sit in a Pale Sage box with small Deep Forest icon tiles.
+
+The DBA notice is an Info alert, and the billing description image sits inline at the end of the sentence, 26px tall and vertically centered, with no border, radius or other decoration.
+
+The summary is a Deep Forest card with a lime glow. It has a lime bag tile in the head, each line on a faint glass row with a lime credits tile, a dashed rule above the total (32px, Strategy Lime), a 54px lime pay button, a white-outlined secondary button, a secure-payment note with a lime shield, and the payment methods image on a Paper White tile.
+
+### Cart pages (cart, credit cart)
+A single-column layout of their own, unlike the two-column form pages. There is no stepper. Everything is centered: a muted item-count eyebrow, a Fraunces heading and a pill-shaped "keep browsing" link stacked in the middle.
+
+Items form a centered grid of cards (260–320px each), so a single card, often a credit pack, sits in the middle instead of on the left. Each card is Paper White with a 16px radius; it lifts 4px with a Deep Forest border on hover, and the cards fade up in turn.
+- **Top:** a full-width 16:9 image, because material images are landscape; it zooms slightly on hover. A white pill chip (lime for credit packs) sits top left and a round white remove button top right, which turns Error red and rotates on hover. Credit packs use a Deep Forest frame with a dot texture and a lime glow, holding a box that shows the pack's total credits: a 40px lime figure over an uppercase caption label, framed by a faint lime border on a glass fill.
+- **Body:** the title, clamped to two lines.
+- **Foot:** under a dashed rule, muted meta on the left and the price (22px) on the right.
+
+Below the grid, a centered 560px summary card: Paper White, a lime top border and a lime offset shadow. It has a centered Inter 500 18px title, stat rows on Soft Line rules, the total on a Pale Sage row in 30px figures, and a full-width 54px lime button. The secure note and payment methods image sit centered below it.
+
+On the credit cart, a wide wallet panel sits below the item grid, above the summary card: Paper White, with a 6px left border that is lime, or Warning when credits are short. It shows three stat tiles side by side (balance on Deep Forest, then needed and remaining on Pale Sage) and a 12px meter that fills on load, with the coverage percentage and a buy-credits link. A Warning note spans the panel when the balance is too low.
+
+Empty and signed-out states show three dashed placeholder card outlines that breathe softly and fade out downward. A lime round icon, ringed in canvas and a thin Soft Line, overlaps their lower edge, followed by the Fraunces title, the text, an optional balance pill and the primary and secondary buttons.
+
+### Buy credits (calculator)
+A centered intro sits on top: a muted eyebrow, the intro at reading size, and two pill chips for the exchange rate and the 90-day validity. Below it is one wide calculator console, a Paper White card with a soft forest shadow split into two halves (stacking below 992px):
+- **Input half:** an uppercase caption label, then a large Pale Sage amount box (88px tall). The currency symbol and the typed figure are in Fraunces; on focus the box turns Paper White with a Deep Forest border and a lime glow. Four quick-amount buttons sit in a grid; the selected one turns lime and they lift on hover. The "good to know" Info note sits at the bottom.
+- **Result half:** Deep Forest with a lime glow and a faint dot texture. It shows the credits you will receive as a large Fraunces lime figure that pulses when it changes, a "base × multiplier" equation in two glass cells, a 56px lime button and the secure note.
+
+Above the console, between the intro and the calculator, "Multipliers by purchase amount" is a ladder of four tier cards, not a table. Each card has a small gridded chart whose bar rises on load to its share of the top multiplier (x1 33%, x2 67%, x2.5 83%, x3 100%). Below the chart are the multiplier in Fraunces 44px, the tier name with its icon, and the amount range under a caption. The top tier has a Deep Forest bar and a lime "highest multiplier" pill. The tier that matches the typed amount lifts 6px with a Deep Forest border, a lime offset shadow, a lime bar and a green "matches your amount" pill.
+
+### Policy and information pages (from the database)
+The article is a Paper White card (16px radius) with reading-friendly 16px / 1.75 text:
+- **Headings:** each h2 opens a new section, with a Soft Line rule above it and a short lime bar on that rule; h2 is Inter 500 22px, h3 18px and h4–h6 16px, all Deep Forest.
+- **Lists:** bullets are lime dots ringed in Deep Forest; numbered lists use Deep Forest circles with lime numbers.
+- **Other elements:** links are underlined, blockquotes sit on Pale Sage with a Deep Forest edge, and horizontal rules are dashed.
+- **Tables:** tables from the database are wrapped in a rounded bordered frame that scrolls sideways on small screens. Their inline styles are overridden so the label column sits on Pale Sage in Inter 500, rows are separated by Soft Line rules, and header rows turn Deep Forest. Inline DBA images keep their own inline styles.
+
+When a page has two or more h2 headings, a sticky "On this page" card appears on the left (260px). It lists the sections with two-digit numbers, and the section in view is marked with a lime left edge on Pale Sage. Otherwise the article is centered at 880px.
+
+Below the article, "Related policies" shows cards for the other policies: a Deep Forest icon tile with a lime icon, the policy name and a "read policy" link. On hover a card lifts with a lime offset shadow. Printing hides everything except the article.
+
+### Catalogue (e-learning materials list)
+A 280px sticky sidebar sits beside the results. It holds a Paper White categories card (an uppercase caption title, then one row per category with a count pill; the current one turns Deep Forest with a lime count) and a Deep Forest "need credits?" promo card (lime icon tile, short text, primary button). Below 992px the sidebar turns into a sideways-scrolling row of pill links and the promo hides.
+
+The results start with a header: a muted count eyebrow, a Fraunces title and the intro on the right, above a Soft Line rule. Material cards sit in an auto-fill grid (260px minimum):
+- **Top:** a 4:3 image (material images are landscape) that zooms slightly on hover.
+- **Body:** a category chip and a four-bar level meter with the level count, the title and summary (each clamped to two lines), and a dashed rule over the "starting from" credits.
+- **Corner:** a round arrow button that turns lime and tilts on hover.
+
+On hover a card lifts 4px with a Deep Forest border and a lime offset shadow, and cards fade up in turn. Pagination uses 44px square buttons, with the current page in Deep Forest. The empty state is a dashed-border card.
+
+### Material detail
+Two columns: a sticky 4:3 image stage with a five-across thumbnail strip (the active thumbnail has a Deep Forest border), and an info card with a lime top border. The info card holds:
+- a category pill linking to its category
+- the Fraunces title and the lede at reading size
+- an "at a glance" row of Pale Sage tiles: level count, starting price and category
+- a full-width lime button that jumps to the levels, and the wallet note
+
+Levels come straight after the hero, in a Deep Forest section: a lime eyebrow, a white Fraunces title and a hint, then a level picker. The picker is a tab row showing four options at a time (two on phones) and scrolls sideways with snapping when a material has more. Each option shows "Level n", a four-bar meter, the level name and its credits; the selected option turns Strategy Lime with a Deep Forest meter. Only the selected level's details show below, in a Paper White panel:
+- the level name
+- the "what you will learn / who it is for / what you will be able to do" points as Pale Sage cards with Deep Forest icon tiles
+- a buy box with a lime top border: the level label, the price in Fraunces 48px and a lime add-to-cart button
+
+Arrow keys, Home and End move between the options. "About this e-learning material" follows the levels, under a rule, with its Fraunces title in a 280px column beside the text at reading size. The main image and thumbnails are clipped to their 16px and 12px corners even when content protection is off.
+
+### About page
+Two sections.
+
+1. **Story beside a video (two columns, video first on tablets and phones).** The text column has a Forest Mid eyebrow, a Fraunces heading-lg title, the lead paragraph at reading size, a second paragraph, and three key points as Paper White rows with Deep Forest icon tiles that slide right on hover. The video (`assets/videos/about-work.mp4`, muted, looping, 16:9, with the `about-work.webp` poster) sits in a 16px-radius frame with a lime offset shadow and a soft forest shadow, and a drifting dot grid peeks from behind its top-right corner. A round frosted pause/play button sits bottom right; reduced-motion visitors get the poster without autoplay.
+2. **How it works.** A Deep Forest panel with lime and Forest Mid glows. It has a centered lime eyebrow and white Fraunces title, then four path cards (Categories, E-Learning Materials, Levels, Credits) joined by a dashed lime line. Each card shows a small step number, a lime round icon, the name and a one-line explanation, and lifts on hover. A closing row pairs "Ready to take a look?" with the lime primary button and a white-outlined contact button.
+
+### Account dashboard
+An app-style layout: a 300px sticky sidebar and a content column (stacking below 992px).
+- **Profile card:** Deep Forest with a lime glow. It holds a 72px lime avatar with the initial in Fraunces, a lime "welcome back" eyebrow, the name, the email and a member-since pill. Under a dashed rule sit the available credits in Fraunces 44px lime and a full-width lime buy-credits button.
+- **Section menu:** a Paper White vertical tab list (orders, materials, password), each with an icon and a count pill; the active tab is Deep Forest with a lime icon and count. Log out sits last and turns Error red on hover. On narrow screens the menu becomes a sideways-scrolling row.
+
+The content column starts with three stat tiles (available credits, levels unlocked, credit purchases), each with a Deep Forest icon tile. The active section sits in a Paper White card:
+- **Credit purchases:** wrapping rows rather than a table. Each row has a Pale Sage icon tile, the order number and date, credits, amount, a status pill (Success, Warning or Error colors) and an outlined "view receipt" button that turns lime on hover.
+- **My materials:** a grid of cards with a 16:10 image, an "unlocked" or status pill on the image, level and credits chips, the title, the order number and date, and an "open material" link.
+- **Change password:** the form (one field per row, 480px max) beside a Pale Sage tips card with green check bullets.
+
+Empty sections show a dashed card with a Deep Forest round icon, one line of text and a primary button.
+
+### Order details (receipt)
+An invoice layout, 1000px wide.
+- **Top bar:** Deep Forest with a lime glow and a dot texture. On the left: a lime "receipt" pill, the order number in Fraunces, the date, and the order and payment status pills with captions. On the right: "total paid" (or "credits used") in large lime Fraunces, with the lime PDF download button and a white-outlined print button.
+- **Cards below:** two Paper White cards side by side, each titled over a dashed rule. "Items in this order" lists each item on a Pale Sage row (course icon, or a Deep Forest tile with lime coins for credit packs), with its title, level and credits. "Order information" is a two-column grid of caption labels and values, with the transaction ID spanning the full width.
+- **Footer:** a "back to my account" link. Printing turns the top bar light and hides the buttons.
 
 ### Notification toast
 Stacked at the top right, 12px below the header (400px wide, full width on phones), sliding in from the right. Paper White card, 1px Soft Line border, 16px radius and a soft forest shadow. A 40px status tile (12px radius) holds the icon on the status surface color: a check for success, an exclamation mark for errors. Beside it sit an uppercase caption label in the status color, the message in Inter 15px Deep Forest, and a close button. Success toasts close by themselves after 5 seconds, with a lime timer bar shrinking along the bottom; hovering or focusing pauses it. Error toasts carry a 4px Error left border and stay until closed. Styles live in `public/css/style.css`.

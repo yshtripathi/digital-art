@@ -2,7 +2,8 @@
 
 @php
     $pageTitle = $page_data->page_title ?? '';
-    $pgEmail   = e($misc['Company Email'] ?? __('frontend.company.email'));
+    $pageSlug  = $page_data->page_slug ?? '';
+    $pgEmail   = e(trim($misc['Company Email'] ?? __('frontend.company.email')));
     $rawDesc   = strtr($page_data->page_desc ?? '', [
         ':company'      => e($misc['Company Name'] ?? __('frontend.company.name')),
         ':email'        => '<a href="mailto:' . $pgEmail . '">' . $pgEmail . '</a>',
@@ -13,9 +14,14 @@
     ]);
     $cleanText = trim(preg_replace('/\s+/', ' ', strip_tags($rawDesc)));
     $metaDesc  = !empty($page_data->page_meta) ? $page_data->page_meta : \Illuminate\Support\Str::limit($cleanText, 160);
-    $isCjk = (bool) preg_match('/[\p{Han}\p{Hiragana}\p{Katakana}]/u', $cleanText);
-    $wordCount = $isCjk ? mb_strlen(preg_replace('/\s+/u', '', $cleanText)) : str_word_count($cleanText);
-    $readMinutes = max(1, (int) ceil($wordCount / ($isCjk ? 500 : 200)));
+
+    $policies = [
+        'terms-conditions' => ['label' => __('frontend.footer.link_terms'),   'icon' => 'fa-file-contract'],
+        'privacy-policy'   => ['label' => __('frontend.footer.link_privacy'), 'icon' => 'fa-user-shield'],
+        'refund-policy'    => ['label' => __('frontend.footer.link_refund'),  'icon' => 'fa-undo-alt'],
+        'delivery-policy'  => ['label' => __('frontend.footer.link_access'),  'icon' => 'fa-key'],
+    ];
+    $related = array_filter($policies, fn ($key) => $key !== $pageSlug, ARRAY_FILTER_USE_KEY);
 @endphp
 
 @section('title', $pageTitle)
@@ -32,40 +38,38 @@
 ])
 
 <section class="pg">
-    <div class="pg__wrap">
+    <div class="pg__wrap" data-pg>
+        <aside class="pg__side" data-toc-box hidden>
+            <nav class="pg__toc" aria-labelledby="pgTocTitle">
+                <p class="pg__toc-title" id="pgTocTitle">{{ __('frontend.page.toc') }}</p>
+                <ol class="pg__toc-list" data-toc></ol>
+            </nav>
+        </aside>
 
-        <div class="pg__meta">
-            <span class="pg__tag">{{ __('frontend.page.tag') }}</span>
-            @if($wordCount > 0)
-                <span class="pg__time">
-                    <i class="far fa-clock" aria-hidden="true"></i>
-                    {{ __('frontend.page.read_min', ['min' => $readMinutes]) }}
-                </span>
-            @endif
-            <span class="pg__tools">
-                <button type="button" class="pg__tool" onclick="window.print()" aria-label="{{ __('frontend.page.tool_print') }}" title="{{ __('frontend.page.tool_print') }}">
-                    <i class="fas fa-print" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="pg__tool" data-copy-link data-copied="{{ __('frontend.page.tool_copied') }}" aria-label="{{ __('frontend.page.tool_copy') }}" title="{{ __('frontend.page.tool_copy') }}">
-                    <i class="fas fa-link" aria-hidden="true"></i>
-                </button>
-                <span class="pg__copied" role="status" data-copy-note></span>
-            </span>
-        </div>
-
-        <article class="pg__prose">
+        <article class="pg__prose" data-prose>
             {!! $rawDesc !!}
         </article>
-
-        <div class="pg__help band--coffee">
-            <p class="pg__help-text">{{ __('frontend.page.help_title') }}</p>
-            <div class="pg__help-actions">
-                <a href="{{ route('contact') }}" class="btn btn--primary">{{ __('frontend.footer.link_contact') }}</a>
-                <a href="{{ route('product-lists') }}" class="btn btn--ghost">{{ __('frontend.page.help_browse') }}</a>
-            </div>
-        </div>
-
     </div>
+
+    @if(count($related))
+        <nav class="pg-rel" aria-labelledby="pgRelTitle">
+            <h2 class="pg-rel__title" id="pgRelTitle">{{ __('frontend.page.related') }}</h2>
+            <ul class="pg-rel__list">
+                @foreach($related as $slug => $item)
+                    <li>
+                        <a href="{{ route('pages', $slug) }}" class="pg-rel__card">
+                            <span class="pg-rel__icon" aria-hidden="true"><i class="fas {{ $item['icon'] }}"></i></span>
+                            <span class="pg-rel__name">{{ $item['label'] }}</span>
+                            <span class="pg-rel__go">
+                                {{ __('frontend.page.open') }}
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </nav>
+    @endif
 </section>
 
 @push('scripts')
@@ -73,7 +77,10 @@
 (function () {
     'use strict';
 
-    document.querySelectorAll('.pg__prose table').forEach(function (table) {
+    var prose = document.querySelector('[data-prose]');
+    if (!prose) { return; }
+
+    prose.querySelectorAll('table').forEach(function (table) {
         if (table.parentElement.classList.contains('pg__table')) { return; }
         var box = document.createElement('div');
         box.className = 'pg__table';
@@ -81,26 +88,36 @@
         box.appendChild(table);
     });
 
-    var copy = document.querySelector('[data-copy-link]');
-    var note = document.querySelector('[data-copy-note]');
+    var heads = Array.prototype.slice.call(prose.querySelectorAll('h2'));
+    var list = document.querySelector('[data-toc]');
+    var box = document.querySelector('[data-toc-box]');
+    var wrap = document.querySelector('[data-pg]');
 
-    if (copy && note) {
-        copy.addEventListener('click', function () {
-            var done = function () {
-                note.textContent = copy.getAttribute('data-copied');
-                copy.classList.add('is-done');
-                setTimeout(function () {
-                    note.textContent = '';
-                    copy.classList.remove('is-done');
-                }, 2000);
-            };
+    if (heads.length < 2 || !list || !box) { return; }
 
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(window.location.href).then(done, done);
-            } else {
-                done();
-            }
-        });
+    var links = heads.map(function (head, index) {
+        if (!head.id) { head.id = 'section-' + (index + 1); }
+        var item = document.createElement('li');
+        var link = document.createElement('a');
+        link.href = '#' + head.id;
+        link.textContent = head.textContent.trim();
+        item.appendChild(link);
+        list.appendChild(item);
+        return link;
+    });
+
+    box.hidden = false;
+    wrap.classList.add('has-toc');
+
+    if ('IntersectionObserver' in window) {
+        var seen = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) { return; }
+                var at = heads.indexOf(entry.target);
+                links.forEach(function (link, i) { link.classList.toggle('is-active', i === at); });
+            });
+        }, { rootMargin: '-110px 0px -65% 0px' });
+        heads.forEach(function (head) { seen.observe(head); });
     }
 }());
 </script>

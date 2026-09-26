@@ -8,10 +8,8 @@
     $hoCourses = collect($product_lists ?? [])->filter(fn ($c) => !empty($c->photo))->values();
     $hoCourses = $hoCourses->where('is_featured', 1)
         ->concat($hoCourses->where('is_featured', '!=', 1))
-        ->take(5)
+        ->take(10)
         ->values();
-    $hoFeature = $hoCourses->first();
-    $hoMore = $hoCourses->slice(1, 4);
 
     $hoMaterials = \App\Models\Product::where('status', 'active')->count();
     $hoLevels = \App\Models\ProductLevel::whereIn('course_id', \App\Models\Product::where('status', 'active')->pluck('id'))->count();
@@ -153,7 +151,7 @@
     </section>
 @endif
 
-@if($hoFeature)
+@if($hoCourses->count())
     <section class="hp-sec hp-sec--sage" aria-labelledby="hpPicksTitle">
         <div class="hp-sec__wrap">
             <header class="hp-head">
@@ -161,21 +159,29 @@
                     <p class="eyebrow">{{ __('frontend.home.picks_tag') }}</p>
                     <h2 id="hpPicksTitle" class="hp-head__title">{{ __('frontend.home.picks_title') }}</h2>
                 </div>
-                <a href="{{ route('product-lists') }}" class="hp-head__link">
-                    {{ __('frontend.home.picks_all') }}
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
+                <div class="hp-head__tools">
+                    <a href="{{ route('product-lists') }}" class="hp-head__link">
+                        {{ __('frontend.home.picks_all') }}
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <button type="button" class="hp-arrow" aria-label="{{ __('frontend.home.picks_prev') }}" aria-controls="hpPicksTrack" data-slide="-1" disabled>
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="hp-arrow" aria-label="{{ __('frontend.home.picks_next') }}" aria-controls="hpPicksTrack" data-slide="1">
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </div>
             </header>
 
-            <ul class="hp-picks">
-                @foreach(collect([$hoFeature])->concat($hoMore) as $course)
+            <ul class="hp-picks" id="hpPicksTrack" data-slider>
+                @foreach($hoCourses as $course)
                     @php
                         $pimg = explode(',', $course->photo)[0];
                         $lvCount = $course->levels ? $course->levels->count() : 0;
                         $minPoints = $lvCount ? $course->levels->min('price_in_points') : 0;
                         $catTitle = optional($course->cat_info)->title;
                     @endphp
-                    <li class="hp-pick {{ $loop->first ? 'hp-pick--lead' : '' }}">
+                    <li class="hp-pick">
                         <a href="{{ route('product-detail', $course->slug) }}" class="hp-pick__link">
                             <span class="hp-pick__media cg-card__media">
                                 <img src="{{ asset(ltrim($pimg, '/')) }}" alt="" width="1200" height="896" loading="lazy" decoding="async">
@@ -185,8 +191,8 @@
                                     <span class="hp-pick__cat">{{ $catTitle }}</span>
                                 @endif
                                 <span class="hp-pick__title">{{ $course->title }}</span>
-                                @if($loop->first && $course->summary)
-                                    <span class="hp-pick__desc">{{ \Illuminate\Support\Str::limit(strip_tags($course->summary), 150) }}</span>
+                                @if($course->summary)
+                                    <span class="hp-pick__desc">{{ \Illuminate\Support\Str::limit(strip_tags($course->summary), 90) }}</span>
                                 @endif
                                 <span class="hp-pick__foot">
                                     @if($minPoints)
@@ -205,6 +211,10 @@
                     </li>
                 @endforeach
             </ul>
+
+            <div class="hp-rail" aria-hidden="true">
+                <span class="hp-rail__fill" data-slider-bar></span>
+            </div>
         </div>
     </section>
 @endif
@@ -330,6 +340,43 @@
     'use strict';
 
     var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var track = document.querySelector('[data-slider]');
+    if (track) {
+        var arrows = document.querySelectorAll('[data-slide]');
+        var bar = document.querySelector('[data-slider-bar]');
+
+        var step = function () {
+            var card = track.querySelector('li');
+            var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+            return card ? card.getBoundingClientRect().width + gap : track.clientWidth;
+        };
+
+        var sync = function () {
+            var max = track.scrollWidth - track.clientWidth;
+            var at = track.scrollLeft;
+            arrows.forEach(function (btn) {
+                var dir = parseInt(btn.getAttribute('data-slide'), 10);
+                btn.disabled = dir < 0 ? at <= 2 : at >= max - 2;
+            });
+            if (bar) {
+                var seen = track.clientWidth / track.scrollWidth;
+                bar.style.width = (Math.min(1, seen) * 100).toFixed(2) + '%';
+                bar.style.transform = 'translateX(' + (max > 0 ? (at / max) * (1 / seen - 1) * 100 : 0).toFixed(2) + '%)';
+            }
+        };
+
+        arrows.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var dir = parseInt(btn.getAttribute('data-slide'), 10);
+                track.scrollBy({ left: dir * step(), behavior: calm ? 'auto' : 'smooth' });
+            });
+        });
+
+        track.addEventListener('scroll', function () { window.requestAnimationFrame(sync); }, { passive: true });
+        window.addEventListener('resize', sync);
+        sync();
+    }
 
     document.querySelectorAll('[data-hp-video]').forEach(function (video) {
         var toggle = video.parentElement.querySelector('[data-hp-toggle]');

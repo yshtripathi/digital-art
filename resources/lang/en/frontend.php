@@ -123,6 +123,8 @@ return [
         'picks_title'     => 'Materials to start with',
         'picks_all'       => 'All E-Learning Materials',
         'picks_open'      => 'Open this material',
+        'picks_prev'      => 'Show previous materials',
+        'picks_next'      => 'Show more materials',
         'price_from'      => 'Starting from',
         'price_unit'      => 'credits',
         'level_count'     => ':count level|:count levels',

@@ -123,6 +123,8 @@ return [
         'picks_title'     => 'はじめの一歩におすすめの教材',
         'picks_all'       => 'すべてのeラーニング教材',
         'picks_open'      => 'この教材を開く',
+        'picks_prev'      => '前の教材を表示',
+        'picks_next'      => 'さらに教材を表示',
         'price_from'      => '価格',
         'price_unit'      => 'クレジット',
         'level_count'     => ':count レベル',

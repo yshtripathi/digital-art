@@ -5,16 +5,16 @@ return [
     // Dummy fallbacks, used only when the miscs table value is empty
     'company' => [
         'name'    => '[Company Name]',
-        'email'   => ' support@mandala-learning.com',
+        'email'   => 'course@bizacademys.com',
         'address' => '[Company Address]',
     ],
 
     // resources/views/frontend/layouts/head.blade.php
     'head' => [
-        'site'    => 'Mandala Learning',
-        'home'    => ':site — 自己成長のためのeラーニング教材',
-        'summary' => '心の持ち方、感情、人間関係、集中力、自信、心の落ち着き、お金の習慣を学べる自己成長のためのeラーニング教材です。レベルを選び、クレジットで解放して、自分のペースで学べます。',
-        'preload' => 'ページを読み込んでいます',
+        'site'    => 'BizAcademys',
+        'home'    => ':site — ビジネスとマーケティングのeラーニング教材',
+        'summary' => 'マーケティング、営業、起業、コミュニケーション、オンラインビジネスのスキルを学べるeラーニング教材です。レベルを選び、クレジットで解放して、自分のペースで学べます。',
+        'topic'   => 'ビジネスとマーケティングのスキル',
     ],
 
     // resources/views/frontend/layouts/breadcrumb.blade.php
@@ -80,18 +80,16 @@ return [
         'letter_send'  => '登録する',
         'letter_bad'   => '有効なメールアドレスを入力してください。',
         'letter_done'  => 'ご登録ありがとうございます',
-        'about_text'   => '自分のペースで読み進められる自己成長のためのeラーニング教材です。どの教材もレベルに分かれているので、今の自分に合うところから始め、準備ができたら次のレベルをクレジットで解放できます。',
-        'details'      => '連絡先',
-        'col_topics'   => 'カテゴリーから探す',
-        'topics_empty' => 'eラーニング教材が公開されると、ここにカテゴリーが表示されます',
-        'col_company'  => '会社情報とアカウント',
+        'details'      => '会社情報',
+        'info_name'    => '会社名',
+        'info_mail'    => 'メールアドレス',
+        'info_place'   => '所在地',
+        'col_company'  => 'クイックリンク',
         'link_all'     => 'すべてのeラーニング教材',
         'link_about'   => '私たちについて',
         'link_contact' => 'お問い合わせ',
+        'link_credits' => 'クレジットを購入',
         'link_account' => 'マイアカウント',
-        'link_logout'  => 'ログアウト',
-        'link_login'   => 'ログイン',
-        'link_join'    => 'アカウント作成',
         'col_policies' => '規約とポリシー',
         'link_terms'   => '利用規約',
         'link_privacy' => 'プライバシーポリシー',

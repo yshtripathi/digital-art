@@ -1,5 +1,4 @@
 @php
-    $footCategories = \App\Models\Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
     $footCompany = $misc['Company Name'] ?? __('frontend.company.name');
     $footEmail   = $misc['Company Email'] ?? __('frontend.company.email');
     $footAddress = $misc['Company Address'] ?? __('frontend.company.address');
@@ -7,114 +6,91 @@
 
 
 <footer class="ft" data-ft>
-    <section class="ft__news band--indigo" aria-labelledby="signup-title">
-        <div class="ft__mandala" aria-hidden="true" data-ft-spin>
-            <svg viewBox="0 0 400 400" focusable="false">
-                <circle class="ml__orbit" cx="200" cy="200" r="197"/>
-                <g class="ml__dots">
-                    @foreach (range(0, 350, 10) as $angle)
-                        <circle cx="200" cy="14" r="2.6" transform="rotate({{ $angle }} 200 200)"/>
-                    @endforeach
-                </g>
-                <g class="ml__outer">
-                    @foreach (range(0, 345, 15) as $angle)
-                        <ellipse cx="200" cy="46" rx="12" ry="30" transform="rotate({{ $angle }} 200 200)"/>
-                    @endforeach
-                </g>
-                <g class="ml__mid">
-                    @foreach (range(0, 330, 30) as $angle)
-                        <g transform="rotate({{ $angle }} 200 200)">
-                            <ellipse cx="200" cy="96" rx="24" ry="50" class="ml__paper"/>
-                            <ellipse cx="200" cy="100" rx="9" ry="32" class="ml__line"/>
-                        </g>
-                    @endforeach
-                </g>
-                <g class="ml__rays">
-                    @foreach (range(0, 345, 15) as $angle)
-                        <path d="M200 124 L208 152 L200 166 L192 152 Z" transform="rotate({{ $angle }} 200 200)"/>
-                    @endforeach
-                </g>
-                <g class="ml__core">
-                    <circle cx="200" cy="200" r="42" class="ml__ink"/>
-                    <circle cx="200" cy="200" r="32" class="ml__paper"/>
-                    <circle cx="200" cy="200" r="22" class="ml__sun"/>
-                    <circle cx="200" cy="200" r="12" class="ml__ink"/>
-                    <circle cx="200" cy="200" r="4" class="ml__paper"/>
-                </g>
+    <section class="ft__news" aria-labelledby="signup-title">
+        <div class="ft__card" data-reveal>
+            <div class="ft__news-in">
+                <p class="eyebrow">{{ __('frontend.footer.letter_tag') }}</p>
+                <h2 class="ft__title" id="signup-title">{{ __('frontend.footer.letter_title') }}</h2>
+                <p class="ft__lead">{{ __('frontend.footer.letter_text') }}</p>
+
+                <form class="ft__form" novalidate data-signup>
+                    <label class="vh" for="signup-email">{{ __('frontend.footer.letter_field') }}</label>
+                    <input type="email" name="email" id="signup-email" class="ft__input" placeholder="{{ __('frontend.footer.letter_ph') }}" autocomplete="email" required>
+                    <button type="submit" class="btn btn--primary ft__send">
+                        {{ __('frontend.footer.letter_send') }}
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+                <p class="ft__ok" role="status" hidden data-signup-ok>
+                    <i class="fas fa-check-circle" aria-hidden="true"></i>
+                    <span>{{ __('frontend.footer.letter_done') }}</span>
+                </p>
+            </div>
+
+            <svg class="ft__chart" viewBox="0 0 240 180" aria-hidden="true" focusable="false">
+                <path class="ft__grid" d="M20 40 H228 M20 80 H228 M20 120 H228"/>
+                <path class="ft__axis" d="M20 12 V160 H228"/>
+                <rect class="ft__bar" x="36" y="120" width="28" height="40" rx="4"/>
+                <rect class="ft__bar" x="82" y="96" width="28" height="64" rx="4"/>
+                <rect class="ft__bar" x="128" y="72" width="28" height="88" rx="4"/>
+                <rect class="ft__bar" x="174" y="40" width="28" height="120" rx="4"/>
+                <polyline class="ft__trend" points="26,134 50,106 96,82 142,58 188,26"/>
+                <circle class="ft__goal" cx="188" cy="26" r="8"/>
             </svg>
-        </div>
-
-        <div class="ft__news-in">
-            <p class="eyebrow">{{ __('frontend.footer.letter_tag') }}</p>
-            <h2 class="ft__title" id="signup-title">{{ __('frontend.footer.letter_title') }}</h2>
-            <p class="ft__lead">{{ __('frontend.footer.letter_text') }}</p>
-
-            <form class="ft__form" novalidate data-signup>
-                <label class="vh" for="signup-email">{{ __('frontend.footer.letter_field') }}</label>
-                <input type="email" name="email" id="signup-email" class="ft__input" placeholder="{{ __('frontend.footer.letter_ph') }}" autocomplete="email" required>
-                <button type="submit" class="btn btn--primary">
-                    {{ __('frontend.footer.letter_send') }}
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </button>
-            </form>
-
-            <p class="ft__ok" role="status" hidden data-signup-ok>
-                <span class="ft__ok-mark" aria-hidden="true"><span class="rosette"></span></span>
-                <span>{{ __('frontend.footer.letter_done') }}</span>
-            </p>
         </div>
     </section>
 
-    <div class="ft__garland" aria-hidden="true">
-        @for ($i = 0; $i < 28; $i++)
-            <span style="--i: {{ $i }}"></span>
-        @endfor
-    </div>
-
-    <div class="ft__base band--coffee">
-        <div class="ft__grid">
-            <div class="ft__brand ft__reveal">
+    <div class="ft__base">
+        <div class="ft__grid-wrap">
+            <div class="ft__brand" data-reveal>
                 <a href="{{ route('home') }}" class="ft__logo">
                     <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $footCompany }}" loading="lazy">
                 </a>
-                <p class="ft__about">{{ __('frontend.footer.about_text') }}</p>
 
-                <ul class="ft__facts" aria-label="{{ __('frontend.footer.details') }}">
-                    <li>{{ $footCompany }}</li>
-                    <li><a href="mailto:{{ $footEmail }}">{{ $footEmail }}</a></li>
-                    <li>{{ $footAddress }}</li>
-                </ul>
+                <div class="ft__facts">
+                    <h2 class="ft__label">{{ __('frontend.footer.details') }}</h2>
+                    <dl class="ft__info">
+                        <div class="ft__fact">
+                            <i class="fas fa-building" aria-hidden="true"></i>
+                            <div>
+                                <dt>{{ __('frontend.footer.info_name') }}</dt>
+                                <dd>{{ $footCompany }}</dd>
+                            </div>
+                        </div>
+                        <div class="ft__fact">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <div>
+                                <dt>{{ __('frontend.footer.info_mail') }}</dt>
+                                <dd><a href="mailto:{{ trim($footEmail) }}">{{ trim($footEmail) }}</a></dd>
+                            </div>
+                        </div>
+                        <div class="ft__fact">
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            <div>
+                                <dt>{{ __('frontend.footer.info_place') }}</dt>
+                                <dd>{{ $footAddress }}</dd>
+                            </div>
+                        </div>
+                    </dl>
+                </div>
             </div>
 
-            <nav class="ft__col ft__col--wide ft__reveal" aria-label="{{ __('frontend.footer.col_topics') }}">
-                <h2 class="ft__label">{{ __('frontend.footer.col_topics') }}</h2>
-                <ul class="ft__links ft__links--two">
-                    @forelse($footCategories as $cat)
-                        <li><a href="{{ route('product-lists', $cat->slug) }}" class="ft__link">{{ $cat->title }}</a></li>
-                    @empty
-                        <li><span class="ft__empty">{{ __('frontend.footer.topics_empty') }}</span></li>
-                    @endforelse
-                </ul>
-            </nav>
-
-            <nav class="ft__col ft__reveal" aria-label="{{ __('frontend.footer.col_company') }}">
-                <h2 class="ft__label">{{ __('frontend.footer.col_company') }}</h2>
+            <nav class="ft__col" aria-labelledby="ft-quick" data-reveal>
+                <h2 class="ft__label" id="ft-quick">{{ __('frontend.footer.col_company') }}</h2>
                 <ul class="ft__links">
                     <li><a href="{{ route('product-lists') }}" class="ft__link">{{ __('frontend.footer.link_all') }}</a></li>
+                    <li><a href="{{ route('points.topup') }}" class="ft__link">{{ __('frontend.footer.link_credits') }}</a></li>
                     <li><a href="{{ route('about-us') }}" class="ft__link">{{ __('frontend.footer.link_about') }}</a></li>
                     <li><a href="{{ route('contact') }}" class="ft__link">{{ __('frontend.footer.link_contact') }}</a></li>
                     @auth
                         <li><a href="{{ route('user') }}" class="ft__link">{{ __('frontend.footer.link_account') }}</a></li>
-                        <li><a href="{{ route('user.logout') }}" class="ft__link">{{ __('frontend.footer.link_logout') }}</a></li>
-                    @else
-                        <li><a href="{{ route('login.form') }}" class="ft__link">{{ __('frontend.footer.link_login') }}</a></li>
-                        <li><a href="{{ route('register.form') }}" class="ft__link">{{ __('frontend.footer.link_join') }}</a></li>
                     @endauth
                 </ul>
             </nav>
 
-            <nav class="ft__col ft__reveal" aria-label="{{ __('frontend.footer.col_policies') }}">
-                <h2 class="ft__label">{{ __('frontend.footer.col_policies') }}</h2>
+            <nav class="ft__col" aria-labelledby="ft-policies" data-reveal>
+                <h2 class="ft__label" id="ft-policies">{{ __('frontend.footer.col_policies') }}</h2>
                 <ul class="ft__links">
                     <li><a href="{{ route('pages','terms-conditions') }}" class="ft__link">{{ __('frontend.footer.link_terms') }}</a></li>
                     <li><a href="{{ route('pages','privacy-policy') }}" class="ft__link">{{ __('frontend.footer.link_privacy') }}</a></li>
@@ -128,8 +104,9 @@
             <p class="ft__copy">
                 &copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $footCompany }}</a>. {{ __('frontend.footer.copyright') }}
             </p>
-            <span class="ft__seal" aria-hidden="true"><span class="rosette"></span></span>
-            <img class="ft__pay" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.pay_alt') }}" loading="lazy">
+            <span class="ft__pay">
+                <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.pay_alt') }}" loading="lazy">
+            </span>
         </div>
     </div>
 </footer>
@@ -138,6 +115,7 @@
 
 <button type="button" class="totop" aria-label="{{ __('frontend.footer.scroll_top') }}" data-totop>
     <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    <span class="totop__bar" aria-hidden="true"></span>
 </button>
 
 <script src="{{url('assets/js/jquery.js')}}"></script>
@@ -216,27 +194,15 @@
     }
 
     var rise = document.querySelector('[data-totop]');
-    var foot = document.querySelector('[data-ft]');
-    var spin = document.querySelector('[data-ft-spin]');
     var ticking = false;
 
     function paint() {
         ticking = false;
+        if (!rise) { return; }
         var max = document.documentElement.scrollHeight - window.innerHeight;
         var progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
-
-        if (rise) {
-            rise.classList.toggle('is-shown', window.scrollY > 320);
-            rise.style.setProperty('--p', (progress * 100).toFixed(1));
-        }
-
-        if (spin && !calm.matches) {
-            var box = spin.getBoundingClientRect();
-            if (box.bottom > 0 && box.top < window.innerHeight) {
-                var travel = (window.innerHeight - box.top) / (window.innerHeight + box.height);
-                spin.style.setProperty('--spin', (travel * 120).toFixed(2) + 'deg');
-            }
-        }
+        rise.classList.toggle('is-shown', window.scrollY > 320);
+        rise.style.setProperty('--p', (progress * 100).toFixed(1) + '%');
     }
 
     function queue() {
@@ -256,22 +222,20 @@
         });
     }
 
-    if (foot) {
-        var parts = foot.querySelectorAll('.ft__news, .ft__garland, .ft__base');
+    var parts = document.querySelectorAll('[data-ft] [data-reveal]');
 
-        if ('IntersectionObserver' in window) {
-            var watch = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-in');
-                        watch.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15 });
-            parts.forEach(function (el) { watch.observe(el); });
-        } else {
-            parts.forEach(function (el) { el.classList.add('is-in'); });
-        }
+    if ('IntersectionObserver' in window) {
+        var watch = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-in');
+                    watch.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        parts.forEach(function (el) { watch.observe(el); });
+    } else {
+        parts.forEach(function (el) { el.classList.add('is-in'); });
     }
 }());
 </script>

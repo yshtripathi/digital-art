@@ -5,16 +5,16 @@ return [
     // Dummy fallbacks, used only when the miscs table value is empty
     'company' => [
         'name'    => '[Company Name]',
-        'email'   => ' support@mandala-learning.com',
+        'email'   => 'course@bizacademys.com',
         'address' => '[Company Address]',
     ],
 
     // resources/views/frontend/layouts/head.blade.php
     'head' => [
-        'site'    => 'Mandala Learning',
-        'home'    => ':site — Self-Help E-Learning Materials',
-        'summary' => 'Self-help e-learning materials for mindset, emotions, relationships, focus, confidence, calm and money habits. Choose a level, unlock it with credits and study at your own pace.',
-        'preload' => 'Loading the page',
+        'site'    => 'BizAcademys',
+        'home'    => ':site — Business & Marketing E-Learning Materials',
+        'summary' => 'E-learning materials for marketing, sales, entrepreneurship, communication and online business skills. Choose a level, unlock it with credits and study at your own pace.',
+        'topic'   => 'Business & Marketing Skills',
     ],
 
     // resources/views/frontend/layouts/breadcrumb.blade.php
@@ -80,18 +80,16 @@ return [
         'letter_send'  => 'Subscribe',
         'letter_bad'   => 'Please enter a valid email address.',
         'letter_done'  => 'Thank you for subscribing',
-        'about_text'   => 'Self-help e-learning materials to read at your own pace. Every material is split into levels, so you can begin where you are today and unlock the next step with credits when it feels right.',
-        'details'      => 'Contact details',
-        'col_topics'   => 'Browse by Category',
-        'topics_empty' => 'Categories appear here once e-learning materials are published',
-        'col_company'  => 'Company & Account',
+        'details'      => 'Company Details',
+        'info_name'    => 'Company Name',
+        'info_mail'    => 'Email Address',
+        'info_place'   => 'Company Address',
+        'col_company'  => 'Quick Links',
         'link_all'     => 'All E-Learning Materials',
         'link_about'   => 'About Us',
         'link_contact' => 'Contact Us',
+        'link_credits' => 'Buy Credits',
         'link_account' => 'My Account',
-        'link_logout'  => 'Log Out',
-        'link_login'   => 'Log In',
-        'link_join'    => 'Create Account',
         'col_policies' => 'Policies',
         'link_terms'   => 'Terms & Conditions',
         'link_privacy' => 'Privacy Policy',

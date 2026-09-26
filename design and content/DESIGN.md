@@ -2,10 +2,10 @@
 > Boardroom greenhouse editorial
 
 **Website:** BizAcademys — www.bizacademys.com
-**Subject:** Online e-learning materials for Business Planning & Strategy
+**Subject:** Online e-learning materials for business and marketing skills: digital marketing, sales and negotiation, entrepreneurship and business growth, personal branding and communication, social media and influencer marketing, content creation and copywriting, customer relationships and retention, e-commerce and online selling, marketing analytics and tools, career and freelancing skills
 **Theme:** light
 
-BizAcademys uses a calm, editorial look built for people who study strategy, not just browse it. A pale sage canvas (#eef2e3) replaces sterile SaaS white and keeps long study sessions easy on the eyes. Deep Forest (#043f2e) carries the brand: headings, dark sections and stat cards, suggesting growth, stability and money. A single Strategy Lime accent (#c8f169) marks the one action that matters on each screen. Headlines are set in Fraunces, a free serif, with tight tracking, so pages read like a business journal rather than a dashboard. Body and interface text use Inter. Depth comes from color layers (sage → paper white → forest) instead of shadows. Buttons and inputs use a 4px radius; cards and large surfaces use 16px.
+BizAcademys uses a calm, editorial look built for people who study business and marketing, not just browse it. A pale sage canvas (#eef2e3) replaces sterile SaaS white and keeps long study sessions easy on the eyes. Deep Forest (#043f2e) carries the brand: headings, dark sections and stat cards, suggesting growth, stability and money. A single Strategy Lime accent (#c8f169) marks the one action that matters on each screen. Headlines are set in Fraunces, a free serif, with tight tracking, so pages read like a business journal rather than a dashboard. Body and interface text use Inter. Depth comes from color layers (sage → paper white → forest) instead of shadows. Buttons, inputs and small controls use a 12px radius; cards, panels and large surfaces use 16px.
 
 The mood is confident, warm and intellectual: business education without corporate coldness.
 
@@ -29,18 +29,18 @@ The mood is confident, warm and intellectual: business education without corpora
 
 ### Status
 
-Status colors are for feedback only: quiz answers, form validation, completion states and notices. Never use them for decoration. Always pair them with an icon or a text label, because the success green sits close to the brand greens.
+Status colors are for feedback only: quiz answers, form validation, completion states and notices. Never use them for decoration. Always pair them with an icon or a text label. Success uses a blue-leaning emerald (`#08735a`) so it never matches Forest Mid (`#2a6f2b`) or any other brand green.
 
 | Name | Text / Border | Surface | Token prefix | Use |
 |------|---------------|---------|--------------|-----|
-| Success | `#2a6f2b` | `#e3f0d6` | `--color-success` | Correct answer, lesson completed, payment confirmed |
+| Success | `#08735a` | `#dff2e7` | `--color-success` | Correct answer, lesson completed, payment confirmed |
 | Error | `#b3261e` | `#fbe4e2` | `--color-error` | Wrong answer, form errors, failed payment |
 | Warning | `#8a5a00` | `#fbefd5` | `--color-warning` | Credits expiring, unsaved changes |
 | Info | `#1f5fa8` | `#e2ecf8` | `--color-info` | Tips, notes, neutral notices |
 
 ### Data visualization
 
-Business Planning & Strategy materials rely on charts: market share, SWOT scoring, financial projections, break-even lines. Use these colors in this order for chart series only, never for interface elements.
+Business and marketing materials rely on charts: campaign results, conversion funnels, sales targets, audience growth, market share. Use these colors in this order for chart series only, never for interface elements.
 
 | Order | Name | Value | Token |
 |-------|------|-------|-------|
@@ -62,6 +62,8 @@ Gridlines use Soft Line (`#cfd8c4`); axis labels use Muted Moss (`#4d5a52`).
 | Muted Moss on Pale Sage | 6.4:1 | AA |
 | Ink Black on Strategy Lime | 16.2:1 | AAA |
 | Paper White on Deep Forest | 11.7:1 | AAA |
+| Success on Paper White | 5.7:1 | AA |
+| Success on Success surface | 5.0:1 | AA |
 | Error on Paper White | 6.4:1 | AA |
 | Info on Paper White | 6.3:1 | AA |
 
@@ -131,11 +133,11 @@ Large sizes scale down on phones through `clamp()`.
 
 | Element | Value | Token |
 |---------|-------|-------|
-| Buttons, inputs, small tags | 4px | `--radius-sm` |
+| Buttons, inputs, small tags, header controls, dropdown rows | 12px | `--radius-sm` |
 | Cards, images, large surfaces | 16px | `--radius-lg` |
 | Pill badges, progress bars | 9999px | `--radius-pill` |
 
-Only these three radii exist. Never use 8px, 12px or 20px.
+Only these three radii exist. Never use 4px, 8px or 20px.
 
 ### Layout
 
@@ -168,10 +170,10 @@ Fraunces 400, display or heading-lg size, Deep Forest on sage or paper white. Ne
 Fraunces 400 at 36px, -0.02em tracking. Turns Paper White on Deep Forest sections.
 
 ### Eyebrow label
-Inter 500, 12–14px, uppercase, 0.06em tracking, Deep Forest. Sits 12px above a section heading. Example: "BUSINESS PLANNING".
+Inter 500, 12–14px, uppercase, 0.06em tracking, Deep Forest. Sits 12px above a section heading. Example: "DIGITAL MARKETING".
 
 ### Primary button
-Strategy Lime background, Ink Black text, Inter 500 16px, 12px 20px padding, 4px radius, no border. Hover: Lime Hover. Pressed: Lime Pressed. Disabled: Soft Line background, Muted Moss text, no pointer. Use once per screen, for the main action: "Buy Credits", "Start Learning", "Submit".
+Strategy Lime background, Ink Black text, Inter 500 16px, 12px 20px padding, 12px radius, no border. Hover: Lime Hover. Pressed: Lime Pressed. Disabled: Soft Line background, Muted Moss text, no pointer. Use once per screen, for the main action: "Buy Credits", "Start Learning", "Submit".
 
 ### Secondary button
 Transparent, 1px Deep Forest border, Deep Forest text, same size and radius as the primary. Hover: Pale Sage fill. On Deep Forest sections: Paper White border and text.
@@ -179,8 +181,17 @@ Transparent, 1px Deep Forest border, Deep Forest text, same size and radius as t
 ### Text link
 Deep Forest, underline 1px with 3px offset. Hover: Forest Mid.
 
+### Logo
+The logo image (`assets/images/logo.webp`) sits at the left of the header at 44px tall (34px on small phones).
+
 ### Navigation
-Paper White bar, logo left, links centered or right. Inter 500 16px in Deep Forest; the active link goes to weight 600 with a 2px Strategy Lime underline.
+Sticky single-row header, 72px tall (64px below 1200px). At the top of the page it is a full-width Paper White bar with a Soft Line bottom border. Once the page scrolls it turns into a floating bar: centered, page width (1200px max, 16px side gutters), 60px tall, 24px from the top, with a Soft Line border, 16px radius and a soft forest shadow. Its dropdowns then open 8px below it with all corners rounded. Logo left, links centered (Categories, About Us, Contact Us), account area right. The language control shows the flag of the current language. Links are Inter 500 15px in Deep Forest, never wrapping, with a faint forest tint on hover; the active link goes to weight 600 with a 3px Strategy Lime underline. Categories open a two-column dropdown panel ending in a Deep Forest "see all" bar. The right side holds a language and currency control, then Log In and Create Account for guests, or a Strategy Lime credits control and an avatar menu for members, then a cart button with a lime count badge. Every header control uses the 12px radius; only the count badge is a pill. Below 1200px the links move into a right-side menu sheet.
+
+### Dropdown panel
+Drops from the bottom edge of the header, attached to it: Paper White, 1px Soft Line border, 3px Strategy Lime top border, square top corners and 16px bottom corners, 16–24px padding. Floating panels are the one exception to the no-shadow rule: they carry a soft forest shadow (`0 20px 40px -12px rgba(4, 63, 46, 0.28)`) so they stand out from the page. Section labels are uppercase caption text in Muted Moss. Rows are Inter 500 14px with a Pale Sage hover; selected chips turn Strategy Lime.
+
+### Side sheet
+Menu and cart slide in from the right, up to 420px wide, over a 45% Deep Forest veil. Paper White body, a Soft Line rule under the title row, and a Pale Sage footer holding the actions.
 
 ### Material card
 Paper White, 16px radius, 1px Soft Line border, no shadow. Image on top with 16px top radii, then category eyebrow, Inter 500 title at heading-sm, meta row (duration, level) in Muted Moss body-sm, and the price or credits in Deep Forest. Hover: border turns Deep Forest.
@@ -189,32 +200,51 @@ Paper White, 16px radius, 1px Soft Line border, no shadow. Image on top with 16p
 Pale Sage, 16px radius, card padding, stroke icon in Deep Forest, Inter 500 title, one-line description in Charcoal.
 
 ### Stat card
-Deep Forest background, 16px radius, Paper White figure in Inter 400 at 36px, uppercase Strategy Lime label in caption size above it.
+Deep Forest background, 16px radius, Paper White figure in Fraunces 400 at heading size (36px, 28px mobile, -0.02em tracking, tabular numbers), uppercase Strategy Lime label in Inter 500 caption size above it.
 
 ### Progress bar
 8px tall, pill radius, Soft Line track, Deep Forest fill. The percentage appears as text next to it in body-sm.
 
 ### Form field
-Full width inside a centered form of at most 480px, strictly one field per row. Label above in Inter 500 14px, Deep Forest. Input: Paper White, 1px Soft Line border, 4px radius, 12px 16px padding, Inter 16px. Focus: Deep Forest border plus focus ring. Error: Error border, message below in Error color with an icon.
+Full width inside a centered form of at most 480px, strictly one field per row. Label above in Inter 500 14px, Deep Forest. Input: Paper White, 1px Soft Line border, 12px radius, 12px 16px padding, Inter 16px. Focus: Deep Forest border plus focus ring. Error: Error border, message below in Error color with an icon.
 
 ### Alert
-Status surface color, 4px left border in the matching status color, 16px padding, 4px radius, icon + text. Text stays Deep Forest for readability; only the icon and border take the status color.
+Status surface color, 4px left border in the matching status color, 16px padding, 12px radius, icon + text. Text stays Deep Forest for readability; only the icon and border take the status color.
 
 ### Quiz option
-Paper White, 1px Soft Line border, 4px radius, 16px padding. Selected: Deep Forest border. After submitting: correct turns Success surface and border with a check icon; wrong turns Error surface and border with a cross icon.
+Paper White, 1px Soft Line border, 12px radius, 16px padding. Selected: Deep Forest border. After submitting: correct turns Success surface and border with a check icon; wrong turns Error surface and border with a cross icon.
 
 ### Badge / tag
-Pale Sage or Strategy Lime background, Ink Black text, Inter 500 12px, 2px 10px padding, 4px or pill radius. Examples: "Beginner", "New", "12 lessons".
+Pale Sage or Strategy Lime background, Ink Black text, Inter 500 12px, 2px 10px padding, 12px or pill radius. Examples: "Beginner", "New", "12 lessons".
 
 ### Footer
-Deep Forest background, Paper White text, Strategy Lime for link hover. Copyright line links to the home page.
+Two layers. A Paper White newsletter card (16px radius, Soft Line border, soft forest shadow) sits across the edge between the Pale Sage page and the Deep Forest footer. It holds the eyebrow, a Fraunces heading, a short lead, and an email field with the primary button beside it (stacked on phones). On wide screens a small bar chart grows beside it when it scrolls into view, with a Deep Forest trend line and a lime goal dot. The success message is a Success-surface notice with a check icon. Behind the card, a Strategy Lime sheet of the same size tilts out (about 1.6°) from under its bottom-right corner as the card scrolls into view, and a softly fading Deep Forest dot grid drifts slowly behind its top-left corner.
+
+The Deep Forest footer has 16px top corners and three columns:
+1. The logo on a Paper White tile and company details (name, email, address from the `miscs` table), each with a lime icon on a faint tile
+2. Quick links
+3. Policies
+
+Column labels are uppercase lime caption text. Links are Paper White at 82% opacity, turning Strategy Lime on hover with a short lime dash sliding in. The bottom row holds the copyright line (linked to the home page) and the payment methods image on a Paper White tile. Columns fade up in sequence as they scroll into view.
+
+### Page banner (breadcrumb)
+Every inner page opens with a Deep Forest panel set 16px below the header, page width, 16px radius, at least 280px tall. No photo or video: depth comes from a soft lime glow top right, a Forest Mid glow bottom left and a faint drifting dot grid top left. The breadcrumb trail sits on a translucent glass strip (12px radius), with a home icon on the first link, small chevrons between links and the current page in Strategy Lime. The page title below it is Fraunces heading-lg in Paper White. On the right, a large faint growth chart animates on load: bars rise, a lime trend line draws in, and a lime goal dot pops, then pulses slowly. Pages without a title use a compact version with only the trail and no chart. On phones the chart shrinks behind the text.
+
+### Notification toast
+Stacked at the top right, 12px below the header (400px wide, full width on phones), sliding in from the right. Paper White card, 1px Soft Line border, 16px radius and a soft forest shadow. A 40px status tile (12px radius) holds the icon on the status surface color: a check for success, an exclamation mark for errors. Beside it sit an uppercase caption label in the status color, the message in Inter 15px Deep Forest, and a close button. Success toasts close by themselves after 5 seconds, with a lime timer bar shrinking along the bottom; hovering or focusing pauses it. Error toasts carry a 4px Error left border and stay until closed. Styles live in `public/css/style.css`.
+
+### Cookie banner
+A floating bar fixed 16px above the bottom of the screen, stretched to page width (1200px max, 16px gutters), sliding up shortly after the page loads. Paper White, 1px Soft Line border, 3px Strategy Lime top border, 16px radius and a soft forest shadow. One row: a Deep Forest icon tile with a lime cookie icon, the title (Inter 500 18px) and intro with the policy link, then Customize (text button), Only essentials (secondary) and Accept all (primary). Customize expands a panel inside the bar with one Pale Sage card per cookie category: title, a switch (Deep Forest track and lime knob when on; the essentials switch is locked), description and an expandable cookie list. Save settings sits bottom right. On tablets the actions wrap under the text; on phones everything stacks and the buttons go full width.
+
+### Back-to-top button
+Fixed bottom right, 48px, Deep Forest with a lime arrow, 12px radius. It appears after 320px of scrolling, and a lime bar along its bottom edge shows how far down the page the reader is.
 
 ### Icon
 Stroke-based, 1.5–2px weight, Deep Forest stroke, no fill. Paper White on dark sections.
 
 ## Imagery
 
-Documentary, human photography: founders at whiteboards, teams around a planning table, notebooks with sketched plans, laptops showing charts. Warm, natural light. Never staged stock handshakes, never duotone or color overlays. Images sit inside 16px-radius frames. Diagrams inside materials (SWOT grids, business model canvases, funnels) use the chart palette and Inter labels.
+Documentary, human photography: founders at whiteboards, marketers reviewing campaign dashboards, sales conversations, creators filming or writing content, laptops showing charts. Warm, natural light. Never staged stock handshakes, never duotone or color overlays. Images sit inside 16px-radius frames. Diagrams inside materials (sales funnels, customer journeys, content calendars, SWOT grids) use the chart palette and Inter labels.
 
 ## Do
 
@@ -230,11 +260,11 @@ Documentary, human photography: founders at whiteboards, teams around a planning
 ## Don't
 
 - Don't use Inter for headlines above 36px or Fraunces below 36px
-- Don't add box shadows to cards or buttons
+- Don't add box shadows to cards or buttons (only floating dropdown panels, the scrolled header, the footer newsletter card, the cookie banner and notification toasts carry a shadow)
 - Don't use pure white (#ffffff) as the page background
 - Don't bold Fraunces; keep Inter at 500 or below except navigation
 - Don't use status colors or chart colors for decoration
-- Don't mix radii beyond 4px, 16px and pill
+- Don't mix radii beyond 12px, 16px and pill
 - Don't put white text on Strategy Lime, or black text on Forest Mid
 
 ## Surfaces
@@ -256,4 +286,4 @@ Load from Google Fonts:
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 ```
 
-The full token set is in `variables.css`.
+The full token set lives at the top of `public/css/style.css`, followed by the base and component styles.

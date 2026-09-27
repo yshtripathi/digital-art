@@ -12,9 +12,9 @@
 
 <section class="auth">
     <div class="auth__card">
-        <p class="auth__badge">{{ __('frontend.register.tag') }}</p>
-        <h2 class="auth__title">{{ __('frontend.register.form_title') }}</h2>
-        <p class="auth__lead">{{ __('frontend.register.intro') }}</p>
+        <p class="auth__badge">{{ __('frontend.register.badge') }}</p>
+        <h2 class="auth__title">{{ __('frontend.register.heading') }}</h2>
+        <p class="auth__lead">{{ __('frontend.register.lead') }}</p>
 
         <form name="frmRegister" id="frmRegister" action="{{ route('register.submit') }}" method="post" novalidate>
             @csrf
@@ -94,8 +94,8 @@
             </div>
         </form>
 
-        <p class="auth__divider"><span>{{ __('frontend.register.login_prompt') }}</span></p>
-        <a href="{{ route('login.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.register.login_link') }}</a>
+        <p class="auth__divider"><span>{{ __('frontend.register.have_acct') }}</span></p>
+        <a href="{{ route('login.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.register.go_login') }}</a>
     </div>
 </section>
 

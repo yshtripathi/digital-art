@@ -14,7 +14,7 @@
 
 <section class="inv">
     <div class="inv__wrap">
-    @if($order)
+    @if($order && (int) $order->user_id === (int) auth()->id())
         @php
             $currency = match($order->currency) {
                 'USD' => '$',
@@ -80,7 +80,7 @@
         <div class="inv-body">
             @if(count($items))
                 <section class="inv-card" aria-labelledby="invItems">
-                    <h2 class="inv-card__title" id="invItems">{{ __('frontend.receipt.items_head') }}</h2>
+                    <h2 class="inv-card__title" id="invItems">{{ __('frontend.receipt.lines') }}</h2>
                     <ul class="inv-items">
                         @foreach($items as $item)
                             @php
@@ -113,7 +113,7 @@
             @endif
 
             <section class="inv-card" aria-labelledby="invInfo">
-                <h2 class="inv-card__title" id="invInfo">{{ __('frontend.receipt.info_head') }}</h2>
+                <h2 class="inv-card__title" id="invInfo">{{ __('frontend.receipt.details') }}</h2>
                 <dl class="inv-info">
                     <div>
                         <dt>{{ __('frontend.receipt.f_name') }}</dt>
@@ -156,8 +156,8 @@
     @else
         <div class="acct-blank inv-none">
             <span class="acct-blank__icon" aria-hidden="true"><i class="fas fa-file-invoice"></i></span>
-            <h2 class="inv-none__title">{{ __('frontend.receipt.none_title') }}</h2>
-            <p>{{ __('frontend.receipt.none_text') }}</p>
+            <h2 class="inv-none__title">{{ __('frontend.receipt.lost') }}</h2>
+            <p>{{ __('frontend.receipt.lost_text') }}</p>
             <a href="{{ route('user') }}" class="btn btn--primary">
                 <i class="fas fa-arrow-left" aria-hidden="true"></i>
                 {{ __('frontend.receipt.go_back') }}

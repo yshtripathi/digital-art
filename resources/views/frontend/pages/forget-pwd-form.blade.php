@@ -12,14 +12,14 @@
 
 <section class="auth">
     <div class="auth__card">
-        <p class="auth__badge">{{ __('frontend.forgot.tag') }}</p>
-        <h2 class="auth__title">{{ __('frontend.forgot.form_title') }}</h2>
-        <p class="auth__lead">{{ __('frontend.forgot.intro') }}</p>
+        <p class="auth__badge">{{ __('frontend.forgot.badge') }}</p>
+        <h2 class="auth__title">{{ __('frontend.forgot.heading') }}</h2>
+        <p class="auth__lead">{{ __('frontend.forgot.lead') }}</p>
 
         @if(session('status'))
             <p class="msg msg--ok" role="status">
                 <i class="fas fa-check-circle" aria-hidden="true"></i>
-                <span>{{ __('frontend.forgot.sent_note') }}</span>
+                <span>{{ __('frontend.forgot.sent') }}</span>
             </p>
         @endif
 
@@ -62,8 +62,8 @@
             </div>
         </form>
 
-        <p class="auth__divider"><span>{{ __('frontend.forgot.back_prompt') }}</span></p>
-        <a href="{{ route('login.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.forgot.back_link') }}</a>
+        <p class="auth__divider"><span>{{ __('frontend.forgot.recall') }}</span></p>
+        <a href="{{ route('login.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.forgot.go_back') }}</a>
     </div>
 </section>
 

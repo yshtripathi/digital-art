@@ -2,10 +2,10 @@
 
 @if(isset($category->title) && $category->title)
     @section('title', $category->title)
-    @section('description', __('frontend.catalog.summary'))
+    @section('description', __('frontend.catalog.meta'))
 @else
     @section('title', __('frontend.catalog.page_name'))
-    @section('description', __('frontend.catalog.summary'))
+    @section('description', __('frontend.catalog.meta'))
 @endif
 
 @section('main-content')
@@ -37,7 +37,7 @@
         <aside class="cg-side">
             @if($allCategories->count())
                 <nav class="cg-cats" aria-labelledby="cgCatsTitle">
-                    <p class="cg-cats__title" id="cgCatsTitle">{{ __('frontend.catalog.side_title') }}</p>
+                    <p class="cg-cats__title" id="cgCatsTitle">{{ __('frontend.catalog.areas') }}</p>
                     <ul class="cg-cats__list">
                         <li>
                             <a href="{{ route('product-lists') }}" class="cg-cat {{ !$isCat ? 'is-active' : '' }}" @if(!$isCat) aria-current="page" @endif>
@@ -60,8 +60,8 @@
 
             <div class="cg-promo">
                 <span class="cg-promo__icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
-                <p class="cg-promo__title">{{ __('frontend.catalog.promo_title') }}</p>
-                <p class="cg-promo__text">{{ __('frontend.catalog.promo_text') }}</p>
+                <p class="cg-promo__title">{{ __('frontend.catalog.promo_head') }}</p>
+                <p class="cg-promo__text">{{ __('frontend.catalog.promo_body') }}</p>
                 <a href="{{ route('points.topup') }}" class="btn btn--primary btn--block">
                     <span>{{ __('frontend.catalog.promo_go') }}</span>
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -78,7 +78,7 @@
                     <h2 class="cg-bar__title">{{ $bcTitle }}</h2>
                 </div>
                 @if(!$isCat)
-                    <p class="cg-bar__desc">{{ __('frontend.catalog.intro') }}</p>
+                    <p class="cg-bar__desc">{{ __('frontend.catalog.lead') }}</p>
                 @endif
             </header>
 
@@ -172,8 +172,8 @@
             @else
                 <div class="cg-empty">
                     <span class="cg-empty__icon" aria-hidden="true"><i class="fas fa-box-open"></i></span>
-                    <h2 class="cg-empty__title">{{ __('frontend.catalog.none_title') }}</h2>
-                    <p class="cg-empty__desc">{{ __('frontend.catalog.none_text') }}</p>
+                    <h2 class="cg-empty__title">{{ __('frontend.catalog.empty_head') }}</h2>
+                    <p class="cg-empty__desc">{{ __('frontend.catalog.empty_text') }}</p>
                     <a href="{{ route('product-lists') }}" class="btn btn--primary">{{ __('frontend.catalog.filter_all') }}</a>
                 </div>
             @endif

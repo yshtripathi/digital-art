@@ -1,6 +1,6 @@
 @extends('frontend.layouts.main')
 @section('title', __('frontend.topup.page_name'))
-@section('description', __('frontend.topup.summary'))
+@section('description', __('frontend.topup.meta'))
 
 @section('main-content')
 @include('frontend.layouts.breadcrumb', [
@@ -50,8 +50,8 @@
     <div class="tp__wrap">
 
         <header class="tp-head">
-            <p class="eyebrow">{{ __('frontend.topup.calc_head') }}</p>
-            <p class="tp-head__text">{{ __('frontend.topup.intro') }}</p>
+            <p class="eyebrow">{{ __('frontend.topup.eyebrow') }}</p>
+            <p class="tp-head__text">{{ __('frontend.topup.lead') }}</p>
             <ul class="tp-head__chips">
                 <li><i class="fas fa-exchange-alt" aria-hidden="true"></i> {{ $rateNote }}</li>
                 <li><i class="fas fa-calendar-alt" aria-hidden="true"></i> {{ rtrim(__('frontend.topup.valid_days'), '.。') }}</li>
@@ -59,7 +59,7 @@
         </header>
 
         <section class="tp-ladder" aria-labelledby="tpLadderTitle">
-            <h2 id="tpLadderTitle" class="tp-ladder__title">{{ __('frontend.topup.tiers_heading') }}</h2>
+            <h2 id="tpLadderTitle" class="tp-ladder__title">{{ __('frontend.topup.ladder') }}</h2>
             <ol class="tp-ladder__list">
                 @foreach($tiers as $t)
                     <li class="tp-tier {{ $t['f'] ? 'tp-tier--best' : '' }}" data-mult="{{ $t['big'] }}" style="--rise: {{ round(((float) substr($t['big'], 1)) / 3 * 100) }}%">
@@ -104,12 +104,12 @@
 
                     <p class="tp-notice">
                         <i class="fas fa-info-circle" aria-hidden="true"></i>
-                        <span><strong>{{ __('frontend.topup.fact_title') }}</strong> {{ __('frontend.topup.fact_text') }}</span>
+                        <span><strong>{{ __('frontend.topup.note_head') }}</strong> {{ __('frontend.topup.note') }}</span>
                     </p>
                 </div>
 
                 <aside class="tp-result">
-                    <span class="tp-result__label">{{ __('frontend.topup.res_total') }}</span>
+                    <span class="tp-result__label">{{ __('frontend.topup.you_get') }}</span>
                     <span class="tp-result__total" id="tpTotalWrap" aria-live="polite">
                         <strong id="total_points" class="num">0</strong>
                     </span>
@@ -127,13 +127,13 @@
                     </div>
 
                     <button type="submit" class="btn btn--primary btn--block tp-submit">
-                        <span>{{ __('frontend.topup.send') }}</span>
+                        <span>{{ __('frontend.topup.add') }}</span>
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </button>
 
                     <p class="tp-result__secure">
                         <i class="fas fa-lock" aria-hidden="true"></i>
-                        <span>{{ __('frontend.topup.secure_note') }}</span>
+                        <span>{{ __('frontend.topup.secure') }}</span>
                     </p>
                 </aside>
             </div>

@@ -31,11 +31,11 @@
                 <header class="ct__top">
                     <div>
                         <p class="eyebrow">{{ trans_choice('frontend.coursecart.item_count', $itemCount, ['count' => $itemCount]) }}</p>
-                        <h2 class="ct__heading">{{ __('frontend.coursecart.list_title') }}</h2>
+                        <h2 class="ct__heading">{{ __('frontend.coursecart.picked') }}</h2>
                     </div>
                     <a href="{{ route('product-lists') }}" class="ct__back">
                         <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                        <span>{{ __('frontend.coursecart.browse') }}</span>
+                        <span>{{ __('frontend.coursecart.more') }}</span>
                     </a>
                 </header>
 
@@ -148,13 +148,13 @@
                     @if(!$enough)
                         <p class="ct-wallet__alert" role="status">
                             <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-                            <span>{{ __('frontend.coursecart.short') }}</span>
+                            <span>{{ __('frontend.coursecart.low') }}</span>
                         </p>
                     @endif
                 </div>
 
                 <div class="ct-bar" aria-labelledby="ctBarTitle">
-                    <h2 id="ctBarTitle" class="ct-bar__title">{{ __('frontend.coursecart.sum_title') }}</h2>
+                    <h2 id="ctBarTitle" class="ct-bar__title">{{ __('frontend.coursecart.summary') }}</h2>
                     <dl class="ct-bar__stats">
                         <div class="ct-bar__stat">
                             <dt>{{ __('frontend.coursecart.wallet') }}</dt>
@@ -186,8 +186,8 @@
                         <span></span><span></span><span></span>
                     </div>
                     <span class="ct-empty__icon" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
-                    <h2 class="ct-empty__title">{{ __('frontend.coursecart.none_title') }}</h2>
-                    <p class="ct-empty__desc">{{ __('frontend.coursecart.none_text') }}</p>
+                    <h2 class="ct-empty__title">{{ __('frontend.coursecart.empty_head') }}</h2>
+                    <p class="ct-empty__desc">{{ __('frontend.coursecart.empty_text') }}</p>
                     <p class="ct-empty__balance">
                         <span>{{ __('frontend.coursecart.wallet') }}</span>
                         <strong><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($points) }} {{ __('frontend.coursecart.unit') }}</strong>
@@ -210,8 +210,8 @@
                     <span></span><span></span><span></span>
                 </div>
                 <span class="ct-empty__icon" aria-hidden="true"><i class="fas fa-lock"></i></span>
-                <h2 class="ct-empty__title">{{ __('frontend.coursecart.guest_title') }}</h2>
-                <p class="ct-empty__desc">{{ __('frontend.coursecart.guest_text') }}</p>
+                <h2 class="ct-empty__title">{{ __('frontend.coursecart.guest_head') }}</h2>
+                <p class="ct-empty__desc">{{ __('frontend.coursecart.guest_body') }}</p>
                 <div class="ct-empty__actions">
                     <a href="{{ route('login.form') }}" class="btn btn--primary">
                         <i class="fas fa-sign-in-alt" aria-hidden="true"></i>

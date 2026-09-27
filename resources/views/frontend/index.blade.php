@@ -43,16 +43,16 @@
     $flowPoster = file_exists(public_path('assets/images/home-flow.webp'));
 
     $hoSteps = [
-        ['t' => 'flow1_title', 'd' => 'flow1_text', 'i' => 'fa-compass'],
-        ['t' => 'flow2_title', 'd' => 'flow2_text', 'i' => 'fa-signal'],
-        ['t' => 'flow3_title', 'd' => 'flow3_text', 'i' => 'fa-lock-open'],
-        ['t' => 'flow4_title', 'd' => 'flow4_text', 'i' => 'fa-graduation-cap'],
+        ['t' => 's1', 'd' => 's1_text', 'i' => 'fa-compass'],
+        ['t' => 's2', 'd' => 's2_text', 'i' => 'fa-signal'],
+        ['t' => 's3', 'd' => 's3_text', 'i' => 'fa-lock-open'],
+        ['t' => 's4', 'd' => 's4_text', 'i' => 'fa-graduation-cap'],
     ];
     $hoWhy = [
-        ['t' => 'why1_title', 'd' => 'why1_text', 'i' => 'fa-eye'],
-        ['t' => 'why2_title', 'd' => 'why2_text', 'i' => 'fa-coins'],
-        ['t' => 'why3_title', 'd' => 'why3_text', 'i' => 'fa-clock'],
-        ['t' => 'why4_title', 'd' => 'why4_text', 'i' => 'fa-briefcase'],
+        ['t' => 'p1', 'd' => 'p1_text', 'i' => 'fa-eye'],
+        ['t' => 'p2', 'd' => 'p2_text', 'i' => 'fa-coins'],
+        ['t' => 'p3', 'd' => 'p3_text', 'i' => 'fa-clock'],
+        ['t' => 'p4', 'd' => 'p4_text', 'i' => 'fa-briefcase'],
     ];
     $hoMult = [['x1', 33], ['x2', 67], ['x2.5', 83], ['x3', 100]];
 @endphp
@@ -60,25 +60,25 @@
 <section class="hp-hero">
     <div class="hp-hero__wrap">
         <div class="hp-hero__text">
-            <p class="hp-hero__tag">{{ __('frontend.home.hero_tag') }}</p>
-            <h1 class="hp-hero__title">{{ __('frontend.home.hero_head') }}</h1>
-            <p class="hp-hero__lead">{{ __('frontend.home.hero_body') }}</p>
+            <p class="hp-hero__tag">{{ __('frontend.home.tag') }}</p>
+            <h1 class="hp-hero__title">{{ __('frontend.home.title') }}</h1>
+            <p class="hp-hero__lead">{{ __('frontend.home.lead') }}</p>
             <div class="hp-hero__cta">
                 <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                    <span>{{ __('frontend.home.cta_explore') }}</span>
+                    <span>{{ __('frontend.home.go_browse') }}</span>
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
-                <a href="{{ route('points.topup') }}" class="btn btn--secondary">{{ __('frontend.home.cta_credits') }}</a>
+                <a href="{{ route('points.topup') }}" class="btn btn--secondary">{{ __('frontend.home.go_credits') }}</a>
             </div>
         </div>
 
         <div class="hp-hero__visual">
             @if($heroVideo)
                 <figure class="hp-hero__frame">
-                    <video class="hp-hero__video" autoplay muted loop playsinline preload="metadata" @if($heroPoster) poster="{{ asset('assets/images/home-hero.webp') }}" @endif aria-label="{{ __('frontend.home.hero_video') }}" data-hp-video>
+                    <video class="hp-hero__video" autoplay muted loop playsinline preload="metadata" @if($heroPoster) poster="{{ asset('assets/images/home-hero.webp') }}" @endif aria-label="{{ __('frontend.home.hero_alt') }}" data-hp-video>
                         <source src="{{ asset('assets/videos/home-hero.mp4') }}" type="video/mp4">
                     </video>
-                    <button type="button" class="hp-hero__toggle" aria-label="{{ __('frontend.home.motion_pause') }}" data-pause="{{ __('frontend.home.motion_pause') }}" data-play="{{ __('frontend.home.motion_play') }}" data-hp-toggle>
+                    <button type="button" class="hp-hero__toggle" aria-label="{{ __('frontend.home.pause') }}" data-pause="{{ __('frontend.home.pause') }}" data-play="{{ __('frontend.home.play') }}" data-hp-toggle>
                         <i class="fas fa-pause" aria-hidden="true"></i>
                     </button>
                 </figure>
@@ -101,15 +101,15 @@
             <ul class="hp-hero__stats">
                 <li class="hp-stat hp-stat--a">
                     <strong class="num">{{ number_format($hoMaterials) }}</strong>
-                    <span>{{ __('frontend.home.stat_materials') }}</span>
+                    <span>{{ __('frontend.home.n_materials') }}</span>
                 </li>
                 <li class="hp-stat hp-stat--b">
                     <strong class="num">{{ number_format($hoCategories->count()) }}</strong>
-                    <span>{{ __('frontend.home.stat_categories') }}</span>
+                    <span>{{ __('frontend.home.n_areas') }}</span>
                 </li>
                 <li class="hp-stat hp-stat--c">
                     <strong class="num">{{ number_format($hoLevels) }}</strong>
-                    <span>{{ __('frontend.home.stat_levels') }}</span>
+                    <span>{{ __('frontend.home.n_levels') }}</span>
                 </li>
             </ul>
         </div>
@@ -121,18 +121,18 @@
         <div class="hp-sec__wrap">
             <header class="hp-head">
                 <div>
-                    <p class="eyebrow">{{ __('frontend.home.cats_tag') }}</p>
-                    <h2 id="hpCatsTitle" class="hp-head__title">{{ __('frontend.home.cats_title') }}</h2>
+                    <p class="eyebrow">{{ __('frontend.home.areas_tag') }}</p>
+                    <h2 id="hpCatsTitle" class="hp-head__title">{{ __('frontend.home.areas_title') }}</h2>
                 </div>
-                <p class="hp-head__text">{{ __('frontend.home.cats_text') }}</p>
+                <p class="hp-head__text">{{ __('frontend.home.areas_text') }}</p>
             </header>
 
             <ul class="hp-cats {{ $skillsPhoto ? 'has-photo' : '' }}">
                 @if($skillsPhoto)
                     <li class="hp-cats__photo">
                         <figure class="hp-cats__figure">
-                            <img src="{{ asset('assets/images/home-skills.webp') }}" alt="{{ __('frontend.home.skills_photo') }}" width="1000" height="1429" loading="lazy" decoding="async">
-                            <figcaption class="hp-cats__note">{{ __('frontend.home.skills_note') }}</figcaption>
+                            <img src="{{ asset('assets/images/home-skills.webp') }}" alt="{{ __('frontend.home.areas_photo') }}" width="1000" height="1429" loading="lazy" decoding="async">
+                            <figcaption class="hp-cats__note">{{ __('frontend.home.areas_note') }}</figcaption>
                         </figure>
                     </li>
                 @endif
@@ -141,7 +141,7 @@
                         <a href="{{ route('product-lists', $cat->slug) }}" class="hp-cat">
                             <span class="hp-cat__icon" aria-hidden="true"><i class="fas {{ $hoIcon($cat->title) }}"></i></span>
                             <span class="hp-cat__name">{{ $cat->title }}</span>
-                            <span class="hp-cat__count">{{ trans_choice('frontend.home.cats_count', $cat->products_count, ['count' => $cat->products_count]) }}</span>
+                            <span class="hp-cat__count">{{ trans_choice('frontend.home.areas_count', $cat->products_count, ['count' => $cat->products_count]) }}</span>
                             <i class="fas fa-arrow-right hp-cat__go" aria-hidden="true"></i>
                         </a>
                     </li>
@@ -156,18 +156,18 @@
         <div class="hp-sec__wrap">
             <header class="hp-head">
                 <div>
-                    <p class="eyebrow">{{ __('frontend.home.picks_tag') }}</p>
-                    <h2 id="hpPicksTitle" class="hp-head__title">{{ __('frontend.home.picks_title') }}</h2>
+                    <p class="eyebrow">{{ __('frontend.home.feat_tag') }}</p>
+                    <h2 id="hpPicksTitle" class="hp-head__title">{{ __('frontend.home.feat_title') }}</h2>
                 </div>
                 <div class="hp-head__tools">
                     <a href="{{ route('product-lists') }}" class="hp-head__link">
-                        {{ __('frontend.home.picks_all') }}
+                        {{ __('frontend.home.feat_all') }}
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
-                    <button type="button" class="hp-arrow" aria-label="{{ __('frontend.home.picks_prev') }}" aria-controls="hpPicksTrack" data-slide="-1" disabled>
+                    <button type="button" class="hp-arrow" aria-label="{{ __('frontend.home.feat_prev') }}" aria-controls="hpPicksTrack" data-slide="-1" disabled>
                         <i class="fas fa-arrow-left" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="hp-arrow" aria-label="{{ __('frontend.home.picks_next') }}" aria-controls="hpPicksTrack" data-slide="1">
+                    <button type="button" class="hp-arrow" aria-label="{{ __('frontend.home.feat_next') }}" aria-controls="hpPicksTrack" data-slide="1">
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -197,14 +197,14 @@
                                 <span class="hp-pick__foot">
                                     @if($minPoints)
                                         <span class="hp-pick__price">
-                                            <small>{{ __('frontend.home.price_from') }}</small>
-                                            <strong class="num">{{ number_format($minPoints) }} <em>{{ __('frontend.home.price_unit') }}</em></strong>
+                                            <small>{{ __('frontend.home.from') }}</small>
+                                            <strong class="num">{{ number_format($minPoints) }} <em>{{ __('frontend.home.unit') }}</em></strong>
                                         </span>
                                     @endif
                                     @if($lvCount)
-                                        <span class="hp-pick__levels">{{ trans_choice('frontend.home.level_count', $lvCount, ['count' => $lvCount]) }}</span>
+                                        <span class="hp-pick__levels">{{ trans_choice('frontend.home.levels', $lvCount, ['count' => $lvCount]) }}</span>
                                     @endif
-                                    <span class="vh">{{ __('frontend.home.picks_open') }}</span>
+                                    <span class="vh">{{ __('frontend.home.feat_open') }}</span>
                                 </span>
                             </span>
                         </a>
@@ -222,16 +222,16 @@
 <section class="hp-sec hp-sec--mint" aria-labelledby="hpFlowTitle">
     <div class="hp-sec__wrap">
         <header class="hp-head hp-head--center">
-            <p class="eyebrow">{{ __('frontend.home.flow_tag') }}</p>
-            <h2 id="hpFlowTitle" class="hp-head__title">{{ __('frontend.home.flow_title') }}</h2>
+            <p class="eyebrow">{{ __('frontend.home.steps_tag') }}</p>
+            <h2 id="hpFlowTitle" class="hp-head__title">{{ __('frontend.home.steps_title') }}</h2>
         </header>
 
         @if($flowVideo)
             <figure class="hp-reel">
-                <video class="hp-reel__video" autoplay muted loop playsinline preload="metadata" @if($flowPoster) poster="{{ asset('assets/images/home-flow.webp') }}" @endif aria-label="{{ __('frontend.home.flow_video') }}" data-hp-video>
+                <video class="hp-reel__video" autoplay muted loop playsinline preload="metadata" @if($flowPoster) poster="{{ asset('assets/images/home-flow.webp') }}" @endif aria-label="{{ __('frontend.home.steps_video') }}" data-hp-video>
                     <source src="{{ asset('assets/videos/home-flow.mp4') }}" type="video/mp4">
                 </video>
-                <button type="button" class="hp-hero__toggle" aria-label="{{ __('frontend.home.motion_pause') }}" data-pause="{{ __('frontend.home.motion_pause') }}" data-play="{{ __('frontend.home.motion_play') }}" data-hp-toggle>
+                <button type="button" class="hp-hero__toggle" aria-label="{{ __('frontend.home.pause') }}" data-pause="{{ __('frontend.home.pause') }}" data-play="{{ __('frontend.home.play') }}" data-hp-toggle>
                     <i class="fas fa-pause" aria-hidden="true"></i>
                 </button>
             </figure>
@@ -253,20 +253,20 @@
 <section class="hp-credits" aria-labelledby="hpCreditsTitle">
     <div class="hp-credits__box">
         <div class="hp-credits__text">
-            <p class="eyebrow">{{ __('frontend.home.credits_tag') }}</p>
-            <h2 id="hpCreditsTitle" class="hp-credits__title">{{ __('frontend.home.credits_title') }}</h2>
-            <p class="hp-credits__lead">{{ __('frontend.home.credits_text') }}</p>
+            <p class="eyebrow">{{ __('frontend.home.cred_tag') }}</p>
+            <h2 id="hpCreditsTitle" class="hp-credits__title">{{ __('frontend.home.cred_title') }}</h2>
+            <p class="hp-credits__lead">{{ __('frontend.home.cred_text') }}</p>
             <p class="hp-credits__note">
                 <i class="fas fa-calendar-alt" aria-hidden="true"></i>
                 {{ __('frontend.topup.valid_days') }}
             </p>
             <a href="{{ route('points.topup') }}" class="btn btn--primary">
-                <span>{{ __('frontend.home.credits_go') }}</span>
+                <span>{{ __('frontend.home.cred_go') }}</span>
                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
             </a>
         </div>
 
-        <ol class="hp-mult" aria-label="{{ __('frontend.topup.tiers_heading') }}">
+        <ol class="hp-mult" aria-label="{{ __('frontend.topup.ladder') }}">
             @foreach($hoMult as [$label, $rise])
                 <li class="hp-mult__col {{ $loop->last ? 'is-top' : '' }}" style="--rise: {{ $rise }}%">
                     <span class="hp-mult__bar" aria-hidden="true"></span>
@@ -281,7 +281,7 @@
     <div class="hp-sec__wrap hp-why">
         <div class="hp-why__visual {{ $whyPhoto ? '' : 'hp-why__visual--plain' }}">
             @if($whyPhoto)
-                <img src="{{ asset('assets/images/home-why.webp') }}" alt="{{ __('frontend.home.why_photo') }}" width="1100" height="1650" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/home-why.webp') }}" alt="{{ __('frontend.home.plus_photo') }}" width="1100" height="1650" loading="lazy" decoding="async">
             @else
                 <span class="hp-why__mark" aria-hidden="true">
                     <i class="fas fa-chart-line"></i>
@@ -290,8 +290,8 @@
         </div>
 
         <div class="hp-why__text">
-            <p class="eyebrow">{{ __('frontend.home.why_tag') }}</p>
-            <h2 id="hpWhyTitle" class="hp-head__title">{{ __('frontend.home.why_title') }}</h2>
+            <p class="eyebrow">{{ __('frontend.home.plus_tag') }}</p>
+            <h2 id="hpWhyTitle" class="hp-head__title">{{ __('frontend.home.plus_title') }}</h2>
             <ul class="hp-why__list">
                 @foreach($hoWhy as $w)
                     <li class="hp-why__item">
@@ -311,21 +311,21 @@
     <div class="hp-end__card {{ $startPhoto ? 'has-photo' : '' }}">
         @if($startPhoto)
             <figure class="hp-end__photo">
-                <img src="{{ asset('assets/images/home-start.webp') }}" alt="{{ __('frontend.home.start_photo') }}" width="1600" height="900" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/home-start.webp') }}" alt="{{ __('frontend.home.close_photo') }}" width="1600" height="900" loading="lazy" decoding="async">
             </figure>
         @endif
         <div class="hp-end__body">
-        <h2 id="hpEndTitle" class="hp-end__title">{{ __('frontend.home.end_title') }}</h2>
-        <p class="hp-end__text">{{ __('frontend.home.end_text') }}</p>
+        <h2 id="hpEndTitle" class="hp-end__title">{{ __('frontend.home.close_title') }}</h2>
+        <p class="hp-end__text">{{ __('frontend.home.close_text') }}</p>
         <div class="hp-end__cta">
             <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                <span>{{ __('frontend.home.cta_explore') }}</span>
+                <span>{{ __('frontend.home.go_browse') }}</span>
                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
             </a>
             @guest
-                <a href="{{ route('register.form') }}" class="btn btn--secondary">{{ __('frontend.home.end_join') }}</a>
+                <a href="{{ route('register.form') }}" class="btn btn--secondary">{{ __('frontend.home.close_join') }}</a>
             @else
-                <a href="{{ route('points.topup') }}" class="btn btn--secondary">{{ __('frontend.home.cta_credits') }}</a>
+                <a href="{{ route('points.topup') }}" class="btn btn--secondary">{{ __('frontend.home.go_credits') }}</a>
             @endguest
         </div>
         </div>

@@ -11,24 +11,28 @@
 ])
 
 @php
-    $ctEmail   = $misc['Company Email'] ?? __('frontend.company.email');
-    $ctAddress = $misc['Company Address'] ?? __('frontend.company.address');
-    $ctCompany = $misc['Company Name'] ?? __('frontend.company.name');
+    $ctEmail   = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : null;
+    $ctAddress = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
+    $ctCompany = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
 @endphp
 
 <section class="contact">
     <div class="contact__wrap">
         <aside class="contact__info">
-            <p class="auth__badge">{{ __('frontend.contact.tag') }}</p>
-            <h2 class="auth__title">{{ __('frontend.contact.title_main') }}</h2>
-            <p class="auth__lead">{{ __('frontend.contact.intro') }}</p>
+            <p class="auth__badge">{{ __('frontend.contact.badge') }}</p>
+            <h2 class="auth__title">{{ __('frontend.contact.heading') }}</h2>
+            <p class="auth__lead">{{ __('frontend.contact.lead') }}</p>
 
             <ul class="contact__rows">
                 <li class="contact__row">
                     <span class="contact__icon" aria-hidden="true"><i class="fas fa-envelope"></i></span>
                     <span class="contact__text">
                         <span class="contact__label">{{ __('frontend.contact.row_email') }}</span>
-                        <a href="mailto:{{ $ctEmail }}" class="contact__value">{{ $ctEmail }}</a>
+                        @if($ctEmail)
+                            <a href="mailto:{{ $ctEmail }}" class="contact__value">{{ $ctEmail }}</a>
+                        @else
+                            <span class="contact__value">{{ __('frontend.company.email') }}</span>
+                        @endif
                     </span>
                 </li>
                 <li class="contact__row">
@@ -48,9 +52,9 @@
             </ul>
 
             <div class="contact__reasons">
-                <p class="contact__reasons-title">{{ __('frontend.contact.topics_title') }}</p>
+                <p class="contact__reasons-title">{{ __('frontend.contact.reasons') }}</p>
                 <ul class="contact__reasons-list">
-                    @foreach(__('frontend.contact.topics') as $topic)
+                    @foreach(__('frontend.contact.asks') as $topic)
                         <li>{{ $topic }}</li>
                     @endforeach
                 </ul>

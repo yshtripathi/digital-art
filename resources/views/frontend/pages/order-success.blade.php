@@ -5,7 +5,7 @@
     $transaction_id = $transaction_id ?? null;
     $email_status   = $email_status ?? null;
     $order = $transaction_id ? Order::where('trans_id', $transaction_id)->first() : null;
-    $supportEmail = trim($misc['Company Email'] ?? __('frontend.company.email'));
+    $supportEmail = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : null;
 @endphp
 @section('main-content')
 
@@ -36,13 +36,13 @@
 
         <div class="rs__status">
             <span class="rs__badge" aria-hidden="true"><i class="fas fa-check"></i></span>
-            <h2 class="rs__title">{{ __('frontend.success.head') }}</h2>
-            <p class="rs__msg">{{ __('frontend.success.text') }}</p>
+            <h2 class="rs__title">{{ __('frontend.success.heading') }}</h2>
+            <p class="rs__msg">{{ __('frontend.success.lead') }}</p>
 
             <div class="rs__actions">
                 @if($order)
                     <a href="{{ route('user.order.show', $order->id) }}" class="btn btn--primary btn--block">
-                        <i class="fas fa-eye" aria-hidden="true"></i> {{ __('frontend.success.go_order') }}
+                        <i class="fas fa-eye" aria-hidden="true"></i> {{ __('frontend.success.go_receipt') }}
                     </a>
                 @endif
                 <a href="{{ route('home') }}" class="btn btn--ghost btn--block">
@@ -94,11 +94,11 @@
             @endif
 
             <div class="rs__next">
-                <h3 class="rs__head">{{ __('frontend.success.next_head') }}</h3>
+                <h3 class="rs__head">{{ __('frontend.success.next') }}</h3>
                 <ul class="rs__list">
                     <li><i class="fas fa-clock" aria-hidden="true"></i><span>{{ __('frontend.success.next1') }}</span></li>
                     <li><i class="fas fa-hourglass-half" aria-hidden="true"></i><span>{{ __('frontend.success.next2') }}</span></li>
-                    <li><i class="fas fa-envelope" aria-hidden="true"></i><span>{!! str_replace(':email', '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>', e(__('frontend.success.next3'))) !!}</span></li>
+                    <li><i class="fas fa-envelope" aria-hidden="true"></i><span>{!! str_replace(':email', $supportEmail ? '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>' : e(__('frontend.company.email')), e(__('frontend.success.next3'))) !!}</span></li>
                 </ul>
             </div>
         </div>

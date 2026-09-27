@@ -31,12 +31,12 @@
             <header class="ct__top">
                 <div>
                     <p class="eyebrow">{{ trans_choice('frontend.cart.item_count', count($cartItems), ['count' => count($cartItems)]) }}</p>
-                    <h2 class="ct__heading">{{ __('frontend.cart.list_title') }}</h2>
+                    <h2 class="ct__heading">{{ __('frontend.cart.picked') }}</h2>
                 </div>
                 @if(Helper::totalCartPoints() > 0)
                     <a href="{{ route('product-lists') }}" class="ct__back">
                         <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                        <span>{{ __('frontend.cart.browse') }}</span>
+                        <span>{{ __('frontend.cart.more') }}</span>
                     </a>
                 @endif
             </header>
@@ -96,7 +96,7 @@
             </ul>
 
             <div class="ct-bar" aria-labelledby="ctBarTitle">
-                <h2 id="ctBarTitle" class="ct-bar__title">{{ __('frontend.cart.sum_title') }}</h2>
+                <h2 id="ctBarTitle" class="ct-bar__title">{{ __('frontend.cart.summary') }}</h2>
                 <dl class="ct-bar__stats">
                     <div class="ct-bar__stat">
                         <dt>{{ __('frontend.cart.col_credits') }}</dt>
@@ -122,7 +122,7 @@
             <div class="ct__trust">
                 <p>
                     <i class="fas fa-lock" aria-hidden="true"></i>
-                    <span>{{ __('frontend.cart.secure_note') }}</span>
+                    <span>{{ __('frontend.cart.secure') }}</span>
                 </p>
                 <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.cart.pay_alt') }}" loading="lazy">
             </div>
@@ -132,8 +132,8 @@
                     <span></span><span></span><span></span>
                 </div>
                 <span class="ct-empty__icon" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
-                <h2 class="ct-empty__title">{{ __('frontend.cart.none_title') }}</h2>
-                <p class="ct-empty__desc">{{ __('frontend.cart.none_text') }}</p>
+                <h2 class="ct-empty__title">{{ __('frontend.cart.empty_head') }}</h2>
+                <p class="ct-empty__desc">{{ __('frontend.cart.empty_text') }}</p>
                 <div class="ct-empty__actions">
                     <a href="{{ route('points.topup') }}" class="btn btn--primary">
                         <i class="fas fa-bolt" aria-hidden="true"></i>

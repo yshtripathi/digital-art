@@ -1,7 +1,8 @@
 @php
-    $footCompany = $misc['Company Name'] ?? __('frontend.company.name');
-    $footEmail   = $misc['Company Email'] ?? __('frontend.company.email');
-    $footAddress = $misc['Company Address'] ?? __('frontend.company.address');
+    $footSite    = __('frontend.head.site');
+    $footCompany = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
+    $footMail    = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : null;
+    $footAddress = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
 @endphp
 
 
@@ -10,8 +11,8 @@
         <div class="ft__card" data-reveal>
             <div class="ft__news-in">
                 <p class="eyebrow">{{ __('frontend.footer.letter_tag') }}</p>
-                <h2 class="ft__title" id="signup-title">{{ __('frontend.footer.letter_title') }}</h2>
-                <p class="ft__lead">{{ __('frontend.footer.letter_text') }}</p>
+                <h2 class="ft__title" id="signup-title">{{ __('frontend.footer.news_title') }}</h2>
+                <p class="ft__lead">{{ __('frontend.footer.news_text') }}</p>
 
                 <form class="ft__form" novalidate data-signup>
                     <label class="vh" for="signup-email">{{ __('frontend.footer.letter_field') }}</label>
@@ -45,7 +46,7 @@
         <div class="ft__grid-wrap">
             <div class="ft__brand" data-reveal>
                 <a href="{{ route('home') }}" class="ft__logo">
-                    <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footCompany }}" width="1146" height="240" loading="lazy">
+                    <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footSite }}" width="1146" height="240" loading="lazy">
                 </a>
 
                 <div class="ft__facts">
@@ -62,7 +63,7 @@
                             <i class="fas fa-envelope" aria-hidden="true"></i>
                             <div>
                                 <dt>{{ __('frontend.footer.info_mail') }}</dt>
-                                <dd><a href="mailto:{{ trim($footEmail) }}">{{ trim($footEmail) }}</a></dd>
+                                <dd>@if($footMail)<a href="mailto:{{ $footMail }}">{{ $footMail }}</a>@else{{ __('frontend.company.email') }}@endif</dd>
                             </div>
                         </div>
                         <div class="ft__fact">
@@ -77,7 +78,7 @@
             </div>
 
             <nav class="ft__col" aria-labelledby="ft-quick" data-reveal>
-                <h2 class="ft__label" id="ft-quick">{{ __('frontend.footer.col_company') }}</h2>
+                <h2 class="ft__label" id="ft-quick">{{ __('frontend.footer.col_links') }}</h2>
                 <ul class="ft__links">
                     <li><a href="{{ route('product-lists') }}" class="ft__link">{{ __('frontend.footer.link_all') }}</a></li>
                     <li><a href="{{ route('points.topup') }}" class="ft__link">{{ __('frontend.footer.link_credits') }}</a></li>

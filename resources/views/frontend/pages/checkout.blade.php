@@ -19,8 +19,6 @@
     $coSymbol   = Helper::getCurrencySymbol(session('currency'));
     $coDecimals = session('currency') == 'JPY' ? 0 : 2;
     $coLines    = Helper::getAllProductFromCart();
-    $coUserId   = auth()->check() ? auth()->id() : session('guest');
-    $coPoints   = App\Models\Cart::where('user_id', $coUserId)->where('order_id', null)->pluck('points')->first();
 @endphp
 
 <section class="co">
@@ -515,7 +513,7 @@
                             </div>
 
                             <div class="co__facts">
-                                <p class="co__facts-title">{{ __('frontend.checkout.facts_head') }}</p>
+                                <p class="co__facts-title">{{ __('frontend.checkout.before') }}</p>
                                 <ul class="co__facts-list">
                                     <li><i class="fas fa-clock" aria-hidden="true"></i><span>{{ __('frontend.checkout.fact_delivery') }}</span></li>
                                     <li><i class="fas fa-bolt" aria-hidden="true"></i><span>{{ __('frontend.checkout.fact_validity') }}</span></li>
@@ -560,7 +558,7 @@
                                 <li class="sum__row">
                                     <span class="sum__item">
                                         <span class="sum__icon"><i class="fas fa-bolt" aria-hidden="true"></i></span>
-                                        <span>{{ number_format($coPoints, 0, '.', ',') }} {{ __('frontend.checkout.unit_credits') }}</span>
+                                        <span>{{ number_format($coLine->points, 0, '.', ',') }} {{ __('frontend.checkout.unit_credits') }}</span>
                                     </span>
                                     <span class="sum__price">{{ $coSymbol }}{{ number_format($coLine['price'], $coDecimals, '.', ',') }}</span>
                                 </li>
@@ -580,11 +578,11 @@
                         {{ __('frontend.checkout.go_pay') }}
                     </button>
 
-                    <a href="{{ route('home') }}" class="btn btn--ghost btn--block">{{ __('frontend.checkout.go_back') }}</a>
+                    <a href="{{ route('home') }}" class="btn btn--ghost btn--block">{{ __('frontend.checkout.more') }}</a>
 
                     <p class="sum__trust">
                         <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                        <span>{{ __('frontend.checkout.secure_note') }}</span>
+                        <span>{{ __('frontend.checkout.secure') }}</span>
                     </p>
 
                     <img class="sum__methods" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.checkout.pay_alt') }}" loading="lazy">

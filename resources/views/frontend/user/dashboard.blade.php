@@ -13,7 +13,8 @@
 @php
     $u = Auth::user();
     $purchasedCount = isset($purchasedOrders) ? count($purchasedOrders) : 0;
-    $redeemedCount = isset($redeemedOrders) ? count($redeemedOrders) : 0;
+    $unlockedItems = collect($redeemedOrders ?? [])->flatMap(fn ($order) => $order->cart_info->map(fn ($item) => ['order' => $order, 'item' => $item]));
+    $redeemedCount = $unlockedItems->count();
     $levelLabel = function ($level) {
         $key = 'frontend.dashboard.level_names.' . strtolower((string) $level->skill_level);
         return Lang::has($key) ? __($key) : ucfirst((string) $level->skill_level);
@@ -31,7 +32,7 @@
         <aside class="acct-side">
             <div class="acct-me">
                 <span class="acct-me__avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr($u->name ?? 'U', 0, 1)) }}</span>
-                <p class="acct-me__hello">{{ __('frontend.dashboard.hello') }}</p>
+                <p class="acct-me__hello">{{ __('frontend.dashboard.greet') }}</p>
                 <p class="acct-me__name">{{ $u->name }}</p>
                 <p class="acct-me__email">{{ $u->email }}</p>
                 <span class="acct-me__since">
@@ -91,7 +92,7 @@
             </ul>
 
             <div class="acct-panel" id="panel-purchased" role="tabpanel" data-panel="purchased">
-                <h2 class="acct-panel__title">{{ __('frontend.dashboard.orders_title') }}</h2>
+                <h2 class="acct-panel__title">{{ __('frontend.dashboard.buys') }}</h2>
 
                 @if($purchasedCount > 0)
                     <ul class="acct-orders">
@@ -115,10 +116,11 @@
                                 </div>
                                 <div class="acct-order__state">
                                     <span class="vh">{{ __('frontend.dashboard.th_status') }}:</span>
-                                    @if($order->payment_status === 'Completed')
+                                    @php $payState = strtolower(trim((string) $order->payment_status)); @endphp
+                                    @if(in_array($payState, ['completed', 'paid', 'success']))
                                         <span class="pill pill--ok"><i class="fas fa-check" aria-hidden="true"></i> {{ $statusLabel('Completed') }}</span>
-                                    @elseif($order->payment_status === 'Failed')
-                                        <span class="pill pill--err"><i class="fas fa-times" aria-hidden="true"></i> {{ $statusLabel('Failed') }}</span>
+                                    @elseif(in_array($payState, ['failed', 'payment failed']))
+                                        <span class="pill pill--err"><i class="fas fa-times" aria-hidden="true"></i> {{ $statusLabel($payState) }}</span>
                                     @else
                                         <span class="pill pill--wait"><i class="fas fa-clock" aria-hidden="true"></i> {{ $statusLabel('Pending') }}</span>
                                     @endif
@@ -133,7 +135,7 @@
                 @else
                     <div class="acct-blank">
                         <span class="acct-blank__icon" aria-hidden="true"><i class="fas fa-receipt"></i></span>
-                        <p>{{ __('frontend.dashboard.orders_none') }}</p>
+                        <p>{{ __('frontend.dashboard.buys_none') }}</p>
                         <a href="{{ route('points.topup') }}" class="btn btn--primary">
                             <i class="fas fa-plus" aria-hidden="true"></i>
                             {{ __('frontend.dashboard.go_buy') }}
@@ -143,13 +145,14 @@
             </div>
 
             <div class="acct-panel" id="panel-redeemed" role="tabpanel" data-panel="redeemed" hidden>
-                <h2 class="acct-panel__title">{{ __('frontend.dashboard.library_title') }}</h2>
+                <h2 class="acct-panel__title">{{ __('frontend.dashboard.lib') }}</h2>
 
                 @if($redeemedCount > 0)
                     <ul class="acct-lib">
-                        @foreach($redeemedOrders as $order)
+                        @foreach($unlockedItems as $unlocked)
                             @php
-                                $cartItem = $order->cart_info->first();
+                                $order = $unlocked['order'];
+                                $cartItem = $unlocked['item'];
                                 $level = null;
                                 if($cartItem) {
                                     $level = \App\Models\ProductLevel::where('course_id', $cartItem->product_id)
@@ -179,7 +182,7 @@
                                         @if($level)
                                             <span class="acct-mat__chip"><i class="fas fa-signal" aria-hidden="true"></i> {{ $levelLabel($level) }}</span>
                                         @endif
-                                        <span class="acct-mat__chip"><i class="fas fa-coins" aria-hidden="true"></i> <span class="num">{{ number_format($order->cart_info->sum('points')) }}</span></span>
+                                        <span class="acct-mat__chip"><i class="fas fa-coins" aria-hidden="true"></i> <span class="num">{{ number_format($cartItem->points) }}</span></span>
                                     </div>
 
                                     <h3 class="acct-mat__title">{{ $product ? $product->title : __('frontend.dashboard.gone') }}</h3>
@@ -202,7 +205,7 @@
                 @else
                     <div class="acct-blank">
                         <span class="acct-blank__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
-                        <p>{{ __('frontend.dashboard.library_none') }}</p>
+                        <p>{{ __('frontend.dashboard.lib_none') }}</p>
                         <a href="{{ route('product-lists') }}" class="btn btn--primary">
                             <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                             {{ __('frontend.dashboard.go_browse') }}
@@ -212,7 +215,7 @@
             </div>
 
             <div class="acct-panel" id="panel-password" role="tabpanel" data-panel="password" hidden>
-                <h2 class="acct-panel__title">{{ __('frontend.dashboard.pw_title') }}</h2>
+                <h2 class="acct-panel__title">{{ __('frontend.dashboard.pw_head') }}</h2>
 
                 <div class="acct-pwd">
                     <form action="{{ route('change.password') }}" method="POST" id="pwdForm" class="acct-pwd__form" novalidate>
@@ -264,11 +267,11 @@
 
                     <aside class="acct-tips">
                         <span class="acct-tips__icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
-                        <h3 class="acct-tips__title">{{ __('frontend.dashboard.tips_head') }}</h3>
+                        <h3 class="acct-tips__title">{{ __('frontend.dashboard.tips') }}</h3>
                         <ul class="acct-tips__list">
                             <li>{{ __('frontend.dashboard.tip_length') }}</li>
-                            <li>{{ __('frontend.dashboard.tip_mix') }}</li>
-                            <li>{{ __('frontend.dashboard.tip_unique') }}</li>
+                            <li>{{ __('frontend.dashboard.tip2') }}</li>
+                            <li>{{ __('frontend.dashboard.tip3') }}</li>
                         </ul>
                     </aside>
                 </div>

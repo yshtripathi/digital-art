@@ -10,19 +10,19 @@
     ]
 ])
 
-@php $supportEmail = trim($misc['Company Email'] ?? __('frontend.company.email')); @endphp
+@php $supportEmail = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : null; @endphp
 
 <section class="rs rs--failed">
     <div class="rs__wrap">
 
         <div class="rs__status">
             <span class="rs__badge" aria-hidden="true"><i class="fas fa-times"></i></span>
-            <h2 class="rs__title">{{ __('frontend.failed.head') }}</h2>
-            <p class="rs__msg">{{ __('frontend.failed.text') }}</p>
+            <h2 class="rs__title">{{ __('frontend.failed.heading') }}</h2>
+            <p class="rs__msg">{{ __('frontend.failed.lead') }}</p>
 
             <div class="rs__actions">
                 <a href="{{ route('points.topup') }}" class="btn btn--primary btn--block">
-                    <i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.failed.go_retry') }}
+                    <i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.failed.retry') }}
                 </a>
                 <a href="{{ route('home') }}" class="btn btn--ghost btn--block">
                     <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.failed.go_home') }}
@@ -31,20 +31,20 @@
         </div>
 
         <div class="rs__panel">
-            <h3 class="rs__head">{{ __('frontend.failed.tips_head') }}</h3>
+            <h3 class="rs__head">{{ __('frontend.failed.fixes') }}</h3>
 
             <ol class="rs__steps">
-                <li class="rs__step"><span class="rs__num">1</span><span>{{ __('frontend.failed.tip1') }}</span></li>
-                <li class="rs__step"><span class="rs__num">2</span><span>{{ __('frontend.failed.tip2') }}</span></li>
-                <li class="rs__step"><span class="rs__num">3</span><span>{{ __('frontend.failed.tip3') }}</span></li>
+                <li class="rs__step"><span class="rs__num">1</span><span>{{ __('frontend.failed.fix1') }}</span></li>
+                <li class="rs__step"><span class="rs__num">2</span><span>{{ __('frontend.failed.fix2') }}</span></li>
+                <li class="rs__step"><span class="rs__num">3</span><span>{{ __('frontend.failed.fix3') }}</span></li>
             </ol>
 
             <div class="rs__assist">
                 <span class="rs__assist-icon" aria-hidden="true"><i class="fas fa-headset"></i></span>
                 <div>
-                    <h4 class="rs__assist-title">{{ __('frontend.failed.help_head') }}</h4>
+                    <h4 class="rs__assist-title">{{ __('frontend.failed.help') }}</h4>
                     <p class="rs__assist-text">
-                        {!! str_replace(':email', '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>', e(__('frontend.failed.help_text'))) !!}
+                        {!! str_replace(':email', $supportEmail ? '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>' : e(__('frontend.company.email')), e(__('frontend.failed.reach'))) !!}
                     </p>
                 </div>
             </div>

@@ -12,9 +12,9 @@
 
 <section class="auth">
     <div class="auth__card">
-        <p class="auth__badge">{{ __('frontend.login.tag') }}</p>
-        <h2 class="auth__title">{{ __('frontend.login.form_title') }}</h2>
-        <p class="auth__lead">{{ __('frontend.login.intro') }}</p>
+        <p class="auth__badge">{{ __('frontend.login.badge') }}</p>
+        <h2 class="auth__title">{{ __('frontend.login.heading') }}</h2>
+        <p class="auth__lead">{{ __('frontend.login.lead') }}</p>
 
         @if(session('loginerror'))
             <p class="msg msg--error" role="alert">
@@ -71,8 +71,8 @@
             </div>
         </form>
 
-        <p class="auth__divider"><span>{{ __('frontend.login.join_prompt') }}</span></p>
-        <a href="{{ route('register.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.login.join_link') }}</a>
+        <p class="auth__divider"><span>{{ __('frontend.login.new_here') }}</span></p>
+        <a href="{{ route('register.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.login.go_join') }}</a>
     </div>
 </section>
 

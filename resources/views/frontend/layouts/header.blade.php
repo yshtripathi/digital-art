@@ -42,7 +42,7 @@
                                 @endforeach
                             </ul>
                         @else
-                            <p class="cats__none">{{ __('frontend.header.topics_empty') }}</p>
+                            <p class="cats__none">{{ __('frontend.header.cats_wait') }}</p>
                         @endif
                         <a class="cats__all" href="{{ route('product-lists') }}">
                             {{ __('frontend.header.topics_all') }}
@@ -99,7 +99,7 @@
             @endguest
 
             @auth
-                <a href="{{ route('points.topup') }}" class="hd__credits is-desktop" aria-label="{{ number_format($balance) }} {{ __('frontend.header.unit_credits') }}. {{ __('frontend.header.wallet_hint') }}">
+                <a href="{{ route('points.topup') }}" class="hd__credits is-desktop" aria-label="{{ number_format($balance) }} {{ __('frontend.header.unit_credits') }}. {{ __('frontend.header.wallet_tip') }}">
                     <i class="fas fa-coins" aria-hidden="true"></i>
                     <span class="num">{{ number_format($balance) }}</span>
                     <span class="hd__unit" aria-hidden="true">{{ __('frontend.header.unit_credits') }}</span>
@@ -197,7 +197,7 @@
                             @forelse($navCategories as $cat)
                                 <li><a href="{{ route('product-lists', $cat->slug) }}">{{ $cat->title }}</a></li>
                             @empty
-                                <li><p class="menu__none">{{ __('frontend.header.topics_empty') }}</p></li>
+                                <li><p class="menu__none">{{ __('frontend.header.cats_wait') }}</p></li>
                             @endforelse
                         </ul>
                     </details>
@@ -312,7 +312,7 @@
         @else
             <div class="bag__empty">
                 <span class="bag__icon" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
-                <p class="bag__empty-text">{{ __('frontend.header.cart_blank') }}</p>
+                <p class="bag__empty-text">{{ __('frontend.header.bag_empty') }}</p>
                 <a href="{{ route('product-lists') }}" class="btn btn--primary">
                     {{ __('frontend.header.cart_browse') }}
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -363,7 +363,7 @@
             @elseif($hasCourses && !$hasCredits)
                 <a href="{{ route('coursecart') }}" class="btn btn--primary btn--block">{{ __('frontend.header.cart_full') }}</a>
             @endif
-            <button type="button" class="bag__continue" data-sheet-close>{{ __('frontend.header.cart_back') }}</button>
+            <button type="button" class="bag__continue" data-sheet-close>{{ __('frontend.header.bag_back') }}</button>
         </div>
     @endif
 </aside>

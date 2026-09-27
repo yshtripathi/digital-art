@@ -90,14 +90,21 @@
 
                 @if($hasLevels)
                     <a href="#cdLevels" class="btn btn--primary cd-info__cta">
-                        <span>{{ __('frontend.course.levels_title') }}</span>
+                        <span>{{ __('frontend.course.pick') }}</span>
                         <i class="fas fa-arrow-down" aria-hidden="true"></i>
                     </a>
 
                     <p class="cd-note">
                         <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                        <span>{{ __('frontend.course.wallet_note') }}</span>
+                        <span>{{ __('frontend.course.spend') }}</span>
                     </p>
+
+                    @auth
+                        <p class="cd-note">
+                            <i class="fas fa-coins" aria-hidden="true"></i>
+                            <span>{{ __('frontend.course.wallet') }}: <strong class="num">{{ number_format(auth()->user()->points_balance ?? 0) }}</strong> {{ __('frontend.course.price_unit') }}</span>
+                        </p>
+                    @endauth
                 @endif
             </div>
         </div>
@@ -105,9 +112,9 @@
         @if($hasLevels)
             <section id="cdLevels" class="cd-levels" aria-labelledby="cdLevelsTitle">
                 <header class="cd-levels__head">
-                    <p class="eyebrow">{{ __('frontend.course.levels_note') }}</p>
-                    <h2 id="cdLevelsTitle" class="cd-levels__title">{{ __('frontend.course.levels_title') }}</h2>
-                    <p class="cd-levels__hint">{{ __('frontend.course.pick_hint') }}</p>
+                    <p class="eyebrow">{{ __('frontend.course.each') }}</p>
+                    <h2 id="cdLevelsTitle" class="cd-levels__title">{{ __('frontend.course.pick') }}</h2>
+                    <p class="cd-levels__hint">{{ __('frontend.course.hint') }}</p>
                 </header>
 
                 <div class="cd-picker" role="tablist" aria-labelledby="cdLevelsTitle" data-picker>
@@ -136,21 +143,21 @@
                                 @if($level->learn_info)
                                     <li class="cd-point">
                                         <span class="cd-point__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
-                                        <h4 class="cd-point__label">{{ __('frontend.course.point_learn') }}</h4>
+                                        <h4 class="cd-point__label">{{ __('frontend.course.covers') }}</h4>
                                         <p class="cd-point__desc">{{ $level->learn_info }}</p>
                                     </li>
                                 @endif
                                 @if($level->purpose)
                                     <li class="cd-point">
                                         <span class="cd-point__icon" aria-hidden="true"><i class="fas fa-bullseye"></i></span>
-                                        <h4 class="cd-point__label">{{ __('frontend.course.point_for') }}</h4>
+                                        <h4 class="cd-point__label">{{ __('frontend.course.suits') }}</h4>
                                         <p class="cd-point__desc">{{ $level->purpose }}</p>
                                     </li>
                                 @endif
                                 @if($level->outcome)
                                     <li class="cd-point">
                                         <span class="cd-point__icon" aria-hidden="true"><i class="fas fa-award"></i></span>
-                                        <h4 class="cd-point__label">{{ __('frontend.course.point_after') }}</h4>
+                                        <h4 class="cd-point__label">{{ __('frontend.course.apply') }}</h4>
                                         <p class="cd-point__desc">{{ $level->outcome }}</p>
                                     </li>
                                 @endif
@@ -173,7 +180,7 @@
                                 <input type="hidden" name="price_hk" value="{{ $level->price_hk }}">
                                 <input type="hidden" name="level_id" value="{{ $level->id }}">
                                 <button type="submit" class="btn btn--primary btn--block cd-form__submit">
-                                    <span>{{ __('frontend.course.add_cart') }}</span>
+                                    <span>{{ __('frontend.course.add') }}</span>
                                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                 </button>
                             </form>
@@ -185,7 +192,7 @@
 
         @if($product_detail->description || $product_detail->summary)
             <section class="cd-about" aria-labelledby="cdAboutTitle">
-                <h2 id="cdAboutTitle" class="cd-about__title">{{ __('frontend.course.about_title') }}</h2>
+                <h2 id="cdAboutTitle" class="cd-about__title">{{ __('frontend.course.overview') }}</h2>
                 <div class="cd-prose">
                     @if($product_detail->description)
                         {!! nl2br(e($product_detail->description)) !!}

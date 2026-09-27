@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('description', __('frontend.home.summary'))
+@section('description', __('frontend.home.meta'))
 
 @section('main-content')
 @php
@@ -24,16 +24,16 @@
     }
 
     $hoSteps = [
-        ['t' => 's1', 'd' => 's1_text', 'i' => 'fa-compass'],
-        ['t' => 's2', 'd' => 's2_text', 'i' => 'fa-signal'],
-        ['t' => 's3', 'd' => 's3_text', 'i' => 'fa-lock-open'],
-        ['t' => 's4', 'd' => 's4_text', 'i' => 'fa-graduation-cap'],
+        ['t' => 'how1', 'd' => 'how1_text', 'i' => 'fa-compass'],
+        ['t' => 'how2', 'd' => 'how2_text', 'i' => 'fa-signal'],
+        ['t' => 'how3', 'd' => 'how3_text', 'i' => 'fa-lock-open'],
+        ['t' => 'how4', 'd' => 'how4_text', 'i' => 'fa-graduation-cap'],
     ];
     $hoWhy = [
-        ['t' => 'p1', 'd' => 'p1_text', 'i' => 'fa-eye'],
-        ['t' => 'p2', 'd' => 'p2_text', 'i' => 'fa-coins'],
-        ['t' => 'p3', 'd' => 'p3_text', 'i' => 'fa-clock'],
-        ['t' => 'p4', 'd' => 'p4_text', 'i' => 'fa-comment-dots'],
+        ['t' => 'why1', 'd' => 'why1_text', 'i' => 'fa-eye'],
+        ['t' => 'why2', 'd' => 'why2_text', 'i' => 'fa-coins'],
+        ['t' => 'why3', 'd' => 'why3_text', 'i' => 'fa-clock'],
+        ['t' => 'why4', 'd' => 'why4_text', 'i' => 'fa-comment-dots'],
     ];
 @endphp
 
@@ -49,35 +49,35 @@
         <div class="hx__text">
             <span class="hx__tag">
                 <span class="hx__dot" aria-hidden="true"></span>
-                {{ __('frontend.home.tag') }}
+                {{ __('frontend.home.hero_tag') }}
             </span>
-            <h1 id="hxTitle" class="hx__title">{{ __('frontend.home.title') }}</h1>
-            <p class="hx__lead">{{ __('frontend.home.lead') }}</p>
+            <h1 id="hxTitle" class="hx__title">{{ __('frontend.home.hero_title') }}</h1>
+            <p class="hx__lead">{{ __('frontend.home.hero_lead') }}</p>
             <div class="hx__cta">
                 <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                    <span>{{ __('frontend.home.go_browse') }}</span>
+                    <span>{{ __('frontend.home.hero_go') }}</span>
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
-                <a href="{{ route('points.topup') }}" class="btn btn--ghost hx__ghost">{{ __('frontend.home.go_credits') }}</a>
+                <a href="{{ route('points.topup') }}" class="btn btn--ghost hx__ghost">{{ __('frontend.home.hero_buy') }}</a>
             </div>
             <p class="hx__safe">
                 <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                {{ __('frontend.home.safe') }}
+                {{ __('frontend.home.hero_note') }}
             </p>
         </div>
 
         <ul class="hx__stats">
             <li class="hx-stat">
                 <strong class="num">{{ number_format($hoMaterials) }}</strong>
-                <span>{{ __('frontend.home.n_materials') }}</span>
+                <span>{{ __('frontend.home.stat_mat') }}</span>
             </li>
             <li class="hx-stat">
                 <strong class="num">{{ number_format($hoCategories->count()) }}</strong>
-                <span>{{ __('frontend.home.n_areas') }}</span>
+                <span>{{ __('frontend.home.stat_cat') }}</span>
             </li>
             <li class="hx-stat">
                 <strong class="num">{{ number_format($hoLevels) }}</strong>
-                <span>{{ __('frontend.home.n_levels') }}</span>
+                <span>{{ __('frontend.home.stat_lvl') }}</span>
             </li>
         </ul>
     </div>
@@ -102,17 +102,17 @@
         <div class="hb__wrap">
             <header class="hb__head">
                 <div>
-                    <span class="eyebrow">{{ __('frontend.home.feat_tag') }}</span>
-                    <h2 id="hbTitle" class="hb__title">{{ __('frontend.home.feat_title') }}</h2>
+                    <span class="eyebrow">{{ __('frontend.home.pick_tag') }}</span>
+                    <h2 id="hbTitle" class="hb__title">{{ __('frontend.home.pick_title') }}</h2>
                 </div>
                 <a href="{{ route('product-lists') }}" class="auth__back hb__all">
-                    {{ __('frontend.home.feat_all') }}
+                    {{ __('frontend.home.pick_all') }}
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </header>
 
             <div class="hk" data-deck>
-                <ul class="hk__stage" aria-roledescription="carousel" aria-label="{{ __('frontend.home.feat_title') }}">
+                <ul class="hk__stage" aria-roledescription="carousel" aria-label="{{ __('frontend.home.pick_title') }}">
                     @foreach($hoCourses as $course)
                         @php
                             $pimg = explode(',', $course->photo)[0];
@@ -152,7 +152,7 @@
                                             </span>
                                         @endif
                                         <span class="cg-card__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
-                                        <span class="vh">{{ __('frontend.home.feat_open') }}</span>
+                                        <span class="vh">{{ __('frontend.home.pick_open') }}</span>
                                     </span>
                                 </span>
                             </a>
@@ -161,7 +161,7 @@
                 </ul>
 
                 <div class="hk__controls">
-                    <button type="button" class="hk__arrow" aria-label="{{ __('frontend.home.feat_prev') }}" data-deck-prev>
+                    <button type="button" class="hk__arrow" aria-label="{{ __('frontend.home.pick_prev') }}" data-deck-prev>
                         <i class="fas fa-arrow-left" aria-hidden="true"></i>
                     </button>
                     <div class="hk__dots">
@@ -170,7 +170,7 @@
                         @endforeach
                     </div>
                     <span class="hk__count num" aria-live="polite" data-deck-count>01 / {{ str_pad($hoCourses->count(), 2, '0', STR_PAD_LEFT) }}</span>
-                    <button type="button" class="hk__arrow" aria-label="{{ __('frontend.home.feat_next') }}" data-deck-next>
+                    <button type="button" class="hk__arrow" aria-label="{{ __('frontend.home.pick_next') }}" data-deck-next>
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -183,9 +183,9 @@
     <img class="hs__candles" src="{{ asset('assets/images/home-candles.webp') }}" alt="" width="1800" height="692" loading="lazy" decoding="async">
     <div class="hs__wrap">
         <header class="hs__head">
-            <span class="eyebrow">{{ __('frontend.home.steps_tag') }}</span>
-            <h2 id="hsTitle" class="hs__title">{{ __('frontend.home.steps_title') }}</h2>
-            <p class="hs__text">{{ __('frontend.home.steps_text') }}</p>
+            <span class="eyebrow">{{ __('frontend.home.how_tag') }}</span>
+            <h2 id="hsTitle" class="hs__title">{{ __('frontend.home.how_title') }}</h2>
+            <p class="hs__text">{{ __('frontend.home.how_text') }}</p>
         </header>
 
         <ol class="hs-stairs">
@@ -206,19 +206,19 @@
 <section class="hc" aria-labelledby="hcTitle">
     <div class="hc__wrap">
         <figure class="hc__visual">
-            <img src="{{ asset('assets/images/home-credits.webp') }}" alt="{{ __('frontend.home.cred_img') }}" width="900" height="1317" loading="lazy" decoding="async">
+            <img src="{{ asset('assets/images/home-credits.webp') }}" alt="{{ __('frontend.home.wal_img') }}" width="900" height="1317" loading="lazy" decoding="async">
         </figure>
 
         <div class="hc__body">
-            <span class="eyebrow">{{ __('frontend.home.cred_tag') }}</span>
-            <h2 id="hcTitle" class="hc__title">{{ __('frontend.home.cred_title') }}</h2>
-            <p class="hc__text">{{ __('frontend.home.cred_text') }}</p>
+            <span class="eyebrow">{{ __('frontend.home.wal_tag') }}</span>
+            <h2 id="hcTitle" class="hc__title">{{ __('frontend.home.wal_title') }}</h2>
+            <p class="hc__text">{{ __('frontend.home.wal_text') }}</p>
 
             <div class="hc-card">
                 <div class="hc-card__top">
                     <span class="hc-card__label">
                         <i class="fas fa-receipt" aria-hidden="true"></i>
-                        {{ __('frontend.home.cred_card') }}
+                        {{ __('frontend.home.wal_card') }}
                     </span>
                     <span class="hc-card__valid">
                         <i class="fas fa-calendar-alt" aria-hidden="true"></i>
@@ -247,7 +247,7 @@
             </div>
 
             <a href="{{ route('points.topup') }}" class="btn btn--primary">
-                <span>{{ __('frontend.home.cred_go') }}</span>
+                <span>{{ __('frontend.home.wal_go') }}</span>
                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
             </a>
         </div>
@@ -257,16 +257,16 @@
 <section class="hy" aria-labelledby="hyTitle">
     <div class="hy__wrap">
         <figure class="hy__photo">
-            <img src="{{ asset('assets/images/home-why.webp') }}" alt="{{ __('frontend.home.plus_photo') }}" width="1400" height="933" loading="lazy" decoding="async">
+            <img src="{{ asset('assets/images/home-why.webp') }}" alt="{{ __('frontend.home.why_img') }}" width="1400" height="933" loading="lazy" decoding="async">
             <figcaption class="hy__chip">
                 <i class="fas fa-eye" aria-hidden="true"></i>
-                {{ __('frontend.home.p1') }}
+                {{ __('frontend.home.why1') }}
             </figcaption>
         </figure>
 
         <div class="hy__body">
-            <span class="eyebrow">{{ __('frontend.home.plus_tag') }}</span>
-            <h2 id="hyTitle" class="hy__title">{{ __('frontend.home.plus_title') }}</h2>
+            <span class="eyebrow">{{ __('frontend.home.why_tag') }}</span>
+            <h2 id="hyTitle" class="hy__title">{{ __('frontend.home.why_title') }}</h2>
             <ul class="hy-grid">
                 @foreach($hoWhy as $w)
                     <li class="hy-card" style="--i: {{ $loop->index }}">
@@ -286,23 +286,23 @@
 <section class="he" aria-labelledby="heTitle">
     <div class="he__band">
         <div class="he__body">
-            <span class="eyebrow">{{ __('frontend.home.close_tag') }}</span>
-            <h2 id="heTitle" class="he__title">{{ __('frontend.home.close_title') }}</h2>
-            <p class="he__text">{{ __('frontend.home.close_text') }}</p>
+            <span class="eyebrow">{{ __('frontend.home.end_tag') }}</span>
+            <h2 id="heTitle" class="he__title">{{ __('frontend.home.end_title') }}</h2>
+            <p class="he__text">{{ __('frontend.home.end_text') }}</p>
             <div class="he__cta">
                 <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                    <span>{{ __('frontend.home.go_browse') }}</span>
+                    <span>{{ __('frontend.home.hero_go') }}</span>
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
                 @guest
-                    <a href="{{ route('register.form') }}" class="btn btn--ghost">{{ __('frontend.home.close_join') }}</a>
+                    <a href="{{ route('register.form') }}" class="btn btn--ghost">{{ __('frontend.home.end_join') }}</a>
                 @else
-                    <a href="{{ route('points.topup') }}" class="btn btn--ghost">{{ __('frontend.home.go_credits') }}</a>
+                    <a href="{{ route('points.topup') }}" class="btn btn--ghost">{{ __('frontend.home.hero_buy') }}</a>
                 @endguest
             </div>
         </div>
         <figure class="he__photo">
-            <img src="{{ asset('assets/images/home-cta.webp') }}" alt="{{ __('frontend.home.close_photo') }}" width="1920" height="1280" loading="lazy" decoding="async">
+            <img src="{{ asset('assets/images/home-cta.webp') }}" alt="{{ __('frontend.home.end_img') }}" width="1920" height="1280" loading="lazy" decoding="async">
         </figure>
     </div>
 </section>

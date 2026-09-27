@@ -49,15 +49,12 @@
                     <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footSite }}" width="890" height="240" loading="lazy">
                 </a>
                 <p class="ft__about">{{ __('frontend.footer.about') }}</p>
-                <span class="ft__topic">
-                    <span class="ft__dot" aria-hidden="true"></span>
-                    {{ __('frontend.head.topic') }}
-                </span>
             </div>
 
             <nav class="ft__col" aria-labelledby="ft-quick" data-reveal>
                 <h2 class="ft__label" id="ft-quick">{{ __('frontend.footer.col_links') }}</h2>
                 <ul class="ft__links">
+                    <li><a href="{{ route('product-lists') }}" class="ft__link">{{ __('frontend.footer.link_all') }}</a></li>
                     <li><a href="{{ route('points.topup') }}" class="ft__link">{{ __('frontend.footer.link_credits') }}</a></li>
                     <li><a href="{{ route('about-us') }}" class="ft__link">{{ __('frontend.footer.link_about') }}</a></li>
                     <li><a href="{{ route('contact') }}" class="ft__link">{{ __('frontend.footer.link_contact') }}</a></li>
@@ -92,7 +89,13 @@
                     <span class="ft__well" aria-hidden="true"><i class="fas fa-envelope"></i></span>
                     <div>
                         <dt>{{ __('frontend.footer.info_mail') }}</dt>
-                        <dd><a href="mailto:{{ $footMail }}">{{ $footMail }}</a></dd>
+                        <dd>
+                            @if(filled($misc['Company Email'] ?? null))
+                                <a href="mailto:{{ $footMail }}">{{ $footMail }}</a>
+                            @else
+                                {{ $footMail }}
+                            @endif
+                        </dd>
                     </div>
                 </div>
                 <div class="ft__fact">

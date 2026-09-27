@@ -5,7 +5,7 @@
     $transaction_id = $transaction_id ?? null;
     $email_status   = $email_status ?? null;
     $order = $transaction_id ? Order::where('trans_id', $transaction_id)->first() : null;
-    $supportEmail = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : null;
+    $supportEmail = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
 @endphp
 @section('main-content')
 
@@ -98,7 +98,7 @@
                 <ul class="rs__list">
                     <li><i class="fas fa-clock" aria-hidden="true"></i><span>{{ __('frontend.success.next1') }}</span></li>
                     <li><i class="fas fa-hourglass-half" aria-hidden="true"></i><span>{{ __('frontend.success.next2') }}</span></li>
-                    <li><i class="fas fa-envelope" aria-hidden="true"></i><span>{!! str_replace(':email', $supportEmail ? '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>' : e(__('frontend.company.email')), e(__('frontend.success.next3'))) !!}</span></li>
+                    <li><i class="fas fa-envelope" aria-hidden="true"></i><span>{!! str_replace(':email', '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>', e(__('frontend.success.next3'))) !!}</span></li>
                 </ul>
             </div>
         </div>

@@ -5,7 +5,7 @@ return [
     // Dummy fallbacks, used only when the miscs table value is empty
     'company' => [
         'name'    => '[Company Name]',
-        'email'   => '[Company Email]',
+        'email'   => 'course@bizacademys.com',
         'address' => '[Company Address]',
     ],
 
@@ -307,9 +307,7 @@ return [
         'r_status'    => 'お支払い状況',
         'state_names' => [
             'completed' => '完了',
-            'pending'   => '保留中',
             'failed'    => '失敗',
-            'success'   => '完了',
             'paid'      => '完了',
         ],
         'r_invoice'   => '請求書をダウンロード（PDF）',
@@ -598,7 +596,6 @@ return [
         'fmt_date'     => 'Y年n月j日 H:i',
         'state_names'  => [
             'completed'      => '完了',
-            'pending'        => '保留中',
             'failed'         => '失敗',
             'payment failed' => 'お支払い失敗',
             'new'            => '新規',

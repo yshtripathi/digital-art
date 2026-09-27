@@ -5,7 +5,7 @@ return [
     // Dummy fallbacks, used only when the miscs table value is empty
     'company' => [
         'name'    => '[Company Name]',
-        'email'   => '[Company Email]',
+        'email'   => 'course@bizacademys.com',
         'address' => '[Company Address]',
     ],
 
@@ -307,9 +307,7 @@ return [
         'r_status'    => 'Payment status',
         'state_names' => [
             'completed' => 'Completed',
-            'pending'   => 'Pending',
             'failed'    => 'Failed',
-            'success'   => 'Completed',
             'paid'      => 'Completed',
         ],
         'r_invoice'   => 'Download Invoice (PDF)',
@@ -598,7 +596,6 @@ return [
         'fmt_date'     => 'd M Y, g:i a',
         'state_names'  => [
             'completed'      => 'Completed',
-            'pending'        => 'Pending',
             'failed'         => 'Failed',
             'payment failed' => 'Payment failed',
             'new'            => 'New',

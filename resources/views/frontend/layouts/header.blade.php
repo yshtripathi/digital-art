@@ -341,7 +341,7 @@
         <div class="sheet__foot bag__foot">
             <dl class="bag__sum">
                 <div class="bag__row">
-                    <dt>{{ __('frontend.header.cart_sum') }}</dt>
+                    <dt>{{ __('frontend.header.cart_sum') }}:</dt>
                     @if($hasCredits && !$hasCourses)
                         <dd class="bag__total num">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</dd>
                     @else
@@ -351,7 +351,7 @@
 
                 @if($hasCourses && Auth::check())
                     <div class="bag__row bag__row--muted">
-                        <dt>{{ __('frontend.header.cart_wallet') }}</dt>
+                        <dt>{{ __('frontend.header.cart_wallet') }}:</dt>
                         <dd><span class="num">{{ number_format($balance) }}</span> {{ __('frontend.header.unit_credits') }}</dd>
                     </div>
                 @endif

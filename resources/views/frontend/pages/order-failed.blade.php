@@ -10,7 +10,7 @@
     ]
 ])
 
-@php $supportEmail = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : null; @endphp
+@php $supportEmail = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email'); @endphp
 
 <section class="rs rs--failed">
     <div class="rs__wrap">
@@ -44,7 +44,7 @@
                 <div>
                     <h4 class="rs__assist-title">{{ __('frontend.failed.help') }}</h4>
                     <p class="rs__assist-text">
-                        {!! str_replace(':email', $supportEmail ? '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>' : e(__('frontend.company.email')), e(__('frontend.failed.reach'))) !!}
+                        {!! str_replace(':email', '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>', e(__('frontend.failed.reach'))) !!}
                     </p>
                 </div>
             </div>

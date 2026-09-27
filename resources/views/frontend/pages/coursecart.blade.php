@@ -157,11 +157,11 @@
                     <h2 id="ctBarTitle" class="ct-bar__title">{{ __('frontend.coursecart.summary') }}</h2>
                     <dl class="ct-bar__stats">
                         <div class="ct-bar__stat">
-                            <dt>{{ __('frontend.coursecart.wallet') }}</dt>
+                            <dt>{{ __('frontend.coursecart.wallet') }}:</dt>
                             <dd><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($points) }}</dd>
                         </div>
                         <div class="ct-bar__stat ct-bar__stat--total">
-                            <dt>{{ __('frontend.coursecart.need') }}</dt>
+                            <dt>{{ __('frontend.coursecart.need') }}:</dt>
                             <dd>{{ number_format($total_points) }} <small>{{ __('frontend.coursecart.unit') }}</small></dd>
                         </div>
                     </dl>

@@ -1,7 +1,7 @@
 @php
     $footSite    = __('frontend.head.site');
     $footCompany = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
-    $footMail    = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : null;
+    $footMail    = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
     $footAddress = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
 @endphp
 
@@ -63,7 +63,7 @@
                             <i class="fas fa-envelope" aria-hidden="true"></i>
                             <div>
                                 <dt>{{ __('frontend.footer.info_mail') }}</dt>
-                                <dd>@if($footMail)<a href="mailto:{{ $footMail }}">{{ $footMail }}</a>@else{{ __('frontend.company.email') }}@endif</dd>
+                                <dd><a href="mailto:{{ $footMail }}">{{ $footMail }}</a></dd>
                             </div>
                         </div>
                         <div class="ft__fact">

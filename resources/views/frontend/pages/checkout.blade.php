@@ -567,7 +567,7 @@
                     @endif
 
                     <div class="sum__total">
-                        <span>{{ __('frontend.checkout.sum_total') }}</span>
+                        <span>{{ __('frontend.checkout.sum_total') }}:</span>
                         <strong>{{ $coSymbol }}{{ number_format($coTotal, $coDecimals, '.', ',') }}</strong>
                     </div>
                 </div>

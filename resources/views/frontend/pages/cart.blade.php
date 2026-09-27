@@ -99,17 +99,17 @@
                 <h2 id="ctBarTitle" class="ct-bar__title">{{ __('frontend.cart.summary') }}</h2>
                 <dl class="ct-bar__stats">
                     <div class="ct-bar__stat">
-                        <dt>{{ __('frontend.cart.col_credits') }}</dt>
+                        <dt>{{ __('frontend.cart.col_credits') }}:</dt>
                         <dd><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($totalCredits) }}</dd>
                     </div>
                     @if($discount > 0)
                         <div class="ct-bar__stat">
-                            <dt>{{ __('frontend.cart.sum_discount') }}</dt>
+                            <dt>{{ __('frontend.cart.sum_discount') }}:</dt>
                             <dd>&minus; {{ $sym }}{{ number_format($discount, $dec) }}</dd>
                         </div>
                     @endif
                     <div class="ct-bar__stat ct-bar__stat--total">
-                        <dt>{{ __('frontend.cart.sum_total') }}</dt>
+                        <dt>{{ __('frontend.cart.sum_total') }}:</dt>
                         <dd>{{ $sym }}{{ number_format($total_amount, $dec) }}</dd>
                     </div>
                 </dl>

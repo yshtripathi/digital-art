@@ -11,7 +11,7 @@
 ])
 
 @php
-    $ctEmail   = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : null;
+    $ctEmail   = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
     $ctAddress = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
     $ctCompany = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
 @endphp
@@ -28,11 +28,7 @@
                     <span class="contact__icon" aria-hidden="true"><i class="fas fa-envelope"></i></span>
                     <span class="contact__text">
                         <span class="contact__label">{{ __('frontend.contact.row_email') }}</span>
-                        @if($ctEmail)
-                            <a href="mailto:{{ $ctEmail }}" class="contact__value">{{ $ctEmail }}</a>
-                        @else
-                            <span class="contact__value">{{ __('frontend.company.email') }}</span>
-                        @endif
+                        <a href="mailto:{{ $ctEmail }}" class="contact__value">{{ $ctEmail }}</a>
                     </span>
                 </li>
                 <li class="contact__row">

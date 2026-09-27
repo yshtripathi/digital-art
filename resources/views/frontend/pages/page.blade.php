@@ -3,10 +3,10 @@
 @php
     $pageTitle = $page_data->page_title ?? '';
     $pageSlug  = $page_data->page_slug ?? '';
-    $pgEmail   = filled($misc['Company Email'] ?? null) ? e(trim($misc['Company Email'])) : null;
+    $pgEmail   = e(filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email'));
     $rawDesc   = strtr($page_data->page_desc ?? '', [
         ':company'      => e(filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name')),
-        ':email'        => $pgEmail ? '<a href="mailto:' . $pgEmail . '">' . $pgEmail . '</a>' : e(__('frontend.company.email')),
+        ':email'        => '<a href="mailto:' . $pgEmail . '">' . $pgEmail . '</a>',
         ':address'      => e(filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address')),
         ':delivery_url' => route('pages', 'delivery-policy'),
         ':refund_url'   => route('pages', 'refund-policy'),

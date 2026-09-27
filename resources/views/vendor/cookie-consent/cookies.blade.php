@@ -1,10 +1,7 @@
 <aside id="ck-consent" class="ck" role="region" aria-labelledby="ck-consent-title">
     <div class="ck__bar">
         <div class="ck__head">
-            <span class="ck__icon" aria-hidden="true">
-                <span class="ck__ring"></span>
-                <i class="fas fa-cookie-bite"></i>
-            </span>
+            <span class="ck__icon" aria-hidden="true"><i class="fas fa-cookie-bite"></i></span>
             <h2 class="ck__title" id="ck-consent-title">@lang('cookieConsent::cookies.title')</h2>
         </div>
 

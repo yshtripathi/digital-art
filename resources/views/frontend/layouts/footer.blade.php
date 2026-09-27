@@ -3,81 +3,42 @@
     $footCompany = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
     $footMail    = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
     $footAddress = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
-    $footJa      = session('app_locale') == 'ja' || app()->getLocale() == 'ja';
 @endphp
 
 <footer class="ft" data-ft>
-    <div class="ft__tape" aria-hidden="true">
-        <div class="ft__track">
-            @foreach([1, 2] as $copy)
-                @foreach(__('frontend.head.terms') as $term)
-                    <span class="pre__term {{ $loop->odd ? 'is-up' : 'is-down' }}">{{ $term }}</span>
-                @endforeach
-            @endforeach
-        </div>
-    </div>
-
-    <div class="ft__wrap">
-        <section class="ft__news" aria-labelledby="signup-title" data-reveal>
-            <div class="ft__news-copy">
-                <span class="eyebrow">{{ __('frontend.footer.letter_tag') }}</span>
-                <h2 class="ft__title" id="signup-title">{{ __('frontend.footer.news_title') }}</h2>
-                <p class="ft__lead">{{ __('frontend.footer.news_text') }}</p>
-            </div>
-
-            <div class="ft__news-act">
-                <form class="ft__form" novalidate data-signup>
-                    <label class="vh" for="signup-email">{{ __('frontend.footer.letter_field') }}</label>
-                    <i class="fas fa-envelope ft__form-icon" aria-hidden="true"></i>
-                    <input type="email" name="email" id="signup-email" class="ft__input" placeholder="{{ __('frontend.footer.letter_ph') }}" autocomplete="email" required>
-                    <button type="submit" class="btn btn--primary ft__send">
-                        {{ __('frontend.footer.letter_send') }}
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </button>
-                </form>
-
-                <p class="ft__ok" role="status" hidden data-signup-ok>
-                    <i class="fas fa-check-circle" aria-hidden="true"></i>
-                    <span>{{ __('frontend.footer.letter_done') }}</span>
-                </p>
-            </div>
-        </section>
-
-        <div class="ft__main">
-            <div class="ft__brand" data-reveal>
-                <a href="{{ route('home') }}" class="ft__logo">
-                    <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footSite }}" width="890" height="240" loading="lazy">
-                </a>
-                <p class="ft__about">{{ __('frontend.footer.about') }}</p>
-            </div>
-
-            <nav class="ft__col" aria-labelledby="ft-quick" data-reveal>
-                <h2 class="ft__label" id="ft-quick">{{ __('frontend.footer.col_links') }}</h2>
-                <ul class="ft__links">
-                    <li><a href="{{ route('product-lists') }}" class="ft__link">{{ __('frontend.footer.link_all') }}</a></li>
-                    <li><a href="{{ route('points.topup') }}" class="ft__link">{{ __('frontend.footer.link_credits') }}</a></li>
-                    <li><a href="{{ route('about-us') }}" class="ft__link">{{ __('frontend.footer.link_about') }}</a></li>
-                    <li><a href="{{ route('contact') }}" class="ft__link">{{ __('frontend.footer.link_contact') }}</a></li>
-                    @auth
-                        <li><a href="{{ route('user') }}" class="ft__link">{{ __('frontend.footer.link_account') }}</a></li>
-                    @endauth
-                </ul>
-            </nav>
-
-            <nav class="ft__col" aria-labelledby="ft-policies" data-reveal>
-                <h2 class="ft__label" id="ft-policies">{{ __('frontend.footer.col_policies') }}</h2>
-                <ul class="ft__links">
-                    <li><a href="{{ route('pages','terms-conditions') }}" class="ft__link">{{ __('frontend.footer.link_terms') }}</a></li>
-                    <li><a href="{{ route('pages','privacy-policy') }}" class="ft__link">{{ __('frontend.footer.link_privacy') }}</a></li>
-                    <li><a href="{{ route('pages','refund-policy') }}" class="ft__link">{{ __('frontend.footer.link_refund') }}</a></li>
-                    <li><a href="{{ route('pages','delivery-policy') }}" class="ft__link">{{ __('frontend.footer.link_access') }}</a></li>
-                </ul>
-            </nav>
+    <section class="ft__news" aria-labelledby="signup-title" data-reveal>
+        <div class="ft__news-copy">
+            <span class="ft__tag">
+                <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
+                {{ __('frontend.footer.letter_tag') }}
+            </span>
+            <h2 class="ft__title" id="signup-title">{{ __('frontend.footer.news_title') }}</h2>
+            <p class="ft__lead">{{ __('frontend.footer.news_text') }}</p>
         </div>
 
-        <section class="ft__company" aria-labelledby="ft-details" data-reveal>
+        <div class="ft__news-act">
+            <form class="ft__form" novalidate data-signup>
+                <label class="vh" for="signup-email">{{ __('frontend.footer.letter_field') }}</label>
+                <input type="email" name="email" id="signup-email" class="ft__input" placeholder="{{ __('frontend.footer.letter_ph') }}" autocomplete="email" required>
+                <button type="submit" class="btn btn--primary ft__send">{{ __('frontend.footer.letter_send') }}</button>
+            </form>
+
+            <p class="ft__ok" role="status" hidden data-signup-ok>
+                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                <span>{{ __('frontend.footer.letter_done') }}</span>
+            </p>
+        </div>
+    </section>
+
+    <div class="ft__main">
+        <div class="ft__brand" data-reveal>
+            <a href="{{ route('home') }}" class="ft__logo">
+                <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footSite }}" width="890" height="240" loading="lazy">
+            </a>
+            <p class="ft__about">{{ __('frontend.footer.about') }}</p>
+
             <h2 class="vh" id="ft-details">{{ __('frontend.footer.details') }}</h2>
-            <dl class="ft__facts">
+            <dl class="ft__facts" aria-labelledby="ft-details">
                 <div class="ft__fact">
                     <span class="ft__well" aria-hidden="true"><i class="fas fa-building"></i></span>
                     <div>
@@ -106,37 +67,43 @@
                     </div>
                 </div>
             </dl>
-        </section>
+        </div>
 
-        <aside class="ft__risk" aria-labelledby="ft-risk" data-reveal>
-            <i class="fas fa-exclamation-triangle ft__risk-icon" aria-hidden="true"></i>
-            <p>
-                <strong id="ft-risk">{{ __('frontend.footer.risk_title') }}</strong>
-                {{ __('frontend.footer.risk') }}
-            </p>
-        </aside>
+        <nav class="ft__col" aria-labelledby="ft-quick" data-reveal>
+            <h2 class="ft__label" id="ft-quick">{{ __('frontend.footer.col_links') }}</h2>
+            <ul class="ft__links">
+                <li><a href="{{ route('product-lists') }}" class="ft__link">{{ __('frontend.footer.link_all') }}</a></li>
+                <li><a href="{{ route('points.topup') }}" class="ft__link">{{ __('frontend.footer.link_credits') }}</a></li>
+                <li><a href="{{ route('about-us') }}" class="ft__link">{{ __('frontend.footer.link_about') }}</a></li>
+                <li><a href="{{ route('contact') }}" class="ft__link">{{ __('frontend.footer.link_contact') }}</a></li>
+                @auth
+                    <li><a href="{{ route('user') }}" class="ft__link">{{ __('frontend.footer.link_account') }}</a></li>
+                @endauth
+            </ul>
+        </nav>
+
+        <nav class="ft__col" aria-labelledby="ft-policies" data-reveal>
+            <h2 class="ft__label" id="ft-policies">{{ __('frontend.footer.col_policies') }}</h2>
+            <ul class="ft__links">
+                <li><a href="{{ route('pages','terms-conditions') }}" class="ft__link">{{ __('frontend.footer.link_terms') }}</a></li>
+                <li><a href="{{ route('pages','privacy-policy') }}" class="ft__link">{{ __('frontend.footer.link_privacy') }}</a></li>
+                <li><a href="{{ route('pages','refund-policy') }}" class="ft__link">{{ __('frontend.footer.link_refund') }}</a></li>
+                <li><a href="{{ route('pages','delivery-policy') }}" class="ft__link">{{ __('frontend.footer.link_access') }}</a></li>
+            </ul>
+        </nav>
     </div>
 
     <div class="ft__end">
-        <div class="ft__end-in">
-            <p class="ft__copy">
-                &copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $footCompany }}</a>. {{ __('frontend.footer.copyright') }}
-            </p>
-            <div class="ft__langs" aria-label="{{ __('frontend.header.pref_language') }}">
-                <a class="ft__lang {{ !$footJa ? 'is-active' : '' }}" href="{{ route('change.language', 'en') }}" @if(!$footJa) aria-current="true" @endif>EN</a>
-                <a class="ft__lang {{ $footJa ? 'is-active' : '' }}" href="{{ route('change.language', 'ja') }}" @if($footJa) aria-current="true" @endif>JP</a>
-            </div>
-            <span class="ft__pay">
-                <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.pay_alt') }}" loading="lazy">
-            </span>
-        </div>
+        <p class="ft__copy">
+            &copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $footCompany }}</a>. {{ __('frontend.footer.copyright') }}
+        </p>
+        <img class="ft__pay" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.pay_alt') }}" loading="lazy">
     </div>
 </footer>
 
 </div>
 
 <button type="button" class="totop" aria-label="{{ __('frontend.footer.scroll_top') }}" data-totop>
-    <span class="totop__ring" aria-hidden="true"></span>
     <i class="fas fa-arrow-up" aria-hidden="true"></i>
 </button>
 

@@ -12,68 +12,83 @@
     ]
 ])
 
+@php
+    $auGlyphs = [['₿', 8, 18], ['Ξ', 22, 78], ['₮', 46, 10], ['◎', 58, 88], ['Ł', 84, 72], ['Ð', 92, 26], ['₳', 36, 52], ['Ξ', 70, 40]];
+    $auPath = [
+        ['fa-th-large', 'path1'],
+        ['fa-book-open', 'path2'],
+        ['fa-layer-group', 'path3'],
+        ['fa-coins', 'path4'],
+    ];
+@endphp
+
 <section class="au" aria-labelledby="auTitle">
-    <div class="au__grid">
-        <div class="au-copy">
-            <span class="eyebrow">{{ __('frontend.about.tag') }}</span>
-            <h2 id="auTitle" class="au-copy__title">{{ __('frontend.about.heading') }}</h2>
-            <p class="au-copy__lead">{{ __('frontend.about.intro1') }}</p>
-            <p class="au-copy__text">{{ __('frontend.about.intro2') }}</p>
+    <div class="au__box">
+        <span class="au__grid" aria-hidden="true"></span>
+        <span class="au__glow" aria-hidden="true"></span>
+        <span class="au__dust" aria-hidden="true">
+            @foreach($auGlyphs as $g)
+                <span style="--x: {{ $g[1] }}%; --y: {{ $g[2] }}%; --d: {{ $loop->index * -1.7 }}s">{{ $g[0] }}</span>
+            @endforeach
+        </span>
 
-            <ul class="au-points">
-                <li>
-                    <span class="au-points__icon" aria-hidden="true"><i class="fas fa-search"></i></span>
-                    <span>{{ __('frontend.about.hl1') }}</span>
-                </li>
-                <li>
-                    <span class="au-points__icon" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
-                    <span>{{ __('frontend.about.hl2') }}</span>
-                </li>
-                <li>
-                    <span class="au-points__icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
-                    <span>{{ __('frontend.about.hl3') }}</span>
-                </li>
-            </ul>
+        <div class="au__top">
+            <div class="au-copy">
+                <span class="au-copy__tag"><i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.about.tag') }}</span>
+                <h2 id="auTitle" class="au-copy__title">{{ __('frontend.about.heading') }}</h2>
+                <p class="au-copy__lead">{{ __('frontend.about.intro1') }}</p>
+                <p class="au-copy__text">{{ __('frontend.about.intro2') }}</p>
 
-            <div class="au-flow">
-                <p class="au-flow__title">{{ __('frontend.about.path_title') }}</p>
-                <ol class="au-flow__steps">
-                    @foreach(range(1, 4) as $n)
-                        <li class="au-step" style="--i: {{ $n - 1 }}">
-                            <span class="au-step__num num" aria-hidden="true">{{ str_pad($n, 2, '0', STR_PAD_LEFT) }}</span>
-                            <span class="au-step__body">
-                                <strong class="au-step__name">{{ __('frontend.about.path' . $n) }}</strong>
-                                <span class="au-step__text">{{ __('frontend.about.path' . $n . '_text') }}</span>
-                            </span>
-                        </li>
-                    @endforeach
-                </ol>
+                <ul class="au-chips">
+                    <li><i class="fas fa-search" aria-hidden="true"></i> {{ __('frontend.about.hl1') }}</li>
+                    <li><i class="fas fa-layer-group" aria-hidden="true"></i> {{ __('frontend.about.hl2') }}</li>
+                    <li><i class="fas fa-coins" aria-hidden="true"></i> {{ __('frontend.about.hl3') }}</li>
+                </ul>
+
+                <div class="au-copy__acts">
+                    <a href="{{ route('product-lists') }}" class="btn btn--primary">
+                        <span>{{ __('frontend.about.cta_browse') }}</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <a href="{{ route('contact') }}" class="btn btn--ghost">{{ __('frontend.about.cta_contact') }}</a>
+                </div>
+
+                <p class="au-copy__note">
+                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                    {{ __('frontend.footer.risk_title') }}
+                </p>
             </div>
 
-            <div class="au-copy__acts">
-                <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                    <span>{{ __('frontend.about.cta_browse') }}</span>
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-                <a href="{{ route('contact') }}" class="btn btn--ghost">{{ __('frontend.about.cta_contact') }}</a>
+            <div class="au-orb" aria-hidden="true">
+                <span class="au-orb__pulse"></span>
+                <span class="au-orb__pulse au-orb__pulse--late"></span>
+                <span class="au-orb__ring au-orb__ring--outer">
+                    <span class="au-orb__sat" style="--x: 50%; --y: 0%">Ξ</span>
+                    <span class="au-orb__sat" style="--x: 93.3%; --y: 75%">₮</span>
+                    <span class="au-orb__sat" style="--x: 6.7%; --y: 75%">◎</span>
+                </span>
+                <span class="au-orb__ring au-orb__ring--inner">
+                    <span class="au-orb__sat au-orb__sat--sm" style="--x: 93.3%; --y: 25%">Ł</span>
+                    <span class="au-orb__sat au-orb__sat--sm" style="--x: 6.7%; --y: 75%">Ð</span>
+                </span>
+                <span class="au-orb__core">₿</span>
             </div>
         </div>
 
-        <div class="au-visual">
-            <figure class="au-shot au-shot--tall">
-                <img src="{{ asset('assets/images/about-markets.webp') }}" alt="{{ __('frontend.about.img_desk') }}" width="1100" height="1650" loading="lazy" decoding="async">
-            </figure>
-            <figure class="au-shot au-shot--wide">
-                <img src="{{ asset('assets/images/about-learner.webp') }}" alt="{{ __('frontend.about.img_reader') }}" width="1600" height="1067" loading="lazy" decoding="async">
-            </figure>
-            <span class="au-chip au-chip--top">
-                <i class="fas fa-user-graduate" aria-hidden="true"></i>
-                {{ __('frontend.about.chip') }}
-            </span>
-            <span class="au-chip au-chip--side">
-                <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                {{ __('frontend.footer.risk_title') }}
-            </span>
+        <div class="au-chain">
+            <p class="au-chain__title">{{ __('frontend.about.path_title') }}</p>
+            <ol class="au-chain__list">
+                @foreach($auPath as $step)
+                    <li class="au-block" style="--i: {{ $loop->index }}">
+                        <span class="au-block__top">
+                            <span class="au-block__icon" aria-hidden="true"><i class="fas {{ $step[0] }}"></i></span>
+                            <span class="au-block__num num" aria-hidden="true">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                        </span>
+                        <strong class="au-block__name">{{ __('frontend.about.' . $step[1]) }}</strong>
+                        <span class="au-block__text">{{ __('frontend.about.' . $step[1] . '_text') }}</span>
+                    </li>
+                @endforeach
+            </ol>
         </div>
     </div>
 </section>

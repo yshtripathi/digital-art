@@ -11,16 +11,12 @@ return [
 
     // resources/views/frontend/layouts/head.blade.php
     'head' => [
-        'site'    => 'JadeMind Academy',
-        'home'    => ':site — Stock Market E-Learning Materials',
-        'summary' => 'E-learning materials that explain shares, charts and market risk in clear, simple steps. Unlock only the levels you need with credits and study at your own pace.',
-        'topic'   => 'Stock Market E-Learning',
-        'lines'   => [
-            'Understand how shares are priced',
-            'Spot trends on a price chart',
-            'Put risk management first',
-        ],
-        'terms'   => ['Shares', 'Dividends', 'Index', 'Market Cap', 'P/E Ratio', 'Candlestick', 'Volume', 'Portfolio', 'Bull Market', 'Bear Market', 'IPO', 'Stop Loss'],
+        'site'    => 'StraitsChain Edu',
+        'home'    => ':site — Cryptocurrency Investing E-Learning Materials',
+        'summary' => 'E-learning materials that explain blockchain, crypto wallets and market risk in clear, simple steps. Unlock only the levels you need with credits and study at your own pace.',
+        'topic'   => 'Cryptocurrency Investing E-Learning',
+        'note'    => 'Learn crypto one clear step at a time',
+        'terms'   => ['Bitcoin', 'Ethereum', 'Blockchain', 'Wallet', 'Private Key', 'Stablecoin', 'Altcoin', 'Market Cap', 'Volatility', 'Exchange', 'DeFi', 'Gas Fee'],
     ],
 
     // resources/views/frontend/layouts/breadcrumb.blade.php
@@ -40,14 +36,12 @@ return [
         'nav_about'     => 'About Us',
         'cats_wait'     => 'Categories appear here as soon as e-learning materials are published.',
         'cart_browse'   => 'Browse E-Learning Materials',
-        'wallet_tip'    => 'Your available credits. Select to add more to your balance.',
         'acct_home'     => 'My Account',
         'acct_topup'    => 'Buy Credits',
         'acct_logout'   => 'Log Out',
         'acct_login'    => 'Log In',
         'acct_join'     => 'Create Account',
         'menu_open'     => 'Open the menu',
-        'menu_close'    => 'Close the menu',
         'menu_heading'  => 'Menu',
         'pref_language' => 'Language',
         'pref_currency' => 'Currency',
@@ -66,9 +60,6 @@ return [
         'cart_full'     => 'View Full Cart',
         'bag_back'      => 'Continue Browsing',
         'cart_wallet'   => 'Your credit balance',
-        'note'          => 'Educational use only. This website does not give investment advice.',
-        'mega_title'    => 'Find the right place to start',
-        'mega_text'     => 'Choose a category to see its e-learning materials, from core ideas to more advanced strategies.',
         'level_names'   => [
             'beginner'                 => 'Beginner',
             'beginner to intermediate' => 'Beginner to Intermediate',
@@ -106,9 +97,8 @@ return [
         'copyright'    => 'All Rights Reserved.',
         'pay_alt'      => 'Accepted payment methods',
         'scroll_top'   => 'Back to top',
-        'about'        => 'Clear, self-paced e-learning materials on how the stock market works, organised into levels you unlock with credits.',
+        'about'        => 'Clear, self-paced e-learning materials on how cryptocurrency and blockchain work, organised into levels you unlock with credits.',
         'risk_title'   => 'Educational use only',
-        'risk'         => 'The e-learning materials on this website are for educational purposes and are not investment advice. Investing in shares carries risk, and you could lose some or all of the money you invest.',
     ],
 
     // resources/views/frontend/index.blade.php
@@ -173,7 +163,6 @@ return [
     'login' => [
         'page_name'   => 'Login',
         'lead'        => 'Welcome back. Log in to open your unlocked levels, see your credit balance and review your purchases.',
-        'badge'       => 'Welcome back',
         'heading'     => 'Log in to your account',
         'mail_label'  => 'Email address',
         'mail_hint'   => 'Enter your email address',
@@ -189,18 +178,12 @@ return [
         'mail_empty'  => 'Please enter your email address.',
         'mail_wrong'  => 'Please enter a valid email address.',
         'pass_empty'  => 'Please enter your password.',
-        'points'      => [
-            'Continue with your unlocked levels',
-            'See your credit balance at a glance',
-            'Review every purchase and receipt',
-        ],
     ],
 
     // resources/views/frontend/pages/register.blade.php
     'register' => [
         'page_name'    => 'Register',
         'lead'         => 'Create an account to keep your credits, unlocked levels and receipts together in one place.',
-        'badge'        => 'New account',
         'heading'      => 'Create your account',
         'name_label'   => 'Full name',
         'name_hint'    => 'Enter your full name',
@@ -227,18 +210,12 @@ return [
         'again_diff'   => 'The passwords you entered do not match.',
         'code_empty'   => 'Please enter the security code shown in the image.',
         'code_wrong'   => 'The security code is incorrect. Please try again with the new code.',
-        'points'       => [
-            'One balance for all your credits',
-            'Unlock levels whenever you are ready',
-            'Every receipt saved to your account',
-        ],
     ],
 
     // resources/views/frontend/pages/forget-pwd-form.blade.php
     'forgot' => [
         'page_name'   => 'Forgot Password',
         'lead'        => 'Enter the email address you registered with. If an account matches it, we will send you a link to set a new password.',
-        'badge'       => 'Password help',
         'heading'     => 'Forgot your password?',
         'sent'        => 'If this email is registered, a password reset link has been sent. Check your inbox, and your spam or junk folder if you cannot see it.',
         'mail_label'  => 'Email address',
@@ -252,31 +229,16 @@ return [
         'mail_wrong'  => 'Please enter a valid email address.',
         'code_empty'  => 'Please enter the security code shown in the image.',
         'code_wrong'  => 'The security code is incorrect. Please try again with the new code.',
-        'steps'       => [
-            'Enter your registered email address',
-            'Open the link in the reset email',
-            'Set a new password and log in',
-        ],
     ],
 
     // resources/views/frontend/pages/contact.blade.php
     'contact' => [
         'page_name'     => 'Contact Us',
-        'badge'         => 'Support',
         'heading'       => 'We are here to help',
         'lead'          => 'Whether your question is about a material, a level, credits or your account, send it through the form below and we will reply by email.',
         'row_email'     => 'Email',
         'row_address'   => 'Address',
         'row_company'   => 'Company',
-        'reasons'       => 'Common reasons to get in touch',
-        'asks'          => [
-            'material' => 'Help choosing a material or level',
-            'credits'  => 'Buying credits or paying by card',
-            'missing'  => 'Access details not received after 72 hours',
-            'account'  => 'Logging in or managing your account',
-            'refund'   => 'Asking about a refund',
-            'feedback' => 'Suggestions and general feedback',
-        ],
         'name_label'    => 'Full name',
         'name_hint'     => 'Enter your full name',
         'mail_label'    => 'Email address',
@@ -337,6 +299,12 @@ return [
         ],
         'r_invoice'   => 'Download Invoice (PDF)',
         'mail_failed' => 'We were unable to send a confirmation email for this order. Please download your invoice and keep a copy for your records.',
+        'r_date'      => 'Date',
+        'r_credits'   => 'Credits added',
+        'r_mail'      => 'Billing email',
+        'copy'        => 'Copy :item',
+        'copy_btn'    => 'Copy',
+        'copied'      => 'Copied',
     ],
 
     // resources/views/frontend/pages/topup.blade.php
@@ -359,6 +327,9 @@ return [
         'tier_vip'      => 'VIP',
         'tier_best'     => 'Highest multiplier',
         'tier_match'    => 'Matches your amount',
+        'hint_start'    => 'Enter an amount to see which multiplier tier it falls into',
+        'hint_next'     => 'Add :amount more to reach :tier (:mult)',
+        'hint_top'      => 'Your amount is in the highest multiplier tier',
         'eyebrow'       => 'Credit calculator',
         'amount_label'  => 'Amount to spend',
         'amount_hint'   => 'Enter an amount to spend',
@@ -375,7 +346,7 @@ return [
     // resources/views/frontend/pages/product-lists.blade.php
     'catalog' => [
         'page_name'    => 'E-Learning Materials',
-        'meta'         => 'Explore stock market e-learning materials by category and level, compare prices in credits and decide where to start.',
+        'meta'         => 'Explore cryptocurrency e-learning materials by category and level, compare prices in credits and decide where to start.',
         'lead'         => 'Choose a category, open a material to see what it covers, and compare its levels before spending any credits.',
         'count_unit'   => 'material|materials',
         'filter_all'   => 'All E-Learning Materials',
@@ -393,6 +364,17 @@ return [
         'promo_head'   => 'Need more credits?',
         'promo_body'   => 'Add credits once and spend them on any level. A larger single purchase receives a higher multiplier.',
         'promo_go'     => 'Buy Credits',
+        'search_label' => 'Search e-learning materials',
+        'search_hint'  => 'Search by title',
+        'sort_label'   => 'Sort e-learning materials',
+        'sort_default' => 'Recommended',
+        'sort_az'      => 'Title A–Z',
+        'sort_low'     => 'Credits: low to high',
+        'sort_high'    => 'Credits: high to low',
+        'view_label'   => 'Layout',
+        'view_grid'    => 'Grid view',
+        'view_list'    => 'List view',
+        'no_match'     => 'No e-learning materials on this page match your search.',
     ],
 
     // resources/views/frontend/pages/product_detail.blade.php
@@ -414,10 +396,12 @@ return [
         'glance_cat'   => 'Category',
         'glance_lv'    => 'Levels',
         'glance_from'  => 'Starting from',
-        'hint'         => 'Choose a level to see what it includes',
+        'hint'         => 'Compare the levels below and add the one that suits you to your cart',
         'level_num'    => 'Level :num',
         'bal_ok'       => 'Your balance covers this level',
         'bal_short'    => 'You need :num more credits for this level',
+        'more'         => 'What this level includes',
+        'path'         => 'Level path',
         'level_names'  => [
             'beginner'     => 'Beginner',
             'beginner to intermediate' => 'Beginner to Intermediate',
@@ -430,6 +414,9 @@ return [
     // resources/views/frontend/pages/page.blade.php
     'page' => [
         'toc'     => 'On This Page',
+        'read'     => ':min min read',
+        'sections' => ':count section|:count sections',
+        'more'     => 'Related policies',
     ],
 
     // resources/views/frontend/pages/coursecart.blade.php
@@ -494,18 +481,18 @@ return [
 
     // resources/views/frontend/pages/about-us.blade.php
     'about' => [
-        'meta'        => 'Who this stock market e-learning platform is for, how its materials and levels are organised and how credits work.',
+        'meta'        => 'Who this cryptocurrency e-learning platform is for, how its materials and levels are organised and how credits work.',
         'page_name'   => 'About Us',
         'tag'         => 'About the platform',
-        'heading'     => 'Stock market learning, organised step by step',
-        'intro1'      => 'This platform explains the stock market through structured e-learning materials. They cover how markets work, how to read a chart, how to assess a company and how to manage risk, in language that stays clear from the first page.',
+        'heading'     => 'Crypto learning, organised block by block',
+        'intro1'      => 'This platform explains cryptocurrency through structured e-learning materials. They cover how blockchains work, how wallets and exchanges fit together, how to read a crypto chart and how to manage risk, in language that stays clear from the first page.',
         'intro2'      => 'Every material is split into levels, and each level explains what it covers before you unlock it. You study on your own, at your own pace, with no timetable and nothing to attend. All materials are for education only and are not investment advice.',
         'hl1'         => 'Clear descriptions before you unlock anything',
         'hl2'         => 'Levels that build on one another',
         'hl3'         => 'Credits spent only on the levels you choose',
         'path_title'  => 'How the catalogue is organised',
         'path1'       => 'Categories',
-        'path1_text'  => 'Subject areas such as market basics, technical analysis and long-term investing',
+        'path1_text'  => 'Subject areas such as blockchain basics, crypto trading and long-term investing',
         'path2'       => 'E-Learning Materials',
         'path2_text'  => 'Each material focuses on one topic and opens with a summary of what it covers',
         'path3'       => 'Levels',
@@ -514,9 +501,6 @@ return [
         'path4_text'  => 'Your balance unlocks levels, and credits are valid for 90 days from the date of purchase',
         'cta_browse'  => 'Browse E-Learning Materials',
         'cta_contact' => 'Contact Us',
-        'chip'        => 'Self-paced study',
-        'img_desk'    => 'A computer monitor showing a table of share prices on a desk at night',
-        'img_reader'  => 'A learner reading notes in front of a screen of market prices',
     ],
 
     // resources/views/frontend/user/dashboard.blade.php
@@ -561,10 +545,6 @@ return [
         'pass_show'     => 'Show password',
         'pass_hide'     => 'Hide password',
         'pw_save'       => 'Update Password',
-        'tips'          => 'Password tips',
-        'tip_length'    => 'Use at least 8 characters',
-        'tip2'          => 'Combine upper and lower case letters, numbers and symbols',
-        'tip3'          => 'Choose a password you do not use on other websites',
         'fmt_date'      => 'd M Y',
         'fmt_month'     => 'M Y',
         'state_names'   => [
@@ -663,7 +643,8 @@ return [
         'holder_hint'   => 'Enter the name on your card',
         'number_label'  => 'Card number',
         'number_hint'   => 'Enter your 16-digit card number',
-        'expiry_label'  => 'Expiry date',
+        'month_label'   => 'Expiry month',
+        'year_label'    => 'Expiry year',
         'month_hint'    => 'MM',
         'year_hint'     => 'YYYY',
         'cvv_label'     => 'Security code (CVV)',

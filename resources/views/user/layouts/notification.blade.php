@@ -3,10 +3,7 @@
 <div class="notes" data-notes>
     @if(session('success'))
         <div class="note note--success" role="status" data-note data-note-auto>
-            <span class="note__well" aria-hidden="true">
-                <span class="note__pulse"></span>
-                <i class="fas fa-check"></i>
-            </span>
+            <span class="note__well" aria-hidden="true"><i class="fas fa-check"></i></span>
             <div class="note__body">
                 <p class="note__label">{{ __('frontend.notify.ok_label') }}</p>
                 <p class="note__msg">{{ session('success') }}</p>
@@ -20,10 +17,7 @@
 
     @if(session('error'))
         <div class="note note--error" role="alert" data-note>
-            <span class="note__well" aria-hidden="true">
-                <span class="note__pulse"></span>
-                <i class="fas fa-exclamation"></i>
-            </span>
+            <span class="note__well" aria-hidden="true"><i class="fas fa-exclamation"></i></span>
             <div class="note__body">
                 <p class="note__label">{{ __('frontend.notify.err_label') }}</p>
                 <p class="note__msg">{{ session('error') }}</p>

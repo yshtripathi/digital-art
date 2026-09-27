@@ -15,7 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#070b0a">
+    <meta name="theme-color" content="#17202e">
 
     <title>{{ $fullTitle }}</title>
     <meta name="title" content="{{ $fullTitle }}">
@@ -44,14 +44,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap">
     @if(str_starts_with($locale, 'ja'))
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap">
     @endif
     <link rel="stylesheet" href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
 
-    <link rel="stylesheet" href="{{ asset('css/jademind.css') }}?v={{ filemtime(public_path('css/jademind.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/straitschain.css') }}?v={{ filemtime(public_path('css/straitschain.css')) }}">
     @if(env('CONTENT_PROTECTION_ENABLED', true))
         <link rel="stylesheet" href="{{ asset('css/prevention.css') }}">
     @endif
@@ -63,35 +63,15 @@
 <div class="page-wrapper">
 
     <div id="preloader" class="pre" aria-hidden="true">
-        <div class="pre__glow"></div>
-        <div class="pre__grid"></div>
-        @foreach([1, 2] as $row)
-            <div class="pre__tape pre__tape--{{ $row }}">
-                <div class="pre__track">
-                    @foreach([1, 2] as $copy)
-                        @foreach(__('frontend.head.terms') as $term)
-                            <span class="pre__term {{ $loop->odd ? 'is-up' : 'is-down' }}">{{ $term }}</span>
-                        @endforeach
-                    @endforeach
-                </div>
-            </div>
-        @endforeach
         <div class="pre__core">
-            <div class="pre__orb">
-                <span class="pre__ring"></span>
-                <span class="pre__ring pre__ring--slow"></span>
-                <span class="pre__wave"></span>
-                <svg class="pre__pulse" viewBox="0 0 120 60" focusable="false">
-                    <polyline points="0,34 22,34 30,28 38,40 48,12 58,46 66,30 76,34 88,24 98,26 120,8"/>
-                </svg>
+            <div class="pre__chain">
+                @for($i = 0; $i < 5; $i++)
+                    <span class="pre__block"></span>
+                @endfor
             </div>
-            <p class="pre__topic">{{ __('frontend.head.topic') }}</p>
             <p class="pre__name">{{ $siteName }}</p>
-            <div class="pre__lines">
-                @foreach(__('frontend.head.lines') as $line)
-                    <span>{{ $line }}</span>
-                @endforeach
-            </div>
-            <div class="pre__progress"><span></span></div>
+            <p class="pre__topic">{{ __('frontend.head.topic') }}</p>
+            <div class="pre__bar"><span></span></div>
+            <p class="pre__note">{{ __('frontend.head.note') }}</p>
         </div>
     </div>

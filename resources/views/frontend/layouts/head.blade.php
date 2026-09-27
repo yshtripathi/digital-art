@@ -60,6 +60,16 @@
 </head>
 
 <body class="antialiased">
+<div class="bg-field" aria-hidden="true">
+    <span class="bg-field__glow"></span>
+    <span class="bg-field__glow bg-field__glow--left"></span>
+    <span class="bg-field__icons">
+        @foreach([['fa-graduation-cap', 6, 0], ['fa-book-open', 18, -3], ['fa-lightbulb', 30, -6.5], ['fa-chart-line', 10, -9], ['fa-brain', 24, -12], ['fa-pencil-alt', 36, -14.5], ['fa-layer-group', 4, -17], ['fa-coins', 28, -19.5]] as $bgIcon)
+            <span class="bg-field__shot" style="--x: {{ $bgIcon[1] }}%; --d: {{ $bgIcon[2] }}s"><i class="fas {{ $bgIcon[0] }}"></i></span>
+        @endforeach
+    </span>
+    <canvas class="bg-field__globe" data-bg-globe></canvas>
+</div>
 <div class="page-wrapper">
 
     <div id="preloader" class="pre" aria-hidden="true">

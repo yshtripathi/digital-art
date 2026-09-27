@@ -233,6 +233,8 @@
 <script src="{{ asset('js/prevention.js') }}"></script>
 @endif
 
+<script src="{{ asset('js/bg-globe.js') }}?v={{ filemtime(public_path('js/bg-globe.js')) }}"></script>
+
 @stack('scripts')
 
 </body>

@@ -46,7 +46,7 @@
         <div class="ft__main">
             <div class="ft__brand" data-reveal>
                 <a href="{{ route('home') }}" class="ft__logo">
-                    <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footSite }}" width="1146" height="240" loading="lazy">
+                    <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footSite }}" width="890" height="240" loading="lazy">
                 </a>
                 <p class="ft__about">{{ __('frontend.footer.about') }}</p>
                 <span class="ft__topic">

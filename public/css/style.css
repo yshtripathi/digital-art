@@ -8629,6 +8629,7 @@ a.cg-pages__num:hover {
 }
 
 .hp-pick {
+  position: relative;
   scroll-snap-align: start;
 }
 

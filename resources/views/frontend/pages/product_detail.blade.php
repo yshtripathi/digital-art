@@ -15,6 +15,12 @@
         $key = 'frontend.course.level_names.' . strtolower((string) $level->skill_level);
         return Lang::has($key) ? __($key) : ucfirst((string) $level->skill_level);
     };
+    $levelTone = function ($level) {
+        $name = strtolower((string) $level->skill_level);
+        if (in_array($name, ['advanced', 'expert'])) { return 'advanced'; }
+        return $name === 'intermediate' ? 'intermediate' : 'beginner';
+    };
+    $cdBalance = Auth::check() ? (int) (Auth::user()->points_balance ?? 0) : 0;
 
     $bcLinks = [
         ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
@@ -35,26 +41,6 @@
     <div class="cd__wrap">
 
         <div class="cd-hero">
-            <div class="cd-media">
-                <figure class="cd-stage">
-                    @if(isset($photos[0]))
-                        <img id="cdStageImg" class="cd-stage__img" src="{{ asset(ltrim($photos[0], '/')) }}" alt="{{ $product_detail->title }}" fetchpriority="high" decoding="async">
-                    @else
-                        <span class="cd-stage__empty" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
-                    @endif
-                </figure>
-
-                @if(count($photos) > 1)
-                    <div class="cd-thumbs">
-                        @foreach($photos as $i => $ph)
-                            <button type="button" class="cd-thumb {{ $i === 0 ? 'is-active' : '' }}" data-src="{{ asset(ltrim($ph, '/')) }}" aria-label="{{ __('frontend.course.photo_show') }} {{ $i + 1 }}" aria-pressed="{{ $i === 0 ? 'true' : 'false' }}">
-                                <img src="{{ asset(ltrim($ph, '/')) }}" alt="" loading="lazy">
-                            </button>
-                        @endforeach
-                    </div>
-                @endif
-            </div>
-
             <div class="cd-info">
                 @if($cdCategory)
                     <a href="{{ route('product-lists', $cdCategory->slug) }}" class="cd-cat">
@@ -89,22 +75,49 @@
                 </dl>
 
                 @if($hasLevels)
-                    <a href="#cdLevels" class="btn btn--primary cd-info__cta">
-                        <span>{{ __('frontend.course.pick') }}</span>
-                        <i class="fas fa-arrow-down" aria-hidden="true"></i>
-                    </a>
+                    <div class="cd-info__acts">
+                        <a href="#cdLevels" class="btn btn--primary">
+                            <span>{{ __('frontend.course.pick') }}</span>
+                            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                        </a>
+                        @auth
+                            <span class="cd-wallet">
+                                <i class="fas fa-coins" aria-hidden="true"></i>
+                                <span>{{ __('frontend.course.wallet') }}</span>
+                                <strong class="num">{{ number_format($cdBalance) }}</strong>
+                            </span>
+                        @endauth
+                    </div>
+                @endif
+            </div>
 
-                    <p class="cd-note">
-                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                        <span>{{ __('frontend.course.spend') }}</span>
-                    </p>
+            <div class="cd-media">
+                <figure class="cd-stage">
+                    @if(isset($photos[0]))
+                        <img id="cdStageImg" class="cd-stage__img" src="{{ asset(ltrim($photos[0], '/')) }}" alt="{{ $product_detail->title }}" fetchpriority="high" decoding="async">
+                    @else
+                        <span class="cd-stage__empty" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
+                    @endif
+                    @if($hasLevels)
+                        <figcaption class="cd-stage__tag">
+                            <span class="cg-card__bars" aria-hidden="true">
+                                @for($b = 1; $b <= 4; $b++)
+                                    <span class="{{ $b <= min($levelCount, 4) ? 'is-on' : '' }}"></span>
+                                @endfor
+                            </span>
+                            {{ trans_choice('frontend.catalog.level_count', $levelCount, ['count' => $levelCount]) }}
+                        </figcaption>
+                    @endif
+                </figure>
 
-                    @auth
-                        <p class="cd-note">
-                            <i class="fas fa-coins" aria-hidden="true"></i>
-                            <span>{{ __('frontend.course.wallet') }}: <strong class="num">{{ number_format(auth()->user()->points_balance ?? 0) }}</strong> {{ __('frontend.course.price_unit') }}</span>
-                        </p>
-                    @endauth
+                @if(count($photos) > 1)
+                    <div class="cd-thumbs">
+                        @foreach($photos as $i => $ph)
+                            <button type="button" class="cd-thumb {{ $i === 0 ? 'is-active' : '' }}" data-src="{{ asset(ltrim($ph, '/')) }}" aria-label="{{ __('frontend.course.photo_show') }} {{ $i + 1 }}" aria-pressed="{{ $i === 0 ? 'true' : 'false' }}">
+                                <img src="{{ asset(ltrim($ph, '/')) }}" alt="" loading="lazy">
+                            </button>
+                        @endforeach
+                    </div>
                 @endif
             </div>
         </div>
@@ -112,64 +125,93 @@
         @if($hasLevels)
             <section id="cdLevels" class="cd-levels" aria-labelledby="cdLevelsTitle">
                 <header class="cd-levels__head">
-                    <p class="eyebrow">{{ __('frontend.course.each') }}</p>
+                    <span class="eyebrow">{{ __('frontend.course.each') }}</span>
                     <h2 id="cdLevelsTitle" class="cd-levels__title">{{ __('frontend.course.pick') }}</h2>
                     <p class="cd-levels__hint">{{ __('frontend.course.hint') }}</p>
                 </header>
 
-                <div class="cd-picker" role="tablist" aria-labelledby="cdLevelsTitle" data-picker>
+                <div class="cd-path" role="tablist" aria-labelledby="cdLevelsTitle" data-picker style="--steps: {{ $levelCount }}">
+                    <span class="cd-path__track" aria-hidden="true"><span class="cd-path__fill" data-path-fill></span></span>
                     @foreach($cdLevels as $key => $level)
-                        <button type="button" class="cd-opt {{ $key === 0 ? 'is-active' : '' }}" role="tab" id="cdTab{{ $level->id }}" aria-controls="cdPanel{{ $level->id }}" aria-selected="{{ $key === 0 ? 'true' : 'false' }}" tabindex="{{ $key === 0 ? '0' : '-1' }}">
-                            <span class="cd-opt__top">
-                                <span class="cd-opt__num">{{ __('frontend.course.level_num', ['num' => $key + 1]) }}</span>
-                                <span class="cd-opt__bars" aria-hidden="true">
-                                    @for($b = 1; $b <= 4; $b++)
-                                        <span class="{{ $b <= min($key + 1, 4) ? 'is-on' : '' }}"></span>
-                                    @endfor
-                                </span>
+                        <button type="button" class="cd-step cd-step--{{ $levelTone($level) }} {{ $key === 0 ? 'is-active' : '' }}" role="tab" id="cdTab{{ $level->id }}" aria-controls="cdPanel{{ $level->id }}" aria-selected="{{ $key === 0 ? 'true' : 'false' }}" tabindex="{{ $key === 0 ? '0' : '-1' }}" data-index="{{ $key }}">
+                            <span class="cd-step__node num" aria-hidden="true">{{ $key + 1 }}</span>
+                            <span class="cd-step__card">
+                                <span class="cd-step__num">{{ __('frontend.course.level_num', ['num' => $key + 1]) }}</span>
+                                <span class="cd-step__name">{{ $levelName($level) }}</span>
+                                <span class="cd-step__price"><span class="num">{{ number_format($level->price_in_points) }}</span> {{ __('frontend.course.price_unit') }}</span>
                             </span>
-                            <span class="cd-opt__name">{{ $levelName($level) }}</span>
-                            <span class="cd-opt__price"><span class="num">{{ number_format($level->price_in_points) }}</span> {{ __('frontend.course.price_unit') }}</span>
                         </button>
                     @endforeach
                 </div>
 
                 @foreach($cdLevels as $key => $level)
-                    <article class="cd-panel" role="tabpanel" id="cdPanel{{ $level->id }}" aria-labelledby="cdTab{{ $level->id }}" tabindex="0" @if($key !== 0) hidden @endif>
+                    @php
+                        $lvPrice = (int) $level->price_in_points;
+                        $lvEnough = $cdBalance >= $lvPrice;
+                        $lvCover = $lvPrice > 0 ? min(100, round($cdBalance / $lvPrice * 100)) : 100;
+                    @endphp
+                    <article class="cd-panel cd-panel--{{ $levelTone($level) }}" role="tabpanel" id="cdPanel{{ $level->id }}" aria-labelledby="cdTab{{ $level->id }}" tabindex="0" @if($key !== 0) hidden @endif>
                         <div class="cd-panel__main">
-                            <h3 class="cd-panel__name">{{ $levelName($level) }}</h3>
+                            <div class="cd-panel__head">
+                                <span class="badge badge--{{ $levelTone($level) }}">{{ __('frontend.course.level_num', ['num' => $key + 1]) }}</span>
+                                <h3 class="cd-panel__name">{{ $levelName($level) }}</h3>
+                            </div>
 
-                            <ul class="cd-points">
+                            <ol class="cd-points">
                                 @if($level->learn_info)
                                     <li class="cd-point">
                                         <span class="cd-point__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
-                                        <h4 class="cd-point__label">{{ __('frontend.course.covers') }}</h4>
-                                        <p class="cd-point__desc">{{ $level->learn_info }}</p>
+                                        <div>
+                                            <h4 class="cd-point__label">{{ __('frontend.course.covers') }}</h4>
+                                            <p class="cd-point__desc">{{ $level->learn_info }}</p>
+                                        </div>
                                     </li>
                                 @endif
                                 @if($level->purpose)
                                     <li class="cd-point">
-                                        <span class="cd-point__icon" aria-hidden="true"><i class="fas fa-bullseye"></i></span>
-                                        <h4 class="cd-point__label">{{ __('frontend.course.suits') }}</h4>
-                                        <p class="cd-point__desc">{{ $level->purpose }}</p>
+                                        <span class="cd-point__icon" aria-hidden="true"><i class="fas fa-user-check"></i></span>
+                                        <div>
+                                            <h4 class="cd-point__label">{{ __('frontend.course.suits') }}</h4>
+                                            <p class="cd-point__desc">{{ $level->purpose }}</p>
+                                        </div>
                                     </li>
                                 @endif
                                 @if($level->outcome)
                                     <li class="cd-point">
-                                        <span class="cd-point__icon" aria-hidden="true"><i class="fas fa-award"></i></span>
-                                        <h4 class="cd-point__label">{{ __('frontend.course.apply') }}</h4>
-                                        <p class="cd-point__desc">{{ $level->outcome }}</p>
+                                        <span class="cd-point__icon" aria-hidden="true"><i class="fas fa-flag-checkered"></i></span>
+                                        <div>
+                                            <h4 class="cd-point__label">{{ __('frontend.course.apply') }}</h4>
+                                            <p class="cd-point__desc">{{ $level->outcome }}</p>
+                                        </div>
                                     </li>
                                 @endif
-                            </ul>
+                            </ol>
                         </div>
 
-                        <div class="cd-panel__buy">
-                            <span class="cd-panel__label">{{ __('frontend.course.level_num', ['num' => $key + 1]) }}</span>
-                            <p class="cd-panel__price">
-                                <strong class="num">{{ number_format($level->price_in_points) }}</strong>
+                        <aside class="cd-buy">
+                            <span class="cd-buy__label">{{ __('frontend.course.level_num', ['num' => $key + 1]) }} · {{ $levelName($level) }}</span>
+                            <p class="cd-buy__price">
+                                <strong class="num">{{ number_format($lvPrice) }}</strong>
                                 <small>{{ __('frontend.course.price_unit') }}</small>
                             </p>
+
+                            @auth
+                                <div class="cd-buy__meter {{ $lvEnough ? 'is-ok' : 'is-short' }}">
+                                    <div class="cd-buy__row">
+                                        <span>{{ __('frontend.course.wallet') }}</span>
+                                        <strong class="num">{{ number_format($cdBalance) }}</strong>
+                                    </div>
+                                    <span class="cd-buy__track" aria-hidden="true"><span style="width: {{ $lvCover }}%"></span></span>
+                                    <p class="cd-buy__state">
+                                        <i class="fas {{ $lvEnough ? 'fa-check-circle' : 'fa-exclamation-circle' }}" aria-hidden="true"></i>
+                                        @if($lvEnough)
+                                            {{ __('frontend.course.bal_ok') }}
+                                        @else
+                                            {{ __('frontend.course.bal_short', ['num' => number_format($lvPrice - $cdBalance)]) }}
+                                        @endif
+                                    </p>
+                                </div>
+                            @endauth
 
                             <form action="{{ route('single-add-to-cart') }}" method="POST" class="cd-form">
                                 @csrf
@@ -184,7 +226,21 @@
                                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                 </button>
                             </form>
-                        </div>
+
+                            @auth
+                                @if(!$lvEnough)
+                                    <a href="{{ route('points.topup') }}" class="btn btn--ghost btn--block">
+                                        <i class="fas fa-plus" aria-hidden="true"></i>
+                                        {{ __('frontend.header.acct_topup') }}
+                                    </a>
+                                @endif
+                            @endauth
+
+                            <p class="cd-buy__note">
+                                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                <span>{{ __('frontend.course.spend') }}</span>
+                            </p>
+                        </aside>
                     </article>
                 @endforeach
             </section>
@@ -192,7 +248,10 @@
 
         @if($product_detail->description || $product_detail->summary)
             <section class="cd-about" aria-labelledby="cdAboutTitle">
-                <h2 id="cdAboutTitle" class="cd-about__title">{{ __('frontend.course.overview') }}</h2>
+                <div class="cd-about__side">
+                    <span class="cd-about__icon" aria-hidden="true"><i class="fas fa-book-reader"></i></span>
+                    <h2 id="cdAboutTitle" class="cd-about__title">{{ __('frontend.course.overview') }}</h2>
+                </div>
                 <div class="cd-prose">
                     @if($product_detail->description)
                         {!! nl2br(e($product_detail->description)) !!}
@@ -228,7 +287,14 @@ document.addEventListener('DOMContentLoaded', function () {
     if (picker) {
         const tabs = Array.prototype.slice.call(picker.querySelectorAll('[role="tab"]'));
 
+        const fill = function (tab) {
+            const at = tabs.indexOf(tab);
+            picker.style.setProperty('--fill', tabs.length > 1 ? at / (tabs.length - 1) : 0);
+            tabs.forEach(function (t, i) { t.classList.toggle('is-past', i < at); });
+        };
+
         const choose = function (tab, focus) {
+            fill(tab);
             tabs.forEach(function (t) {
                 const on = t === tab;
                 t.classList.toggle('is-active', on);
@@ -240,6 +306,8 @@ document.addEventListener('DOMContentLoaded', function () {
             tab.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
             if (focus) { tab.focus(); }
         };
+
+        fill(tabs[0]);
 
         tabs.forEach(function (tab, i) {
             tab.addEventListener('click', function () { choose(tab, false); });

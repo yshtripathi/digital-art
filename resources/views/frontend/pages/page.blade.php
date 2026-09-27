@@ -15,13 +15,6 @@
     $cleanText = trim(preg_replace('/\s+/', ' ', strip_tags($rawDesc)));
     $metaDesc  = !empty($page_data->page_meta) && app()->getLocale() !== 'ja' ? $page_data->page_meta : \Illuminate\Support\Str::limit($cleanText, 160);
 
-    $policies = [
-        'terms-conditions' => ['label' => __('frontend.footer.link_terms'),   'icon' => 'fa-file-contract'],
-        'privacy-policy'   => ['label' => __('frontend.footer.link_privacy'), 'icon' => 'fa-user-shield'],
-        'refund-policy'    => ['label' => __('frontend.footer.link_refund'),  'icon' => 'fa-undo-alt'],
-        'delivery-policy'  => ['label' => __('frontend.footer.link_access'),  'icon' => 'fa-key'],
-    ];
-    $related = array_filter($policies, fn ($key) => $key !== $pageSlug, ARRAY_FILTER_USE_KEY);
 @endphp
 
 @section('title', $pageTitle)
@@ -41,7 +34,10 @@
     <div class="pg__wrap" data-pg>
         <aside class="pg__side" data-toc-box hidden>
             <nav class="pg__toc" aria-labelledby="pgTocTitle">
-                <p class="pg__toc-title" id="pgTocTitle">{{ __('frontend.page.toc') }}</p>
+                <p class="pg__toc-title" id="pgTocTitle">
+                    <i class="fas fa-list-ul" aria-hidden="true"></i>
+                    {{ __('frontend.page.toc') }}
+                </p>
                 <ol class="pg__toc-list" data-toc></ol>
             </nav>
         </aside>
@@ -50,26 +46,6 @@
             {!! $rawDesc !!}
         </article>
     </div>
-
-    @if(count($related))
-        <nav class="pg-rel" aria-labelledby="pgRelTitle">
-            <h2 class="pg-rel__title" id="pgRelTitle">{{ __('frontend.page.more') }}</h2>
-            <ul class="pg-rel__list">
-                @foreach($related as $slug => $item)
-                    <li>
-                        <a href="{{ route('pages', $slug) }}" class="pg-rel__card">
-                            <span class="pg-rel__icon" aria-hidden="true"><i class="fas {{ $item['icon'] }}"></i></span>
-                            <span class="pg-rel__name">{{ $item['label'] }}</span>
-                            <span class="pg-rel__go">
-                                {{ __('frontend.page.read') }}
-                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        </nav>
-    @endif
 </section>
 
 @push('scripts')

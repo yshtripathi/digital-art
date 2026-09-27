@@ -47,99 +47,104 @@
 @endphp
 
 <section class="tp">
-    <div class="tp__wrap">
+    <div class="tp__intro">
+        <span class="eyebrow">{{ __('frontend.topup.eyebrow') }}</span>
+        <p class="tp__lead">{{ __('frontend.topup.lead') }}</p>
+        <ul class="tp__chips">
+            <li><i class="fas fa-exchange-alt" aria-hidden="true"></i> {{ $rateNote }}</li>
+            <li><i class="fas fa-calendar-alt" aria-hidden="true"></i> {{ rtrim(__('frontend.topup.valid_days'), '.。') }}</li>
+        </ul>
+    </div>
 
-        <header class="tp-head">
-            <p class="eyebrow">{{ __('frontend.topup.eyebrow') }}</p>
-            <p class="tp-head__text">{{ __('frontend.topup.lead') }}</p>
-            <ul class="tp-head__chips">
-                <li><i class="fas fa-exchange-alt" aria-hidden="true"></i> {{ $rateNote }}</li>
-                <li><i class="fas fa-calendar-alt" aria-hidden="true"></i> {{ rtrim(__('frontend.topup.valid_days'), '.。') }}</li>
-            </ul>
-        </header>
+    <div class="tp-rates">
+        <h2 class="tp-rates__title">{{ __('frontend.topup.ladder') }}</h2>
+        <div class="tp-rates__frame">
+            <table class="tp-rates__table">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ __('frontend.topup.th_tier') }}</th>
+                        <th scope="col">{{ __('frontend.topup.th_pay') }}</th>
+                        <th scope="col">{{ __('frontend.topup.res_mult') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($tiers as $t)
+                        <tr class="tp-tier {{ $t['f'] ? 'tp-tier--best' : '' }}" data-mult="{{ $t['big'] }}">
+                            <th scope="row">
+                                <div class="tp-tier__cell">
+                                    <span class="tp-tier__name">
+                                        <span class="tp-tier__icon" aria-hidden="true"><i class="fas {{ $t['i'] }}"></i></span>
+                                        {{ $t['n'] }}
+                                    </span>
+                                    @if($t['f'])
+                                        <span class="tp-tier__badge">{{ __('frontend.topup.tier_best') }}</span>
+                                    @endif
+                                    <span class="tp-tier__match"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.topup.tier_match') }}</span>
+                                </div>
+                            </th>
+                            <td class="tp-tier__range num">{!! $t['r'] !!}</td>
+                            <td><span class="tp-tier__mult num">{{ $t['big'] }}</span></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-        <section class="tp-ladder" aria-labelledby="tpLadderTitle">
-            <h2 id="tpLadderTitle" class="tp-ladder__title">{{ __('frontend.topup.ladder') }}</h2>
-            <ol class="tp-ladder__list">
-                @foreach($tiers as $t)
-                    <li class="tp-tier {{ $t['f'] ? 'tp-tier--best' : '' }}" data-mult="{{ $t['big'] }}" style="--rise: {{ round(((float) substr($t['big'], 1)) / 3 * 100) }}%">
-                        <div class="tp-tier__col" aria-hidden="true">
-                            <span class="tp-tier__bar"></span>
-                        </div>
-                        <span class="tp-tier__mult">{{ $t['big'] }}</span>
-                        <span class="tp-tier__name">
-                            <i class="fas {{ $t['i'] }}" aria-hidden="true"></i>
-                            {{ $t['n'] }}
-                        </span>
-                        <span class="tp-tier__range">
-                            <small>{{ __('frontend.topup.th_pay') }}</small>
-                            <span class="num">{!! $t['r'] !!}</span>
-                        </span>
-                        @if($t['f'])
-                            <span class="tp-tier__badge">{{ __('frontend.topup.tier_best') }}</span>
-                        @endif
-                        <span class="tp-tier__match"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.topup.tier_match') }}</span>
-                    </li>
-                @endforeach
-            </ol>
-        </section>
+    <form action="{{ route('points.add-to-cart') }}" method="POST" class="tp-form" novalidate>
+        @csrf
 
-        <form action="{{ route('points.add-to-cart') }}" method="POST" class="tp-form" novalidate>
-            @csrf
-
-            <div class="tp-console">
-                <div class="tp-input">
-                    <label class="tp-label" for="topup_amount">{{ __('frontend.topup.amount_label') }}</label>
-                    <div class="tp-amount">
-                        <span class="tp-amount__symbol" aria-hidden="true">{!! $symbol !!}</span>
-                        <input type="number" name="amount" id="topup_amount" class="tp-amount__input" placeholder="{{ __('frontend.topup.amount_hint') }}" min="1" required inputmode="decimal">
-                    </div>
-
-                    <span class="tp-label" id="tpQuickLabel">{{ __('frontend.topup.quick_label') }}</span>
-                    <div class="tp-quick" role="group" aria-labelledby="tpQuickLabel">
-                        @foreach($quick as $q)
-                            <button type="button" class="tp-quick__btn" data-amount="{{ $q }}">{!! $symbol !!}{{ number_format($q) }}</button>
-                        @endforeach
-                    </div>
-
-                    <p class="tp-notice">
-                        <i class="fas fa-info-circle" aria-hidden="true"></i>
-                        <span><strong>{{ __('frontend.topup.note_head') }}</strong> {{ __('frontend.topup.note') }}</span>
-                    </p>
+        <div class="tp-calc">
+            <div class="tp-calc__input">
+                <label class="tp__label" for="topup_amount">{{ __('frontend.topup.amount_label') }}</label>
+                <div class="tp-amount">
+                    <span class="tp-amount__symbol" aria-hidden="true">{!! $symbol !!}</span>
+                    <input type="number" name="amount" id="topup_amount" class="tp-amount__input num" placeholder="{{ __('frontend.topup.amount_hint') }}" min="1" required inputmode="decimal">
                 </div>
 
-                <aside class="tp-result">
-                    <span class="tp-result__label">{{ __('frontend.topup.you_get') }}</span>
-                    <span class="tp-result__total" id="tpTotalWrap" aria-live="polite">
-                        <strong id="total_points" class="num">0</strong>
-                    </span>
+                <span class="tp__label" id="tpQuickLabel">{{ __('frontend.topup.quick_label') }}</span>
+                <div class="tp-quick" role="group" aria-labelledby="tpQuickLabel">
+                    @foreach($quick as $q)
+                        <button type="button" class="tp-quick__btn num" data-amount="{{ $q }}">{!! $symbol !!}{{ number_format($q) }}</button>
+                    @endforeach
+                </div>
 
-                    <div class="tp-result__eq">
-                        <span class="tp-result__cell">
-                            <small>{{ __('frontend.topup.res_base') }}</small>
-                            <b id="base_points" class="num">0</b>
-                        </span>
-                        <span class="tp-result__op" aria-hidden="true">&times;</span>
-                        <span class="tp-result__cell">
-                            <small>{{ __('frontend.topup.res_mult') }}</small>
-                            <b id="multiplier_display">x1</b>
-                        </span>
-                    </div>
-
-                    <button type="submit" class="btn btn--primary btn--block tp-submit">
-                        <span>{{ __('frontend.topup.add') }}</span>
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </button>
-
-                    <p class="tp-result__secure">
-                        <i class="fas fa-lock" aria-hidden="true"></i>
-                        <span>{{ __('frontend.topup.secure') }}</span>
-                    </p>
-                </aside>
+                <p class="tp__notice">
+                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    <span><strong>{{ __('frontend.topup.note_head') }}</strong> {{ __('frontend.topup.note') }}</span>
+                </p>
             </div>
-        </form>
 
-    </div>
+            <div class="tp-result">
+                <span class="tp-result__label">{{ __('frontend.topup.you_get') }}</span>
+                <span class="tp-result__total" id="tpTotalWrap" aria-live="polite">
+                    <strong id="total_points" class="num">0</strong>
+                </span>
+
+                <div class="tp-result__eq">
+                    <span class="tp-result__cell">
+                        <small>{{ __('frontend.topup.res_base') }}</small>
+                        <b id="base_points" class="num">0</b>
+                    </span>
+                    <span class="tp-result__op" aria-hidden="true">&times;</span>
+                    <span class="tp-result__cell">
+                        <small>{{ __('frontend.topup.res_mult') }}</small>
+                        <b id="multiplier_display" class="num">x1</b>
+                    </span>
+                </div>
+
+                <button type="submit" class="btn btn--primary btn--block tp-submit">
+                    <span>{{ __('frontend.topup.add') }}</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </button>
+
+                <p class="tp-result__secure">
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                    <span>{{ __('frontend.topup.secure') }}</span>
+                </p>
+            </div>
+        </div>
+    </form>
 </section>
 @endsection
 

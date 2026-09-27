@@ -192,6 +192,11 @@ return [
         'mail_empty'  => 'Please enter your email address.',
         'mail_wrong'  => 'Please enter a valid email address.',
         'pass_empty'  => 'Please enter your password.',
+        'points'      => [
+            'Open the levels you have unlocked',
+            'Check your credit balance',
+            'See your past purchases',
+        ],
     ],
 
     // resources/views/frontend/pages/register.blade.php
@@ -225,6 +230,11 @@ return [
         'again_diff'   => 'The passwords you entered do not match.',
         'code_empty'   => 'Please enter the security code shown in the image.',
         'code_wrong'   => 'The security code is incorrect. Please try again with the new code.',
+        'points'       => [
+            'Keep your credits in one account',
+            'Unlock levels at your own pace',
+            'Track every purchase in one place',
+        ],
     ],
 
     // resources/views/frontend/pages/forget-pwd-form.blade.php
@@ -245,6 +255,11 @@ return [
         'mail_wrong'  => 'Please enter a valid email address.',
         'code_empty'  => 'Please enter the security code shown in the image.',
         'code_wrong'  => 'The security code is incorrect. Please try again with the new code.',
+        'steps'       => [
+            'Enter the email address you registered with',
+            'Open the reset link we send to that inbox',
+            'Choose a new password and log in again',
+        ],
     ],
 
     // resources/views/frontend/pages/contact.blade.php
@@ -340,6 +355,7 @@ return [
         'valid_days'    => 'Credits are valid for 90 days from the date of purchase.',
         'ladder'        => 'The more you add, the higher the multiplier',
         'th_pay'        => 'You pay',
+        'th_tier'       => 'Tier',
         'tier_standard' => 'Standard',
         'tier_premium'  => 'Premium',
         'tier_elite'    => 'Elite',
@@ -362,8 +378,8 @@ return [
     // resources/views/frontend/pages/product-lists.blade.php
     'catalog' => [
         'page_name'    => 'E-Learning Materials',
-        'meta'         => 'Browse every business planning and strategy e-learning material by area and level, compare credit prices and choose where to begin.',
-        'lead'         => 'Filter by strategy area, open any material to read what it covers and compare its levels before you spend credits.',
+        'meta'         => 'Browse every stock market e-learning material by category and level, compare credit prices and choose where to begin.',
+        'lead'         => 'Filter by category, open any material to read what it covers and compare its levels before you spend credits.',
         'count_unit'   => 'material|materials',
         'filter_all'   => 'All E-Learning Materials',
         'level_count'  => ':count level|:count levels',
@@ -376,7 +392,7 @@ return [
         'pager_next'   => 'Next',
         'empty_head'   => 'No materials in this area yet',
         'empty_text'   => 'This area has no published e-learning materials at the moment. The full catalogue lists everything available now.',
-        'areas'        => 'Strategy areas',
+        'areas'        => 'Categories',
         'promo_head'   => 'Running low on credits?',
         'promo_body'   => 'Top up once and use your balance on any level. Bigger single top-ups earn a higher multiplier.',
         'promo_go'     => 'Buy Credits',
@@ -403,8 +419,11 @@ return [
         'glance_from'  => 'Starting from',
         'hint'         => 'Select a level to see what it includes',
         'level_num'    => 'Level :num',
+        'bal_ok'       => 'Your balance covers this level',
+        'bal_short'    => 'You need :num more credits for this level',
         'level_names'  => [
             'beginner'     => 'Beginner',
+            'beginner to intermediate' => 'Beginner to Intermediate',
             'intermediate' => 'Intermediate',
             'advanced'     => 'Advanced',
             'expert'       => 'Expert',
@@ -414,8 +433,6 @@ return [
     // resources/views/frontend/pages/page.blade.php
     'page' => [
         'toc'     => 'On This Page',
-        'more'    => 'Other Policies',
-        'read'    => 'Open policy',
     ],
 
     // resources/views/frontend/pages/coursecart.blade.php
@@ -446,6 +463,7 @@ return [
         'guest_join'  => 'Create Account',
         'level_names' => [
             'beginner'     => 'Beginner',
+            'beginner to intermediate' => 'Beginner to Intermediate',
             'intermediate' => 'Intermediate',
             'advanced'     => 'Advanced',
             'expert'       => 'Expert',
@@ -480,31 +498,29 @@ return [
 
     // resources/views/frontend/pages/about-us.blade.php
     'about' => [
-        'summary'    => 'Why this platform exists, how its business planning and strategy e-learning materials are organised and what to expect when you study here.',
+        'summary'    => 'Why this platform exists, how its stock market e-learning materials are organised and what to expect when you study here.',
         'page_name'  => 'About Us',
         'tag'        => 'About the platform',
-        'title'      => 'Business planning and strategy, one level at a time',
-        'p1'         => 'This platform brings practical e-learning materials on business planning, strategy, marketing, sales and growth together in one organised catalogue. Every material explains what it covers, so you can judge whether it fits your plan before you spend a single credit.',
-        'p2'         => 'Everything is self-paced. There is no timetable and no group to keep up with. You read, work through each level and apply it to your own business whenever it suits you.',
+        'title'      => 'The stock market, one level at a time',
+        'p1'         => 'This platform brings e-learning materials on the stock market together in one organised catalogue, from what a share is to reading charts, managing risk and planning a trade. Every material explains what it covers, so you can judge whether it fits you before you spend a single credit.',
+        'p2'         => 'Everything is self-paced. There is no timetable and no group to keep up with. You read, work through each level and practise the ideas whenever it suits you. The materials are for education only and are not investment advice.',
         'pt1'        => 'A catalogue you can explore before you buy',
         'pt2'        => 'Every material split into levels, each with its own description',
         'pt3'        => 'Credits that unlock only the levels you choose',
-        'video_alt'  => 'A learner reviewing notes at a work table while colleagues talk in the background',
-        'pause'      => 'Pause the video',
-        'play'       => 'Play the video',
-        'flow_tag'   => 'How it works',
-        'flow_title' => 'One clear path, whichever area you plan',
-        'f1'         => 'Strategy areas',
-        'f1_text'    => 'Start from the part of your business you want to strengthen, from entrepreneurship to analytics',
+        'flow_title' => 'One clear path, whichever topic you start with',
+        'f1'         => 'Categories',
+        'f1_text'    => 'Start from the topic you want to understand, from market basics to technical analysis',
         'f2'         => 'E-Learning Materials',
         'f2_text'    => 'Open a material to read its summary and see how its levels are arranged',
         'f3'         => 'Levels',
         'f3_text'    => 'Each level explains what it covers, who it suits and what you will be able to apply',
         'f4'         => 'Credits',
         'f4_text'    => 'Unlock only the levels you choose with the credits in your account',
-        'ask'        => 'Ready to plan your next move?',
+        'ask'        => 'Ready to take your first step?',
         'go_browse'  => 'Explore E-Learning Materials',
         'go_contact' => 'Contact Us',
+        'img_markets' => 'A desk monitor showing a board of share prices and market data',
+        'img_learner' => 'A learner reading notes in front of screens with market prices',
     ],
 
     // resources/views/frontend/user/dashboard.blade.php

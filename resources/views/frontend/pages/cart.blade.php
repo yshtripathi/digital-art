@@ -11,142 +11,166 @@
 ])
 
 <section class="ct">
-    <div class="ct__wrap">
+    @if(Helper::cartCount())
+        @php
+            $cartItems = Helper::getAllProductFromCart();
+            $subtotal = 0;
+            $totalCredits = 0;
+            foreach($cartItems as $item) {
+                $subtotal += $item['price'];
+                $totalCredits += $item['points'];
+            }
+            $discount = session()->has('coupon') ? Session::get('coupon')['value'] : 0;
+            $total_amount = $subtotal - $discount;
+            $sym = Helper::getCurrencySymbol(session('currency'));
+            $dec = session('currency') == 'JPY' ? 0 : 2;
+        @endphp
 
-        @if(Helper::cartCount())
-            @php
-                $cartItems = Helper::getAllProductFromCart();
-                $subtotal = 0;
-                $totalCredits = 0;
-                foreach($cartItems as $item) {
-                    $subtotal += $item['price'];
-                    $totalCredits += $item['points'];
-                }
-                $discount = session()->has('coupon') ? Session::get('coupon')['value'] : 0;
-                $total_amount = $subtotal - $discount;
-                $sym = Helper::getCurrencySymbol(session('currency'));
-                $dec = session('currency') == 'JPY' ? 0 : 2;
-            @endphp
+        <ol class="steps">
+            <li class="steps__item is-active" aria-current="step">
+                <span class="steps__no">1</span>
+                <span class="steps__label">{{ __('frontend.cart.st_cart') }}</span>
+            </li>
+            <li class="steps__line" aria-hidden="true"></li>
+            <li class="steps__item">
+                <span class="steps__no">2</span>
+                <span class="steps__label">{{ __('frontend.cart.st_pay') }}</span>
+            </li>
+            <li class="steps__line" aria-hidden="true"></li>
+            <li class="steps__item">
+                <span class="steps__no">3</span>
+                <span class="steps__label">{{ __('frontend.cart.st_done') }}</span>
+            </li>
+        </ol>
 
-            <header class="ct__top">
-                <div>
-                    <p class="eyebrow">{{ trans_choice('frontend.cart.item_count', count($cartItems), ['count' => count($cartItems)]) }}</p>
-                    <h2 class="ct__heading">{{ __('frontend.cart.picked') }}</h2>
-                </div>
-                @if(Helper::totalCartPoints() > 0)
-                    <a href="{{ route('product-lists') }}" class="ct__back">
-                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                        <span>{{ __('frontend.cart.more') }}</span>
-                    </a>
-                @endif
-            </header>
-
-            <ul class="ct__grid">
-                @foreach($cartItems as $cart)
-                    @php
-                        $item_title = __('frontend.cart.pack');
-                        $item_link = null;
-                        $item_photo = null;
-                        if($cart->product) {
-                            $item_title = $cart->product->title;
-                            $item_link = route('product-detail', $cart->product->slug);
-                            $item_photo = $cart->product->photo ? explode(',', $cart->product->photo)[0] : null;
-                        }
-                    @endphp
-
-                    <li class="tile">
-                        <div class="tile__media {{ $cart->product ? '' : 'tile__media--credits' }}">
-                            @if($item_photo)
-                                <img src="{{ asset(ltrim($item_photo, '/')) }}" alt="" loading="lazy">
-                            @elseif($cart->product)
-                                <i class="fas fa-book-open" aria-hidden="true"></i>
-                            @else
-                                <span class="tile__amount">
-                                    <strong class="num">{{ number_format($cart->points) }}</strong>
-                                    <small>{{ __('frontend.cart.col_credits') }}</small>
-                                </span>
-                            @endif
-
-                            <span class="tile__chip {{ $cart->product ? '' : 'tile__chip--accent' }}">
-                                {{ $cart->product ? __('frontend.cart.chip_material') : __('frontend.cart.chip_credits') }}
-                            </span>
-
-                            <a href="{{ route('cart-delete', $cart->id) }}" class="tile__drop" aria-label="{{ __('frontend.cart.drop') }}: {{ $item_title }}">
-                                <i class="fas fa-times" aria-hidden="true"></i>
-                            </a>
-                        </div>
-
-                        <div class="tile__body">
-                            @if($item_link)
-                                <a href="{{ $item_link }}" class="tile__title">{{ $item_title }}</a>
-                            @else
-                                <span class="tile__title">{{ $item_title }}</span>
-                            @endif
-                        </div>
-
-                        <div class="tile__foot">
-                            <span class="tile__meta">
-                                <i class="fas fa-bolt" aria-hidden="true"></i>
-                                {{ number_format($cart->points) }} {{ __('frontend.cart.col_credits') }}
-                            </span>
-                            <strong class="tile__price">{{ $sym }}{{ number_format($cart['price'], $dec) }}</strong>
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
-
-            <div class="ct-bar" aria-labelledby="ctBarTitle">
-                <h2 id="ctBarTitle" class="ct-bar__title">{{ __('frontend.cart.summary') }}</h2>
-                <dl class="ct-bar__stats">
-                    <div class="ct-bar__stat">
-                        <dt>{{ __('frontend.cart.col_credits') }}:</dt>
-                        <dd><i class="fas fa-bolt" aria-hidden="true"></i> {{ number_format($totalCredits) }}</dd>
+        <div class="ct__grid">
+            <div class="ct__main">
+                <div class="ct__head">
+                    <div>
+                        <span class="eyebrow">{{ trans_choice('frontend.cart.item_count', count($cartItems), ['count' => count($cartItems)]) }}</span>
+                        <h2 class="ct__title">{{ __('frontend.cart.picked') }}</h2>
                     </div>
-                    @if($discount > 0)
-                        <div class="ct-bar__stat">
-                            <dt>{{ __('frontend.cart.sum_discount') }}:</dt>
-                            <dd>&minus; {{ $sym }}{{ number_format($discount, $dec) }}</dd>
-                        </div>
+                    @if(Helper::totalCartPoints() > 0)
+                        <a href="{{ route('product-lists') }}" class="auth__back">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                            {{ __('frontend.cart.more') }}
+                        </a>
                     @endif
-                    <div class="ct-bar__stat ct-bar__stat--total">
-                        <dt>{{ __('frontend.cart.sum_total') }}:</dt>
-                        <dd>{{ $sym }}{{ number_format($total_amount, $dec) }}</dd>
+                </div>
+
+                <ul class="ct__list">
+                    @foreach($cartItems as $cart)
+                        @php
+                            $item_title = __('frontend.cart.pack');
+                            $item_link = null;
+                            $item_photo = null;
+                            if($cart->product) {
+                                $item_title = $cart->product->title;
+                                $item_link = route('product-detail', $cart->product->slug);
+                                $item_photo = $cart->product->photo ? explode(',', $cart->product->photo)[0] : null;
+                            }
+                        @endphp
+
+                        <li class="line" style="--i: {{ $loop->index }}">
+                            <span class="line__media {{ $cart->product ? '' : 'line__media--credits' }}">
+                                @if($item_photo)
+                                    <img src="{{ asset(ltrim($item_photo, '/')) }}" alt="" loading="lazy">
+                                @elseif($cart->product)
+                                    <i class="fas fa-book-open" aria-hidden="true"></i>
+                                @else
+                                    <i class="fas fa-coins" aria-hidden="true"></i>
+                                @endif
+                            </span>
+
+                            <div class="line__body">
+                                <span class="badge {{ $cart->product ? '' : 'badge--beginner' }}">
+                                    {{ $cart->product ? __('frontend.cart.chip_material') : __('frontend.cart.chip_credits') }}
+                                </span>
+                                @if($item_link)
+                                    <a href="{{ $item_link }}" class="line__title">{{ $item_title }}</a>
+                                @else
+                                    <span class="line__title">{{ $item_title }}</span>
+                                @endif
+                                <span class="line__meta">
+                                    <i class="fas fa-bolt" aria-hidden="true"></i>
+                                    <span class="num">{{ number_format($cart->points) }}</span> {{ __('frontend.cart.col_credits') }}
+                                </span>
+                            </div>
+
+                            <div class="line__end">
+                                <strong class="line__price num">{{ $sym }}{{ number_format($cart['price'], $dec) }}</strong>
+                                <a href="{{ route('cart-delete', $cart->id) }}" class="line__drop" aria-label="{{ __('frontend.cart.drop') }}: {{ $item_title }}">
+                                    <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <aside class="ct__rail">
+                <div class="sum">
+                    <div class="sum__head">
+                        <span class="sum__badge" aria-hidden="true"><i class="fas fa-receipt"></i></span>
+                        <h2 class="sum__title">{{ __('frontend.cart.summary') }}</h2>
                     </div>
-                </dl>
-                <a href="{{ route('checkout') }}" class="btn btn--primary ct-bar__cta">
-                    <span>{{ __('frontend.cart.go_pay') }}</span>
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+
+                    <div class="sum__body">
+                        <dl class="ct__stats">
+                            <div class="ct__stat">
+                                <dt>{{ __('frontend.cart.col_credits') }}</dt>
+                                <dd><i class="fas fa-bolt" aria-hidden="true"></i> <span class="num">{{ number_format($totalCredits) }}</span></dd>
+                            </div>
+                            @if($discount > 0)
+                                <div class="ct__stat">
+                                    <dt>{{ __('frontend.cart.sum_discount') }}</dt>
+                                    <dd class="num">&minus; {{ $sym }}{{ number_format($discount, $dec) }}</dd>
+                                </div>
+                            @endif
+                        </dl>
+
+                        <div class="sum__total">
+                            <span>{{ __('frontend.cart.sum_total') }}</span>
+                            <strong>{{ $sym }}{{ number_format($total_amount, $dec) }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="sum__foot">
+                        <a href="{{ route('checkout') }}" class="btn btn--primary btn--block sum__pay">
+                            {{ __('frontend.cart.go_pay') }}
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+
+                        <p class="sum__trust">
+                            <i class="fas fa-lock" aria-hidden="true"></i>
+                            <span>{{ __('frontend.cart.secure') }}</span>
+                        </p>
+
+                        <img class="sum__methods" src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.cart.pay_alt') }}" loading="lazy">
+                    </div>
+                </div>
+            </aside>
+        </div>
+    @else
+        <div class="rs__hero ct__empty">
+            <div class="ct__orb" aria-hidden="true">
+                <span class="rs__wave"></span>
+                <span class="rs__wave rs__wave--late"></span>
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+            <h2 class="rs__title">{{ __('frontend.cart.empty_head') }}</h2>
+            <p class="rs__msg">{{ __('frontend.cart.empty_text') }}</p>
+            <div class="rs__actions">
+                <a href="{{ route('points.topup') }}" class="btn btn--primary">
+                    <i class="fas fa-bolt" aria-hidden="true"></i>
+                    {{ __('frontend.cart.none_buy') }}
+                </a>
+                <a href="{{ route('product-lists') }}" class="btn btn--ghost">
+                    <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                    {{ __('frontend.cart.none_browse') }}
                 </a>
             </div>
-
-            <div class="ct__trust">
-                <p>
-                    <i class="fas fa-lock" aria-hidden="true"></i>
-                    <span>{{ __('frontend.cart.secure') }}</span>
-                </p>
-                <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.cart.pay_alt') }}" loading="lazy">
-            </div>
-        @else
-            <div class="ct-empty">
-                <div class="ct-empty__slots" aria-hidden="true">
-                    <span></span><span></span><span></span>
-                </div>
-                <span class="ct-empty__icon" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
-                <h2 class="ct-empty__title">{{ __('frontend.cart.empty_head') }}</h2>
-                <p class="ct-empty__desc">{{ __('frontend.cart.empty_text') }}</p>
-                <div class="ct-empty__actions">
-                    <a href="{{ route('points.topup') }}" class="btn btn--primary">
-                        <i class="fas fa-bolt" aria-hidden="true"></i>
-                        <span>{{ __('frontend.cart.none_buy') }}</span>
-                    </a>
-                    <a href="{{ route('product-lists') }}" class="btn btn--secondary">
-                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                        <span>{{ __('frontend.cart.none_browse') }}</span>
-                    </a>
-                </div>
-            </div>
-        @endif
-
-    </div>
+        </div>
+    @endif
 </section>
 @endsection

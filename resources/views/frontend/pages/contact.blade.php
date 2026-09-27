@@ -16,10 +16,10 @@
     $ctCompany = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
 @endphp
 
-<section class="contact">
-    <div class="contact__wrap">
-        <aside class="contact__info">
-            <p class="auth__badge">{{ __('frontend.contact.badge') }}</p>
+<section class="auth contact">
+    <div class="auth__shell">
+        <aside class="auth__side">
+            <span class="eyebrow">{{ __('frontend.contact.badge') }}</span>
             <h2 class="auth__title">{{ __('frontend.contact.heading') }}</h2>
             <p class="auth__lead">{{ __('frontend.contact.lead') }}</p>
 
@@ -47,9 +47,9 @@
                 </li>
             </ul>
 
-            <div class="contact__reasons">
-                <p class="contact__reasons-title">{{ __('frontend.contact.reasons') }}</p>
-                <ul class="contact__reasons-list">
+            <div class="contact__topics">
+                <p class="contact__topics-title">{{ __('frontend.contact.reasons') }}</p>
+                <ul class="contact__chips">
                     @foreach(__('frontend.contact.asks') as $topic)
                         <li>{{ $topic }}</li>
                     @endforeach
@@ -57,12 +57,11 @@
             </div>
         </aside>
 
-        <div class="contact__form">
+        <div class="auth__main">
             <form method="POST" action="{{ route('contact.send') }}" id="contactform" novalidate>
                 @csrf
 
                 <div class="auth__fields">
-
                     <div class="fld">
                         <label class="fld__label" for="name">{{ __('frontend.contact.name_label') }}</label>
                         <div class="fld__box">
@@ -134,7 +133,7 @@
                         </div>
                     @endif
 
-                    <button type="submit" class="btn btn--primary btn--block">
+                    <button type="submit" class="btn btn--primary btn--block auth__submit">
                         {{ __('frontend.contact.send') }}
                         <i class="fas fa-paper-plane" aria-hidden="true"></i>
                     </button>

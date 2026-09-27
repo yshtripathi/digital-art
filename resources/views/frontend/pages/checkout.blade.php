@@ -22,27 +22,25 @@
 @endphp
 
 <section class="co">
+    <ol class="steps">
+        <li class="steps__item is-done">
+            <span class="steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>
+            <span class="steps__label">{{ __('frontend.cart.st_cart') }}</span>
+        </li>
+        <li class="steps__line is-done" aria-hidden="true"></li>
+        <li class="steps__item is-active" aria-current="step">
+            <span class="steps__no">2</span>
+            <span class="steps__label">{{ __('frontend.cart.st_pay') }}</span>
+        </li>
+        <li class="steps__line" aria-hidden="true"></li>
+        <li class="steps__item">
+            <span class="steps__no">3</span>
+            <span class="steps__label">{{ __('frontend.cart.st_done') }}</span>
+        </li>
+    </ol>
+
     <div class="co__grid">
-
         <div class="co__main">
-
-            <ol class="steps">
-                <li class="steps__item is-done">
-                    <span class="steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>
-                    <span class="steps__label">{{ __('frontend.cart.st_cart') }}</span>
-                </li>
-                <li class="steps__line is-done" aria-hidden="true"></li>
-                <li class="steps__item is-active" aria-current="step">
-                    <span class="steps__no">2</span>
-                    <span class="steps__label">{{ __('frontend.cart.st_pay') }}</span>
-                </li>
-                <li class="steps__line" aria-hidden="true"></li>
-                <li class="steps__item">
-                    <span class="steps__no">3</span>
-                    <span class="steps__label">{{ __('frontend.cart.st_done') }}</span>
-                </li>
-            </ol>
-
             <form name="frmCheckout" id="frmCheckout" method="POST" action="{{ route('cart.order') }}" novalidate>
                 @csrf
 
@@ -50,7 +48,8 @@
 
                     <div class="panel">
                         <div class="panel__head">
-                            <span class="panel__num">01</span>
+                            <span class="panel__num num">01</span>
+                            <span class="panel__icon" aria-hidden="true"><i class="fas fa-id-card"></i></span>
                             <h2 class="panel__title">{{ __('frontend.checkout.sec_billing') }}</h2>
                         </div>
                         <div class="panel__body">
@@ -395,7 +394,8 @@
 
                     <div class="panel">
                         <div class="panel__head">
-                            <span class="panel__num">02</span>
+                            <span class="panel__num num">02</span>
+                            <span class="panel__icon" aria-hidden="true"><i class="fas fa-pen"></i></span>
                             <h2 class="panel__title">{{ __('frontend.checkout.sec_extra') }}</h2>
                         </div>
                         <div class="panel__body">
@@ -411,7 +411,8 @@
 
                     <div class="panel">
                         <div class="panel__head">
-                            <span class="panel__num">03</span>
+                            <span class="panel__num num">03</span>
+                            <span class="panel__icon" aria-hidden="true"><i class="fas fa-credit-card"></i></span>
                             <h2 class="panel__title">{{ __('frontend.checkout.sec_card') }}</h2>
                         </div>
                         <div class="panel__body">
@@ -461,7 +462,8 @@
 
                     <div class="panel">
                         <div class="panel__head">
-                            <span class="panel__num">04</span>
+                            <span class="panel__num num">04</span>
+                            <span class="panel__icon" aria-hidden="true"><i class="fas fa-file-signature"></i></span>
                             <h2 class="panel__title">{{ __('frontend.checkout.sec_terms') }}</h2>
                         </div>
                         <div class="panel__body">
@@ -520,11 +522,6 @@
                                 </ul>
                             </div>
 
-                            <div class="dba">
-                                <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                <p>{{ __('frontend.checkout.dba_text') }} <img class="dba__img" src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('frontend.checkout.dba_alt') }}" width="83" height="33"></p>
-                            </div>
-
                             @if(env('CAPTCHA_ENABLED', true))
                                 <div class="fld co__captcha">
                                     <label class="fld__label" for="captcha">{{ __('frontend.checkout.code_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
@@ -547,7 +544,7 @@
         <aside class="co__rail">
             <div class="sum">
                 <div class="sum__head">
-                    <span class="panel__num"><i class="fas fa-shopping-bag" aria-hidden="true"></i></span>
+                    <span class="sum__badge" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
                     <h2 class="sum__title">{{ __('frontend.checkout.sum_title') }}</h2>
                 </div>
 
@@ -567,12 +564,17 @@
                     @endif
 
                     <div class="sum__total">
-                        <span>{{ __('frontend.checkout.sum_total') }}:</span>
+                        <span>{{ __('frontend.checkout.sum_total') }}</span>
                         <strong>{{ $coSymbol }}{{ number_format($coTotal, $coDecimals, '.', ',') }}</strong>
                     </div>
                 </div>
 
                 <div class="sum__foot">
+                    <p class="co__bill">
+                        {{ __('frontend.checkout.dba_text') }}
+                        <img class="co__bill-img" src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('frontend.checkout.dba_alt') }}" width="83" height="33">
+                    </p>
+
                     <button type="submit" form="frmCheckout" class="btn btn--primary btn--block sum__pay" id="button-confirm">
                         <i class="fas fa-lock" aria-hidden="true"></i>
                         {{ __('frontend.checkout.go_pay') }}

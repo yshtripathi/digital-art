@@ -548,7 +548,7 @@
 
                 <p class="co__bill">
                     {{ __('frontend.checkout.dba_text') }}
-                    <img class="co__bill-img" src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('frontend.checkout.dba_alt') }}" width="83" height="33">
+                    <img class="co__bill-img" src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('frontend.checkout.dba_alt') }}" width="112" height="32">
                 </p>
 
                 <button type="submit" form="frmCheckout" class="btn btn--primary btn--block sum__pay" id="button-confirm">

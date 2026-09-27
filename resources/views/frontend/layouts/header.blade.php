@@ -18,7 +18,7 @@
 <header class="nav" data-hd>
     <div class="nav__bar">
         <a href="{{ route('home') }}" class="nav__brand">
-            <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $siteName }}" width="890" height="240">
+            <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $siteName }}" width="801" height="240">
         </a>
 
         <nav class="nav__menu is-desktop" aria-label="{{ __('frontend.header.nav_main') }}">

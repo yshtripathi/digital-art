@@ -8,8 +8,9 @@
     $hoCourses = collect($product_lists ?? [])->filter(fn ($c) => !empty($c->photo))->values();
     $hoCourses = $hoCourses->where('is_featured', 1)
         ->concat($hoCourses->where('is_featured', '!=', 1))
-        ->take(20)
+        ->take(15)
         ->values();
+    $hoPages = $hoCourses->chunk(5)->values();
 
     $hoMaterials = \App\Models\Product::where('status', 'active')->count();
     $hoLevels = \App\Models\ProductLevel::whereIn('course_id', \App\Models\Product::where('status', 'active')->pluck('id'))->count();
@@ -22,6 +23,7 @@
     } else {
         $hoTiers = [['tier_standard', '$1 – $499', 'x1'], ['tier_premium', '$500 – $999', 'x2'], ['tier_elite', '$1,000 – $1,499', 'x2.5'], ['tier_vip', '$1,500+', 'x3']];
     }
+    $hoTierIcons = ['fa-feather', 'fa-star', 'fa-gem', 'fa-crown'];
 
     $hoSteps = [
         ['t' => 'how1', 'd' => 'how1_text', 'i' => 'fa-compass'],
@@ -33,277 +35,229 @@
         ['t' => 'why1', 'd' => 'why1_text', 'i' => 'fa-eye'],
         ['t' => 'why2', 'd' => 'why2_text', 'i' => 'fa-coins'],
         ['t' => 'why3', 'd' => 'why3_text', 'i' => 'fa-clock'],
-        ['t' => 'why4', 'd' => 'why4_text', 'i' => 'fa-comment-dots'],
+        ['t' => 'why4', 'd' => 'why4_text', 'i' => 'fa-shield-alt'],
     ];
+    $hoGlyphs = ['₿', 'Ξ', '₮', '◎', 'Ł', 'Ð', '₳'];
+    $hoPills = collect(__('frontend.head.terms'))->take(6)->values();
+    $hoPillSpots = [[62, 18], [86, 30], [58, 62], [90, 70], [70, 86], [78, 8]];
 @endphp
 
-<section class="hx" aria-labelledby="hxTitle">
-    <div class="hx__media" aria-hidden="true">
-        <video class="hx__video" autoplay muted loop playsinline preload="metadata" poster="{{ asset('assets/images/home-hero.webp') }}" data-hp-video>
-            <source src="{{ asset('assets/videos/home-hero.mp4') }}" type="video/mp4">
-        </video>
-    </div>
-    <span class="hx__shade" aria-hidden="true"></span>
-
-    <div class="hx__wrap">
-        <div class="hx__text">
-            <span class="hx__tag">
-                <span class="hx__dot" aria-hidden="true"></span>
-                {{ __('frontend.home.hero_tag') }}
+<section class="hm-hero" aria-labelledby="hmTitle">
+    <div class="hm-hero__pills" aria-hidden="true">
+        @foreach($hoPills as $pill)
+            <span class="hm-pill" style="--x: {{ $hoPillSpots[$loop->index][0] }}%; --y: {{ $hoPillSpots[$loop->index][1] }}%; --d: {{ $loop->index * -1.4 }}s">
+                <span class="hm-pill__dot"></span>{{ $pill }}
             </span>
-            <h1 id="hxTitle" class="hx__title">{{ __('frontend.home.hero_title') }}</h1>
-            <p class="hx__lead">{{ __('frontend.home.hero_lead') }}</p>
-            <div class="hx__cta">
-                <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                    <span>{{ __('frontend.home.hero_go') }}</span>
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-                <a href="{{ route('points.topup') }}" class="btn btn--ghost hx__ghost">{{ __('frontend.home.hero_buy') }}</a>
-            </div>
-            <p class="hx__safe">
-                <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                {{ __('frontend.home.hero_note') }}
-            </p>
-        </div>
-
-        <ul class="hx__stats">
-            <li class="hx-stat">
-                <strong class="num">{{ number_format($hoMaterials) }}</strong>
-                <span>{{ __('frontend.home.stat_mat') }}</span>
-            </li>
-            <li class="hx-stat">
-                <strong class="num">{{ number_format($hoCategories->count()) }}</strong>
-                <span>{{ __('frontend.home.stat_cat') }}</span>
-            </li>
-            <li class="hx-stat">
-                <strong class="num">{{ number_format($hoLevels) }}</strong>
-                <span>{{ __('frontend.home.stat_lvl') }}</span>
-            </li>
-        </ul>
-    </div>
-
-    <button type="button" class="hx__toggle" aria-label="{{ __('frontend.home.pause') }}" data-pause="{{ __('frontend.home.pause') }}" data-play="{{ __('frontend.home.play') }}" data-hp-toggle>
-        <i class="fas fa-pause" aria-hidden="true"></i>
-    </button>
-</section>
-
-<div class="hx-tape" aria-hidden="true">
-    <div class="hx-tape__track">
-        @foreach([1, 2] as $copy)
-            @foreach(__('frontend.head.terms') as $term)
-                <span class="pre__term {{ $loop->odd ? 'is-up' : 'is-down' }}">{{ $term }}</span>
-            @endforeach
         @endforeach
     </div>
-</div>
+
+    <div class="hm-hero__copy">
+        <span class="hm-hero__tag" data-rise><i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.home.hero_tag') }}</span>
+        <h1 id="hmTitle" class="hm-hero__title" data-rise>{{ __('frontend.home.hero_title') }}</h1>
+        <p class="hm-hero__lead" data-rise>{{ __('frontend.home.hero_lead') }}</p>
+
+        <div class="hm-hero__acts" data-rise>
+            <a href="{{ route('product-lists') }}" class="btn btn--primary">
+                <span>{{ __('frontend.home.hero_go') }}</span>
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+            <a href="{{ route('points.topup') }}" class="btn btn--ghost">
+                <i class="fas fa-coins" aria-hidden="true"></i>
+                {{ __('frontend.home.hero_buy') }}
+            </a>
+        </div>
+
+        <dl class="hm-stats" data-rise>
+            <div class="hm-stat">
+                <dt>{{ __('frontend.home.stat_mat') }}</dt>
+                <dd class="num" data-count="{{ $hoMaterials }}">{{ number_format($hoMaterials) }}</dd>
+            </div>
+            <div class="hm-stat">
+                <dt>{{ __('frontend.home.stat_cat') }}</dt>
+                <dd class="num" data-count="{{ $hoCategories->count() }}">{{ number_format($hoCategories->count()) }}</dd>
+            </div>
+            <div class="hm-stat">
+                <dt>{{ __('frontend.home.stat_lvl') }}</dt>
+                <dd class="num" data-count="{{ $hoLevels }}">{{ number_format($hoLevels) }}</dd>
+            </div>
+        </dl>
+
+        <p class="hm-hero__note" data-rise>
+            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+            {{ __('frontend.home.hero_note') }}
+        </p>
+    </div>
+</section>
 
 @if($hoCourses->count())
-    <section class="hb" aria-labelledby="hbTitle">
-        <div class="hb__wrap">
-            <header class="hb__head">
-                <div>
-                    <span class="eyebrow">{{ __('frontend.home.pick_tag') }}</span>
-                    <h2 id="hbTitle" class="hb__title">{{ __('frontend.home.pick_title') }}</h2>
-                </div>
-                <a href="{{ route('product-lists') }}" class="auth__back hb__all">
+    <section class="hm-pick" aria-labelledby="hmPickTitle" data-deck>
+        <div class="hm-head" data-rise>
+            <div>
+                <span class="hm-head__tag">{{ __('frontend.home.pick_tag') }}</span>
+                <h2 id="hmPickTitle" class="hm-head__title">{{ __('frontend.home.pick_title') }}</h2>
+            </div>
+            <div class="hm-deck__nav">
+                @if($hoPages->count() > 1)
+                    <button type="button" class="hm-deck__arrow" aria-label="{{ __('frontend.home.pick_prev') }}" data-deck-prev><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+                    <div class="hm-deck__dots" role="tablist" aria-label="{{ __('frontend.home.pick_title') }}">
+                        @foreach($hoPages as $p => $page)
+                            <button type="button" class="hm-deck__dot {{ $p === 0 ? 'is-active' : '' }}" role="tab" aria-selected="{{ $p === 0 ? 'true' : 'false' }}" aria-label="{{ $p + 1 }} / {{ $hoPages->count() }}" data-deck-dot="{{ $p }}">
+                                <span class="num">{{ str_pad($p + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                <span class="hm-deck__bar" aria-hidden="true"><span></span></span>
+                            </button>
+                        @endforeach
+                    </div>
+                    <button type="button" class="hm-deck__arrow" aria-label="{{ __('frontend.home.pick_next') }}" data-deck-next><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                @endif
+                <a href="{{ route('product-lists') }}" class="hm-deck__all">
                     {{ __('frontend.home.pick_all') }}
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
-            </header>
+            </div>
+        </div>
 
-            <div class="hk" data-deck>
-                <ul class="hk__stage" aria-roledescription="carousel" aria-label="{{ __('frontend.home.pick_title') }}">
-                    @foreach($hoCourses as $course)
+        <div class="hm-deck" data-deck-stage>
+            @foreach($hoPages as $p => $page)
+                <ul class="hm-page {{ $p === 0 ? 'is-active' : '' }}" data-deck-page @if($p !== 0) aria-hidden="true" @endif>
+                    @foreach($page->values() as $t => $course)
                         @php
                             $pimg = explode(',', $course->photo)[0];
                             $lvCount = $course->levels ? $course->levels->count() : 0;
                             $minPoints = $lvCount ? $course->levels->min('price_in_points') : 0;
                             $catTitle = optional($course->cat_info)->title;
+                            $isBig = $t === 0;
                         @endphp
-                        <li class="hk-card" data-deck-card aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $hoCourses->count() }}">
-                            <a href="{{ route('product-detail', $course->slug) }}" class="hk-card__link">
-                                <span class="hk-card__media">
-                                    <img src="{{ asset(ltrim($pimg, '/')) }}" alt="" width="1200" height="896" loading="{{ $loop->index < 3 ? 'eager' : 'lazy' }}" decoding="async">
-                                    <span class="hk-card__num num" aria-hidden="true">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
-                                    @if($lvCount)
-                                        <span class="cg-card__signal">
-                                            <span class="cg-card__bars" aria-hidden="true">
-                                                @for($b = 1; $b <= 4; $b++)
-                                                    <span class="{{ $b <= min($lvCount, 4) ? 'is-on' : '' }}"></span>
-                                                @endfor
-                                            </span>
-                                            {{ trans_choice('frontend.home.levels', $lvCount, ['count' => $lvCount]) }}
-                                        </span>
-                                    @endif
-                                </span>
-                                <span class="hk-card__body">
+                        <li class="hm-tile {{ $isBig ? 'hm-tile--big' : '' }}" style="--i: {{ $t }}">
+                            <a href="{{ route('product-detail', $course->slug) }}" class="hm-tile__link" @if($p !== 0) tabindex="-1" @endif>
+                                <img class="hm-tile__img" src="{{ asset(ltrim($pimg, '/')) }}" alt="" width="1200" height="896" loading="{{ $p === 0 ? 'eager' : 'lazy' }}" decoding="async">
+                                <span class="hm-tile__shade" aria-hidden="true"></span>
+                                <span class="hm-tile__top">
                                     @if($catTitle)
-                                        <span class="cg-card__cat">{{ $catTitle }}</span>
+                                        <span class="hm-tile__cat">{{ $catTitle }}</span>
                                     @endif
-                                    <span class="hk-card__title">{{ $course->title }}</span>
-                                    @if($course->summary)
-                                        <span class="hk-card__desc">{{ \Illuminate\Support\Str::limit(strip_tags($course->summary), 130) }}</span>
+                                    <span class="hm-tile__num num" aria-hidden="true">{{ str_pad($p * 5 + $t + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                </span>
+                                <span class="hm-tile__body">
+                                    <span class="hm-tile__title">{{ $course->title }}</span>
+                                    @if($isBig && $course->summary)
+                                        <span class="hm-tile__desc">{{ \Illuminate\Support\Str::limit(strip_tags($course->summary), 150) }}</span>
                                     @endif
-                                    <span class="cg-card__foot">
-                                        @if($minPoints)
-                                            <span class="cg-card__price">
-                                                <small>{{ __('frontend.home.from') }}</small>
-                                                <strong><span class="num">{{ number_format($minPoints) }}</span> <em>{{ __('frontend.home.unit') }}</em></strong>
+                                    <span class="hm-tile__meta">
+                                        @if($lvCount)
+                                            <span class="hm-tile__lv">
+                                                <span class="mat__meter" aria-hidden="true">
+                                                    @for($b = 1; $b <= min($lvCount, 6); $b++)
+                                                        <span style="--b: {{ $b }}"></span>
+                                                    @endfor
+                                                </span>
+                                                {{ trans_choice('frontend.home.levels', $lvCount, ['count' => $lvCount]) }}
                                             </span>
                                         @endif
-                                        <span class="cg-card__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
-                                        <span class="vh">{{ __('frontend.home.pick_open') }}</span>
+                                        @if($minPoints)
+                                            <span class="hm-tile__price">
+                                                <i class="fas fa-coins" aria-hidden="true"></i>
+                                                <small>{{ __('frontend.home.from') }}</small>
+                                                <strong class="num">{{ number_format($minPoints) }}</strong>
+                                                <em>{{ __('frontend.home.unit') }}</em>
+                                            </span>
+                                        @endif
                                     </span>
                                 </span>
+                                <span class="hm-tile__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                                <span class="vh">{{ __('frontend.home.pick_open') }}</span>
                             </a>
                         </li>
                     @endforeach
                 </ul>
-
-                <div class="hk__controls">
-                    <button type="button" class="hk__arrow" aria-label="{{ __('frontend.home.pick_prev') }}" data-deck-prev>
-                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                    </button>
-                    <div class="hk__dots">
-                        @foreach($hoCourses as $course)
-                            <button type="button" class="hk__dot" aria-label="{{ $loop->iteration }} / {{ $hoCourses->count() }}" data-deck-dot="{{ $loop->index }}"><span></span></button>
-                        @endforeach
-                    </div>
-                    <span class="hk__count num" aria-live="polite" data-deck-count>01 / {{ str_pad($hoCourses->count(), 2, '0', STR_PAD_LEFT) }}</span>
-                    <button type="button" class="hk__arrow" aria-label="{{ __('frontend.home.pick_next') }}" data-deck-next>
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
 @endif
 
-<section class="hs" aria-labelledby="hsTitle">
-    <img class="hs__candles" src="{{ asset('assets/images/home-candles.webp') }}" alt="" width="1800" height="692" loading="lazy" decoding="async">
-    <div class="hs__wrap">
-        <header class="hs__head">
-            <span class="eyebrow">{{ __('frontend.home.how_tag') }}</span>
-            <h2 id="hsTitle" class="hs__title">{{ __('frontend.home.how_title') }}</h2>
-            <p class="hs__text">{{ __('frontend.home.how_text') }}</p>
-        </header>
+<section class="hm-how" aria-labelledby="hmHowTitle">
+    <div class="hm-head" data-rise>
+        <div>
+            <span class="hm-head__tag">{{ __('frontend.home.how_tag') }}</span>
+            <h2 id="hmHowTitle" class="hm-head__title">{{ __('frontend.home.how_title') }}</h2>
+            <p class="hm-head__text">{{ __('frontend.home.how_text') }}</p>
+        </div>
+    </div>
 
-        <ol class="hs-stairs">
-            @foreach($hoSteps as $i => $s)
-                <li class="hs-step" style="--i: {{ $i }}">
-                    <span class="hs-step__top">
-                        <span class="hs-step__icon" aria-hidden="true"><i class="fas {{ $s['i'] }}"></i></span>
-                        <span class="hs-step__num num" aria-hidden="true">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                    </span>
-                    <h3 class="hs-step__title">{{ __('frontend.home.' . $s['t']) }}</h3>
-                    <p class="hs-step__text">{{ __('frontend.home.' . $s['d']) }}</p>
+    <div class="hm-how__grid">
+        <ol class="hm-chain">
+            @foreach($hoSteps as $s)
+                <li class="hm-step" style="--i: {{ $loop->index }}" data-rise>
+                    <span class="hm-step__icon" aria-hidden="true"><i class="fas {{ $s['i'] }}"></i></span>
+                    <span class="hm-step__num num" aria-hidden="true">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                    <h3 class="hm-step__title">{{ __('frontend.home.' . $s['t']) }}</h3>
+                    <p class="hm-step__text">{{ __('frontend.home.' . $s['d']) }}</p>
                 </li>
             @endforeach
         </ol>
-    </div>
-</section>
 
-<section class="hc" aria-labelledby="hcTitle">
-    <div class="hc__wrap">
-        <figure class="hc__visual">
-            <img src="{{ asset('assets/images/home-credits.webp') }}" alt="{{ __('frontend.home.wal_img') }}" width="900" height="1317" loading="lazy" decoding="async">
-        </figure>
-
-        <div class="hc__body">
-            <span class="eyebrow">{{ __('frontend.home.wal_tag') }}</span>
-            <h2 id="hcTitle" class="hc__title">{{ __('frontend.home.wal_title') }}</h2>
-            <p class="hc__text">{{ __('frontend.home.wal_text') }}</p>
-
-            <div class="hc-card">
-                <div class="hc-card__top">
-                    <span class="hc-card__label">
-                        <i class="fas fa-receipt" aria-hidden="true"></i>
-                        {{ __('frontend.home.wal_card') }}
-                    </span>
-                    <span class="hc-card__valid">
-                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                        {{ rtrim(__('frontend.topup.valid_days'), '.。') }}
-                    </span>
-                </div>
-                <div class="rs__tear hc-card__tear" aria-hidden="true"></div>
-                <table class="hc-card__table">
-                    <thead>
-                        <tr>
-                            <th scope="col">{{ __('frontend.topup.th_tier') }}</th>
-                            <th scope="col">{{ __('frontend.topup.th_pay') }}</th>
-                            <th scope="col">{{ __('frontend.topup.res_mult') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($hoTiers as [$tier, $range, $mult])
-                            <tr class="{{ $loop->last ? 'is-top' : '' }}">
-                                <th scope="row">{{ __('frontend.topup.' . $tier) }}</th>
-                                <td class="num">{!! $range !!}</td>
-                                <td><span class="hc-card__mult num">{{ $mult }}</span></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <a href="{{ route('points.topup') }}" class="btn btn--primary">
-                <span>{{ __('frontend.home.wal_go') }}</span>
-                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-            </a>
-        </div>
-    </div>
-</section>
-
-<section class="hy" aria-labelledby="hyTitle">
-    <div class="hy__wrap">
-        <figure class="hy__photo">
-            <img src="{{ asset('assets/images/home-why.webp') }}" alt="{{ __('frontend.home.why_img') }}" width="1400" height="933" loading="lazy" decoding="async">
-            <figcaption class="hy__chip">
-                <i class="fas fa-eye" aria-hidden="true"></i>
-                {{ __('frontend.home.why1') }}
-            </figcaption>
-        </figure>
-
-        <div class="hy__body">
-            <span class="eyebrow">{{ __('frontend.home.why_tag') }}</span>
-            <h2 id="hyTitle" class="hy__title">{{ __('frontend.home.why_title') }}</h2>
-            <ul class="hy-grid">
+        <aside class="hm-why" aria-labelledby="hmWhyTitle" data-rise>
+            <span class="hm-head__tag">{{ __('frontend.home.why_tag') }}</span>
+            <h3 id="hmWhyTitle" class="hm-why__title">{{ __('frontend.home.why_title') }}</h3>
+            <ul class="hm-why__list">
                 @foreach($hoWhy as $w)
-                    <li class="hy-card" style="--i: {{ $loop->index }}">
-                        <span class="hy-card__head">
-                            <span class="hy-card__icon" aria-hidden="true"><i class="fas {{ $w['i'] }}"></i></span>
-                            <span class="hy-card__num num" aria-hidden="true">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                    <li>
+                        <span class="hm-why__icon" aria-hidden="true"><i class="fas {{ $w['i'] }}"></i></span>
+                        <span>
+                            <strong>{{ __('frontend.home.' . $w['t']) }}</strong>
+                            <span>{{ __('frontend.home.' . $w['d']) }}</span>
                         </span>
-                        <strong class="hy-card__name">{{ __('frontend.home.' . $w['t']) }}</strong>
-                        <span class="hy-card__text">{{ __('frontend.home.' . $w['d']) }}</span>
                     </li>
                 @endforeach
             </ul>
-        </div>
+        </aside>
     </div>
 </section>
 
-<section class="he" aria-labelledby="heTitle">
-    <div class="he__band">
-        <div class="he__body">
-            <span class="eyebrow">{{ __('frontend.home.end_tag') }}</span>
-            <h2 id="heTitle" class="he__title">{{ __('frontend.home.end_title') }}</h2>
-            <p class="he__text">{{ __('frontend.home.end_text') }}</p>
-            <div class="he__cta">
-                <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                    <span>{{ __('frontend.home.hero_go') }}</span>
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-                @guest
-                    <a href="{{ route('register.form') }}" class="btn btn--ghost">{{ __('frontend.home.end_join') }}</a>
-                @else
-                    <a href="{{ route('points.topup') }}" class="btn btn--ghost">{{ __('frontend.home.hero_buy') }}</a>
-                @endguest
-            </div>
+<section class="hm-credits" aria-labelledby="hmCreditsTitle">
+    <div class="hm-credits__box" data-rise>
+        <div class="hm-credits__copy">
+            <span class="hm-head__tag">{{ __('frontend.home.wal_tag') }}</span>
+            <h2 id="hmCreditsTitle" class="hm-head__title">{{ __('frontend.home.wal_title') }}</h2>
+            <p class="hm-head__text">{{ __('frontend.home.wal_text') }}</p>
+            <a href="{{ route('points.topup') }}" class="btn btn--primary">
+                <i class="fas fa-calculator" aria-hidden="true"></i>
+                {{ __('frontend.home.wal_go') }}
+            </a>
         </div>
-        <figure class="he__photo">
-            <img src="{{ asset('assets/images/home-cta.webp') }}" alt="{{ __('frontend.home.end_img') }}" width="1920" height="1280" loading="lazy" decoding="async">
-        </figure>
+
+        <div class="hm-bars" role="list" aria-label="{{ __('frontend.home.wal_card') }}">
+            @foreach($hoTiers as [$tier, $range, $mult])
+                <div class="hm-bar {{ $loop->last ? 'is-top' : '' }}" role="listitem" style="--p: {{ [0.34, 0.58, 0.76, 1][$loop->index] }}; --i: {{ $loop->index }}">
+                    <span class="hm-bar__track">
+                        <strong class="hm-bar__mult num">{{ $mult }}</strong>
+                        <span class="hm-bar__col" aria-hidden="true">
+                            <i class="fas {{ $hoTierIcons[$loop->index] }}"></i>
+                        </span>
+                    </span>
+                    <span class="hm-bar__name">{{ __('frontend.topup.' . $tier) }}</span>
+                    <span class="hm-bar__range num">{!! $range !!}</span>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <div class="hm-end" data-rise>
+        <div>
+            <span class="hm-head__tag">{{ __('frontend.home.end_tag') }}</span>
+            <h2 class="hm-end__title">{{ __('frontend.home.end_title') }}</h2>
+            <p class="hm-end__text">{{ __('frontend.home.end_text') }}</p>
+        </div>
+        <div class="hm-end__acts">
+            <a href="{{ route('product-lists') }}" class="btn btn--primary">
+                <span>{{ __('frontend.home.hero_go') }}</span>
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+            @guest
+                <a href="{{ route('register.form') }}" class="btn btn--ghost">{{ __('frontend.home.end_join') }}</a>
+            @else
+                <a href="{{ route('points.topup') }}" class="btn btn--ghost">{{ __('frontend.home.hero_buy') }}</a>
+            @endguest
+        </div>
     </div>
 </section>
 
@@ -316,115 +270,115 @@
 
     var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    var deck = document.querySelector('[data-deck]');
-    if (deck) {
-        var cards = Array.prototype.slice.call(deck.querySelectorAll('[data-deck-card]'));
-        var dots = Array.prototype.slice.call(deck.querySelectorAll('[data-deck-dot]'));
-        var count = deck.querySelector('[data-deck-count]');
-        var total = cards.length;
-        var active = 0;
-        var timer = null;
-        var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-        var narrow = window.matchMedia('(max-width: 767.98px)');
-
-        var render = function () {
-            var shift = narrow.matches ? 78 : 62;
-            cards.forEach(function (card, i) {
-                var d = i - active;
-                if (d > total / 2) { d -= total; }
-                if (d < -total / 2) { d += total; }
-                var far = Math.abs(d);
-                var on = d === 0;
-                card.style.setProperty('--x', (d * shift) + '%');
-                card.style.setProperty('--s', Math.max(0.6, 1 - far * 0.14));
-                card.style.setProperty('--r', (d * -16) + 'deg');
-                card.style.setProperty('--z', 10 - far);
-                card.style.setProperty('--o', far > 2 ? 0 : 1 - far * 0.3);
-                card.classList.toggle('is-active', on);
-                card.classList.toggle('is-hidden', far > 2);
-                card.setAttribute('aria-hidden', on ? 'false' : 'true');
-                var link = card.querySelector('a');
-                if (link) { link.setAttribute('tabindex', on ? '0' : '-1'); }
-            });
-            dots.forEach(function (dot, i) {
-                dot.classList.toggle('is-active', i === active);
-                dot.setAttribute('aria-current', i === active ? 'true' : 'false');
-            });
-            if (count) { count.textContent = pad(active + 1) + ' / ' + pad(total); }
-        };
-
-        var go = function (to) {
-            active = (to + total) % total;
-            render();
-        };
-
-        var stop = function () { clearInterval(timer); timer = null; };
-        var play = function () {
-            stop();
-            if (calm || total < 2) { return; }
-            timer = setInterval(function () { go(active + 1); }, 5000);
-        };
-
-        deck.querySelector('[data-deck-prev]').addEventListener('click', function () { go(active - 1); });
-        deck.querySelector('[data-deck-next]').addEventListener('click', function () { go(active + 1); });
-        dots.forEach(function (dot, i) { dot.addEventListener('click', function () { go(i); }); });
-
-        cards.forEach(function (card, i) {
-            card.addEventListener('click', function (event) {
-                if (i !== active) {
-                    event.preventDefault();
-                    go(i);
+    var risers = document.querySelectorAll('[data-rise]');
+    if ('IntersectionObserver' in window && !calm) {
+        var watch = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-in');
+                    watch.unobserve(entry.target);
                 }
             });
+        }, { threshold: 0.15 });
+        risers.forEach(function (el) { el.classList.add('is-wait'); watch.observe(el); });
+    }
+
+    var counters = document.querySelectorAll('[data-count]');
+    counters.forEach(function (el) {
+        var goal = parseInt(el.getAttribute('data-count'), 10) || 0;
+        if (calm || goal === 0) { return; }
+        var start = null;
+        el.textContent = '0';
+        var step = function (time) {
+            if (!start) { start = time; }
+            var done = Math.min((time - start) / 1400, 1);
+            var eased = 1 - Math.pow(1 - done, 3);
+            el.textContent = Math.round(goal * eased).toLocaleString();
+            if (done < 1) { requestAnimationFrame(step); }
+        };
+        setTimeout(function () { requestAnimationFrame(step); }, 400);
+    });
+
+    var deck = document.querySelector('[data-deck]');
+    if (deck) {
+        var pages = Array.prototype.slice.call(deck.querySelectorAll('[data-deck-page]'));
+        var dots = Array.prototype.slice.call(deck.querySelectorAll('[data-deck-dot]'));
+        var stage = deck.querySelector('[data-deck-stage]');
+        var current = 0;
+        var timer = null;
+        var wait = 7000;
+
+        var show = function (index, dir) {
+            if (!pages.length) { return; }
+            var next = (index + pages.length) % pages.length;
+            if (next === current && pages[next].classList.contains('is-active')) { return; }
+            stage.setAttribute('data-dir', dir || (next > current ? 'next' : 'prev'));
+            pages.forEach(function (page, i) {
+                var on = i === next;
+                page.classList.toggle('is-active', on);
+                page.classList.toggle('is-leaving', i === current && !on);
+                if (on) { page.removeAttribute('aria-hidden'); } else { page.setAttribute('aria-hidden', 'true'); }
+                page.querySelectorAll('a').forEach(function (link) {
+                    if (on) { link.removeAttribute('tabindex'); } else { link.setAttribute('tabindex', '-1'); }
+                });
+            });
+            dots.forEach(function (dot, i) {
+                var on = i === next;
+                dot.classList.toggle('is-active', on);
+                dot.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+            current = next;
+            restart();
+        };
+
+        var restart = function () {
+            clearTimeout(timer);
+            deck.classList.remove('is-timing');
+            void deck.offsetWidth;
+            if (calm || pages.length < 2 || deck.classList.contains('is-held')) { return; }
+            deck.classList.add('is-timing');
+            timer = setTimeout(function () { show(current + 1, 'next'); }, wait);
+        };
+
+        var prev = deck.querySelector('[data-deck-prev]');
+        var next = deck.querySelector('[data-deck-next]');
+        if (prev) { prev.addEventListener('click', function () { show(current - 1, 'prev'); }); }
+        if (next) { next.addEventListener('click', function () { show(current + 1, 'next'); }); }
+        dots.forEach(function (dot) {
+            dot.addEventListener('click', function () { show(parseInt(dot.getAttribute('data-deck-dot'), 10)); });
+        });
+
+        var hold = function () { deck.classList.add('is-held'); clearTimeout(timer); deck.classList.remove('is-timing'); };
+        var release = function () { deck.classList.remove('is-held'); restart(); };
+        stage.addEventListener('mouseenter', hold);
+        stage.addEventListener('mouseleave', release);
+        stage.addEventListener('focusin', hold);
+        stage.addEventListener('focusout', release);
+
+        var startX = null;
+        stage.addEventListener('pointerdown', function (event) { startX = event.clientX; });
+        stage.addEventListener('pointerup', function (event) {
+            if (startX === null) { return; }
+            var moved = event.clientX - startX;
+            startX = null;
+            if (Math.abs(moved) > 50) { show(current + (moved < 0 ? 1 : -1), moved < 0 ? 'next' : 'prev'); }
         });
 
         deck.addEventListener('keydown', function (event) {
-            if (event.key === 'ArrowLeft') { event.preventDefault(); go(active - 1); }
-            if (event.key === 'ArrowRight') { event.preventDefault(); go(active + 1); }
+            if (event.key === 'ArrowRight') { show(current + 1, 'next'); }
+            if (event.key === 'ArrowLeft') { show(current - 1, 'prev'); }
         });
 
-        var startX = null;
-        deck.addEventListener('pointerdown', function (event) { startX = event.clientX; });
-        deck.addEventListener('pointerup', function (event) {
-            if (startX === null) { return; }
-            var moved = event.clientX - startX;
-            if (Math.abs(moved) > 50) { go(active + (moved < 0 ? 1 : -1)); }
-            startX = null;
-        });
-
-        deck.addEventListener('mouseenter', stop);
-        deck.addEventListener('mouseleave', play);
-        deck.addEventListener('focusin', stop);
-        deck.addEventListener('focusout', play);
-        window.addEventListener('resize', render);
-
-        render();
-        play();
-    }
-
-    document.querySelectorAll('[data-hp-video]').forEach(function (video) {
-        var toggle = document.querySelector('[data-hp-toggle]');
-        if (!toggle) { return; }
-
-        var icon = toggle.querySelector('i');
-
-        var paint = function () {
-            toggle.setAttribute('aria-label', video.paused ? toggle.dataset.play : toggle.dataset.pause);
-            icon.className = video.paused ? 'fas fa-play' : 'fas fa-pause';
-        };
-
-        if (calm) {
-            video.removeAttribute('autoplay');
-            video.pause();
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) { release(); } else { hold(); }
+                });
+            }, { threshold: 0.3 }).observe(stage);
+        } else {
+            restart();
         }
-
-        toggle.addEventListener('click', function () {
-            if (video.paused) { video.play(); } else { video.pause(); }
-        });
-        video.addEventListener('play', paint);
-        video.addEventListener('pause', paint);
-        paint();
-    });
+    }
 }());
 </script>
 @endpush

@@ -1,28 +1,31 @@
 <aside id="ck-consent" class="ck" role="region" aria-labelledby="ck-consent-title">
     <div class="ck__bar">
-        <span class="ck__icon" aria-hidden="true"><i class="fas fa-cookie-bite"></i></span>
-
-        <div class="ck__text">
+        <div class="ck__head">
+            <span class="ck__icon" aria-hidden="true">
+                <span class="ck__ring"></span>
+                <i class="fas fa-cookie-bite"></i>
+            </span>
             <h2 class="ck__title" id="ck-consent-title">@lang('cookieConsent::cookies.title')</h2>
-            <p class="ck__intro">
-                @lang('cookieConsent::cookies.intro')
-                @if($policy)
-                    @lang('cookieConsent::cookies.link', ['url' => $policy])
-                @endif
-            </p>
         </div>
 
-        <div class="ck__acts">
-            <button type="button" class="ck__more" data-ck-toggle="ck-consent-prefs">
-                <i class="fas fa-sliders-h" aria-hidden="true"></i>
-                <span>@lang('cookieConsent::cookies.customize')</span>
-                <i class="fas fa-chevron-down ck__chev" aria-hidden="true"></i>
-            </button>
+        <p class="ck__intro">
+            @lang('cookieConsent::cookies.intro')
+            @if($policy)
+                @lang('cookieConsent::cookies.link', ['url' => $policy])
+            @endif
+        </p>
 
+        <div class="ck__acts">
             @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'ck__btn ck__btn--soft'])
 
             @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'ck__btn ck__btn--main'])
         </div>
+
+        <button type="button" class="ck__more" data-ck-toggle="ck-consent-prefs">
+            <i class="fas fa-sliders-h" aria-hidden="true"></i>
+            <span>@lang('cookieConsent::cookies.customize')</span>
+            <i class="fas fa-chevron-down ck__chev" aria-hidden="true"></i>
+        </button>
     </div>
 
     <div class="ck__panel" id="ck-consent-prefs">
@@ -85,7 +88,7 @@
                 </div>
 
                 <div class="ck__save">
-                    <button type="submit" class="btn btn--primary">@lang('cookieConsent::cookies.save')</button>
+                    <button type="submit" class="btn btn--primary btn--block">@lang('cookieConsent::cookies.save')</button>
                 </div>
             </form>
         </div>

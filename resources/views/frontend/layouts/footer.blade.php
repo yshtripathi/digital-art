@@ -3,19 +3,32 @@
     $footCompany = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
     $footMail    = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
     $footAddress = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
+    $footJa      = session('app_locale') == 'ja' || app()->getLocale() == 'ja';
 @endphp
 
-
 <footer class="ft" data-ft>
-    <section class="ft__news" aria-labelledby="signup-title">
-        <div class="ft__card" data-reveal>
-            <div class="ft__news-in">
-                <p class="eyebrow">{{ __('frontend.footer.letter_tag') }}</p>
+    <div class="ft__tape" aria-hidden="true">
+        <div class="ft__track">
+            @foreach([1, 2] as $copy)
+                @foreach(__('frontend.head.terms') as $term)
+                    <span class="pre__term {{ $loop->odd ? 'is-up' : 'is-down' }}">{{ $term }}</span>
+                @endforeach
+            @endforeach
+        </div>
+    </div>
+
+    <div class="ft__wrap">
+        <section class="ft__news" aria-labelledby="signup-title" data-reveal>
+            <div class="ft__news-copy">
+                <span class="eyebrow">{{ __('frontend.footer.letter_tag') }}</span>
                 <h2 class="ft__title" id="signup-title">{{ __('frontend.footer.news_title') }}</h2>
                 <p class="ft__lead">{{ __('frontend.footer.news_text') }}</p>
+            </div>
 
+            <div class="ft__news-act">
                 <form class="ft__form" novalidate data-signup>
                     <label class="vh" for="signup-email">{{ __('frontend.footer.letter_field') }}</label>
+                    <i class="fas fa-envelope ft__form-icon" aria-hidden="true"></i>
                     <input type="email" name="email" id="signup-email" class="ft__input" placeholder="{{ __('frontend.footer.letter_ph') }}" autocomplete="email" required>
                     <button type="submit" class="btn btn--primary ft__send">
                         {{ __('frontend.footer.letter_send') }}
@@ -28,59 +41,23 @@
                     <span>{{ __('frontend.footer.letter_done') }}</span>
                 </p>
             </div>
+        </section>
 
-            <svg class="ft__chart" viewBox="0 0 240 180" aria-hidden="true" focusable="false">
-                <path class="ft__grid" d="M20 40 H228 M20 80 H228 M20 120 H228"/>
-                <path class="ft__axis" d="M20 12 V160 H228"/>
-                <rect class="ft__bar" x="36" y="120" width="28" height="40" rx="4"/>
-                <rect class="ft__bar" x="82" y="96" width="28" height="64" rx="4"/>
-                <rect class="ft__bar" x="128" y="72" width="28" height="88" rx="4"/>
-                <rect class="ft__bar" x="174" y="40" width="28" height="120" rx="4"/>
-                <polyline class="ft__trend" points="26,134 50,106 96,82 142,58 188,26"/>
-                <circle class="ft__goal" cx="188" cy="26" r="8"/>
-            </svg>
-        </div>
-    </section>
-
-    <div class="ft__base">
-        <div class="ft__grid-wrap">
+        <div class="ft__main">
             <div class="ft__brand" data-reveal>
                 <a href="{{ route('home') }}" class="ft__logo">
                     <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footSite }}" width="1146" height="240" loading="lazy">
                 </a>
-
-                <div class="ft__facts">
-                    <h2 class="ft__label">{{ __('frontend.footer.details') }}</h2>
-                    <dl class="ft__info">
-                        <div class="ft__fact">
-                            <i class="fas fa-building" aria-hidden="true"></i>
-                            <div>
-                                <dt>{{ __('frontend.footer.info_name') }}</dt>
-                                <dd>{{ $footCompany }}</dd>
-                            </div>
-                        </div>
-                        <div class="ft__fact">
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
-                            <div>
-                                <dt>{{ __('frontend.footer.info_mail') }}</dt>
-                                <dd><a href="mailto:{{ $footMail }}">{{ $footMail }}</a></dd>
-                            </div>
-                        </div>
-                        <div class="ft__fact">
-                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                            <div>
-                                <dt>{{ __('frontend.footer.info_place') }}</dt>
-                                <dd>{{ $footAddress }}</dd>
-                            </div>
-                        </div>
-                    </dl>
-                </div>
+                <p class="ft__about">{{ __('frontend.footer.about') }}</p>
+                <span class="ft__topic">
+                    <span class="ft__dot" aria-hidden="true"></span>
+                    {{ __('frontend.head.topic') }}
+                </span>
             </div>
 
             <nav class="ft__col" aria-labelledby="ft-quick" data-reveal>
                 <h2 class="ft__label" id="ft-quick">{{ __('frontend.footer.col_links') }}</h2>
                 <ul class="ft__links">
-                    <li><a href="{{ route('product-lists') }}" class="ft__link">{{ __('frontend.footer.link_all') }}</a></li>
                     <li><a href="{{ route('points.topup') }}" class="ft__link">{{ __('frontend.footer.link_credits') }}</a></li>
                     <li><a href="{{ route('about-us') }}" class="ft__link">{{ __('frontend.footer.link_about') }}</a></li>
                     <li><a href="{{ route('contact') }}" class="ft__link">{{ __('frontend.footer.link_contact') }}</a></li>
@@ -101,10 +78,51 @@
             </nav>
         </div>
 
-        <div class="ft__end">
+        <section class="ft__company" aria-labelledby="ft-details" data-reveal>
+            <h2 class="vh" id="ft-details">{{ __('frontend.footer.details') }}</h2>
+            <dl class="ft__facts">
+                <div class="ft__fact">
+                    <span class="ft__well" aria-hidden="true"><i class="fas fa-building"></i></span>
+                    <div>
+                        <dt>{{ __('frontend.footer.info_name') }}</dt>
+                        <dd>{{ $footCompany }}</dd>
+                    </div>
+                </div>
+                <div class="ft__fact">
+                    <span class="ft__well" aria-hidden="true"><i class="fas fa-envelope"></i></span>
+                    <div>
+                        <dt>{{ __('frontend.footer.info_mail') }}</dt>
+                        <dd><a href="mailto:{{ $footMail }}">{{ $footMail }}</a></dd>
+                    </div>
+                </div>
+                <div class="ft__fact">
+                    <span class="ft__well" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
+                    <div>
+                        <dt>{{ __('frontend.footer.info_place') }}</dt>
+                        <dd>{{ $footAddress }}</dd>
+                    </div>
+                </div>
+            </dl>
+        </section>
+
+        <aside class="ft__risk" aria-labelledby="ft-risk" data-reveal>
+            <i class="fas fa-exclamation-triangle ft__risk-icon" aria-hidden="true"></i>
+            <p>
+                <strong id="ft-risk">{{ __('frontend.footer.risk_title') }}</strong>
+                {{ __('frontend.footer.risk') }}
+            </p>
+        </aside>
+    </div>
+
+    <div class="ft__end">
+        <div class="ft__end-in">
             <p class="ft__copy">
                 &copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $footCompany }}</a>. {{ __('frontend.footer.copyright') }}
             </p>
+            <div class="ft__langs" aria-label="{{ __('frontend.header.pref_language') }}">
+                <a class="ft__lang {{ !$footJa ? 'is-active' : '' }}" href="{{ route('change.language', 'en') }}" @if(!$footJa) aria-current="true" @endif>EN</a>
+                <a class="ft__lang {{ $footJa ? 'is-active' : '' }}" href="{{ route('change.language', 'ja') }}" @if($footJa) aria-current="true" @endif>JP</a>
+            </div>
             <span class="ft__pay">
                 <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.pay_alt') }}" loading="lazy">
             </span>
@@ -115,8 +133,8 @@
 </div>
 
 <button type="button" class="totop" aria-label="{{ __('frontend.footer.scroll_top') }}" data-totop>
+    <span class="totop__ring" aria-hidden="true"></span>
     <i class="fas fa-arrow-up" aria-hidden="true"></i>
-    <span class="totop__bar" aria-hidden="true"></span>
 </button>
 
 <script src="{{url('assets/js/jquery.js')}}"></script>

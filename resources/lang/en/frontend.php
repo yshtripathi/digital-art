@@ -11,10 +11,16 @@ return [
 
     // resources/views/frontend/layouts/head.blade.php
     'head' => [
-        'site'    => 'BizAcademys',
-        'home'    => ':site — Business Planning & Strategy E-Learning Materials',
-        'summary' => 'Self-paced e-learning materials organised by category and level. Buy credits, unlock the level that suits you and study whenever it fits your day.',
-        'topic'   => 'Business Planning & Strategy',
+        'site'    => 'JadeMind Academy',
+        'home'    => ':site — Stock Market E-Learning Materials for Beginners',
+        'summary' => 'Self-paced e-learning materials that explain the stock market step by step, from your first share to your first trading plan. Buy credits, unlock the level that suits you and study whenever it fits your day.',
+        'topic'   => 'Stock Market for Beginners',
+        'lines'   => [
+            'Learn what a share really is',
+            'Read a price chart with confidence',
+            'Plan every trade with risk in mind',
+        ],
+        'terms'   => ['Shares', 'Dividends', 'Index', 'Market Cap', 'P/E Ratio', 'Candlestick', 'Volume', 'Portfolio', 'Bull Market', 'Bear Market', 'IPO', 'Stop Loss'],
     ],
 
     // resources/views/frontend/layouts/breadcrumb.blade.php
@@ -60,11 +66,15 @@ return [
         'cart_full'     => 'View Full Cart',
         'bag_back'      => 'Continue Browsing',
         'cart_wallet'   => 'Your credit balance',
+        'note'          => 'For education only. Nothing on this website is investment advice.',
+        'mega_title'    => 'Learn the market one step at a time',
+        'mega_text'     => 'Pick a category to see its e-learning materials, from the first basics to advanced strategies.',
         'level_names'   => [
-            'beginner'     => 'Beginner',
-            'intermediate' => 'Intermediate',
-            'advanced'     => 'Advanced',
-            'expert'       => 'Expert',
+            'beginner'                 => 'Beginner',
+            'beginner to intermediate' => 'Beginner to Intermediate',
+            'intermediate'             => 'Intermediate',
+            'advanced'                 => 'Advanced',
+            'expert'                   => 'Expert',
         ],
     ],
 
@@ -96,6 +106,9 @@ return [
         'copyright'    => 'All Rights Reserved.',
         'pay_alt'      => 'Accepted payment methods',
         'scroll_top'   => 'Back to top',
+        'about'        => 'Self-paced e-learning materials that explain the stock market in plain language, one level at a time.',
+        'risk_title'   => 'Education only',
+        'risk'         => 'All e-learning materials on this website are for education only and are not investment advice. Investing in the stock market involves risk, including the loss of the money you invest.',
     ],
 
     // resources/views/frontend/index.blade.php

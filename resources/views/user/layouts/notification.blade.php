@@ -1,9 +1,12 @@
 @if(session('success') || session('error'))
 
-<div class="notes">
+<div class="notes" data-notes>
     @if(session('success'))
         <div class="note note--success" role="status" data-note data-note-auto>
-            <span class="note__badge" aria-hidden="true"><i class="fas fa-check"></i></span>
+            <span class="note__well" aria-hidden="true">
+                <span class="note__pulse"></span>
+                <i class="fas fa-check"></i>
+            </span>
             <div class="note__body">
                 <p class="note__label">{{ __('frontend.notify.ok_label') }}</p>
                 <p class="note__msg">{{ session('success') }}</p>
@@ -17,7 +20,10 @@
 
     @if(session('error'))
         <div class="note note--error" role="alert" data-note>
-            <span class="note__badge" aria-hidden="true"><i class="fas fa-exclamation"></i></span>
+            <span class="note__well" aria-hidden="true">
+                <span class="note__pulse"></span>
+                <i class="fas fa-exclamation"></i>
+            </span>
             <div class="note__body">
                 <p class="note__label">{{ __('frontend.notify.err_label') }}</p>
                 <p class="note__msg">{{ session('error') }}</p>
@@ -33,7 +39,7 @@
 (function () {
     'use strict';
 
-    var stack = document.querySelector('.notes');
+    var stack = document.querySelector('[data-notes]');
     var bar = document.querySelector('[data-hd]');
 
     function place() {
@@ -41,10 +47,9 @@
         var edge = 0;
         if (bar) {
             var box = bar.getBoundingClientRect();
-            var inner = bar.firstElementChild ? bar.firstElementChild.getBoundingClientRect() : box;
-            edge = Math.max(box.bottom, inner.bottom, 0);
+            edge = Math.max(box.bottom, 0);
         }
-        stack.style.setProperty('--notes-top', Math.round(edge + 12) + 'px');
+        stack.style.setProperty('--notes-top', Math.round(edge + 16) + 'px');
     }
 
     place();
@@ -65,12 +70,14 @@
 
         var start = function () {
             clearTimeout(timer);
+            note.classList.remove('is-paused');
             began = Date.now();
             timer = setTimeout(hide, left);
         };
 
         var pause = function () {
             clearTimeout(timer);
+            note.classList.add('is-paused');
             left = Math.max(left - (Date.now() - began), 0);
         };
 

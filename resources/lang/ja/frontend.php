@@ -11,10 +11,16 @@ return [
 
     // resources/views/frontend/layouts/head.blade.php
     'head' => [
-        'site'    => 'BizAcademys',
-        'home'    => ':site — ビジネスプランニングと戦略のeラーニング教材',
-        'summary' => 'カテゴリーとレベルごとに整理された、自分のペースで学べるeラーニング教材です。クレジットを購入して自分に合ったレベルを解放し、好きな時間に学習できます。',
-        'topic'   => 'ビジネスプランニングと戦略',
+        'site'    => 'JadeMind Academy',
+        'home'    => ':site — 初心者のための株式投資eラーニング教材',
+        'summary' => '株式市場の基本を、はじめての株から最初の取引計画までステップごとに学べる、自分のペースで進めるeラーニング教材です。クレジットを購入して自分に合ったレベルを解放し、好きな時間に学習できます。',
+        'topic'   => '初心者のための株式投資',
+        'lines'   => [
+            '株とは何かを基本から学ぶ',
+            '株価チャートを自信を持って読む',
+            'リスクを考えて取引を計画する',
+        ],
+        'terms'   => ['株式', '配当', '株価指数', '時価総額', 'PER', 'ローソク足', '出来高', 'ポートフォリオ', '強気相場', '弱気相場', 'IPO', '損切り'],
     ],
 
     // resources/views/frontend/layouts/breadcrumb.blade.php
@@ -60,11 +66,15 @@ return [
         'cart_full'     => 'カートの詳細を見る',
         'bag_back'      => '閲覧を続ける',
         'cart_wallet'   => 'クレジット残高',
+        'note'          => '本サイトの内容は学習目的のみであり、投資助言ではありません。',
+        'mega_title'    => '一歩ずつ株式市場を学ぶ',
+        'mega_text'     => 'カテゴリーを選ぶと、基礎から応用戦略までのeラーニング教材が表示されます。',
         'level_names'   => [
-            'beginner'     => '初級',
-            'intermediate' => '中級',
-            'advanced'     => '上級',
-            'expert'       => 'エキスパート',
+            'beginner'                 => '初級',
+            'beginner to intermediate' => '初級〜中級',
+            'intermediate'             => '中級',
+            'advanced'                 => '上級',
+            'expert'                   => 'エキスパート',
         ],
     ],
 
@@ -96,6 +106,9 @@ return [
         'copyright'    => '無断転載を禁じます。',
         'pay_alt'      => 'ご利用いただけるお支払い方法',
         'scroll_top'   => 'ページの先頭へ戻る',
+        'about'        => '株式市場の基本をわかりやすい言葉で、レベルごとに自分のペースで学べるeラーニング教材です。',
+        'risk_title'   => '学習目的のみ',
+        'risk'         => '本サイトのeラーニング教材はすべて学習目的のものであり、投資助言ではありません。株式投資にはリスクがあり、投資した資金を失う可能性があります。',
     ],
 
     // resources/views/frontend/index.blade.php

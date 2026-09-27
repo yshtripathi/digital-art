@@ -125,16 +125,16 @@
 
                             <dl class="ct__stats">
                                 <div class="ct__stat">
-                                    <dt>{{ __('frontend.coursecart.wallet') }}</dt>
+                                    <dt>{{ __('frontend.coursecart.wallet') }}:</dt>
                                     <dd><i class="fas fa-bolt" aria-hidden="true"></i> <span class="num">{{ number_format($points) }}</span></dd>
                                 </div>
                                 <div class="ct__stat">
-                                    <dt>{{ __('frontend.coursecart.need') }}</dt>
+                                    <dt>{{ __('frontend.coursecart.need') }}:</dt>
                                     <dd class="num">{{ number_format($total_points) }}</dd>
                                 </div>
                                 @if($enough)
                                     <div class="ct__stat ct__stat--after">
-                                        <dt>{{ __('frontend.coursecart.left') }}</dt>
+                                        <dt>{{ __('frontend.coursecart.left') }}:</dt>
                                         <dd class="num">{{ number_format($after) }}</dd>
                                     </div>
                                 @endif

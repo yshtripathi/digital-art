@@ -178,8 +178,38 @@ body {
   overflow-x: clip;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: -10%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 42% at 8% 6%, rgba(193, 185, 244, 0.55), transparent 70%),
+    radial-gradient(34% 40% at 92% 18%, rgba(105, 62, 223, 0.16), transparent 70%),
+    radial-gradient(40% 45% at 78% 88%, rgba(193, 185, 244, 0.42), transparent 70%),
+    radial-gradient(30% 36% at 14% 76%, rgba(114, 73, 241, 0.12), transparent 70%),
+    radial-gradient(26% 30% at 50% 48%, rgba(239, 235, 252, 0.7), transparent 70%),
+    linear-gradient(160deg, #f8f7fe 0%, #f6fafb 38%, #f3f0fd 72%, #f7f5ff 100%);
+  animation: page-glow 28s ease-in-out infinite alternate;
+}
+
 html:lang(ja) body {
   font-family: var(--font-ja);
+}
+
+@keyframes page-glow {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-2%, 1.5%, 0) scale(1.04);
+  }
+
+  100% {
+    transform: translate3d(2%, -1.5%, 0) scale(1.02);
+  }
 }
 
 body.is-locked {
@@ -10821,9 +10851,7 @@ a.pager__num:hover {
 
 .lead {
   padding: clamp(40px, 6vw, 72px) var(--page-gutter) var(--spacing-64);
-  background:
-    radial-gradient(circle at 85% 20%, rgba(193, 185, 244, 0.45), transparent 45%),
-    var(--surface-page);
+  background: radial-gradient(circle at 85% 20%, rgba(193, 185, 244, 0.45), transparent 45%);
 }
 
 .lead__wrap {
@@ -12134,6 +12162,10 @@ a.pager__num:hover {
 @media (prefers-reduced-motion: reduce) {
   .pre {
     display: none;
+  }
+
+  body::before {
+    animation: none;
   }
 
   html {

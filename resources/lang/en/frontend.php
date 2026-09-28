@@ -239,6 +239,8 @@ return [
 
     // resources/views/frontend/pages/contact.blade.php
     'contact' => [
+        'copy'          => 'Copy',
+        'copied'        => 'Copied',
         'page_name'     => 'Contact Us',
         'side_title'    => 'Questions? We are listening',
         'side_text'     => 'Use the details below or send us a message, and we will reply by email.',
@@ -272,6 +274,7 @@ return [
 
     // resources/views/frontend/pages/order-failed.blade.php
     'failed' => [
+        'checked'   => ':done of :total checked',
         'page_name' => 'Payment Failed',
         'heading'   => 'Your payment was not completed',
         'lead'      => 'Your payment could not be completed. No credits were added. Please check the details below and try again.',
@@ -364,6 +367,11 @@ return [
 
     // resources/views/frontend/pages/product-lists.blade.php
     'catalog' => [
+        'all'          => 'All',
+        'cats_label'   => 'Browse by category',
+        'levels_label' => 'Level',
+        'showing'      => 'Showing :shown of :total',
+        'reset'        => 'Reset filters',
         'page_name'    => 'E-Learning Materials',
         'meta'         => 'Explore language and writing study materials by category and level, compare prices in credits and decide where to start.',
         'filter_all'   => 'Browse All Materials',
@@ -428,11 +436,13 @@ return [
 
     // resources/views/frontend/pages/page.blade.php
     'page' => [
-        'read'     => ':min min read',
-        'sections' => ':count section|:count sections',
-        'copy'     => 'Copy text',
-        'copied'   => 'Copied',
-        'print'    => 'Print',
+        'toc'       => 'On this page',
+        'size'      => 'Text size',
+        'smaller'   => 'Make the text smaller',
+        'larger'    => 'Make the text larger',
+        'others'    => 'Other policies',
+        'help'      => 'Questions about this policy?',
+        'help_text' => 'Write to us and we will reply by email.',
     ],
 
     // resources/views/frontend/pages/coursecart.blade.php
@@ -496,6 +506,14 @@ return [
 
     // resources/views/frontend/pages/about-us.blade.php
     'about' => [
+        'how_label'   => 'How it works',
+        'how_title'   => 'From your first look to your own pace',
+        'step1_t'     => 'Pick a study guide',
+        'step1'       => 'Browse the categories and open any guide to read what it covers and who it is written for.',
+        'step2_t'     => 'Preview every level',
+        'step2'       => 'Each level lists what it covers, who it suits and what you will be able to apply before you spend a credit.',
+        'step3_t'     => 'Unlock with credits',
+        'step3'       => 'Buy credits once, then use them on the levels you choose and work through them whenever it suits you.',
         'desc'        => 'Learn what our language and writing study guides cover, how the four levels build on one another and how credits unlock them.',
         'page_name'   => 'About Us',
         'label'       => 'About the guides',
@@ -512,6 +530,21 @@ return [
 
     // resources/views/frontend/user/dashboard.blade.php
     'dashboard' => [
+        'th_order'      => 'Order number',
+        'th_material'   => 'Study guide',
+        'th_level'      => 'Level',
+        'th_action'     => 'Details',
+        'find_orders'   => 'Search by order number',
+        'find_lib'      => 'Search your study guides',
+        'no_hits'       => 'Nothing matches your search.',
+        'pw_rules'      => 'Password checklist',
+        'rule_len'      => 'At least 8 characters',
+        'rule_new'      => 'Different from your current password',
+        'rule_match'    => 'Both new passwords match',
+        'strength'      => 'Strength',
+        'str_weak'      => 'Weak',
+        'str_fair'      => 'Fair',
+        'str_good'      => 'Strong',
         'page_name'     => 'Dashboard',
         'crumb'         => 'My Account',
         'greet'         => 'Welcome back',
@@ -574,6 +607,9 @@ return [
 
     // resources/views/frontend/user/order/show.blade.php
     'receipt' => [
+        'th_item'      => 'Item',
+        'th_level'     => 'Level',
+        'th_credits'   => 'Credits',
         'page_name'    => 'Order Details',
         'crumb'        => 'My Account',
         'tag'          => 'Receipt',

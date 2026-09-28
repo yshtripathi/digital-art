@@ -60,7 +60,7 @@
         <div class="foot__grid">
             <div class="foot__brand">
                 <a href="{{ route('home') }}" class="foot__logo">
-                    <img src="{{ asset('assets/images/logo.webp') }}?v={{ (file_exists(public_path('assets/images/logo.webp')) ? filemtime(public_path('assets/images/logo.webp')) : 0) }}" alt="{{ $footSite }}" width="998" height="240" loading="lazy">
+                    <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $footSite }}" width="869" height="144" loading="lazy">
                 </a>
                 <p class="foot__about">{{ __('frontend.footer.about') }}</p>
                 @if($footCats->isNotEmpty())

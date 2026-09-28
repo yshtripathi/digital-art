@@ -10,95 +10,108 @@
     ]
 ])
 
-<section class="auth">
-    <div class="auth__card">
-        <div class="auth__head">
-            <span class="auth__levels" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
-            <h2 class="auth__title">{{ __('frontend.register.title') }}</h2>
-            <p class="auth__lead">{{ __('frontend.register.intro') }}</p>
-        </div>
+<section class="gate">
+    <div class="gate__stack">
+        <nav class="gate__tabs" aria-label="{{ __('frontend.header.acct_menu') }}">
+            <a href="{{ route('login.form') }}" class="gate__tab">
+                <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                <span>{{ __('frontend.header.acct_login') }}</span>
+            </a>
+            <a href="{{ route('register.form') }}" class="gate__tab is-active" aria-current="page">
+                <i class="fas fa-user-plus" aria-hidden="true"></i>
+                <span>{{ __('frontend.header.acct_join') }}</span>
+            </a>
+        </nav>
 
-        <div class="auth__tabs">
-            <a href="{{ route('login.form') }}" class="auth__tab">{{ __('frontend.header.acct_login') }}</a>
-            <a href="{{ route('register.form') }}" class="auth__tab is-active" aria-current="page">{{ __('frontend.header.acct_join') }}</a>
-        </div>
-
-        <form name="frmRegister" id="frmRegister" class="auth__form" action="{{ route('register.submit') }}" method="post" novalidate>
-            @csrf
-
-            <div class="fld">
-                <label class="fld__label" for="name">{{ __('frontend.register.name_label') }}</label>
-                <div class="fld__box">
-                    <i class="fas fa-user fld__icon" aria-hidden="true"></i>
-                    <input type="text" name="name" id="name" autocomplete="name" class="fld__input @error('name') is-invalid @enderror" placeholder="{{ __('frontend.register.name_hint') }}" value="{{ old('name') }}">
+        <div class="gate__card">
+            <div class="gate__head">
+                <span class="gate__badge" aria-hidden="true"><i class="fas fa-user-plus"></i></span>
+                <div>
+                    <h2 class="gate__title">{{ __('frontend.register.title') }}</h2>
+                    <p class="gate__lead">{{ __('frontend.register.intro') }}</p>
                 </div>
-                @error('name')
-                    <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                @enderror
             </div>
 
-            <div class="fld">
-                <label class="fld__label" for="email">{{ __('frontend.register.mail_label') }}</label>
-                <div class="fld__box">
-                    <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
-                    <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.register.mail_hint') }}" value="{{ old('email') }}">
-                </div>
-                @error('email')
-                    <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                @enderror
-            </div>
+            <form name="frmRegister" id="frmRegister" class="gate__form" action="{{ route('register.submit') }}" method="post" novalidate>
+                @csrf
 
-            <div class="fld">
-                <label class="fld__label" for="password">{{ __('frontend.register.pass_label') }}</label>
-                <div class="fld__box">
-                    <i class="fas fa-lock fld__icon" aria-hidden="true"></i>
-                    <input type="password" name="password" id="password" autocomplete="new-password" class="fld__input @error('password') is-invalid @enderror" placeholder="{{ __('frontend.register.pass_hint') }}">
-                    <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.register.pass_show') }}" data-hide="{{ __('frontend.register.pass_hide') }}" aria-label="{{ __('frontend.register.pass_show') }}" aria-pressed="false">
-                        <i class="fas fa-eye" aria-hidden="true"></i>
-                    </button>
-                </div>
-                @error('password')
-                    <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="fld">
-                <label class="fld__label" for="password_confirmation">{{ __('frontend.register.again_label') }}</label>
-                <div class="fld__box">
-                    <i class="fas fa-lock fld__icon" aria-hidden="true"></i>
-                    <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="new-password" class="fld__input @error('password_confirmation') is-invalid @enderror" placeholder="{{ __('frontend.register.again_hint') }}">
-                    <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.register.pass_show') }}" data-hide="{{ __('frontend.register.pass_hide') }}" aria-label="{{ __('frontend.register.pass_show') }}" aria-pressed="false">
-                        <i class="fas fa-eye" aria-hidden="true"></i>
-                    </button>
-                </div>
-                @error('password_confirmation')
-                    <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                @enderror
-            </div>
-
-            @if(env('CAPTCHA_ENABLED', true))
-                <div class="fld">
-                    <label class="fld__label" for="captcha">{{ __('frontend.register.code_label') }}</label>
-                    <div class="cap @error('captcha') is-invalid @enderror">
-                        <div class="cap__img">@captcha</div>
-                        <div class="fld__box">
-                            <i class="fas fa-shield-alt fld__icon" aria-hidden="true"></i>
-                            <input type="text" id="captcha" name="captcha" autocomplete="off" class="fld__input" placeholder="{{ __('frontend.register.code_hint') }}">
-                        </div>
+                <div class="entry">
+                    <label class="entry__label" for="name">{{ __('frontend.register.name_label') }}</label>
+                    <div class="entry__box @error('name') is-invalid @enderror">
+                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-user"></i></span>
+                        <input type="text" name="name" id="name" autocomplete="name" class="entry__input" placeholder="{{ __('frontend.register.name_hint') }}" value="{{ old('name') }}">
                     </div>
-                    @error('captcha')
-                        <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ __('frontend.register.code_wrong') }}</span>
+                    @error('name')
+                        <span class="entry__err">{{ $message }}</span>
                     @enderror
                 </div>
-            @endif
 
-            <button type="submit" name="submit-form" class="btn btn--block auth__submit">{{ __('frontend.register.submit') }}</button>
-        </form>
+                <div class="entry">
+                    <label class="entry__label" for="email">{{ __('frontend.register.mail_label') }}</label>
+                    <div class="entry__box @error('email') is-invalid @enderror">
+                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-at"></i></span>
+                        <input type="email" name="email" id="email" autocomplete="email" class="entry__input" placeholder="{{ __('frontend.register.mail_hint') }}" value="{{ old('email') }}">
+                    </div>
+                    @error('email')
+                        <span class="entry__err">{{ $message }}</span>
+                    @enderror
+                </div>
 
-        <p class="auth__foot">
-            {{ __('frontend.register.has_acct') }}
-            <a href="{{ route('login.form') }}">{{ __('frontend.register.login') }}</a>
-        </p>
+                <div class="entry">
+                    <label class="entry__label" for="password">{{ __('frontend.register.pass_label') }}</label>
+                    <div class="entry__box @error('password') is-invalid @enderror">
+                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-key"></i></span>
+                        <input type="password" name="password" id="password" autocomplete="new-password" class="entry__input" placeholder="{{ __('frontend.register.pass_hint') }}">
+                        <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.register.pass_show') }}" data-hide="{{ __('frontend.register.pass_hide') }}" aria-label="{{ __('frontend.register.pass_show') }}" aria-pressed="false">
+                            <i class="fas fa-eye" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    @error('password')
+                        <span class="entry__err">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="entry">
+                    <label class="entry__label" for="password_confirmation">{{ __('frontend.register.again_label') }}</label>
+                    <div class="entry__box @error('password_confirmation') is-invalid @enderror">
+                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-redo-alt"></i></span>
+                        <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="new-password" class="entry__input" placeholder="{{ __('frontend.register.again_hint') }}">
+                        <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.register.pass_show') }}" data-hide="{{ __('frontend.register.pass_hide') }}" aria-label="{{ __('frontend.register.pass_show') }}" aria-pressed="false">
+                            <i class="fas fa-eye" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    @error('password_confirmation')
+                        <span class="entry__err">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                @if(env('CAPTCHA_ENABLED', true))
+                    <div class="entry">
+                        <label class="entry__label" for="captcha">{{ __('frontend.register.code_label') }}</label>
+                        <div class="entry__cap">
+                            <div class="cap__img">@captcha</div>
+                            <div class="entry__box @error('captcha') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
+                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="entry__input" placeholder="{{ __('frontend.register.code_hint') }}">
+                            </div>
+                        </div>
+                        @error('captcha')
+                            <span class="entry__err">{{ __('frontend.register.code_wrong') }}</span>
+                        @enderror
+                    </div>
+                @endif
+
+                <button type="submit" name="submit-form" class="btn btn--block gate__submit">
+                    <span>{{ __('frontend.register.submit') }}</span>
+                    <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
+                </button>
+            </form>
+
+            <p class="gate__foot">
+                {{ __('frontend.register.has_acct') }}
+                <a href="{{ route('login.form') }}" class="gate__swap">{{ __('frontend.register.login') }}</a>
+            </p>
+        </div>
     </div>
 </section>
 
@@ -110,24 +123,15 @@
     $(document).ready(function() {
         $("#frmRegister").validate({
             errorElement: 'span',
-            errorClass: 'fld__err',
+            errorClass: 'entry__err',
             errorPlacement: function(error, element) {
-                error.prepend('<i class="fas fa-info-circle" aria-hidden="true"></i> ');
-                error.appendTo(element.closest('.fld'));
+                error.appendTo(element.closest('.entry'));
             },
             highlight: function(element) {
-                if ($(element).attr('name') === 'captcha') {
-                    $(element).closest('.cap').addClass('is-invalid');
-                } else {
-                    $(element).addClass('is-invalid');
-                }
+                $(element).closest('.entry__box').addClass('is-invalid');
             },
             unhighlight: function(element) {
-                if ($(element).attr('name') === 'captcha') {
-                    $(element).closest('.cap').removeClass('is-invalid');
-                } else {
-                    $(element).removeClass('is-invalid');
-                }
+                $(element).closest('.entry__box').removeClass('is-invalid');
             },
             rules: {
                 name: { required: true, minlength: 2 },

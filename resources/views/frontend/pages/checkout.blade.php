@@ -40,7 +40,8 @@
     </ol>
 
     <div class="co__grid">
-        <form name="frmCheckout" id="frmCheckout" class="co__main" method="POST" action="{{ route('cart.order') }}" novalidate>
+        <div class="gate__stack gate__stack--wide">
+        <form name="frmCheckout" id="frmCheckout" class="gate__card co__main" method="POST" action="{{ route('cart.order') }}" novalidate>
             @csrf
 
                 <div class="co__panel" style="--i: 0">
@@ -50,83 +51,83 @@
                         <i class="fas fa-id-card co__panel-icon" aria-hidden="true"></i>
                     </div>
                     <div class="co__panel-body">
-                        <div class="fld">
-                            <label class="fld__label" for="first_name">{{ __('frontend.checkout.first_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-user fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="first_name" id="first_name" autocomplete="given-name" class="fld__input" placeholder="{{ __('frontend.checkout.first_hint') }}" value="{{ old('first_name') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="first_name">{{ __('frontend.checkout.first_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('first_name') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-user"></i></span>
+                                <input type="text" name="first_name" id="first_name" autocomplete="given-name" class="entry__input" placeholder="{{ __('frontend.checkout.first_hint') }}" value="{{ old('first_name') }}">
                             </div>
-                            @error('first_name')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('first_name')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="last_name">{{ __('frontend.checkout.last_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-user fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="last_name" id="last_name" autocomplete="family-name" class="fld__input" placeholder="{{ __('frontend.checkout.last_hint') }}" value="{{ old('last_name') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="last_name">{{ __('frontend.checkout.last_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('last_name') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-user"></i></span>
+                                <input type="text" name="last_name" id="last_name" autocomplete="family-name" class="entry__input" placeholder="{{ __('frontend.checkout.last_hint') }}" value="{{ old('last_name') }}">
                             </div>
-                            @error('last_name')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('last_name')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="email">{{ __('frontend.checkout.mail_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
-                                <input type="email" name="email" id="email" autocomplete="email" class="fld__input" placeholder="{{ __('frontend.checkout.mail_hint') }}" value="{{ old('email', auth()->user()->email ?? '') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="email">{{ __('frontend.checkout.mail_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('email') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-envelope"></i></span>
+                                <input type="email" name="email" id="email" autocomplete="email" class="entry__input" placeholder="{{ __('frontend.checkout.mail_hint') }}" value="{{ old('email', auth()->user()->email ?? '') }}">
                             </div>
-                            @error('email')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('email')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="phone">{{ __('frontend.checkout.phone_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-phone-alt fld__icon" aria-hidden="true"></i>
-                                <input type="tel" name="phone" id="phone" autocomplete="tel" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '')" class="fld__input" placeholder="{{ __('frontend.checkout.phone_hint') }}" value="{{ old('phone', auth()->user()->phone ?? '') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="phone">{{ __('frontend.checkout.phone_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('phone') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-phone-alt"></i></span>
+                                <input type="tel" name="phone" id="phone" autocomplete="tel" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '')" class="entry__input" placeholder="{{ __('frontend.checkout.phone_hint') }}" value="{{ old('phone', auth()->user()->phone ?? '') }}">
                             </div>
-                            @error('phone')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('phone')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="address">{{ __('frontend.checkout.street_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-map-marker-alt fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="address1" id="address" autocomplete="street-address" class="fld__input" placeholder="{{ __('frontend.checkout.street_hint') }}" value="{{ old('address1', auth()->user()->address ?? '') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="address">{{ __('frontend.checkout.street_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('address1') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
+                                <input type="text" name="address1" id="address" autocomplete="street-address" class="entry__input" placeholder="{{ __('frontend.checkout.street_hint') }}" value="{{ old('address1', auth()->user()->address ?? '') }}">
                             </div>
-                            @error('address1')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('address1')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="city">{{ __('frontend.checkout.city_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-city fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="city" id="city" autocomplete="address-level2" class="fld__input" placeholder="{{ __('frontend.checkout.city_hint') }}" value="{{ old('city', auth()->user()->city ?? '') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="city">{{ __('frontend.checkout.city_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('city') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-city"></i></span>
+                                <input type="text" name="city" id="city" autocomplete="address-level2" class="entry__input" placeholder="{{ __('frontend.checkout.city_hint') }}" value="{{ old('city', auth()->user()->city ?? '') }}">
                             </div>
-                            @error('city')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('city')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="post_code">{{ __('frontend.checkout.zip_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-mail-bulk fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="post_code" id="post_code" autocomplete="postal-code" inputmode="numeric" class="fld__input" placeholder="{{ __('frontend.checkout.zip_hint') }}" value="{{ old('post_code', auth()->user()->zip ?? '') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="post_code">{{ __('frontend.checkout.zip_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('post_code') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-mail-bulk"></i></span>
+                                <input type="text" name="post_code" id="post_code" autocomplete="postal-code" inputmode="numeric" class="entry__input" placeholder="{{ __('frontend.checkout.zip_hint') }}" value="{{ old('post_code', auth()->user()->zip ?? '') }}">
                             </div>
-                            @error('post_code')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('post_code')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="state">{{ __('frontend.checkout.region_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-map fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="state" id="state" autocomplete="address-level1" class="fld__input" placeholder="{{ __('frontend.checkout.region_hint') }}" value="{{ old('state', auth()->user()->state ?? '') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="state">{{ __('frontend.checkout.region_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('state') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-map"></i></span>
+                                <input type="text" name="state" id="state" autocomplete="address-level1" class="entry__input" placeholder="{{ __('frontend.checkout.region_hint') }}" value="{{ old('state', auth()->user()->state ?? '') }}">
                             </div>
-                            @error('state')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('state')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="country">{{ __('frontend.checkout.nation_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-globe fld__icon" aria-hidden="true"></i>
-                                <select name="country" id="country" autocomplete="country" class="fld__input fld__select">
+                        <div class="entry">
+                            <label class="entry__label" for="country">{{ __('frontend.checkout.nation_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('country') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-globe"></i></span>
+                                <select name="country" id="country" autocomplete="country" class="entry__input entry__select">
                                 <option value="">{{ __('frontend.checkout.nation_hint') }}</option>
                                 <option value="AF">Afghanistan</option>
                                 <option value="AX">Åland Islands</option>
@@ -379,9 +380,9 @@
                                 <option value="ZM">Zambia</option>
                                 <option value="ZW">Zimbabwe</option>
                                 </select>
-                                <i class="fas fa-chevron-down fld__caret" aria-hidden="true"></i>
+                                <i class="fas fa-chevron-down entry__caret" aria-hidden="true"></i>
                             </div>
-                            @error('country')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('country')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
                     </div>
                 </div>
@@ -393,11 +394,11 @@
                         <i class="fas fa-pen co__panel-icon" aria-hidden="true"></i>
                     </div>
                     <div class="co__panel-body">
-                        <div class="fld">
-                            <label class="fld__label" for="note">{{ __('frontend.checkout.notes_label') }}</label>
-                            <div class="fld__box fld__box--area">
-                                <i class="fas fa-comment-dots fld__icon" aria-hidden="true"></i>
-                                <textarea name="note" id="note" rows="4" class="fld__input fld__area" placeholder="{{ __('frontend.checkout.notes_hint') }}">{{ old('note') }}</textarea>
+                        <div class="entry">
+                            <label class="entry__label" for="note">{{ __('frontend.checkout.notes_label') }}</label>
+                            <div class="entry__box entry__box--area">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-comment-dots"></i></span>
+                                <textarea name="note" id="note" rows="4" class="entry__input entry__area" placeholder="{{ __('frontend.checkout.notes_hint') }}">{{ old('note') }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -410,49 +411,49 @@
                         <i class="fas fa-credit-card co__panel-icon" aria-hidden="true"></i>
                     </div>
                     <div class="co__panel-body">
-                        <div class="fld">
-                            <label class="fld__label" for="name_on_card">{{ __('frontend.checkout.holder_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-user fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="name" id="name_on_card" autocomplete="cc-name" class="fld__input" placeholder="{{ __('frontend.checkout.holder_hint') }}" value="{{ old('name') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="name_on_card">{{ __('frontend.checkout.holder_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('name') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-user"></i></span>
+                                <input type="text" name="name" id="name_on_card" autocomplete="cc-name" class="entry__input" placeholder="{{ __('frontend.checkout.holder_hint') }}" value="{{ old('name') }}">
                             </div>
-                            @error('name')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('name')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="card_number">{{ __('frontend.checkout.number_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-credit-card fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="card_number" id="card_number" autocomplete="cc-number" inputmode="numeric" maxlength="19" class="fld__input num cc-number" placeholder="{{ __('frontend.checkout.number_hint') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="card_number">{{ __('frontend.checkout.number_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('card_number') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-credit-card"></i></span>
+                                <input type="text" name="card_number" id="card_number" autocomplete="cc-number" inputmode="numeric" maxlength="19" class="entry__input num cc-number" placeholder="{{ __('frontend.checkout.number_hint') }}">
                             </div>
-                            @error('card_number')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('card_number')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="expiry_month">{{ __('frontend.checkout.month_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-calendar-alt fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="expiry_month" id="expiry_month" autocomplete="cc-exp-month" inputmode="numeric" maxlength="2" class="fld__input num" placeholder="{{ __('frontend.checkout.month_hint') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="expiry_month">{{ __('frontend.checkout.month_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('expiry_month') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-calendar-alt"></i></span>
+                                <input type="text" name="expiry_month" id="expiry_month" autocomplete="cc-exp-month" inputmode="numeric" maxlength="2" class="entry__input num" placeholder="{{ __('frontend.checkout.month_hint') }}">
                             </div>
-                            @error('expiry_month')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('expiry_month')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="expiry_year">{{ __('frontend.checkout.year_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-calendar fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="expiry_year" id="expiry_year" autocomplete="cc-exp-year" inputmode="numeric" maxlength="4" class="fld__input num" placeholder="{{ __('frontend.checkout.year_hint') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="expiry_year">{{ __('frontend.checkout.year_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('expiry_year') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-calendar"></i></span>
+                                <input type="text" name="expiry_year" id="expiry_year" autocomplete="cc-exp-year" inputmode="numeric" maxlength="4" class="entry__input num" placeholder="{{ __('frontend.checkout.year_hint') }}">
                             </div>
-                            @error('expiry_year')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('expiry_year')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="fld">
-                            <label class="fld__label" for="cvv">{{ __('frontend.checkout.cvv_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                            <div class="fld__box">
-                                <i class="fas fa-lock fld__icon" aria-hidden="true"></i>
-                                <input type="text" name="cvv" id="cvv" autocomplete="off" inputmode="numeric" maxlength="4" class="fld__input num cc-cvc" placeholder="{{ __('frontend.checkout.cvv_hint') }}">
+                        <div class="entry">
+                            <label class="entry__label" for="cvv">{{ __('frontend.checkout.cvv_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                            <div class="entry__box @error('cvv') is-invalid @enderror">
+                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-lock"></i></span>
+                                <input type="text" name="cvv" id="cvv" autocomplete="off" inputmode="numeric" maxlength="4" class="entry__input num cc-cvc" placeholder="{{ __('frontend.checkout.cvv_hint') }}">
                             </div>
-                            @error('cvv')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('cvv')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
                     </div>
                 </div>
@@ -466,32 +467,36 @@
                     <div class="co__panel-body">
                         <div class="agree">
                         <div>
-                            <label class="agree__row" for="terms">
+                            <label class="tick tick--agree" for="terms">
                                 <input type="checkbox" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : '' }}>
+                                <span class="tick__box" aria-hidden="true"><i class="fas fa-check"></i></span>
                                 <span class="agree__text">{{ __('frontend.checkout.ok_terms') }} <a href="{{ route('pages', 'terms-conditions') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.see_terms') }}</a></span>
                             </label>
-                            @error('terms')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('terms')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
                         <div>
-                            <label class="agree__row" for="privacy">
+                            <label class="tick tick--agree" for="privacy">
                                 <input type="checkbox" id="privacy" name="privacy" value="1" {{ old('privacy') ? 'checked' : '' }}>
+                                <span class="tick__box" aria-hidden="true"><i class="fas fa-check"></i></span>
                                 <span class="agree__text">{{ __('frontend.checkout.ok_privacy') }} <a href="{{ route('pages', 'privacy-policy') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.see_privacy') }}</a></span>
                             </label>
-                            @error('privacy')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('privacy')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
                         <div>
-                            <label class="agree__row" for="delivery">
+                            <label class="tick tick--agree" for="delivery">
                                 <input type="checkbox" id="delivery" name="delivery" value="1" {{ old('delivery') ? 'checked' : '' }}>
+                                <span class="tick__box" aria-hidden="true"><i class="fas fa-check"></i></span>
                                 <span class="agree__text">{{ __('frontend.checkout.ok_access') }} <a href="{{ route('pages', 'delivery-policy') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.see_access') }}</a></span>
                             </label>
-                            @error('delivery')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('delivery')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
                         <div>
-                            <label class="agree__row" for="refund">
+                            <label class="tick tick--agree" for="refund">
                                 <input type="checkbox" id="refund" name="refund" value="1" {{ old('refund') ? 'checked' : '' }}>
+                                <span class="tick__box" aria-hidden="true"><i class="fas fa-check"></i></span>
                                 <span class="agree__text">{{ __('frontend.checkout.ok_refund') }} <a href="{{ route('pages', 'refund-policy') }}" target="_blank" rel="noopener">{{ __('frontend.checkout.see_refund') }}</a></span>
                             </label>
-                            @error('refund')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
+                            @error('refund')<span class="entry__err">{{ $message }}</span>@enderror
                         </div>
                         </div>
 
@@ -504,24 +509,25 @@
                         </div>
 
                         @if(env('CAPTCHA_ENABLED', true))
-                            <div class="fld">
-                                <label class="fld__label" for="captcha">{{ __('frontend.checkout.code_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
-                                <div class="cap @error('captcha') is-invalid @enderror">
+                            <div class="entry">
+                                <label class="entry__label" for="captcha">{{ __('frontend.checkout.code_label') }} <span class="co__req" aria-label="{{ __('frontend.checkout.req_mark') }}">*</span></label>
+                                <div class="entry__cap">
                                     <div class="cap__img">@captcha</div>
-                                    <div class="fld__box">
-                                        <i class="fas fa-shield-alt fld__icon" aria-hidden="true"></i>
-                                        <input type="text" id="captcha" name="captcha" autocomplete="off" class="fld__input" placeholder="{{ __('frontend.checkout.code_hint') }}">
+                                    <div class="entry__box @error('captcha') is-invalid @enderror">
+                                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
+                                        <input type="text" id="captcha" name="captcha" autocomplete="off" class="entry__input" placeholder="{{ __('frontend.checkout.code_hint') }}">
                                     </div>
                                 </div>
-                                @error('captcha')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ __('frontend.checkout.code_wrong') }}</span>@enderror
+                                @error('captcha')<span class="entry__err">{{ __('frontend.checkout.code_wrong') }}</span>@enderror
                             </div>
                         @endif
                     </div>
                 </div>
         </form>
+        </div>
 
-        <aside class="co__rail">
-            <div class="sum">
+        <aside class="co__rail gate__stack gate__stack--wide">
+            <div class="gate__card sum">
                 <div class="sum__head">
                     <span class="sum__badge" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
                     <h2 class="sum__title">{{ __('frontend.checkout.sum_title') }}</h2>
@@ -548,15 +554,15 @@
 
                 <p class="co__bill">
                     {{ __('frontend.checkout.dba_text') }}
-                    <img class="co__bill-img" src="{{ asset('assets/images/dba.webp') }}?v={{ filemtime(public_path('assets/images/dba.webp')) }}" alt="{{ __('frontend.checkout.dba_alt') }}" width="120" height="32">
+                    <img class="co__bill-img" src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('frontend.checkout.dba_alt') }}" width="120" height="32">
                 </p>
 
-                <button type="submit" form="frmCheckout" class="btn btn--block sum__pay" id="button-confirm">
-                    <i class="fas fa-lock" aria-hidden="true"></i>
-                    {{ __('frontend.checkout.go_pay') }}
+                <button type="submit" form="frmCheckout" class="btn btn--block gate__submit sum__pay" id="button-confirm">
+                    <span><i class="fas fa-lock" aria-hidden="true"></i> {{ __('frontend.checkout.go_pay') }}</span>
+                    <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
                 </button>
 
-                <a href="{{ route('home') }}" class="btn btn--ghost btn--block sum__more">{{ __('frontend.checkout.more') }}</a>
+                <a href="{{ route('home') }}" class="btn btn--outline btn--block sum__more">{{ __('frontend.checkout.more') }}</a>
 
                 <p class="sum__trust">
                     <i class="fas fa-shield-alt" aria-hidden="true"></i>
@@ -578,12 +584,10 @@
     jQuery(document).ready(function() {
         jQuery("#frmCheckout").validate({
             ignore: ":hidden:not([type=checkbox])",
-            errorClass: "fld__err",
+            errorClass: "entry__err",
             errorElement: "span",
             errorPlacement: function(error, element) {
-                error.prepend('<i class="fas fa-info-circle" aria-hidden="true"></i> ');
-
-                var group = element.closest('.fld');
+                var group = element.closest('.entry');
                 if (group.length) { error.appendTo(group); return; }
 
                 var agree = element.closest('.agree > div');
@@ -592,16 +596,10 @@
                 error.insertAfter(element);
             },
             highlight: function(element) {
-                jQuery(element).addClass('is-invalid');
-                if (element.id === 'captcha') {
-                    jQuery(element).closest('.cap').addClass('is-invalid');
-                }
+                jQuery(element).closest('.entry__box, .tick').addClass('is-invalid');
             },
             unhighlight: function(element) {
-                jQuery(element).removeClass('is-invalid');
-                if (element.id === 'captcha') {
-                    jQuery(element).closest('.cap').removeClass('is-invalid');
-                }
+                jQuery(element).closest('.entry__box, .tick').removeClass('is-invalid');
             },
             rules: {
                 first_name: "required",

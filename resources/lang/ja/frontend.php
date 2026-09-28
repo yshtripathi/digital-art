@@ -239,6 +239,8 @@ return [
 
     // resources/views/frontend/pages/contact.blade.php
     'contact' => [
+        'copy'          => 'コピー',
+        'copied'        => 'コピーしました',
         'page_name'     => 'お問い合わせ',
         'side_title'    => 'ご質問をお待ちしています',
         'side_text'     => '下記の連絡先をご利用いただくか、メッセージをお送りください。メールでご返信します。',
@@ -272,6 +274,7 @@ return [
 
     // resources/views/frontend/pages/order-failed.blade.php
     'failed' => [
+        'checked'   => ':total 件中 :done 件を確認済み',
         'page_name' => 'お支払い失敗',
         'heading'   => 'お支払いは完了しませんでした',
         'lead'      => 'お支払いを完了できませんでした。クレジットは追加されていません。以下の内容をご確認のうえ、もう一度お試しください。',
@@ -364,6 +367,11 @@ return [
 
     // resources/views/frontend/pages/product-lists.blade.php
     'catalog' => [
+        'all'          => 'すべて',
+        'cats_label'   => 'カテゴリーから探す',
+        'levels_label' => 'レベル',
+        'showing'      => ':total 件中 :shown 件を表示',
+        'reset'        => '絞り込みをリセット',
         'page_name'    => 'eラーニング教材',
         'meta'         => '語学とライティングの学習教材をカテゴリーやレベル別に探し、クレジットでの価格を比べて、どこから始めるかを決められます。',
         'filter_all'   => 'すべての教材を見る',
@@ -428,11 +436,13 @@ return [
 
     // resources/views/frontend/pages/page.blade.php
     'page' => [
-        'read'     => '約:min分で読めます',
-        'sections' => ':count項目',
-        'copy'     => 'テキストをコピー',
-        'copied'   => 'コピーしました',
-        'print'    => '印刷',
+        'toc'       => 'このページの内容',
+        'size'      => '文字サイズ',
+        'smaller'   => '文字を小さくする',
+        'larger'    => '文字を大きくする',
+        'others'    => 'その他のポリシー',
+        'help'      => 'このポリシーについてのご質問',
+        'help_text' => 'お気軽にご連絡ください。メールでご返信いたします。',
     ],
 
     // resources/views/frontend/pages/coursecart.blade.php
@@ -496,6 +506,14 @@ return [
 
     // resources/views/frontend/pages/about-us.blade.php
     'about' => [
+        'how_label'   => 'ご利用の流れ',
+        'how_title'   => '最初の確認から、自分のペースの学習まで',
+        'step1_t'     => '学習教材を選ぶ',
+        'step1'       => 'カテゴリーから探し、気になる教材を開いて内容と対象を確認できます。',
+        'step2_t'     => '各レベルを確認する',
+        'step2'       => 'クレジットを使う前に、各レベルの内容、向いている方、身につくことを確認できます。',
+        'step3_t'     => 'クレジットで解放する',
+        'step3'       => 'クレジットを購入したら、選んだレベルに使い、都合のよいときに学習を進められます。',
         'desc'        => '語学とライティングの学習ガイドの内容、4つのレベルのつながり、クレジットでの解放方法をご紹介します。',
         'page_name'   => '私たちについて',
         'label'       => 'ガイドについて',
@@ -512,6 +530,21 @@ return [
 
     // resources/views/frontend/user/dashboard.blade.php
     'dashboard' => [
+        'th_order'      => '注文番号',
+        'th_material'   => '学習教材',
+        'th_level'      => 'レベル',
+        'th_action'     => '詳細',
+        'find_orders'   => '注文番号で検索',
+        'find_lib'      => '教材を検索',
+        'no_hits'       => '検索に一致する項目はありません。',
+        'pw_rules'      => 'パスワードのチェックリスト',
+        'rule_len'      => '8文字以上',
+        'rule_new'      => '現在のパスワードと異なる',
+        'rule_match'    => '新しいパスワードが一致している',
+        'strength'      => '強度',
+        'str_weak'      => '弱い',
+        'str_fair'      => '普通',
+        'str_good'      => '強い',
         'page_name'     => 'ダッシュボード',
         'crumb'         => 'マイアカウント',
         'greet'         => 'おかえりなさい',
@@ -574,6 +607,9 @@ return [
 
     // resources/views/frontend/user/order/show.blade.php
     'receipt' => [
+        'th_item'      => '項目',
+        'th_level'     => 'レベル',
+        'th_credits'   => 'クレジット',
         'page_name'    => '注文の詳細',
         'crumb'        => 'マイアカウント',
         'tag'          => '領収書',

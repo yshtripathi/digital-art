@@ -10,69 +10,83 @@
     ]
 ])
 
-<section class="auth">
-    <div class="auth__card">
-        <div class="auth__head">
-            <span class="auth__levels" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
-            <h2 class="auth__title">{{ __('frontend.login.title') }}</h2>
-            <p class="auth__lead">{{ __('frontend.login.intro') }}</p>
-        </div>
+<section class="gate">
+    <div class="gate__stack">
+        <nav class="gate__tabs" aria-label="{{ __('frontend.header.acct_menu') }}">
+            <a href="{{ route('login.form') }}" class="gate__tab is-active" aria-current="page">
+                <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                <span>{{ __('frontend.header.acct_login') }}</span>
+            </a>
+            <a href="{{ route('register.form') }}" class="gate__tab">
+                <i class="fas fa-user-plus" aria-hidden="true"></i>
+                <span>{{ __('frontend.header.acct_join') }}</span>
+            </a>
+        </nav>
 
-        <div class="auth__tabs">
-            <a href="{{ route('login.form') }}" class="auth__tab is-active" aria-current="page">{{ __('frontend.header.acct_login') }}</a>
-            <a href="{{ route('register.form') }}" class="auth__tab">{{ __('frontend.header.acct_join') }}</a>
-        </div>
-
-        @if(session('loginerror'))
-            <p class="auth__msg auth__msg--error" role="alert">
-                <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-                <span>{{ session('loginerror') }}</span>
-            </p>
-        @endif
-
-        <form name="frmLogin" id="frmLogin" class="auth__form" action="{{ route('login.submit') }}" method="post" novalidate>
-            @csrf
-
-            <div class="fld">
-                <label class="fld__label" for="email">{{ __('frontend.login.mail_label') }}</label>
-                <div class="fld__box">
-                    <i class="fas fa-envelope fld__icon" aria-hidden="true"></i>
-                    <input type="email" name="email" id="email" autocomplete="email" class="fld__input @error('email') is-invalid @enderror" placeholder="{{ __('frontend.login.mail_hint') }}" value="{{ old('email') }}">
+        <div class="gate__card">
+            <div class="gate__head">
+                <span class="gate__badge" aria-hidden="true"><i class="fas fa-sign-in-alt"></i></span>
+                <div>
+                    <h2 class="gate__title">{{ __('frontend.login.title') }}</h2>
+                    <p class="gate__lead">{{ __('frontend.login.intro') }}</p>
                 </div>
-                @error('email')
-                    <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                @enderror
             </div>
 
-            <div class="fld">
-                <label class="fld__label" for="password">{{ __('frontend.login.pass_label') }}</label>
-                <div class="fld__box">
-                    <i class="fas fa-lock fld__icon" aria-hidden="true"></i>
-                    <input type="password" name="password" id="password" autocomplete="current-password" class="fld__input @error('password') is-invalid @enderror" placeholder="{{ __('frontend.login.pass_hint') }}">
-                    <button type="button" class="fld__eye" data-pass-toggle data-show="{{ __('frontend.login.pass_show') }}" data-hide="{{ __('frontend.login.pass_hide') }}" aria-label="{{ __('frontend.login.pass_show') }}" aria-pressed="false">
-                        <i class="fas fa-eye" aria-hidden="true"></i>
-                    </button>
-                </div>
-                @error('password')
-                    <span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>
-                @enderror
-            </div>
+            @if(session('loginerror'))
+                <p class="gate__note gate__note--error" role="alert">
+                    <i class="fas fa-exclamation" aria-hidden="true"></i>
+                    <span>{{ session('loginerror') }}</span>
+                </p>
+            @endif
 
-            <div class="auth__opts">
-                <label class="auth__check" for="remember">
+            <form name="frmLogin" id="frmLogin" class="gate__form" action="{{ route('login.submit') }}" method="post" novalidate>
+                @csrf
+
+                <div class="entry">
+                    <label class="entry__label" for="email">{{ __('frontend.login.mail_label') }}</label>
+                    <div class="entry__box @error('email') is-invalid @enderror">
+                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-at"></i></span>
+                        <input type="email" name="email" id="email" autocomplete="email" class="entry__input" placeholder="{{ __('frontend.login.mail_hint') }}" value="{{ old('email') }}">
+                    </div>
+                    @error('email')
+                        <span class="entry__err">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="entry">
+                    <div class="entry__top">
+                        <label class="entry__label" for="password">{{ __('frontend.login.pass_label') }}</label>
+                        <a href="{{ route('forgetpwd.form') }}" class="gate__link">{{ __('frontend.login.forgot') }}</a>
+                    </div>
+                    <div class="entry__box @error('password') is-invalid @enderror">
+                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-key"></i></span>
+                        <input type="password" name="password" id="password" autocomplete="current-password" class="entry__input" placeholder="{{ __('frontend.login.pass_hint') }}">
+                        <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.login.pass_show') }}" data-hide="{{ __('frontend.login.pass_hide') }}" aria-label="{{ __('frontend.login.pass_show') }}" aria-pressed="false">
+                            <i class="fas fa-eye" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    @error('password')
+                        <span class="entry__err">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <label class="tick" for="remember">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                    <span class="tick__box" aria-hidden="true"><i class="fas fa-check"></i></span>
                     <span>{{ __('frontend.login.remember') }}</span>
                 </label>
-                <a href="{{ route('forgetpwd.form') }}" class="auth__link">{{ __('frontend.login.forgot') }}</a>
-            </div>
 
-            <button type="submit" name="submit-form" class="btn btn--block auth__submit">{{ __('frontend.login.submit') }}</button>
-        </form>
+                <button type="submit" name="submit-form" class="btn btn--block gate__submit">
+                    <span>{{ __('frontend.login.submit') }}</span>
+                    <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
+                </button>
+            </form>
 
-        <p class="auth__foot">
-            {{ __('frontend.login.no_acct') }}
-            <a href="{{ route('register.form') }}">{{ __('frontend.login.join') }}</a>
-        </p>
+            <p class="gate__foot">
+                {{ __('frontend.login.no_acct') }}
+                <a href="{{ route('register.form') }}" class="gate__swap">{{ __('frontend.login.join') }}</a>
+            </p>
+        </div>
     </div>
 </section>
 
@@ -84,16 +98,15 @@
     $(document).ready(function() {
         $("#frmLogin").validate({
             errorElement: 'span',
-            errorClass: 'fld__err',
+            errorClass: 'entry__err',
             errorPlacement: function(error, element) {
-                error.prepend('<i class="fas fa-info-circle" aria-hidden="true"></i> ');
-                error.appendTo(element.closest('.fld'));
+                error.appendTo(element.closest('.entry'));
             },
             highlight: function(element) {
-                $(element).addClass('is-invalid');
+                $(element).closest('.entry__box').addClass('is-invalid');
             },
             unhighlight: function(element) {
-                $(element).removeClass('is-invalid');
+                $(element).closest('.entry__box').removeClass('is-invalid');
             },
             rules: {
                 password: { required: true },

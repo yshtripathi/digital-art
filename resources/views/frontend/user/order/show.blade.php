@@ -15,13 +15,7 @@
 <section class="rcp">
     @if($order && (int) $order->user_id === (int) auth()->id())
         @php
-            $currency = match($order->currency) {
-                'USD' => '$',
-                'JPY' => '&yen;',
-                'HKD' => 'HK$',
-                default => '$',
-            };
-            $totalFmt = $currency . number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2);
+            $totalFmt = Helper::getCurrencySymbol($order->currency) . number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2);
             $items = $order->cart_info ?? collect();
             $payOk = in_array(strtolower((string) $order->payment_status), ['completed', 'paid', 'success']);
             $orderOk = in_array(strtolower((string) $order->status), ['completed', 'delivered']);
@@ -50,7 +44,7 @@
                             <strong><span class="num">{{ number_format($creditsUsed) }}</span> <small>{{ __('frontend.receipt.unit_credits') }}</small></strong>
                         @else
                             <span>{{ __('frontend.receipt.sum_paid') }}</span>
-                            <strong class="num">{!! $totalFmt !!}</strong>
+                            <strong class="num">{{ $totalFmt }}</strong>
                         @endif
                     </div>
                 </header>
@@ -68,7 +62,7 @@
                         <small>{{ __('frontend.receipt.f_method') }}</small>
                         <span class="rcp-chip__val">
                             @if($paidWithCredits)
-                                <i class="fas fa-coins" aria-hidden="true"></i> {{ __('frontend.receipt.pay_credits') }}
+                                <i class="fas fa-wallet" aria-hidden="true"></i> {{ __('frontend.receipt.pay_credits') }}
                             @else
                                 <i class="far fa-credit-card" aria-hidden="true"></i> {{ __('frontend.receipt.pay_card') }}
                             @endif
@@ -95,7 +89,7 @@
                                 @endphp
                                 <li class="rcp-item">
                                     <span class="rcp-item__icon {{ $isCourse ? '' : 'is-credits' }}" aria-hidden="true">
-                                        <i class="fas {{ $isCourse ? 'fa-graduation-cap' : 'fa-coins' }}"></i>
+                                        <i class="fas {{ $isCourse ? 'fa-graduation-cap' : 'fa-wallet' }}"></i>
                                     </span>
                                     <span class="rcp-item__text">
                                         <span class="rcp-item__title">{{ $itemTitle }}</span>
@@ -113,7 +107,7 @@
                                 <strong><span class="num">{{ number_format($creditsUsed) }}</span> {{ __('frontend.receipt.unit_credits') }}</strong>
                             @else
                                 <span>{{ __('frontend.receipt.sum_paid') }}</span>
-                                <strong class="num">{!! $totalFmt !!}</strong>
+                                <strong class="num">{{ $totalFmt }}</strong>
                             @endif
                         </div>
                     </section>
@@ -157,7 +151,7 @@
             <aside class="rcp-side">
                 <span class="rcp-side__icon" aria-hidden="true"><i class="fas fa-file-invoice"></i></span>
                 <p class="rcp-side__no num">{{ $order->order_number }}</p>
-                <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--primary btn--block">
+                <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--block">
                     <i class="fas fa-download" aria-hidden="true"></i>
                     {{ __('frontend.receipt.go_pdf') }}
                 </a>
@@ -177,7 +171,7 @@
             <h2 class="ct__empty-title">{{ __('frontend.receipt.lost') }}</h2>
             <p class="ct__empty-text">{{ __('frontend.receipt.lost_text') }}</p>
             <div class="ct__empty-acts">
-                <a href="{{ route('user') }}" class="btn btn--primary">
+                <a href="{{ route('user') }}" class="btn">
                     <i class="fas fa-arrow-left" aria-hidden="true"></i>
                     {{ __('frontend.receipt.go_back') }}
                 </a>

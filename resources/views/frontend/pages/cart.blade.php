@@ -71,14 +71,14 @@
                         }
                     @endphp
 
-                    <li class="line">
+                    <li class="line" style="--i: {{ $loop->index }}">
                         <span class="line__media {{ $cart->product ? '' : 'line__media--credits' }}">
                             @if($item_photo)
                                 <img src="{{ asset(ltrim($item_photo, '/')) }}" alt="" loading="lazy">
                             @elseif($cart->product)
                                 <i class="fas fa-book-open" aria-hidden="true"></i>
                             @else
-                                <i class="fas fa-coins" aria-hidden="true"></i>
+                                <i class="fas fa-wallet" aria-hidden="true"></i>
                             @endif
                         </span>
 
@@ -90,7 +90,7 @@
                                 <span class="line__title">{{ $item_title }}</span>
                             @endif
                             <span class="line__meta">
-                                <i class="fas fa-coins" aria-hidden="true"></i>
+                                <i class="fas fa-wallet" aria-hidden="true"></i>
                                 <span class="num">{{ number_format($cart->points) }}</span> {{ __('frontend.cart.col_credits') }}
                             </span>
                         </div>
@@ -111,7 +111,7 @@
                     <dl class="ct__stats">
                         <div class="ct__stat">
                             <dt>{{ __('frontend.cart.col_credits') }}</dt>
-                            <dd><i class="fas fa-coins" aria-hidden="true"></i> <span class="num">{{ number_format($totalCredits) }}</span></dd>
+                            <dd><i class="fas fa-wallet" aria-hidden="true"></i> <span class="num">{{ number_format($totalCredits) }}</span></dd>
                         </div>
                         @if($discount > 0)
                             <div class="ct__stat">
@@ -126,7 +126,7 @@
                         <strong class="num">{{ $sym }}{{ number_format($total_amount, $dec) }}</strong>
                     </div>
 
-                    <a href="{{ route('checkout') }}" class="btn btn--primary ct__go">
+                    <a href="{{ route('checkout') }}" class="btn ct__go">
                         {{ __('frontend.cart.go_pay') }}
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
@@ -147,8 +147,8 @@
             <h2 class="ct__empty-title">{{ __('frontend.cart.empty_head') }}</h2>
             <p class="ct__empty-text">{{ __('frontend.cart.empty_text') }}</p>
             <div class="ct__empty-acts">
-                <a href="{{ route('points.topup') }}" class="btn btn--primary">
-                    <i class="fas fa-coins" aria-hidden="true"></i>
+                <a href="{{ route('points.topup') }}" class="btn">
+                    <i class="fas fa-wallet" aria-hidden="true"></i>
                     {{ __('frontend.cart.none_buy') }}
                 </a>
                 <a href="{{ route('product-lists') }}" class="btn btn--ghost">

@@ -13,7 +13,7 @@
 <section class="auth">
     <div class="auth__card">
         <div class="auth__head">
-            <span class="auth__icon" aria-hidden="true"><i class="fas fa-sign-in-alt"></i></span>
+            <span class="auth__levels" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
             <h2 class="auth__title">{{ __('frontend.login.title') }}</h2>
             <p class="auth__lead">{{ __('frontend.login.intro') }}</p>
         </div>
@@ -66,7 +66,7 @@
                 <a href="{{ route('forgetpwd.form') }}" class="auth__link">{{ __('frontend.login.forgot') }}</a>
             </div>
 
-            <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit">{{ __('frontend.login.submit') }}</button>
+            <button type="submit" name="submit-form" class="btn btn--block auth__submit">{{ __('frontend.login.submit') }}</button>
         </form>
 
         <p class="auth__foot">

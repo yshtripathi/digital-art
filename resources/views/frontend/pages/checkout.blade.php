@@ -43,7 +43,7 @@
         <form name="frmCheckout" id="frmCheckout" class="co__main" method="POST" action="{{ route('cart.order') }}" novalidate>
             @csrf
 
-                <div class="co__panel">
+                <div class="co__panel" style="--i: 0">
                     <div class="co__panel-head">
                         <span class="co__num num">01</span>
                         <h2 class="co__panel-title">{{ __('frontend.checkout.sec_billing') }}</h2>
@@ -386,7 +386,7 @@
                     </div>
                 </div>
 
-                <div class="co__panel">
+                <div class="co__panel" style="--i: 1">
                     <div class="co__panel-head">
                         <span class="co__num num">02</span>
                         <h2 class="co__panel-title">{{ __('frontend.checkout.sec_extra') }}</h2>
@@ -403,7 +403,7 @@
                     </div>
                 </div>
 
-                <div class="co__panel">
+                <div class="co__panel" style="--i: 2">
                     <div class="co__panel-head">
                         <span class="co__num num">03</span>
                         <h2 class="co__panel-title">{{ __('frontend.checkout.sec_card') }}</h2>
@@ -457,7 +457,7 @@
                     </div>
                 </div>
 
-                <div class="co__panel">
+                <div class="co__panel" style="--i: 3">
                     <div class="co__panel-head">
                         <span class="co__num num">04</span>
                         <h2 class="co__panel-title">{{ __('frontend.checkout.sec_terms') }}</h2>
@@ -532,7 +532,7 @@
                         @foreach($coLines as $coLine)
                             <li class="sum__row">
                                 <span class="sum__item">
-                                    <span class="sum__icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
+                                    <span class="sum__icon" aria-hidden="true"><i class="fas fa-wallet"></i></span>
                                     <span><span class="num">{{ number_format($coLine->points, 0, '.', ',') }}</span> {{ __('frontend.checkout.unit_credits') }}</span>
                                 </span>
                                 <span class="sum__price num">{{ $coSymbol }}{{ number_format($coLine['price'], $coDecimals, '.', ',') }}</span>
@@ -548,15 +548,15 @@
 
                 <p class="co__bill">
                     {{ __('frontend.checkout.dba_text') }}
-                    <img class="co__bill-img" src="{{ asset('assets/images/dba.webp') }}" alt="{{ __('frontend.checkout.dba_alt') }}" width="112" height="32">
+                    <img class="co__bill-img" src="{{ asset('assets/images/dba.webp') }}?v={{ filemtime(public_path('assets/images/dba.webp')) }}" alt="{{ __('frontend.checkout.dba_alt') }}" width="120" height="32">
                 </p>
 
-                <button type="submit" form="frmCheckout" class="btn btn--primary btn--block sum__pay" id="button-confirm">
+                <button type="submit" form="frmCheckout" class="btn btn--block sum__pay" id="button-confirm">
                     <i class="fas fa-lock" aria-hidden="true"></i>
                     {{ __('frontend.checkout.go_pay') }}
                 </button>
 
-                <a href="{{ route('home') }}" class="btn btn--ghost btn--block">{{ __('frontend.checkout.more') }}</a>
+                <a href="{{ route('home') }}" class="btn btn--ghost btn--block sum__more">{{ __('frontend.checkout.more') }}</a>
 
                 <p class="sum__trust">
                     <i class="fas fa-shield-alt" aria-hidden="true"></i>

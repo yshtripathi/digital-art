@@ -1,30 +1,4 @@
 <aside id="ck-consent" class="ck" role="region" aria-labelledby="ck-consent-title">
-    <div class="ck__bar">
-        <div class="ck__head">
-            <span class="ck__icon" aria-hidden="true"><i class="fas fa-cookie-bite"></i></span>
-            <h2 class="ck__title" id="ck-consent-title">@lang('cookieConsent::cookies.title')</h2>
-        </div>
-
-        <p class="ck__intro">
-            @lang('cookieConsent::cookies.intro')
-            @if($policy)
-                @lang('cookieConsent::cookies.link', ['url' => $policy])
-            @endif
-        </p>
-
-        <div class="ck__acts">
-            @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'ck__btn ck__btn--soft'])
-
-            @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'ck__btn ck__btn--main'])
-        </div>
-
-        <button type="button" class="ck__more" data-ck-toggle="ck-consent-prefs">
-            <i class="fas fa-sliders-h" aria-hidden="true"></i>
-            <span>@lang('cookieConsent::cookies.customize')</span>
-            <i class="fas fa-chevron-down ck__chev" aria-hidden="true"></i>
-        </button>
-    </div>
-
     <div class="ck__panel" id="ck-consent-prefs">
         <div class="ck__panel-in">
             <form action="{{ route('cookieconsent.accept.configuration') }}" method="post" class="ck__prefs">
@@ -36,7 +10,7 @@
                             $isEssential = $category->key() === 'essentials';
                             $catCookies  = $category->getCookies();
                         @endphp
-                        <div class="ck__cat">
+                        <div class="ck__cat" style="--i: {{ $loop->index }}">
                             <label class="ck__top" for="ck-cat-{{ $category->key() }}">
                                 <span class="ck__name">
                                     {{ $category->title }}
@@ -59,7 +33,7 @@
                             @if(count($catCookies))
                                 <button type="button" class="ck__details" data-ck-toggle="ck-list-{{ $category->key() }}" data-more="@lang('cookieConsent::cookies.details.more')" data-less="@lang('cookieConsent::cookies.details.less')">
                                     <span data-ck-label>@lang('cookieConsent::cookies.details.more')</span>
-                                    <i class="fas fa-chevron-down ck__chev" aria-hidden="true"></i>
+                                    <i class="fas fa-plus ck__plus" aria-hidden="true"></i>
                                 </button>
 
                                 <div class="ck__panel" id="ck-list-{{ $category->key() }}">
@@ -69,7 +43,7 @@
                                                 <li class="ck__item">
                                                     <div class="ck__item-top">
                                                         <p class="ck__cookie">{{ $cookie->name }}</p>
-                                                        <span class="ck__dur num">{{ \Carbon\CarbonInterval::minutes($cookie->duration)->cascade() }}</span>
+                                                        <span class="ck__dur">{{ \Carbon\CarbonInterval::minutes($cookie->duration)->cascade() }}</span>
                                                     </div>
                                                     @if($cookie->description)
                                                         <p class="ck__desc">{{ $cookie->description }}</p>
@@ -85,9 +59,32 @@
                 </div>
 
                 <div class="ck__save">
-                    <button type="submit" class="btn btn--primary btn--block">@lang('cookieConsent::cookies.save')</button>
+                    <button type="submit" class="btn">@lang('cookieConsent::cookies.save')</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div class="ck__bar">
+        <div class="ck__copy">
+            <h2 class="ck__title" id="ck-consent-title">@lang('cookieConsent::cookies.title')</h2>
+            <p class="ck__intro">
+                @lang('cookieConsent::cookies.intro')
+                @if($policy)
+                    @lang('cookieConsent::cookies.link', ['url' => $policy])
+                @endif
+            </p>
+        </div>
+
+        <div class="ck__acts">
+            <button type="button" class="ck__more" data-ck-toggle="ck-consent-prefs">
+                <span>@lang('cookieConsent::cookies.customize')</span>
+                <i class="fas fa-chevron-up ck__chev" aria-hidden="true"></i>
+            </button>
+
+            @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'ck__btn ck__btn--soft'])
+
+            @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'ck__btn ck__btn--main'])
         </div>
     </div>
 </aside>

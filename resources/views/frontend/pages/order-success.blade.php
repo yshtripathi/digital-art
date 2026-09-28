@@ -1,11 +1,12 @@
 @extends('frontend.layouts.main')
 @section('title', __('frontend.success.page_name'))
 @php
-    use App\Models\Order;
     $transaction_id = $transaction_id ?? null;
     $email_status   = $email_status ?? null;
-    $order = $transaction_id ? Order::with('cart_info')->where('trans_id', $transaction_id)->first() : null;
-    $supportEmail = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
+    $order = $transaction_id ? \App\Models\Order::with('cart_info')->where('trans_id', $transaction_id)->first() : null;
+    $supportMail = filled($misc['Company Email'] ?? null)
+        ? '<a href="mailto:' . e(trim($misc['Company Email'])) . '">' . e(trim($misc['Company Email'])) . '</a>'
+        : e(__('frontend.company.email'));
 @endphp
 @section('main-content')
 
@@ -19,12 +20,7 @@
 
 @if($order)
     @php
-        $currency = match($order->currency) {
-            'USD' => '$',
-            'JPY' => '&yen;',
-            'HKD' => 'HK$',
-            default => '$',
-        };
+        $currency = Helper::getCurrencySymbol($order->currency);
         $isPaid = in_array(strtolower((string) $order->payment_status), ['paid', 'completed', 'success']);
         $statusKey = 'frontend.success.state_names.' . strtolower((string) $order->payment_status);
         $statusText = Lang::has($statusKey) ? __($statusKey) : ucwords((string) $order->payment_status);
@@ -51,6 +47,7 @@
     </ol>
 
     <div class="rz__card rz__card--ok">
+        <span class="rz__levels" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
         <div class="rz__top">
             <span class="rz__mark" aria-hidden="true"><i class="fas fa-check"></i></span>
             <h2 class="rz__title">{{ __('frontend.success.heading') }}</h2>
@@ -61,7 +58,7 @@
             <div class="rz__receipt">
                 <div class="rz__amount">
                     <span>{{ __('frontend.success.r_amount') }}</span>
-                    <strong class="num">{!! $currency !!}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</strong>
+                    <strong class="num">{{ $currency }}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</strong>
                     <span class="rz__pill {{ $isPaid ? 'rz__pill--paid' : 'rz__pill--wait' }}">
                         <i class="fas {{ $isPaid ? 'fa-check-circle' : 'fa-clock' }}" aria-hidden="true"></i>
                         {{ __('frontend.success.r_status') }}: {{ $statusText }}
@@ -96,7 +93,7 @@
                     @if($orderCredits > 0)
                         <div class="rz__row">
                             <dt>{{ __('frontend.success.r_credits') }}</dt>
-                            <dd><i class="fas fa-coins rz__coin" aria-hidden="true"></i> <span class="num">{{ number_format($orderCredits) }}</span></dd>
+                            <dd><i class="fas fa-wallet rz__coin" aria-hidden="true"></i> <span class="num">{{ number_format($orderCredits) }}</span></dd>
                         </div>
                     @endif
                     @if(filled($order->email))
@@ -118,14 +115,14 @@
 
         <div class="rz__acts">
             @if($order)
-                <a href="{{ route('user.order.show', $order->id) }}" class="btn btn--primary">
+                <a href="{{ route('user.order.show', $order->id) }}" class="btn">
                     <i class="fas fa-receipt" aria-hidden="true"></i> {{ __('frontend.success.go_receipt') }}
                 </a>
                 <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--ghost">
                     <i class="fas fa-download" aria-hidden="true"></i> {{ __('frontend.success.r_invoice') }}
                 </a>
             @endif
-            <a href="{{ route('home') }}" class="{{ $order ? 'rz__home' : 'btn btn--primary' }}">
+            <a href="{{ route('home') }}" class="{{ $order ? 'rz__home' : 'btn' }}">
                 <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.success.go_home') }}
             </a>
         </div>
@@ -143,7 +140,7 @@
                 </li>
                 <li>
                     <span class="rz__dot" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                    <span>{!! str_replace(':email', '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>', e(__('frontend.success.next3'))) !!}</span>
+                    <span>{!! str_replace(':email', $supportMail, e(__('frontend.success.next3'))) !!}</span>
                 </li>
             </ol>
         </div>

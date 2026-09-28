@@ -3,27 +3,24 @@
 <div class="notes" data-notes>
     @if(session('success'))
         <div class="note note--success" role="status" data-note data-note-auto>
-            <span class="note__well" aria-hidden="true"><i class="fas fa-check"></i></span>
+            <span class="note__dot" aria-hidden="true"></span>
             <div class="note__body">
-                <p class="note__label">{{ __('frontend.notify.ok_label') }}</p>
                 <p class="note__msg">{{ session('success') }}</p>
             </div>
             <button type="button" class="note__close" aria-label="{{ __('frontend.notify.dismiss') }}" data-note-close>
-                <i class="fas fa-times" aria-hidden="true"></i>
+                <span></span><span></span>
             </button>
-            <span class="note__timer" aria-hidden="true"></span>
         </div>
     @endif
 
     @if(session('error'))
         <div class="note note--error" role="alert" data-note>
-            <span class="note__well" aria-hidden="true"><i class="fas fa-exclamation"></i></span>
+            <span class="note__dot" aria-hidden="true"></span>
             <div class="note__body">
-                <p class="note__label">{{ __('frontend.notify.err_label') }}</p>
                 <p class="note__msg">{{ session('error') }}</p>
             </div>
             <button type="button" class="note__close" aria-label="{{ __('frontend.notify.dismiss') }}" data-note-close>
-                <i class="fas fa-times" aria-hidden="true"></i>
+                <span></span><span></span>
             </button>
         </div>
     @endif
@@ -59,7 +56,7 @@
             if (note.classList.contains('is-hiding')) { return; }
             clearTimeout(timer);
             note.classList.add('is-hiding');
-            setTimeout(function () { note.remove(); }, 320);
+            setTimeout(function () { note.remove(); }, 420);
         };
 
         var start = function () {

@@ -10,7 +10,11 @@
     ]
 ])
 
-@php $supportEmail = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email'); @endphp
+@php
+    $supportMail = filled($misc['Company Email'] ?? null)
+        ? '<a href="mailto:' . e(trim($misc['Company Email'])) . '">' . e(trim($misc['Company Email'])) . '</a>'
+        : e(__('frontend.company.email'));
+@endphp
 
 <section class="rz">
     <ol class="steps">
@@ -31,6 +35,7 @@
     </ol>
 
     <div class="rz__card rz__card--fail">
+        <span class="rz__levels" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
         <div class="rz__top">
             <span class="rz__mark" aria-hidden="true"><i class="fas fa-times"></i></span>
             <h2 class="rz__title">{{ __('frontend.failed.heading') }}</h2>
@@ -38,7 +43,7 @@
         </div>
 
         <div class="rz__acts">
-            <a href="{{ route('points.topup') }}" class="btn btn--primary">
+            <a href="{{ route('points.topup') }}" class="btn">
                 <i class="fas fa-redo" aria-hidden="true"></i> {{ __('frontend.failed.retry') }}
             </a>
             <a href="{{ route('home') }}" class="btn btn--ghost">
@@ -69,7 +74,7 @@
             <div>
                 <h3 class="rz__help-title">{{ __('frontend.failed.help') }}</h3>
                 <p class="rz__help-text">
-                    {!! str_replace(':email', '<a href="mailto:' . e($supportEmail) . '">' . e($supportEmail) . '</a>', e(__('frontend.failed.reach'))) !!}
+                    {!! str_replace(':email', $supportMail, e(__('frontend.failed.reach'))) !!}
                 </p>
             </div>
         </div>

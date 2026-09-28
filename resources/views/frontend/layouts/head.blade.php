@@ -15,7 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#17202e">
+    <meta name="theme-color" content="#ffffff">
 
     <title>{{ $fullTitle }}</title>
     <meta name="title" content="{{ $fullTitle }}">
@@ -44,44 +44,32 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap">
     @if(str_starts_with($locale, 'ja'))
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap">
     @endif
     <link rel="stylesheet" href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
 
-    <link rel="stylesheet" href="{{ asset('css/straitschain.css') }}?v={{ filemtime(public_path('css/straitschain.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/clearcopys.css') }}?v={{ filemtime(public_path('css/clearcopys.css')) }}">
     @if(env('CONTENT_PROTECTION_ENABLED', true))
-        <link rel="stylesheet" href="{{ asset('css/prevention.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/prevention.css') }}?v={{ filemtime(public_path('css/prevention.css')) }}">
     @endif
 
     @cookieconsentscripts
 </head>
 
 <body class="antialiased">
-<div class="bg-field" aria-hidden="true">
-    <span class="bg-field__glow"></span>
-    <span class="bg-field__glow bg-field__glow--left"></span>
-    <span class="bg-field__icons">
-        @foreach([['fa-graduation-cap', 6, 0], ['fa-book-open', 18, -3], ['fa-lightbulb', 30, -6.5], ['fa-chart-line', 10, -9], ['fa-brain', 24, -12], ['fa-pencil-alt', 36, -14.5], ['fa-layer-group', 4, -17], ['fa-coins', 28, -19.5]] as $bgIcon)
-            <span class="bg-field__shot" style="--x: {{ $bgIcon[1] }}%; --d: {{ $bgIcon[2] }}s"><i class="fas {{ $bgIcon[0] }}"></i></span>
-        @endforeach
-    </span>
-    <canvas class="bg-field__globe" data-bg-globe></canvas>
-</div>
 <div class="page-wrapper">
 
     <div id="preloader" class="pre" aria-hidden="true">
         <div class="pre__core">
-            <div class="pre__chain">
-                @for($i = 0; $i < 5; $i++)
-                    <span class="pre__block"></span>
-                @endfor
+            <p class="pre__name">@foreach(mb_str_split($siteName) as $preIndex => $preChar)<span class="pre__char" style="--i: {{ $preIndex }}">{{ $preChar === ' ' ? "\u{00A0}" : $preChar }}</span>@endforeach<span class="pre__caret"></span></p>
+            <div class="pre__rule">
+                <span class="pre__stroke pre__stroke--writing"></span>
+                <span class="pre__stroke pre__stroke--language"></span>
+                <span class="pre__nib"></span>
             </div>
-            <p class="pre__name">{{ $siteName }}</p>
             <p class="pre__topic">{{ __('frontend.head.topic') }}</p>
-            <div class="pre__bar"><span></span></div>
-            <p class="pre__note">{{ __('frontend.head.note') }}</p>
         </div>
     </div>

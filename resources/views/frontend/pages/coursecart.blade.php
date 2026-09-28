@@ -67,14 +67,14 @@
                             $lvl_label = $level ? (Lang::has($lvl_key) ? __($lvl_key) : ucfirst($level->skill_level)) : null;
                         @endphp
 
-                        <li class="line">
+                        <li class="line" style="--i: {{ $loop->index }}">
                             <span class="line__media {{ $is_course ? '' : 'line__media--credits' }}">
                                 @if($item_photo)
                                     <img src="{{ asset(ltrim($item_photo, '/')) }}" alt="" loading="lazy">
                                 @elseif($is_course)
                                     <i class="fas fa-book-open" aria-hidden="true"></i>
                                 @else
-                                    <i class="fas fa-coins" aria-hidden="true"></i>
+                                    <i class="fas fa-wallet" aria-hidden="true"></i>
                                 @endif
                             </span>
 
@@ -96,7 +96,7 @@
                                 @endif
                             </div>
 
-                            <strong class="line__price"><i class="fas fa-coins" aria-hidden="true"></i> <span class="num">{{ number_format($cart->points) }}</span> <span class="line__unit">{{ __('frontend.coursecart.unit') }}</span></strong>
+                            <strong class="line__price"><i class="fas fa-wallet" aria-hidden="true"></i> <span class="num">{{ number_format($cart->points) }}</span> <span class="line__unit">{{ __('frontend.coursecart.unit') }}</span></strong>
 
                             <a href="{{ route('cart-delete', $cart->id) }}" class="line__drop" aria-label="{{ __('frontend.coursecart.drop') }}: {{ $item_title }}">
                                 <i class="fas fa-trash-alt" aria-hidden="true"></i>
@@ -111,7 +111,7 @@
                     <dl class="ct__stats ct__stats--wallet">
                         <div class="ct__stat">
                             <dt>{{ __('frontend.coursecart.wallet') }}</dt>
-                            <dd><i class="fas fa-coins" aria-hidden="true"></i> <span class="num">{{ number_format($points) }}</span> <span class="ct__unit">{{ __('frontend.coursecart.unit') }}</span></dd>
+                            <dd><i class="fas fa-wallet" aria-hidden="true"></i> <span class="num">{{ number_format($points) }}</span> <span class="ct__unit">{{ __('frontend.coursecart.unit') }}</span></dd>
                         </div>
                         <div class="ct__stat">
                             <dt>{{ __('frontend.coursecart.need') }}</dt>
@@ -146,7 +146,7 @@
 
                     <div class="ct__acts">
                         @if($enough)
-                            <button type="submit" form="redeemPointsForm" class="btn btn--primary ct__go">
+                            <button type="submit" form="redeemPointsForm" class="btn ct__go">
                                 <i class="fas fa-lock-open" aria-hidden="true"></i>
                                 {{ __('frontend.coursecart.go_unlock') }}
                             </button>
@@ -155,8 +155,8 @@
                                 {{ __('frontend.coursecart.go_buy') }}
                             </a>
                         @else
-                            <a href="{{ route('points.topup') }}" class="btn btn--primary ct__go">
-                                <i class="fas fa-coins" aria-hidden="true"></i>
+                            <a href="{{ route('points.topup') }}" class="btn ct__go">
+                                <i class="fas fa-wallet" aria-hidden="true"></i>
                                 {{ __('frontend.coursecart.go_buy') }}
                             </a>
                         @endif
@@ -170,10 +170,10 @@
                 <p class="ct__empty-text">{{ __('frontend.coursecart.empty_text') }}</p>
                 <p class="ct__balance">
                     <span>{{ __('frontend.coursecart.wallet') }}</span>
-                    <strong><i class="fas fa-coins" aria-hidden="true"></i> <span class="num">{{ number_format($points) }}</span> {{ __('frontend.coursecart.unit') }}</strong>
+                    <strong><i class="fas fa-wallet" aria-hidden="true"></i> <span class="num">{{ number_format($points) }}</span> {{ __('frontend.coursecart.unit') }}</strong>
                 </p>
                 <div class="ct__empty-acts">
-                    <a href="{{ route('product-lists') }}" class="btn btn--primary">
+                    <a href="{{ route('product-lists') }}" class="btn">
                         <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                         {{ __('frontend.coursecart.none_browse') }}
                     </a>
@@ -190,7 +190,7 @@
             <h2 class="ct__empty-title">{{ __('frontend.coursecart.guest_head') }}</h2>
             <p class="ct__empty-text">{{ __('frontend.coursecart.guest_body') }}</p>
             <div class="ct__empty-acts">
-                <a href="{{ route('login.form') }}" class="btn btn--primary">
+                <a href="{{ route('login.form') }}" class="btn">
                     <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
                     {{ __('frontend.coursecart.guest_login') }}
                 </a>

@@ -62,16 +62,16 @@
     <div class="dash__main">
         <div class="dash-wallet">
             <span class="dash-wallet__coins" aria-hidden="true">
-                <span><i class="fab fa-bitcoin"></i></span>
-                <span><i class="fas fa-coins"></i></span>
-                <span><i class="fab fa-ethereum"></i></span>
+                <span><i class="fas fa-wallet"></i></span>
+                <span><i class="fas fa-pen-nib"></i></span>
+                <span><i class="fas fa-microphone"></i></span>
             </span>
             <span class="dash-wallet__label">{{ __('frontend.dashboard.wallet_label') }}</span>
             <p class="dash-wallet__value">
                 <span class="num">{{ number_format($u->points_balance ?? 0) }}</span>
             </p>
             <div class="dash-wallet__acts">
-                <a href="{{ route('points.topup') }}" class="btn btn--primary">
+                <a href="{{ route('points.topup') }}" class="btn">
                     <i class="fas fa-plus" aria-hidden="true"></i>
                     {{ __('frontend.dashboard.go_buy') }}
                 </a>
@@ -113,13 +113,13 @@
                             </div>
                             <span class="dash-tx__credits">
                                 <span class="vh">{{ __('frontend.dashboard.th_credits') }}:</span>
-                                <i class="fas fa-coins" aria-hidden="true"></i>
+                                <i class="fas fa-wallet" aria-hidden="true"></i>
                                 <span class="num">{{ $tone === 'ok' ? '+' : '' }}{{ number_format($order->cart_info->sum('points')) }}</span>
                             </span>
                             <div class="dash-tx__end">
                                 <strong class="dash-tx__amount num">
                                     <span class="vh">{{ __('frontend.dashboard.th_amount') }}:</span>
-                                    {!! $order->currency=='JPY' ? '&yen;' : Helper::getCurrencySymbol($order->currency) !!}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}
+                                    {{ Helper::getCurrencySymbol($order->currency) }}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}
                                 </strong>
                                 <span class="dash-tx__state">
                                     <span class="vh">{{ __('frontend.dashboard.th_status') }}:</span>
@@ -142,7 +142,7 @@
                 <div class="dash-blank">
                     <span class="dash-blank__icon" aria-hidden="true"><i class="fas fa-receipt"></i></span>
                     <p>{{ __('frontend.dashboard.buys_none') }}</p>
-                    <a href="{{ route('points.topup') }}" class="btn btn--primary">
+                    <a href="{{ route('points.topup') }}" class="btn">
                         <i class="fas fa-plus" aria-hidden="true"></i>
                         {{ __('frontend.dashboard.go_buy') }}
                     </a>
@@ -174,7 +174,7 @@
                                 @if($cimg)
                                     <img src="{{ asset(ltrim($cimg, '/')) }}" alt="" loading="lazy">
                                 @else
-                                    <i class="fab fa-bitcoin" aria-hidden="true"></i>
+                                    <i class="fas fa-book-open" aria-hidden="true"></i>
                                 @endif
                                 <span class="dash-mat__state {{ $isDone ? 'is-ok' : 'is-wait' }}">
                                     <i class="fas {{ $isDone ? 'fa-lock-open' : 'fa-clock' }}" aria-hidden="true"></i>
@@ -187,7 +187,7 @@
                                     @if($level)
                                         <span class="badge">{{ $levelLabel($level) }}</span>
                                     @endif
-                                    <span class="dash-mat__cost"><i class="fas fa-coins" aria-hidden="true"></i> <span class="num">{{ number_format($cartItem->points) }}</span></span>
+                                    <span class="dash-mat__cost"><i class="fas fa-wallet" aria-hidden="true"></i> <span class="num">{{ number_format($cartItem->points) }}</span></span>
                                 </div>
 
                                 <h3 class="dash-mat__title">{{ $product ? $product->title : __('frontend.dashboard.gone') }}</h3>
@@ -211,7 +211,7 @@
                 <div class="dash-blank">
                     <span class="dash-blank__icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
                     <p>{{ __('frontend.dashboard.lib_none') }}</p>
-                    <a href="{{ route('product-lists') }}" class="btn btn--primary">
+                    <a href="{{ route('product-lists') }}" class="btn">
                         <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                         {{ __('frontend.dashboard.go_browse') }}
                     </a>
@@ -262,7 +262,7 @@
                         @error('new_confirm_password')<span class="fld__err"><i class="fas fa-info-circle" aria-hidden="true"></i> {{ $message }}</span>@enderror
                     </div>
 
-                    <button type="submit" class="btn btn--primary btn--block auth__submit">
+                    <button type="submit" class="btn btn--block auth__submit">
                         <i class="fas fa-check" aria-hidden="true"></i>
                         {{ __('frontend.dashboard.pw_save') }}
                     </button>

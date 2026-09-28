@@ -11,10 +11,10 @@ return [
 
     // resources/views/frontend/layouts/head.blade.php
     'head' => [
-        'site'    => 'ClearCopys',
-        'home'    => ':site — Language and Writing E-Learning Materials',
-        'summary' => 'Self-paced study materials organised into clear levels. Compare what each level covers, unlock only what you need with credits and learn at your own pace.',
-        'topic'   => 'Language & Writing E-Learning',
+        'site'    => 'Word Craftsman',
+        'home'    => ':site — Writing and Language Study Materials',
+        'summary' => 'Self-paced study materials for writing and language learning, organised into clear levels. Compare what each level covers, unlock only what you need with credits and learn at your own pace.',
+        'topic'   => 'Writing & Language Study Materials',
     ],
 
     // resources/views/frontend/layouts/breadcrumb.blade.php
@@ -57,6 +57,13 @@ return [
         'cart_short'    => 'Cart',
         'menu_close'    => 'Close the menu',
         'bag_title'     => 'Nothing here yet',
+        'nav_categories' => 'Categories',
+        'mega_title'    => 'Find the right place to start',
+        'mega_line'     => 'Every category is split into levels, so you can pick the one that matches where you are today.',
+        'mega_help'     => 'Not sure where to begin? Write to us',
+        'pref_title'    => 'Language and currency',
+        'acct_menu'     => 'Account menu',
+        'acct_signed'   => 'Signed in as',
         'level_names'   => [
             'beginner'                 => 'Beginner',
             'intermediate'             => 'Intermediate',
@@ -93,7 +100,8 @@ return [
         'copyright'    => 'All Rights Reserved.',
         'pay_alt'      => 'Accepted payment methods',
         'scroll_top'   => 'Back to top',
-        'about'        => 'Clear, self-paced study guides in four levels. Start where you are, move up when you are ready and learn on your own schedule.',
+        'col_topics'   => 'Categories',
+        'about'        => 'Self-paced study materials for writing and language learning, arranged in clear levels so you can start where you are and move up when you are ready.',
     ],
 
     // resources/views/frontend/index.blade.php
@@ -697,6 +705,8 @@ return [
 
     // resources/views/user/layouts/notification.blade.php
     'notify' => [
+        'ok'        => 'Success',
+        'fail'      => 'Something went wrong',
         'dismiss'   => 'Close this message',
     ],
 

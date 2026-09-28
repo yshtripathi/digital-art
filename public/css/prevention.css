@@ -6,6 +6,7 @@ video {
   -ms-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+  -webkit-user-drag: none;
 }
 
 a,
@@ -40,7 +41,7 @@ button,
   inset: 0;
   z-index: 19;
   pointer-events: none;
-  background: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(180deg, rgba(105, 62, 223, 0.12) 0%, rgba(41, 0, 122, 0.22) 100%);
 }
 
 .card__media::after,
@@ -51,23 +52,23 @@ button,
 .cg-card__media::after,
 .cd-stage::after,
 .cd-thumb::after {
-  content: "CLEARCOPYS";
+  content: "WORD CRAFTSMAN";
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 20;
   font-family: var(--font-heading);
   font-size: max(1.25rem, 2.2vw);
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: 0.08em;
   white-space: nowrap;
-  color: rgba(255, 255, 255, 0.92);
-  text-shadow: 0 0 10px rgba(58, 58, 62, 0.8), 0 0 2px rgba(9, 11, 17, 0.6);
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0 10px rgba(41, 0, 122, 0.75), 0 0 2px rgba(23, 23, 23, 0.6);
   pointer-events: none;
   transform: translate(-50%, -50%) rotate(-30deg);
 }
 
 .cd-thumb::after {
-  font-size: 1rem;
+  font-size: 0.875rem;
   letter-spacing: 0.04em;
 }

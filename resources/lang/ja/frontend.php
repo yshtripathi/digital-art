@@ -11,10 +11,10 @@ return [
 
     // resources/views/frontend/layouts/head.blade.php
     'head' => [
-        'site'    => 'ClearCopys',
-        'home'    => ':site — 語学とライティングのeラーニング教材',
-        'summary' => '分かりやすいレベルに分かれた、自分のペースで学べる学習教材です。各レベルの内容を比べ、必要な分だけクレジットで解放して学べます。',
-        'topic'   => '語学＆ライティング eラーニング',
+        'site'    => 'Word Craftsman',
+        'home'    => ':site — ライティングと語学の学習教材',
+        'summary' => 'ライティングと語学を、分かりやすいレベルに分かれた教材で自分のペースで学べます。各レベルの内容を比べ、必要な分だけクレジットで解放して学べます。',
+        'topic'   => 'ライティング＆語学 学習教材',
     ],
 
     // resources/views/frontend/layouts/breadcrumb.blade.php
@@ -57,6 +57,13 @@ return [
         'cart_short'    => 'カート',
         'menu_close'    => 'メニューを閉じる',
         'bag_title'     => 'まだ何も入っていません',
+        'nav_categories' => 'カテゴリー',
+        'mega_title'    => '自分に合った始め方を見つけましょう',
+        'mega_line'     => 'どのカテゴリーもレベル別に分かれているので、今の自分に合ったレベルから選べます。',
+        'mega_help'     => 'どこから始めるか迷ったら、こちらへご連絡ください',
+        'pref_title'    => '言語と通貨',
+        'acct_menu'     => 'アカウントメニュー',
+        'acct_signed'   => 'ログイン中',
         'level_names'   => [
             'beginner'                 => '初級',
             'intermediate'             => '中級',
@@ -93,7 +100,8 @@ return [
         'copyright'    => '無断転載を禁じます。',
         'pay_alt'      => 'ご利用いただけるお支払い方法',
         'scroll_top'   => 'ページの先頭へ戻る',
-        'about'        => '4つのレベルで学べる、わかりやすい自習用の学習ガイドです。今の自分に合ったところから始め、準備ができたら次へ。自分の予定に合わせて学べます。',
+        'col_topics'   => 'カテゴリー',
+        'about'        => 'ライティングと語学を、わかりやすいレベル別の教材で自分のペースで学べます。今の自分に合ったところから始め、準備ができたら次のレベルへ進めます。',
     ],
 
     // resources/views/frontend/index.blade.php
@@ -697,6 +705,8 @@ return [
 
     // resources/views/user/layouts/notification.blade.php
     'notify' => [
+        'ok'        => '完了しました',
+        'fail'      => 'エラーが発生しました',
         'dismiss'   => 'このメッセージを閉じる',
     ],
 

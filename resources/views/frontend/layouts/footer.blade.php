@@ -1,120 +1,136 @@
 @php
-    $footSite       = __('frontend.head.site');
-    $footCompany    = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
-    $footMail       = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
-    $footAddress    = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
+    $footSite    = __('frontend.head.site');
+    $footCompany = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
+    $footMail    = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
+    $footAddress = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
+    $footCats    = $category ?? collect();
+
+    $footLearn = [
+        ['url' => route('product-lists'), 'label' => __('frontend.footer.link_all')],
+        ['url' => route('points.topup'),  'label' => __('frontend.footer.link_credits')],
+        ['url' => route('about-us'),      'label' => __('frontend.footer.link_about')],
+        ['url' => route('contact'),       'label' => __('frontend.footer.link_contact')],
+    ];
+    if (Auth::check()) {
+        $footLearn[] = ['url' => route('user'), 'label' => __('frontend.footer.link_account')];
+    }
+
+    $footLegal = [
+        ['url' => route('pages', 'terms-conditions'), 'label' => __('frontend.footer.link_terms')],
+        ['url' => route('pages', 'privacy-policy'),   'label' => __('frontend.footer.link_privacy')],
+        ['url' => route('pages', 'refund-policy'),    'label' => __('frontend.footer.link_refund')],
+        ['url' => route('pages', 'delivery-policy'),  'label' => __('frontend.footer.link_access')],
+    ];
 @endphp
 
-<footer class="ft" data-ft>
-    <div class="ft__news" data-reveal>
-        <div class="ft__news-copy">
-            <span class="ft__news-icon" aria-hidden="true"><i class="far fa-paper-plane"></i></span>
-            <div>
-                <p class="ft__news-tag">{{ __('frontend.footer.letter_tag') }}</p>
-                <h2 class="ft__news-title" id="signup-title">{{ __('frontend.footer.news_title') }}</h2>
-                <p class="ft__news-line">{{ __('frontend.footer.news_line') }}</p>
+<footer class="foot">
+    <div class="foot__wrap">
+        <section class="letter" aria-labelledby="letter-title">
+            <div class="letter__copy">
+                <p class="letter__tag">
+                    <i class="far fa-envelope-open" aria-hidden="true"></i>
+                    {{ __('frontend.footer.letter_tag') }}
+                </p>
+                <h2 class="letter__title" id="letter-title">{{ __('frontend.footer.news_title') }}</h2>
+                <p class="letter__line">{{ __('frontend.footer.news_line') }}</p>
             </div>
-        </div>
 
-        <div class="ft__news-act" data-signup-box>
-            <form class="ft__form" novalidate aria-labelledby="signup-title" data-signup>
-                <label class="vh" for="signup-email">{{ __('frontend.footer.letter_field') }}</label>
-                <span class="ft__field">
-                    <i class="far fa-envelope" aria-hidden="true"></i>
-                    <input type="email" name="email" id="signup-email" class="ft__input" placeholder="{{ __('frontend.footer.letter_ph') }}" autocomplete="email" required>
-                </span>
-                <button type="submit" class="ft__send">
-                    <span>{{ __('frontend.footer.letter_send') }}</span>
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </button>
-            </form>
-            <p class="ft__bad" role="alert" hidden data-signup-bad>{{ __('frontend.footer.letter_bad') }}</p>
-            <p class="ft__ok" role="status" hidden data-signup-ok>
-                <span class="ft__ok-mark" aria-hidden="true"><i class="fas fa-check"></i></span>
-                <span>{{ __('frontend.footer.letter_done') }}</span>
-            </p>
+            <div class="letter__act" data-letter>
+                <form class="letter__form" novalidate data-letter-form>
+                    <label class="letter__label" for="letter-email">{{ __('frontend.footer.letter_field') }}</label>
+                    <div class="letter__row">
+                        <input type="email" name="email" id="letter-email" class="letter__input" placeholder="{{ __('frontend.footer.letter_ph') }}" autocomplete="email" required aria-describedby="letter-bad">
+                        <button type="submit" class="letter__send">
+                            <span>{{ __('frontend.footer.letter_send') }}</span>
+                            <span class="letter__arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                        </button>
+                    </div>
+                    <p class="letter__bad" id="letter-bad" role="alert" hidden data-letter-bad>
+                        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                        {{ __('frontend.footer.letter_bad') }}
+                    </p>
+                </form>
+                <p class="letter__ok" role="status" hidden data-letter-ok>
+                    <span class="letter__stamp" aria-hidden="true"><i class="fas fa-check"></i></span>
+                    <span>{{ __('frontend.footer.letter_done') }}</span>
+                </p>
+            </div>
+        </section>
+
+        <div class="foot__grid">
+            <div class="foot__brand">
+                <a href="{{ route('home') }}" class="foot__logo">
+                    <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footSite }}" width="998" height="240" loading="lazy">
+                </a>
+                <p class="foot__about">{{ __('frontend.footer.about') }}</p>
+                @if($footCats->isNotEmpty())
+                    <p class="foot__head" id="foot-cats">{{ __('frontend.footer.col_topics') }}</p>
+                    <ul class="foot__tags" aria-labelledby="foot-cats">
+                        @foreach($footCats as $cat)
+                            <li><a href="{{ route('product-lists', $cat->slug) }}" class="foot__tag"><span class="foot__dot" aria-hidden="true"></span>{{ $cat->title }}</a></li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+            <nav class="foot__col" aria-labelledby="foot-learn">
+                <p class="foot__head" id="foot-learn">{{ __('frontend.footer.col_links') }}</p>
+                <ul class="foot__links">
+                    @foreach($footLearn as $link)
+                        <li><a href="{{ $link['url'] }}" class="foot__link"><span class="foot__roll" data-text="{{ $link['label'] }}"><span>{{ $link['label'] }}</span></span><i class="fas fa-long-arrow-alt-right foot__go" aria-hidden="true"></i></a></li>
+                    @endforeach
+                </ul>
+            </nav>
+
+            <nav class="foot__col" aria-labelledby="foot-legal">
+                <p class="foot__head" id="foot-legal">{{ __('frontend.footer.col_policies') }}</p>
+                <ul class="foot__links">
+                    @foreach($footLegal as $link)
+                        <li><a href="{{ $link['url'] }}" class="foot__link"><span class="foot__roll" data-text="{{ $link['label'] }}"><span>{{ $link['label'] }}</span></span><i class="fas fa-long-arrow-alt-right foot__go" aria-hidden="true"></i></a></li>
+                    @endforeach
+                </ul>
+            </nav>
+
+            <div class="foot__col">
+                <p class="foot__head" id="foot-reach">{{ __('frontend.footer.details') }}</p>
+                <dl class="reach" aria-labelledby="foot-reach">
+                    <div class="reach__item">
+                        <span class="reach__icon" aria-hidden="true"><i class="far fa-building"></i></span>
+                        <div>
+                            <dt>{{ __('frontend.footer.info_name') }}</dt>
+                            <dd>{{ $footCompany }}</dd>
+                        </div>
+                    </div>
+                    <div class="reach__item">
+                        <span class="reach__icon" aria-hidden="true"><i class="far fa-envelope"></i></span>
+                        <div>
+                            <dt>{{ __('frontend.footer.info_mail') }}</dt>
+                            <dd><a href="mailto:{{ $footMail }}" class="reach__mail">{{ $footMail }}</a></dd>
+                        </div>
+                    </div>
+                    <div class="reach__item">
+                        <span class="reach__icon" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
+                        <div>
+                            <dt>{{ __('frontend.footer.info_place') }}</dt>
+                            <dd>{{ $footAddress }}</dd>
+                        </div>
+                    </div>
+                </dl>
+            </div>
         </div>
     </div>
 
-    <div class="ft__main">
-        <div class="ft__brand" data-reveal>
-            <a href="{{ route('home') }}" class="ft__logo">
-                <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $footSite }}" width="998" height="240" loading="lazy">
-            </a>
-            <p class="ft__about">{{ __('frontend.footer.about') }}</p>
-            <div class="ft__levels" aria-hidden="true">
-                <span></span><span></span><span></span><span></span>
-            </div>
+    <div class="foot__base">
+        <div class="foot__base-in">
+            <p class="foot__copy">&copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $footCompany }}</a>. {{ __('frontend.footer.copyright') }}</p>
+            <span class="foot__pay"><img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.pay_alt') }}" width="220" height="30" loading="lazy"></span>
         </div>
-
-        <nav class="ft__col" aria-labelledby="ft-quick" data-reveal style="--d: 1">
-            <h2 class="ft__label" id="ft-quick">{{ __('frontend.footer.col_links') }}</h2>
-            <ul class="ft__links">
-                <li><a href="{{ route('product-lists') }}" class="ft__link"><span>{{ __('frontend.footer.link_all') }}</span></a></li>
-                <li><a href="{{ route('points.topup') }}" class="ft__link"><span>{{ __('frontend.footer.link_credits') }}</span></a></li>
-                <li><a href="{{ route('about-us') }}" class="ft__link"><span>{{ __('frontend.footer.link_about') }}</span></a></li>
-                <li><a href="{{ route('contact') }}" class="ft__link"><span>{{ __('frontend.footer.link_contact') }}</span></a></li>
-                @auth
-                    <li><a href="{{ route('user') }}" class="ft__link"><span>{{ __('frontend.footer.link_account') }}</span></a></li>
-                @endauth
-            </ul>
-        </nav>
-
-        <nav class="ft__col" aria-labelledby="ft-policies" data-reveal style="--d: 2">
-            <h2 class="ft__label" id="ft-policies">{{ __('frontend.footer.col_policies') }}</h2>
-            <ul class="ft__links ft__links--policies">
-                <li><a href="{{ route('pages','terms-conditions') }}" class="ft__link"><span>{{ __('frontend.footer.link_terms') }}</span></a></li>
-                <li><a href="{{ route('pages','privacy-policy') }}" class="ft__link"><span>{{ __('frontend.footer.link_privacy') }}</span></a></li>
-                <li><a href="{{ route('pages','refund-policy') }}" class="ft__link"><span>{{ __('frontend.footer.link_refund') }}</span></a></li>
-                <li><a href="{{ route('pages','delivery-policy') }}" class="ft__link"><span>{{ __('frontend.footer.link_access') }}</span></a></li>
-            </ul>
-        </nav>
-
-        <div class="ft__col" data-reveal style="--d: 3">
-            <h2 class="ft__label" id="ft-details">{{ __('frontend.footer.details') }}</h2>
-            <dl class="ft__facts" aria-labelledby="ft-details">
-                <div class="ft__fact">
-                    <span class="ft__well" aria-hidden="true"><i class="far fa-building"></i></span>
-                    <div>
-                        <dt>{{ __('frontend.footer.info_name') }}</dt>
-                        <dd>{{ $footCompany }}</dd>
-                    </div>
-                </div>
-                <div class="ft__fact">
-                    <span class="ft__well" aria-hidden="true"><i class="far fa-envelope"></i></span>
-                    <div>
-                        <dt>{{ __('frontend.footer.info_mail') }}</dt>
-                        <dd>
-                            <a href="mailto:{{ $footMail }}">{{ $footMail }}</a>
-                        </dd>
-                    </div>
-                </div>
-                <div class="ft__fact">
-                    <span class="ft__well" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
-                    <div>
-                        <dt>{{ __('frontend.footer.info_place') }}</dt>
-                        <dd>{{ $footAddress }}</dd>
-                    </div>
-                </div>
-            </dl>
-        </div>
-    </div>
-
-    <p class="ft__mark" aria-hidden="true" data-reveal>
-        @foreach(mb_str_split($footSite) as $markIndex => $markChar)<span style="--i: {{ $markIndex }}">{{ $markChar === ' ' ? "\u{00A0}" : $markChar }}</span>@endforeach
-    </p>
-
-    <div class="ft__end">
-        <p class="ft__copy">
-            &copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $footCompany }}</a>. {{ __('frontend.footer.copyright') }}
-        </p>
-        <span class="ft__pay"><img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.pay_alt') }}" width="220" height="30" loading="lazy"></span>
     </div>
 </footer>
 
 </div>
 
-<button type="button" class="totop" aria-label="{{ __('frontend.footer.scroll_top') }}" data-totop>
+<button type="button" class="lift" aria-label="{{ __('frontend.footer.scroll_top') }}" data-lift>
     <i class="fas fa-arrow-up" aria-hidden="true"></i>
 </button>
 
@@ -160,10 +176,10 @@
 
     var calm = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    var box = document.querySelector('[data-signup-box]');
-    var form = document.querySelector('[data-signup]');
-    var done = document.querySelector('[data-signup-ok]');
-    var bad = document.querySelector('[data-signup-bad]');
+    var box = document.querySelector('[data-letter]');
+    var form = document.querySelector('[data-letter-form]');
+    var done = document.querySelector('[data-letter-ok]');
+    var bad = document.querySelector('[data-letter-bad]');
     var timer;
 
     if (form && box) {
@@ -192,25 +208,27 @@
 
             form.reset();
             if (bad) { bad.hidden = true; }
+            box.classList.add('is-done');
             if (done) { done.hidden = false; }
 
             clearTimeout(timer);
             timer = setTimeout(function () {
+                box.classList.remove('is-done');
                 if (done) { done.hidden = true; }
             }, 5000);
         });
     }
 
-    var rise = document.querySelector('[data-totop]');
+    var lift = document.querySelector('[data-lift]');
     var ticking = false;
 
     function paint() {
         ticking = false;
-        if (!rise) { return; }
+        if (!lift) { return; }
         var max = document.documentElement.scrollHeight - window.innerHeight;
         var progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
-        rise.classList.toggle('is-shown', window.scrollY > 320);
-        rise.style.setProperty('--p', (progress * 100).toFixed(1) + '%');
+        lift.classList.toggle('is-shown', window.scrollY > 320);
+        lift.style.setProperty('--p', progress.toFixed(3));
     }
 
     function queue() {
@@ -224,26 +242,10 @@
     window.addEventListener('resize', queue);
     paint();
 
-    if (rise) {
-        rise.addEventListener('click', function () {
+    if (lift) {
+        lift.addEventListener('click', function () {
             window.scrollTo({ top: 0, behavior: calm.matches ? 'auto' : 'smooth' });
         });
-    }
-
-    var parts = document.querySelectorAll('[data-ft] [data-reveal]');
-
-    if ('IntersectionObserver' in window) {
-        var watch = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-in');
-                    watch.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-        parts.forEach(function (el) { watch.observe(el); });
-    } else {
-        parts.forEach(function (el) { el.classList.add('is-in'); });
     }
 }());
 </script>

@@ -15,7 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#693edf">
 
     <title>{{ $fullTitle }}</title>
     <meta name="title" content="{{ $fullTitle }}">
@@ -44,14 +44,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
     @if(str_starts_with($locale, 'ja'))
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap">
     @endif
     <link rel="stylesheet" href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
 
-    <link rel="stylesheet" href="{{ asset('css/clearcopys.css') }}?v={{ filemtime(public_path('css/clearcopys.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/word-craftsman.css') }}?v={{ filemtime(public_path('css/word-craftsman.css')) }}">
     @if(env('CONTENT_PROTECTION_ENABLED', true))
         <link rel="stylesheet" href="{{ asset('css/prevention.css') }}?v={{ filemtime(public_path('css/prevention.css')) }}">
     @endif
@@ -62,14 +62,22 @@
 <body class="antialiased">
 <div class="page-wrapper">
 
+    @php
+        $preInitials = collect(preg_split('/\s+/u', trim($siteName)))->filter()->take(2)->map(fn ($word) => mb_strtoupper(mb_substr($word, 0, 1)))->implode('');
+        $preCategories = ($category ?? collect())->take(5);
+    @endphp
     <div id="preloader" class="pre" aria-hidden="true">
         <div class="pre__core">
-            <p class="pre__name">@foreach(mb_str_split($siteName) as $preIndex => $preChar)<span class="pre__char" style="--i: {{ $preIndex }}">{{ $preChar === ' ' ? "\u{00A0}" : $preChar }}</span>@endforeach<span class="pre__caret"></span></p>
-            <div class="pre__rule">
-                <span class="pre__stroke pre__stroke--writing"></span>
-                <span class="pre__stroke pre__stroke--language"></span>
-                <span class="pre__nib"></span>
-            </div>
+            <span class="pre__mark">{{ $preInitials }}</span>
+            <p class="pre__title"><span class="pre__name">{{ $siteName }}</span></p>
+            <span class="pre__steps"><span style="--i: 0"></span><span style="--i: 1"></span><span style="--i: 2"></span><span style="--i: 3"></span><span style="--i: 4"></span></span>
+            @if($preCategories->isNotEmpty())
+                <ul class="pre__cats">
+                    @foreach($preCategories as $preIndex => $preCategory)
+                        <li class="pre__cat" style="--i: {{ $preIndex }}">{{ $preCategory->title }}</li>
+                    @endforeach
+                </ul>
+            @endif
             <p class="pre__topic">{{ __('frontend.head.topic') }}</p>
         </div>
     </div>

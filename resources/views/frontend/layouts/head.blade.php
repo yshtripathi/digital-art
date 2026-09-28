@@ -64,7 +64,7 @@
 
     @php
         $preInitials = collect(preg_split('/\s+/u', trim($siteName)))->filter()->take(2)->map(fn ($word) => mb_strtoupper(mb_substr($word, 0, 1)))->implode('');
-        $preCategories = ($category ?? collect())->take(5);
+        $preCategories = (isset($category) && $category instanceof \Illuminate\Support\Collection ? $category : \App\Models\Category::getAllParentWithChild())->take(5);
     @endphp
     <div id="preloader" class="pre" aria-hidden="true">
         <div class="pre__core">

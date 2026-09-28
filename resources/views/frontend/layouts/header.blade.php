@@ -8,7 +8,7 @@
     $userName     = Auth::check() ? Auth::user()->name : '';
     $userInitial  = Auth::check() ? mb_strtoupper(mb_substr($userName, 0, 1)) : '';
     $hdMail       = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
-    $navCats      = $category ?? collect();
+    $navCats      = (isset($category) && $category instanceof \Illuminate\Support\Collection ? $category : \App\Models\Category::getAllParentWithChild());
     $activeSlug   = Route::is('product-lists') ? request()->route('slug') : null;
 
     $languages = [

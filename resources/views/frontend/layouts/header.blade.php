@@ -26,7 +26,7 @@
 <header class="mast" data-mast>
     <div class="mast__shell">
         <a href="{{ route('home') }}" class="mast__brand">
-            <img src="{{ asset('assets/images/logo.webp') }}?v={{ filemtime(public_path('assets/images/logo.webp')) }}" alt="{{ $siteName }}" width="998" height="240">
+            <img src="{{ asset('assets/images/logo.webp') }}?v={{ (file_exists(public_path('assets/images/logo.webp')) ? filemtime(public_path('assets/images/logo.webp')) : 0) }}" alt="{{ $siteName }}" width="998" height="240">
         </a>
 
         <nav class="mast__nav" aria-label="{{ __('frontend.header.nav_main') }}">

@@ -37,10 +37,10 @@
     <meta name="twitter:description" content="{{ $description }}">
     <meta name="twitter:image" content="{{ $shareImage }}">
 
-    <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}?v={{ filemtime(public_path('assets/images/favicon.ico')) }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}?v={{ filemtime(public_path('assets/images/favicon.ico')) }}" type="image/x-icon">
-    <link rel="icon" href="{{ asset('assets/images/favicon-64.png') }}?v={{ filemtime(public_path('assets/images/favicon-64.png')) }}" type="image/png" sizes="64x64">
-    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon-64.png') }}?v={{ filemtime(public_path('assets/images/favicon-64.png')) }}">
+    <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}?v={{ (file_exists(public_path('assets/images/favicon.ico')) ? filemtime(public_path('assets/images/favicon.ico')) : 0) }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}?v={{ (file_exists(public_path('assets/images/favicon.ico')) ? filemtime(public_path('assets/images/favicon.ico')) : 0) }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/favicon-64.png') }}?v={{ (file_exists(public_path('assets/images/favicon-64.png')) ? filemtime(public_path('assets/images/favicon-64.png')) : 0) }}" type="image/png" sizes="64x64">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon-64.png') }}?v={{ (file_exists(public_path('assets/images/favicon-64.png')) ? filemtime(public_path('assets/images/favicon-64.png')) : 0) }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,9 +51,9 @@
     <link rel="stylesheet" href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
 
-    <link rel="stylesheet" href="{{ asset('css/word-craftsman.css') }}?v={{ filemtime(public_path('css/word-craftsman.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/word-craftsman.css') }}?v={{ (file_exists(public_path('css/word-craftsman.css')) ? filemtime(public_path('css/word-craftsman.css')) : 0) }}">
     @if(env('CONTENT_PROTECTION_ENABLED', true))
-        <link rel="stylesheet" href="{{ asset('css/prevention.css') }}?v={{ filemtime(public_path('css/prevention.css')) }}">
+        <link rel="stylesheet" href="{{ asset('css/prevention.css') }}?v={{ (file_exists(public_path('css/prevention.css')) ? filemtime(public_path('css/prevention.css')) : 0) }}">
     @endif
 
     @cookieconsentscripts

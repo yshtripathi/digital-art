@@ -14,14 +14,14 @@
     <div class="auth__card">
         <div class="auth__head">
             <span class="auth__icon" aria-hidden="true"><i class="fas fa-key"></i></span>
-            <h2 class="auth__title">{{ __('frontend.forgot.heading') }}</h2>
-            <p class="auth__lead">{{ __('frontend.forgot.lead') }}</p>
+            <h2 class="auth__title">{{ __('frontend.forgot.title') }}</h2>
+            <p class="auth__lead">{{ __('frontend.forgot.intro') }}</p>
         </div>
 
         @if(session('status'))
             <p class="auth__msg auth__msg--ok" role="status">
                 <i class="fas fa-check-circle" aria-hidden="true"></i>
-                <span>{{ __('frontend.forgot.sent') }}</span>
+                <span>{{ __('frontend.forgot.done') }}</span>
             </p>
         @endif
 
@@ -55,12 +55,12 @@
                 </div>
             @endif
 
-            <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit">{{ __('frontend.forgot.submit') }}</button>
+            <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit">{{ __('frontend.forgot.send_link') }}</button>
         </form>
 
         <p class="auth__foot">
-            {{ __('frontend.forgot.recall') }}
-            <a href="{{ route('login.form') }}">{{ __('frontend.forgot.go_back') }}</a>
+            {{ __('frontend.forgot.remember') }}
+            <a href="{{ route('login.form') }}">{{ __('frontend.forgot.login') }}</a>
         </p>
     </div>
 </section>

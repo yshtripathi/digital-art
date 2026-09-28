@@ -20,8 +20,8 @@
     <div class="auth__card auth__card--wide">
         <div class="auth__head">
             <span class="auth__icon" aria-hidden="true"><i class="fas fa-headset"></i></span>
-            <h2 class="auth__title">{{ __('frontend.contact.heading') }}</h2>
-            <p class="auth__lead">{{ __('frontend.contact.lead') }}</p>
+            <h2 class="auth__title">{{ __('frontend.contact.title') }}</h2>
+            <p class="auth__lead">{{ __('frontend.contact.intro') }}</p>
         </div>
 
         <ul class="auth__info">
@@ -122,7 +122,7 @@
                 </div>
             @endif
 
-            <button type="submit" class="btn btn--primary btn--block auth__submit">{{ __('frontend.contact.send') }}</button>
+            <button type="submit" class="btn btn--primary btn--block auth__submit">{{ __('frontend.contact.submit') }}</button>
         </form>
     </div>
 </section>

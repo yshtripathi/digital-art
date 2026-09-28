@@ -14,8 +14,8 @@
     <div class="auth__card">
         <div class="auth__head">
             <span class="auth__icon" aria-hidden="true"><i class="fas fa-user-plus"></i></span>
-            <h2 class="auth__title">{{ __('frontend.register.heading') }}</h2>
-            <p class="auth__lead">{{ __('frontend.register.lead') }}</p>
+            <h2 class="auth__title">{{ __('frontend.register.title') }}</h2>
+            <p class="auth__lead">{{ __('frontend.register.intro') }}</p>
         </div>
 
         <div class="auth__tabs">
@@ -92,12 +92,12 @@
                 </div>
             @endif
 
-            <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit">{{ __('frontend.register.send') }}</button>
+            <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit">{{ __('frontend.register.submit') }}</button>
         </form>
 
         <p class="auth__foot">
-            {{ __('frontend.register.have_acct') }}
-            <a href="{{ route('login.form') }}">{{ __('frontend.register.go_login') }}</a>
+            {{ __('frontend.register.has_acct') }}
+            <a href="{{ route('login.form') }}">{{ __('frontend.register.login') }}</a>
         </p>
     </div>
 </section>

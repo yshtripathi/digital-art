@@ -1,0 +1,11 @@
+id,title,title_jp,slug,summary,summary_jp,photo,is_parent,parent_id,added_by,status,catgenres,created_at,updated_at
+1,Introduction to Cryptocurrency,仮想通貨入門,,NULL,NULL,NULL,1,NULL,NULL,active,1,NULL,NULL
+2,Crypto Trading Strategies,暗号取引戦略,,NULL,NULL,NULL,1,NULL,NULL,active,1,NULL,NULL
+3,Cryptocurrency Regulations,暗号通貨規制,,NULL,NULL,NULL,1,NULL,NULL,active,1,NULL,NULL
+4,Crypto Taxation & Accounting (Japan-Specific),暗号課税-会計（日本固有）,,NULL,NULL,NULL,1,NULL,NULL,active,1,NULL,NULL
+5,Technical Analysis for Crypto,暗号のための技術的な分析,,NULL,NULL,NULL,1,NULL,NULL,active,1,NULL,NULL
+6,NFTs (Non-Fungible Tokens),NFT（非代替トークン）,,NULL,NULL,NULL,1,NULL,NULL,active,1,NULL,NULL
+7,DeFi (Decentralized Finance),DeFi（分散型ファイナンス）,,NULL,NULL,NULL,1,NULL,NULL,active,1,NULL,NULL
+8,Crypto Wallets & Security,暗号ウォレットとセキュリティ,,NULL,NULL,NULL,1,NULL,NULL,active,1,NULL,NULL
+9,Web3 and Decentralized Applications (dApps),Web3および分散型アプリケーション（dApps）,,NULL,NULL,NULL,1,NULL,NULL,active,1,NULL,NULL
+10,Metaverse & Virtual Economy,メタバースと仮想経済,,NULL,NULL,NULL,1,NULL,NULL,active,1,NULL,NULL

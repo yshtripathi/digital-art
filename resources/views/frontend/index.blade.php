@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('description', __('frontend.home.meta'))
+@section('description', __('frontend.home.desc'))
 
 @section('main-content')
 @php
@@ -26,16 +26,16 @@
     $hoTierIcons = ['fa-feather', 'fa-star', 'fa-gem', 'fa-crown'];
 
     $hoSteps = [
-        ['t' => 'how1', 'd' => 'how1_text', 'i' => 'fa-compass'],
-        ['t' => 'how2', 'd' => 'how2_text', 'i' => 'fa-signal'],
-        ['t' => 'how3', 'd' => 'how3_text', 'i' => 'fa-lock-open'],
-        ['t' => 'how4', 'd' => 'how4_text', 'i' => 'fa-graduation-cap'],
+        ['t' => 'step1', 'd' => 'step1_text', 'i' => 'fa-compass'],
+        ['t' => 'step2', 'd' => 'step2_text', 'i' => 'fa-signal'],
+        ['t' => 'step3', 'd' => 'step3_text', 'i' => 'fa-lock-open'],
+        ['t' => 'step4', 'd' => 'step4_text', 'i' => 'fa-graduation-cap'],
     ];
     $hoWhy = [
-        ['t' => 'why1', 'd' => 'why1_text', 'i' => 'fa-eye'],
-        ['t' => 'why2', 'd' => 'why2_text', 'i' => 'fa-coins'],
-        ['t' => 'why3', 'd' => 'why3_text', 'i' => 'fa-clock'],
-        ['t' => 'why4', 'd' => 'why4_text', 'i' => 'fa-shield-alt'],
+        ['t' => 'perk1', 'd' => 'perk1_text', 'i' => 'fa-eye'],
+        ['t' => 'perk2', 'd' => 'perk2_text', 'i' => 'fa-coins'],
+        ['t' => 'perk3', 'd' => 'perk3_text', 'i' => 'fa-clock'],
+        ['t' => 'perk4', 'd' => 'perk4_text', 'i' => 'fa-shield-alt'],
     ];
     $hoGlyphs = ['₿', 'Ξ', '₮', '◎', 'Ł', 'Ð', '₳'];
     $hoPills = collect(__('frontend.head.terms'))->take(6)->values();
@@ -52,18 +52,18 @@
     </div>
 
     <div class="hm-hero__copy">
-        <span class="hm-hero__tag" data-rise><i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.home.hero_tag') }}</span>
-        <h1 id="hmTitle" class="hm-hero__title" data-rise>{{ __('frontend.home.hero_title') }}</h1>
-        <p class="hm-hero__lead" data-rise>{{ __('frontend.home.hero_lead') }}</p>
+        <span class="hm-hero__tag" data-rise><i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.home.badge') }}</span>
+        <h1 id="hmTitle" class="hm-hero__title" data-rise>{{ __('frontend.home.headline') }}</h1>
+        <p class="hm-hero__lead" data-rise>{{ __('frontend.home.intro') }}</p>
 
         <div class="hm-hero__acts" data-rise>
             <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                <span>{{ __('frontend.home.hero_go') }}</span>
+                <span>{{ __('frontend.home.browse') }}</span>
                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
             </a>
             <a href="{{ route('points.topup') }}" class="btn btn--ghost">
                 <i class="fas fa-coins" aria-hidden="true"></i>
-                {{ __('frontend.home.hero_buy') }}
+                {{ __('frontend.home.buy') }}
             </a>
         </div>
 
@@ -84,7 +84,7 @@
 
         <p class="hm-hero__note" data-rise>
             <i class="fas fa-shield-alt" aria-hidden="true"></i>
-            {{ __('frontend.home.hero_note') }}
+            {{ __('frontend.home.notice') }}
         </p>
     </div>
 </section>
@@ -93,13 +93,13 @@
     <section class="hm-pick" aria-labelledby="hmPickTitle" data-deck>
         <div class="hm-head" data-rise>
             <div>
-                <span class="hm-head__tag">{{ __('frontend.home.pick_tag') }}</span>
-                <h2 id="hmPickTitle" class="hm-head__title">{{ __('frontend.home.pick_title') }}</h2>
+                <span class="hm-head__tag">{{ __('frontend.home.feat_tag') }}</span>
+                <h2 id="hmPickTitle" class="hm-head__title">{{ __('frontend.home.feat_title') }}</h2>
             </div>
             <div class="hm-deck__nav">
                 @if($hoPages->count() > 1)
                     <button type="button" class="hm-deck__arrow" aria-label="{{ __('frontend.home.pick_prev') }}" data-deck-prev><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-                    <div class="hm-deck__dots" role="tablist" aria-label="{{ __('frontend.home.pick_title') }}">
+                    <div class="hm-deck__dots" role="tablist" aria-label="{{ __('frontend.home.feat_title') }}">
                         @foreach($hoPages as $p => $page)
                             <button type="button" class="hm-deck__dot {{ $p === 0 ? 'is-active' : '' }}" role="tab" aria-selected="{{ $p === 0 ? 'true' : 'false' }}" aria-label="{{ $p + 1 }} / {{ $hoPages->count() }}" data-deck-dot="{{ $p }}">
                                 <span class="num">{{ str_pad($p + 1, 2, '0', STR_PAD_LEFT) }}</span>
@@ -110,7 +110,7 @@
                     <button type="button" class="hm-deck__arrow" aria-label="{{ __('frontend.home.pick_next') }}" data-deck-next><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
                 @endif
                 <a href="{{ route('product-lists') }}" class="hm-deck__all">
-                    {{ __('frontend.home.pick_all') }}
+                    {{ __('frontend.home.feat_all') }}
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
@@ -177,9 +177,9 @@
 <section class="hm-how" aria-labelledby="hmHowTitle">
     <div class="hm-head" data-rise>
         <div>
-            <span class="hm-head__tag">{{ __('frontend.home.how_tag') }}</span>
-            <h2 id="hmHowTitle" class="hm-head__title">{{ __('frontend.home.how_title') }}</h2>
-            <p class="hm-head__text">{{ __('frontend.home.how_text') }}</p>
+            <span class="hm-head__tag">{{ __('frontend.home.flow_tag') }}</span>
+            <h2 id="hmHowTitle" class="hm-head__title">{{ __('frontend.home.flow_title') }}</h2>
+            <p class="hm-head__text">{{ __('frontend.home.flow_text') }}</p>
         </div>
     </div>
 
@@ -196,8 +196,8 @@
         </ol>
 
         <aside class="hm-why" aria-labelledby="hmWhyTitle" data-rise>
-            <span class="hm-head__tag">{{ __('frontend.home.why_tag') }}</span>
-            <h3 id="hmWhyTitle" class="hm-why__title">{{ __('frontend.home.why_title') }}</h3>
+            <span class="hm-head__tag">{{ __('frontend.home.perk_tag') }}</span>
+            <h3 id="hmWhyTitle" class="hm-why__title">{{ __('frontend.home.perk_title') }}</h3>
             <ul class="hm-why__list">
                 @foreach($hoWhy as $w)
                     <li>
@@ -216,16 +216,16 @@
 <section class="hm-credits" aria-labelledby="hmCreditsTitle">
     <div class="hm-credits__box" data-rise>
         <div class="hm-credits__copy">
-            <span class="hm-head__tag">{{ __('frontend.home.wal_tag') }}</span>
-            <h2 id="hmCreditsTitle" class="hm-head__title">{{ __('frontend.home.wal_title') }}</h2>
-            <p class="hm-head__text">{{ __('frontend.home.wal_text') }}</p>
+            <span class="hm-head__tag">{{ __('frontend.home.cred_tag') }}</span>
+            <h2 id="hmCreditsTitle" class="hm-head__title">{{ __('frontend.home.cred_title') }}</h2>
+            <p class="hm-head__text">{{ __('frontend.home.cred_text') }}</p>
             <a href="{{ route('points.topup') }}" class="btn btn--primary">
                 <i class="fas fa-calculator" aria-hidden="true"></i>
-                {{ __('frontend.home.wal_go') }}
+                {{ __('frontend.home.cred_go') }}
             </a>
         </div>
 
-        <div class="hm-bars" role="list" aria-label="{{ __('frontend.home.wal_card') }}">
+        <div class="hm-bars" role="list" aria-label="{{ __('frontend.home.cred_chart') }}">
             @foreach($hoTiers as [$tier, $range, $mult])
                 <div class="hm-bar {{ $loop->last ? 'is-top' : '' }}" role="listitem" style="--p: {{ [0.34, 0.58, 0.76, 1][$loop->index] }}; --i: {{ $loop->index }}">
                     <span class="hm-bar__track">
@@ -243,19 +243,19 @@
 
     <div class="hm-end" data-rise>
         <div>
-            <span class="hm-head__tag">{{ __('frontend.home.end_tag') }}</span>
-            <h2 class="hm-end__title">{{ __('frontend.home.end_title') }}</h2>
-            <p class="hm-end__text">{{ __('frontend.home.end_text') }}</p>
+            <span class="hm-head__tag">{{ __('frontend.home.close_tag') }}</span>
+            <h2 class="hm-end__title">{{ __('frontend.home.close_title') }}</h2>
+            <p class="hm-end__text">{{ __('frontend.home.close_text') }}</p>
         </div>
         <div class="hm-end__acts">
             <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                <span>{{ __('frontend.home.hero_go') }}</span>
+                <span>{{ __('frontend.home.browse') }}</span>
                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
             </a>
             @guest
-                <a href="{{ route('register.form') }}" class="btn btn--ghost">{{ __('frontend.home.end_join') }}</a>
+                <a href="{{ route('register.form') }}" class="btn btn--ghost">{{ __('frontend.home.join') }}</a>
             @else
-                <a href="{{ route('points.topup') }}" class="btn btn--ghost">{{ __('frontend.home.hero_buy') }}</a>
+                <a href="{{ route('points.topup') }}" class="btn btn--ghost">{{ __('frontend.home.buy') }}</a>
             @endguest
         </div>
     </div>

@@ -1,6 +1,6 @@
 @extends('frontend.layouts.main')
 @section('title', __('frontend.about.page_name'))
-@section('description', __('frontend.about.meta'))
+@section('description', __('frontend.about.desc'))
 
 @section('main-content')
 
@@ -15,10 +15,10 @@
 @php
     $auGlyphs = [['₿', 8, 18], ['Ξ', 22, 78], ['₮', 46, 10], ['◎', 58, 88], ['Ł', 84, 72], ['Ð', 92, 26], ['₳', 36, 52], ['Ξ', 70, 40]];
     $auPath = [
-        ['fa-th-large', 'path1'],
-        ['fa-book-open', 'path2'],
-        ['fa-layer-group', 'path3'],
-        ['fa-coins', 'path4'],
+        ['fa-th-large', 'step1'],
+        ['fa-book-open', 'step2'],
+        ['fa-layer-group', 'step3'],
+        ['fa-coins', 'step4'],
     ];
 @endphp
 
@@ -34,23 +34,23 @@
 
         <div class="au__top">
             <div class="au-copy">
-                <span class="au-copy__tag"><i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.about.tag') }}</span>
-                <h2 id="auTitle" class="au-copy__title">{{ __('frontend.about.heading') }}</h2>
-                <p class="au-copy__lead">{{ __('frontend.about.intro1') }}</p>
-                <p class="au-copy__text">{{ __('frontend.about.intro2') }}</p>
+                <span class="au-copy__tag"><i class="fas fa-bolt" aria-hidden="true"></i> {{ __('frontend.about.label') }}</span>
+                <h2 id="auTitle" class="au-copy__title">{{ __('frontend.about.title') }}</h2>
+                <p class="au-copy__lead">{{ __('frontend.about.lead') }}</p>
+                <p class="au-copy__text">{{ __('frontend.about.body') }}</p>
 
                 <ul class="au-chips">
-                    <li><i class="fas fa-search" aria-hidden="true"></i> {{ __('frontend.about.hl1') }}</li>
-                    <li><i class="fas fa-layer-group" aria-hidden="true"></i> {{ __('frontend.about.hl2') }}</li>
-                    <li><i class="fas fa-coins" aria-hidden="true"></i> {{ __('frontend.about.hl3') }}</li>
+                    <li><i class="fas fa-search" aria-hidden="true"></i> {{ __('frontend.about.point1') }}</li>
+                    <li><i class="fas fa-layer-group" aria-hidden="true"></i> {{ __('frontend.about.point2') }}</li>
+                    <li><i class="fas fa-coins" aria-hidden="true"></i> {{ __('frontend.about.point3') }}</li>
                 </ul>
 
                 <div class="au-copy__acts">
                     <a href="{{ route('product-lists') }}" class="btn btn--primary">
-                        <span>{{ __('frontend.about.cta_browse') }}</span>
+                        <span>{{ __('frontend.about.go_browse') }}</span>
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
-                    <a href="{{ route('contact') }}" class="btn btn--ghost">{{ __('frontend.about.cta_contact') }}</a>
+                    <a href="{{ route('contact') }}" class="btn btn--ghost">{{ __('frontend.about.go_contact') }}</a>
                 </div>
 
                 <p class="au-copy__note">
@@ -76,7 +76,7 @@
         </div>
 
         <div class="au-chain">
-            <p class="au-chain__title">{{ __('frontend.about.path_title') }}</p>
+            <p class="au-chain__title">{{ __('frontend.about.steps') }}</p>
             <ol class="au-chain__list">
                 @foreach($auPath as $step)
                     <li class="au-block" style="--i: {{ $loop->index }}">

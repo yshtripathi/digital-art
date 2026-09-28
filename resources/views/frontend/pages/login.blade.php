@@ -14,8 +14,8 @@
     <div class="auth__card">
         <div class="auth__head">
             <span class="auth__icon" aria-hidden="true"><i class="fas fa-sign-in-alt"></i></span>
-            <h2 class="auth__title">{{ __('frontend.login.heading') }}</h2>
-            <p class="auth__lead">{{ __('frontend.login.lead') }}</p>
+            <h2 class="auth__title">{{ __('frontend.login.title') }}</h2>
+            <p class="auth__lead">{{ __('frontend.login.intro') }}</p>
         </div>
 
         <div class="auth__tabs">
@@ -61,17 +61,17 @@
             <div class="auth__opts">
                 <label class="auth__check" for="remember">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <span>{{ __('frontend.login.stay') }}</span>
+                    <span>{{ __('frontend.login.remember') }}</span>
                 </label>
-                <a href="{{ route('forgetpwd.form') }}" class="auth__link">{{ __('frontend.login.lost_link') }}</a>
+                <a href="{{ route('forgetpwd.form') }}" class="auth__link">{{ __('frontend.login.forgot') }}</a>
             </div>
 
-            <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit">{{ __('frontend.login.send') }}</button>
+            <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit">{{ __('frontend.login.submit') }}</button>
         </form>
 
         <p class="auth__foot">
-            {{ __('frontend.login.new_here') }}
-            <a href="{{ route('register.form') }}">{{ __('frontend.login.go_join') }}</a>
+            {{ __('frontend.login.no_acct') }}
+            <a href="{{ route('register.form') }}">{{ __('frontend.login.join') }}</a>
         </p>
     </div>
 </section>

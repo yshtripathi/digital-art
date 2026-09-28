@@ -388,12 +388,12 @@
             <dl class="tally">
                 @if($hasCourses && Auth::check())
                     <div class="tally__row">
-                        <dt>{{ __('frontend.header.cart_wallet') }}</dt>
+                        <dt>{{ __('frontend.header.cart_wallet') }}:</dt>
                         <dd>{{ number_format($balance) }} {{ __('frontend.header.unit_credits') }}</dd>
                     </div>
                 @endif
                 <div class="tally__row tally__row--total">
-                    <dt>{{ __('frontend.header.cart_sum') }}</dt>
+                    <dt>{{ __('frontend.header.cart_sum') }}:</dt>
                     @if($hasCredits && !$hasCourses)
                         <dd>{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</dd>
                     @else

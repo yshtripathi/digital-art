@@ -85,11 +85,7 @@
                     <div>
                         <dt>{{ __('frontend.footer.info_mail') }}</dt>
                         <dd>
-                            @if(filled($misc['Company Email'] ?? null))
-                                <a href="mailto:{{ $footMail }}">{{ $footMail }}</a>
-                            @else
-                                {{ $footMail }}
-                            @endif
+                            <a href="mailto:{{ $footMail }}">{{ $footMail }}</a>
                         </dd>
                     </div>
                 </div>

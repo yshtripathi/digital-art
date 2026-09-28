@@ -10546,14 +10546,14 @@ a.lib__page:hover {
   background-color: var(--tone);
 }
 
-.hm-chip--writing {
+.hm-chip--language {
+  --tone: var(--category-language);
   top: -16px;
   left: 18px;
   animation-delay: 1s, 0s;
 }
 
-.hm-chip--language {
-  --tone: var(--category-language);
+.hm-chip--writing {
   top: 50%;
   right: -10px;
   animation-delay: 1.15s, -2.5s;
@@ -10634,7 +10634,7 @@ a.lib__page:hover {
     font-size: 13px;
   }
 
-  .hm-chip--language {
+  .hm-chip--writing {
     right: 0;
   }
 

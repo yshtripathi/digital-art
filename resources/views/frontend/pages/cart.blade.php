@@ -110,19 +110,19 @@
                 <div class="ct__band">
                     <dl class="ct__stats">
                         <div class="ct__stat">
-                            <dt>{{ __('frontend.cart.col_credits') }}</dt>
+                            <dt>{{ __('frontend.cart.col_credits') }}:</dt>
                             <dd><i class="fas fa-wallet" aria-hidden="true"></i> <span class="num">{{ number_format($totalCredits) }}</span></dd>
                         </div>
                         @if($discount > 0)
                             <div class="ct__stat">
-                                <dt>{{ __('frontend.cart.sum_discount') }}</dt>
+                                <dt>{{ __('frontend.cart.sum_discount') }}:</dt>
                                 <dd class="num">&minus; {{ $sym }}{{ number_format($discount, $dec) }}</dd>
                             </div>
                         @endif
                     </dl>
 
                     <div class="ct__total">
-                        <span>{{ __('frontend.cart.sum_total') }}</span>
+                        <span>{{ __('frontend.cart.sum_total') }}:</span>
                         <strong class="num">{{ $sym }}{{ number_format($total_amount, $dec) }}</strong>
                     </div>
 

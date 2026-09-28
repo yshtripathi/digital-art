@@ -11,9 +11,8 @@
 ])
 
 @php
-    $supportMail = filled($misc['Company Email'] ?? null)
-        ? '<a href="mailto:' . e(trim($misc['Company Email'])) . '">' . e(trim($misc['Company Email'])) . '</a>'
-        : e(__('frontend.company.email'));
+    $supportAddr = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
+    $supportMail = '<a href="mailto:' . e($supportAddr) . '">' . e($supportAddr) . '</a>';
 @endphp
 
 <section class="rz">

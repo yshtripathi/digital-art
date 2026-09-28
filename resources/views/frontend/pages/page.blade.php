@@ -3,7 +3,7 @@
 @php
     $pageTitle = $page_data->page_title ?? '';
     $pgEmail   = e(filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email'));
-    $pgMail    = filled($misc['Company Email'] ?? null) ? '<a href="mailto:' . $pgEmail . '">' . $pgEmail . '</a>' : $pgEmail;
+    $pgMail    = '<a href="mailto:' . $pgEmail . '">' . $pgEmail . '</a>';
     $rawDesc   = strtr($page_data->page_desc ?? '', [
         ':company'      => e(filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name')),
         ':email'        => $pgMail,

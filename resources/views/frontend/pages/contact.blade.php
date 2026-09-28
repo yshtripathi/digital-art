@@ -35,11 +35,7 @@
                         <span class="cx__icon cx__icon--writing" aria-hidden="true"><i class="far fa-envelope"></i></span>
                         <span class="cx__meta">
                             <span class="cx__label">{{ __('frontend.contact.row_email') }}</span>
-                            @if(filled($misc['Company Email'] ?? null))
-                                <a href="mailto:{{ $ctEmail }}" class="cx__value">{{ $ctEmail }}</a>
-                            @else
-                                <span class="cx__value">{{ $ctEmail }}</span>
-                            @endif
+                            <a href="mailto:{{ $ctEmail }}" class="cx__value">{{ $ctEmail }}</a>
                         </span>
                     </li>
                     <li class="cx__row" style="--i: 1">

@@ -7,7 +7,7 @@
     $balance         = Auth::check() ? (Auth::user()->points_balance ?? 0) : 0;
     $userName        = Auth::check() ? Auth::user()->name : '';
     $userInitial     = Auth::check() ? mb_strtoupper(mb_substr($userName, 0, 1)) : '';
-    $hdMail          = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : null;
+    $hdMail          = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
 
     $languages = [
         ['code' => 'en', 'flag' => 'fi-gb', 'short' => 'EN', 'label' => 'English', 'on' => !$isJa],
@@ -326,12 +326,12 @@
             <dl class="bag__sum">
                 @if($hasCourses && Auth::check())
                     <div class="bag__row bag__row--muted">
-                        <dt>{{ __('frontend.header.cart_wallet') }}</dt>
+                        <dt>{{ __('frontend.header.cart_wallet') }}:</dt>
                         <dd>{{ number_format($balance) }} {{ __('frontend.header.unit_credits') }}</dd>
                     </div>
                 @endif
                 <div class="bag__row">
-                    <dt>{{ __('frontend.header.cart_sum') }}</dt>
+                    <dt>{{ __('frontend.header.cart_sum') }}:</dt>
                     @if($hasCredits && !$hasCourses)
                         <dd class="bag__total">{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</dd>
                     @else

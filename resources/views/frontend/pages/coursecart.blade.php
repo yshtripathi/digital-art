@@ -110,11 +110,11 @@
 
                     <dl class="ct__stats ct__stats--wallet">
                         <div class="ct__stat">
-                            <dt>{{ __('frontend.coursecart.wallet') }}</dt>
+                            <dt>{{ __('frontend.coursecart.wallet') }}:</dt>
                             <dd><i class="fas fa-wallet" aria-hidden="true"></i> <span class="num">{{ number_format($points) }}</span> <span class="ct__unit">{{ __('frontend.coursecart.unit') }}</span></dd>
                         </div>
                         <div class="ct__stat">
-                            <dt>{{ __('frontend.coursecart.need') }}</dt>
+                            <dt>{{ __('frontend.coursecart.need') }}:</dt>
                             <dd><span class="num">{{ number_format($total_points) }}</span> <span class="ct__unit">{{ __('frontend.coursecart.unit') }}</span></dd>
                         </div>
                         @if($enough)

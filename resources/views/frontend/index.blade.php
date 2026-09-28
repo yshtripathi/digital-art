@@ -74,8 +74,8 @@
                 <img src="{{ $hoImg('home-5.webp') }}" alt="" width="900" height="1350" decoding="async">
             </figure>
 
-            <span class="hm-chip hm-chip--writing" aria-hidden="true"><i class="fas fa-pen-nib"></i> {{ __('frontend.home.chip_writing') }}</span>
             <span class="hm-chip hm-chip--language" aria-hidden="true"><i class="fas fa-comments"></i> {{ __('frontend.home.chip_language') }}</span>
+            <span class="hm-chip hm-chip--writing" aria-hidden="true"><i class="fas fa-pen-nib"></i> {{ __('frontend.home.chip_writing') }}</span>
             <span class="hm-lvls" aria-hidden="true">
                 <span class="hm-lvls__bars"><span></span><span></span><span></span><span></span></span>
                 <span>{{ __('frontend.home.chip_levels') }}</span>

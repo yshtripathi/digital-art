@@ -17,10 +17,10 @@
     $pgSlug    = request()->route('slug');
 
     $pgPolicies = [
-        ['slug' => 'terms-conditions', 'label' => __('frontend.footer.link_terms'),   'icon' => 'fa-file-contract'],
-        ['slug' => 'privacy-policy',   'label' => __('frontend.footer.link_privacy'), 'icon' => 'fa-user-shield'],
-        ['slug' => 'refund-policy',    'label' => __('frontend.footer.link_refund'),  'icon' => 'fa-undo-alt'],
-        ['slug' => 'delivery-policy',  'label' => __('frontend.footer.link_access'),  'icon' => 'fa-envelope-open-text'],
+        ['slug' => 'terms-conditions', 'label' => __('frontend.footer.terms'),   'icon' => 'fa-file-contract'],
+        ['slug' => 'privacy-policy',   'label' => __('frontend.footer.privacy'), 'icon' => 'fa-user-shield'],
+        ['slug' => 'refund-policy',    'label' => __('frontend.footer.refund'),  'icon' => 'fa-undo-alt'],
+        ['slug' => 'delivery-policy',  'label' => __('frontend.footer.delivery'),  'icon' => 'fa-envelope-open-text'],
     ];
 @endphp
 
@@ -41,23 +41,23 @@
     <aside class="policy__side">
         <details class="toc" data-toc hidden>
             <summary class="toc__head">
-                <span><i class="fas fa-stream" aria-hidden="true"></i>{{ __('frontend.page.toc') }}</span>
+                <span><i class="fas fa-stream" aria-hidden="true"></i>{{ __('frontend.page.contents') }}</span>
                 <i class="fas fa-chevron-down toc__caret" aria-hidden="true"></i>
             </summary>
             <ol class="toc__list" data-toc-list></ol>
         </details>
 
         <div class="policy__box">
-            <p class="policy__label" id="pg-size">{{ __('frontend.page.size') }}</p>
+            <p class="policy__label" id="pg-size">{{ __('frontend.page.text_size') }}</p>
             <div class="sizer" role="group" aria-labelledby="pg-size">
-                <button type="button" class="sizer__btn" data-size="-1" aria-label="{{ __('frontend.page.smaller') }}">A<sup>−</sup></button>
+                <button type="button" class="sizer__btn" data-size="-1" aria-label="{{ __('frontend.page.text_smaller') }}">A<sup>−</sup></button>
                 <span class="sizer__dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <button type="button" class="sizer__btn sizer__btn--lg" data-size="1" aria-label="{{ __('frontend.page.larger') }}">A<sup>+</sup></button>
+                <button type="button" class="sizer__btn sizer__btn--lg" data-size="1" aria-label="{{ __('frontend.page.text_larger') }}">A<sup>+</sup></button>
             </div>
         </div>
 
         <nav class="policy__box" aria-labelledby="pg-others">
-            <p class="policy__label" id="pg-others">{{ __('frontend.page.others') }}</p>
+            <p class="policy__label" id="pg-others">{{ __('frontend.page.more') }}</p>
             <ul class="docs">
                 @foreach($pgPolicies as $doc)
                     <li>
@@ -71,8 +71,8 @@
         </nav>
 
         <div class="policy__help">
-            <p class="policy__help-title">{{ __('frontend.page.help') }}</p>
-            <p class="policy__help-text">{{ __('frontend.page.help_text') }}</p>
+            <p class="policy__help-title">{{ __('frontend.page.help_title') }}</p>
+            <p class="policy__help-text">{{ __('frontend.page.help_line') }}</p>
             <a href="mailto:{{ $pgEmail }}" class="policy__help-mail"><i class="far fa-envelope" aria-hidden="true"></i>{!! $pgEmail !!}</a>
         </div>
     </aside>

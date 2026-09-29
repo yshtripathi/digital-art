@@ -1,36 +1,36 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.failed.page_name'))
+@section('title', __('frontend.failed.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.failed.page_name'),
+    'title' => __('frontend.failed.title'),
     'links' => [
         ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
-        ['name' => __('frontend.failed.page_name')]
+        ['name' => __('frontend.failed.title')]
     ]
 ])
 
 @php
     $supportAddr = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
     $supportMail = '<a href="mailto:' . e($supportAddr) . '">' . e($supportAddr) . '</a>';
-    $fixes = [__('frontend.failed.fix1'), __('frontend.failed.fix2'), __('frontend.failed.fix3')];
+    $fixes = [__('frontend.failed.check_one'), __('frontend.failed.check_two'), __('frontend.failed.check_three')];
 @endphp
 
 <section class="outcome">
     <ol class="steps">
         <li class="steps__item is-done">
             <span class="steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>
-            <span class="steps__label">{{ __('frontend.cart.st_cart') }}</span>
+            <span class="steps__label">{{ __('frontend.cart.step_cart') }}</span>
         </li>
         <li class="steps__line is-done" aria-hidden="true"></li>
         <li class="steps__item is-failed" aria-current="step">
             <span class="steps__no"><i class="fas fa-times" aria-hidden="true"></i></span>
-            <span class="steps__label">{{ __('frontend.cart.st_pay') }}</span>
+            <span class="steps__label">{{ __('frontend.cart.step_pay') }}</span>
         </li>
         <li class="steps__line" aria-hidden="true"></li>
         <li class="steps__item">
             <span class="steps__no">3</span>
-            <span class="steps__label">{{ __('frontend.cart.st_done') }}</span>
+            <span class="steps__label">{{ __('frontend.cart.step_done') }}</span>
         </li>
     </ol>
 
@@ -47,7 +47,7 @@
                     <i class="fas fa-redo" aria-hidden="true"></i> {{ __('frontend.failed.retry') }}
                 </a>
                 <a href="{{ route('home') }}" class="btn btn--outline">
-                    <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.failed.go_home') }}
+                    <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.failed.home') }}
                 </a>
             </div>
         </div>
@@ -55,8 +55,8 @@
         <div class="outcome__detail">
             <div class="checks" data-checks>
                 <div class="checks__head">
-                    <h3 class="checks__title">{{ __('frontend.failed.fixes') }}</h3>
-                    <span class="checks__count" aria-live="polite" data-checks-count data-template="{{ __('frontend.failed.checked') }}">{{ __('frontend.failed.checked', ['done' => 0, 'total' => count($fixes)]) }}</span>
+                    <h3 class="checks__title">{{ __('frontend.failed.checks') }}</h3>
+                    <span class="checks__count" aria-live="polite" data-checks-count data-template="{{ __('frontend.failed.progress') }}">{{ __('frontend.failed.progress', ['done' => 0, 'total' => count($fixes)]) }}</span>
                 </div>
                 <div class="checks__bar" aria-hidden="true"><span data-checks-bar></span></div>
                 <ul class="checks__list">
@@ -75,8 +75,8 @@
             <div class="lifeline">
                 <span class="lifeline__icon" aria-hidden="true"><i class="fas fa-headset"></i></span>
                 <div class="lifeline__body">
-                    <h3 class="lifeline__title">{{ __('frontend.failed.help') }}</h3>
-                    <p class="lifeline__text">{!! str_replace(':email', $supportMail, e(__('frontend.failed.reach'))) !!}</p>
+                    <h3 class="lifeline__title">{{ __('frontend.failed.help_title') }}</h3>
+                    <p class="lifeline__text">{!! str_replace(':email', $supportMail, e(__('frontend.failed.help_text'))) !!}</p>
                 </div>
             </div>
         </div>

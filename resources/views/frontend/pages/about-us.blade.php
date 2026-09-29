@@ -1,14 +1,14 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.about.page_name'))
-@section('description', __('frontend.about.desc'))
+@section('title', __('frontend.about.name'))
+@section('description', __('frontend.about.description'))
 
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.about.page_name'),
+    'title' => __('frontend.about.name'),
     'links' => [
         ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
-        ['name' => __('frontend.about.page_name')]
+        ['name' => __('frontend.about.name')]
     ]
 ])
 
@@ -22,9 +22,9 @@
     $auStill = $auMedia('about-3.webp');
     $auVideo = $auMedia('about-video.mp4');
     $auSteps = [
-        ['icon' => 'fa-search',     'title' => __('frontend.about.step1_t'), 'text' => __('frontend.about.step1')],
-        ['icon' => 'fa-list-ul',    'title' => __('frontend.about.step2_t'), 'text' => __('frontend.about.step2')],
-        ['icon' => 'fa-lock-open',  'title' => __('frontend.about.step3_t'), 'text' => __('frontend.about.step3')],
+        ['icon' => 'fa-search',     'title' => __('frontend.about.step_one'), 'text' => __('frontend.about.step_one_text')],
+        ['icon' => 'fa-list-ul',    'title' => __('frontend.about.step_two'), 'text' => __('frontend.about.step_two_text')],
+        ['icon' => 'fa-lock-open',  'title' => __('frontend.about.step_three'), 'text' => __('frontend.about.step_three_text')],
     ];
 @endphp
 
@@ -47,28 +47,28 @@
             </figure>
             <span class="story__badge">
                 <strong>4</strong>
-                <span>{{ __('frontend.about.badge') }}</span>
+                <span>{{ __('frontend.about.levels_badge') }}</span>
             </span>
         </div>
 
         <div class="story__copy">
-            <p class="story__tag">{{ __('frontend.about.label') }}</p>
-            <h2 id="auTitle" class="story__title">{{ __('frontend.about.title') }}</h2>
-            <p class="story__lead">{{ __('frontend.about.lead') }}</p>
-            <p class="story__text">{{ __('frontend.about.body') }}</p>
+            <p class="story__tag">{{ __('frontend.about.eyebrow') }}</p>
+            <h2 id="auTitle" class="story__title">{{ __('frontend.about.heading') }}</h2>
+            <p class="story__lead">{{ __('frontend.about.intro') }}</p>
+            <p class="story__text">{{ __('frontend.about.detail') }}</p>
 
             <ul class="story__points">
-                <li><span class="story__tick" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.about.point1') }}</li>
-                <li><span class="story__tick" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.about.point2') }}</li>
-                <li><span class="story__tick" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.about.point3') }}</li>
+                <li><span class="story__tick" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.about.point_one') }}</li>
+                <li><span class="story__tick" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.about.point_two') }}</li>
+                <li><span class="story__tick" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.about.point_three') }}</li>
             </ul>
 
             <div class="story__acts">
                 <a href="{{ route('product-lists') }}" class="btn">
-                    <span>{{ __('frontend.about.go_browse') }}</span>
+                    <span>{{ __('frontend.about.browse') }}</span>
                     <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
                 </a>
-                <a href="{{ route('contact') }}" class="btn btn--outline">{{ __('frontend.about.go_contact') }}</a>
+                <a href="{{ route('contact') }}" class="btn btn--outline">{{ __('frontend.about.contact') }}</a>
             </div>
         </div>
     </div>
@@ -77,8 +77,8 @@
 <section class="flow" aria-labelledby="auHowTitle">
     <div class="flow__wrap">
         <header class="flow__head">
-            <p class="flow__tag">{{ __('frontend.about.how_label') }}</p>
-            <h2 id="auHowTitle" class="flow__title">{{ __('frontend.about.how_title') }}</h2>
+            <p class="flow__tag">{{ __('frontend.about.steps_label') }}</p>
+            <h2 id="auHowTitle" class="flow__title">{{ __('frontend.about.steps_heading') }}</h2>
         </header>
 
         <div class="flow__grid">

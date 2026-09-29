@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.success.page_name'))
+@section('title', __('frontend.success.title'))
 @php
     $transaction_id = $transaction_id ?? null;
     $email_status   = $email_status ?? null;
@@ -10,10 +10,10 @@
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.success.page_name'),
+    'title' => __('frontend.success.title'),
     'links' => [
         ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
-        ['name' => __('frontend.success.page_name')]
+        ['name' => __('frontend.success.title')]
     ]
 ])
 
@@ -21,7 +21,7 @@
     @php
         $currency = Helper::getCurrencySymbol($order->currency);
         $isPaid = in_array(strtolower((string) $order->payment_status), ['paid', 'completed', 'success']);
-        $statusKey = 'frontend.success.state_names.' . strtolower((string) $order->payment_status);
+        $statusKey = 'frontend.success.state_' . str_replace(' ', '_', strtolower(trim((string) $order->payment_status)));
         $statusText = Lang::has($statusKey) ? __($statusKey) : ucwords((string) $order->payment_status);
         $orderCredits = $order->cart_info->sum('points');
     @endphp
@@ -31,17 +31,17 @@
     <ol class="steps">
         <li class="steps__item is-done">
             <span class="steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>
-            <span class="steps__label">{{ __('frontend.cart.st_cart') }}</span>
+            <span class="steps__label">{{ __('frontend.cart.step_cart') }}</span>
         </li>
         <li class="steps__line is-done" aria-hidden="true"></li>
         <li class="steps__item is-done">
             <span class="steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>
-            <span class="steps__label">{{ __('frontend.cart.st_pay') }}</span>
+            <span class="steps__label">{{ __('frontend.cart.step_pay') }}</span>
         </li>
         <li class="steps__line is-done" aria-hidden="true"></li>
         <li class="steps__item is-done is-active" aria-current="step">
             <span class="steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>
-            <span class="steps__label">{{ __('frontend.cart.st_done') }}</span>
+            <span class="steps__label">{{ __('frontend.cart.step_done') }}</span>
         </li>
     </ol>
 
@@ -55,11 +55,11 @@
 
             @if($order)
                 <div class="outcome__amount">
-                    <span class="outcome__amount-label">{{ __('frontend.success.r_amount') }}</span>
+                    <span class="outcome__amount-label">{{ __('frontend.success.amount_paid') }}</span>
                     <strong class="outcome__amount-value">{{ $currency }}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</strong>
                     <span class="state-chip {{ $isPaid ? 'state-chip--ok' : 'state-chip--wait' }}">
                         <i class="fas {{ $isPaid ? 'fa-check' : 'fa-clock' }}" aria-hidden="true"></i>
-                        {{ __('frontend.success.r_status') }}: {{ $statusText }}
+                        {{ __('frontend.success.status') }}: {{ $statusText }}
                     </span>
                 </div>
             @endif
@@ -69,38 +69,38 @@
             @if($order)
                 <dl class="facts">
                     <div class="fact fact--wide">
-                        <dt>{{ __('frontend.success.r_order') }}</dt>
+                        <dt>{{ __('frontend.success.order_no') }}</dt>
                         <dd>
                             <span class="fact__value" data-copy-text>{{ $order->order_number }}</span>
-                            <button type="button" class="fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.r_order')]) }}">
+                            <button type="button" class="fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.order_no')]) }}">
                                 <i class="far fa-copy" aria-hidden="true"></i>
                                 <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
                             </button>
                         </dd>
                     </div>
                     <div class="fact fact--wide">
-                        <dt>{{ __('frontend.success.r_txn') }}</dt>
+                        <dt>{{ __('frontend.success.transaction') }}</dt>
                         <dd>
                             <span class="fact__value" data-copy-text>{{ $transaction_id }}</span>
-                            <button type="button" class="fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.r_txn')]) }}">
+                            <button type="button" class="fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.transaction')]) }}">
                                 <i class="far fa-copy" aria-hidden="true"></i>
                                 <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
                             </button>
                         </dd>
                     </div>
                     <div class="fact">
-                        <dt>{{ __('frontend.success.r_date') }}</dt>
+                        <dt>{{ __('frontend.success.date') }}</dt>
                         <dd><span class="fact__value">{{ $order->created_at ? $order->created_at->format('Y-m-d H:i') : '' }}</span></dd>
                     </div>
                     @if($orderCredits > 0)
                         <div class="fact">
-                            <dt>{{ __('frontend.success.r_credits') }}</dt>
+                            <dt>{{ __('frontend.success.credits_added') }}</dt>
                             <dd><span class="fact__value fact__value--credits"><i class="fas fa-coins" aria-hidden="true"></i> {{ number_format($orderCredits) }}</span></dd>
                         </div>
                     @endif
                     @if(filled($order->email))
                         <div class="fact fact--wide">
-                            <dt>{{ __('frontend.success.r_mail') }}</dt>
+                            <dt>{{ __('frontend.success.billing_email') }}</dt>
                             <dd><span class="fact__value">{{ $order->email }}</span></dd>
                         </div>
                     @endif
@@ -109,7 +109,7 @@
                 @if($email_status == 'inactive')
                     <p class="outcome__note">
                         <i class="fas fa-exclamation" aria-hidden="true"></i>
-                        <span>{{ __('frontend.success.mail_failed') }}</span>
+                        <span>{{ __('frontend.success.email_failed') }}</span>
                     </p>
                 @endif
             @endif
@@ -117,36 +117,36 @@
             <div class="outcome__acts">
                 @if($order)
                     <a href="{{ route('user.order.show', $order->id) }}" class="btn">
-                        <i class="fas fa-receipt" aria-hidden="true"></i> {{ __('frontend.success.go_receipt') }}
+                        <i class="fas fa-receipt" aria-hidden="true"></i> {{ __('frontend.success.receipt') }}
                     </a>
                     <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--outline">
-                        <i class="fas fa-file-download" aria-hidden="true"></i> {{ __('frontend.success.r_invoice') }}
+                        <i class="fas fa-file-download" aria-hidden="true"></i> {{ __('frontend.success.invoice') }}
                     </a>
                 @endif
                 <a href="{{ route('home') }}" class="{{ $order ? 'outcome__home' : 'btn' }}">
-                    <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.success.go_home') }}
+                    <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.success.home') }}
                 </a>
             </div>
         </div>
     </div>
 
     <div class="journey">
-        <h3 class="journey__title">{{ __('frontend.success.next') }}</h3>
+        <h3 class="journey__title">{{ __('frontend.success.next_title') }}</h3>
         <ol class="journey__list">
             <li class="journey__step" style="--i: 0">
                 <span class="journey__node" aria-hidden="true"><i class="far fa-clock"></i></span>
                 <span class="journey__no" aria-hidden="true">01</span>
-                <p class="journey__text">{{ __('frontend.success.next1') }}</p>
+                <p class="journey__text">{{ __('frontend.success.next_one') }}</p>
             </li>
             <li class="journey__step" style="--i: 1">
                 <span class="journey__node" aria-hidden="true"><i class="fas fa-hourglass-half"></i></span>
                 <span class="journey__no" aria-hidden="true">02</span>
-                <p class="journey__text">{{ __('frontend.success.next2') }}</p>
+                <p class="journey__text">{{ __('frontend.success.next_two') }}</p>
             </li>
             <li class="journey__step" style="--i: 2">
                 <span class="journey__node" aria-hidden="true"><i class="far fa-envelope"></i></span>
                 <span class="journey__no" aria-hidden="true">03</span>
-                <p class="journey__text">{!! str_replace(':email', $supportMail, e(__('frontend.success.next3'))) !!}</p>
+                <p class="journey__text">{!! str_replace(':email', $supportMail, e(__('frontend.success.next_three'))) !!}</p>
             </li>
         </ol>
     </div>

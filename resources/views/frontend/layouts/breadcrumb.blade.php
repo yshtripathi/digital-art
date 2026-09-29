@@ -21,7 +21,7 @@
 
     <div class="crumb__inner">
         @if(count($crumbLinks))
-            <nav class="crumb__nav" aria-label="{{ __('frontend.breadcrumb.trail') }}">
+            <nav class="crumb__nav" aria-label="{{ __('frontend.breadcrumb.label') }}">
                 <ol class="crumb__trail">
                     @foreach($crumbLinks as $index => $link)
                         <li class="crumb__step" style="--i: {{ $index }}">

@@ -2,16 +2,16 @@
 
 @if(isset($category->title) && $category->title)
     @section('title', $category->title)
-    @section('description', __('frontend.catalog.meta'))
+    @section('description', __('frontend.catalog.description'))
 @else
-    @section('title', __('frontend.catalog.page_name'))
-    @section('description', __('frontend.catalog.meta'))
+    @section('title', __('frontend.catalog.title'))
+    @section('description', __('frontend.catalog.description'))
 @endif
 
 @section('main-content')
 @php
     $isCat = isset($category->title) && $category->title;
-    $bcTitle = $isCat ? $category->title : __('frontend.catalog.page_name');
+    $bcTitle = $isCat ? $category->title : __('frontend.catalog.title');
     $isPaginator = $products instanceof \Illuminate\Pagination\AbstractPaginator;
     $totalCourses = $isPaginator && method_exists($products, 'total') ? $products->total() : $products->count();
     $activeSlug = $isCat ? $category->slug : null;
@@ -19,10 +19,10 @@
     $shelfCounts = \App\Models\Product::where('status', 'active')->selectRaw('cat_id, count(*) as total')->groupBy('cat_id')->pluck('total', 'cat_id');
     $shelfAll = $shelfCounts->sum();
     $sorts = [
-        'default' => __('frontend.catalog.sort_default'),
-        'az'      => __('frontend.catalog.sort_az'),
-        'low'     => __('frontend.catalog.sort_low'),
-        'high'    => __('frontend.catalog.sort_high'),
+        'default' => __('frontend.catalog.sort_recommended'),
+        'az'      => __('frontend.catalog.sort_title'),
+        'low'     => __('frontend.catalog.sort_low_high'),
+        'high'    => __('frontend.catalog.sort_high_low'),
     ];
 @endphp
 
@@ -31,7 +31,7 @@
     'links' => $isCat
         ? [
             ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
-            ['name' => __('frontend.catalog.page_name'), 'url' => route('product-lists')],
+            ['name' => __('frontend.catalog.title'), 'url' => route('product-lists')],
             ['name' => $bcTitle]
         ]
         : [
@@ -43,10 +43,10 @@
 <section class="shelf" data-shelf>
     <div class="shelf__wrap">
         @if($shelf->isNotEmpty())
-            <nav class="rail" aria-label="{{ __('frontend.catalog.cats_label') }}">
+            <nav class="rail" aria-label="{{ __('frontend.catalog.categories') }}">
                 <a href="{{ route('product-lists') }}" class="rail__item {{ $activeSlug ? '' : 'is-current' }}" @unless($activeSlug) aria-current="page" @endunless>
                     <span class="rail__mark rail__mark--all" aria-hidden="true"><i class="fas fa-border-all"></i></span>
-                    <span class="rail__name">{{ __('frontend.catalog.all') }}</span>
+                    <span class="rail__name">{{ __('frontend.catalog.show_all') }}</span>
                     <span class="rail__count">{{ $shelfAll }}</span>
                 </a>
                 @foreach($shelf as $cat)
@@ -64,12 +64,12 @@
                 <div class="finder__row">
                     <label class="finder__search" for="shelf-q">
                         <i class="fas fa-search" aria-hidden="true"></i>
-                        <span class="vh">{{ __('frontend.catalog.search_label') }}</span>
-                        <input type="search" id="shelf-q" class="finder__q" placeholder="{{ __('frontend.catalog.search_hint') }}" autocomplete="off" data-shelf-q>
+                        <span class="vh">{{ __('frontend.catalog.search') }}</span>
+                        <input type="search" id="shelf-q" class="finder__q" placeholder="{{ __('frontend.catalog.search_placeholder') }}" autocomplete="off" data-shelf-q>
                         <kbd class="finder__key" aria-hidden="true">/</kbd>
                     </label>
 
-                    <div class="finder__sort" role="radiogroup" aria-label="{{ __('frontend.catalog.sort_label') }}">
+                    <div class="finder__sort" role="radiogroup" aria-label="{{ __('frontend.catalog.sort') }}">
                         @foreach($sorts as $key => $label)
                             <button type="button" class="finder__opt {{ $key === 'default' ? 'is-on' : '' }}" role="radio" aria-checked="{{ $key === 'default' ? 'true' : 'false' }}" data-shelf-sort="{{ $key }}">{{ $label }}</button>
                         @endforeach
@@ -78,9 +78,9 @@
 
                 <div class="finder__row finder__row--sub">
                     <p class="finder__count" aria-live="polite">
-                        <span data-shelf-count data-template="{{ __('frontend.catalog.showing') }}">{{ __('frontend.catalog.showing', ['shown' => $products->count(), 'total' => $products->count()]) }}</span>
+                        <span data-shelf-count data-template="{{ __('frontend.catalog.count') }}">{{ __('frontend.catalog.count', ['shown' => $products->count(), 'total' => $products->count()]) }}</span>
                         <button type="button" class="finder__reset" hidden data-shelf-reset>
-                            <i class="fas fa-undo-alt" aria-hidden="true"></i>{{ __('frontend.catalog.reset') }}
+                            <i class="fas fa-undo-alt" aria-hidden="true"></i>{{ __('frontend.catalog.clear') }}
                         </button>
                     </p>
                 </div>
@@ -106,7 +106,7 @@
                                     <span class="book__blank" aria-hidden="true"><i class="fas fa-book-open"></i></span>
                                 @endif
                                 @if($lvCount)
-                                    <span class="book__count">{{ trans_choice('frontend.catalog.level_count', $lvCount, ['count' => $lvCount]) }}</span>
+                                    <span class="book__count">{{ trans_choice('frontend.catalog.levels', $lvCount, ['count' => $lvCount]) }}</span>
                                 @endif
                             </span>
 
@@ -124,15 +124,15 @@
                                 <span class="book__foot">
                                     @if($minPoints)
                                         <span class="book__price">
-                                            <small>{{ __('frontend.catalog.price_from') }}</small>
+                                            <small>{{ __('frontend.catalog.from') }}</small>
                                             <strong>{{ number_format($minPoints) }}</strong>
-                                            <em>{{ __('frontend.catalog.price_unit') }}</em>
+                                            <em>{{ __('frontend.catalog.credits') }}</em>
                                         </span>
                                     @else
-                                        <span class="book__price book__price--soon"><small>{{ __('frontend.catalog.levels_soon') }}</small></span>
+                                        <span class="book__price book__price--soon"><small>{{ __('frontend.catalog.no_levels') }}</small></span>
                                     @endif
                                     <span class="book__go" aria-hidden="true"><i class="fas fa-long-arrow-alt-right"></i></span>
-                                    <span class="vh">{{ __('frontend.catalog.card_open') }}</span>
+                                    <span class="vh">{{ __('frontend.catalog.open') }}</span>
                                 </span>
                             </span>
                         </a>
@@ -142,18 +142,18 @@
 
             <div class="nomatch" hidden data-shelf-none>
                 <span class="nomatch__icon" aria-hidden="true"><i class="fas fa-filter"></i></span>
-                <p class="nomatch__text">{{ __('frontend.catalog.no_match') }}</p>
+                <p class="nomatch__text">{{ __('frontend.catalog.no_results') }}</p>
                 <button type="button" class="btn btn--outline btn--sm" data-shelf-reset>
-                    <i class="fas fa-undo-alt" aria-hidden="true"></i>{{ __('frontend.catalog.reset') }}
+                    <i class="fas fa-undo-alt" aria-hidden="true"></i>{{ __('frontend.catalog.clear') }}
                 </button>
             </div>
 
             @if($isPaginator && $products->hasPages())
-                <nav class="pager" aria-label="{{ __('frontend.catalog.pager_label') }}">
+                <nav class="pager" aria-label="{{ __('frontend.catalog.pages') }}">
                     @if($products->onFirstPage())
-                        <span class="pager__step is-off" aria-hidden="true"><i class="fas fa-long-arrow-alt-left"></i> {{ __('frontend.catalog.pager_prev') }}</span>
+                        <span class="pager__step is-off" aria-hidden="true"><i class="fas fa-long-arrow-alt-left"></i> {{ __('frontend.catalog.prev') }}</span>
                     @else
-                        <a href="{{ $products->previousPageUrl() }}" class="pager__step"><i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> {{ __('frontend.catalog.pager_prev') }}</a>
+                        <a href="{{ $products->previousPageUrl() }}" class="pager__step"><i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> {{ __('frontend.catalog.prev') }}</a>
                     @endif
 
                     @if(method_exists($products, 'lastPage'))
@@ -169,25 +169,25 @@
                     @endif
 
                     @if($products->hasMorePages())
-                        <a href="{{ $products->nextPageUrl() }}" class="pager__step">{{ __('frontend.catalog.pager_next') }} <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i></a>
+                        <a href="{{ $products->nextPageUrl() }}" class="pager__step">{{ __('frontend.catalog.next') }} <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i></a>
                     @else
-                        <span class="pager__step is-off" aria-hidden="true">{{ __('frontend.catalog.pager_next') }} <i class="fas fa-long-arrow-alt-right"></i></span>
+                        <span class="pager__step is-off" aria-hidden="true">{{ __('frontend.catalog.next') }} <i class="fas fa-long-arrow-alt-right"></i></span>
                     @endif
                 </nav>
             @endif
         @else
             <div class="nomatch nomatch--page">
                 <span class="nomatch__icon" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
-                <h2 class="nomatch__title">{{ __('frontend.catalog.empty_head') }}</h2>
+                <h2 class="nomatch__title">{{ __('frontend.catalog.empty_title') }}</h2>
                 <p class="nomatch__text">{{ __('frontend.catalog.empty_text') }}</p>
-                <a href="{{ route('product-lists') }}" class="btn">{{ __('frontend.catalog.filter_all') }}</a>
+                <a href="{{ route('product-lists') }}" class="btn">{{ __('frontend.catalog.browse_all') }}</a>
             </div>
         @endif
 
         <aside class="boost">
             <div class="boost__copy">
-                <p class="boost__title">{{ __('frontend.catalog.promo_head') }}</p>
-                <p class="boost__text">{{ __('frontend.catalog.promo_body') }}</p>
+                <p class="boost__title">{{ __('frontend.catalog.credits_title') }}</p>
+                <p class="boost__text">{{ __('frontend.catalog.credits_text') }}</p>
             </div>
             <ul class="boost__tiers" aria-hidden="true">
                 <li>x1</li>
@@ -197,7 +197,7 @@
             </ul>
             <a href="{{ route('points.topup') }}" class="btn btn--light boost__go">
                 <i class="fas fa-coins" aria-hidden="true"></i>
-                {{ __('frontend.catalog.promo_go') }}
+                {{ __('frontend.catalog.credits_btn') }}
             </a>
         </aside>
     </div>

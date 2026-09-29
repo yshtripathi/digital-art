@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.dashboard.page_name'))
+@section('title', __('frontend.dashboard.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.dashboard.crumb'),
+    'title' => __('frontend.dashboard.account'),
     'links' => [
         ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
-        ['name' => __('frontend.dashboard.crumb')]
+        ['name' => __('frontend.dashboard.account')]
     ]
 ])
 
@@ -16,11 +16,11 @@
     $unlockedItems = collect($redeemedOrders ?? [])->flatMap(fn ($order) => $order->cart_info->map(fn ($item) => ['order' => $order, 'item' => $item]));
     $redeemedCount = $unlockedItems->count();
     $levelLabel = function ($level) {
-        $key = 'frontend.dashboard.level_names.' . strtolower((string) $level->skill_level);
+        $key = 'frontend.dashboard.level_' . str_replace(' ', '_', strtolower(trim((string) $level->skill_level)));
         return Lang::has($key) ? __($key) : ucfirst((string) $level->skill_level);
     };
     $statusLabel = function ($value) {
-        $key = 'frontend.dashboard.state_names.' . strtolower(trim((string) $value));
+        $key = 'frontend.dashboard.state_' . str_replace(' ', '_', strtolower(trim((string) $value)));
         return Lang::has($key) ? __($key) : ucwords((string) $value);
     };
     $fmtDate = fn ($date, $format) => $date->locale(app()->getLocale())->translatedFormat($format);
@@ -33,30 +33,30 @@
             <div class="hub__me">
                 <span class="hub__avatar" aria-hidden="true">{{ $initial }}</span>
                 <div class="hub__who">
-                    <span class="hub__greet">{{ __('frontend.dashboard.greet') }}</span>
+                    <span class="hub__greet">{{ __('frontend.dashboard.welcome') }}</span>
                     <h2 class="hub__name">{{ $u->name }}</h2>
                     <p class="hub__meta">
                         <span><i class="far fa-envelope" aria-hidden="true"></i>{{ $u->email }}</span>
-                        <span><i class="far fa-calendar" aria-hidden="true"></i>{{ __('frontend.dashboard.since') }} {{ $fmtDate($u->created_at, __('frontend.dashboard.fmt_month')) }}</span>
+                        <span><i class="far fa-calendar" aria-hidden="true"></i>{{ __('frontend.dashboard.member_since') }} {{ $fmtDate($u->created_at, __('frontend.dashboard.month_format')) }}</span>
                     </p>
                 </div>
                 <a href="{{ route('user.logout') }}" class="hub__out">
                     <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
-                    <span>{{ __('frontend.dashboard.sign_out') }}</span>
+                    <span>{{ __('frontend.dashboard.logout') }}</span>
                 </a>
             </div>
 
             <div class="hub__stats">
                 <div class="hub__balance">
-                    <span class="hub__label">{{ __('frontend.dashboard.wallet_label') }}</span>
+                    <span class="hub__label">{{ __('frontend.dashboard.balance') }}</span>
                     <strong class="hub__value"><i class="fas fa-coins" aria-hidden="true"></i>{{ number_format($u->points_balance ?? 0) }}</strong>
                     <div class="hub__acts">
                         <a href="{{ route('points.topup') }}" class="btn btn--light btn--sm">
                             <i class="fas fa-plus" aria-hidden="true"></i>
-                            {{ __('frontend.dashboard.go_buy') }}
+                            {{ __('frontend.dashboard.buy_credits') }}
                         </a>
                         <a href="{{ route('product-lists') }}" class="hub__link">
-                            {{ __('frontend.dashboard.go_browse') }}
+                            {{ __('frontend.dashboard.browse') }}
                             <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -64,20 +64,20 @@
                 <div class="hub__count">
                     <span class="hub__count-icon" aria-hidden="true"><i class="fas fa-lock-open"></i></span>
                     <strong>{{ $redeemedCount }}</strong>
-                    <span>{{ __('frontend.dashboard.stat_levels') }}</span>
+                    <span>{{ __('frontend.dashboard.levels_count') }}</span>
                 </div>
                 <div class="hub__count">
                     <span class="hub__count-icon" aria-hidden="true"><i class="fas fa-receipt"></i></span>
                     <strong>{{ $purchasedCount }}</strong>
-                    <span>{{ __('frontend.dashboard.stat_orders') }}</span>
+                    <span>{{ __('frontend.dashboard.orders_count') }}</span>
                 </div>
             </div>
         </header>
 
-        <nav class="hub__tabs" role="tablist" aria-label="{{ __('frontend.dashboard.tabs_label') }}">
+        <nav class="hub__tabs" role="tablist" aria-label="{{ __('frontend.dashboard.sections') }}">
             <button type="button" role="tab" class="hub__tab is-on" id="tab-orders" data-tab="orders" aria-selected="true" aria-controls="panel-orders">
                 <i class="fas fa-receipt" aria-hidden="true"></i>
-                <span>{{ __('frontend.dashboard.tab_orders') }}</span>
+                <span>{{ __('frontend.dashboard.tab_purchases') }}</span>
                 <span class="hub__badge">{{ $purchasedCount }}</span>
             </button>
             <button type="button" role="tab" class="hub__tab" id="tab-library" data-tab="library" aria-selected="false" aria-controls="panel-library" tabindex="-1">
@@ -87,18 +87,18 @@
             </button>
             <button type="button" role="tab" class="hub__tab" id="tab-security" data-tab="security" aria-selected="false" aria-controls="panel-security" tabindex="-1">
                 <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                <span>{{ __('frontend.dashboard.tab_security') }}</span>
+                <span>{{ __('frontend.dashboard.tab_password') }}</span>
             </button>
         </nav>
 
         <div class="hub__panel" id="panel-orders" role="tabpanel" aria-labelledby="tab-orders" data-panel="orders">
             <div class="hub__panel-head">
-                <h3 class="hub__panel-title">{{ __('frontend.dashboard.buys') }}</h3>
+                <h3 class="hub__panel-title">{{ __('frontend.dashboard.purchases_title') }}</h3>
                 @if($purchasedCount > 0)
                     <label class="hub__find">
                         <i class="fas fa-search" aria-hidden="true"></i>
-                        <span class="vh">{{ __('frontend.dashboard.find_orders') }}</span>
-                        <input type="search" placeholder="{{ __('frontend.dashboard.find_orders') }}" data-find="orders" autocomplete="off">
+                        <span class="vh">{{ __('frontend.dashboard.search_orders') }}</span>
+                        <input type="search" placeholder="{{ __('frontend.dashboard.search_orders') }}" data-find="orders" autocomplete="off">
                     </label>
                 @endif
             </div>
@@ -108,12 +108,12 @@
                     <table class="ledger__table">
                         <thead>
                             <tr>
-                                <th scope="col">{{ __('frontend.dashboard.th_order') }}</th>
-                                <th scope="col">{{ __('frontend.dashboard.th_date') }}</th>
-                                <th scope="col" class="is-num">{{ __('frontend.dashboard.th_credits') }}</th>
-                                <th scope="col" class="is-num">{{ __('frontend.dashboard.th_amount') }}</th>
-                                <th scope="col">{{ __('frontend.dashboard.th_status') }}</th>
-                                <th scope="col" class="is-end"><span class="vh">{{ __('frontend.dashboard.th_action') }}</span></th>
+                                <th scope="col">{{ __('frontend.dashboard.col_order') }}</th>
+                                <th scope="col">{{ __('frontend.dashboard.col_date') }}</th>
+                                <th scope="col" class="is-num">{{ __('frontend.dashboard.col_credits') }}</th>
+                                <th scope="col" class="is-num">{{ __('frontend.dashboard.col_amount') }}</th>
+                                <th scope="col">{{ __('frontend.dashboard.col_status') }}</th>
+                                <th scope="col" class="is-end"><span class="vh">{{ __('frontend.dashboard.col_action') }}</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -123,11 +123,11 @@
                                     $tone = in_array($payState, ['completed', 'paid', 'success']) ? 'ok' : (in_array($payState, ['failed', 'payment failed']) ? 'err' : 'wait');
                                 @endphp
                                 <tr data-row="orders" data-key="{{ \Illuminate\Support\Str::lower($order->order_number) }}">
-                                    <td data-label="{{ __('frontend.dashboard.th_order') }}"><span class="ledger__code">{{ $order->order_number }}</span></td>
-                                    <td data-label="{{ __('frontend.dashboard.th_date') }}">{{ $fmtDate($order->created_at, __('frontend.dashboard.fmt_date')) }}</td>
-                                    <td data-label="{{ __('frontend.dashboard.th_credits') }}" class="is-num"><span class="ledger__credits"><i class="fas fa-coins" aria-hidden="true"></i>{{ $tone === 'ok' ? '+' : '' }}{{ number_format($order->cart_info->sum('points')) }}</span></td>
-                                    <td data-label="{{ __('frontend.dashboard.th_amount') }}" class="is-num"><strong>{{ Helper::getCurrencySymbol($order->currency) }}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}</strong></td>
-                                    <td data-label="{{ __('frontend.dashboard.th_status') }}">
+                                    <td data-label="{{ __('frontend.dashboard.col_order') }}"><span class="ledger__code">{{ $order->order_number }}</span></td>
+                                    <td data-label="{{ __('frontend.dashboard.col_date') }}">{{ $fmtDate($order->created_at, __('frontend.dashboard.date_format')) }}</td>
+                                    <td data-label="{{ __('frontend.dashboard.col_credits') }}" class="is-num"><span class="ledger__credits"><i class="fas fa-coins" aria-hidden="true"></i>{{ $tone === 'ok' ? '+' : '' }}{{ number_format($order->cart_info->sum('points')) }}</span></td>
+                                    <td data-label="{{ __('frontend.dashboard.col_amount') }}" class="is-num"><strong>{{ Helper::getCurrencySymbol($order->currency) }}{{ number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2) }}</strong></td>
+                                    <td data-label="{{ __('frontend.dashboard.col_status') }}">
                                         <span class="pill pill--{{ $tone }}">
                                             @if($tone === 'ok')
                                                 {{ $statusLabel('Completed') }}
@@ -140,7 +140,7 @@
                                     </td>
                                     <td class="is-end">
                                         <a href="{{ route('user.order.show', $order->id) }}" class="ledger__open">
-                                            {{ __('frontend.dashboard.go_receipt') }}
+                                            {{ __('frontend.dashboard.view_receipt') }}
                                             <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -149,14 +149,14 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="hub__none" hidden data-none="orders">{{ __('frontend.dashboard.no_hits') }}</p>
+                <p class="hub__none" hidden data-none="orders">{{ __('frontend.dashboard.no_results') }}</p>
             @else
                 <div class="hub__empty">
                     <span class="hub__empty-icon" aria-hidden="true"><i class="fas fa-receipt"></i></span>
-                    <p>{{ __('frontend.dashboard.buys_none') }}</p>
+                    <p>{{ __('frontend.dashboard.purchases_empty') }}</p>
                     <a href="{{ route('points.topup') }}" class="btn">
                         <i class="fas fa-plus" aria-hidden="true"></i>
-                        {{ __('frontend.dashboard.go_buy') }}
+                        {{ __('frontend.dashboard.buy_credits') }}
                     </a>
                 </div>
             @endif
@@ -164,12 +164,12 @@
 
         <div class="hub__panel" id="panel-library" role="tabpanel" aria-labelledby="tab-library" data-panel="library" hidden>
             <div class="hub__panel-head">
-                <h3 class="hub__panel-title">{{ __('frontend.dashboard.lib') }}</h3>
+                <h3 class="hub__panel-title">{{ __('frontend.dashboard.library_title') }}</h3>
                 @if($redeemedCount > 0)
                     <label class="hub__find">
                         <i class="fas fa-search" aria-hidden="true"></i>
-                        <span class="vh">{{ __('frontend.dashboard.find_lib') }}</span>
-                        <input type="search" placeholder="{{ __('frontend.dashboard.find_lib') }}" data-find="library" autocomplete="off">
+                        <span class="vh">{{ __('frontend.dashboard.search_library') }}</span>
+                        <input type="search" placeholder="{{ __('frontend.dashboard.search_library') }}" data-find="library" autocomplete="off">
                     </label>
                 @endif
             </div>
@@ -179,12 +179,12 @@
                     <table class="ledger__table">
                         <thead>
                             <tr>
-                                <th scope="col">{{ __('frontend.dashboard.th_material') }}</th>
-                                <th scope="col">{{ __('frontend.dashboard.th_level') }}</th>
-                                <th scope="col" class="is-num">{{ __('frontend.dashboard.th_credits') }}</th>
-                                <th scope="col">{{ __('frontend.dashboard.th_date') }}</th>
-                                <th scope="col">{{ __('frontend.dashboard.th_status') }}</th>
-                                <th scope="col" class="is-end"><span class="vh">{{ __('frontend.dashboard.th_action') }}</span></th>
+                                <th scope="col">{{ __('frontend.dashboard.col_guide') }}</th>
+                                <th scope="col">{{ __('frontend.dashboard.col_level') }}</th>
+                                <th scope="col" class="is-num">{{ __('frontend.dashboard.col_credits') }}</th>
+                                <th scope="col">{{ __('frontend.dashboard.col_date') }}</th>
+                                <th scope="col">{{ __('frontend.dashboard.col_status') }}</th>
+                                <th scope="col" class="is-end"><span class="vh">{{ __('frontend.dashboard.col_action') }}</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -201,10 +201,10 @@
                                     $product = $cartItem ? $cartItem->product : null;
                                     $cimg = $product && $product->photo ? explode(',', $product->photo)[0] : null;
                                     $isDone = strtolower($order->status) === 'completed';
-                                    $title = $product ? $product->title : __('frontend.dashboard.gone');
+                                    $title = $product ? $product->title : __('frontend.dashboard.unavailable');
                                 @endphp
                                 <tr data-row="library" data-key="{{ \Illuminate\Support\Str::lower($title . ' ' . $order->order_number) }}">
-                                    <td data-label="{{ __('frontend.dashboard.th_material') }}">
+                                    <td data-label="{{ __('frontend.dashboard.col_guide') }}">
                                         <span class="ledger__item">
                                             <span class="ledger__thumb">
                                                 @if($cimg)
@@ -219,16 +219,16 @@
                                             </span>
                                         </span>
                                     </td>
-                                    <td data-label="{{ __('frontend.dashboard.th_level') }}">
+                                    <td data-label="{{ __('frontend.dashboard.col_level') }}">
                                         @if($level)
                                             <span class="ledger__level">{{ $levelLabel($level) }}</span>
                                         @else
                                             <span class="ledger__dash">—</span>
                                         @endif
                                     </td>
-                                    <td data-label="{{ __('frontend.dashboard.th_credits') }}" class="is-num"><span class="ledger__credits"><i class="fas fa-coins" aria-hidden="true"></i>{{ number_format($cartItem->points) }}</span></td>
-                                    <td data-label="{{ __('frontend.dashboard.th_date') }}">{{ $fmtDate($order->created_at, __('frontend.dashboard.fmt_date')) }}</td>
-                                    <td data-label="{{ __('frontend.dashboard.th_status') }}">
+                                    <td data-label="{{ __('frontend.dashboard.col_credits') }}" class="is-num"><span class="ledger__credits"><i class="fas fa-coins" aria-hidden="true"></i>{{ number_format($cartItem->points) }}</span></td>
+                                    <td data-label="{{ __('frontend.dashboard.col_date') }}">{{ $fmtDate($order->created_at, __('frontend.dashboard.date_format')) }}</td>
+                                    <td data-label="{{ __('frontend.dashboard.col_status') }}">
                                         <span class="pill {{ $isDone ? 'pill--ok' : 'pill--wait' }}">
                                             <i class="fas {{ $isDone ? 'fa-lock-open' : 'fa-clock' }}" aria-hidden="true"></i>
                                             {{ $isDone ? __('frontend.dashboard.unlocked') : $statusLabel($order->status) }}
@@ -237,7 +237,7 @@
                                     <td class="is-end">
                                         @if($product)
                                             <a href="{{ route('product-detail', $product->slug) }}" class="ledger__open">
-                                                {{ __('frontend.dashboard.go_material') }}
+                                                {{ __('frontend.dashboard.open_guide') }}
                                                 <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
                                             </a>
                                         @endif
@@ -247,14 +247,14 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="hub__none" hidden data-none="library">{{ __('frontend.dashboard.no_hits') }}</p>
+                <p class="hub__none" hidden data-none="library">{{ __('frontend.dashboard.no_results') }}</p>
             @else
                 <div class="hub__empty">
                     <span class="hub__empty-icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
-                    <p>{{ __('frontend.dashboard.lib_none') }}</p>
+                    <p>{{ __('frontend.dashboard.library_empty') }}</p>
                     <a href="{{ route('product-lists') }}" class="btn">
                         <i class="fas fa-search" aria-hidden="true"></i>
-                        {{ __('frontend.dashboard.go_browse') }}
+                        {{ __('frontend.dashboard.browse') }}
                     </a>
                 </div>
             @endif
@@ -262,7 +262,7 @@
 
         <div class="hub__panel" id="panel-security" role="tabpanel" aria-labelledby="tab-security" data-panel="security" hidden>
             <div class="hub__panel-head">
-                <h3 class="hub__panel-title">{{ __('frontend.dashboard.pw_head') }}</h3>
+                <h3 class="hub__panel-title">{{ __('frontend.dashboard.password_title') }}</h3>
             </div>
 
             <div class="vault">
@@ -270,11 +270,11 @@
                     @csrf
 
                     <div class="entry">
-                        <label class="entry__label" for="current_password">{{ __('frontend.dashboard.pw_now') }}</label>
+                        <label class="entry__label" for="current_password">{{ __('frontend.dashboard.current') }}</label>
                         <div class="entry__box @error('current_password') is-invalid @enderror">
                             <span class="entry__icon" aria-hidden="true"><i class="fas fa-lock"></i></span>
-                            <input type="password" id="current_password" name="current_password" autocomplete="current-password" class="entry__input" placeholder="{{ __('frontend.dashboard.pw_now_hint') }}">
-                            <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.pass_show') }}" data-hide="{{ __('frontend.dashboard.pass_hide') }}" aria-label="{{ __('frontend.dashboard.pass_show') }}" aria-pressed="false">
+                            <input type="password" id="current_password" name="current_password" autocomplete="current-password" class="entry__input" placeholder="{{ __('frontend.dashboard.current_placeholder') }}">
+                            <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false">
                                 <i class="fas fa-eye" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -282,27 +282,27 @@
                     </div>
 
                     <div class="entry">
-                        <label class="entry__label" for="new_password">{{ __('frontend.dashboard.pw_new') }}</label>
+                        <label class="entry__label" for="new_password">{{ __('frontend.dashboard.new') }}</label>
                         <div class="entry__box @error('new_password') is-invalid @enderror">
                             <span class="entry__icon" aria-hidden="true"><i class="fas fa-key"></i></span>
-                            <input type="password" id="new_password" name="new_password" autocomplete="new-password" class="entry__input" placeholder="{{ __('frontend.dashboard.pw_new_hint') }}">
-                            <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.pass_show') }}" data-hide="{{ __('frontend.dashboard.pass_hide') }}" aria-label="{{ __('frontend.dashboard.pass_show') }}" aria-pressed="false">
+                            <input type="password" id="new_password" name="new_password" autocomplete="new-password" class="entry__input" placeholder="{{ __('frontend.dashboard.new_placeholder') }}">
+                            <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false">
                                 <i class="fas fa-eye" aria-hidden="true"></i>
                             </button>
                         </div>
                         <div class="meter" aria-hidden="true" data-meter>
                             <span class="meter__bars"><span></span><span></span><span></span></span>
-                            <span class="meter__text">{{ __('frontend.dashboard.strength') }}: <strong data-meter-label>—</strong></span>
+                            <span class="meter__text">{{ __('frontend.dashboard.meter') }}: <strong data-meter-label>—</strong></span>
                         </div>
                         @error('new_password')<span class="entry__err">{{ $message }}</span>@enderror
                     </div>
 
                     <div class="entry">
-                        <label class="entry__label" for="new_confirm_password">{{ __('frontend.dashboard.pw_again') }}</label>
+                        <label class="entry__label" for="new_confirm_password">{{ __('frontend.dashboard.confirm') }}</label>
                         <div class="entry__box @error('new_confirm_password') is-invalid @enderror">
                             <span class="entry__icon" aria-hidden="true"><i class="fas fa-redo-alt"></i></span>
-                            <input type="password" id="new_confirm_password" name="new_confirm_password" autocomplete="new-password" class="entry__input" placeholder="{{ __('frontend.dashboard.pw_again_hint') }}">
-                            <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.pass_show') }}" data-hide="{{ __('frontend.dashboard.pass_hide') }}" aria-label="{{ __('frontend.dashboard.pass_show') }}" aria-pressed="false">
+                            <input type="password" id="new_confirm_password" name="new_confirm_password" autocomplete="new-password" class="entry__input" placeholder="{{ __('frontend.dashboard.confirm_placeholder') }}">
+                            <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.dashboard.show') }}" data-hide="{{ __('frontend.dashboard.hide') }}" aria-label="{{ __('frontend.dashboard.show') }}" aria-pressed="false">
                                 <i class="fas fa-eye" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -310,17 +310,17 @@
                     </div>
 
                     <button type="submit" class="btn btn--block gate__submit">
-                        <span>{{ __('frontend.dashboard.pw_save') }}</span>
+                        <span>{{ __('frontend.dashboard.save') }}</span>
                         <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
                     </button>
                 </form>
 
                 <aside class="vault__rules">
-                    <p class="vault__rules-title"><i class="fas fa-clipboard-check" aria-hidden="true"></i>{{ __('frontend.dashboard.pw_rules') }}</p>
+                    <p class="vault__rules-title"><i class="fas fa-clipboard-check" aria-hidden="true"></i>{{ __('frontend.dashboard.checklist') }}</p>
                     <ul class="rules">
-                        <li class="rules__item" data-rule="len"><span class="rules__mark" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.dashboard.rule_len') }}</li>
-                        <li class="rules__item" data-rule="new"><span class="rules__mark" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.dashboard.rule_new') }}</li>
-                        <li class="rules__item" data-rule="match"><span class="rules__mark" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.dashboard.rule_match') }}</li>
+                        <li class="rules__item" data-rule="len"><span class="rules__mark" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.dashboard.rule_length') }}</li>
+                        <li class="rules__item" data-rule="new"><span class="rules__mark" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.dashboard.rule_different') }}</li>
+                        <li class="rules__item" data-rule="match"><span class="rules__mark" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.dashboard.rule_same') }}</li>
                     </ul>
                 </aside>
             </div>
@@ -392,17 +392,17 @@
         var again = document.getElementById('new_confirm_password');
         var meter = document.querySelector('[data-meter]');
         var meterLabel = document.querySelector('[data-meter-label]');
-        var words = [@json(__('frontend.dashboard.str_weak')), @json(__('frontend.dashboard.str_fair')), @json(__('frontend.dashboard.str_good'))];
+        var words = [@json(__('frontend.dashboard.weak')), @json(__('frontend.dashboard.fair')), @json(__('frontend.dashboard.strong'))];
         var rules = {
             len: document.querySelector('[data-rule="len"]'),
             fresh: document.querySelector('[data-rule="new"]'),
             match: document.querySelector('[data-rule="match"]')
         };
         var pwdText = {
-            current: @json(__('frontend.dashboard.pw_now_empty')),
-            fresh: @json(__('frontend.dashboard.pw_new_empty')),
-            short: @json(__('frontend.dashboard.pw_new_short', ['min' => 8])),
-            match: @json(__('frontend.dashboard.pw_diff'))
+            current: @json(__('frontend.dashboard.current_required')),
+            fresh: @json(__('frontend.dashboard.new_required')),
+            short: @json(__('frontend.dashboard.new_min', ['min' => 8])),
+            match: @json(__('frontend.dashboard.mismatch'))
         };
 
         var check = function () {

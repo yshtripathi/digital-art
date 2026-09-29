@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.cart.page_name'))
+@section('title', __('frontend.cart.title'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.cart.page_name'),
+    'title' => __('frontend.cart.title'),
     'links' => [
         ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
-        ['name' => __('frontend.cart.page_name')]
+        ['name' => __('frontend.cart.title')]
     ]
 ])
 
@@ -29,17 +29,17 @@
         <ol class="steps">
             <li class="steps__item is-active" aria-current="step">
                 <span class="steps__no">1</span>
-                <span class="steps__label">{{ __('frontend.cart.st_cart') }}</span>
+                <span class="steps__label">{{ __('frontend.cart.step_cart') }}</span>
             </li>
             <li class="steps__line" aria-hidden="true"></li>
             <li class="steps__item">
                 <span class="steps__no">2</span>
-                <span class="steps__label">{{ __('frontend.cart.st_pay') }}</span>
+                <span class="steps__label">{{ __('frontend.cart.step_pay') }}</span>
             </li>
             <li class="steps__line" aria-hidden="true"></li>
             <li class="steps__item">
                 <span class="steps__no">3</span>
-                <span class="steps__label">{{ __('frontend.cart.st_done') }}</span>
+                <span class="steps__label">{{ __('frontend.cart.step_done') }}</span>
             </li>
         </ol>
 
@@ -47,12 +47,12 @@
             <div class="basket__main">
                 <div class="basket__head">
                     <div>
-                        <h2 class="basket__title">{{ __('frontend.cart.picked') }}</h2>
-                        <span class="basket__count">{{ trans_choice('frontend.cart.item_count', count($cartItems), ['count' => count($cartItems)]) }}</span>
+                        <h2 class="basket__title">{{ __('frontend.cart.selected') }}</h2>
+                        <span class="basket__count">{{ trans_choice('frontend.cart.items', count($cartItems), ['count' => count($cartItems)]) }}</span>
                     </div>
                     @if(Helper::totalCartPoints() > 0)
                         <a href="{{ route('product-lists') }}" class="basket__more">
-                            {{ __('frontend.cart.more') }}
+                            {{ __('frontend.cart.browse_more') }}
                             <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
                         </a>
                     @endif
@@ -61,7 +61,7 @@
                 <ul class="stubs">
                     @foreach($cartItems as $cart)
                         @php
-                            $item_title = __('frontend.cart.pack');
+                            $item_title = __('frontend.cart.package');
                             $item_link = null;
                             $item_photo = null;
                             if($cart->product) {
@@ -83,7 +83,7 @@
                             </span>
 
                             <div class="stub__body">
-                                <span class="stub__tag">{{ $cart->product ? __('frontend.cart.chip_material') : __('frontend.cart.chip_credits') }}</span>
+                                <span class="stub__tag">{{ $cart->product ? __('frontend.cart.tag_guide') : __('frontend.cart.tag_credits') }}</span>
                                 @if($item_link)
                                     <a href="{{ $item_link }}" class="stub__title">{{ $item_title }}</a>
                                 @else
@@ -97,7 +97,7 @@
 
                             <div class="stub__side">
                                 <strong class="stub__price">{{ $sym }}{{ number_format($cart['price'], $dec) }}</strong>
-                                <a href="{{ route('cart-delete', $cart->id) }}" class="stub__drop" aria-label="{{ __('frontend.cart.drop') }}: {{ $item_title }}">
+                                <a href="{{ route('cart-delete', $cart->id) }}" class="stub__drop" aria-label="{{ __('frontend.cart.remove') }}: {{ $item_title }}">
                                     <i class="far fa-trash-alt" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -107,7 +107,7 @@
             </div>
 
             <aside class="sumup">
-                <p class="sumup__caption">{{ __('frontend.cart.summary') }}</p>
+                <p class="sumup__caption">{{ __('frontend.cart.totals') }}</p>
 
                 <dl class="sumup__rows">
                     <div class="sumup__row">
@@ -116,45 +116,45 @@
                     </div>
                     @if($discount > 0)
                         <div class="sumup__row sumup__row--off">
-                            <dt>{{ __('frontend.cart.sum_discount') }}:</dt>
+                            <dt>{{ __('frontend.cart.discount') }}:</dt>
                             <dd>&minus; {{ $sym }}{{ number_format($discount, $dec) }}</dd>
                         </div>
                     @endif
                 </dl>
 
                 <div class="sumup__total">
-                    <span>{{ __('frontend.cart.sum_total') }}:</span>
+                    <span>{{ __('frontend.cart.total') }}:</span>
                     <strong>{{ $sym }}{{ number_format($total_amount, $dec) }}</strong>
                 </div>
 
                 <a href="{{ route('checkout') }}" class="btn btn--block sumup__go">
-                    <span>{{ __('frontend.cart.go_pay') }}</span>
+                    <span>{{ __('frontend.cart.checkout') }}</span>
                     <span class="sumup__go-icon" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <a href="{{ route('points.topup') }}" class="btn btn--outline btn--block">
                     <i class="fas fa-plus" aria-hidden="true"></i>
-                    {{ __('frontend.cart.none_buy') }}
+                    {{ __('frontend.cart.buy_credits') }}
                 </a>
 
                 <div class="sumup__trust">
-                    <p><i class="fas fa-lock" aria-hidden="true"></i> <span>{{ __('frontend.cart.secure') }}</span></p>
-                    <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.cart.pay_alt') }}" loading="lazy">
+                    <p><i class="fas fa-lock" aria-hidden="true"></i> <span>{{ __('frontend.cart.secure_note') }}</span></p>
+                    <img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.cart.payments') }}" loading="lazy">
                 </div>
             </aside>
         </div>
     @else
         <div class="dropzone">
             <span class="dropzone__icon" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
-            <h2 class="dropzone__title">{{ __('frontend.cart.empty_head') }}</h2>
+            <h2 class="dropzone__title">{{ __('frontend.cart.empty_title') }}</h2>
             <p class="dropzone__text">{{ __('frontend.cart.empty_text') }}</p>
             <div class="dropzone__acts">
                 <a href="{{ route('points.topup') }}" class="btn">
                     <i class="fas fa-coins" aria-hidden="true"></i>
-                    {{ __('frontend.cart.none_buy') }}
+                    {{ __('frontend.cart.buy_credits') }}
                 </a>
                 <a href="{{ route('product-lists') }}" class="btn btn--outline">
                     <i class="fas fa-book-open" aria-hidden="true"></i>
-                    {{ __('frontend.cart.none_browse') }}
+                    {{ __('frontend.cart.browse') }}
                 </a>
             </div>
         </div>

@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('description', __('frontend.home.desc'))
+@section('description', __('frontend.home.description'))
 
 @section('main-content')
 @php
@@ -25,10 +25,10 @@
     }
 
     $hoSteps = [
-        ['t' => 'step1', 'd' => 'step1_text', 'i' => 'fa-compass'],
-        ['t' => 'step2', 'd' => 'step2_text', 'i' => 'fa-balance-scale'],
-        ['t' => 'step3', 'd' => 'step3_text', 'i' => 'fa-lock-open'],
-        ['t' => 'step4', 'd' => 'step4_text', 'i' => 'fa-book-reader'],
+        ['t' => 'step_one', 'd' => 'step_one_text', 'i' => 'fa-compass'],
+        ['t' => 'step_two', 'd' => 'step_two_text', 'i' => 'fa-balance-scale'],
+        ['t' => 'step_three', 'd' => 'step_three_text', 'i' => 'fa-lock-open'],
+        ['t' => 'step_four', 'd' => 'step_four_text', 'i' => 'fa-book-reader'],
     ];
 
     $heroVideo = $hoMedia('home-hero.mp4');
@@ -41,21 +41,21 @@
 <section class="lead" aria-labelledby="hmTitle">
     <div class="lead__wrap">
         <div class="lead__copy">
-            <p class="lead__tag"><span class="lead__dot" aria-hidden="true"></span>{{ __('frontend.home.badge') }}</p>
+            <p class="lead__tag"><span class="lead__dot" aria-hidden="true"></span>{{ __('frontend.home.eyebrow') }}</p>
             <h1 id="hmTitle" class="lead__title">
-                <span>{{ __('frontend.home.headline') }}</span>
-                <span class="lead__accent">{{ __('frontend.home.headline_2') }}</span>
+                <span>{{ __('frontend.home.title') }}</span>
+                <span class="lead__accent">{{ __('frontend.home.title_accent') }}</span>
             </h1>
-            <p class="lead__text">{{ __('frontend.home.intro') }}</p>
+            <p class="lead__text">{{ __('frontend.home.lead') }}</p>
 
             <div class="lead__acts">
                 <a href="{{ route('product-lists') }}" class="btn lead__go">
-                    <span>{{ __('frontend.home.browse') }}</span>
+                    <span>{{ __('frontend.home.explore') }}</span>
                     <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
                 </a>
                 <a href="{{ route('points.topup') }}" class="btn btn--outline">
                     <i class="fas fa-coins" aria-hidden="true"></i>
-                    {{ __('frontend.home.buy') }}
+                    {{ __('frontend.home.credits_btn') }}
                 </a>
             </div>
         </div>
@@ -64,7 +64,7 @@
             <figure class="frame frame--hero {{ ($heroVideo || $heroStill) ? '' : 'is-empty' }}">
                 @if($heroVideo)
                     <video src="{{ $heroVideo }}" @if($heroStill) poster="{{ $heroStill }}" @endif autoplay muted loop playsinline preload="metadata" aria-hidden="true" data-hero-video></video>
-                    <button type="button" class="lead__toggle" aria-pressed="false" data-hero-toggle data-play="{{ __('frontend.home.video_play') }}" data-pause="{{ __('frontend.home.video_pause') }}" aria-label="{{ __('frontend.home.video_pause') }}">
+                    <button type="button" class="lead__toggle" aria-pressed="false" data-hero-toggle data-play="{{ __('frontend.home.play') }}" data-pause="{{ __('frontend.home.pause') }}" aria-label="{{ __('frontend.home.pause') }}">
                         <i class="fas fa-pause" aria-hidden="true"></i>
                     </button>
                 @elseif($heroStill)
@@ -106,13 +106,13 @@
         <div class="reel__wrap">
             <header class="reel__head">
                 <div>
-                    <p class="reel__tag">{{ __('frontend.home.feat_tag') }}</p>
-                    <h2 id="hmFeatTitle" class="reel__title">{{ __('frontend.home.feat_title') }}</h2>
+                    <p class="reel__tag">{{ __('frontend.home.picks_label') }}</p>
+                    <h2 id="hmFeatTitle" class="reel__title">{{ __('frontend.home.picks_title') }}</h2>
                 </div>
                 <div class="reel__nav">
-                    <button type="button" class="reel__btn" data-reel-prev aria-label="{{ __('frontend.home.pick_prev') }}"><i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i></button>
-                    <button type="button" class="reel__btn" data-reel-next aria-label="{{ __('frontend.home.pick_next') }}"><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i></button>
-                    <a href="{{ route('product-lists') }}" class="reel__all">{{ __('frontend.home.feat_all') }}</a>
+                    <button type="button" class="reel__btn" data-reel-prev aria-label="{{ __('frontend.home.prev') }}"><i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i></button>
+                    <button type="button" class="reel__btn" data-reel-next aria-label="{{ __('frontend.home.next') }}"><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i></button>
+                    <a href="{{ route('product-lists') }}" class="reel__all">{{ __('frontend.home.all') }}</a>
                 </div>
             </header>
 
@@ -133,14 +133,14 @@
                                 <span class="reel__name">{{ $course->title }}</span>
                                 <span class="reel__meta">
                                     @if($lvCount)
-                                        <span>{{ trans_choice('frontend.home.levels', $lvCount, ['count' => $lvCount]) }}</span>
+                                        <span>{{ trans_choice('frontend.home.level_count', $lvCount, ['count' => $lvCount]) }}</span>
                                     @endif
                                     @if($minPoints)
-                                        <span class="reel__price">{{ __('frontend.home.from') }} <strong>{{ number_format($minPoints) }}</strong> {{ __('frontend.home.unit') }}</span>
+                                        <span class="reel__price">{{ __('frontend.home.starts_at') }} <strong>{{ number_format($minPoints) }}</strong> {{ __('frontend.home.credits') }}</span>
                                     @endif
                                 </span>
                             </span>
-                            <span class="vh">{{ __('frontend.home.pick_open') }}</span>
+                            <span class="vh">{{ __('frontend.home.open') }}</span>
                         </a>
                     </li>
                 @endforeach
@@ -160,13 +160,13 @@
         </figure>
 
         <div class="scene__card">
-            <p class="scene__tag">{{ __('frontend.home.story_tag') }}</p>
-            <h2 id="hmStoryTitle" class="scene__title">{{ __('frontend.home.story_title') }}</h2>
-            <p class="scene__text">{{ __('frontend.home.story_text') }}</p>
+            <p class="scene__tag">{{ __('frontend.home.study_label') }}</p>
+            <h2 id="hmStoryTitle" class="scene__title">{{ __('frontend.home.study_title') }}</h2>
+            <p class="scene__text">{{ __('frontend.home.study_text') }}</p>
             <ul class="scene__list">
-                <li><i class="fas fa-check" aria-hidden="true"></i>{{ __('frontend.home.story1') }}</li>
-                <li><i class="fas fa-check" aria-hidden="true"></i>{{ __('frontend.home.story2') }}</li>
-                <li><i class="fas fa-check" aria-hidden="true"></i>{{ __('frontend.home.story3') }}</li>
+                <li><i class="fas fa-check" aria-hidden="true"></i>{{ __('frontend.home.study_one') }}</li>
+                <li><i class="fas fa-check" aria-hidden="true"></i>{{ __('frontend.home.study_two') }}</li>
+                <li><i class="fas fa-check" aria-hidden="true"></i>{{ __('frontend.home.study_three') }}</li>
             </ul>
         </div>
     </div>
@@ -175,9 +175,9 @@
 <section class="fold" aria-labelledby="hmFlowTitle" data-fold>
     <div class="fold__wrap">
         <header class="fold__head">
-            <p class="fold__tag">{{ __('frontend.home.flow_tag') }}</p>
-            <h2 id="hmFlowTitle" class="fold__title">{{ __('frontend.home.flow_title') }}</h2>
-            <p class="fold__text">{{ __('frontend.home.flow_text') }}</p>
+            <p class="fold__tag">{{ __('frontend.home.steps_label') }}</p>
+            <h2 id="hmFlowTitle" class="fold__title">{{ __('frontend.home.steps_title') }}</h2>
+            <p class="fold__text">{{ __('frontend.home.steps_text') }}</p>
         </header>
 
         <ol class="fold__list">
@@ -198,16 +198,16 @@
 <section class="ladder2" aria-labelledby="hmCredTitle">
     <div class="ladder2__wrap">
         <div class="ladder2__copy">
-            <p class="ladder2__tag">{{ __('frontend.home.cred_tag') }}</p>
-            <h2 id="hmCredTitle" class="ladder2__title">{{ __('frontend.home.cred_title') }}</h2>
-            <p class="ladder2__text">{{ __('frontend.home.cred_text') }}</p>
+            <p class="ladder2__tag">{{ __('frontend.home.credit_label') }}</p>
+            <h2 id="hmCredTitle" class="ladder2__title">{{ __('frontend.home.credit_title') }}</h2>
+            <p class="ladder2__text">{{ __('frontend.home.credit_text') }}</p>
             <a href="{{ route('points.topup') }}" class="btn">
                 <i class="fas fa-calculator" aria-hidden="true"></i>
-                {{ __('frontend.home.cred_go') }}
+                {{ __('frontend.home.credit_btn') }}
             </a>
         </div>
 
-        <ul class="tiles" aria-label="{{ __('frontend.home.cred_chart') }}">
+        <ul class="tiles" aria-label="{{ __('frontend.home.credit_tiers') }}">
             @foreach($hoTiers as $tier)
                 <li class="tiles__item {{ $loop->last ? 'tiles__item--top' : '' }}">
                     <span class="tiles__mult">{{ $tier[2] }}</span>
@@ -228,18 +228,18 @@
         @endif
     </figure>
     <div class="finale__body">
-        <p class="finale__tag">{{ __('frontend.home.close_tag') }}</p>
-        <h2 id="hmCloseTitle" class="finale__title">{{ __('frontend.home.close_title') }}</h2>
-        <p class="finale__text">{{ __('frontend.home.close_text') }}</p>
+        <p class="finale__tag">{{ __('frontend.home.end_label') }}</p>
+        <h2 id="hmCloseTitle" class="finale__title">{{ __('frontend.home.end_title') }}</h2>
+        <p class="finale__text">{{ __('frontend.home.end_text') }}</p>
         <div class="finale__acts">
             <a href="{{ route('product-lists') }}" class="btn btn--light">
-                <span>{{ __('frontend.home.browse') }}</span>
+                <span>{{ __('frontend.home.explore') }}</span>
                 <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
             </a>
             @guest
-                <a href="{{ route('register.form') }}" class="btn btn--outline-light">{{ __('frontend.home.join') }}</a>
+                <a href="{{ route('register.form') }}" class="btn btn--outline-light">{{ __('frontend.home.register') }}</a>
             @else
-                <a href="{{ route('points.topup') }}" class="btn btn--outline-light">{{ __('frontend.home.buy') }}</a>
+                <a href="{{ route('points.topup') }}" class="btn btn--outline-light">{{ __('frontend.home.credits_btn') }}</a>
             @endguest
         </div>
     </div>

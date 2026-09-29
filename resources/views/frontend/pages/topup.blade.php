@@ -1,13 +1,13 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.topup.page_name'))
-@section('description', __('frontend.topup.meta'))
+@section('title', __('frontend.topup.title'))
+@section('description', __('frontend.topup.description'))
 
 @section('main-content')
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.topup.page_name'),
+    'title' => __('frontend.topup.title'),
     'links' => [
         ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
-        ['name' => __('frontend.topup.page_name')]
+        ['name' => __('frontend.topup.title')]
     ]
 ])
 
@@ -22,7 +22,7 @@
         ];
         $quick = [16000, 80000, 160000, 240000];
         $symbol = '&yen;';
-        $rateNote = __('frontend.topup.rate_yen');
+        $rateNote = __('frontend.topup.rate_jpy');
     } elseif ($cur == 'HKD') {
         $tiers = [
             ['n' => __('frontend.topup.tier_standard'), 'i' => 'fa-feather', 'big' => 'x1',   'min' => 1,     'r' => 'HK$1 - HK$3,999'],
@@ -32,7 +32,7 @@
         ];
         $quick = [800, 4000, 8000, 12000];
         $symbol = 'HK$';
-        $rateNote = __('frontend.topup.rate_hk');
+        $rateNote = __('frontend.topup.rate_hkd');
     } else {
         $tiers = [
             ['n' => __('frontend.topup.tier_standard'), 'i' => 'fa-feather', 'big' => 'x1',   'min' => 1,    'r' => '$1 - $499'],
@@ -42,15 +42,15 @@
         ];
         $quick = [100, 500, 1000, 1500];
         $symbol = '$';
-        $rateNote = __('frontend.topup.rate_dollar');
+        $rateNote = __('frontend.topup.rate_usd');
     }
 @endphp
 
 <section class="credit">
     <div class="credit__wrap">
         <header class="credit__intro">
-            <p class="credit__eyebrow"><i class="fas fa-coins" aria-hidden="true"></i>{{ __('frontend.header.unit_credits') }}</p>
-            <h2 class="credit__title">{{ __('frontend.topup.title') }}</h2>
+            <p class="credit__eyebrow"><i class="fas fa-coins" aria-hidden="true"></i>{{ __('frontend.header.credits') }}</p>
+            <h2 class="credit__title">{{ __('frontend.topup.heading') }}</h2>
             <p class="credit__lead">{{ __('frontend.topup.lead') }}</p>
         </header>
 
@@ -58,22 +58,22 @@
             <li class="spec__cell">
                 <span class="spec__icon" aria-hidden="true"><i class="fas fa-exchange-alt"></i></span>
                 <span class="spec__text">
-                    <small>{{ __('frontend.topup.fact_rate') }}</small>
+                    <small>{{ __('frontend.topup.rate_label') }}</small>
                     <strong>{{ $rateNote }}</strong>
                 </span>
             </li>
             <li class="spec__cell">
                 <span class="spec__icon" aria-hidden="true"><i class="far fa-calendar-check"></i></span>
                 <span class="spec__text">
-                    <small>{{ __('frontend.topup.fact_valid') }}</small>
-                    <strong>{{ rtrim(__('frontend.topup.valid_days'), '.。') }}</strong>
+                    <small>{{ __('frontend.topup.validity_label') }}</small>
+                    <strong>{{ rtrim(__('frontend.topup.validity'), '.。') }}</strong>
                 </span>
             </li>
             <li class="spec__cell">
                 <span class="spec__icon" aria-hidden="true"><i class="fas fa-unlock-alt"></i></span>
                 <span class="spec__text">
-                    <small>{{ __('frontend.topup.fact_use') }}</small>
-                    <strong>{{ rtrim(__('frontend.topup.note'), '.。') }}</strong>
+                    <small>{{ __('frontend.topup.use_label') }}</small>
+                    <strong>{{ rtrim(__('frontend.topup.use'), '.。') }}</strong>
                 </span>
             </li>
         </ul>
@@ -84,30 +84,30 @@
             <div class="credit__main">
                 <div class="ladder">
                     <div class="ladder__head">
-                        <h3 class="ladder__title">{{ __('frontend.topup.ladder') }}</h3>
-                        <p class="ladder__text">{{ __('frontend.topup.table_text') }}</p>
+                        <h3 class="ladder__title">{{ __('frontend.topup.tiers_title') }}</h3>
+                        <p class="ladder__text">{{ __('frontend.topup.tiers_text') }}</p>
                     </div>
                     <table class="ladder__table">
-                        <caption class="vh">{{ __('frontend.topup.ladder') }}</caption>
+                        <caption class="vh">{{ __('frontend.topup.tiers_title') }}</caption>
                         <thead>
                             <tr>
-                                <th scope="col">{{ __('frontend.topup.col_tier') }}</th>
-                                <th scope="col">{{ __('frontend.topup.col_range') }}</th>
-                                <th scope="col">{{ __('frontend.topup.col_mult') }}</th>
-                                <th scope="col"><span class="vh">{{ __('frontend.topup.col_status') }}</span></th>
+                                <th scope="col">{{ __('frontend.topup.tier') }}</th>
+                                <th scope="col">{{ __('frontend.topup.range') }}</th>
+                                <th scope="col">{{ __('frontend.topup.multiplier') }}</th>
+                                <th scope="col"><span class="vh">{{ __('frontend.topup.status') }}</span></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($tiers as $t)
                                 <tr class="rung {{ $loop->last ? 'rung--top' : '' }}" data-mult="{{ $t['big'] }}" data-min="{{ $t['min'] }}" data-name="{{ $t['n'] }}" style="--fill: {{ ($loop->index + 1) * 25 }}%">
-                                    <th scope="row" data-label="{{ __('frontend.topup.col_tier') }}">
+                                    <th scope="row" data-label="{{ __('frontend.topup.tier') }}">
                                         <span class="rung__name">
                                             <span class="rung__icon" aria-hidden="true"><i class="fas {{ $t['i'] }}"></i></span>
                                             {{ $t['n'] }}
                                         </span>
                                     </th>
-                                    <td class="rung__range" data-label="{{ __('frontend.topup.col_range') }}">{!! $t['r'] !!}</td>
-                                    <td data-label="{{ __('frontend.topup.col_mult') }}">
+                                    <td class="rung__range" data-label="{{ __('frontend.topup.range') }}">{!! $t['r'] !!}</td>
+                                    <td data-label="{{ __('frontend.topup.multiplier') }}">
                                         <span class="rung__mult">
                                             <strong>{{ $t['big'] }}</strong>
                                             <span class="rung__meter" aria-hidden="true"><span></span></span>
@@ -115,9 +115,9 @@
                                     </td>
                                     <td class="rung__state">
                                         @if($loop->last)
-                                            <span class="rung__best">{{ __('frontend.topup.tier_best') }}</span>
+                                            <span class="rung__best">{{ __('frontend.topup.top_tier') }}</span>
                                         @endif
-                                        <span class="rung__match"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.topup.tier_match') }}</span>
+                                        <span class="rung__match"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.topup.your_tier') }}</span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -127,19 +127,19 @@
 
                 <div class="console">
                     <div class="console__head">
-                        <p class="console__kicker">{{ __('frontend.topup.calc_kicker') }}</p>
+                        <p class="console__kicker">{{ __('frontend.topup.calc_step') }}</p>
                         <h3 class="console__title">{{ __('frontend.topup.calc_title') }}</h3>
                         <p class="console__text">{{ __('frontend.topup.calc_text') }}</p>
                     </div>
 
-                    <label class="console__label" for="topup_amount">{{ __('frontend.topup.amount_label') }}</label>
+                    <label class="console__label" for="topup_amount">{{ __('frontend.topup.amount') }}</label>
                     <div class="display">
                         <span class="display__sym" aria-hidden="true">{!! $symbol !!}</span>
-                        <input type="number" name="amount" id="topup_amount" class="display__input" placeholder="{{ __('frontend.topup.amount_hint') }}" min="1" required inputmode="decimal">
+                        <input type="number" name="amount" id="topup_amount" class="display__input" placeholder="{{ __('frontend.topup.amount_placeholder') }}" min="1" required inputmode="decimal">
                         <span class="display__mult" data-live-mult aria-hidden="true">x1</span>
                     </div>
 
-                    <span class="console__label" id="keysLabel">{{ __('frontend.topup.quick_label') }}</span>
+                    <span class="console__label" id="keysLabel">{{ __('frontend.topup.presets') }}</span>
                     <div class="keys" role="group" aria-labelledby="keysLabel">
                         @foreach($quick as $q)
                             <button type="button" class="key" data-amount="{{ $q }}">
@@ -151,7 +151,7 @@
 
                     <p class="status" aria-live="polite" data-hint>
                         <span class="status__icon" aria-hidden="true"><i class="far fa-lightbulb"></i></span>
-                        <span data-hint-text>{{ __('frontend.topup.hint_start') }}</span>
+                        <span data-hint-text>{{ __('frontend.topup.tip_start') }}</span>
                     </p>
                 </div>
             </div>
@@ -161,22 +161,22 @@
                     <p class="receipt__label">{{ __('frontend.topup.you_get') }}</p>
                     <p class="receipt__total" id="tpTotalWrap" aria-live="polite">
                         <strong id="total_points">0</strong>
-                        <span>{{ __('frontend.topup.unit') }}</span>
+                        <span>{{ __('frontend.topup.credits') }}</span>
                     </p>
 
                     <table class="receipt__lines">
-                        <caption class="vh">{{ __('frontend.topup.bill_caption') }}</caption>
+                        <caption class="vh">{{ __('frontend.topup.breakdown') }}</caption>
                         <tbody>
                             <tr>
-                                <th scope="row"><span>{{ __('frontend.topup.res_amount') }}</span></th>
+                                <th scope="row"><span>{{ __('frontend.topup.row_amount') }}</span></th>
                                 <td id="amount_display">{!! $symbol !!}0</td>
                             </tr>
                             <tr>
-                                <th scope="row"><span>{{ __('frontend.topup.res_base') }}</span></th>
+                                <th scope="row"><span>{{ __('frontend.topup.row_base') }}</span></th>
                                 <td id="base_points">0</td>
                             </tr>
                             <tr>
-                                <th scope="row"><span>{{ __('frontend.topup.res_mult') }}</span></th>
+                                <th scope="row"><span>{{ __('frontend.topup.row_multiplier') }}</span></th>
                                 <td id="multiplier_display">x1</td>
                             </tr>
                         </tbody>
@@ -214,9 +214,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const hintText = document.querySelector('[data-hint-text]');
     const symbol = @json(html_entity_decode($symbol));
     const words = {
-        start: @json(__('frontend.topup.hint_start')),
-        next: @json(__('frontend.topup.hint_next')),
-        top: @json(__('frontend.topup.hint_top'))
+        start: @json(__('frontend.topup.tip_start')),
+        next: @json(__('frontend.topup.tip_next')),
+        top: @json(__('frontend.topup.tip_top'))
     };
     const isJPY = {{ session('currency') == 'JPY' ? 'true' : 'false' }};
     const isHKD = {{ session('currency') == 'HKD' ? 'true' : 'false' }};
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             if (!((parseFloat(input.value) || 0) >= 1)) {
-                input.setCustomValidity(@json(__('frontend.topup.amount_empty')));
+                input.setCustomValidity(@json(__('frontend.topup.amount_required')));
                 input.reportValidity();
                 return;
             }

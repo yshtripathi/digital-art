@@ -12,14 +12,14 @@
     $levelCount = $cdLevels->count();
     $minPoints = $hasLevels ? $cdLevels->min('price_in_points') : 0;
     $levelName = function ($level) {
-        $key = 'frontend.course.level_names.' . strtolower((string) $level->skill_level);
+        $key = 'frontend.course.level_' . str_replace(' ', '_', strtolower(trim((string) $level->skill_level)));
         return Lang::has($key) ? __($key) : ucfirst((string) $level->skill_level);
     };
     $cdBalance = Auth::check() ? (int) (Auth::user()->points_balance ?? 0) : 0;
 
     $bcLinks = [
         ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
-        ['name' => __('frontend.course.crumb_all'), 'url' => route('product-lists')],
+        ['name' => __('frontend.course.all'), 'url' => route('product-lists')],
     ];
     if ($cdCategory) {
         $bcLinks[] = ['name' => $cdCategory->title, 'url' => route('product-lists', $cdCategory->slug)];
@@ -50,7 +50,7 @@
                 @if(count($photos) > 1)
                     <div class="viewer__thumbs">
                         @foreach($photos as $i => $ph)
-                            <button type="button" class="viewer__thumb cd-thumb {{ $i === 0 ? 'is-active' : '' }}" data-src="{{ asset(ltrim($ph, '/')) }}" aria-label="{{ __('frontend.course.photo_show') }} {{ $i + 1 }}" aria-pressed="{{ $i === 0 ? 'true' : 'false' }}">
+                            <button type="button" class="viewer__thumb cd-thumb {{ $i === 0 ? 'is-active' : '' }}" data-src="{{ asset(ltrim($ph, '/')) }}" aria-label="{{ __('frontend.course.show_image') }} {{ $i + 1 }}" aria-pressed="{{ $i === 0 ? 'true' : 'false' }}">
                                 <img src="{{ asset(ltrim($ph, '/')) }}" alt="" loading="lazy">
                             </button>
                         @endforeach
@@ -73,25 +73,25 @@
                 @endif
 
                 @if($hasLevels)
-                    <ul class="study__facts" aria-label="{{ __('frontend.course.glance') }}">
+                    <ul class="study__facts" aria-label="{{ __('frontend.course.summary') }}">
                         <li>
                             <span class="study__fact-icon" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
-                            <span><small>{{ __('frontend.course.glance_lv') }}</small><strong>{{ $levelCount }}</strong></span>
+                            <span><small>{{ __('frontend.course.levels') }}</small><strong>{{ $levelCount }}</strong></span>
                         </li>
                         <li>
                             <span class="study__fact-icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
-                            <span><small>{{ __('frontend.course.glance_from') }}</small><strong>{{ number_format($minPoints) }} <em>{{ __('frontend.course.price_unit') }}</em></strong></span>
+                            <span><small>{{ __('frontend.course.from') }}</small><strong>{{ number_format($minPoints) }} <em>{{ __('frontend.course.credits') }}</em></strong></span>
                         </li>
                         @auth
                             <li class="study__fact--wallet">
                                 <span class="study__fact-icon" aria-hidden="true"><i class="fas fa-wallet"></i></span>
-                                <span><small>{{ __('frontend.course.wallet') }}</small><strong>{{ number_format($cdBalance) }} <em>{{ __('frontend.course.price_unit') }}</em></strong></span>
+                                <span><small>{{ __('frontend.course.balance') }}</small><strong>{{ number_format($cdBalance) }} <em>{{ __('frontend.course.credits') }}</em></strong></span>
                             </li>
                         @endauth
                     </ul>
 
                     <a href="#cdLevels" class="btn study__go">
-                        <span>{{ __('frontend.course.pick') }}</span>
+                        <span>{{ __('frontend.course.choose') }}</span>
                         <i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i>
                     </a>
                 @endif
@@ -100,7 +100,7 @@
 
         @if($product_detail->description)
             <section class="brief" aria-labelledby="cdAboutTitle">
-                <h2 id="cdAboutTitle" class="brief__title">{{ __('frontend.course.overview') }}</h2>
+                <h2 id="cdAboutTitle" class="brief__title">{{ __('frontend.course.about') }}</h2>
                 <div class="brief__text">{!! nl2br(e($product_detail->description)) !!}</div>
             </section>
         @endif
@@ -108,9 +108,9 @@
         @if($hasLevels)
             <section id="cdLevels" class="tiers" aria-labelledby="cdLevelsTitle" data-tiers>
                 <header class="tiers__head">
-                    <p class="tiers__eyebrow">{{ __('frontend.course.each') }}</p>
-                    <h2 id="cdLevelsTitle" class="tiers__title">{{ __('frontend.course.pick') }}</h2>
-                    <p class="tiers__hint">{{ __('frontend.course.hint') }}</p>
+                    <p class="tiers__eyebrow">{{ __('frontend.course.note') }}</p>
+                    <h2 id="cdLevelsTitle" class="tiers__title">{{ __('frontend.course.choose') }}</h2>
+                    <p class="tiers__hint">{{ __('frontend.course.compare') }}</p>
                 </header>
 
                 <div class="switch" role="tablist" aria-labelledby="cdLevelsTitle" data-tier-tabs>
@@ -119,7 +119,7 @@
                             <span class="switch__no">{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}</span>
                             <span class="switch__text">
                                 <span class="switch__name">{{ $levelName($level) }}</span>
-                                <span class="switch__price">{{ number_format($level->price_in_points) }} {{ __('frontend.course.price_unit') }}</span>
+                                <span class="switch__price">{{ number_format($level->price_in_points) }} {{ __('frontend.course.credits') }}</span>
                             </span>
                         </button>
                     @endforeach
@@ -130,9 +130,9 @@
                         $lvPrice = (int) $level->price_in_points;
                         $lvEnough = $cdBalance >= $lvPrice;
                         $lvDetails = array_filter([
-                            ['icon' => 'fa-book-open',        'title' => __('frontend.course.covers'), 'text' => $level->learn_info],
-                            ['icon' => 'fa-user-check',       'title' => __('frontend.course.suits'),  'text' => $level->purpose],
-                            ['icon' => 'fa-flag-checkered',   'title' => __('frontend.course.apply'),  'text' => $level->outcome],
+                            ['icon' => 'fa-book-open',        'title' => __('frontend.course.topics'), 'text' => $level->learn_info],
+                            ['icon' => 'fa-user-check',       'title' => __('frontend.course.purpose'),  'text' => $level->purpose],
+                            ['icon' => 'fa-flag-checkered',   'title' => __('frontend.course.outcome'),  'text' => $level->outcome],
                         ], fn ($row) => filled($row['text']));
                     @endphp
                     <article class="tier" id="lvl-{{ $level->id }}" role="tabpanel" aria-labelledby="tab-{{ $level->id }}" data-tier-panel>
@@ -140,7 +140,7 @@
                             <div class="tier__top">
                                 <span class="tier__rank" aria-hidden="true">{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}</span>
                                 <div>
-                                    <p class="tier__of">{{ __('frontend.course.level_num', ['num' => $key + 1]) }} / {{ $levelCount }}</p>
+                                    <p class="tier__of">{{ __('frontend.course.step', ['num' => $key + 1]) }} / {{ $levelCount }}</p>
                                     <h3 class="tier__name">{{ $levelName($level) }}</h3>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
                         <aside class="tier__buy">
                             <p class="tier__price">
                                 <strong>{{ number_format($lvPrice) }}</strong>
-                                <span>{{ __('frontend.course.price_unit') }}</span>
+                                <span>{{ __('frontend.course.credits') }}</span>
                             </p>
 
                             @auth
@@ -169,9 +169,9 @@
                                     <i class="fas {{ $lvEnough ? 'fa-check' : 'fa-exclamation' }}" aria-hidden="true"></i>
                                     <span>
                                         @if($lvEnough)
-                                            {{ __('frontend.course.bal_ok') }}
+                                            {{ __('frontend.course.enough') }}
                                         @else
-                                            {{ __('frontend.course.bal_short', ['num' => number_format($lvPrice - $cdBalance)]) }}
+                                            {{ __('frontend.course.short', ['num' => number_format($lvPrice - $cdBalance)]) }}
                                         @endif
                                     </span>
                                 </p>
@@ -187,7 +187,7 @@
                                 <input type="hidden" name="level_id" value="{{ $level->id }}">
                                 <button type="submit" class="btn btn--block cd-form__submit">
                                     <i class="fas fa-cart-plus" aria-hidden="true"></i>
-                                    <span>{{ __('frontend.course.add') }}</span>
+                                    <span>{{ __('frontend.course.add_level') }}</span>
                                 </button>
                             </form>
 
@@ -195,7 +195,7 @@
                                 @if(!$lvEnough)
                                     <a href="{{ route('points.topup') }}" class="btn btn--outline btn--block">
                                         <i class="fas fa-plus" aria-hidden="true"></i>
-                                        {{ __('frontend.header.acct_topup') }}
+                                        {{ __('frontend.header.buy_credits') }}
                                     </a>
                                 @endif
                             @endauth
@@ -205,7 +205,7 @@
 
                 <p class="tiers__note">
                     <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                    <span>{{ __('frontend.course.spend') }}</span>
+                    <span>{{ __('frontend.course.spend_note') }}</span>
                 </p>
             </section>
         @endif
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const btn = form.querySelector('.cd-form__submit');
             const original = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> <span>' + @json(__('frontend.course.adding')) + '</span>';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> <span>' + @json(__('frontend.course.adding_now')) + '</span>';
 
             fetch(form.action, { method: 'POST', body: new FormData(form), redirect: 'manual' })
                 .then(function (response) { return new Promise(function (resolve) { setTimeout(function () { resolve(response); }, 500); }); })

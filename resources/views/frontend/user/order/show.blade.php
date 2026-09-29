@@ -1,14 +1,14 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.receipt.page_name'))
+@section('title', __('frontend.receipt.title'))
 
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.receipt.page_name'),
+    'title' => __('frontend.receipt.title'),
     'links' => [
         ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
-        ['name' => __('frontend.receipt.crumb'), 'url' => route('user')],
-        ['name' => __('frontend.receipt.page_name')]
+        ['name' => __('frontend.receipt.account'), 'url' => route('user')],
+        ['name' => __('frontend.receipt.title')]
     ]
 ])
 
@@ -22,7 +22,7 @@
             $orderBad = str_contains(strtolower((string) $order->status), 'fail') || strtolower((string) $order->status) === 'cancel';
             $payBad = str_contains(strtolower((string) $order->payment_status), 'fail');
             $statusLabel = function ($value) {
-                $key = 'frontend.receipt.state_names.' . strtolower(trim((string) $value));
+                $key = 'frontend.receipt.state_' . str_replace(' ', '_', strtolower(trim((string) $value)));
                 return Lang::has($key) ? __($key) : ucwords((string) $value);
             };
             $created = $order->created_at->locale(app()->getLocale());
@@ -34,16 +34,16 @@
             <article class="bill__doc">
                 <header class="bill__head">
                     <div class="bill__id">
-                        <span class="bill__tag"><i class="fas fa-receipt" aria-hidden="true"></i>{{ __('frontend.receipt.tag') }}</span>
+                        <span class="bill__tag"><i class="fas fa-receipt" aria-hidden="true"></i>{{ __('frontend.receipt.label') }}</span>
                         <h2 class="bill__no">{{ $order->order_number }}</h2>
-                        <p class="bill__date"><i class="far fa-calendar" aria-hidden="true"></i>{{ $created->translatedFormat(__('frontend.receipt.fmt_head')) }}</p>
+                        <p class="bill__date"><i class="far fa-calendar" aria-hidden="true"></i>{{ $created->translatedFormat(__('frontend.receipt.heading_format')) }}</p>
                     </div>
                     <div class="bill__sum">
                         @if($paidWithCredits)
-                            <span>{{ __('frontend.receipt.sum_used') }}</span>
-                            <strong>{{ number_format($creditsUsed) }} <small>{{ __('frontend.receipt.unit_credits') }}</small></strong>
+                            <span>{{ __('frontend.receipt.total_credits') }}</span>
+                            <strong>{{ number_format($creditsUsed) }} <small>{{ __('frontend.receipt.credits') }}</small></strong>
                         @else
-                            <span>{{ __('frontend.receipt.sum_paid') }}</span>
+                            <span>{{ __('frontend.receipt.total_paid') }}</span>
                             <strong>{{ $totalFmt }}</strong>
                         @endif
                     </div>
@@ -51,20 +51,20 @@
 
                 <dl class="bill__status">
                     <div>
-                        <dt>{{ __('frontend.receipt.f_status') }}</dt>
+                        <dt>{{ __('frontend.receipt.order_status') }}</dt>
                         <dd><span class="pill {{ $orderOk ? 'pill--ok' : ($orderBad ? 'pill--err' : 'pill--wait') }}"><i class="fas {{ $orderOk ? 'fa-check' : ($orderBad ? 'fa-times' : 'fa-clock') }}" aria-hidden="true"></i>{{ $statusLabel($order->status) }}</span></dd>
                     </div>
                     <div>
-                        <dt>{{ __('frontend.receipt.f_payment') }}</dt>
+                        <dt>{{ __('frontend.receipt.payment_status') }}</dt>
                         <dd><span class="pill {{ $payOk ? 'pill--ok' : ($payBad ? 'pill--err' : 'pill--wait') }}"><i class="fas {{ $payOk ? 'fa-check' : ($payBad ? 'fa-times' : 'fa-clock') }}" aria-hidden="true"></i>{{ $statusLabel($order->payment_status) }}</span></dd>
                     </div>
                     <div>
-                        <dt>{{ __('frontend.receipt.f_method') }}</dt>
+                        <dt>{{ __('frontend.receipt.method') }}</dt>
                         <dd class="bill__method">
                             @if($paidWithCredits)
-                                <i class="fas fa-coins" aria-hidden="true"></i>{{ __('frontend.receipt.pay_credits') }}
+                                <i class="fas fa-coins" aria-hidden="true"></i>{{ __('frontend.receipt.paid_credits') }}
                             @else
-                                <i class="far fa-credit-card" aria-hidden="true"></i>{{ __('frontend.receipt.pay_card') }}
+                                <i class="far fa-credit-card" aria-hidden="true"></i>{{ __('frontend.receipt.card') }}
                             @endif
                         </dd>
                     </div>
@@ -72,54 +72,54 @@
 
                 @if(count($items))
                     <section class="bill__part" aria-labelledby="billItems">
-                        <h3 class="bill__title" id="billItems">{{ __('frontend.receipt.lines') }}</h3>
+                        <h3 class="bill__title" id="billItems">{{ __('frontend.receipt.items_title') }}</h3>
                         <div class="ledger">
                             <table class="ledger__table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">{{ __('frontend.receipt.th_item') }}</th>
-                                        <th scope="col">{{ __('frontend.receipt.th_level') }}</th>
-                                        <th scope="col" class="is-num">{{ __('frontend.receipt.th_credits') }}</th>
+                                        <th scope="col">{{ __('frontend.receipt.col_item') }}</th>
+                                        <th scope="col">{{ __('frontend.receipt.col_level') }}</th>
+                                        <th scope="col" class="is-num">{{ __('frontend.receipt.col_credits') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($items as $item)
                                         @php
                                             $isCourse = $item->product && $item->product_id < 1000;
-                                            $itemTitle = $isCourse ? $item->product->title : __('frontend.receipt.pack');
+                                            $itemTitle = $isCourse ? $item->product->title : __('frontend.receipt.package');
                                             $itemLevel = null;
                                             if ($isCourse) {
                                                 $lvl = \App\Models\ProductLevel::where('course_id', $item->product_id)->where('price_in_points', $item->points)->first();
                                                 if ($lvl) {
-                                                    $lvlKey = 'frontend.receipt.level_names.' . strtolower($lvl->skill_level);
+                                                    $lvlKey = 'frontend.receipt.level_' . str_replace(' ', '_', strtolower(trim((string) $lvl->skill_level)));
                                                     $itemLevel = Lang::has($lvlKey) ? __($lvlKey) : ucfirst($lvl->skill_level);
                                                 }
                                             }
                                         @endphp
                                         <tr>
-                                            <td data-label="{{ __('frontend.receipt.th_item') }}">
+                                            <td data-label="{{ __('frontend.receipt.col_item') }}">
                                                 <span class="ledger__item">
                                                     <span class="ledger__thumb {{ $isCourse ? '' : 'is-credits' }}" aria-hidden="true"><i class="fas {{ $isCourse ? 'fa-book-open' : 'fa-coins' }}"></i></span>
                                                     <span class="ledger__title">{{ $itemTitle }}</span>
                                                 </span>
                                             </td>
-                                            <td data-label="{{ __('frontend.receipt.th_level') }}">
+                                            <td data-label="{{ __('frontend.receipt.col_level') }}">
                                                 @if($itemLevel)
                                                     <span class="ledger__level">{{ $itemLevel }}</span>
                                                 @else
                                                     <span class="ledger__dash">—</span>
                                                 @endif
                                             </td>
-                                            <td data-label="{{ __('frontend.receipt.th_credits') }}" class="is-num"><span class="ledger__credits"><i class="fas fa-coins" aria-hidden="true"></i>{{ number_format($item->points) }}</span></td>
+                                            <td data-label="{{ __('frontend.receipt.col_credits') }}" class="is-num"><span class="ledger__credits"><i class="fas fa-coins" aria-hidden="true"></i>{{ number_format($item->points) }}</span></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th scope="row" colspan="2">{{ $paidWithCredits ? __('frontend.receipt.sum_used') : __('frontend.receipt.sum_paid') }}:</th>
+                                        <th scope="row" colspan="2">{{ $paidWithCredits ? __('frontend.receipt.total_credits') : __('frontend.receipt.total_paid') }}:</th>
                                         <td class="is-num">
                                             @if($paidWithCredits)
-                                                <strong>{{ number_format($creditsUsed) }} {{ __('frontend.receipt.unit_credits') }}</strong>
+                                                <strong>{{ number_format($creditsUsed) }} {{ __('frontend.receipt.credits') }}</strong>
                                             @else
                                                 <strong>{{ $totalFmt }}</strong>
                                             @endif
@@ -132,30 +132,30 @@
                 @endif
 
                 <section class="bill__part" aria-labelledby="billInfo">
-                    <h3 class="bill__title" id="billInfo">{{ __('frontend.receipt.details') }}</h3>
+                    <h3 class="bill__title" id="billInfo">{{ __('frontend.receipt.info_title') }}</h3>
                     <dl class="bill__info">
                         <div>
-                            <dt>{{ __('frontend.receipt.f_name') }}</dt>
+                            <dt>{{ __('frontend.receipt.name') }}</dt>
                             <dd>{{ $order->first_name }} {{ $order->last_name }}</dd>
                         </div>
                         <div>
-                            <dt>{{ __('frontend.receipt.f_email') }}</dt>
+                            <dt>{{ __('frontend.receipt.email') }}</dt>
                             <dd>{{ $order->email }}</dd>
                         </div>
                         <div>
-                            <dt>{{ __('frontend.receipt.f_qty') }}</dt>
+                            <dt>{{ __('frontend.receipt.quantity') }}</dt>
                             <dd>{{ $order->quantity }}</dd>
                         </div>
                         <div>
-                            <dt>{{ __('frontend.receipt.f_date') }}</dt>
-                            <dd>{{ $created->translatedFormat(__('frontend.receipt.fmt_date')) }}</dd>
+                            <dt>{{ __('frontend.receipt.date') }}</dt>
+                            <dd>{{ $created->translatedFormat(__('frontend.receipt.date_format')) }}</dd>
                         </div>
                         <div class="bill__info-wide">
-                            <dt>{{ __('frontend.receipt.f_txn') }}</dt>
+                            <dt>{{ __('frontend.receipt.transaction') }}</dt>
                             <dd class="bill__txn">
                                 <span data-copy-text>{{ $order->trans_id ?: '—' }}</span>
                                 @if($order->trans_id)
-                                    <button type="button" class="fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.receipt.f_txn')]) }}">
+                                    <button type="button" class="fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.receipt.transaction')]) }}">
                                         <i class="far fa-copy" aria-hidden="true"></i>
                                         <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
                                     </button>
@@ -172,27 +172,27 @@
                     <p class="bill__panel-no">{{ $order->order_number }}</p>
                     <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--block">
                         <i class="fas fa-file-download" aria-hidden="true"></i>
-                        {{ __('frontend.receipt.go_pdf') }}
+                        {{ __('frontend.receipt.pdf') }}
                     </a>
                     <button type="button" class="btn btn--outline btn--block" data-print>
                         <i class="fas fa-print" aria-hidden="true"></i>
-                        {{ __('frontend.receipt.go_print') }}
+                        {{ __('frontend.receipt.print') }}
                     </button>
                 </div>
                 <a href="{{ route('user') }}" class="bill__back">
                     <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
-                    {{ __('frontend.receipt.go_back') }}
+                    {{ __('frontend.receipt.back') }}
                 </a>
             </aside>
         </div>
     @else
         <div class="nomatch nomatch--page">
             <span class="nomatch__icon" aria-hidden="true"><i class="fas fa-file-invoice"></i></span>
-            <h2 class="nomatch__title">{{ __('frontend.receipt.lost') }}</h2>
-            <p class="nomatch__text">{{ __('frontend.receipt.lost_text') }}</p>
+            <h2 class="nomatch__title">{{ __('frontend.receipt.missing_title') }}</h2>
+            <p class="nomatch__text">{{ __('frontend.receipt.missing_text') }}</p>
             <a href="{{ route('user') }}" class="btn">
                 <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
-                {{ __('frontend.receipt.go_back') }}
+                {{ __('frontend.receipt.back') }}
             </a>
         </div>
     @endif

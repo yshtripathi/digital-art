@@ -1,12 +1,12 @@
 @extends('frontend.layouts.main')
-@section('title', __('frontend.contact.page_name'))
+@section('title', __('frontend.contact.tab'))
 @section('main-content')
 
 @include('frontend.layouts.breadcrumb', [
-    'title' => __('frontend.contact.page_name'),
+    'title' => __('frontend.contact.tab'),
     'links' => [
         ['name' => __('frontend.breadcrumb.start'), 'url' => route('home')],
-        ['name' => __('frontend.contact.page_name')]
+        ['name' => __('frontend.contact.tab')]
     ]
 ])
 
@@ -27,33 +27,33 @@
                 <span class="post__site">{{ $ctSite }}</span>
             </span>
 
-            <p class="post__eyebrow">{{ __('frontend.contact.page_name') }}</p>
-            <h2 class="post__title">{{ __('frontend.contact.side_title') }}</h2>
-            <p class="post__text">{{ __('frontend.contact.side_text') }}</p>
+            <p class="post__eyebrow">{{ __('frontend.contact.tab') }}</p>
+            <h2 class="post__title">{{ __('frontend.contact.aside_title') }}</h2>
+            <p class="post__text">{{ __('frontend.contact.aside_text') }}</p>
 
             <ul class="post__rows">
                 <li class="post__row" style="--i: 0">
                     <span class="post__icon" aria-hidden="true"><i class="far fa-envelope"></i></span>
                     <span class="post__meta">
-                        <span class="post__label">{{ __('frontend.contact.row_email') }}</span>
+                        <span class="post__label">{{ __('frontend.contact.detail_email') }}</span>
                         <a href="mailto:{{ $ctEmail }}" class="post__value">{{ $ctEmail }}</a>
                     </span>
-                    <button type="button" class="post__copy" data-copy="{{ $ctEmail }}" data-done="{{ __('frontend.contact.copied') }}">
+                    <button type="button" class="post__copy" data-copy="{{ $ctEmail }}" data-done="{{ __('frontend.contact.copy_done') }}">
                         <i class="far fa-copy" aria-hidden="true"></i>
-                        <span data-copy-label>{{ __('frontend.contact.copy') }}</span>
+                        <span data-copy-label>{{ __('frontend.contact.copy_button') }}</span>
                     </button>
                 </li>
                 <li class="post__row" style="--i: 1">
                     <span class="post__icon" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
                     <span class="post__meta">
-                        <span class="post__label">{{ __('frontend.contact.row_address') }}</span>
+                        <span class="post__label">{{ __('frontend.contact.detail_address') }}</span>
                         <span class="post__value">{{ $ctAddress }}</span>
                     </span>
                 </li>
                 <li class="post__row" style="--i: 2">
                     <span class="post__icon" aria-hidden="true"><i class="far fa-building"></i></span>
                     <span class="post__meta">
-                        <span class="post__label">{{ __('frontend.contact.row_company') }}</span>
+                        <span class="post__label">{{ __('frontend.contact.detail_company') }}</span>
                         <span class="post__value">{{ $ctCompany }}</span>
                     </span>
                 </li>
@@ -64,18 +64,18 @@
         <div class="gate__stack gate__stack--wide">
         <div class="gate__card note-card">
             <div class="note-card__head">
-                <h2 class="note-card__title">{{ __('frontend.contact.title') }}</h2>
-                <p class="note-card__lead">{{ __('frontend.contact.intro') }}</p>
+                <h2 class="note-card__title">{{ __('frontend.contact.heading') }}</h2>
+                <p class="note-card__lead">{{ __('frontend.contact.text') }}</p>
             </div>
 
             <form method="POST" action="{{ route('contact.send') }}" id="contactform" class="gate__form" novalidate>
                 @csrf
 
                 <div class="entry">
-                    <label class="entry__label" for="name">{{ __('frontend.contact.name_label') }}</label>
+                    <label class="entry__label" for="name">{{ __('frontend.contact.name') }}</label>
                     <div class="entry__box @error('name') is-invalid @enderror">
                         <span class="entry__icon" aria-hidden="true"><i class="fas fa-user"></i></span>
-                        <input type="text" name="name" id="name" autocomplete="name" class="entry__input" placeholder="{{ __('frontend.contact.name_hint') }}" value="{{ old('name') }}">
+                        <input type="text" name="name" id="name" autocomplete="name" class="entry__input" placeholder="{{ __('frontend.contact.name_placeholder') }}" value="{{ old('name') }}">
                     </div>
                     @error('name')
                         <span class="entry__err">{{ $message }}</span>
@@ -83,10 +83,10 @@
                 </div>
 
                 <div class="entry">
-                    <label class="entry__label" for="email">{{ __('frontend.contact.mail_label') }}</label>
+                    <label class="entry__label" for="email">{{ __('frontend.contact.email') }}</label>
                     <div class="entry__box @error('email') is-invalid @enderror">
                         <span class="entry__icon" aria-hidden="true"><i class="fas fa-at"></i></span>
-                        <input type="email" name="email" id="email" autocomplete="email" class="entry__input" placeholder="{{ __('frontend.contact.mail_hint') }}" value="{{ old('email') }}">
+                        <input type="email" name="email" id="email" autocomplete="email" class="entry__input" placeholder="{{ __('frontend.contact.email_placeholder') }}" value="{{ old('email') }}">
                     </div>
                     @error('email')
                         <span class="entry__err">{{ $message }}</span>
@@ -94,10 +94,10 @@
                 </div>
 
                 <div class="entry">
-                    <label class="entry__label" for="phone">{{ __('frontend.contact.phone_field') }}</label>
+                    <label class="entry__label" for="phone">{{ __('frontend.contact.phone') }}</label>
                     <div class="entry__box @error('phone') is-invalid @enderror">
                         <span class="entry__icon" aria-hidden="true"><i class="fas fa-mobile-alt"></i></span>
-                        <input type="tel" name="phone" id="phone" autocomplete="tel" class="entry__input" placeholder="{{ __('frontend.contact.phone_hint') }}" value="{{ old('phone') }}" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')">
+                        <input type="tel" name="phone" id="phone" autocomplete="tel" class="entry__input" placeholder="{{ __('frontend.contact.phone_placeholder') }}" value="{{ old('phone') }}" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')">
                     </div>
                     @error('phone')
                         <span class="entry__err">{{ $message }}</span>
@@ -105,10 +105,10 @@
                 </div>
 
                 <div class="entry">
-                    <label class="entry__label" for="subject">{{ __('frontend.contact.subject_label') }}</label>
+                    <label class="entry__label" for="subject">{{ __('frontend.contact.subject') }}</label>
                     <div class="entry__box @error('subject') is-invalid @enderror">
                         <span class="entry__icon" aria-hidden="true"><i class="fas fa-heading"></i></span>
-                        <input type="text" name="subject" id="subject" class="entry__input" placeholder="{{ __('frontend.contact.subject_hint') }}" value="{{ old('subject') }}">
+                        <input type="text" name="subject" id="subject" class="entry__input" placeholder="{{ __('frontend.contact.subject_placeholder') }}" value="{{ old('subject') }}">
                     </div>
                     @error('subject')
                         <span class="entry__err">{{ $message }}</span>
@@ -116,10 +116,10 @@
                 </div>
 
                 <div class="entry">
-                    <label class="entry__label" for="message">{{ __('frontend.contact.msg_label') }}</label>
+                    <label class="entry__label" for="message">{{ __('frontend.contact.message') }}</label>
                     <div class="entry__box entry__box--area @error('message') is-invalid @enderror">
                         <span class="entry__icon" aria-hidden="true"><i class="far fa-comment-alt"></i></span>
-                        <textarea name="message" id="message" rows="5" class="entry__input entry__area" placeholder="{{ __('frontend.contact.msg_hint') }}">{{ old('message') }}</textarea>
+                        <textarea name="message" id="message" rows="5" class="entry__input entry__area" placeholder="{{ __('frontend.contact.message_placeholder') }}">{{ old('message') }}</textarea>
                     </div>
                     @error('message')
                         <span class="entry__err">{{ $message }}</span>
@@ -128,22 +128,22 @@
 
                 @if(env('CAPTCHA_ENABLED', true))
                     <div class="entry">
-                        <label class="entry__label" for="captcha">{{ __('frontend.contact.code_label') }}</label>
+                        <label class="entry__label" for="captcha">{{ __('frontend.contact.captcha') }}</label>
                         <div class="entry__cap">
                             <div class="cap__img">@captcha</div>
                             <div class="entry__box @error('captcha') is-invalid @enderror">
                                 <span class="entry__icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
-                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="entry__input" placeholder="{{ __('frontend.contact.code_hint') }}">
+                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="entry__input" placeholder="{{ __('frontend.contact.captcha_placeholder') }}">
                             </div>
                         </div>
                         @error('captcha')
-                            <span class="entry__err">{{ __('frontend.contact.code_wrong') }}</span>
+                            <span class="entry__err">{{ __('frontend.contact.captcha_invalid') }}</span>
                         @enderror
                     </div>
                 @endif
 
                 <button type="submit" class="btn btn--block gate__submit">
-                    <span>{{ __('frontend.contact.submit') }}</span>
+                    <span>{{ __('frontend.contact.button') }}</span>
                     <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
                 </button>
             </form>
@@ -199,13 +199,13 @@
     }
 
     var messages = {
-        name: @json(__('frontend.contact.name_empty')),
-        email: @json(__('frontend.contact.mail_empty')),
-        emailValid: @json(__('frontend.contact.mail_wrong')),
-        phone: @json(__('frontend.contact.phone_empty')),
-        subject: @json(__('frontend.contact.subject_empty')),
-        message: @json(__('frontend.contact.msg_empty')),
-        captcha: @json(__('frontend.contact.code_empty'))
+        name: @json(__('frontend.contact.name_required')),
+        email: @json(__('frontend.contact.email_required')),
+        emailValid: @json(__('frontend.contact.email_invalid')),
+        phone: @json(__('frontend.contact.phone_required')),
+        subject: @json(__('frontend.contact.subject_required')),
+        message: @json(__('frontend.contact.message_required')),
+        captcha: @json(__('frontend.contact.captcha_required'))
     };
 
     function isEmail(value) {

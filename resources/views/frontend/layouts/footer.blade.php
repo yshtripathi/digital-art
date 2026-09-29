@@ -6,20 +6,20 @@
     $footCats    = (isset($category) && $category instanceof \Illuminate\Support\Collection ? $category : \App\Models\Category::getAllParentWithChild());
 
     $footLearn = [
-        ['url' => route('product-lists'), 'label' => __('frontend.footer.link_all')],
-        ['url' => route('points.topup'),  'label' => __('frontend.footer.link_credits')],
-        ['url' => route('about-us'),      'label' => __('frontend.footer.link_about')],
-        ['url' => route('contact'),       'label' => __('frontend.footer.link_contact')],
+        ['url' => route('product-lists'), 'label' => __('frontend.footer.all_materials')],
+        ['url' => route('points.topup'),  'label' => __('frontend.footer.buy_credits')],
+        ['url' => route('about-us'),      'label' => __('frontend.footer.about')],
+        ['url' => route('contact'),       'label' => __('frontend.footer.contact')],
     ];
     if (Auth::check()) {
-        $footLearn[] = ['url' => route('user'), 'label' => __('frontend.footer.link_account')];
+        $footLearn[] = ['url' => route('user'), 'label' => __('frontend.footer.account')];
     }
 
     $footLegal = [
-        ['url' => route('pages', 'terms-conditions'), 'label' => __('frontend.footer.link_terms')],
-        ['url' => route('pages', 'privacy-policy'),   'label' => __('frontend.footer.link_privacy')],
-        ['url' => route('pages', 'refund-policy'),    'label' => __('frontend.footer.link_refund')],
-        ['url' => route('pages', 'delivery-policy'),  'label' => __('frontend.footer.link_access')],
+        ['url' => route('pages', 'terms-conditions'), 'label' => __('frontend.footer.terms')],
+        ['url' => route('pages', 'privacy-policy'),   'label' => __('frontend.footer.privacy')],
+        ['url' => route('pages', 'refund-policy'),    'label' => __('frontend.footer.refund')],
+        ['url' => route('pages', 'delivery-policy'),  'label' => __('frontend.footer.delivery')],
     ];
 @endphp
 
@@ -29,30 +29,30 @@
             <div class="letter__copy">
                 <p class="letter__tag">
                     <i class="far fa-envelope-open" aria-hidden="true"></i>
-                    {{ __('frontend.footer.letter_tag') }}
+                    {{ __('frontend.footer.news_label') }}
                 </p>
                 <h2 class="letter__title" id="letter-title">{{ __('frontend.footer.news_title') }}</h2>
-                <p class="letter__line">{{ __('frontend.footer.news_line') }}</p>
+                <p class="letter__line">{{ __('frontend.footer.news_text') }}</p>
             </div>
 
             <div class="letter__act" data-letter>
                 <form class="letter__form" novalidate data-letter-form>
-                    <label class="letter__label" for="letter-email">{{ __('frontend.footer.letter_field') }}</label>
+                    <label class="letter__label" for="letter-email">{{ __('frontend.footer.news_field') }}</label>
                     <div class="letter__row">
-                        <input type="email" name="email" id="letter-email" class="letter__input" placeholder="{{ __('frontend.footer.letter_ph') }}" autocomplete="email" required aria-describedby="letter-bad">
+                        <input type="email" name="email" id="letter-email" class="letter__input" placeholder="{{ __('frontend.footer.news_placeholder') }}" autocomplete="email" required aria-describedby="letter-bad">
                         <button type="submit" class="letter__send">
-                            <span>{{ __('frontend.footer.letter_send') }}</span>
+                            <span>{{ __('frontend.footer.news_button') }}</span>
                             <span class="letter__arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
                         </button>
                     </div>
-                    <p class="letter__bad" id="letter-bad" role="alert" hidden data-letter-bad>
+                    <p class="letter__bad" id="letter-bad" role="alert" hidden data-letter-bad data-empty="{{ __('frontend.footer.news_empty') }}" data-invalid="{{ __('frontend.footer.news_invalid') }}">
                         <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-                        {{ __('frontend.footer.letter_bad') }}
+                        <span data-letter-msg>{{ __('frontend.footer.news_invalid') }}</span>
                     </p>
                 </form>
                 <p class="letter__ok" role="status" hidden data-letter-ok>
                     <span class="letter__stamp" aria-hidden="true"><i class="fas fa-check"></i></span>
-                    <span>{{ __('frontend.footer.letter_done') }}</span>
+                    <span>{{ __('frontend.footer.news_success') }}</span>
                 </p>
             </div>
         </section>
@@ -62,9 +62,9 @@
                 <a href="{{ route('home') }}" class="foot__logo">
                     <img src="{{ asset('assets/images/logo.webp') }}" alt="{{ $footSite }}" width="869" height="144" loading="lazy">
                 </a>
-                <p class="foot__about">{{ __('frontend.footer.about') }}</p>
+                <p class="foot__about">{{ __('frontend.footer.intro') }}</p>
                 @if($footCats->isNotEmpty())
-                    <p class="foot__head" id="foot-cats">{{ __('frontend.footer.col_topics') }}</p>
+                    <p class="foot__head" id="foot-cats">{{ __('frontend.footer.categories') }}</p>
                     <ul class="foot__tags" aria-labelledby="foot-cats">
                         @foreach($footCats as $cat)
                             <li><a href="{{ route('product-lists', $cat->slug) }}" class="foot__tag"><span class="foot__dot" aria-hidden="true"></span>{{ $cat->title }}</a></li>
@@ -74,7 +74,7 @@
             </div>
 
             <nav class="foot__col" aria-labelledby="foot-learn">
-                <p class="foot__head" id="foot-learn">{{ __('frontend.footer.col_links') }}</p>
+                <p class="foot__head" id="foot-learn">{{ __('frontend.footer.learn_title') }}</p>
                 <ul class="foot__links">
                     @foreach($footLearn as $link)
                         <li><a href="{{ $link['url'] }}" class="foot__link"><span class="foot__roll" data-text="{{ $link['label'] }}"><span>{{ $link['label'] }}</span></span><i class="fas fa-long-arrow-alt-right foot__go" aria-hidden="true"></i></a></li>
@@ -83,7 +83,7 @@
             </nav>
 
             <nav class="foot__col" aria-labelledby="foot-legal">
-                <p class="foot__head" id="foot-legal">{{ __('frontend.footer.col_policies') }}</p>
+                <p class="foot__head" id="foot-legal">{{ __('frontend.footer.legal_title') }}</p>
                 <ul class="foot__links">
                     @foreach($footLegal as $link)
                         <li><a href="{{ $link['url'] }}" class="foot__link"><span class="foot__roll" data-text="{{ $link['label'] }}"><span>{{ $link['label'] }}</span></span><i class="fas fa-long-arrow-alt-right foot__go" aria-hidden="true"></i></a></li>
@@ -92,26 +92,26 @@
             </nav>
 
             <div class="foot__col">
-                <p class="foot__head" id="foot-reach">{{ __('frontend.footer.details') }}</p>
+                <p class="foot__head" id="foot-reach">{{ __('frontend.footer.contact_title') }}</p>
                 <dl class="reach" aria-labelledby="foot-reach">
                     <div class="reach__item">
                         <span class="reach__icon" aria-hidden="true"><i class="far fa-building"></i></span>
                         <div>
-                            <dt>{{ __('frontend.footer.info_name') }}</dt>
+                            <dt>{{ __('frontend.footer.company') }}</dt>
                             <dd>{{ $footCompany }}</dd>
                         </div>
                     </div>
                     <div class="reach__item">
                         <span class="reach__icon" aria-hidden="true"><i class="far fa-envelope"></i></span>
                         <div>
-                            <dt>{{ __('frontend.footer.info_mail') }}</dt>
+                            <dt>{{ __('frontend.footer.email') }}</dt>
                             <dd><a href="mailto:{{ $footMail }}" class="reach__mail">{{ $footMail }}</a></dd>
                         </div>
                     </div>
                     <div class="reach__item">
                         <span class="reach__icon" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
                         <div>
-                            <dt>{{ __('frontend.footer.info_place') }}</dt>
+                            <dt>{{ __('frontend.footer.address') }}</dt>
                             <dd>{{ $footAddress }}</dd>
                         </div>
                     </div>
@@ -122,15 +122,15 @@
 
     <div class="foot__base">
         <div class="foot__base-in">
-            <p class="foot__copy">&copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $footCompany }}</a>. {{ __('frontend.footer.copyright') }}</p>
-            <span class="foot__pay"><img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.pay_alt') }}" width="220" height="30" loading="lazy"></span>
+            <p class="foot__copy">&copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ $footCompany }}</a>. {{ __('frontend.footer.rights') }}</p>
+            <span class="foot__pay"><img src="{{ asset('assets/images/payment.webp') }}" alt="{{ __('frontend.footer.payments') }}" width="220" height="30" loading="lazy"></span>
         </div>
     </div>
 </footer>
 
 </div>
 
-<button type="button" class="lift" aria-label="{{ __('frontend.footer.scroll_top') }}" data-lift>
+<button type="button" class="lift" aria-label="{{ __('frontend.footer.top') }}" data-lift>
     <i class="fas fa-arrow-up" aria-hidden="true"></i>
 </button>
 
@@ -201,7 +201,11 @@
                 void box.offsetWidth;
                 box.classList.add('is-bad');
                 field.setAttribute('aria-invalid', 'true');
-                if (bad) { bad.hidden = false; }
+                if (bad) {
+                    var msg = bad.querySelector('[data-letter-msg]');
+                    if (msg) { msg.textContent = value === '' ? bad.getAttribute('data-empty') : bad.getAttribute('data-invalid'); }
+                    bad.hidden = false;
+                }
                 field.focus();
                 return;
             }

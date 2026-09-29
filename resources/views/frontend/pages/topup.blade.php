@@ -15,7 +15,7 @@
     $cur = session('currency');
     if ($cur == 'JPY') {
         $tiers = [
-            ['n' => __('frontend.topup.tier_standard'), 'i' => 'fa-feather', 'big' => 'x1',   'min' => 1,      'r' => '&yen;1 - &yen;79,999'],
+            ['n' => __('frontend.topup.tier_standard'), 'i' => 'fa-seedling', 'big' => 'x1',   'min' => 1,      'r' => '&yen;1 - &yen;79,999'],
             ['n' => __('frontend.topup.tier_premium'),  'i' => 'fa-star',    'big' => 'x2',   'min' => 80000,  'r' => '&yen;80,000 - &yen;159,999'],
             ['n' => __('frontend.topup.tier_elite'),    'i' => 'fa-gem',     'big' => 'x2.5', 'min' => 160000, 'r' => '&yen;160,000 - &yen;239,999'],
             ['n' => __('frontend.topup.tier_vip'),      'i' => 'fa-crown',   'big' => 'x3',   'min' => 240000, 'r' => '&yen;240,000+'],
@@ -25,7 +25,7 @@
         $rateNote = __('frontend.topup.rate_jpy');
     } elseif ($cur == 'HKD') {
         $tiers = [
-            ['n' => __('frontend.topup.tier_standard'), 'i' => 'fa-feather', 'big' => 'x1',   'min' => 1,     'r' => 'HK$1 - HK$3,999'],
+            ['n' => __('frontend.topup.tier_standard'), 'i' => 'fa-seedling', 'big' => 'x1',   'min' => 1,     'r' => 'HK$1 - HK$3,999'],
             ['n' => __('frontend.topup.tier_premium'),  'i' => 'fa-star',    'big' => 'x2',   'min' => 4000,  'r' => 'HK$4,000 - HK$7,999'],
             ['n' => __('frontend.topup.tier_elite'),    'i' => 'fa-gem',     'big' => 'x2.5', 'min' => 8000,  'r' => 'HK$8,000 - HK$11,999'],
             ['n' => __('frontend.topup.tier_vip'),      'i' => 'fa-crown',   'big' => 'x3',   'min' => 12000, 'r' => 'HK$12,000+'],
@@ -35,7 +35,7 @@
         $rateNote = __('frontend.topup.rate_hkd');
     } else {
         $tiers = [
-            ['n' => __('frontend.topup.tier_standard'), 'i' => 'fa-feather', 'big' => 'x1',   'min' => 1,    'r' => '$1 - $499'],
+            ['n' => __('frontend.topup.tier_standard'), 'i' => 'fa-seedling', 'big' => 'x1',   'min' => 1,    'r' => '$1 - $499'],
             ['n' => __('frontend.topup.tier_premium'),  'i' => 'fa-star',    'big' => 'x2',   'min' => 500,  'r' => '$500 - $999'],
             ['n' => __('frontend.topup.tier_elite'),    'i' => 'fa-gem',     'big' => 'x2.5', 'min' => 1000, 'r' => '$1,000 - $1,499'],
             ['n' => __('frontend.topup.tier_vip'),      'i' => 'fa-crown',   'big' => 'x3',   'min' => 1500, 'r' => '$1,500+'],

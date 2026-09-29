@@ -62,28 +62,29 @@
 <body class="antialiased">
 <div class="page-wrapper">
 
-    <div class="loom" id="loom" aria-hidden="true">
-        <div class="loom__inner">
-            <svg class="loom__thread" viewBox="0 0 160 64" fill="none">
-                <path class="loom__path" pathLength="1" d="M4 44 C 28 44 34 12 58 12 C 82 12 84 54 66 54 C 48 54 56 22 84 22 C 110 22 118 44 156 44"/>
-                <circle class="loom__knot" cx="156" cy="44" r="4"/>
+    <div class="ticker" id="ticker" aria-hidden="true">
+        <div class="ticker__inner">
+            <svg class="ticker__chart" viewBox="0 0 160 64" fill="none">
+                <path class="ticker__base" d="M4 58 H156"/>
+                <path class="ticker__path" pathLength="1" d="M4 50 L24 42 L38 47 L58 30 L74 36 L96 20 L112 27 L134 12 L156 6"/>
+                <circle class="ticker__dot" cx="156" cy="6" r="4"/>
             </svg>
-            <span class="loom__name">{{ $siteName }}</span>
+            <span class="ticker__name">{{ $siteName }}</span>
         </div>
     </div>
     <script>
         (function () {
-            var loom = document.getElementById('loom');
-            if (!loom) return;
+            var ticker = document.getElementById('ticker');
+            if (!ticker) return;
             var start = Date.now();
             var done = false;
             function leave() {
                 if (done) return;
                 done = true;
                 setTimeout(function () {
-                    loom.classList.add('loom--leaving');
+                    ticker.classList.add('ticker--leaving');
                     setTimeout(function () {
-                        if (loom.parentNode) loom.parentNode.removeChild(loom);
+                        if (ticker.parentNode) ticker.parentNode.removeChild(ticker);
                     }, 800);
                 }, Math.max(0, 1300 - (Date.now() - start)));
             }

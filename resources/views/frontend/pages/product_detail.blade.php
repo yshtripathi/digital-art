@@ -179,12 +179,12 @@
                     <span class="pd-orbit__track"></span>
                     <span class="pd-orbit__core"><i class="fas fa-book-open"></i></span>
                     <div class="pd-orbit__ring">
-                        <span class="pd-orbit__icon pd-orbit__icon--0" style="--a: 0deg"><span><i class="fas fa-palette"></i></span></span>
-                        <span class="pd-orbit__icon pd-orbit__icon--1" style="--a: 60deg"><span><i class="fas fa-cut"></i></span></span>
-                        <span class="pd-orbit__icon pd-orbit__icon--2" style="--a: 120deg"><span><i class="fas fa-paint-brush"></i></span></span>
-                        <span class="pd-orbit__icon pd-orbit__icon--0" style="--a: 180deg"><span><i class="fas fa-ruler-combined"></i></span></span>
-                        <span class="pd-orbit__icon pd-orbit__icon--1" style="--a: 240deg"><span><i class="fas fa-pen-nib"></i></span></span>
-                        <span class="pd-orbit__icon pd-orbit__icon--2" style="--a: 300deg"><span><i class="fas fa-swatchbook"></i></span></span>
+                        <span class="pd-orbit__icon pd-orbit__icon--0" style="--a: 0deg"><span><i class="fas fa-chart-line"></i></span></span>
+                        <span class="pd-orbit__icon pd-orbit__icon--1" style="--a: 60deg"><span><i class="fas fa-chart-bar"></i></span></span>
+                        <span class="pd-orbit__icon pd-orbit__icon--2" style="--a: 120deg"><span><i class="fas fa-balance-scale"></i></span></span>
+                        <span class="pd-orbit__icon pd-orbit__icon--0" style="--a: 180deg"><span><i class="fas fa-university"></i></span></span>
+                        <span class="pd-orbit__icon pd-orbit__icon--1" style="--a: 240deg"><span><i class="fas fa-calculator"></i></span></span>
+                        <span class="pd-orbit__icon pd-orbit__icon--2" style="--a: 300deg"><span><i class="fas fa-globe"></i></span></span>
                     </div>
                 </div>
             </section>

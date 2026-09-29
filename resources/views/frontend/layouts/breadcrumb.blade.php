@@ -4,10 +4,10 @@
     $bcFull  = !empty($title);
     $bcImage = $bcFull && file_exists(public_path('assets/images/breadcrumb.webp')) ? asset('assets/images/breadcrumb.webp') : null;
     $bcTools = [
-        ['icon' => 'fa-palette',        'spot' => 'a'],
-        ['icon' => 'fa-cut',            'spot' => 'b'],
-        ['icon' => 'fa-paint-brush',    'spot' => 'c'],
-        ['icon' => 'fa-ruler-combined', 'spot' => 'd'],
+        ['icon' => 'fa-chart-line',     'spot' => 'a'],
+        ['icon' => 'fa-dollar-sign',    'spot' => 'b'],
+        ['icon' => 'fa-chart-pie',      'spot' => 'c'],
+        ['icon' => 'fa-balance-scale',  'spot' => 'd'],
     ];
 @endphp
 

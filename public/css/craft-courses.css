@@ -526,7 +526,7 @@ td {
   text-align: left;
 }
 
-.loom {
+.ticker {
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -538,15 +538,15 @@ td {
   color: var(--color-canvas-white);
   pointer-events: none;
   transition: transform 700ms cubic-bezier(0.76, 0, 0.24, 1), border-radius 700ms cubic-bezier(0.76, 0, 0.24, 1);
-  animation: loom-fallback 0s linear 6s forwards;
+  animation: ticker-fallback 0s linear 6s forwards;
 }
 
-.loom--leaving {
+.ticker--leaving {
   border-radius: 0 0 var(--radius-cards) var(--radius-cards);
   transform: translateY(-100%);
 }
 
-.loom__inner {
+.ticker__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -554,35 +554,42 @@ td {
   transition: opacity 300ms ease, transform 500ms ease;
 }
 
-.loom--leaving .loom__inner {
+.ticker--leaving .ticker__inner {
   opacity: 0;
   transform: translateY(-24px);
 }
 
-.loom__thread {
+.ticker__chart {
   width: clamp(120px, 26vw, 180px);
   height: auto;
   overflow: visible;
 }
 
-.loom__path {
+.ticker__base {
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 5;
+}
+
+.ticker__path {
   stroke: var(--color-primary);
   stroke-width: 3;
   stroke-linecap: round;
+  stroke-linejoin: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: loom-draw 1000ms cubic-bezier(0.65, 0, 0.35, 1) 150ms forwards;
+  animation: ticker-draw 1000ms cubic-bezier(0.65, 0, 0.35, 1) 150ms forwards;
 }
 
-.loom__knot {
+.ticker__dot {
   fill: var(--color-primary);
   transform: scale(0);
   transform-box: fill-box;
   transform-origin: center;
-  animation: loom-knot 320ms ease-out 1100ms forwards;
+  animation: ticker-dot 320ms ease-out 1100ms forwards;
 }
 
-.loom__name {
+.ticker__name {
   font-family: var(--font-display);
   font-size: clamp(28px, 5vw, 44px);
   line-height: 1.1;
@@ -590,16 +597,16 @@ td {
   white-space: nowrap;
   letter-spacing: 0.4em;
   opacity: 0;
-  animation: loom-track 900ms cubic-bezier(0.22, 1, 0.36, 1) 400ms forwards;
+  animation: ticker-track 900ms cubic-bezier(0.22, 1, 0.36, 1) 400ms forwards;
 }
 
-@keyframes loom-draw {
+@keyframes ticker-draw {
   to {
     stroke-dashoffset: 0;
   }
 }
 
-@keyframes loom-knot {
+@keyframes ticker-dot {
   60% {
     transform: scale(1.35);
   }
@@ -609,14 +616,14 @@ td {
   }
 }
 
-@keyframes loom-track {
+@keyframes ticker-track {
   to {
     letter-spacing: 0;
     opacity: 1;
   }
 }
 
-@keyframes loom-fallback {
+@keyframes ticker-fallback {
   to {
     visibility: hidden;
   }
@@ -5725,7 +5732,7 @@ a.shop-pager__num:hover {
 }
 
 @media print {
-  .loom,
+  .ticker,
   .hdr,
   .ft,
   .bc,
@@ -6815,7 +6822,7 @@ a.shop-pager__num:hover {
     scroll-behavior: auto;
   }
 
-  .loom {
+  .ticker {
     display: none;
   }
 

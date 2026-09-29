@@ -1,65 +1,55 @@
-<aside id="consent" class="consent" role="region" aria-labelledby="consent-title">
-    <div class="consent__head">
-        <span class="consent__icon" aria-hidden="true"><i class="fas fa-cookie-bite"></i></span>
-        <div class="consent__copy">
-            <h2 class="consent__title" id="consent-title">@lang('cookieConsent::cookies.title')</h2>
-            <p class="consent__intro">
-                @lang('cookieConsent::cookies.intro')
-                @if($policy)
-                    @lang('cookieConsent::cookies.link', ['url' => $policy])
-                @endif
-            </p>
-        </div>
+<aside id="consent" class="cc" role="region" aria-labelledby="cc-title">
+    <div class="cc__main">
+        <p class="cc__title" id="cc-title">@lang('cookieConsent::cookies.title')</p>
+        <p class="cc__intro">
+            @lang('cookieConsent::cookies.intro')
+            @if($policy)
+                @lang('cookieConsent::cookies.link', ['url' => $policy])
+            @endif
+        </p>
     </div>
 
-    <div class="consent__fold" id="consent-prefs">
-        <div class="consent__fold-in">
-            <form action="{{ route('cookieconsent.accept.configuration') }}" method="post" class="consent__prefs">
+    <div class="cc__fold" id="cc-prefs">
+        <div class="cc__fold-in">
+            <form action="{{ route('cookieconsent.accept.configuration') }}" method="post" class="cc__prefs">
                 @csrf
 
-                <ul class="consent__cats">
+                <ul class="cc__cats">
                     @foreach($cookies->getCategories() as $category)
                         @php
                             $isEssential = $category->key() === 'essentials';
                             $catCookies  = $category->getCookies();
                         @endphp
-                        <li class="consent__cat" style="--i: {{ $loop->index }}">
-                            <label class="consent__row" for="consent-cat-{{ $category->key() }}">
-                                <span class="consent__name">
-                                    {{ $category->title }}
-                                    @if($isEssential)
-                                        <i class="fas fa-lock consent__lock" aria-hidden="true"></i>
-                                    @endif
-                                </span>
+                        <li class="cc__cat">
+                            <label class="cc__row" for="cc-cat-{{ $category->key() }}">
+                                <span class="cc__name">{{ $category->title }}</span>
                                 @if($isEssential)
                                     <input type="hidden" name="categories[]" value="{{ $category->key() }}">
-                                    <input type="checkbox" class="toggle" id="consent-cat-{{ $category->key() }}" checked disabled>
+                                    <input type="checkbox" class="cc__switch" id="cc-cat-{{ $category->key() }}" checked disabled>
                                 @else
-                                    <input type="checkbox" class="toggle" name="categories[]" value="{{ $category->key() }}" id="consent-cat-{{ $category->key() }}">
+                                    <input type="checkbox" class="cc__switch" name="categories[]" value="{{ $category->key() }}" id="cc-cat-{{ $category->key() }}">
                                 @endif
                             </label>
 
                             @if($category->description)
-                                <p class="consent__info">{{ $category->description }}</p>
+                                <p class="cc__info">{{ $category->description }}</p>
                             @endif
 
                             @if(count($catCookies))
-                                <button type="button" class="consent__peek" data-consent-toggle="consent-list-{{ $category->key() }}" data-more="@lang('cookieConsent::cookies.details.more')" data-less="@lang('cookieConsent::cookies.details.less')">
-                                    <span data-consent-label>@lang('cookieConsent::cookies.details.more')</span>
-                                    <i class="fas fa-chevron-down consent__caret" aria-hidden="true"></i>
+                                <button type="button" class="cc__peek" data-cc-toggle="cc-list-{{ $category->key() }}" data-more="@lang('cookieConsent::cookies.details.more')" data-less="@lang('cookieConsent::cookies.details.less')">
+                                    <span data-cc-label>@lang('cookieConsent::cookies.details.more')</span>
+                                    <i class="fas fa-chevron-down cc__caret" aria-hidden="true"></i>
                                 </button>
 
-                                <div class="consent__fold" id="consent-list-{{ $category->key() }}">
-                                    <div class="consent__fold-in">
-                                        <ul class="consent__list">
+                                <div class="cc__fold" id="cc-list-{{ $category->key() }}">
+                                    <div class="cc__fold-in">
+                                        <ul class="cc__list">
                                             @foreach($catCookies as $cookie)
-                                                <li class="consent__item">
-                                                    <div class="consent__item-top">
-                                                        <p class="consent__cookie">{{ $cookie->name }}</p>
-                                                        <span class="consent__dur">{{ \Carbon\CarbonInterval::minutes($cookie->duration)->cascade() }}</span>
-                                                    </div>
+                                                <li class="cc__item">
+                                                    <span class="cc__cookie">{{ $cookie->name }}</span>
+                                                    <span class="cc__dur">{{ \Carbon\CarbonInterval::minutes($cookie->duration)->cascade() }}</span>
                                                     @if($cookie->description)
-                                                        <p class="consent__desc">{{ $cookie->description }}</p>
+                                                        <span class="cc__desc">{{ $cookie->description }}</span>
                                                     @endif
                                                 </li>
                                             @endforeach
@@ -71,22 +61,21 @@
                     @endforeach
                 </ul>
 
-                <button type="submit" class="btn btn--dark btn--block consent__save">@lang('cookieConsent::cookies.save')</button>
+                <button type="submit" class="btn btn--dark btn--block">@lang('cookieConsent::cookies.save')</button>
             </form>
         </div>
     </div>
 
-    <div class="consent__acts">
-        @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'consent__btn consent__btn--main'])
+    <div class="cc__acts">
+        @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'cc-act cc-act--main'])
 
-        @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'consent__btn consent__btn--soft'])
-
-        <button type="button" class="consent__more" data-consent-toggle="consent-prefs">
-            <i class="fas fa-sliders-h" aria-hidden="true"></i>
-            <span>@lang('cookieConsent::cookies.customize')</span>
-            <i class="fas fa-chevron-down consent__caret" aria-hidden="true"></i>
-        </button>
+        @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'cc-act cc-act--soft'])
     </div>
+
+    <button type="button" class="cc__more" data-cc-toggle="cc-prefs" data-more="@lang('cookieConsent::cookies.customize')" data-less="@lang('cookieConsent::cookies.customize')">
+        <span data-cc-label>@lang('cookieConsent::cookies.customize')</span>
+        <i class="fas fa-chevron-down cc__caret" aria-hidden="true"></i>
+    </button>
 </aside>
 
 <script>
@@ -94,19 +83,13 @@
     'use strict';
 
     var root = document.getElementById('consent');
+    if (!root) { return; }
 
-    if (!root) {
-        return;
-    }
+    root.querySelectorAll('[data-cc-toggle]').forEach(function (trigger) {
+        var panel = document.getElementById(trigger.getAttribute('data-cc-toggle'));
+        if (!panel) { return; }
 
-    root.querySelectorAll('[data-consent-toggle]').forEach(function (trigger) {
-        var panel = document.getElementById(trigger.getAttribute('data-consent-toggle'));
-
-        if (!panel) {
-            return;
-        }
-
-        var label = trigger.querySelector('[data-consent-label]');
+        var label = trigger.querySelector('[data-cc-label]');
         var more = trigger.getAttribute('data-more');
         var less = trigger.getAttribute('data-less');
 
@@ -115,17 +98,10 @@
 
         trigger.addEventListener('click', function () {
             var open = !panel.classList.contains('is-open');
-
             panel.classList.toggle('is-open', open);
             trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
-
-            if (panel.id === 'consent-prefs') {
-                root.classList.toggle('is-open', open);
-            }
-
-            if (label && more && less) {
-                label.textContent = open ? less : more;
-            }
+            if (panel.id === 'cc-prefs') { root.classList.toggle('is-open', open); }
+            if (label && more && less) { label.textContent = open ? less : more; }
         });
     });
 }());

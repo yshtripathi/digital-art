@@ -1,52 +1,53 @@
 @php
-    $crumbGlyphs = [
-        ['A',  6,  18, 'fill'],
-        ['あ', 30, 8,  'line'],
-        ['Ж',  56, 30, 'line'],
-        ['¶',  18, 58, 'line'],
-        ['ع',  78, 12, 'fill'],
-        ['한', 44, 70, 'fill'],
-        ['“',  84, 60, 'line'],
+    $bcLinks = isset($links) ? array_values($links) : [];
+    $bcLast  = count($bcLinks) - 1;
+    $bcFull  = !empty($title);
+    $bcImage = $bcFull && file_exists(public_path('assets/images/breadcrumb.webp')) ? asset('assets/images/breadcrumb.webp') : null;
+    $bcTools = [
+        ['icon' => 'fa-palette',        'spot' => 'a'],
+        ['icon' => 'fa-cut',            'spot' => 'b'],
+        ['icon' => 'fa-paint-brush',    'spot' => 'c'],
+        ['icon' => 'fa-ruler-combined', 'spot' => 'd'],
     ];
-    $crumbLinks = isset($links) ? array_values($links) : [];
-    $crumbLast  = count($crumbLinks) - 1;
 @endphp
 
-<section class="crumb {{ empty($title) ? 'crumb--compact' : '' }}">
-    <div class="crumb__glyphs" aria-hidden="true">
-        @foreach($crumbGlyphs as $glyph)
-            <span class="crumb__glyph crumb__glyph--{{ $glyph[3] }}" style="--x: {{ $glyph[1] }}%; --y: {{ $glyph[2] }}%; --i: {{ $loop->index }}">{{ $glyph[0] }}</span>
-        @endforeach
-    </div>
-
-    <div class="crumb__inner">
-        @if(count($crumbLinks))
-            <nav class="crumb__nav" aria-label="{{ __('frontend.breadcrumb.label') }}">
-                <ol class="crumb__trail">
-                    @foreach($crumbLinks as $index => $link)
-                        <li class="crumb__step" style="--i: {{ $index }}">
-                            @if(isset($link['url']) && $index < $crumbLast)
-                                <a href="{{ $link['url'] }}" class="crumb__link">
-                                    @if($index === 0)
-                                        <i class="fas fa-home crumb__home" aria-hidden="true"></i>
+<section class="bc {{ $bcFull ? '' : 'bc--slim' }}">
+    <div class="container">
+        <div class="bc__card">
+            <div class="bc__text">
+                @if(count($bcLinks))
+                    <nav aria-label="{{ __('frontend.breadcrumb.label') }}">
+                        <ol class="bc__trail">
+                            @foreach($bcLinks as $index => $link)
+                                <li class="bc__step">
+                                    @if(isset($link['url']) && $index < $bcLast)
+                                        <a href="{{ $link['url'] }}" class="bc__link">{{ $link['name'] }}</a>
+                                    @else
+                                        <span class="bc__here" aria-current="page">{{ $link['name'] }}</span>
                                     @endif
-                                    <span>{{ $link['name'] }}</span>
-                                </a>
-                                <i class="fas fa-chevron-right crumb__sep" aria-hidden="true"></i>
-                            @else
-                                <span class="crumb__here" aria-current="page">
-                                    <span class="crumb__pin" aria-hidden="true"></span>
-                                    {{ $link['name'] }}
-                                </span>
-                            @endif
-                        </li>
-                    @endforeach
-                </ol>
-            </nav>
-        @endif
+                                </li>
+                            @endforeach
+                        </ol>
+                    </nav>
+                @endif
 
-        @if(!empty($title))
-            <h1 class="crumb__title"><span class="crumb__words">{{ $title }}</span></h1>
-        @endif
+                @if($bcFull)
+                    <h1 class="bc__title">{{ $title }}</h1>
+                @endif
+            </div>
+
+            @if($bcFull)
+                <div class="bc__art" aria-hidden="true">
+                    <div class="bc__frame {{ $bcImage ? '' : 'bc__frame--empty' }}">
+                        @if($bcImage)
+                            <img src="{{ $bcImage }}" alt="" width="1800" height="675">
+                        @endif
+                    </div>
+                    @foreach($bcTools as $tool)
+                        <span class="bc__tool bc__tool--{{ $tool['spot'] }}" style="--i: {{ $loop->index }}"><i class="fas {{ $tool['icon'] }}"></i></span>
+                    @endforeach
+                </div>
+            @endif
+        </div>
     </div>
 </section>

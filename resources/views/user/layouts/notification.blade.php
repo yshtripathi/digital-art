@@ -1,261 +1,201 @@
 @if(session('success') || session('error'))
 @once
 <style>
-.toasts {
-  --t-violet: var(--color-quill-violet, #693edf);
-  --t-royal: var(--color-royal-script, #3b0d96);
-  --t-wash: var(--color-lavender-wash, #efebfc);
-  --t-page: var(--color-lavender-page, #c1b9f4);
-  --t-ink: var(--color-ink, #000b0f);
-  --t-pencil: var(--color-pencil, #566b76);
-  --t-rule: var(--color-page-rule, #e2e8eb);
-  --t-paper: var(--color-paper, #ffffff);
-  --t-ok: #1f7a4d;
-  --t-ok-bg: #e8f5ee;
-  --t-bad: #b42318;
-  --t-bad-bg: #fdecea;
+.notes {
   position: fixed;
-  top: var(--toast-top, 16px);
-  left: 50%;
-  z-index: 280;
-  display: grid;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 10px;
-  width: min(460px, calc(100% - 24px));
-  transform: translateX(-50%);
-  font-family: var(--font-body, 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif);
+  width: min(380px, calc(100% - 24px));
+  font-family: var(--font-body, 'Manrope', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif);
   pointer-events: none;
 }
 
-.toast {
-  --tone: var(--t-ok);
-  --tone-bg: var(--t-ok-bg);
-  position: relative;
+.note {
+  --note-tone: var(--color-success-ink, #1e7a45);
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) 32px;
-  align-items: start;
-  gap: 14px;
-  padding: 14px 14px 18px;
-  overflow: hidden;
-  border: 1px solid var(--t-rule);
-  border-radius: 4px;
-  background-color: var(--t-paper);
-  box-shadow: 0 16px 40px rgba(41, 0, 122, 0.16), 0 2px 6px rgba(23, 23, 23, 0.06);
+  grid-template-rows: 1fr;
+  width: 100%;
   pointer-events: auto;
-  animation: toast-drop 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: note-in 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: grid-template-rows 320ms ease, opacity 220ms ease, margin 320ms ease;
 }
 
-.toast--error {
-  --tone: var(--t-bad);
-  --tone-bg: var(--t-bad-bg);
+.note--error {
+  --note-tone: var(--color-error-ink, #b42318);
 }
 
-.toast::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 18px;
-  height: 18px;
-  background: linear-gradient(225deg, var(--tone) 0 50%, transparent 50%);
-  animation: toast-fold 420ms ease 300ms both;
+.note__card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px;
+  align-items: start;
+  gap: 12px;
+  min-height: 0;
+  padding: 18px 16px 18px 20px;
+  overflow: hidden;
+  border: 1px solid var(--color-chalk-line, #dddddd);
+  border-radius: var(--radius-buttons, 20px);
+  background-color: var(--color-canvas-white, #ffffff);
+  color: var(--color-studio-black, #000000);
 }
 
-.toast__icon {
+.note__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--note-tone);
+}
+
+.note__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--note-tone);
+}
+
+.note__msg {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.note__close {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 40px;
   height: 40px;
-  margin-top: 2px;
-  border-radius: 4px;
-  background-color: var(--tone-bg);
-  color: var(--tone);
-  font-size: 16px;
-  animation: toast-stamp 520ms cubic-bezier(0.34, 1.56, 0.64, 1) 180ms both;
-}
-
-.toast__body {
-  min-width: 0;
-  padding-top: 2px;
-}
-
-.toast__title {
-  margin: 0 0 2px;
-  font-family: var(--font-heading, 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif);
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.35;
-  color: var(--t-ink);
-}
-
-.toast__msg {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--t-pencil);
-  overflow-wrap: anywhere;
-}
-
-.toast__close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
   padding: 0;
-  border: 1px solid transparent;
-  border-radius: 4px;
+  border: 0;
+  border-radius: 50%;
   background: none;
-  color: var(--t-pencil);
-  font-size: 14px;
+  color: var(--color-studio-black, #000000);
+  font-size: 13px;
   cursor: pointer;
-  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  transition: background-color 160ms ease;
 }
 
-.toast__close i {
-  transition: transform 250ms ease;
+.note__close:hover {
+  background-color: var(--color-sketch-paper, #f5f5f5);
 }
 
-.toast__close:hover {
-  border-color: var(--t-page);
-  background-color: var(--t-wash);
-  color: var(--t-royal);
-}
-
-.toast__close:hover i {
-  transform: scale(0.8);
-}
-
-.toast__close:focus-visible {
+.note__close:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--t-paper), 0 0 0 4px var(--t-violet);
+  box-shadow: 0 0 0 2px var(--color-studio-black, #000000), 0 0 0 4px var(--color-craft-yellow, #fff050);
 }
 
-.toast__time {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 3px;
-  background-color: var(--t-wash);
-}
-
-.toast__time::after {
-  content: "";
+.note__ring {
   position: absolute;
   inset: 0;
-  background-color: var(--t-violet);
-  transform-origin: left center;
-  animation: toast-time 5s linear 520ms forwards;
+  width: 40px;
+  height: 40px;
+  transform: rotate(-90deg);
+  pointer-events: none;
 }
 
-.toast.is-paused .toast__time::after {
+.note__ring circle {
+  fill: none;
+  stroke-width: 2;
+}
+
+.note__ring-base {
+  stroke: var(--color-chalk-line, #dddddd);
+}
+
+.note__ring-run {
+  stroke: var(--color-studio-black, #000000);
+  stroke-dasharray: 113.1;
+  stroke-dashoffset: 0;
+  animation: note-run 5s linear 460ms forwards;
+}
+
+.note.is-paused .note__ring-run {
   animation-play-state: paused;
 }
 
-.toast--error .toast__time {
-  display: none;
+.note.is-leaving {
+  grid-template-rows: 0fr;
+  margin-top: -10px;
+  opacity: 0;
 }
 
-.toast.is-hiding {
-  animation: toast-lift 380ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
-
-@keyframes toast-drop {
+@keyframes note-in {
   from {
     opacity: 0;
-    transform: translateY(-28px) scale(0.96);
+    transform: translateX(40px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: none;
   }
 }
 
-@keyframes toast-stamp {
-  from {
-    opacity: 0;
-    transform: scale(0.4) rotate(-18deg);
-  }
-
+@keyframes note-run {
   to {
-    opacity: 1;
-    transform: scale(1) rotate(0);
+    stroke-dashoffset: 113.1;
   }
 }
 
-@keyframes toast-fold {
-  from {
-    width: 0;
-    height: 0;
-  }
-}
-
-@keyframes toast-time {
-  from {
-    transform: scaleX(1);
-  }
-
-  to {
-    transform: scaleX(0);
-  }
-}
-
-@keyframes toast-lift {
-  to {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.96);
-  }
-}
-
-@media (max-width: 560px) {
-  .toast {
-    grid-template-columns: 34px minmax(0, 1fr) 32px;
-    gap: 12px;
-  }
-
-  .toast__icon {
-    width: 34px;
-    height: 34px;
-    font-size: 14px;
+@media (max-width: 479.98px) {
+  .notes {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: auto;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .toast,
-  .toast__icon,
-  .toast.is-hiding {
+  .note {
     animation-duration: 1ms;
+    transition-duration: 1ms;
   }
 }
 </style>
 
-<div class="toasts" data-toasts>
+<div class="notes" data-notes>
     @if(session('success'))
-        <div class="toast toast--success" role="status" data-toast data-toast-auto>
-            <span class="toast__icon" aria-hidden="true"><i class="fas fa-check"></i></span>
-            <div class="toast__body">
-                <p class="toast__title">{{ __('frontend.notify.ok') }}</p>
-                <p class="toast__msg">{{ session('success') }}</p>
+        <div class="note note--success" role="status" data-note data-note-auto>
+            <div class="note__card">
+                <div>
+                    <p class="note__head"><span class="note__dot" aria-hidden="true"></span>{{ __('frontend.notify.ok') }}</p>
+                    <p class="note__msg">{{ session('success') }}</p>
+                </div>
+                <button type="button" class="note__close" aria-label="{{ __('frontend.notify.dismiss') }}" data-note-close>
+                    <svg class="note__ring" viewBox="0 0 40 40" aria-hidden="true">
+                        <circle class="note__ring-base" cx="20" cy="20" r="18"/>
+                        <circle class="note__ring-run" cx="20" cy="20" r="18"/>
+                    </svg>
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
             </div>
-            <button type="button" class="toast__close" aria-label="{{ __('frontend.notify.dismiss') }}" data-toast-close>
-                <i class="fas fa-times" aria-hidden="true"></i>
-            </button>
-            <span class="toast__time" aria-hidden="true"></span>
         </div>
     @endif
 
     @if(session('error'))
-        <div class="toast toast--error" role="alert" data-toast>
-            <span class="toast__icon" aria-hidden="true"><i class="fas fa-exclamation"></i></span>
-            <div class="toast__body">
-                <p class="toast__title">{{ __('frontend.notify.fail') }}</p>
-                <p class="toast__msg">{{ session('error') }}</p>
+        <div class="note note--error" role="alert" data-note>
+            <div class="note__card">
+                <div>
+                    <p class="note__head"><span class="note__dot" aria-hidden="true"></span>{{ __('frontend.notify.fail') }}</p>
+                    <p class="note__msg">{{ session('error') }}</p>
+                </div>
+                <button type="button" class="note__close" aria-label="{{ __('frontend.notify.dismiss') }}" data-note-close>
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
             </div>
-            <button type="button" class="toast__close" aria-label="{{ __('frontend.notify.dismiss') }}" data-toast-close>
-                <i class="fas fa-times" aria-hidden="true"></i>
-            </button>
         </div>
     @endif
 </div>
@@ -264,55 +204,36 @@
 (function () {
     'use strict';
 
-    var stack = document.querySelector('[data-toasts]');
-    var mast = document.querySelector('[data-mast]');
+    var stack = document.querySelector('[data-notes]');
 
-    function place() {
-        if (!stack) { return; }
-        var edge = 0;
-        if (mast) {
-            edge = Math.max(mast.getBoundingClientRect().bottom, 0);
-        }
-        stack.style.setProperty('--toast-top', Math.round(edge + 12) + 'px');
-    }
-
-    place();
-    window.addEventListener('scroll', place, { passive: true });
-    window.addEventListener('resize', place);
-
-    document.querySelectorAll('[data-toast]').forEach(function (toast) {
+    document.querySelectorAll('[data-note]').forEach(function (note) {
         var hide = function () {
-            if (toast.classList.contains('is-hiding')) { return; }
-            toast.classList.add('is-hiding');
+            if (note.classList.contains('is-leaving')) { return; }
+            note.classList.add('is-leaving');
             setTimeout(function () {
-                toast.remove();
+                note.remove();
                 if (stack && !stack.children.length) { stack.remove(); }
-            }, 380);
+            }, 340);
         };
 
-        var close = toast.querySelector('[data-toast-close]');
+        var close = note.querySelector('[data-note-close]');
         if (close) { close.addEventListener('click', hide); }
 
-        if (toast.hasAttribute('data-toast-auto')) {
-            var time = toast.querySelector('.toast__time');
-            if (time) {
-                time.addEventListener('animationend', hide);
-            }
-            var pause = function () { toast.classList.add('is-paused'); };
-            var resume = function () { toast.classList.remove('is-paused'); };
-            toast.addEventListener('mouseenter', pause);
-            toast.addEventListener('mouseleave', resume);
-            toast.addEventListener('focusin', pause);
-            toast.addEventListener('focusout', resume);
+        if (note.hasAttribute('data-note-auto')) {
+            var run = note.querySelector('.note__ring-run');
+            if (run) { run.addEventListener('animationend', hide); }
+            var pause = function () { note.classList.add('is-paused'); };
+            var resume = function () { note.classList.remove('is-paused'); };
+            note.addEventListener('mouseenter', pause);
+            note.addEventListener('mouseleave', resume);
+            note.addEventListener('focusin', pause);
+            note.addEventListener('focusout', resume);
         }
     });
 
     document.addEventListener('keydown', function (event) {
         if (event.key !== 'Escape') { return; }
-        document.querySelectorAll('[data-toast]').forEach(function (toast) {
-            var close = toast.querySelector('[data-toast-close]');
-            if (close) { close.click(); }
-        });
+        document.querySelectorAll('[data-note-close]').forEach(function (btn) { btn.click(); });
     });
 }());
 </script>

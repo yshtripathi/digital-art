@@ -146,9 +146,9 @@
                             <span>{{ __('frontend.topup.credits') }}</span>
                         </p>
                         <dl class="tu-result__lines" aria-label="{{ __('frontend.topup.breakdown') }}">
-                            <div><dt>{{ __('frontend.topup.row_amount') }}</dt><dd id="amount_display">{!! $symbol !!}0</dd></div>
-                            <div><dt>{{ __('frontend.topup.row_base') }}</dt><dd id="base_points">0</dd></div>
-                            <div><dt>{{ __('frontend.topup.row_multiplier') }}</dt><dd id="multiplier_display">x1</dd></div>
+                            <div><dt>{{ __('frontend.topup.row_amount') }}:</dt><dd id="amount_display">{!! $symbol !!}0</dd></div>
+                            <div><dt>{{ __('frontend.topup.row_base') }}:</dt><dd id="base_points">0</dd></div>
+                            <div><dt>{{ __('frontend.topup.row_multiplier') }}:</dt><dd id="multiplier_display">x1</dd></div>
                         </dl>
                     </div>
 

@@ -441,7 +441,7 @@
                                 <li class="pay-sum__row">
                                     <span class="pay-sum__item">
                                         <span class="pay-sum__icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
-                                        <span>{{ number_format($coLine->points, 0, '.', ',') }} {{ __('frontend.checkout.credits') }}</span>
+                                        <span>{{ number_format($coLine->points, 0, '.', ',') }} {{ __('frontend.checkout.credits') }}:</span>
                                     </span>
                                     <span class="pay-sum__price">{{ $coSymbol }}{{ number_format($coLine['price'], $coDecimals, '.', ',') }}</span>
                                 </li>
@@ -450,12 +450,12 @@
                     @endif
 
                     <p class="pay-sum__total">
-                        <span>{{ __('frontend.checkout.total') }}</span>
+                        <span>{{ __('frontend.checkout.total') }}:</span>
                         <strong>{{ $coSymbol }}{{ number_format($coTotal, $coDecimals, '.', ',') }}</strong>
                     </p>
 
                     @if($coDba)
-                        <p class="pay-bill">{{ __('frontend.checkout.billing_notice') }} <img class="pay-bill__img" src="{{ $coDba }}" alt="{{ __('frontend.checkout.billing_alt') }}" width="160" height="37"></p>
+                        <p class="pay-bill">{{ __('frontend.checkout.billing_notice') }} <img class="pay-bill__img" src="{{ $coDba }}" alt="{{ __('frontend.checkout.billing_alt') }}" width="82" height="40"></p>
                     @endif
 
                     <button type="submit" form="frmCheckout" class="btn btn--primary btn--block" id="button-confirm">

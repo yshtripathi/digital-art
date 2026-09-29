@@ -4,7 +4,7 @@
     $ftMail    = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
     $ftAddress = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
     $ftCats    = (isset($category) && $category instanceof \Illuminate\Support\Collection ? $category : \App\Models\Category::getAllParentWithChild())->take(4);
-    $ftLogo    = file_exists(public_path('assets/images/logo.webp')) ? asset('assets/images/logo.webp') : null;
+    $ftLogo    = file_exists(public_path('assets/images/logo-dark.webp')) ? asset('assets/images/logo-dark.webp') : (file_exists(public_path('assets/images/logo.webp')) ? asset('assets/images/logo.webp') : null);
     $ftPay     = file_exists(public_path('assets/images/payment.webp')) ? asset('assets/images/payment.webp') : null;
 
     $ftGuides = [['url' => route('product-lists'), 'label' => __('frontend.footer.all_materials')]];
@@ -49,7 +49,7 @@
             <div class="ft-brand">
                 <a href="{{ route('home') }}" class="ft-logo">
                     @if($ftLogo)
-                        <img src="{{ $ftLogo }}" alt="{{ $ftSite }}" width="869" height="144" loading="lazy">
+                        <img src="{{ $ftLogo }}" alt="{{ $ftSite }}" width="716" height="210" loading="lazy">
                     @else
                         <span>{{ $ftSite }}</span>
                     @endif

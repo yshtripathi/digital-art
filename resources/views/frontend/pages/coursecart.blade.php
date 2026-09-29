@@ -107,15 +107,15 @@
 
                             <dl class="bag-ledger">
                                 <div class="bag-ledger__row">
-                                    <dt>{{ __('frontend.coursecart.balance') }}</dt>
+                                    <dt>{{ __('frontend.coursecart.balance') }}:</dt>
                                     <dd>{{ number_format($points) }}</dd>
                                 </div>
                                 <div class="bag-ledger__row">
-                                    <dt>{{ __('frontend.coursecart.needed') }}</dt>
+                                    <dt>{{ __('frontend.coursecart.needed') }}:</dt>
                                     <dd>&minus; {{ number_format($total_points) }}</dd>
                                 </div>
                                 <div class="bag-ledger__row bag-ledger__row--after {{ $enough ? '' : 'is-short' }}">
-                                    <dt>{{ __('frontend.coursecart.after') }}</dt>
+                                    <dt>{{ __('frontend.coursecart.after') }}:</dt>
                                     <dd>{{ $after < 0 ? '−' : '' }}{{ number_format(abs($after)) }} <small>{{ __('frontend.coursecart.credits') }}</small></dd>
                                 </div>
                             </dl>

@@ -5,7 +5,7 @@ return [
     // Dummy fallbacks, used only when the miscs table value is empty
     'company' => [
         'name'    => '[Company Name]',
-        'email'   => '[Company Email]',
+        'email'   => 'info@craft-course.com',
         'address' => '[Company Address]',
     ],
 
@@ -29,8 +29,8 @@ return [
         'home'          => 'Home',
         'materials'     => 'Guides',
         'categories'    => 'Subjects',
-        'about'         => 'About',
-        'contact'       => 'Contact',
+        'about'         => 'About Us',
+        'contact'       => 'Contact Us',
         'library'       => 'My Materials',
         'account'       => 'Account',
         'account_menu'  => 'Account menu',

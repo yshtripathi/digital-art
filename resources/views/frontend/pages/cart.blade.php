@@ -94,7 +94,7 @@
                             <li class="pay-sum__row">
                                 <span class="pay-sum__item">
                                     <span class="pay-sum__icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
-                                    <span>{{ __('frontend.cart.col_credits') }}</span>
+                                    <span>{{ __('frontend.cart.col_credits') }}:</span>
                                 </span>
                                 <span class="pay-sum__price">{{ number_format($totalCredits) }}</span>
                             </li>
@@ -102,7 +102,7 @@
                                 <li class="pay-sum__row">
                                     <span class="pay-sum__item">
                                         <span class="pay-sum__icon" aria-hidden="true"><i class="fas fa-tag"></i></span>
-                                        <span>{{ __('frontend.cart.discount') }}</span>
+                                        <span>{{ __('frontend.cart.discount') }}:</span>
                                     </span>
                                     <span class="pay-sum__price">&minus; {{ $sym }}{{ number_format($discount, $dec) }}</span>
                                 </li>
@@ -110,7 +110,7 @@
                         </ul>
 
                         <p class="pay-sum__total">
-                            <span>{{ __('frontend.cart.total') }}</span>
+                            <span>{{ __('frontend.cart.total') }}:</span>
                             <strong>{{ $sym }}{{ number_format($total_amount, $dec) }}</strong>
                         </p>
 

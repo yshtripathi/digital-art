@@ -80,7 +80,7 @@
         <div class="container hdr-bar__row">
             <a href="{{ route('home') }}" class="hdr-logo">
                 @if($logoFile)
-                    <img src="{{ $logoFile }}" alt="{{ $siteName }}" width="869" height="144">
+                    <img src="{{ $logoFile }}" alt="{{ $siteName }}" width="716" height="210">
                 @else
                     <span>{{ $siteName }}</span>
                 @endif
@@ -182,7 +182,7 @@
     <div class="menu-sheet__top">
         <a href="{{ route('home') }}" class="hdr-logo">
             @if($logoFile)
-                <img src="{{ $logoFile }}" alt="{{ $siteName }}" width="869" height="144">
+                <img src="{{ $logoFile }}" alt="{{ $siteName }}" width="716" height="210">
             @else
                 <span>{{ $siteName }}</span>
             @endif
@@ -328,12 +328,12 @@
         <div class="cart-sheet__foot">
             @if($hasCourses && Auth::check())
                 <p class="cart-sheet__row">
-                    <span>{{ __('frontend.header.balance') }}</span>
+                    <span>{{ __('frontend.header.balance') }}:</span>
                     <span>{{ number_format($balance) }} {{ __('frontend.header.credits') }}</span>
                 </p>
             @endif
             <p class="cart-sheet__row cart-sheet__row--total">
-                <span>{{ __('frontend.header.total') }}</span>
+                <span>{{ __('frontend.header.total') }}:</span>
                 @if($hasCredits && !$hasCourses)
                     <strong>{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</strong>
                 @else

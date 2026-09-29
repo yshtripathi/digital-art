@@ -136,10 +136,24 @@ return [
         'end_title'     => 'Begin at the level that suits you',
         'end_text'      => 'Sign up, compare the study guides and unlock a first level when the time is right. Your access details arrive by email, typically within 24 hours of confirmed payment.',
         'register'      => 'Create Your Account',
+        'calc_label'    => 'Credit calculator',
+        'calc_title'    => 'See what your top-up is worth',
+        'calc_text'     => 'Pick an amount to see your bonus band and the credits you would receive.',
+        'calc_login'    => 'Sign In to Top Up',
+        'collage_label' => 'Learn your way',
+        'collage_title' => 'Study when and where it suits you',
+        'collage_text'  => 'Every level you unlock opens in your account, so you can read it at home, on the move or at your desk. There is no timetable to follow.',
+        'collage_one'   => 'Unlocked levels are kept in your account',
+        'collage_two'   => 'No fixed timetable or deadlines',
+        'collage_three' => 'Four levels in every study guide',
     ],
 
     // resources/views/frontend/pages/login.blade.php
     'login' => [
+        'side_title'           => 'Pick up where you left off',
+        'side_1'               => 'Check your credit balance at any time',
+        'side_2'               => 'Go back to the levels you have unlocked',
+        'side_3'               => 'Find all your receipts in one place',
         'tab'                  => 'Login',
         'heading'              => 'Good to see you again',
         'text'                 => 'Sign in to check your credit balance, the levels you have unlocked and your receipts.',
@@ -161,6 +175,10 @@ return [
 
     // resources/views/frontend/pages/register.blade.php
     'register' => [
+        'side_title'           => 'Start in a few simple steps',
+        'side_1'               => 'Create your account with your email address',
+        'side_2'               => 'Add credits whenever you are ready',
+        'side_3'               => 'Unlock only the levels you need',
         'tab'                  => 'Register',
         'heading'              => 'Set up your account',
         'text'                 => 'With an account, your credits, unlocked levels and receipts are all kept together.',
@@ -193,6 +211,10 @@ return [
 
     // resources/views/frontend/pages/forget-pwd-form.blade.php
     'forgot' => [
+        'side_title'           => 'Get back into your account',
+        'side_1'               => 'Enter the email address linked to your account',
+        'side_2'               => 'Open the link we send to your inbox',
+        'side_3'               => 'Choose a new password and sign in',
         'tab'                 => 'Forgot Password',
         'heading'             => 'Set a new password',
         'text'                => 'Type the email address linked to your account. If it matches an account, we will send a link for choosing a new password.',
@@ -214,6 +236,7 @@ return [
     'contact' => [
         'tab'                 => 'Contact Us',
         'aside_title'         => 'Ways to contact us',
+        'aside_text'          => 'Use the form to send us a message, or reach us with the details below.',
         'detail_company'      => 'Company name',
         'detail_email'        => 'Email address',
         'detail_address'      => 'Postal address',
@@ -329,6 +352,15 @@ return [
         'add'                => 'Place in Cart',
         'adding'             => 'Placing in your cart…',
         'secure'             => 'Our payment provider handles card payments through an encrypted connection.',
+        'how_title'          => 'How topping up works',
+        'how_1_title'        => 'Choose an amount',
+        'how_1_text'         => 'Type any amount or pick one of the suggested amounts',
+        'how_2_title'        => 'Check your credits',
+        'how_2_text'         => 'The calculator applies the bonus rate for your band straight away',
+        'how_3_title'        => 'Pay at checkout',
+        'how_3_text'         => 'Place the credits in your cart and complete the card payment',
+        'how_4_title'        => 'Unlock levels',
+        'how_4_text'         => 'Spend your credits on the study guide levels you want to read',
     ],
 
     // resources/views/frontend/pages/product-lists.blade.php
@@ -352,6 +384,7 @@ return [
         'empty_title'        => 'This category is empty for now',
         'empty_text'         => 'There are no study guides in this category at the moment. Please look through the full list instead.',
         'browse_all'         => 'See All Study Guides',
+        'guides'             => '{1} :count study guide|[2,*] :count study guides',
     ],
 
     // resources/views/frontend/pages/product_detail.blade.php
@@ -379,6 +412,7 @@ return [
         'level_intermediate' => 'Intermediate',
         'level_advanced'     => 'Advanced',
         'level_expert'       => 'Expert',
+        'glance'             => 'At a glance',
     ],
 
     // resources/views/frontend/pages/coursecart.blade.php
@@ -397,6 +431,7 @@ return [
         'totals'             => 'Credit breakdown',
         'covered'            => 'Share paid by your balance',
         'not_enough'         => 'You do not have enough credits. Please buy more credits to continue.',
+        'short_by'           => 'You need :count more credits to unlock these levels.',
         'unlock'             => 'Spend Credits to Unlock',
         'buy_credits'        => 'Get Credits',
         'empty_title'        => 'Your level list is empty',
@@ -679,4 +714,7 @@ return [
         'dismiss'   => 'Close this message',
     ],
 
+    'page' => [
+        'toc'                => 'On this page',
+    ],
 ];

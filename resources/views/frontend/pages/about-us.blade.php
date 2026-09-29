@@ -13,9 +13,13 @@
 ])
 
 @php
-    $abImage = file_exists(public_path('assets/images/about.webp')) ? asset('assets/images/about.webp') : null;
-    $abSteps2 = file_exists(public_path('assets/images/about-steps.webp')) ? asset('assets/images/about-steps.webp') : null;
     $abPoints = [__('frontend.about.point_one'), __('frontend.about.point_two'), __('frontend.about.point_three')];
+    $abLevels = [
+        ['name' => __('frontend.header.beginner'),     'h' => 34],
+        ['name' => __('frontend.header.intermediate'), 'h' => 56],
+        ['name' => __('frontend.header.advanced'),     'h' => 78],
+        ['name' => __('frontend.header.expert'),       'h' => 100],
+    ];
     $abFacts = [
         ['icon' => 'fa-layer-group', 'key' => 'fact_one'],
         ['icon' => 'fa-eye',         'key' => 'fact_two'],
@@ -32,20 +36,8 @@
 
 <section class="ab" aria-labelledby="abTitle">
     <div class="container ab__grid">
-        <div class="ab-media" aria-hidden="true">
-            <span class="ab-media__back"></span>
-            <figure class="ab-media__frame {{ $abImage ? '' : 'is-empty' }}">
-                @if($abImage)
-                    <img src="{{ $abImage }}" alt="" width="1200" height="1500" loading="lazy" decoding="async">
-                @else
-                    <i class="far fa-image"></i>
-                @endif
-            </figure>
-            <span class="ab-media__chip"><strong>4</strong>{{ __('frontend.about.levels_badge') }}</span>
-        </div>
-
         <div class="ab-copy">
-            <span class="tag">{{ __('frontend.about.eyebrow') }}</span>
+            <p class="eyebrow">{{ __('frontend.about.eyebrow') }}</p>
             <h2 id="abTitle" class="ab-copy__title">{{ __('frontend.about.heading') }}</h2>
             <p class="ab-copy__lead">{{ __('frontend.about.intro') }}</p>
             <p class="ab-copy__text">{{ __('frontend.about.detail') }}</p>
@@ -61,49 +53,64 @@
                 <a href="{{ route('contact') }}" class="btn btn--ghost">{{ __('frontend.about.contact') }}</a>
             </div>
         </div>
+
+        <div class="ab-viz" data-reveal aria-hidden="true">
+            <div class="ab-viz__top">
+                <span class="ab-viz__badge"><strong>4</strong> {{ __('frontend.about.levels_badge') }}</span>
+                <span class="ab-viz__dots"><span></span><span></span><span></span></span>
+            </div>
+            <div class="ab-viz__chart">
+                <svg class="ab-viz__path" viewBox="0 0 400 200" preserveAspectRatio="none">
+                    <path d="M 50 132 L 150 88 L 250 44 L 350 0" pathLength="1"/>
+                </svg>
+                @foreach($abLevels as $level)
+                    <div class="ab-bar" style="--h: {{ $level['h'] }}%; --i: {{ $loop->index }}">
+                        <span class="ab-bar__fill">
+                            <span class="ab-bar__no">0{{ $loop->iteration }}</span>
+                            @if($loop->last)
+                                <i class="fas fa-flag-checkered ab-bar__flag"></i>
+                            @endif
+                        </span>
+                        <span class="ab-bar__name">{{ $level['name'] }}</span>
+                    </div>
+                @endforeach
+            </div>
+            <div class="ab-viz__legend">
+                <span><i class="fas fa-eye"></i>{{ __('frontend.about.fact_two') }}</span>
+                <span><i class="fas fa-coins"></i>{{ __('frontend.about.fact_four') }}</span>
+            </div>
+        </div>
     </div>
 </section>
 
 <section class="ab-how" aria-labelledby="abHowTitle">
     <div class="container">
-        <div class="ab-how__card" data-reveal>
-            <figure class="ab-how__media {{ $abSteps2 ? '' : 'is-empty' }}" aria-hidden="true">
-                @if($abSteps2)
-                    <img src="{{ $abSteps2 }}" alt="" width="1000" height="1500" loading="lazy" decoding="async">
-                @else
-                    <i class="far fa-image"></i>
-                @endif
-            </figure>
+        <header class="ab-how__head">
+            <p class="eyebrow">{{ __('frontend.about.steps_label') }}</p>
+            <h2 id="abHowTitle" class="ab-how__title">{{ __('frontend.about.steps_heading') }}</h2>
+        </header>
 
-            <div class="ab-how__body">
-                <header class="ab-how__head">
-                    <span class="tag">{{ __('frontend.about.steps_label') }}</span>
-                    <h2 id="abHowTitle" class="ab-how__title">{{ __('frontend.about.steps_heading') }}</h2>
-                </header>
+        <ol class="ab-steps">
+            @foreach($abSteps as $step)
+                <li class="ab-step" style="--i: {{ $loop->index }}">
+                    <span class="ab-step__no" aria-hidden="true"><i class="fas {{ $step['icon'] }}"></i></span>
+                    <h3 class="ab-step__name">{{ $step['title'] }}</h3>
+                    <p class="ab-step__text">{{ $step['text'] }}</p>
+                </li>
+            @endforeach
+        </ol>
 
-                <ol class="ab-steps">
-                    @foreach($abSteps as $step)
-                        <li class="ab-step" style="--i: {{ $loop->index }}">
-                            <span class="ab-step__no" aria-hidden="true">{{ $loop->iteration }}</span>
-                            <div class="ab-step__card">
-                                <h3 class="ab-step__name"><i class="fas {{ $step['icon'] }}" aria-hidden="true"></i>{{ $step['title'] }}</h3>
-                                <p class="ab-step__text">{{ $step['text'] }}</p>
-                            </div>
-                        </li>
-                    @endforeach
-                </ol>
-            </div>
-
-            <ul class="ab-facts">
-                @foreach($abFacts as $fact)
-                    <li class="ab-fact" style="--i: {{ $loop->index }}">
-                        <span class="ab-fact__icon" aria-hidden="true"><i class="fas {{ $fact['icon'] }}"></i></span>
+        <ul class="ab-facts">
+            @foreach($abFacts as $fact)
+                <li class="ab-fact">
+                    <span class="ab-fact__icon" aria-hidden="true"><i class="fas {{ $fact['icon'] }}"></i></span>
+                    <span>
                         <strong class="ab-fact__title">{{ __('frontend.about.' . $fact['key']) }}</strong>
                         <span class="ab-fact__text">{{ __('frontend.about.' . $fact['key'] . '_text') }}</span>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
+                    </span>
+                </li>
+            @endforeach
+        </ul>
     </div>
 </section>
 

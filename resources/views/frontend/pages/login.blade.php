@@ -11,17 +11,36 @@
 ])
 
 @php
-    $authImage = file_exists(public_path('assets/images/auth.webp')) ? asset('assets/images/auth.webp') : null;
+    $authImage = file_exists(public_path('assets/images/auth-art.webp')) ? asset('assets/images/auth-art.webp') : null;
+    $authLogo  = file_exists(public_path('assets/images/logo.webp')) ? asset('assets/images/logo.webp') : null;
 @endphp
 
 <section class="auth">
     <div class="container">
         <div class="auth__card">
-            <div class="auth__art {{ $authImage ? '' : 'is-empty' }}" aria-hidden="true">
-                @if($authImage)
-                    <img src="{{ $authImage }}" alt="" width="1000" height="1498">
-                @endif
-                <span class="auth__tag"><i class="fas fa-lock"></i></span>
+            <div class="auth__art {{ $authImage ? '' : 'is-empty' }}">
+                <a href="{{ route('home') }}" class="auth__logo" aria-label="{{ __('frontend.head.site') }}">
+                    @if($authLogo)
+                        <img src="{{ $authLogo }}" alt="{{ __('frontend.head.site') }}" width="716" height="210">
+                    @else
+                        <span>{{ __('frontend.head.site') }}</span>
+                    @endif
+                </a>
+
+                <div class="auth__pic" aria-hidden="true">
+                    @if($authImage)
+                        <img src="{{ $authImage }}" alt="" width="1200" height="1200">
+                    @endif
+                </div>
+
+                <div class="auth__side">
+                    <p class="auth__side-title">{{ __('frontend.login.side_title') }}</p>
+                    <ol class="auth__points">
+                        <li style="--i: 0">{{ __('frontend.login.side_1') }}</li>
+                        <li style="--i: 1">{{ __('frontend.login.side_2') }}</li>
+                        <li style="--i: 2">{{ __('frontend.login.side_3') }}</li>
+                    </ol>
+                </div>
             </div>
 
             <div class="auth__body">

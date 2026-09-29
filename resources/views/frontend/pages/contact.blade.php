@@ -14,47 +14,51 @@
     $ctEmail   = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
     $ctAddress = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
     $ctCompany = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
-    $ctImage   = file_exists(public_path('assets/images/contact.webp')) ? asset('assets/images/contact.webp') : null;
+    $ctImage   = file_exists(public_path('assets/images/contact-art.webp')) ? asset('assets/images/contact-art.webp') : null;
+    $ctLogo    = file_exists(public_path('assets/images/logo.webp')) ? asset('assets/images/logo.webp') : null;
 @endphp
 
 <section class="auth">
     <div class="container">
-        <div class="auth__card auth__card--wide">
-            <div class="auth__art ct-art {{ $ctImage ? '' : 'is-empty' }}">
-                @if($ctImage)
-                    <img src="{{ $ctImage }}" alt="" width="1000" height="1500">
-                @endif
-                <span class="auth__tag" aria-hidden="true"><i class="far fa-envelope"></i></span>
+        <div class="auth__card">
+            <div class="auth__art {{ $ctImage ? '' : 'is-empty' }}">
+                <a href="{{ route('home') }}" class="auth__logo" aria-label="{{ __('frontend.head.site') }}">
+                    @if($ctLogo)
+                        <img src="{{ $ctLogo }}" alt="{{ __('frontend.head.site') }}" width="716" height="210">
+                    @else
+                        <span>{{ __('frontend.head.site') }}</span>
+                    @endif
+                </a>
 
-                <div class="ct-info">
-                    <h2 class="ct-info__title">{{ __('frontend.contact.aside_title') }}</h2>
-                    <ul class="ct-info__rows">
-                        <li class="ct-info__row">
-                            <span class="ct-info__icon" aria-hidden="true"><i class="far fa-envelope"></i></span>
-                            <span class="ct-info__meta">
-                                <span class="ct-info__label">{{ __('frontend.contact.detail_email') }}</span>
-                                <a href="mailto:{{ $ctEmail }}" class="ct-info__value">{{ $ctEmail }}</a>
-                            </span>
-                            <button type="button" class="ct-info__copy" data-copy="{{ $ctEmail }}" data-done="{{ __('frontend.contact.copy_done') }}">
-                                <i class="far fa-copy" aria-hidden="true"></i>
-                                <span data-copy-label>{{ __('frontend.contact.copy_button') }}</span>
-                            </button>
-                        </li>
-                        <li class="ct-info__row">
-                            <span class="ct-info__icon" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
-                            <span class="ct-info__meta">
-                                <span class="ct-info__label">{{ __('frontend.contact.detail_address') }}</span>
-                                <span class="ct-info__value">{{ $ctAddress }}</span>
-                            </span>
-                        </li>
-                        <li class="ct-info__row">
-                            <span class="ct-info__icon" aria-hidden="true"><i class="far fa-building"></i></span>
-                            <span class="ct-info__meta">
-                                <span class="ct-info__label">{{ __('frontend.contact.detail_company') }}</span>
-                                <span class="ct-info__value">{{ $ctCompany }}</span>
-                            </span>
-                        </li>
-                    </ul>
+                <div class="auth__pic" aria-hidden="true">
+                    @if($ctImage)
+                        <img src="{{ $ctImage }}" alt="" width="1200" height="1200">
+                    @endif
+                </div>
+
+                <div class="auth__side">
+                    <p class="auth__side-title">{{ __('frontend.contact.aside_title') }}</p>
+                    <p class="ct-note">{{ __('frontend.contact.aside_text') }}</p>
+                    <dl class="ct-list">
+                        <div class="ct-item" style="--i: 0">
+                            <dt>{{ __('frontend.contact.detail_email') }}</dt>
+                            <dd>
+                                <a href="mailto:{{ $ctEmail }}" class="ct-item__mail">{{ $ctEmail }}</a>
+                                <button type="button" class="ct-copy" data-copy="{{ $ctEmail }}" data-done="{{ __('frontend.contact.copy_done') }}">
+                                    <i class="far fa-copy" aria-hidden="true"></i>
+                                    <span data-copy-label>{{ __('frontend.contact.copy_button') }}</span>
+                                </button>
+                            </dd>
+                        </div>
+                        <div class="ct-item" style="--i: 1">
+                            <dt>{{ __('frontend.contact.detail_address') }}</dt>
+                            <dd>{{ $ctAddress }}</dd>
+                        </div>
+                        <div class="ct-item" style="--i: 2">
+                            <dt>{{ __('frontend.contact.detail_company') }}</dt>
+                            <dd>{{ $ctCompany }}</dd>
+                        </div>
+                    </dl>
                 </div>
             </div>
 

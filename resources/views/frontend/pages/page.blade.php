@@ -30,7 +30,14 @@
 ])
 
 <section class="doc-wrap">
-    <div class="container">
+    <div class="container doc-grid">
+        <aside class="doc-toc" data-toc hidden>
+            <details class="doc-toc__box" open data-toc-box>
+                <summary class="doc-toc__title">{{ __('frontend.page.toc') }}</summary>
+                <ol class="doc-toc__list" data-toc-list></ol>
+            </details>
+        </aside>
+
         <article class="doc" data-doc>
             {!! $rawDesc !!}
         </article>
@@ -53,6 +60,41 @@
         table.parentNode.insertBefore(box, table);
         box.appendChild(table);
     });
+
+    var toc = document.querySelector('[data-toc]');
+    var list = document.querySelector('[data-toc-list]');
+    var heads = Array.prototype.slice.call(doc.querySelectorAll('h2'));
+
+    if (toc && list && heads.length > 1) {
+        var links = [];
+        heads.forEach(function (head, i) {
+            if (!head.id) { head.id = 'section-' + (i + 1); }
+            var item = document.createElement('li');
+            var link = document.createElement('a');
+            link.href = '#' + head.id;
+            link.className = 'doc-toc__link';
+            link.textContent = head.textContent.trim();
+            item.appendChild(link);
+            list.appendChild(item);
+            links.push(link);
+        });
+        toc.hidden = false;
+
+        var box = document.querySelector('[data-toc-box]');
+        if (box && window.matchMedia('(max-width: 1023px)').matches) { box.open = false; }
+
+        if ('IntersectionObserver' in window) {
+            var watch = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) { return; }
+                    links.forEach(function (link) {
+                        link.classList.toggle('is-on', link.getAttribute('href') === '#' + entry.target.id);
+                    });
+                });
+            }, { rootMargin: '-90px 0px -65% 0px' });
+            heads.forEach(function (head) { watch.observe(head); });
+        }
+    }
 }());
 </script>
 @endpush

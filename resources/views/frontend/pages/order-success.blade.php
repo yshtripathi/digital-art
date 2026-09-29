@@ -35,100 +35,95 @@
             <li class="pay-steps__item is-done is-now" aria-current="step"><span class="pay-steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>{{ __('frontend.cart.step_done') }}</li>
         </ol>
 
-        <div class="pay__grid">
-            <div class="pay-card res" style="--i: 0">
-                <div class="res__head">
-                    <span class="res__mark" aria-hidden="true"><i class="fas fa-check"></i></span>
-                    <div>
-                        <h2 class="res__title">{{ __('frontend.success.heading') }}</h2>
-                        <p class="res__lead">{{ __('frontend.success.lead') }}</p>
-                    </div>
-                </div>
-
-                @if($order)
-                    <div class="res__amount">
-                        <span class="res__amount-label">{{ __('frontend.success.amount_paid') }}</span>
-                        <strong class="res__amount-value">{{ $currency }}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</strong>
-                        <span class="res__state {{ $isPaid ? 'is-ok' : 'is-wait' }}">{{ __('frontend.success.status') }}: {{ $statusText }}</span>
-                    </div>
-
-                    <dl class="res__facts">
-                        <div class="res-fact">
-                            <dt>{{ __('frontend.success.order_no') }}</dt>
-                            <dd>
-                                <span data-copy-text>{{ $order->order_number }}</span>
-                                <button type="button" class="res-fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.order_no')]) }}">
-                                    <i class="far fa-copy" aria-hidden="true"></i>
-                                    <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
-                                </button>
-                            </dd>
-                        </div>
-                        <div class="res-fact">
-                            <dt>{{ __('frontend.success.transaction') }}</dt>
-                            <dd>
-                                <span data-copy-text>{{ $transaction_id }}</span>
-                                <button type="button" class="res-fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.transaction')]) }}">
-                                    <i class="far fa-copy" aria-hidden="true"></i>
-                                    <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
-                                </button>
-                            </dd>
-                        </div>
-                        <div class="res-fact">
-                            <dt>{{ __('frontend.success.date') }}</dt>
-                            <dd><span>{{ $order->created_at ? $order->created_at->format('Y-m-d H:i') : '' }}</span></dd>
-                        </div>
-                        @if($orderCredits > 0)
-                            <div class="res-fact">
-                                <dt>{{ __('frontend.success.credits_added') }}</dt>
-                                <dd><span>{{ number_format($orderCredits) }}</span></dd>
-                            </div>
-                        @endif
-                        @if(filled($order->email))
-                            <div class="res-fact">
-                                <dt>{{ __('frontend.success.billing_email') }}</dt>
-                                <dd><span>{{ $order->email }}</span></dd>
-                            </div>
-                        @endif
-                    </dl>
-
-                    @if($email_status == 'inactive')
-                        <p class="res__note">{{ __('frontend.success.email_failed') }}</p>
-                    @endif
-                @endif
-
-                <div class="res__acts">
-                    @if($order)
-                        <a href="{{ route('user.order.show', $order->id) }}" class="btn btn--primary">{{ __('frontend.success.receipt') }}</a>
-                        <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--dark">
-                            <i class="fas fa-download" aria-hidden="true"></i>
-                            <span>{{ __('frontend.success.invoice') }}</span>
-                        </a>
-                        <a href="{{ route('home') }}" class="res__home">{{ __('frontend.success.home') }}</a>
-                    @else
-                        <a href="{{ route('home') }}" class="btn btn--primary">{{ __('frontend.success.home') }}</a>
-                    @endif
-                </div>
+        <div class="rs rs--ok">
+            <div class="rs__hero">
+                <svg class="rs__mark" viewBox="0 0 52 52" aria-hidden="true">
+                    <circle class="rs__ring" cx="26" cy="26" r="24" pathLength="1"/>
+                    <path class="rs__sign" d="M15 27 L22 34 L37 19" pathLength="1"/>
+                </svg>
+                <h2 class="rs__title">{{ __('frontend.success.heading') }}</h2>
+                <p class="rs__lead">{{ __('frontend.success.lead') }}</p>
             </div>
 
-            <aside class="pay__rail">
-                <div class="pay-sum">
-                    <h2 class="pay-sum__title">{{ __('frontend.success.next_title') }}</h2>
-                    <ol class="res-next">
-                        <li class="res-next__item">
-                            <span class="res-next__no" aria-hidden="true">1</span>
-                            <p>{{ __('frontend.success.next_one') }}</p>
-                        </li>
-                        <li class="res-next__item">
-                            <span class="res-next__no" aria-hidden="true">2</span>
-                            <p>{{ __('frontend.success.next_two') }}</p>
-                        </li>
-                        <li class="res-next__item">
-                            <span class="res-next__no" aria-hidden="true">3</span>
-                            <p>{!! str_replace(':email', $supportMail, e(__('frontend.success.next_three'))) !!}</p>
-                        </li>
-                    </ol>
+            @if($order)
+                <div class="rs__amount">
+                    <span class="rs__amount-label">{{ __('frontend.success.amount_paid') }}</span>
+                    <strong class="rs__amount-value">{{ $currency }}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</strong>
+                    <span class="st {{ $isPaid ? 'st--ok' : 'st--wait' }}">{{ __('frontend.success.status') }}: {{ $statusText }}</span>
                 </div>
-            </aside>
+
+                <dl class="rs__facts">
+                    <div class="rs-fact">
+                        <dt>{{ __('frontend.success.order_no') }}</dt>
+                        <dd>
+                            <span data-copy-text>{{ $order->order_number }}</span>
+                            <button type="button" class="res-fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.order_no')]) }}">
+                                <i class="far fa-copy" aria-hidden="true"></i>
+                                <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
+                            </button>
+                        </dd>
+                    </div>
+                    <div class="rs-fact">
+                        <dt>{{ __('frontend.success.transaction') }}</dt>
+                        <dd>
+                            <span data-copy-text>{{ $transaction_id }}</span>
+                            <button type="button" class="res-fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.transaction')]) }}">
+                                <i class="far fa-copy" aria-hidden="true"></i>
+                                <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
+                            </button>
+                        </dd>
+                    </div>
+                    <div class="rs-fact">
+                        <dt>{{ __('frontend.success.date') }}</dt>
+                        <dd><span>{{ $order->created_at ? $order->created_at->format('Y-m-d H:i') : '' }}</span></dd>
+                    </div>
+                    @if($orderCredits > 0)
+                        <div class="rs-fact">
+                            <dt>{{ __('frontend.success.credits_added') }}</dt>
+                            <dd><span>{{ number_format($orderCredits) }}</span></dd>
+                        </div>
+                    @endif
+                    @if(filled($order->email))
+                        <div class="rs-fact rs-fact--wide">
+                            <dt>{{ __('frontend.success.billing_email') }}</dt>
+                            <dd><span>{{ $order->email }}</span></dd>
+                        </div>
+                    @endif
+                </dl>
+
+                @if($email_status == 'inactive')
+                    <p class="rs__note">{{ __('frontend.success.email_failed') }}</p>
+                @endif
+            @endif
+
+            <div class="rs__acts">
+                @if($order)
+                    <a href="{{ route('user.order.show', $order->id) }}" class="btn btn--primary">{{ __('frontend.success.receipt') }}</a>
+                    <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--ghost">
+                        <i class="fas fa-download" aria-hidden="true"></i>
+                        <span>{{ __('frontend.success.invoice') }}</span>
+                    </a>
+                @endif
+                <a href="{{ route('home') }}" class="{{ $order ? 'rs__home' : 'btn btn--primary' }}">{{ __('frontend.success.home') }}</a>
+            </div>
+        </div>
+
+        <div class="rs-next">
+            <h2 class="rs-next__title">{{ __('frontend.success.next_title') }}</h2>
+            <ol class="rs-next__list">
+                <li class="rs-next__item" style="--i: 0">
+                    <span class="rs-next__no" aria-hidden="true">1</span>
+                    <p>{{ __('frontend.success.next_one') }}</p>
+                </li>
+                <li class="rs-next__item" style="--i: 1">
+                    <span class="rs-next__no" aria-hidden="true">2</span>
+                    <p>{{ __('frontend.success.next_two') }}</p>
+                </li>
+                <li class="rs-next__item" style="--i: 2">
+                    <span class="rs-next__no" aria-hidden="true">3</span>
+                    <p>{!! str_replace(':email', $supportMail, e(__('frontend.success.next_three'))) !!}</p>
+                </li>
+            </ol>
         </div>
     </div>
 </section>

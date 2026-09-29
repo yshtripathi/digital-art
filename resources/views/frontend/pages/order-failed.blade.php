@@ -24,42 +24,41 @@
             <li class="pay-steps__item"><span class="pay-steps__no">3</span>{{ __('frontend.cart.step_done') }}</li>
         </ol>
 
-        <div class="pay__grid">
-            <div class="pay-card res res--fail" style="--i: 0">
-                <div class="res__head">
-                    <span class="res__mark" aria-hidden="true"><i class="fas fa-times"></i></span>
-                    <div>
-                        <h2 class="res__title">{{ __('frontend.failed.heading') }}</h2>
-                        <p class="res__lead">{{ __('frontend.failed.lead') }}</p>
-                    </div>
-                </div>
-
-                <div class="res__box">
-                    <p class="res__box-title">{{ __('frontend.failed.checks') }}</p>
-                    <ul class="res__checks">
-                        @foreach($fixes as $fix)
-                            <li><i class="fas fa-circle" aria-hidden="true"></i><span>{{ $fix }}</span></li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                <div class="res__acts">
-                    <a href="{{ route('points.topup') }}" class="btn btn--primary">
-                        <i class="fas fa-redo" aria-hidden="true"></i>
-                        <span>{{ __('frontend.failed.retry') }}</span>
-                    </a>
-                    <a href="{{ route('home') }}" class="btn btn--dark">{{ __('frontend.failed.home') }}</a>
-                </div>
+        <div class="rs rs--fail">
+            <div class="rs__hero">
+                <svg class="rs__mark" viewBox="0 0 52 52" aria-hidden="true">
+                    <circle class="rs__ring" cx="26" cy="26" r="24" pathLength="1"/>
+                    <path class="rs__sign" d="M18 18 L34 34 M34 18 L18 34" pathLength="1"/>
+                </svg>
+                <h2 class="rs__title">{{ __('frontend.failed.heading') }}</h2>
+                <p class="rs__lead">{{ __('frontend.failed.lead') }}</p>
             </div>
 
-            <aside class="pay__rail">
-                <div class="pay-sum res-help">
-                    <span class="res-help__icon" aria-hidden="true"><i class="fas fa-headset"></i></span>
-                    <h2 class="pay-sum__title">{{ __('frontend.failed.help_title') }}</h2>
-                    <p class="res-help__text">{!! str_replace(':email', $supportMail, e(__('frontend.failed.help_text'))) !!}</p>
-                    <a href="{{ route('contact') }}" class="btn btn--dark btn--block">{{ __('frontend.header.contact') }}</a>
-                </div>
-            </aside>
+            <div class="rs__checks">
+                <p class="rs__checks-title">{{ __('frontend.failed.checks') }}</p>
+                <ol class="rs__checks-list">
+                    @foreach($fixes as $fix)
+                        <li style="--i: {{ $loop->index }}">{{ $fix }}</li>
+                    @endforeach
+                </ol>
+            </div>
+
+            <div class="rs__acts">
+                <a href="{{ route('points.topup') }}" class="btn btn--primary rs__retry">
+                    <i class="fas fa-redo" aria-hidden="true"></i>
+                    <span>{{ __('frontend.failed.retry') }}</span>
+                </a>
+                <a href="{{ route('home') }}" class="btn btn--ghost">{{ __('frontend.failed.home') }}</a>
+            </div>
+        </div>
+
+        <div class="rs-help">
+            <span class="rs-help__icon" aria-hidden="true"><i class="fas fa-headset"></i></span>
+            <div class="rs-help__body">
+                <h2 class="rs-help__title">{{ __('frontend.failed.help_title') }}</h2>
+                <p class="rs-help__text">{!! str_replace(':email', $supportMail, e(__('frontend.failed.help_text'))) !!}</p>
+            </div>
+            <a href="{{ route('contact') }}" class="btn btn--primary rs-help__btn">{{ __('frontend.header.contact') }}</a>
         </div>
     </div>
 </section>

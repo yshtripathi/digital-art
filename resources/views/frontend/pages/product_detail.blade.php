@@ -169,24 +169,41 @@
             </div>
         </div>
 
-        @if($product_detail->description)
+        @if($product_detail->description || $hasLevels)
             <section class="pd-about" aria-labelledby="cdAboutTitle">
                 <div class="pd-about__body">
                     <h2 id="cdAboutTitle" class="pd-about__title">{{ __('frontend.course.about') }}</h2>
-                    <div class="pd-about__text">{!! nl2br(e($product_detail->description)) !!}</div>
+                    @if($product_detail->description)
+                        <div class="pd-about__text">{!! nl2br(e($product_detail->description)) !!}</div>
+                    @elseif($product_detail->summary)
+                        <div class="pd-about__text">{{ $product_detail->summary }}</div>
+                    @endif
                 </div>
-                <div class="pd-orbit" aria-hidden="true">
-                    <span class="pd-orbit__track"></span>
-                    <span class="pd-orbit__core"><i class="fas fa-book-open"></i></span>
-                    <div class="pd-orbit__ring">
-                        <span class="pd-orbit__icon pd-orbit__icon--0" style="--a: 0deg"><span><i class="fas fa-chart-line"></i></span></span>
-                        <span class="pd-orbit__icon pd-orbit__icon--1" style="--a: 60deg"><span><i class="fas fa-chart-bar"></i></span></span>
-                        <span class="pd-orbit__icon pd-orbit__icon--2" style="--a: 120deg"><span><i class="fas fa-balance-scale"></i></span></span>
-                        <span class="pd-orbit__icon pd-orbit__icon--0" style="--a: 180deg"><span><i class="fas fa-university"></i></span></span>
-                        <span class="pd-orbit__icon pd-orbit__icon--1" style="--a: 240deg"><span><i class="fas fa-calculator"></i></span></span>
-                        <span class="pd-orbit__icon pd-orbit__icon--2" style="--a: 300deg"><span><i class="fas fa-globe"></i></span></span>
-                    </div>
-                </div>
+
+                <aside class="pd-glance">
+                    <p class="pd-glance__title">{{ __('frontend.course.glance') }}</p>
+                    <dl class="pd-glance__list">
+                        @if($cdCategory)
+                            <div>
+                                <dt>{{ __('frontend.header.categories') }}</dt>
+                                <dd><a href="{{ route('product-lists', $cdCategory->slug) }}">{{ $cdCategory->title }}</a></dd>
+                            </div>
+                        @endif
+                        @if($hasLevels)
+                            <div>
+                                <dt>{{ __('frontend.course.levels') }}</dt>
+                                <dd>{{ $levelCount }}</dd>
+                            </div>
+                            <div>
+                                <dt>{{ __('frontend.course.from') }}</dt>
+                                <dd>{{ number_format($minPoints) }} {{ __('frontend.course.credits') }}</dd>
+                            </div>
+                        @endif
+                    </dl>
+                    @if($hasLevels)
+                        <a href="#cdLevels" class="btn btn--primary btn--block">{{ __('frontend.course.choose') }}</a>
+                    @endif
+                </aside>
             </section>
         @endif
     </div>

@@ -135,10 +135,24 @@ return [
         'end_title'     => '自分に合ったレベルから始めましょう',
         'end_text'      => 'アカウントを作成して学習ガイドを比べ、準備が整ったら最初のレベルを解放しましょう。アクセス情報は、通常お支払いの確認から24時間以内にメールで届きます。',
         'register'      => 'アカウントを作成する',
+        'calc_label'    => 'クレジット計算ツール',
+        'calc_title'    => 'チャージ額でもらえるクレジットを確認',
+        'calc_text'     => '金額を選ぶと、ボーナス区分と受け取れるクレジット数が表示されます。',
+        'calc_login'    => 'ログインしてチャージ',
+        'collage_label' => '自分のペースで',
+        'collage_title' => '好きな時間、好きな場所で学習',
+        'collage_text'  => '解除したレベルはアカウントで開けるため、自宅でも外出先でも読み進められます。決まった時間割はありません。',
+        'collage_one'   => '解除したレベルはアカウントに保存',
+        'collage_two'   => '時間割や締め切りはなし',
+        'collage_three' => 'すべての学習ガイドに4つのレベル',
     ],
 
     // resources/views/frontend/pages/login.blade.php
     'login' => [
+        'side_title'           => '前回の続きから始めましょう',
+        'side_1'               => 'クレジット残高をいつでも確認できます',
+        'side_2'               => '解除したレベルにすぐ戻れます',
+        'side_3'               => '領収書をまとめて確認できます',
         'tab'                  => 'ログイン',
         'heading'              => 'またのご利用ありがとうございます',
         'text'                 => 'ログインして、クレジット残高、利用中のレベル、領収書をご確認ください。',
@@ -160,6 +174,10 @@ return [
 
     // resources/views/frontend/pages/register.blade.php
     'register' => [
+        'side_title'           => '簡単な手順ですぐに始められます',
+        'side_1'               => 'メールアドレスでアカウントを作成',
+        'side_2'               => '必要なときにクレジットを追加',
+        'side_3'               => '必要なレベルだけを解除',
         'tab'                  => '新規登録',
         'heading'              => 'アカウントを登録する',
         'text'                 => 'アカウントを作成すると、クレジット、利用中のレベル、領収書をひとつの場所で管理できます。',
@@ -192,6 +210,10 @@ return [
 
     // resources/views/frontend/pages/forget-pwd-form.blade.php
     'forgot' => [
+        'side_title'           => 'アカウントに戻りましょう',
+        'side_1'               => 'アカウントに登録したメールアドレスを入力',
+        'side_2'               => '届いたメールのリンクを開く',
+        'side_3'               => '新しいパスワードを設定してログイン',
         'tab'                 => 'パスワードをお忘れの方',
         'heading'             => '新しいパスワードの設定',
         'text'                => 'アカウントにご登録のメールアドレスをご入力ください。該当するアカウントがある場合は、新しいパスワードを設定するためのリンクをお送りします。',
@@ -213,6 +235,7 @@ return [
     'contact' => [
         'tab'                 => 'お問い合わせ',
         'aside_title'         => '連絡先のご案内',
+        'aside_text'          => 'フォームからメッセージを送るか、以下の連絡先をご利用ください。',
         'detail_company'      => '運営会社',
         'detail_email'        => 'メールアドレス',
         'detail_address'      => '所在地',
@@ -328,6 +351,15 @@ return [
         'add'                => 'カートに入れる',
         'adding'             => 'カートに入れています…',
         'secure'             => 'カードでのお支払いは、決済代行会社が暗号化通信を用いて処理します。',
+        'how_title'          => 'クレジット追加の流れ',
+        'how_1_title'        => '金額を選ぶ',
+        'how_1_text'         => '任意の金額を入力するか、おすすめの金額から選択',
+        'how_2_title'        => 'クレジットを確認',
+        'how_2_text'         => '計算ツールがあなたの区分のボーナス率をすぐに反映',
+        'how_3_title'        => 'お支払い',
+        'how_3_text'         => 'クレジットをカートに入れ、カード決済を完了',
+        'how_4_title'        => 'レベルを解除',
+        'how_4_text'         => '読みたい学習ガイドのレベルにクレジットを使用',
     ],
 
     // resources/views/frontend/pages/product-lists.blade.php
@@ -351,6 +383,7 @@ return [
         'empty_title'        => 'このカテゴリーは現在準備中です',
         'empty_text'         => 'このカテゴリーには現在学習ガイドがありません。全ガイドの一覧からお探しください。',
         'browse_all'         => '全学習ガイドを見る',
+        'guides'             => ':count件の学習ガイド',
     ],
 
     // resources/views/frontend/pages/product_detail.blade.php
@@ -378,6 +411,7 @@ return [
         'level_intermediate' => '中級',
         'level_advanced'     => '上級',
         'level_expert'       => 'エキスパート',
+        'glance'             => '概要',
     ],
 
     // resources/views/frontend/pages/coursecart.blade.php
@@ -396,6 +430,7 @@ return [
         'totals'             => 'クレジットの明細',
         'covered'            => '残高で支払える割合',
         'not_enough'         => 'クレジットが足りません。続けるには、クレジットを追加で購入してください。',
+        'short_by'           => 'これらのレベルを解除するには、あと:countクレジット必要です。',
         'unlock'             => 'クレジットを使って解放',
         'buy_credits'        => 'クレジットを入手',
         'empty_title'        => 'レベルはまだ選ばれていません',
@@ -678,4 +713,7 @@ return [
         'dismiss'   => 'このメッセージを閉じる',
     ],
 
+    'page' => [
+        'toc'                => '目次',
+    ],
 ];

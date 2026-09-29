@@ -29,27 +29,54 @@
         ],
 ])
 
-<section class="shop" data-shop>
+<section class="shop">
     <div class="container">
-        @if($products->count())
+        @if($isCat)
+            @php
+                $shIsJa = app()->getLocale() == 'ja';
+                $shCatTitle = $shIsJa && filled($category->title_jp ?? null) ? $category->title_jp : $category->title;
+                $shCatText = $shIsJa && filled($category->summary_jp ?? null) ? $category->summary_jp : ($category->summary ?? '');
+                $shCatRaw = trim((string) ($category->photo ?? ''));
+                $shCatImg = $shCatRaw !== '' && file_exists(public_path(ltrim($shCatRaw, '/'))) ? asset(ltrim($shCatRaw, '/')) : null;
+                $shTotal = $isPaginator ? $products->total() : $products->count();
+                $shStack = collect($isPaginator ? $products->items() : $products)->map(function ($p) {
+                    $raw = $p->photo ? trim(explode(',', $p->photo)[0]) : '';
+                    return $raw !== '' && file_exists(public_path(ltrim($raw, '/'))) ? asset(ltrim($raw, '/')) : null;
+                })->filter()->take(3)->values();
+            @endphp
+            <header class="shop-cat">
+                <span class="shop-cat__media {{ $shCatImg ? '' : 'is-empty' }}">
+                    @if($shCatImg)
+                        <img src="{{ $shCatImg }}" alt="{{ $shCatTitle }}" width="400" height="400">
+                    @else
+                        <i class="fas fa-layer-group" aria-hidden="true"></i>
+                    @endif
+                </span>
+                <div class="shop-cat__body">
+                    <p class="eyebrow shop-cat__label">{{ __('frontend.header.categories') }}</p>
+                    <h2 class="shop-cat__title">{{ $shCatTitle }}</h2>
+                    @if(filled($shCatText))
+                        <p class="shop-cat__text">{{ $shCatText }}</p>
+                    @endif
+                    <span class="shop-cat__count"><i class="fas fa-book-open" aria-hidden="true"></i>{{ trans_choice('frontend.catalog.guides', $shTotal, ['count' => number_format($shTotal)]) }}</span>
+                </div>
+                @if($shStack->isNotEmpty())
+                    <div class="shop-cat__stack" aria-hidden="true">
+                        @foreach($shStack as $shImg)
+                            <span class="shop-cat__card" style="--n: {{ $loop->index }}; --c: {{ $shStack->count() }}"><img src="{{ $shImg }}" alt="" width="300" height="300" decoding="async"></span>
+                        @endforeach
+                    </div>
+                @endif
+            </header>
+        @elseif($products->count())
             <div class="shop-intro">
                 <h2 class="shop-intro__title">{{ __('frontend.catalog.intro_title') }}</h2>
                 <p class="shop-intro__text">{{ __('frontend.catalog.intro_text') }}</p>
             </div>
+        @endif
 
-            <div class="shop-search">
-                <label class="shop-search__icon" for="shop-q">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                    <span class="vh">{{ __('frontend.catalog.search') }}</span>
-                </label>
-                <input type="search" id="shop-q" class="shop-search__input" placeholder="{{ __('frontend.catalog.search_placeholder') }}" autocomplete="off" data-shop-q>
-                <button type="button" class="shop-search__clear" aria-label="{{ __('frontend.catalog.clear') }}" hidden data-shop-x>
-                    <i class="fas fa-times" aria-hidden="true"></i>
-                </button>
-                <span class="shop-search__count" aria-live="polite" data-shop-count data-template="{{ __('frontend.catalog.count') }}">{{ __('frontend.catalog.count', ['shown' => $products->count(), 'total' => $products->count()]) }}</span>
-            </div>
-
-            <ul class="shop-grid" data-shop-grid>
+        @if($products->count())
+            <ul class="shop-grid">
                 @foreach($products as $course)
                     @php
                         $rawImg = $course->photo ? trim(explode(',', $course->photo)[0]) : '';
@@ -57,8 +84,9 @@
                         $courseLevels = $course->levels ?? collect();
                         $lvCount = $courseLevels->count();
                         $minPoints = $lvCount ? $courseLevels->min('price_in_points') : 0;
+                        $courseTitle = app()->getLocale() == 'ja' && filled($course->title_jp ?? null) ? $course->title_jp : $course->title;
                     @endphp
-                    <li class="shop-item" data-shop-item data-title="{{ \Illuminate\Support\Str::lower($course->title) }}" style="--i: {{ $loop->index % 8 }}">
+                    <li class="shop-item" style="--i: {{ $loop->index % 8 }}">
                         <a href="{{ route('product-detail', $course->slug) }}" class="shop-item__link">
                             <span class="shop-item__media media-frame {{ $pimg ? '' : 'is-empty' }}">
                                 @if($pimg)
@@ -70,21 +98,21 @@
                                     <span class="shop-item__levels"><i class="fas fa-layer-group" aria-hidden="true"></i>{{ trans_choice('frontend.catalog.levels', $lvCount, ['count' => $lvCount]) }}</span>
                                 @endif
                             </span>
-                            <span class="shop-item__name">{{ $course->title }}</span>
-                            @if($minPoints)
-                                <span class="shop-item__price">{{ __('frontend.catalog.from') }} <strong>{{ number_format($minPoints) }}</strong> {{ __('frontend.catalog.credits') }}</span>
-                            @else
-                                <span class="shop-item__price">{{ __('frontend.catalog.no_levels') }}</span>
-                            @endif
+                            <span class="shop-item__body">
+                                <span class="shop-item__name">{{ $courseTitle }}</span>
+                                <span class="shop-item__foot">
+                                    @if($minPoints)
+                                        <span class="shop-item__price">{{ __('frontend.catalog.from') }} <strong>{{ number_format($minPoints) }}</strong> {{ __('frontend.catalog.credits') }}</span>
+                                    @else
+                                        <span class="shop-item__price">{{ __('frontend.catalog.no_levels') }}</span>
+                                    @endif
+                                    <span class="shop-item__go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                                </span>
+                            </span>
                         </a>
                     </li>
                 @endforeach
             </ul>
-
-            <div class="shop-none" hidden data-shop-none>
-                <p>{{ __('frontend.catalog.no_results') }}</p>
-                <button type="button" class="btn btn--dark" data-shop-reset>{{ __('frontend.catalog.clear') }}</button>
-            </div>
 
             @if($isPaginator && $products->hasPages())
                 <nav class="shop-pager" aria-label="{{ __('frontend.catalog.pages') }}">
@@ -124,46 +152,3 @@
     </div>
 </section>
 @endsection
-
-@push('scripts')
-<script>
-(function () {
-    'use strict';
-
-    var root = document.querySelector('[data-shop]');
-    var grid = root ? root.querySelector('[data-shop-grid]') : null;
-    if (!grid) { return; }
-
-    var items = Array.prototype.slice.call(grid.querySelectorAll('[data-shop-item]'));
-    var query = root.querySelector('[data-shop-q]');
-    var none = root.querySelector('[data-shop-none]');
-    var reset = root.querySelector('[data-shop-reset]');
-    var clear = root.querySelector('[data-shop-x]');
-    var count = root.querySelector('[data-shop-count]');
-    var template = count ? count.dataset.template : '';
-
-    function apply() {
-        var term = (query.value || '').trim().toLowerCase();
-        var shown = 0;
-        items.forEach(function (item) {
-            item.hidden = !(!term || item.dataset.title.indexOf(term) !== -1);
-            if (!item.hidden) { shown++; }
-        });
-        none.hidden = shown !== 0;
-        if (clear) { clear.hidden = !query.value; }
-        if (count) { count.textContent = template.replace(':shown', shown).replace(':total', items.length); }
-    }
-
-    function wipe() {
-        query.value = '';
-        apply();
-        query.focus();
-    }
-
-    query.addEventListener('input', apply);
-    if (reset) { reset.addEventListener('click', wipe); }
-    if (clear) { clear.addEventListener('click', wipe); }
-    apply();
-}());
-</script>
-@endpush

@@ -5,13 +5,13 @@ return [
     // Dummy fallbacks, used only when the miscs table value is empty
     'company' => [
         'name'    => '[Company Name]',
-        'email'   => 'info@craft-course.com',
+        'email'   => '[Company Email]',
         'address' => '[Company Address]',
     ],
 
     // resources/views/frontend/layouts/head.blade.php
     'head' => [
-        'site'        => 'Craft Courses',
+        'site'        => 'KnowledgeCademy',
         'home'        => ':site — 自分のペースで進める学習ガイド',
         'description' => '初級からエキスパートまでの4段階に分かれた学習ガイドです。カテゴリーから分野を探し、各レベルの内容を確認して、選んだレベルにだけクレジットを使えます。',
     ],
@@ -44,6 +44,9 @@ return [
         'close_menu'    => 'メニューを閉じる',
         'language'      => '表示言語',
         'currency'      => '表示通貨',
+        'cur_USD'       => '米ドル',
+        'cur_JPY'       => '日本円',
+        'cur_HKD'       => '香港ドル',
         'mail'          => 'メールを送る',
         'credits'       => 'クレジット',
         'browse'        => 'ガイド一覧を見る',

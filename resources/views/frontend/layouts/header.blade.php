@@ -12,11 +12,32 @@
     $activeSlug   = Route::is('product-lists') ? request()->route('slug') : null;
     $logoFile     = file_exists(public_path('assets/images/logo.webp')) ? asset('assets/images/logo.webp') : null;
 
+    $catIcons = [
+        'software-development-engineering'     => 'fa-code',
+        'data-automation-ai'                   => 'fa-brain',
+        'it-infrastructure-cloud-security'     => 'fa-server',
+        'product-design-ux-digital-experience' => 'fa-pencil-ruler',
+        'devops-agile-technology-leadership'   => 'fa-infinity',
+    ];
+
+    $catTitle = function ($cat) use ($isJa) {
+        return $isJa && filled($cat->title_jp ?? null) ? $cat->title_jp : $cat->title;
+    };
+    $catText = function ($cat) use ($isJa) {
+        $text = $isJa && filled($cat->summary_jp ?? null) ? $cat->summary_jp : ($cat->summary ?? '');
+        return \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags(html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8')))), 90, '…');
+    };
+
     $languages = [
         ['code' => 'en', 'flag' => 'fi-gb', 'short' => 'EN', 'label' => 'English', 'on' => !$isJa],
         ['code' => 'ja', 'flag' => 'fi-jp', 'short' => 'JA', 'label' => '日本語', 'on' => $isJa],
     ];
     $activeLanguage = $isJa ? $languages[1] : $languages[0];
+
+    $curName = function ($code, $fallback = null) {
+        $key = 'frontend.header.cur_' . $code;
+        return Lang::has($key) ? __($key) : ($fallback ?: $code);
+    };
 
     $navLinks = [
         ['route' => 'about-us', 'label' => __('frontend.header.about')],
@@ -25,226 +46,261 @@
 @endphp
 
 <header class="hdr" data-hdr>
-    <div class="hdr-strip">
-        <div class="container hdr-strip__row">
-            @if($hdMail)
-                <a href="mailto:{{ $hdMail }}" class="hdr-strip__mail" aria-label="{{ __('frontend.header.mail') }}: {{ $hdMail }}">
-                    <i class="far fa-envelope" aria-hidden="true"></i>
-                    <span>{{ $hdMail }}</span>
-                </a>
+    <div class="container hdr__row">
+        <a href="{{ route('home') }}" class="brand" aria-label="{{ $siteName }}">
+            @if($logoFile)
+                <img src="{{ $logoFile }}" alt="{{ $siteName }}" width="716" height="210" class="brand__logo">
+            @else
+                <span class="brand__name">{{ $siteName }}</span>
             @endif
+        </a>
 
-            <div class="hdr-strip__prefs">
-                <div class="pick" data-pick>
-                    <button type="button" class="pick__btn" aria-expanded="false" aria-controls="pick-lang" aria-label="{{ __('frontend.header.language') }}" data-pick-btn>
-                        <i class="fi {{ $activeLanguage['flag'] }} pick__flag" aria-hidden="true"></i>
-                        <span>{{ $activeLanguage['short'] }}</span>
-                        <i class="fas fa-chevron-down pick__chev" aria-hidden="true"></i>
-                    </button>
-                    <ul class="pick__menu pick__menu--end" id="pick-lang">
-                        @foreach($languages as $lang)
-                            <li>
-                                <a href="{{ route('change.language', $lang['code']) }}" class="pick__opt {{ $lang['on'] ? 'is-active' : '' }}" @if($lang['on']) aria-current="true" @endif>
-                                    <i class="fi {{ $lang['flag'] }} pick__flag" aria-hidden="true"></i>
-                                    <span>{{ $lang['label'] }}</span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                <span class="hdr-strip__sep" aria-hidden="true"></span>
-
-                <div class="pick" data-pick>
-                    <button type="button" class="pick__btn" aria-expanded="false" aria-controls="pick-cur" aria-label="{{ __('frontend.header.currency') }}" data-pick-btn>
-                        <span class="pick__sym" aria-hidden="true">{{ Helper::getCurrencySymbol($currency) }}</span>
-                        <span>{{ $currency }}</span>
-                        <i class="fas fa-chevron-down pick__chev" aria-hidden="true"></i>
-                    </button>
-                    <ul class="pick__menu pick__menu--end" id="pick-cur">
-                        @foreach($currencyList as $cur)
-                            <li>
-                                <a href="{{ route('change.currency', $cur->code) }}" class="pick__opt {{ $currency == $cur->code ? 'is-active' : '' }}" @if($currency == $cur->code) aria-current="true" @endif>
-                                    <span class="pick__sym" aria-hidden="true">{{ Helper::getCurrencySymbol($cur->code) }}</span>
-                                    <span>{{ $cur->code }}</span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="hdr-bar">
-        <div class="container hdr-bar__row">
-            <a href="{{ route('home') }}" class="hdr-logo">
-                @if($logoFile)
-                    <img src="{{ $logoFile }}" alt="{{ $siteName }}" width="716" height="210">
-                @else
-                    <span>{{ $siteName }}</span>
-                @endif
-            </a>
-
-            <div class="hdr-bar__mid">
-                <nav class="hdr-nav" aria-label="{{ __('frontend.header.menu_label') }}">
-                    <ul class="hdr-nav__list">
-                        <li>
-                            <a href="{{ route('home') }}" class="hdr-link {{ Route::is('home') ? 'is-active' : '' }}" @if(Route::is('home')) aria-current="page" @endif>{{ __('frontend.header.home') }}</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('product-lists') }}" class="hdr-link {{ Route::is('product-lists') && !$activeSlug ? 'is-active' : '' }}" @if(Route::is('product-lists') && !$activeSlug) aria-current="page" @endif>{{ __('frontend.header.materials') }}</a>
-                        </li>
-                        @if($navCats->isNotEmpty())
-                            <li class="pick" data-pick data-pick-hover>
-                                <button type="button" class="hdr-link {{ $activeSlug ? 'is-active' : '' }}" aria-expanded="false" aria-controls="pick-cats" data-pick-btn>
-                                    {{ __('frontend.header.categories') }}
-                                    <i class="fas fa-chevron-down pick__chev" aria-hidden="true"></i>
-                                </button>
-                                <ul class="pick__menu pick__menu--cats" id="pick-cats">
+        <nav class="hdr__nav" aria-label="{{ __('frontend.header.menu_label') }}" data-spot-nav>
+            <span class="hdr__spot" aria-hidden="true" data-spot></span>
+            <ul class="hdr__list">
+                <li>
+                    <a href="{{ route('home') }}" class="hdr__link {{ Route::is('home') ? 'is-active' : '' }}" @if(Route::is('home')) aria-current="page" @endif>{{ __('frontend.header.home') }}</a>
+                </li>
+                <li>
+                    <a href="{{ route('product-lists') }}" class="hdr__link {{ Route::is('product-lists') && !$activeSlug ? 'is-active' : '' }}" @if(Route::is('product-lists') && !$activeSlug) aria-current="page" @endif>{{ __('frontend.header.materials') }}</a>
+                </li>
+                @if($navCats->isNotEmpty())
+                    <li class="pick hdr__cats" data-pick data-pick-hover>
+                        <button type="button" class="hdr__link {{ $activeSlug ? 'is-active' : '' }}" aria-expanded="false" aria-controls="pick-cats" data-pick-btn>
+                            {{ __('frontend.header.categories') }}
+                            <i class="fas fa-chevron-down pick__chev" aria-hidden="true"></i>
+                        </button>
+                        <div class="mega" id="pick-cats">
+                            <div class="mega__grid">
+                                <ul class="mega__list">
                                     @foreach($navCats as $cat)
                                         <li>
-                                            <a href="{{ route('product-lists', $cat->slug) }}" class="pick__cat {{ $activeSlug === $cat->slug ? 'is-active' : '' }}">
-                                                <span>{{ $cat->title }}</span>
-                                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                            <a href="{{ route('product-lists', $cat->slug) }}" class="mega__cat {{ $activeSlug === $cat->slug ? 'is-active' : '' }}" @if($activeSlug === $cat->slug) aria-current="page" @endif>
+                                                <span class="mega__icon" aria-hidden="true"><i class="fas {{ $catIcons[$cat->slug] ?? 'fa-layer-group' }}"></i></span>
+                                                <span class="mega__body">
+                                                    <span class="mega__title">{{ $catTitle($cat) }}</span>
+                                                    @if($catText($cat) !== '')
+                                                        <span class="mega__text">{{ $catText($cat) }}</span>
+                                                    @endif
+                                                </span>
+                                                <i class="fas fa-arrow-right mega__go" aria-hidden="true"></i>
                                             </a>
                                             @if($cat->child_cat && $cat->child_cat->count())
-                                                <ul class="pick__subs">
+                                                <ul class="mega__subs">
                                                     @foreach($cat->child_cat as $sub)
-                                                        <li><a href="{{ route('product-lists', $sub->slug) }}" class="pick__sub {{ $activeSlug === $sub->slug ? 'is-active' : '' }}">{{ $sub->title }}</a></li>
+                                                        <li><a href="{{ route('product-lists', $sub->slug) }}" class="{{ $activeSlug === $sub->slug ? 'is-active' : '' }}">{{ $catTitle($sub) }}</a></li>
                                                     @endforeach
                                                 </ul>
                                             @endif
                                         </li>
                                     @endforeach
                                 </ul>
-                            </li>
-                        @endif
-                        @foreach($navLinks as $link)
-                            <li>
-                                <a href="{{ route($link['route']) }}" class="hdr-link {{ Route::is($link['route']) ? 'is-active' : '' }}" @if(Route::is($link['route'])) aria-current="page" @endif>{{ $link['label'] }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </nav>
-            </div>
 
-            <div class="hdr-bar__end">
-                @auth
-                    <a href="{{ route('points.topup') }}" class="hdr-credits" title="{{ __('frontend.header.buy_credits') }}">
-                        <i class="fas fa-coins" aria-hidden="true"></i>
-                        <span>{{ number_format($balance) }}</span>
-                        <span class="vh">{{ __('frontend.header.credits') }}</span>
-                    </a>
-
-                    <div class="pick hdr-acct" data-pick data-pick-hover>
-                        <button type="button" class="hdr-avatar" aria-expanded="false" aria-controls="pick-acct" aria-label="{{ __('frontend.header.account_menu') }}" data-pick-btn>{{ $userInitial }}</button>
-                        <div class="pick__menu pick__menu--end pick__menu--acct" id="pick-acct">
-                            <p class="pick__who">
-                                <span>{{ __('frontend.header.signed_in') }}</span>
-                                <strong>{{ $userName }}</strong>
-                            </p>
-                            <a href="{{ route('user') }}" class="pick__opt"><i class="far fa-user" aria-hidden="true"></i><span>{{ __('frontend.header.account') }}</span></a>
-                            <a href="{{ route('user') }}" class="pick__opt"><i class="fas fa-book-open" aria-hidden="true"></i><span>{{ __('frontend.header.library') }}</span></a>
-                            <a href="{{ route('points.topup') }}" class="pick__opt"><i class="fas fa-coins" aria-hidden="true"></i><span>{{ __('frontend.header.buy_credits') }}</span></a>
-                            <a href="{{ route('user.logout') }}" class="pick__opt pick__opt--out"><i class="fas fa-sign-out-alt" aria-hidden="true"></i><span>{{ __('frontend.header.logout') }}</span></a>
+                                <div class="mega__aside">
+                                    <p class="eyebrow">{{ __('frontend.header.categories') }}</p>
+                                    <p class="mega__count">{{ $navCats->count() }}</p>
+                                    <a href="{{ route('product-lists') }}" class="btn btn--primary btn--sm">{{ __('frontend.header.browse') }} <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                                    @if($hdMail)
+                                        <a href="mailto:{{ $hdMail }}" class="mega__mail" aria-label="{{ __('frontend.header.mail') }}: {{ $hdMail }}">
+                                            <i class="far fa-envelope" aria-hidden="true"></i>
+                                            <span>{{ $hdMail }}</span>
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
+                    </li>
+                @endif
+                @foreach($navLinks as $link)
+                    <li>
+                        <a href="{{ route($link['route']) }}" class="hdr__link {{ Route::is($link['route']) ? 'is-active' : '' }}" @if(Route::is($link['route'])) aria-current="page" @endif>{{ $link['label'] }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </nav>
+
+        <div class="hdr__end">
+            <div class="pick hdr__prefs" data-pick>
+                <button type="button" class="hdr__prefs-btn" aria-expanded="false" aria-controls="pick-prefs" aria-label="{{ __('frontend.header.language') }} / {{ __('frontend.header.currency') }}" data-pick-btn>
+                    <i class="fi {{ $activeLanguage['flag'] }} hdr__flag" aria-hidden="true"></i>
+                    <span>{{ $activeLanguage['short'] }}</span>
+                    <span class="hdr__prefs-sep" aria-hidden="true"></span>
+                    <span class="hdr__cur-sym" aria-hidden="true">{{ Helper::getCurrencySymbol($currency) }}</span>
+                    <span>{{ $currency }}</span>
+                    <i class="fas fa-chevron-down pick__chev" aria-hidden="true"></i>
+                </button>
+                <div class="pick__menu pick__menu--end pick__menu--prefs" id="pick-prefs">
+                    <p class="pick__label">{{ __('frontend.header.language') }}</p>
+                    <div class="seg">
+                        @foreach($languages as $lang)
+                            <a href="{{ route('change.language', $lang['code']) }}" class="seg__opt {{ $lang['on'] ? 'is-active' : '' }}" @if($lang['on']) aria-current="true" @endif>
+                                <i class="fi {{ $lang['flag'] }} seg__flag" aria-hidden="true"></i>
+                                <span>{{ $lang['label'] }}</span>
+                            </a>
+                        @endforeach
                     </div>
-                @endauth
-
-                @guest
-                    <a href="{{ route('login.form') }}" class="hdr-login">{{ __('frontend.header.login') }}</a>
-                    <a href="{{ route('register.form') }}" class="btn btn--ghost hdr-join">{{ __('frontend.header.register') }}</a>
-                @endguest
-
-                <button type="button" class="hdr-cart" aria-expanded="false" aria-controls="sheet-cart" data-sheet-open="cart">
-                    <i class="fas fa-shopping-bag" aria-hidden="true"></i>
-                    @if($cartQty)
-                        <span class="hdr-cart__count" aria-hidden="true">{{ $cartQty }}</span>
-                    @endif
-                    <span class="vh">{{ __('frontend.header.open_cart') }}</span>
-                </button>
-
-                <button type="button" class="hdr-burger" aria-expanded="false" aria-controls="sheet-menu" aria-label="{{ __('frontend.header.open_menu') }}" data-sheet-open="menu">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </button>
+                    <p class="pick__label">{{ __('frontend.header.currency') }}</p>
+                    <div class="curs">
+                        @foreach($currencyList as $cur)
+                            <a href="{{ route('change.currency', $cur->code) }}" class="curs__opt {{ $currency == $cur->code ? 'is-active' : '' }}" @if($currency == $cur->code) aria-current="true" @endif>
+                                <span class="curs__sym" aria-hidden="true">{{ Helper::getCurrencySymbol($cur->code) }}</span>
+                                <span class="curs__name">{{ $curName($cur->code, $cur->name ?? null) }}</span>
+                                <span class="curs__code">{{ $cur->code }}</span>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
             </div>
+
+            <button type="button" class="hdr__icon hdr__cart" aria-expanded="false" aria-controls="drawer-cart" data-sheet-open="cart">
+                <i class="fas fa-shopping-bag" aria-hidden="true"></i>
+                @if($cartQty)
+                    <span class="hdr__badge" aria-hidden="true">{{ $cartQty }}</span>
+                @endif
+                <span class="vh">{{ __('frontend.header.open_cart') }}</span>
+            </button>
+
+            @auth
+                <a href="{{ route('points.topup') }}" class="hdr__credits" title="{{ __('frontend.header.buy_credits') }}">
+                    <i class="fas fa-coins" aria-hidden="true"></i>
+                    <span>{{ number_format($balance) }}</span>
+                    <span class="vh">{{ __('frontend.header.credits') }}</span>
+                </a>
+
+                <div class="pick hdr__acct" data-pick data-pick-hover>
+                    <button type="button" class="hdr__avatar" aria-expanded="false" aria-controls="pick-acct" aria-label="{{ __('frontend.header.account_menu') }}" data-pick-btn>{{ $userInitial }}</button>
+                    <div class="pick__menu pick__menu--end pick__menu--acct" id="pick-acct">
+                        <p class="pick__who">
+                            <span>{{ __('frontend.header.signed_in') }}</span>
+                            <strong>{{ $userName }}</strong>
+                        </p>
+                        <a href="{{ route('user') }}" class="pick__opt"><i class="far fa-user" aria-hidden="true"></i><span>{{ __('frontend.header.account') }}</span></a>
+                        <a href="{{ route('user') }}" class="pick__opt"><i class="fas fa-book-open" aria-hidden="true"></i><span>{{ __('frontend.header.library') }}</span></a>
+                        <a href="{{ route('points.topup') }}" class="pick__opt"><i class="fas fa-coins" aria-hidden="true"></i><span>{{ __('frontend.header.buy_credits') }}</span></a>
+                        <a href="{{ route('user.logout') }}" class="pick__opt pick__opt--out"><i class="fas fa-sign-out-alt" aria-hidden="true"></i><span>{{ __('frontend.header.logout') }}</span></a>
+                    </div>
+                </div>
+            @endauth
+
+            @guest
+                <div class="hdr__guest">
+                    <a href="{{ route('login.form') }}" class="hdr__login">{{ __('frontend.header.login') }}</a>
+                    <a href="{{ route('register.form') }}" class="btn btn--primary btn--sm hdr__join">{{ __('frontend.header.register') }}</a>
+                </div>
+            @endguest
+
+            <button type="button" class="hdr__icon hdr__burger" aria-expanded="false" aria-controls="drawer-menu" aria-label="{{ __('frontend.header.open_menu') }}" data-sheet-open="menu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </button>
         </div>
-        <span class="hdr-bar__progress" aria-hidden="true"></span>
     </div>
 </header>
 
-<div class="hdr-scrim" data-scrim hidden></div>
+<div class="scrim" data-scrim hidden></div>
 
-<div class="menu-sheet" id="sheet-menu" role="dialog" aria-modal="true" aria-label="{{ __('frontend.header.menu') }}" data-sheet="menu">
-    <div class="menu-sheet__top">
-        <a href="{{ route('home') }}" class="hdr-logo">
+<div class="drawer drawer--menu" id="drawer-menu" role="dialog" aria-modal="true" aria-label="{{ __('frontend.header.menu') }}" data-sheet="menu">
+    <div class="drawer__head">
+        <a href="{{ route('home') }}" class="brand" aria-label="{{ $siteName }}">
             @if($logoFile)
-                <img src="{{ $logoFile }}" alt="{{ $siteName }}" width="716" height="210">
+                <img src="{{ $logoFile }}" alt="{{ $siteName }}" width="716" height="210" class="brand__logo">
             @else
-                <span>{{ $siteName }}</span>
+                <span class="brand__name">{{ $siteName }}</span>
             @endif
         </a>
-        <button type="button" class="sheet-close" aria-label="{{ __('frontend.header.close_menu') }}" data-sheet-close>
+        <button type="button" class="hdr__icon" aria-label="{{ __('frontend.header.close_menu') }}" data-sheet-close>
             <i class="fas fa-times" aria-hidden="true"></i>
         </button>
     </div>
 
-    <nav class="menu-sheet__nav" aria-label="{{ __('frontend.header.mobile_label') }}">
-        <ul class="menu-sheet__list">
-            <li style="--i: 0"><a href="{{ route('home') }}" class="menu-sheet__link {{ Route::is('home') ? 'is-active' : '' }}" @if(Route::is('home')) aria-current="page" @endif>{{ __('frontend.header.home') }}</a></li>
-            <li style="--i: 1"><a href="{{ route('product-lists') }}" class="menu-sheet__link {{ Route::is('product-lists') && !$activeSlug ? 'is-active' : '' }}">{{ __('frontend.header.materials') }}</a></li>
-            @if($navCats->isNotEmpty())
-                <li style="--i: 2">
-                    <details class="menu-sheet__group" @if($activeSlug) open @endif>
-                        <summary class="menu-sheet__link">
-                            {{ __('frontend.header.categories') }}
-                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                        </summary>
-                        <ul class="menu-sheet__cats">
-                            @foreach($navCats as $cat)
-                                <li><a href="{{ route('product-lists', $cat->slug) }}" class="{{ $activeSlug === $cat->slug ? 'is-active' : '' }}">{{ $cat->title }}</a></li>
-                            @endforeach
-                        </ul>
-                    </details>
-                </li>
-            @endif
-            @foreach($navLinks as $link)
-                <li style="--i: {{ $loop->index + 3 }}"><a href="{{ route($link['route']) }}" class="menu-sheet__link {{ Route::is($link['route']) ? 'is-active' : '' }}" @if(Route::is($link['route'])) aria-current="page" @endif>{{ $link['label'] }}</a></li>
-            @endforeach
-            @auth
-                <li style="--i: {{ count($navLinks) + 3 }}"><a href="{{ route('user') }}" class="menu-sheet__link {{ Route::is('user') ? 'is-active' : '' }}">{{ __('frontend.header.library') }}</a></li>
-            @endauth
-        </ul>
-    </nav>
+    <div class="drawer__body">
+        <nav aria-label="{{ __('frontend.header.mobile_label') }}">
+            <ul class="mnav">
+                <li><a href="{{ route('home') }}" class="mnav__link {{ Route::is('home') ? 'is-active' : '' }}" @if(Route::is('home')) aria-current="page" @endif>{{ __('frontend.header.home') }}</a></li>
+                <li><a href="{{ route('product-lists') }}" class="mnav__link {{ Route::is('product-lists') && !$activeSlug ? 'is-active' : '' }}">{{ __('frontend.header.materials') }}</a></li>
+                @if($navCats->isNotEmpty())
+                    <li>
+                        <details class="mnav__group" @if($activeSlug) open @endif>
+                            <summary class="mnav__link">
+                                {{ __('frontend.header.categories') }}
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </summary>
+                            <ul class="mnav__cats">
+                                @foreach($navCats as $cat)
+                                    <li>
+                                        <a href="{{ route('product-lists', $cat->slug) }}" class="{{ $activeSlug === $cat->slug ? 'is-active' : '' }}">
+                                            <i class="fas {{ $catIcons[$cat->slug] ?? 'fa-layer-group' }}" aria-hidden="true"></i>
+                                            <span>{{ $catTitle($cat) }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </details>
+                    </li>
+                @endif
+                @foreach($navLinks as $link)
+                    <li><a href="{{ route($link['route']) }}" class="mnav__link {{ Route::is($link['route']) ? 'is-active' : '' }}" @if(Route::is($link['route'])) aria-current="page" @endif>{{ $link['label'] }}</a></li>
+                @endforeach
+                @auth
+                    <li><a href="{{ route('user') }}" class="mnav__link {{ Route::is('user') ? 'is-active' : '' }}">{{ __('frontend.header.library') }}</a></li>
+                @endauth
+            </ul>
+        </nav>
 
-    <div class="menu-sheet__foot">
+        <div class="drawer__prefs">
+            <p class="pick__label">{{ __('frontend.header.language') }}</p>
+            <div class="seg">
+                @foreach($languages as $lang)
+                    <a href="{{ route('change.language', $lang['code']) }}" class="seg__opt {{ $lang['on'] ? 'is-active' : '' }}" @if($lang['on']) aria-current="true" @endif>
+                        <i class="fi {{ $lang['flag'] }} seg__flag" aria-hidden="true"></i>
+                        <span>{{ $lang['label'] }}</span>
+                    </a>
+                @endforeach
+            </div>
+            <p class="pick__label">{{ __('frontend.header.currency') }}</p>
+            <div class="curs">
+                @foreach($currencyList as $cur)
+                    <a href="{{ route('change.currency', $cur->code) }}" class="curs__opt {{ $currency == $cur->code ? 'is-active' : '' }}" @if($currency == $cur->code) aria-current="true" @endif>
+                        <span class="curs__sym" aria-hidden="true">{{ Helper::getCurrencySymbol($cur->code) }}</span>
+                        <span class="curs__name">{{ $curName($cur->code, $cur->name ?? null) }}</span>
+                        <span class="curs__code">{{ $cur->code }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="drawer__foot">
         @auth
-            <a href="{{ route('points.topup') }}" class="btn btn--ghost btn--block">
+            <a href="{{ route('points.topup') }}" class="btn btn--primary btn--block">
                 <i class="fas fa-coins" aria-hidden="true"></i>{{ number_format($balance) }} {{ __('frontend.header.credits') }}
             </a>
-            <a href="{{ route('user.logout') }}" class="menu-sheet__out">{{ __('frontend.header.logout') }}</a>
+            <a href="{{ route('user.logout') }}" class="btn btn--ghost btn--block">{{ __('frontend.header.logout') }}</a>
         @else
-            <a href="{{ route('register.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.header.register') }}</a>
-            <a href="{{ route('login.form') }}" class="menu-sheet__out">{{ __('frontend.header.login') }}</a>
+            <a href="{{ route('register.form') }}" class="btn btn--primary btn--block">{{ __('frontend.header.register') }}</a>
+            <a href="{{ route('login.form') }}" class="btn btn--ghost btn--block">{{ __('frontend.header.login') }}</a>
         @endauth
+        @if($hdMail)
+            <a href="mailto:{{ $hdMail }}" class="drawer__mail" aria-label="{{ __('frontend.header.mail') }}: {{ $hdMail }}">
+                <i class="far fa-envelope" aria-hidden="true"></i>
+                <span>{{ $hdMail }}</span>
+            </a>
+        @endif
     </div>
 </div>
 
-<aside class="cart-sheet" id="sheet-cart" role="dialog" aria-modal="true" aria-labelledby="cart-sheet-title" data-sheet="cart">
-    <div class="cart-sheet__head">
-        <h2 class="cart-sheet__title" id="cart-sheet-title">
+<aside class="drawer drawer--cart" id="drawer-cart" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title" data-sheet="cart">
+    <div class="drawer__head">
+        <h2 class="drawer__title" id="cart-drawer-title">
             {{ __('frontend.header.cart') }}
-            <span class="cart-sheet__qty">{{ $cartQty }}</span>
+            <span class="tag">{{ $cartQty }}</span>
         </h2>
-        <button type="button" class="sheet-close sheet-close--light" aria-label="{{ __('frontend.header.close_cart') }}" data-sheet-close>
+        <button type="button" class="hdr__icon" aria-label="{{ __('frontend.header.close_cart') }}" data-sheet-close>
             <i class="fas fa-times" aria-hidden="true"></i>
         </button>
     </div>
 
-    <div class="cart-sheet__body">
+    <div class="drawer__body">
         @if(Helper::cartCount())
             <ul class="cart-lines">
                 @foreach(Helper::getAllProductFromCart() as $line)
@@ -257,7 +313,7 @@
                         if($line->product && $line->product_id < 1000) {
                             $linePhoto = trim(explode(',', $line->product->photo)[0]);
                             $linePhoto = $linePhoto !== '' && file_exists(public_path(ltrim($linePhoto, '/'))) ? $linePhoto : null;
-                            $lineTitle = $line->product->title;
+                            $lineTitle = $isJa && filled($line->product->title_jp ?? null) ? $line->product->title_jp : $line->product->title;
 
                             $level = \App\Models\ProductLevel::where('course_id', $line->product_id)
                                          ->where('price_in_points', $line->points)
@@ -325,15 +381,15 @@
                 }
             }
         @endphp
-        <div class="cart-sheet__foot">
+        <div class="drawer__foot">
             @if($hasCourses && Auth::check())
-                <p class="cart-sheet__row">
-                    <span>{{ __('frontend.header.balance') }}:</span>
+                <p class="drawer__row">
+                    <span>{{ __('frontend.header.balance') }}</span>
                     <span>{{ number_format($balance) }} {{ __('frontend.header.credits') }}</span>
                 </p>
             @endif
-            <p class="cart-sheet__row cart-sheet__row--total">
-                <span>{{ __('frontend.header.total') }}:</span>
+            <p class="drawer__row drawer__row--total">
+                <span>{{ __('frontend.header.total') }}</span>
                 @if($hasCredits && !$hasCourses)
                     <strong>{{ Helper::getCurrencySymbol(session('currency')) }}{{ number_format($totalPrice, session('currency')=='JPY' ? 0 : 2) }}</strong>
                 @else
@@ -343,11 +399,11 @@
 
             @if($hasCredits && !$hasCourses)
                 <a href="{{ route('checkout') }}" class="btn btn--primary btn--block">{{ __('frontend.header.checkout') }}</a>
-                <a href="{{ route('cart') }}" class="btn btn--dark btn--block">{{ __('frontend.header.view_cart') }}</a>
+                <a href="{{ route('cart') }}" class="btn btn--ghost btn--block">{{ __('frontend.header.view_cart') }}</a>
             @elseif($hasCourses && !$hasCredits)
                 <a href="{{ route('coursecart') }}" class="btn btn--primary btn--block">{{ __('frontend.header.view_cart') }}</a>
             @endif
-            <button type="button" class="cart-sheet__back" data-sheet-close>{{ __('frontend.header.keep_browsing') }}</button>
+            <button type="button" class="drawer__back" data-sheet-close>{{ __('frontend.header.keep_browsing') }}</button>
         </div>
     @endif
 </aside>
@@ -406,6 +462,33 @@
         if (!event.target.closest('[data-pick]')) { closePicks(null); }
     });
 
+    var spotNav = document.querySelector('[data-spot-nav]');
+    var spot = spotNav ? spotNav.querySelector('[data-spot]') : null;
+    if (spotNav && spot) {
+        var spotLinks = spotNav.querySelectorAll('.hdr__list > li > .hdr__link');
+        var placeSpot = function (link) {
+            Array.prototype.forEach.call(spotLinks, function (item) { item.classList.toggle('is-spot', item === link); });
+            if (!link) { spot.classList.remove('is-on'); return; }
+            var holder = spot.offsetParent || spotNav;
+            var holderBox = holder.getBoundingClientRect();
+            var box = link.getBoundingClientRect();
+            if (!spot.classList.contains('is-on')) { spot.style.transition = 'none'; }
+            spot.style.width = box.width + 'px';
+            spot.style.transform = 'translateX(' + (box.left - holderBox.left - holder.clientLeft) + 'px)';
+            spot.offsetWidth;
+            spot.style.transition = '';
+            spot.classList.add('is-on');
+        };
+        Array.prototype.forEach.call(spotLinks, function (link) {
+            link.addEventListener('mouseenter', function () { placeSpot(link); });
+            link.addEventListener('focus', function () { placeSpot(link); });
+        });
+        spotNav.addEventListener('mouseleave', function () { placeSpot(null); });
+        spotNav.addEventListener('focusout', function (event) {
+            if (!event.relatedTarget || !spotNav.contains(event.relatedTarget)) { placeSpot(null); }
+        });
+    }
+
     var scrim = document.querySelector('[data-scrim]');
     var sheets = {};
     document.querySelectorAll('[data-sheet]').forEach(function (sheet) {
@@ -435,7 +518,7 @@
         markOpeners(sheet, 'false');
         if (scrim) {
             scrim.classList.remove('is-open');
-            setTimeout(function () { if (!active) { scrim.hidden = true; } }, 400);
+            setTimeout(function () { if (!active) { scrim.hidden = true; } }, 350);
         }
         root.classList.remove('has-sheet');
         active = null;
@@ -446,7 +529,7 @@
         closeSheet();
         closePicks(null);
 
-        if (scrim && sheet.getAttribute('data-sheet') === 'cart') {
+        if (scrim) {
             scrim.hidden = false;
             requestAnimationFrame(function () { scrim.classList.add('is-open'); });
         }
@@ -496,10 +579,7 @@
     var ticking = false;
     function onScroll() {
         ticking = false;
-        if (!hdr) { return; }
-        var max = document.documentElement.scrollHeight - window.innerHeight;
-        hdr.classList.toggle('is-scrolled', window.scrollY > 40);
-        hdr.style.setProperty('--hdr-progress', max > 0 ? Math.min(1, window.scrollY / max) : 0);
+        if (hdr) { hdr.classList.toggle('is-scrolled', window.scrollY > 24); }
     }
     window.addEventListener('scroll', function () {
         if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
@@ -509,6 +589,7 @@
     var wide = window.matchMedia('(min-width: 1100px)');
     function onResize() {
         closePicks(null);
+        if (spot) { spot.classList.remove('is-on'); }
         if (active && active.sheet.getAttribute('data-sheet') === 'menu' && wide.matches) { closeSheet(); }
     }
     if (wide.addEventListener) { wide.addEventListener('change', onResize); }

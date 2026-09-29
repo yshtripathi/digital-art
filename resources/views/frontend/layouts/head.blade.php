@@ -15,7 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#ffffff">
 
     <title>{{ $fullTitle }}</title>
     <meta name="title" content="{{ $fullTitle }}">
@@ -44,14 +44,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600&family=Manrope:wght@200;400;500;700&display=swap">
-    @if(str_starts_with($locale, 'ja'))
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
-    @endif
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Space+Grotesk:wght@400;500&display=swap">
     <link rel="stylesheet" href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
 
-    <link rel="stylesheet" href="{{ asset('css/craft-courses.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/knowledgecademy.css') }}">
     @if(env('CONTENT_PROTECTION_ENABLED', true))
         <link rel="stylesheet" href="{{ asset('css/prevention.css') }}">
     @endif
@@ -62,37 +59,41 @@
 <body class="antialiased">
 <div class="page-wrapper">
 
-    <div class="ticker" id="ticker" aria-hidden="true">
-        <div class="ticker__inner">
-            <svg class="ticker__chart" viewBox="0 0 160 64" fill="none">
-                <path class="ticker__base" d="M4 58 H156"/>
-                <path class="ticker__path" pathLength="1" d="M4 50 L24 42 L38 47 L58 30 L74 36 L96 20 L112 27 L134 12 L156 6"/>
-                <circle class="ticker__dot" cx="156" cy="6" r="4"/>
-            </svg>
-            <span class="ticker__name">{{ $siteName }}</span>
+    <div class="boot" id="boot" aria-hidden="true">
+        <div class="boot__lockup">
+            <div class="boot__brand">
+                <span class="boot__mark">
+                    <span class="boot__block"></span>
+                    <span class="boot__block"></span>
+                    <span class="boot__block"></span>
+                    <span class="boot__block"></span>
+                </span>
+                <span class="boot__name">{{ $siteName }}</span>
+            </div>
+            <span class="boot__track"><span class="boot__fill"></span></span>
         </div>
     </div>
     <script>
         (function () {
-            var ticker = document.getElementById('ticker');
-            if (!ticker) return;
+            var boot = document.getElementById('boot');
+            if (!boot) return;
             var start = Date.now();
             var done = false;
-            function leave() {
+            function finish() {
                 if (done) return;
                 done = true;
                 setTimeout(function () {
-                    ticker.classList.add('ticker--leaving');
+                    boot.classList.add('boot--leaving');
                     setTimeout(function () {
-                        if (ticker.parentNode) ticker.parentNode.removeChild(ticker);
-                    }, 800);
-                }, Math.max(0, 1300 - (Date.now() - start)));
+                        if (boot.parentNode) boot.parentNode.removeChild(boot);
+                    }, 700);
+                }, Math.max(0, 1200 - (Date.now() - start)));
             }
             if (document.readyState === 'complete') {
-                leave();
+                finish();
             } else {
-                window.addEventListener('load', leave);
-                setTimeout(leave, 4000);
+                window.addEventListener('load', finish);
+                setTimeout(finish, 4000);
             }
         })();
     </script>

@@ -31,29 +31,29 @@ button,
   inset: 0;
   z-index: 19;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.28) 100%);
+  background: linear-gradient(180deg, rgba(1, 1, 16, 0) 0%, rgba(1, 1, 16, 0.22) 100%);
 }
 
 .media-frame::after,
 .cd-stage::after,
 .cd-thumb::after {
-  content: "CRAFT COURSES";
+  content: "KNOWLEDGECADEMY";
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 20;
   font-family: var(--font-display);
-  font-size: max(1.25rem, 2.2vw);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.08em;
+  font-size: max(1.125rem, 2vw);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.06em;
   white-space: nowrap;
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.6), 0 0 2px rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 8px rgba(1, 1, 16, 0.5);
   pointer-events: none;
   transform: translate(-50%, -50%) rotate(-30deg);
 }
 
 .cd-thumb::after {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
 }

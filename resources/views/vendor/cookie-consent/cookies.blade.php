@@ -1,14 +1,4 @@
 <aside id="consent" class="cc" role="region" aria-labelledby="cc-title">
-    <div class="cc__main">
-        <p class="cc__title" id="cc-title">@lang('cookieConsent::cookies.title')</p>
-        <p class="cc__intro">
-            @lang('cookieConsent::cookies.intro')
-            @if($policy)
-                @lang('cookieConsent::cookies.link', ['url' => $policy])
-            @endif
-        </p>
-    </div>
-
     <div class="cc__fold" id="cc-prefs">
         <div class="cc__fold-in">
             <form action="{{ route('cookieconsent.accept.configuration') }}" method="post" class="cc__prefs">
@@ -38,7 +28,7 @@
                             @if(count($catCookies))
                                 <button type="button" class="cc__peek" data-cc-toggle="cc-list-{{ $category->key() }}" data-more="@lang('cookieConsent::cookies.details.more')" data-less="@lang('cookieConsent::cookies.details.less')">
                                     <span data-cc-label>@lang('cookieConsent::cookies.details.more')</span>
-                                    <i class="fas fa-chevron-down cc__caret" aria-hidden="true"></i>
+                                    <i class="fas fa-plus cc__caret" aria-hidden="true"></i>
                                 </button>
 
                                 <div class="cc__fold" id="cc-list-{{ $category->key() }}">
@@ -61,21 +51,37 @@
                     @endforeach
                 </ul>
 
-                <button type="submit" class="btn btn--dark btn--block">@lang('cookieConsent::cookies.save')</button>
+                <div class="cc__save">
+                    <button type="submit" class="cc__save-btn">@lang('cookieConsent::cookies.save')</button>
+                </div>
             </form>
         </div>
     </div>
 
-    <div class="cc__acts">
-        @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'cc-act cc-act--main'])
+    <div class="cc__bar">
+        <span class="cc__badge" aria-hidden="true"><i class="fas fa-cookie-bite"></i></span>
 
-        @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'cc-act cc-act--soft'])
+        <div class="cc__main">
+            <p class="cc__title" id="cc-title">@lang('cookieConsent::cookies.title')</p>
+            <p class="cc__intro">
+                @lang('cookieConsent::cookies.intro')
+                @if($policy)
+                    @lang('cookieConsent::cookies.link', ['url' => $policy])
+                @endif
+            </p>
+        </div>
+
+        <div class="cc__acts">
+            <button type="button" class="cc__more" data-cc-toggle="cc-prefs" data-more="@lang('cookieConsent::cookies.customize')" data-less="@lang('cookieConsent::cookies.customize')">
+                <i class="fas fa-sliders-h cc__gear" aria-hidden="true"></i>
+                <span data-cc-label>@lang('cookieConsent::cookies.customize')</span>
+            </button>
+
+            @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'cc-act cc-act--soft'])
+
+            @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'cc-act cc-act--main'])
+        </div>
     </div>
-
-    <button type="button" class="cc__more" data-cc-toggle="cc-prefs" data-more="@lang('cookieConsent::cookies.customize')" data-less="@lang('cookieConsent::cookies.customize')">
-        <span data-cc-label>@lang('cookieConsent::cookies.customize')</span>
-        <i class="fas fa-chevron-down cc__caret" aria-hidden="true"></i>
-    </button>
 </aside>
 
 <script>

@@ -5,13 +5,13 @@ return [
     // Dummy fallbacks, used only when the miscs table value is empty
     'company' => [
         'name'    => '[Company Name]',
-        'email'   => 'info@craft-course.com',
+        'email'   => '[Company Email]',
         'address' => '[Company Address]',
     ],
 
     // resources/views/frontend/layouts/head.blade.php
     'head' => [
-        'site'        => 'Craft Courses',
+        'site'        => 'KnowledgeCademy',
         'home'        => ':site — Study Guides at Your Own Pace',
         'description' => 'Study guides split into four levels, from Beginner to Expert. Find a subject by category, check what every level covers and spend credits only on the levels you choose.',
     ],
@@ -45,6 +45,9 @@ return [
 
         'language'      => 'Choose language',
         'currency'      => 'Choose currency',
+        'cur_USD'       => 'US Dollar',
+        'cur_JPY'       => 'Japanese Yen',
+        'cur_HKD'       => 'Hong Kong Dollar',
         'mail'          => 'Send us an email',
         'credits'       => 'credits',
         'browse'        => 'See All Guides',

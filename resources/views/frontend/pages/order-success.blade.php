@@ -27,128 +27,109 @@
     @endphp
 @endif
 
-<section class="outcome">
-    <ol class="steps">
-        <li class="steps__item is-done">
-            <span class="steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>
-            <span class="steps__label">{{ __('frontend.cart.step_cart') }}</span>
-        </li>
-        <li class="steps__line is-done" aria-hidden="true"></li>
-        <li class="steps__item is-done">
-            <span class="steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>
-            <span class="steps__label">{{ __('frontend.cart.step_pay') }}</span>
-        </li>
-        <li class="steps__line is-done" aria-hidden="true"></li>
-        <li class="steps__item is-done is-active" aria-current="step">
-            <span class="steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>
-            <span class="steps__label">{{ __('frontend.cart.step_done') }}</span>
-        </li>
-    </ol>
-
-    <div class="outcome__card outcome__card--ok">
-        <div class="outcome__status">
-            <span class="seal" aria-hidden="true">
-                <svg viewBox="0 0 48 48" focusable="false"><path d="M13 25 L21 33 L36 16"></path></svg>
-            </span>
-            <h2 class="outcome__title">{{ __('frontend.success.heading') }}</h2>
-            <p class="outcome__lead">{{ __('frontend.success.lead') }}</p>
-
-            @if($order)
-                <div class="outcome__amount">
-                    <span class="outcome__amount-label">{{ __('frontend.success.amount_paid') }}</span>
-                    <strong class="outcome__amount-value">{{ $currency }}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</strong>
-                    <span class="state-chip {{ $isPaid ? 'state-chip--ok' : 'state-chip--wait' }}">
-                        <i class="fas {{ $isPaid ? 'fa-check' : 'fa-clock' }}" aria-hidden="true"></i>
-                        {{ __('frontend.success.status') }}: {{ $statusText }}
-                    </span>
-                </div>
-            @endif
-        </div>
-
-        <div class="outcome__detail">
-            @if($order)
-                <dl class="facts">
-                    <div class="fact fact--wide">
-                        <dt>{{ __('frontend.success.order_no') }}</dt>
-                        <dd>
-                            <span class="fact__value" data-copy-text>{{ $order->order_number }}</span>
-                            <button type="button" class="fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.order_no')]) }}">
-                                <i class="far fa-copy" aria-hidden="true"></i>
-                                <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
-                            </button>
-                        </dd>
-                    </div>
-                    <div class="fact fact--wide">
-                        <dt>{{ __('frontend.success.transaction') }}</dt>
-                        <dd>
-                            <span class="fact__value" data-copy-text>{{ $transaction_id }}</span>
-                            <button type="button" class="fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.transaction')]) }}">
-                                <i class="far fa-copy" aria-hidden="true"></i>
-                                <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
-                            </button>
-                        </dd>
-                    </div>
-                    <div class="fact">
-                        <dt>{{ __('frontend.success.date') }}</dt>
-                        <dd><span class="fact__value">{{ $order->created_at ? $order->created_at->format('Y-m-d H:i') : '' }}</span></dd>
-                    </div>
-                    @if($orderCredits > 0)
-                        <div class="fact">
-                            <dt>{{ __('frontend.success.credits_added') }}</dt>
-                            <dd><span class="fact__value fact__value--credits"><i class="fas fa-coins" aria-hidden="true"></i> {{ number_format($orderCredits) }}</span></dd>
-                        </div>
-                    @endif
-                    @if(filled($order->email))
-                        <div class="fact fact--wide">
-                            <dt>{{ __('frontend.success.billing_email') }}</dt>
-                            <dd><span class="fact__value">{{ $order->email }}</span></dd>
-                        </div>
-                    @endif
-                </dl>
-
-                @if($email_status == 'inactive')
-                    <p class="outcome__note">
-                        <i class="fas fa-exclamation" aria-hidden="true"></i>
-                        <span>{{ __('frontend.success.email_failed') }}</span>
-                    </p>
-                @endif
-            @endif
-
-            <div class="outcome__acts">
-                @if($order)
-                    <a href="{{ route('user.order.show', $order->id) }}" class="btn">
-                        <i class="fas fa-receipt" aria-hidden="true"></i> {{ __('frontend.success.receipt') }}
-                    </a>
-                    <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--outline">
-                        <i class="fas fa-file-download" aria-hidden="true"></i> {{ __('frontend.success.invoice') }}
-                    </a>
-                @endif
-                <a href="{{ route('home') }}" class="{{ $order ? 'outcome__home' : 'btn' }}">
-                    <i class="fas fa-home" aria-hidden="true"></i> {{ __('frontend.success.home') }}
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="journey">
-        <h3 class="journey__title">{{ __('frontend.success.next_title') }}</h3>
-        <ol class="journey__list">
-            <li class="journey__step" style="--i: 0">
-                <span class="journey__node" aria-hidden="true"><i class="far fa-clock"></i></span>
-                <span class="journey__no" aria-hidden="true">01</span>
-                <p class="journey__text">{{ __('frontend.success.next_one') }}</p>
-            </li>
-            <li class="journey__step" style="--i: 1">
-                <span class="journey__node" aria-hidden="true"><i class="fas fa-hourglass-half"></i></span>
-                <span class="journey__no" aria-hidden="true">02</span>
-                <p class="journey__text">{{ __('frontend.success.next_two') }}</p>
-            </li>
-            <li class="journey__step" style="--i: 2">
-                <span class="journey__node" aria-hidden="true"><i class="far fa-envelope"></i></span>
-                <span class="journey__no" aria-hidden="true">03</span>
-                <p class="journey__text">{!! str_replace(':email', $supportMail, e(__('frontend.success.next_three'))) !!}</p>
-            </li>
+<section class="pay">
+    <div class="container">
+        <ol class="pay-steps">
+            <li class="pay-steps__item is-done"><span class="pay-steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>{{ __('frontend.cart.step_cart') }}</li>
+            <li class="pay-steps__item is-done"><span class="pay-steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>{{ __('frontend.cart.step_pay') }}</li>
+            <li class="pay-steps__item is-done is-now" aria-current="step"><span class="pay-steps__no"><i class="fas fa-check" aria-hidden="true"></i></span>{{ __('frontend.cart.step_done') }}</li>
         </ol>
+
+        <div class="pay__grid">
+            <div class="pay-card res" style="--i: 0">
+                <div class="res__head">
+                    <span class="res__mark" aria-hidden="true"><i class="fas fa-check"></i></span>
+                    <div>
+                        <h2 class="res__title">{{ __('frontend.success.heading') }}</h2>
+                        <p class="res__lead">{{ __('frontend.success.lead') }}</p>
+                    </div>
+                </div>
+
+                @if($order)
+                    <div class="res__amount">
+                        <span class="res__amount-label">{{ __('frontend.success.amount_paid') }}</span>
+                        <strong class="res__amount-value">{{ $currency }}{{ number_format($order->total_amount, $order->currency == 'JPY' ? 0 : 2) }}</strong>
+                        <span class="res__state {{ $isPaid ? 'is-ok' : 'is-wait' }}">{{ __('frontend.success.status') }}: {{ $statusText }}</span>
+                    </div>
+
+                    <dl class="res__facts">
+                        <div class="res-fact">
+                            <dt>{{ __('frontend.success.order_no') }}</dt>
+                            <dd>
+                                <span data-copy-text>{{ $order->order_number }}</span>
+                                <button type="button" class="res-fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.order_no')]) }}">
+                                    <i class="far fa-copy" aria-hidden="true"></i>
+                                    <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
+                                </button>
+                            </dd>
+                        </div>
+                        <div class="res-fact">
+                            <dt>{{ __('frontend.success.transaction') }}</dt>
+                            <dd>
+                                <span data-copy-text>{{ $transaction_id }}</span>
+                                <button type="button" class="res-fact__copy" data-copy data-done="{{ __('frontend.success.copied') }}" aria-label="{{ __('frontend.success.copy', ['item' => __('frontend.success.transaction')]) }}">
+                                    <i class="far fa-copy" aria-hidden="true"></i>
+                                    <span data-copy-label>{{ __('frontend.success.copy_btn') }}</span>
+                                </button>
+                            </dd>
+                        </div>
+                        <div class="res-fact">
+                            <dt>{{ __('frontend.success.date') }}</dt>
+                            <dd><span>{{ $order->created_at ? $order->created_at->format('Y-m-d H:i') : '' }}</span></dd>
+                        </div>
+                        @if($orderCredits > 0)
+                            <div class="res-fact">
+                                <dt>{{ __('frontend.success.credits_added') }}</dt>
+                                <dd><span>{{ number_format($orderCredits) }}</span></dd>
+                            </div>
+                        @endif
+                        @if(filled($order->email))
+                            <div class="res-fact">
+                                <dt>{{ __('frontend.success.billing_email') }}</dt>
+                                <dd><span>{{ $order->email }}</span></dd>
+                            </div>
+                        @endif
+                    </dl>
+
+                    @if($email_status == 'inactive')
+                        <p class="res__note">{{ __('frontend.success.email_failed') }}</p>
+                    @endif
+                @endif
+
+                <div class="res__acts">
+                    @if($order)
+                        <a href="{{ route('user.order.show', $order->id) }}" class="btn btn--primary">{{ __('frontend.success.receipt') }}</a>
+                        <a href="{{ route('order.pdf', $order->id) }}" class="btn btn--dark">
+                            <i class="fas fa-download" aria-hidden="true"></i>
+                            <span>{{ __('frontend.success.invoice') }}</span>
+                        </a>
+                        <a href="{{ route('home') }}" class="res__home">{{ __('frontend.success.home') }}</a>
+                    @else
+                        <a href="{{ route('home') }}" class="btn btn--primary">{{ __('frontend.success.home') }}</a>
+                    @endif
+                </div>
+            </div>
+
+            <aside class="pay__rail">
+                <div class="pay-sum">
+                    <h2 class="pay-sum__title">{{ __('frontend.success.next_title') }}</h2>
+                    <ol class="res-next">
+                        <li class="res-next__item">
+                            <span class="res-next__no" aria-hidden="true">1</span>
+                            <p>{{ __('frontend.success.next_one') }}</p>
+                        </li>
+                        <li class="res-next__item">
+                            <span class="res-next__no" aria-hidden="true">2</span>
+                            <p>{{ __('frontend.success.next_two') }}</p>
+                        </li>
+                        <li class="res-next__item">
+                            <span class="res-next__no" aria-hidden="true">3</span>
+                            <p>{!! str_replace(':email', $supportMail, e(__('frontend.success.next_three'))) !!}</p>
+                        </li>
+                    </ol>
+                </div>
+            </aside>
+        </div>
     </div>
 </section>
 
@@ -158,18 +139,12 @@
 <script>
     document.addEventListener('click', function (event) {
         var button = event.target.closest('[data-copy]');
-
-        if (!button) {
-            return;
-        }
+        if (!button) { return; }
 
         var source = button.parentElement.querySelector('[data-copy-text]');
         var label = button.querySelector('[data-copy-label]');
         var text = source ? source.textContent.trim() : '';
-
-        if (!text) {
-            return;
-        }
+        if (!text) { return; }
 
         var done = function () {
             var original = label.textContent;

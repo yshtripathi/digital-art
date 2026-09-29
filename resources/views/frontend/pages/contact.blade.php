@@ -11,143 +11,116 @@
 ])
 
 @php
-    $ctEmail    = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
-    $ctAddress  = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
-    $ctCompany  = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
-    $ctSite     = __('frontend.head.site');
-    $ctInitials = collect(preg_split('/\s+/u', trim($ctSite)))->filter()->take(2)->map(fn ($word) => mb_strtoupper(mb_substr($word, 0, 1)))->implode('');
+    $ctEmail   = filled($misc['Company Email'] ?? null) ? trim($misc['Company Email']) : __('frontend.company.email');
+    $ctAddress = filled($misc['Company Address'] ?? null) ? $misc['Company Address'] : __('frontend.company.address');
+    $ctCompany = filled($misc['Company Name'] ?? null) ? $misc['Company Name'] : __('frontend.company.name');
+    $ctImage   = file_exists(public_path('assets/images/contact.webp')) ? asset('assets/images/contact.webp') : null;
 @endphp
 
-<section class="reach-us">
-    <div class="reach-us__grid">
-        <div class="gate__stack gate__stack--wide post-stack">
-        <aside class="post">
-            <span class="post__stamp" aria-hidden="true">
-                <span class="post__mono">{{ $ctInitials }}</span>
-                <span class="post__site">{{ $ctSite }}</span>
-            </span>
+<section class="auth">
+    <div class="container">
+        <div class="auth__card auth__card--wide">
+            <div class="auth__art ct-art {{ $ctImage ? '' : 'is-empty' }}">
+                @if($ctImage)
+                    <img src="{{ $ctImage }}" alt="" width="1000" height="1500">
+                @endif
+                <span class="auth__tag" aria-hidden="true"><i class="far fa-envelope"></i></span>
 
-            <p class="post__eyebrow">{{ __('frontend.contact.tab') }}</p>
-            <h2 class="post__title">{{ __('frontend.contact.aside_title') }}</h2>
-            <p class="post__text">{{ __('frontend.contact.aside_text') }}</p>
-
-            <ul class="post__rows">
-                <li class="post__row" style="--i: 0">
-                    <span class="post__icon" aria-hidden="true"><i class="far fa-envelope"></i></span>
-                    <span class="post__meta">
-                        <span class="post__label">{{ __('frontend.contact.detail_email') }}</span>
-                        <a href="mailto:{{ $ctEmail }}" class="post__value">{{ $ctEmail }}</a>
-                    </span>
-                    <button type="button" class="post__copy" data-copy="{{ $ctEmail }}" data-done="{{ __('frontend.contact.copy_done') }}">
-                        <i class="far fa-copy" aria-hidden="true"></i>
-                        <span data-copy-label>{{ __('frontend.contact.copy_button') }}</span>
-                    </button>
-                </li>
-                <li class="post__row" style="--i: 1">
-                    <span class="post__icon" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
-                    <span class="post__meta">
-                        <span class="post__label">{{ __('frontend.contact.detail_address') }}</span>
-                        <span class="post__value">{{ $ctAddress }}</span>
-                    </span>
-                </li>
-                <li class="post__row" style="--i: 2">
-                    <span class="post__icon" aria-hidden="true"><i class="far fa-building"></i></span>
-                    <span class="post__meta">
-                        <span class="post__label">{{ __('frontend.contact.detail_company') }}</span>
-                        <span class="post__value">{{ $ctCompany }}</span>
-                    </span>
-                </li>
-            </ul>
-        </aside>
-        </div>
-
-        <div class="gate__stack gate__stack--wide">
-        <div class="gate__card note-card">
-            <div class="note-card__head">
-                <h2 class="note-card__title">{{ __('frontend.contact.heading') }}</h2>
-                <p class="note-card__lead">{{ __('frontend.contact.text') }}</p>
+                <div class="ct-info">
+                    <h2 class="ct-info__title">{{ __('frontend.contact.aside_title') }}</h2>
+                    <ul class="ct-info__rows">
+                        <li class="ct-info__row">
+                            <span class="ct-info__icon" aria-hidden="true"><i class="far fa-envelope"></i></span>
+                            <span class="ct-info__meta">
+                                <span class="ct-info__label">{{ __('frontend.contact.detail_email') }}</span>
+                                <a href="mailto:{{ $ctEmail }}" class="ct-info__value">{{ $ctEmail }}</a>
+                            </span>
+                            <button type="button" class="ct-info__copy" data-copy="{{ $ctEmail }}" data-done="{{ __('frontend.contact.copy_done') }}">
+                                <i class="far fa-copy" aria-hidden="true"></i>
+                                <span data-copy-label>{{ __('frontend.contact.copy_button') }}</span>
+                            </button>
+                        </li>
+                        <li class="ct-info__row">
+                            <span class="ct-info__icon" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
+                            <span class="ct-info__meta">
+                                <span class="ct-info__label">{{ __('frontend.contact.detail_address') }}</span>
+                                <span class="ct-info__value">{{ $ctAddress }}</span>
+                            </span>
+                        </li>
+                        <li class="ct-info__row">
+                            <span class="ct-info__icon" aria-hidden="true"><i class="far fa-building"></i></span>
+                            <span class="ct-info__meta">
+                                <span class="ct-info__label">{{ __('frontend.contact.detail_company') }}</span>
+                                <span class="ct-info__value">{{ $ctCompany }}</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
-            <form method="POST" action="{{ route('contact.send') }}" id="contactform" class="gate__form" novalidate>
-                @csrf
+            <div class="auth__body">
+                <h2 class="auth__title">{{ __('frontend.contact.heading') }}</h2>
+                <p class="auth__lead">{{ __('frontend.contact.text') }}</p>
 
-                <div class="entry">
-                    <label class="entry__label" for="name">{{ __('frontend.contact.name') }}</label>
-                    <div class="entry__box @error('name') is-invalid @enderror">
-                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-user"></i></span>
-                        <input type="text" name="name" id="name" autocomplete="name" class="entry__input" placeholder="{{ __('frontend.contact.name_placeholder') }}" value="{{ old('name') }}">
-                    </div>
-                    @error('name')
-                        <span class="entry__err">{{ $message }}</span>
-                    @enderror
-                </div>
+                <form method="POST" action="{{ route('contact.send') }}" id="contactform" class="auth__form" novalidate>
+                    @csrf
 
-                <div class="entry">
-                    <label class="entry__label" for="email">{{ __('frontend.contact.email') }}</label>
-                    <div class="entry__box @error('email') is-invalid @enderror">
-                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-at"></i></span>
-                        <input type="email" name="email" id="email" autocomplete="email" class="entry__input" placeholder="{{ __('frontend.contact.email_placeholder') }}" value="{{ old('email') }}">
-                    </div>
-                    @error('email')
-                        <span class="entry__err">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="entry">
-                    <label class="entry__label" for="phone">{{ __('frontend.contact.phone') }}</label>
-                    <div class="entry__box @error('phone') is-invalid @enderror">
-                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-mobile-alt"></i></span>
-                        <input type="tel" name="phone" id="phone" autocomplete="tel" class="entry__input" placeholder="{{ __('frontend.contact.phone_placeholder') }}" value="{{ old('phone') }}" oninput="this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '')">
-                    </div>
-                    @error('phone')
-                        <span class="entry__err">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="entry">
-                    <label class="entry__label" for="subject">{{ __('frontend.contact.subject') }}</label>
-                    <div class="entry__box @error('subject') is-invalid @enderror">
-                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-heading"></i></span>
-                        <input type="text" name="subject" id="subject" class="entry__input" placeholder="{{ __('frontend.contact.subject_placeholder') }}" value="{{ old('subject') }}">
-                    </div>
-                    @error('subject')
-                        <span class="entry__err">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="entry">
-                    <label class="entry__label" for="message">{{ __('frontend.contact.message') }}</label>
-                    <div class="entry__box entry__box--area @error('message') is-invalid @enderror">
-                        <span class="entry__icon" aria-hidden="true"><i class="far fa-comment-alt"></i></span>
-                        <textarea name="message" id="message" rows="5" class="entry__input entry__area" placeholder="{{ __('frontend.contact.message_placeholder') }}">{{ old('message') }}</textarea>
-                    </div>
-                    @error('message')
-                        <span class="entry__err">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                @if(env('CAPTCHA_ENABLED', true))
-                    <div class="entry">
-                        <label class="entry__label" for="captcha">{{ __('frontend.contact.captcha') }}</label>
-                        <div class="entry__cap">
-                            <div class="cap__img">@captcha</div>
-                            <div class="entry__box @error('captcha') is-invalid @enderror">
-                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
-                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="entry__input" placeholder="{{ __('frontend.contact.captcha_placeholder') }}">
-                            </div>
-                        </div>
-                        @error('captcha')
-                            <span class="entry__err">{{ __('frontend.contact.captcha_invalid') }}</span>
+                    <div class="auth-field" style="--i: 0">
+                        <label for="name">{{ __('frontend.contact.name') }}</label>
+                        <input type="text" name="name" id="name" autocomplete="name" class="@error('name') is-invalid @enderror" placeholder="{{ __('frontend.contact.name_placeholder') }}" value="{{ old('name') }}">
+                        @error('name')
+                            <span class="auth-err">{{ $message }}</span>
                         @enderror
                     </div>
-                @endif
 
-                <button type="submit" class="btn btn--block gate__submit">
-                    <span>{{ __('frontend.contact.button') }}</span>
-                    <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
-                </button>
-            </form>
-        </div>
+                    <div class="auth-field" style="--i: 1">
+                        <label for="email">{{ __('frontend.contact.email') }}</label>
+                        <input type="email" name="email" id="email" autocomplete="email" class="@error('email') is-invalid @enderror" placeholder="{{ __('frontend.contact.email_placeholder') }}" value="{{ old('email') }}">
+                        @error('email')
+                            <span class="auth-err">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="auth-field" style="--i: 2">
+                        <label for="phone">{{ __('frontend.contact.phone') }}</label>
+                        <input type="tel" name="phone" id="phone" autocomplete="tel" class="@error('phone') is-invalid @enderror" placeholder="{{ __('frontend.contact.phone_placeholder') }}" value="{{ old('phone') }}" inputmode="tel" maxlength="20" oninput="this.value = this.value.replace(/[^0-9+\-()\s]/g, '').replace(/(?!^)\+/g, '')">
+                        @error('phone')
+                            <span class="auth-err">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="auth-field" style="--i: 3">
+                        <label for="subject">{{ __('frontend.contact.subject') }}</label>
+                        <input type="text" name="subject" id="subject" class="@error('subject') is-invalid @enderror" placeholder="{{ __('frontend.contact.subject_placeholder') }}" value="{{ old('subject') }}">
+                        @error('subject')
+                            <span class="auth-err">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="auth-field" style="--i: 4">
+                        <label for="message">{{ __('frontend.contact.message') }}</label>
+                        <textarea name="message" id="message" rows="5" class="@error('message') is-invalid @enderror" placeholder="{{ __('frontend.contact.message_placeholder') }}">{{ old('message') }}</textarea>
+                        @error('message')
+                            <span class="auth-err">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    @if(env('CAPTCHA_ENABLED', true))
+                        <div class="auth-field" style="--i: 5">
+                            <label for="captcha">{{ __('frontend.contact.captcha') }}</label>
+                            <div class="auth-cap">
+                                <div class="auth-cap__img cap__img">@captcha</div>
+                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="@error('captcha') is-invalid @enderror" placeholder="{{ __('frontend.contact.captcha_placeholder') }}">
+                            </div>
+                            @error('captcha')
+                                <span class="auth-err">{{ __('frontend.contact.captcha_invalid') }}</span>
+                            @enderror
+                        </div>
+                    @endif
+
+                    <button type="submit" class="btn btn--primary btn--block auth__submit" style="--i: 6">{{ __('frontend.contact.button') }}</button>
+                </form>
+            </div>
         </div>
     </div>
 </section>
@@ -193,60 +166,51 @@
     });
 
     var form = document.getElementById('contactform');
-
-    if (!form) {
-        return;
-    }
+    if (!form) { return; }
 
     var messages = {
         name: @json(__('frontend.contact.name_required')),
         email: @json(__('frontend.contact.email_required')),
         emailValid: @json(__('frontend.contact.email_invalid')),
         phone: @json(__('frontend.contact.phone_required')),
+        phoneValid: @json(__('frontend.contact.phone_invalid')),
         subject: @json(__('frontend.contact.subject_required')),
         message: @json(__('frontend.contact.message_required')),
         captcha: @json(__('frontend.contact.captcha_required'))
     };
+
+    function isPhone(value) {
+        var digits = value.replace(/\D/g, '');
+        return /^\+?[0-9\s\-()]+$/.test(value) && digits.length >= 7 && digits.length <= 15;
+    }
 
     function isEmail(value) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     }
 
     function clearError(field) {
-        var holder = field.closest('.entry');
-        var box = field.closest('.entry__box');
-
-        if (box) { box.classList.remove('is-invalid'); }
-
+        var holder = field.closest('.auth-field');
+        field.classList.remove('is-invalid');
         if (holder) {
-            holder.querySelectorAll('.entry__err').forEach(function (note) { note.remove(); });
+            holder.querySelectorAll('.auth-err').forEach(function (note) { note.remove(); });
         }
     }
 
     function showError(field, text) {
-        var holder = field.closest('.entry');
-        var box = field.closest('.entry__box');
-
-        if (box) { box.classList.add('is-invalid'); }
+        var holder = field.closest('.auth-field');
+        field.classList.add('is-invalid');
         if (!holder) { return; }
-
         var note = document.createElement('span');
-        note.className = 'entry__err';
+        note.className = 'auth-err';
         note.appendChild(document.createTextNode(text));
         holder.appendChild(note);
     }
 
     function check(field) {
         var value = (field.value || '').trim();
-
-        if (!value) {
-            return messages[field.id] || '';
-        }
-
-        if (field.id === 'email' && !isEmail(value)) {
-            return messages.emailValid;
-        }
-
+        if (!value) { return messages[field.id] || ''; }
+        if (field.id === 'email' && !isEmail(value)) { return messages.emailValid; }
+        if (field.id === 'phone' && !isPhone(value)) { return messages.phoneValid; }
         return '';
     }
 
@@ -256,26 +220,20 @@
 
     fields.forEach(function (field) {
         field.addEventListener('input', function () {
-            if (!check(field)) {
-                clearError(field);
-            }
+            if (!check(field)) { clearError(field); }
         });
     });
 
     form.addEventListener('submit', function (event) {
         var failed = null;
-
         fields.forEach(function (field) {
             clearError(field);
-
             var problem = check(field);
-
             if (problem) {
                 showError(field, problem);
                 failed = failed || field;
             }
         });
-
         if (failed) {
             event.preventDefault();
             failed.focus();

@@ -10,107 +10,90 @@
     ]
 ])
 
-<section class="gate">
-    <div class="gate__stack">
-        <nav class="gate__tabs" aria-label="{{ __('frontend.header.account_menu') }}">
-            <a href="{{ route('login.form') }}" class="gate__tab">
-                <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
-                <span>{{ __('frontend.header.login') }}</span>
-            </a>
-            <a href="{{ route('register.form') }}" class="gate__tab is-active" aria-current="page">
-                <i class="fas fa-user-plus" aria-hidden="true"></i>
-                <span>{{ __('frontend.header.register') }}</span>
-            </a>
-        </nav>
+@php
+    $authImage = file_exists(public_path('assets/images/auth.webp')) ? asset('assets/images/auth.webp') : null;
+@endphp
 
-        <div class="gate__card">
-            <div class="gate__head">
-                <span class="gate__badge" aria-hidden="true"><i class="fas fa-user-plus"></i></span>
-                <div>
-                    <h2 class="gate__title">{{ __('frontend.register.heading') }}</h2>
-                    <p class="gate__lead">{{ __('frontend.register.text') }}</p>
-                </div>
+<section class="auth">
+    <div class="container">
+        <div class="auth__card">
+            <div class="auth__art {{ $authImage ? '' : 'is-empty' }}" aria-hidden="true">
+                @if($authImage)
+                    <img src="{{ $authImage }}" alt="" width="1000" height="1498">
+                @endif
+                <span class="auth__tag"><i class="fas fa-user-plus"></i></span>
             </div>
 
-            <form name="frmRegister" id="frmRegister" class="gate__form" action="{{ route('register.submit') }}" method="post" novalidate>
-                @csrf
+            <div class="auth__body">
+                <h2 class="auth__title">{{ __('frontend.register.heading') }}</h2>
+                <p class="auth__lead">{{ __('frontend.register.text') }}</p>
 
-                <div class="entry">
-                    <label class="entry__label" for="name">{{ __('frontend.register.name') }}</label>
-                    <div class="entry__box @error('name') is-invalid @enderror">
-                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-user"></i></span>
-                        <input type="text" name="name" id="name" autocomplete="name" class="entry__input" placeholder="{{ __('frontend.register.name_placeholder') }}" value="{{ old('name') }}">
-                    </div>
-                    @error('name')
-                        <span class="entry__err">{{ $message }}</span>
-                    @enderror
-                </div>
+                <form name="frmRegister" id="frmRegister" class="auth__form" action="{{ route('register.submit') }}" method="post" novalidate>
+                    @csrf
 
-                <div class="entry">
-                    <label class="entry__label" for="email">{{ __('frontend.register.email') }}</label>
-                    <div class="entry__box @error('email') is-invalid @enderror">
-                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-at"></i></span>
-                        <input type="email" name="email" id="email" autocomplete="email" class="entry__input" placeholder="{{ __('frontend.register.email_placeholder') }}" value="{{ old('email') }}">
-                    </div>
-                    @error('email')
-                        <span class="entry__err">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="entry">
-                    <label class="entry__label" for="password">{{ __('frontend.register.password') }}</label>
-                    <div class="entry__box @error('password') is-invalid @enderror">
-                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-key"></i></span>
-                        <input type="password" name="password" id="password" autocomplete="new-password" class="entry__input" placeholder="{{ __('frontend.register.password_placeholder') }}">
-                        <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.register.show') }}" data-hide="{{ __('frontend.register.hide') }}" aria-label="{{ __('frontend.register.show') }}" aria-pressed="false">
-                            <i class="fas fa-eye" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    @error('password')
-                        <span class="entry__err">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="entry">
-                    <label class="entry__label" for="password_confirmation">{{ __('frontend.register.confirm') }}</label>
-                    <div class="entry__box @error('password_confirmation') is-invalid @enderror">
-                        <span class="entry__icon" aria-hidden="true"><i class="fas fa-redo-alt"></i></span>
-                        <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="new-password" class="entry__input" placeholder="{{ __('frontend.register.confirm_placeholder') }}">
-                        <button type="button" class="entry__eye" data-pass-toggle data-show="{{ __('frontend.register.show') }}" data-hide="{{ __('frontend.register.hide') }}" aria-label="{{ __('frontend.register.show') }}" aria-pressed="false">
-                            <i class="fas fa-eye" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    @error('password_confirmation')
-                        <span class="entry__err">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                @if(env('CAPTCHA_ENABLED', true))
-                    <div class="entry">
-                        <label class="entry__label" for="captcha">{{ __('frontend.register.captcha') }}</label>
-                        <div class="entry__cap">
-                            <div class="cap__img">@captcha</div>
-                            <div class="entry__box @error('captcha') is-invalid @enderror">
-                                <span class="entry__icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
-                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="entry__input" placeholder="{{ __('frontend.register.captcha_placeholder') }}">
-                            </div>
-                        </div>
-                        @error('captcha')
-                            <span class="entry__err">{{ __('frontend.register.captcha_invalid') }}</span>
+                    <div class="auth-field" style="--i: 0">
+                        <label for="name">{{ __('frontend.register.name') }}</label>
+                        <input type="text" name="name" id="name" autocomplete="name" class="@error('name') is-invalid @enderror" placeholder="{{ __('frontend.register.name_placeholder') }}" value="{{ old('name') }}">
+                        @error('name')
+                            <span class="auth-err">{{ $message }}</span>
                         @enderror
                     </div>
-                @endif
 
-                <button type="submit" name="submit-form" class="btn btn--block gate__submit">
-                    <span>{{ __('frontend.register.button') }}</span>
-                    <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
-                </button>
-            </form>
+                    <div class="auth-field" style="--i: 1">
+                        <label for="email">{{ __('frontend.register.email') }}</label>
+                        <input type="email" name="email" id="email" autocomplete="email" class="@error('email') is-invalid @enderror" placeholder="{{ __('frontend.register.email_placeholder') }}" value="{{ old('email') }}">
+                        @error('email')
+                            <span class="auth-err">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-            <p class="gate__foot">
-                {{ __('frontend.register.have_account') }}
-                <a href="{{ route('login.form') }}" class="gate__swap">{{ __('frontend.register.login_link') }}</a>
-            </p>
+                    <div class="auth-field" style="--i: 2">
+                        <label for="password">{{ __('frontend.register.password') }}</label>
+                        <div class="auth-pass">
+                            <input type="password" name="password" id="password" autocomplete="new-password" class="@error('password') is-invalid @enderror" placeholder="{{ __('frontend.register.password_placeholder') }}">
+                            <button type="button" class="auth-pass__eye" data-pass-toggle data-show="{{ __('frontend.register.show') }}" data-hide="{{ __('frontend.register.hide') }}" aria-label="{{ __('frontend.register.show') }}" aria-pressed="false">
+                                <i class="far fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        @error('password')
+                            <span class="auth-err">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="auth-field" style="--i: 3">
+                        <label for="password_confirmation">{{ __('frontend.register.confirm') }}</label>
+                        <div class="auth-pass">
+                            <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="new-password" class="@error('password_confirmation') is-invalid @enderror" placeholder="{{ __('frontend.register.confirm_placeholder') }}">
+                            <button type="button" class="auth-pass__eye" data-pass-toggle data-show="{{ __('frontend.register.show') }}" data-hide="{{ __('frontend.register.hide') }}" aria-label="{{ __('frontend.register.show') }}" aria-pressed="false">
+                                <i class="far fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        @error('password_confirmation')
+                            <span class="auth-err">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    @if(env('CAPTCHA_ENABLED', true))
+                        <div class="auth-field" style="--i: 4">
+                            <label for="captcha">{{ __('frontend.register.captcha') }}</label>
+                            <div class="auth-cap">
+                                <div class="auth-cap__img cap__img">@captcha</div>
+                                <input type="text" id="captcha" name="captcha" autocomplete="off" class="@error('captcha') is-invalid @enderror" placeholder="{{ __('frontend.register.captcha_placeholder') }}">
+                            </div>
+                            @error('captcha')
+                                <span class="auth-err">{{ __('frontend.register.captcha_invalid') }}</span>
+                            @enderror
+                        </div>
+                    @endif
+
+                    <button type="submit" name="submit-form" class="btn btn--primary btn--block auth__submit" style="--i: 5">{{ __('frontend.register.button') }}</button>
+                </form>
+
+                <p class="auth__switch">
+                    {{ __('frontend.register.have_account') }}
+                    <a href="{{ route('login.form') }}" class="auth-link auth-link--strong">{{ __('frontend.register.login_link') }}</a>
+                </p>
+            </div>
         </div>
     </div>
 </section>
@@ -123,15 +106,15 @@
     $(document).ready(function() {
         $("#frmRegister").validate({
             errorElement: 'span',
-            errorClass: 'entry__err',
+            errorClass: 'auth-err',
             errorPlacement: function(error, element) {
-                error.appendTo(element.closest('.entry'));
+                error.appendTo(element.closest('.auth-field'));
             },
             highlight: function(element) {
-                $(element).closest('.entry__box').addClass('is-invalid');
+                $(element).addClass('is-invalid');
             },
             unhighlight: function(element) {
-                $(element).closest('.entry__box').removeClass('is-invalid');
+                $(element).removeClass('is-invalid');
             },
             rules: {
                 name: { required: true, minlength: 2 },
@@ -169,17 +152,16 @@
 
 <script>
     document.addEventListener('click', function (event) {
-        var toggle = event.target.closest('[data-pass-toggle]');
+        var button = event.target.closest('[data-pass-toggle]');
+        if (!button) { return; }
 
-        if (toggle) {
-            var input = toggle.parentElement.querySelector('input');
-            var reveal = input.type === 'password';
+        var input = button.parentElement.querySelector('input');
+        var reveal = input.type === 'password';
 
-            input.type = reveal ? 'text' : 'password';
-            toggle.setAttribute('aria-pressed', reveal ? 'true' : 'false');
-            toggle.setAttribute('aria-label', reveal ? toggle.dataset.hide : toggle.dataset.show);
-            toggle.querySelector('i').className = reveal ? 'fas fa-eye-slash' : 'fas fa-eye';
-        }
+        input.type = reveal ? 'text' : 'password';
+        button.setAttribute('aria-pressed', reveal ? 'true' : 'false');
+        button.setAttribute('aria-label', reveal ? button.dataset.hide : button.dataset.show);
+        button.querySelector('i').className = reveal ? 'far fa-eye-slash' : 'far fa-eye';
     });
 </script>
 @endpush

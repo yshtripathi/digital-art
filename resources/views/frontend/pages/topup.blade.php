@@ -46,48 +46,15 @@
     }
 @endphp
 
-<section class="credit">
-    <div class="credit__wrap">
-        <header class="credit__intro">
-            <p class="credit__eyebrow"><i class="fas fa-coins" aria-hidden="true"></i>{{ __('frontend.header.credits') }}</p>
-            <h2 class="credit__title">{{ __('frontend.topup.heading') }}</h2>
-            <p class="credit__lead">{{ __('frontend.topup.lead') }}</p>
-        </header>
+<section class="pay">
+    <div class="container">
+        <div class="pay__grid tu">
+            <div class="pay-card tu-tiers" style="--i: 0">
+                <h2 class="pay-card__title tu__title">{{ __('frontend.topup.tiers_title') }}</h2>
+                <p class="tu__text">{{ __('frontend.topup.tiers_text') }}</p>
 
-        <ul class="spec">
-            <li class="spec__cell">
-                <span class="spec__icon" aria-hidden="true"><i class="fas fa-exchange-alt"></i></span>
-                <span class="spec__text">
-                    <small>{{ __('frontend.topup.rate_label') }}</small>
-                    <strong>{{ $rateNote }}</strong>
-                </span>
-            </li>
-            <li class="spec__cell">
-                <span class="spec__icon" aria-hidden="true"><i class="far fa-calendar-check"></i></span>
-                <span class="spec__text">
-                    <small>{{ __('frontend.topup.validity_label') }}</small>
-                    <strong>{{ rtrim(__('frontend.topup.validity'), '.。') }}</strong>
-                </span>
-            </li>
-            <li class="spec__cell">
-                <span class="spec__icon" aria-hidden="true"><i class="fas fa-unlock-alt"></i></span>
-                <span class="spec__text">
-                    <small>{{ __('frontend.topup.use_label') }}</small>
-                    <strong>{{ rtrim(__('frontend.topup.use'), '.。') }}</strong>
-                </span>
-            </li>
-        </ul>
-
-        <form action="{{ route('points.add-to-cart') }}" method="POST" class="credit__grid" data-credit-form novalidate>
-            @csrf
-
-            <div class="credit__main">
-                <div class="ladder">
-                    <div class="ladder__head">
-                        <h3 class="ladder__title">{{ __('frontend.topup.tiers_title') }}</h3>
-                        <p class="ladder__text">{{ __('frontend.topup.tiers_text') }}</p>
-                    </div>
-                    <table class="ladder__table">
+                <div class="tu-table">
+                    <table>
                         <caption class="vh">{{ __('frontend.topup.tiers_title') }}</caption>
                         <thead>
                             <tr>
@@ -99,25 +66,20 @@
                         </thead>
                         <tbody>
                             @foreach($tiers as $t)
-                                <tr class="rung {{ $loop->last ? 'rung--top' : '' }}" data-mult="{{ $t['big'] }}" data-min="{{ $t['min'] }}" data-name="{{ $t['n'] }}" style="--fill: {{ ($loop->index + 1) * 25 }}%">
-                                    <th scope="row" data-label="{{ __('frontend.topup.tier') }}">
-                                        <span class="rung__name">
-                                            <span class="rung__icon" aria-hidden="true"><i class="fas {{ $t['i'] }}"></i></span>
+                                <tr class="tu-row" data-mult="{{ $t['big'] }}" data-min="{{ $t['min'] }}" data-name="{{ $t['n'] }}">
+                                    <th scope="row">
+                                        <span class="tu-row__name">
+                                            <span class="tu-row__icon" aria-hidden="true"><i class="fas {{ $t['i'] }}"></i></span>
                                             {{ $t['n'] }}
                                         </span>
                                     </th>
-                                    <td class="rung__range" data-label="{{ __('frontend.topup.range') }}">{!! $t['r'] !!}</td>
-                                    <td data-label="{{ __('frontend.topup.multiplier') }}">
-                                        <span class="rung__mult">
-                                            <strong>{{ $t['big'] }}</strong>
-                                            <span class="rung__meter" aria-hidden="true"><span></span></span>
-                                        </span>
-                                    </td>
-                                    <td class="rung__state">
+                                    <td class="tu-row__range">{!! $t['r'] !!}</td>
+                                    <td><strong class="tu-row__mult">{{ $t['big'] }}</strong></td>
+                                    <td class="tu-row__state">
+                                        <span class="tu-row__match">{{ __('frontend.topup.your_tier') }}</span>
                                         @if($loop->last)
-                                            <span class="rung__best">{{ __('frontend.topup.top_tier') }}</span>
+                                            <span class="tu-row__best">{{ __('frontend.topup.top_tier') }}</span>
                                         @endif
-                                        <span class="rung__match"><i class="fas fa-check" aria-hidden="true"></i> {{ __('frontend.topup.your_tier') }}</span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -125,75 +87,83 @@
                     </table>
                 </div>
 
-                <div class="console">
-                    <div class="console__head">
-                        <p class="console__kicker">{{ __('frontend.topup.calc_step') }}</p>
-                        <h3 class="console__title">{{ __('frontend.topup.calc_title') }}</h3>
-                        <p class="console__text">{{ __('frontend.topup.calc_text') }}</p>
+                <ul class="tu-notes">
+                    <li class="tu-notes__item">
+                        <span class="tu-notes__icon" aria-hidden="true"><i class="fas fa-exchange-alt"></i></span>
+                        <span class="tu-notes__text">
+                            <small>{{ __('frontend.topup.rate_label') }}</small>
+                            <strong>{{ $rateNote }}</strong>
+                        </span>
+                    </li>
+                    <li class="tu-notes__item">
+                        <span class="tu-notes__icon" aria-hidden="true"><i class="far fa-calendar-check"></i></span>
+                        <span class="tu-notes__text">
+                            <small>{{ __('frontend.topup.validity_label') }}</small>
+                            <strong>{{ rtrim(__('frontend.topup.validity'), '.。') }}</strong>
+                        </span>
+                    </li>
+                    <li class="tu-notes__item">
+                        <span class="tu-notes__icon" aria-hidden="true"><i class="fas fa-unlock-alt"></i></span>
+                        <span class="tu-notes__text">
+                            <small>{{ __('frontend.topup.use_label') }}</small>
+                            <strong>{{ rtrim(__('frontend.topup.use'), '.。') }}</strong>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+
+            <aside class="pay__rail">
+                <form action="{{ route('points.add-to-cart') }}" method="POST" class="pay-sum tu-calc" data-credit-form novalidate>
+                    @csrf
+                    <h2 class="pay-sum__title">{{ __('frontend.topup.calc_title') }}</h2>
+
+                    <label class="tu-calc__label" for="topup_amount">{{ __('frontend.topup.amount') }}</label>
+                    <div class="tu-input">
+                        <span class="tu-input__sym" aria-hidden="true">{!! $symbol !!}</span>
+                        <input type="number" name="amount" id="topup_amount" placeholder="{{ __('frontend.topup.amount_placeholder') }}" min="1" required inputmode="decimal">
+                        <span class="tu-input__mult" data-live-mult aria-hidden="true">x1</span>
                     </div>
 
-                    <label class="console__label" for="topup_amount">{{ __('frontend.topup.amount') }}</label>
-                    <div class="display">
-                        <span class="display__sym" aria-hidden="true">{!! $symbol !!}</span>
-                        <input type="number" name="amount" id="topup_amount" class="display__input" placeholder="{{ __('frontend.topup.amount_placeholder') }}" min="1" required inputmode="decimal">
-                        <span class="display__mult" data-live-mult aria-hidden="true">x1</span>
-                    </div>
-
-                    <span class="console__label" id="keysLabel">{{ __('frontend.topup.presets') }}</span>
-                    <div class="keys" role="group" aria-labelledby="keysLabel">
+                    <span class="tu-calc__label" id="keysLabel">{{ __('frontend.topup.presets') }}</span>
+                    <div class="tu-keys" role="group" aria-labelledby="keysLabel">
                         @foreach($quick as $q)
-                            <button type="button" class="key" data-amount="{{ $q }}">
-                                <span class="key__amount">{!! $symbol !!}{{ number_format($q) }}</span>
-                                <span class="key__mult">{{ $tiers[$loop->index]['big'] }}</span>
+                            <button type="button" class="tu-key" data-amount="{{ $q }}">
+                                <span>{!! $symbol !!}{{ number_format($q) }}</span>
+                                <small>{{ $tiers[$loop->index]['big'] }}</small>
                             </button>
                         @endforeach
                     </div>
 
-                    <p class="status" aria-live="polite" data-hint>
-                        <span class="status__icon" aria-hidden="true"><i class="far fa-lightbulb"></i></span>
+                    <p class="tu-hint" aria-live="polite" data-hint>
+                        <i class="far fa-lightbulb" aria-hidden="true"></i>
                         <span data-hint-text>{{ __('frontend.topup.tip_start') }}</span>
                     </p>
-                </div>
-            </div>
 
-            <aside class="receipt-wrap">
-                <div class="receipt">
-                    <p class="receipt__label">{{ __('frontend.topup.you_get') }}</p>
-                    <p class="receipt__total" id="tpTotalWrap" aria-live="polite">
-                        <strong id="total_points">0</strong>
-                        <span>{{ __('frontend.topup.credits') }}</span>
-                    </p>
+                    <div class="tu-result">
+                        <p class="tu-result__label">{{ __('frontend.topup.you_get') }}</p>
+                        <p class="tu-result__total" id="tpTotalWrap" aria-live="polite">
+                            <strong id="total_points">0</strong>
+                            <span>{{ __('frontend.topup.credits') }}</span>
+                        </p>
+                        <dl class="tu-result__lines" aria-label="{{ __('frontend.topup.breakdown') }}">
+                            <div><dt>{{ __('frontend.topup.row_amount') }}</dt><dd id="amount_display">{!! $symbol !!}0</dd></div>
+                            <div><dt>{{ __('frontend.topup.row_base') }}</dt><dd id="base_points">0</dd></div>
+                            <div><dt>{{ __('frontend.topup.row_multiplier') }}</dt><dd id="multiplier_display">x1</dd></div>
+                        </dl>
+                    </div>
 
-                    <table class="receipt__lines">
-                        <caption class="vh">{{ __('frontend.topup.breakdown') }}</caption>
-                        <tbody>
-                            <tr>
-                                <th scope="row"><span>{{ __('frontend.topup.row_amount') }}</span></th>
-                                <td id="amount_display">{!! $symbol !!}0</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><span>{{ __('frontend.topup.row_base') }}</span></th>
-                                <td id="base_points">0</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><span>{{ __('frontend.topup.row_multiplier') }}</span></th>
-                                <td id="multiplier_display">x1</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <button type="submit" class="btn btn--block receipt__submit">
-                        <span>{{ __('frontend.topup.add') }}</span>
+                    <button type="submit" class="btn btn--primary btn--block tu-calc__submit">
                         <i class="fas fa-cart-plus" aria-hidden="true"></i>
+                        <span>{{ __('frontend.topup.add') }}</span>
                     </button>
 
-                    <p class="receipt__secure">
+                    <p class="pay-sum__secure tu-calc__secure">
                         <i class="fas fa-lock" aria-hidden="true"></i>
                         <span>{{ __('frontend.topup.secure') }}</span>
                     </p>
-                </div>
+                </form>
             </aside>
-        </form>
+        </div>
     </div>
 </section>
 @endsection
@@ -208,8 +178,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const amountOut = document.getElementById('amount_display');
     const totalWrap = document.getElementById('tpTotalWrap');
     const liveMult = document.querySelector('[data-live-mult]');
-    const tiers = Array.prototype.slice.call(document.querySelectorAll('.rung'));
-    const keys = document.querySelectorAll('.key');
+    const tiers = Array.prototype.slice.call(document.querySelectorAll('.tu-row'));
+    const keys = document.querySelectorAll('.tu-key');
     const hint = document.querySelector('[data-hint]');
     const hintText = document.querySelector('[data-hint-text]');
     const symbol = @json(html_entity_decode($symbol));
@@ -297,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 input.reportValidity();
                 return;
             }
-            const btn = form.querySelector('.receipt__submit');
+            const btn = form.querySelector('.tu-calc__submit');
             const original = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> <span>' + @json(__('frontend.topup.adding')) + '</span>';

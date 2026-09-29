@@ -13,96 +13,96 @@
 ])
 
 @php
-    $auMedia = function ($file) {
-        $path = public_path('assets/images/' . $file);
-        return file_exists($path) ? asset('assets/images/' . $file) : null;
-    };
-    $auMain  = $auMedia('about-1.webp');
-    $auSmall = $auMedia('about-2.webp');
-    $auStill = $auMedia('about-3.webp');
-    $auVideo = $auMedia('about-video.mp4');
-    $auSteps = [
-        ['icon' => 'fa-search',     'title' => __('frontend.about.step_one'), 'text' => __('frontend.about.step_one_text')],
-        ['icon' => 'fa-list-ul',    'title' => __('frontend.about.step_two'), 'text' => __('frontend.about.step_two_text')],
-        ['icon' => 'fa-lock-open',  'title' => __('frontend.about.step_three'), 'text' => __('frontend.about.step_three_text')],
+    $abImage = file_exists(public_path('assets/images/about.webp')) ? asset('assets/images/about.webp') : null;
+    $abSteps2 = file_exists(public_path('assets/images/about-steps.webp')) ? asset('assets/images/about-steps.webp') : null;
+    $abPoints = [__('frontend.about.point_one'), __('frontend.about.point_two'), __('frontend.about.point_three')];
+    $abFacts = [
+        ['icon' => 'fa-layer-group', 'key' => 'fact_one'],
+        ['icon' => 'fa-eye',         'key' => 'fact_two'],
+        ['icon' => 'fa-clock',       'key' => 'fact_three'],
+        ['icon' => 'fa-coins',       'key' => 'fact_four'],
+        ['icon' => 'fa-language',    'key' => 'fact_five'],
+    ];
+    $abSteps = [
+        ['icon' => 'fa-search',    'title' => __('frontend.about.step_one'),   'text' => __('frontend.about.step_one_text')],
+        ['icon' => 'fa-list-ul',   'title' => __('frontend.about.step_two'),   'text' => __('frontend.about.step_two_text')],
+        ['icon' => 'fa-lock-open', 'title' => __('frontend.about.step_three'), 'text' => __('frontend.about.step_three_text')],
     ];
 @endphp
 
-<section class="story" aria-labelledby="auTitle">
-    <div class="story__wrap">
-        <div class="story__media" aria-hidden="true">
-            <figure class="frame frame--main {{ $auMain ? '' : 'is-empty' }}">
-                @if($auMain)
-                    <img src="{{ $auMain }}" alt="" width="1600" height="1067" loading="lazy" decoding="async">
+<section class="ab" aria-labelledby="abTitle">
+    <div class="container ab__grid">
+        <div class="ab-media" aria-hidden="true">
+            <span class="ab-media__back"></span>
+            <figure class="ab-media__frame {{ $abImage ? '' : 'is-empty' }}">
+                @if($abImage)
+                    <img src="{{ $abImage }}" alt="" width="1200" height="1500" loading="lazy" decoding="async">
                 @else
-                    <span class="frame__hint"><i class="far fa-image"></i></span>
+                    <i class="far fa-image"></i>
                 @endif
             </figure>
-            <figure class="frame frame--small {{ $auSmall ? '' : 'is-empty' }}">
-                @if($auSmall)
-                    <img src="{{ $auSmall }}" alt="" width="800" height="1000" loading="lazy" decoding="async">
-                @else
-                    <span class="frame__hint"><i class="far fa-image"></i></span>
-                @endif
-            </figure>
-            <span class="story__badge">
-                <strong>4</strong>
-                <span>{{ __('frontend.about.levels_badge') }}</span>
-            </span>
+            <span class="ab-media__chip"><strong>4</strong>{{ __('frontend.about.levels_badge') }}</span>
         </div>
 
-        <div class="story__copy">
-            <p class="story__tag">{{ __('frontend.about.eyebrow') }}</p>
-            <h2 id="auTitle" class="story__title">{{ __('frontend.about.heading') }}</h2>
-            <p class="story__lead">{{ __('frontend.about.intro') }}</p>
-            <p class="story__text">{{ __('frontend.about.detail') }}</p>
+        <div class="ab-copy">
+            <span class="tag">{{ __('frontend.about.eyebrow') }}</span>
+            <h2 id="abTitle" class="ab-copy__title">{{ __('frontend.about.heading') }}</h2>
+            <p class="ab-copy__lead">{{ __('frontend.about.intro') }}</p>
+            <p class="ab-copy__text">{{ __('frontend.about.detail') }}</p>
 
-            <ul class="story__points">
-                <li><span class="story__tick" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.about.point_one') }}</li>
-                <li><span class="story__tick" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.about.point_two') }}</li>
-                <li><span class="story__tick" aria-hidden="true"><i class="fas fa-check"></i></span>{{ __('frontend.about.point_three') }}</li>
+            <ul class="ab-copy__points">
+                @foreach($abPoints as $point)
+                    <li style="--i: {{ $loop->index }}"><span aria-hidden="true"><i class="fas fa-check"></i></span>{{ $point }}</li>
+                @endforeach
             </ul>
 
-            <div class="story__acts">
-                <a href="{{ route('product-lists') }}" class="btn">
-                    <span>{{ __('frontend.about.browse') }}</span>
-                    <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
-                </a>
-                <a href="{{ route('contact') }}" class="btn btn--outline">{{ __('frontend.about.contact') }}</a>
+            <div class="ab-copy__acts">
+                <a href="{{ route('product-lists') }}" class="btn btn--primary">{{ __('frontend.about.browse') }}</a>
+                <a href="{{ route('contact') }}" class="btn btn--ghost">{{ __('frontend.about.contact') }}</a>
             </div>
         </div>
     </div>
 </section>
 
-<section class="flow" aria-labelledby="auHowTitle">
-    <div class="flow__wrap">
-        <header class="flow__head">
-            <p class="flow__tag">{{ __('frontend.about.steps_label') }}</p>
-            <h2 id="auHowTitle" class="flow__title">{{ __('frontend.about.steps_heading') }}</h2>
-        </header>
-
-        <div class="flow__grid">
-            <figure class="frame frame--video {{ ($auVideo || $auStill) ? '' : 'is-empty' }}" aria-hidden="true">
-                @if($auVideo)
-                    <video src="{{ $auVideo }}" @if($auStill) poster="{{ $auStill }}" @endif autoplay muted loop playsinline preload="metadata" data-about-video></video>
-                @elseif($auStill)
-                    <img src="{{ $auStill }}" alt="" width="1600" height="900" loading="lazy" decoding="async">
+<section class="ab-how" aria-labelledby="abHowTitle">
+    <div class="container">
+        <div class="ab-how__card" data-reveal>
+            <figure class="ab-how__media {{ $abSteps2 ? '' : 'is-empty' }}" aria-hidden="true">
+                @if($abSteps2)
+                    <img src="{{ $abSteps2 }}" alt="" width="1000" height="1500" loading="lazy" decoding="async">
                 @else
-                    <span class="frame__hint frame__hint--play"><i class="fas fa-play"></i></span>
+                    <i class="far fa-image"></i>
                 @endif
             </figure>
 
-            <ol class="flow__steps">
-                @foreach($auSteps as $step)
-                    <li class="flow__step">
-                        <span class="flow__no" aria-hidden="true">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
-                        <div class="flow__body">
-                            <h3 class="flow__name"><i class="fas {{ $step['icon'] }}" aria-hidden="true"></i>{{ $step['title'] }}</h3>
-                            <p class="flow__text">{{ $step['text'] }}</p>
-                        </div>
+            <div class="ab-how__body">
+                <header class="ab-how__head">
+                    <span class="tag">{{ __('frontend.about.steps_label') }}</span>
+                    <h2 id="abHowTitle" class="ab-how__title">{{ __('frontend.about.steps_heading') }}</h2>
+                </header>
+
+                <ol class="ab-steps">
+                    @foreach($abSteps as $step)
+                        <li class="ab-step" style="--i: {{ $loop->index }}">
+                            <span class="ab-step__no" aria-hidden="true">{{ $loop->iteration }}</span>
+                            <div class="ab-step__card">
+                                <h3 class="ab-step__name"><i class="fas {{ $step['icon'] }}" aria-hidden="true"></i>{{ $step['title'] }}</h3>
+                                <p class="ab-step__text">{{ $step['text'] }}</p>
+                            </div>
+                        </li>
+                    @endforeach
+                </ol>
+            </div>
+
+            <ul class="ab-facts">
+                @foreach($abFacts as $fact)
+                    <li class="ab-fact" style="--i: {{ $loop->index }}">
+                        <span class="ab-fact__icon" aria-hidden="true"><i class="fas {{ $fact['icon'] }}"></i></span>
+                        <strong class="ab-fact__title">{{ __('frontend.about.' . $fact['key']) }}</strong>
+                        <span class="ab-fact__text">{{ __('frontend.about.' . $fact['key'] . '_text') }}</span>
                     </li>
                 @endforeach
-            </ol>
+            </ul>
         </div>
     </div>
 </section>
@@ -114,13 +114,24 @@
 (function () {
     'use strict';
 
-    var video = document.querySelector('[data-about-video]');
-    if (!video) { return; }
+    var blocks = document.querySelectorAll('[data-reveal]');
+    if (!blocks.length) { return; }
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        video.removeAttribute('autoplay');
-        video.pause();
+    if (!('IntersectionObserver' in window)) {
+        blocks.forEach(function (block) { block.classList.add('is-in'); });
+        return;
     }
+
+    var watch = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                watch.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.25 });
+
+    blocks.forEach(function (block) { watch.observe(block); });
 }());
 </script>
 @endpush

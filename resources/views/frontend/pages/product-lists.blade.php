@@ -13,17 +13,6 @@
     $isCat = isset($category->title) && $category->title;
     $bcTitle = $isCat ? $category->title : __('frontend.catalog.title');
     $isPaginator = $products instanceof \Illuminate\Pagination\AbstractPaginator;
-    $totalCourses = $isPaginator && method_exists($products, 'total') ? $products->total() : $products->count();
-    $activeSlug = $isCat ? $category->slug : null;
-    $shelf = \App\Models\Category::getAllParentWithChild();
-    $shelfCounts = \App\Models\Product::where('status', 'active')->selectRaw('cat_id, count(*) as total')->groupBy('cat_id')->pluck('total', 'cat_id');
-    $shelfAll = $shelfCounts->sum();
-    $sorts = [
-        'default' => __('frontend.catalog.sort_recommended'),
-        'az'      => __('frontend.catalog.sort_title'),
-        'low'     => __('frontend.catalog.sort_low_high'),
-        'high'    => __('frontend.catalog.sort_high_low'),
-    ];
 @endphp
 
 @include('frontend.layouts.breadcrumb', [
@@ -40,166 +29,98 @@
         ],
 ])
 
-<section class="shelf" data-shelf>
-    <div class="shelf__wrap">
-        @if($shelf->isNotEmpty())
-            <nav class="rail" aria-label="{{ __('frontend.catalog.categories') }}">
-                <a href="{{ route('product-lists') }}" class="rail__item {{ $activeSlug ? '' : 'is-current' }}" @unless($activeSlug) aria-current="page" @endunless>
-                    <span class="rail__mark rail__mark--all" aria-hidden="true"><i class="fas fa-border-all"></i></span>
-                    <span class="rail__name">{{ __('frontend.catalog.show_all') }}</span>
-                    <span class="rail__count">{{ $shelfAll }}</span>
-                </a>
-                @foreach($shelf as $cat)
-                    <a href="{{ route('product-lists', $cat->slug) }}" class="rail__item cat-n{{ $loop->index % 5 }} {{ $activeSlug === $cat->slug ? 'is-current' : '' }}" @if($activeSlug === $cat->slug) aria-current="page" @endif>
-                        <span class="rail__mark" aria-hidden="true"></span>
-                        <span class="rail__name">{{ $cat->title }}</span>
-                        <span class="rail__count">{{ $shelfCounts[$cat->id] ?? 0 }}</span>
-                    </a>
-                @endforeach
-            </nav>
-        @endif
-
+<section class="shop" data-shop>
+    <div class="container">
         @if($products->count())
-            <div class="finder" data-finder>
-                <div class="finder__row">
-                    <label class="finder__search" for="shelf-q">
-                        <i class="fas fa-search" aria-hidden="true"></i>
-                        <span class="vh">{{ __('frontend.catalog.search') }}</span>
-                        <input type="search" id="shelf-q" class="finder__q" placeholder="{{ __('frontend.catalog.search_placeholder') }}" autocomplete="off" data-shelf-q>
-                        <kbd class="finder__key" aria-hidden="true">/</kbd>
-                    </label>
-
-                    <div class="finder__sort" role="radiogroup" aria-label="{{ __('frontend.catalog.sort') }}">
-                        @foreach($sorts as $key => $label)
-                            <button type="button" class="finder__opt {{ $key === 'default' ? 'is-on' : '' }}" role="radio" aria-checked="{{ $key === 'default' ? 'true' : 'false' }}" data-shelf-sort="{{ $key }}">{{ $label }}</button>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="finder__row finder__row--sub">
-                    <p class="finder__count" aria-live="polite">
-                        <span data-shelf-count data-template="{{ __('frontend.catalog.count') }}">{{ __('frontend.catalog.count', ['shown' => $products->count(), 'total' => $products->count()]) }}</span>
-                        <button type="button" class="finder__reset" hidden data-shelf-reset>
-                            <i class="fas fa-undo-alt" aria-hidden="true"></i>{{ __('frontend.catalog.clear') }}
-                        </button>
-                    </p>
-                </div>
+            <div class="shop-intro">
+                <h2 class="shop-intro__title">{{ __('frontend.catalog.intro_title') }}</h2>
+                <p class="shop-intro__text">{{ __('frontend.catalog.intro_text') }}</p>
             </div>
 
-            <ul class="books" data-shelf-grid>
+            <div class="shop-search">
+                <label class="shop-search__icon" for="shop-q">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <span class="vh">{{ __('frontend.catalog.search') }}</span>
+                </label>
+                <input type="search" id="shop-q" class="shop-search__input" placeholder="{{ __('frontend.catalog.search_placeholder') }}" autocomplete="off" data-shop-q>
+                <button type="button" class="shop-search__clear" aria-label="{{ __('frontend.catalog.clear') }}" hidden data-shop-x>
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+                <span class="shop-search__count" aria-live="polite" data-shop-count data-template="{{ __('frontend.catalog.count') }}">{{ __('frontend.catalog.count', ['shown' => $products->count(), 'total' => $products->count()]) }}</span>
+            </div>
+
+            <ul class="shop-grid" data-shop-grid>
                 @foreach($products as $course)
                     @php
-                        $pimg = $course->photo ? explode(',', $course->photo)[0] : null;
+                        $rawImg = $course->photo ? trim(explode(',', $course->photo)[0]) : '';
+                        $pimg = $rawImg !== '' && file_exists(public_path(ltrim($rawImg, '/'))) ? asset(ltrim($rawImg, '/')) : null;
                         $courseLevels = $course->levels ?? collect();
                         $lvCount = $courseLevels->count();
                         $minPoints = $lvCount ? $courseLevels->min('price_in_points') : 0;
-                        $catInfo = $course->cat_info;
-                        $catTitle = optional($catInfo)->title;
-                        $catIndex = $catInfo ? $shelf->search(fn ($c) => $c->id === $catInfo->id) : false;
                     @endphp
-                    <li class="book {{ $catIndex !== false ? 'cat-n' . ($catIndex % 5) : '' }}" data-shelf-item data-title="{{ \Illuminate\Support\Str::lower($course->title) }}" data-price="{{ $minPoints ?: 0 }}" data-order="{{ $loop->index }}" style="--i: {{ $loop->index % 9 }}">
-                        <a href="{{ route('product-detail', $course->slug) }}" class="book__link">
-                            <span class="book__media">
+                    <li class="shop-item" data-shop-item data-title="{{ \Illuminate\Support\Str::lower($course->title) }}" style="--i: {{ $loop->index % 8 }}">
+                        <a href="{{ route('product-detail', $course->slug) }}" class="shop-item__link">
+                            <span class="shop-item__media media-frame {{ $pimg ? '' : 'is-empty' }}">
                                 @if($pimg)
-                                    <img src="{{ asset(ltrim($pimg, '/')) }}" alt="" width="1200" height="750" loading="{{ $loop->index < 3 ? 'eager' : 'lazy' }}" decoding="async">
+                                    <img src="{{ $pimg }}" alt="" width="800" height="800" loading="{{ $loop->index < 4 ? 'eager' : 'lazy' }}" decoding="async">
                                 @else
-                                    <span class="book__blank" aria-hidden="true"><i class="fas fa-book-open"></i></span>
+                                    <i class="fas fa-book-open" aria-hidden="true"></i>
                                 @endif
                                 @if($lvCount)
-                                    <span class="book__count">{{ trans_choice('frontend.catalog.levels', $lvCount, ['count' => $lvCount]) }}</span>
+                                    <span class="shop-item__levels"><i class="fas fa-layer-group" aria-hidden="true"></i>{{ trans_choice('frontend.catalog.levels', $lvCount, ['count' => $lvCount]) }}</span>
                                 @endif
                             </span>
-
-                            <span class="book__body">
-                                @if($catTitle)
-                                    <span class="book__cat"><span class="book__mark" aria-hidden="true"></span>{{ $catTitle }}</span>
-                                @endif
-                                <span class="book__title">{{ $course->title }}</span>
-
-                                @if($course->summary)
-                                    <span class="book__desc">{{ \Illuminate\Support\Str::limit(strip_tags($course->summary), 140) }}</span>
-                                @endif
-
-
-                                <span class="book__foot">
-                                    @if($minPoints)
-                                        <span class="book__price">
-                                            <small>{{ __('frontend.catalog.from') }}</small>
-                                            <strong>{{ number_format($minPoints) }}</strong>
-                                            <em>{{ __('frontend.catalog.credits') }}</em>
-                                        </span>
-                                    @else
-                                        <span class="book__price book__price--soon"><small>{{ __('frontend.catalog.no_levels') }}</small></span>
-                                    @endif
-                                    <span class="book__go" aria-hidden="true"><i class="fas fa-long-arrow-alt-right"></i></span>
-                                    <span class="vh">{{ __('frontend.catalog.open') }}</span>
-                                </span>
-                            </span>
+                            <span class="shop-item__name">{{ $course->title }}</span>
+                            @if($minPoints)
+                                <span class="shop-item__price">{{ __('frontend.catalog.from') }} <strong>{{ number_format($minPoints) }}</strong> {{ __('frontend.catalog.credits') }}</span>
+                            @else
+                                <span class="shop-item__price">{{ __('frontend.catalog.no_levels') }}</span>
+                            @endif
                         </a>
                     </li>
                 @endforeach
             </ul>
 
-            <div class="nomatch" hidden data-shelf-none>
-                <span class="nomatch__icon" aria-hidden="true"><i class="fas fa-filter"></i></span>
-                <p class="nomatch__text">{{ __('frontend.catalog.no_results') }}</p>
-                <button type="button" class="btn btn--outline btn--sm" data-shelf-reset>
-                    <i class="fas fa-undo-alt" aria-hidden="true"></i>{{ __('frontend.catalog.clear') }}
-                </button>
+            <div class="shop-none" hidden data-shop-none>
+                <p>{{ __('frontend.catalog.no_results') }}</p>
+                <button type="button" class="btn btn--dark" data-shop-reset>{{ __('frontend.catalog.clear') }}</button>
             </div>
 
             @if($isPaginator && $products->hasPages())
-                <nav class="pager" aria-label="{{ __('frontend.catalog.pages') }}">
+                <nav class="shop-pager" aria-label="{{ __('frontend.catalog.pages') }}">
                     @if($products->onFirstPage())
-                        <span class="pager__step is-off" aria-hidden="true"><i class="fas fa-long-arrow-alt-left"></i> {{ __('frontend.catalog.prev') }}</span>
+                        <span class="shop-pager__step is-off" aria-hidden="true">{{ __('frontend.catalog.prev') }}</span>
                     @else
-                        <a href="{{ $products->previousPageUrl() }}" class="pager__step"><i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> {{ __('frontend.catalog.prev') }}</a>
+                        <a href="{{ $products->previousPageUrl() }}" class="shop-pager__step">{{ __('frontend.catalog.prev') }}</a>
                     @endif
 
                     @if(method_exists($products, 'lastPage'))
-                        <span class="pager__nums">
-                            @foreach($products->getUrlRange(1, $products->lastPage()) as $page => $url)
-                                @if($page == $products->currentPage())
-                                    <span class="pager__num is-current" aria-current="page">{{ $page }}</span>
-                                @else
-                                    <a href="{{ $url }}" class="pager__num">{{ $page }}</a>
-                                @endif
-                            @endforeach
-                        </span>
+                        @foreach($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                            @if($page == $products->currentPage())
+                                <span class="shop-pager__num is-current" aria-current="page">{{ $page }}</span>
+                            @else
+                                <a href="{{ $url }}" class="shop-pager__num">{{ $page }}</a>
+                            @endif
+                        @endforeach
                     @endif
 
                     @if($products->hasMorePages())
-                        <a href="{{ $products->nextPageUrl() }}" class="pager__step">{{ __('frontend.catalog.next') }} <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i></a>
+                        <a href="{{ $products->nextPageUrl() }}" class="shop-pager__step">{{ __('frontend.catalog.next') }}</a>
                     @else
-                        <span class="pager__step is-off" aria-hidden="true">{{ __('frontend.catalog.next') }} <i class="fas fa-long-arrow-alt-right"></i></span>
+                        <span class="shop-pager__step is-off" aria-hidden="true">{{ __('frontend.catalog.next') }}</span>
                     @endif
                 </nav>
             @endif
         @else
-            <div class="nomatch nomatch--page">
-                <span class="nomatch__icon" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
-                <h2 class="nomatch__title">{{ __('frontend.catalog.empty_title') }}</h2>
-                <p class="nomatch__text">{{ __('frontend.catalog.empty_text') }}</p>
-                <a href="{{ route('product-lists') }}" class="btn">{{ __('frontend.catalog.browse_all') }}</a>
+            <div class="bag-empty">
+                <span class="bag-empty__icon" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
+                <h2 class="bag-empty__title">{{ __('frontend.catalog.empty_title') }}</h2>
+                <p class="bag-empty__text">{{ __('frontend.catalog.empty_text') }}</p>
+                <div class="bag-empty__acts">
+                    <a href="{{ route('product-lists') }}" class="btn btn--primary">{{ __('frontend.catalog.browse_all') }}</a>
+                </div>
             </div>
         @endif
-
-        <aside class="boost">
-            <div class="boost__copy">
-                <p class="boost__title">{{ __('frontend.catalog.credits_title') }}</p>
-                <p class="boost__text">{{ __('frontend.catalog.credits_text') }}</p>
-            </div>
-            <ul class="boost__tiers" aria-hidden="true">
-                <li>x1</li>
-                <li>x2</li>
-                <li>x2.5</li>
-                <li>x3</li>
-            </ul>
-            <a href="{{ route('points.topup') }}" class="btn btn--light boost__go">
-                <i class="fas fa-coins" aria-hidden="true"></i>
-                {{ __('frontend.catalog.credits_btn') }}
-            </a>
-        </aside>
     </div>
 </section>
 @endsection
@@ -209,16 +130,16 @@
 (function () {
     'use strict';
 
-    var root = document.querySelector('[data-shelf]');
-    var grid = root ? root.querySelector('[data-shelf-grid]') : null;
+    var root = document.querySelector('[data-shop]');
+    var grid = root ? root.querySelector('[data-shop-grid]') : null;
     if (!grid) { return; }
 
-    var items = Array.prototype.slice.call(grid.querySelectorAll('[data-shelf-item]'));
-    var query = root.querySelector('[data-shelf-q]');
-    var count = root.querySelector('[data-shelf-count]');
-    var none = root.querySelector('[data-shelf-none]');
-    var resets = root.querySelectorAll('[data-shelf-reset]');
-    var sorts = Array.prototype.slice.call(root.querySelectorAll('[data-shelf-sort]'));
+    var items = Array.prototype.slice.call(grid.querySelectorAll('[data-shop-item]'));
+    var query = root.querySelector('[data-shop-q]');
+    var none = root.querySelector('[data-shop-none]');
+    var reset = root.querySelector('[data-shop-reset]');
+    var clear = root.querySelector('[data-shop-x]');
+    var count = root.querySelector('[data-shop-count]');
     var template = count ? count.dataset.template : '';
 
     function apply() {
@@ -228,54 +149,20 @@
             item.hidden = !(!term || item.dataset.title.indexOf(term) !== -1);
             if (!item.hidden) { shown++; }
         });
-        if (count) {
-            count.textContent = template.replace(':shown', shown).replace(':total', items.length);
-        }
         none.hidden = shown !== 0;
-        var dirty = !!term;
-        resets.forEach(function (btn) { if (btn.closest('.finder')) { btn.hidden = !dirty; } });
+        if (clear) { clear.hidden = !query.value; }
+        if (count) { count.textContent = template.replace(':shown', shown).replace(':total', items.length); }
+    }
+
+    function wipe() {
+        query.value = '';
+        apply();
+        query.focus();
     }
 
     query.addEventListener('input', apply);
-
-    sorts.forEach(function (option) {
-        option.addEventListener('click', function () {
-            var key = option.dataset.shelfSort;
-            var sorted = items.slice().sort(function (a, b) {
-                var pa = parseFloat(a.dataset.price) || Infinity;
-                var pb = parseFloat(b.dataset.price) || Infinity;
-                if (key === 'az') { return a.dataset.title.localeCompare(b.dataset.title); }
-                if (key === 'low') { return pa - pb; }
-                if (key === 'high') { return (pb === Infinity ? -1 : pb) - (pa === Infinity ? -1 : pa); }
-                return a.dataset.order - b.dataset.order;
-            });
-            grid.classList.add('is-shuffling');
-            sorted.forEach(function (item) { grid.appendChild(item); });
-            setTimeout(function () { grid.classList.remove('is-shuffling'); }, 400);
-            sorts.forEach(function (other) {
-                var on = other === option;
-                other.classList.toggle('is-on', on);
-                other.setAttribute('aria-checked', on ? 'true' : 'false');
-            });
-        });
-    });
-
-    resets.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            query.value = '';
-            apply();
-            query.focus();
-        });
-    });
-
-    document.addEventListener('keydown', function (event) {
-        var tag = (event.target.tagName || '').toLowerCase();
-        if (event.key === '/' && tag !== 'input' && tag !== 'textarea' && !event.target.isContentEditable) {
-            event.preventDefault();
-            query.focus();
-        }
-    });
-
+    if (reset) { reset.addEventListener('click', wipe); }
+    if (clear) { clear.addEventListener('click', wipe); }
     apply();
 }());
 </script>
